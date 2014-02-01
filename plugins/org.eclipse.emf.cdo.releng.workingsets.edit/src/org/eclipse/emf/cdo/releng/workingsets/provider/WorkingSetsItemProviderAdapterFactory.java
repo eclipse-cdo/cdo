@@ -10,6 +10,12 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.provider;
 
+import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
+import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
+import org.eclipse.emf.cdo.releng.predicates.OrPredicate;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
+import org.eclipse.emf.cdo.releng.predicates.util.PredicatesSwitch;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 import org.eclipse.emf.cdo.releng.workingsets.util.WorkingSetsAdapterFactory;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -35,12 +41,6 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
-import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
-import org.eclipse.emf.cdo.releng.predicates.OrPredicate;
-import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
-import org.eclipse.emf.cdo.releng.predicates.util.PredicatesSwitch;
-import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -154,7 +154,7 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -171,7 +171,7 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate} instances.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected InclusionPredicateItemProvider inclusionPredicateItemProvider;
@@ -179,7 +179,7 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -196,7 +196,7 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   /**
    * This returns the root adapter factory that contains this factory.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public ComposeableAdapterFactory getRootAdapterFactory()
@@ -249,7 +249,7 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -297,7 +297,7 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -305,19 +305,27 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
   public void dispose()
   {
     if (workingSetItemProvider != null)
+    {
       workingSetItemProvider.dispose();
+    }
     if (workingSetGroupItemProvider != null)
+    {
       workingSetGroupItemProvider.dispose();
+    }
     if (exclusionPredicateItemProvider != null)
+    {
       exclusionPredicateItemProvider.dispose();
+    }
     if (inclusionPredicateItemProvider != null)
+    {
       inclusionPredicateItemProvider.dispose();
+    }
   }
 
   /**
    * A child creation extender for the {@link PredicatesPackage}.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public static class PredicatesChildCreationExtender implements IChildCreationExtender

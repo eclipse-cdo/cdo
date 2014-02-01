@@ -10,11 +10,12 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets;
 
-import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.core.resources.IProject;
 
 /**
  * <!-- begin-user-doc -->
@@ -71,7 +72,7 @@ public interface WorkingSet extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.workingsets.WorkingSet#getId <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @param value the new value of the '<em>Id</em>' attribute.
    * @see #getId()
    * @generated
@@ -89,11 +90,11 @@ public interface WorkingSet extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-       * <p>
-       * If the meaning of the '<em>Name</em>' attribute isn't clear,
-       * there really should be more of a description here...
-       * </p>
-       * <!-- end-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage#getWorkingSet_Name()

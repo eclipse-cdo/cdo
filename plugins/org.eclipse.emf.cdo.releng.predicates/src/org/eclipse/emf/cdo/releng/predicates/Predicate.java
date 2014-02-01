@@ -14,6 +14,8 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.resources.IProject;
 
+import java.io.File;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Predicate</b></em>'.
@@ -21,7 +23,7 @@ import org.eclipse.core.resources.IProject;
  *
  *
  * @see org.eclipse.emf.cdo.releng.predicates.PredicatesPackage#getPredicate()
- * @model interface="true" abstract="true"
+ * @model abstract="true"
  * @generated
  */
 public interface Predicate extends EObject
@@ -33,5 +35,13 @@ public interface Predicate extends EObject
    * @generated
    */
   boolean matches(IProject project);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model projectFolderDataType="org.eclipse.emf.cdo.releng.predicates.File"
+   * @generated
+   */
+  boolean matches(File projectFolder);
 
 } // Predicate

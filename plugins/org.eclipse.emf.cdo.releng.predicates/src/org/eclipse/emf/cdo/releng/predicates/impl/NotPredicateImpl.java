@@ -16,15 +16,11 @@ import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.core.resources.IProject;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,7 +35,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @generated
  */
-public class NotPredicateImpl extends MinimalEObjectImpl.Container implements NotPredicate
+public class NotPredicateImpl extends PredicateImpl implements NotPredicate
 {
   /**
    * The cached value of the '{@link #getOperand() <em>Operand</em>}' containment reference.
@@ -146,6 +142,7 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     Predicate operand = getOperand();
@@ -232,22 +229,6 @@ public class NotPredicateImpl extends MinimalEObjectImpl.Container implements No
       return operand != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case PredicatesPackage.NOT_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
 } // NotPredicateImpl

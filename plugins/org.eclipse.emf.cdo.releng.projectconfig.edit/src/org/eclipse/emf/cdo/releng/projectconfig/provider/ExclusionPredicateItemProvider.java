@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicateItemProvider;
 import org.eclipse.emf.cdo.releng.projectconfig.ExclusionPredicate;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
@@ -26,7 +27,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -41,8 +41,8 @@ import java.util.Set;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ExclusionPredicateItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class ExclusionPredicateItemProvider extends PredicateItemProvider implements IEditingDomainItemProvider,
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   public static void filterCircularPreferenceProfiles(EObject root, Collection<?> objects)
   {
@@ -139,8 +139,8 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_ExclusionPredicate_excludedPreferenceProfiles_feature"), getString(
             "_UI_PropertyDescriptor_description", "_UI_ExclusionPredicate_excludedPreferenceProfiles_feature",
             "_UI_ExclusionPredicate_type"),
-            ProjectConfigPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES, true, false, true, null, null,
-            null)
+        ProjectConfigPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_PREFERENCE_PROFILES, true, false, true, null, null,
+        null)
     {
       @Override
       public Collection<?> getChoiceOfValues(Object object)

@@ -13,7 +13,6 @@
       ecorePackage="projectconfig.ecore#/">
     <genDataTypes ecoreDataType="projectconfig.ecore#//Pattern"/>
     <genClasses ecoreClass="projectconfig.ecore#//WorkspaceConfiguration">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/propertyFilters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/projects"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/defaultPreferenceNode"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//WorkspaceConfiguration/instancePreferenceNode"/>
@@ -21,9 +20,6 @@
       <genOperations ecoreOperation="projectconfig.ecore#//WorkspaceConfiguration/updatePreferenceProfileReferences"/>
       <genOperations ecoreOperation="projectconfig.ecore#//WorkspaceConfiguration/getProject">
         <genParameters ecoreParameter="projectconfig.ecore#//WorkspaceConfiguration/getProject/name"/>
-      </genOperations>
-      <genOperations ecoreOperation="projectconfig.ecore#//WorkspaceConfiguration/isOmitted">
-        <genParameters ecoreParameter="projectconfig.ecore#//WorkspaceConfiguration/isOmitted/property"/>
       </genOperations>
     </genClasses>
     <genClasses provider="Stateful" ecoreClass="projectconfig.ecore#//Project">
@@ -41,10 +37,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projectconfig.ecore#//PreferenceProfile/name"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceProfile/project"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceProfile/predicates"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference projectconfig.ecore#//PreferenceProfile/prerequisites"/>
-      <genOperations ecoreOperation="projectconfig.ecore#//PreferenceProfile/requires">
-        <genParameters ecoreParameter="projectconfig.ecore#//PreferenceProfile/requires/preferenceProfile"/>
-      </genOperations>
       <genOperations ecoreOperation="projectconfig.ecore#//PreferenceProfile/matches">
         <genParameters ecoreParameter="projectconfig.ecore#//PreferenceProfile/matches/project"/>
       </genOperations>
@@ -63,15 +55,6 @@
       </genOperations>
       <genOperations ecoreOperation="projectconfig.ecore#//PreferenceFilter/getProperty">
         <genParameters ecoreParameter="projectconfig.ecore#//PreferenceFilter/getProperty/name"/>
-      </genOperations>
-    </genClasses>
-    <genClasses ecoreClass="projectconfig.ecore#//PropertyFilter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute projectconfig.ecore#//PropertyFilter/omissions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference projectconfig.ecore#//PropertyFilter/predicates"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference projectconfig.ecore#//PropertyFilter/properties"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference projectconfig.ecore#//PropertyFilter/configuration"/>
-      <genOperations ecoreOperation="projectconfig.ecore#//PropertyFilter/matches">
-        <genParameters ecoreParameter="projectconfig.ecore#//PropertyFilter/matches/value"/>
       </genOperations>
     </genClasses>
     <genClasses ecoreClass="projectconfig.ecore#//InclusionPredicate">

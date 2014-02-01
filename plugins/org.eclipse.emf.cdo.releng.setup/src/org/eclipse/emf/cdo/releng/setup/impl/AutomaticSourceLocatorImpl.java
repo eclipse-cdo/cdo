@@ -11,16 +11,23 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectAnalyzer;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -32,6 +39,7 @@ import java.util.Map;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl#getRootFolder <em>Root Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl#isLocateNestedProjects <em>Locate Nested Projects</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl#getPredicates <em>Predicates</em>}</li>
  * </ul>
  * </p>
  *
@@ -78,6 +86,16 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
    * @ordered
    */
   protected boolean locateNestedProjects = LOCATE_NESTED_PROJECTS_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getPredicates() <em>Predicates</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPredicates()
+   * @generated
+   * @ordered
+   */
+  protected EList<Predicate> predicates;
 
   /**
    * <!-- begin-user-doc -->
@@ -157,6 +175,37 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Predicate> getPredicates()
+  {
+    if (predicates == null)
+    {
+      predicates = new EObjectContainmentEList.Resolving<Predicate>(Predicate.class, this,
+          SetupPackage.AUTOMATIC_SOURCE_LOCATOR__PREDICATES);
+    }
+    return predicates;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__PREDICATES:
+      return ((InternalEList<?>)getPredicates()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -166,6 +215,8 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
       return getRootFolder();
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
       return isLocateNestedProjects();
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__PREDICATES:
+      return getPredicates();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -175,6 +226,7 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -185,6 +237,10 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
       return;
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
       setLocateNestedProjects((Boolean)newValue);
+      return;
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__PREDICATES:
+      getPredicates().clear();
+      getPredicates().addAll((Collection<? extends Predicate>)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -206,6 +262,9 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
       setLocateNestedProjects(LOCATE_NESTED_PROJECTS_EDEFAULT);
       return;
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__PREDICATES:
+      getPredicates().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -224,6 +283,8 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
       return ROOT_FOLDER_EDEFAULT == null ? rootFolder != null : !ROOT_FOLDER_EDEFAULT.equals(rootFolder);
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
       return locateNestedProjects != LOCATE_NESTED_PROJECTS_EDEFAULT;
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__PREDICATES:
+      return predicates != null && !predicates.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -253,10 +314,11 @@ public class AutomaticSourceLocatorImpl extends SourceLocatorImpl implements Aut
   public <T> Map<T, File> accept(Visitor<T> visitor, IProgressMonitor monitor)
   {
     File rootFolder = new File(getRootFolder());
+    EList<Predicate> predicates = getPredicates();
     boolean locateNestedProjects = isLocateNestedProjects();
 
     BasicProjectAnalyzer<T> projectAnalyzer = new BasicProjectAnalyzer<T>();
-    return projectAnalyzer.analyze(rootFolder, locateNestedProjects, visitor, monitor);
+    return projectAnalyzer.analyze(rootFolder, predicates, locateNestedProjects, visitor, monitor);
   }
 
 } // AutomaticSourceLocatorImpl

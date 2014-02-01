@@ -14,10 +14,8 @@ import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IPath;
@@ -26,7 +24,6 @@ import org.eclipse.egit.core.project.GitProjectData;
 import org.eclipse.egit.core.project.RepositoryMapping;
 import org.eclipse.team.core.RepositoryProvider;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -42,7 +39,7 @@ import java.lang.reflect.Method;
  *
  * @generated
  */
-public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implements RepositoryPredicate
+public class RepositoryPredicateImpl extends PredicateImpl implements RepositoryPredicate
 {
   /**
    * The default value of the '{@link #getProject() <em>Project</em>}' attribute.
@@ -181,6 +178,7 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     String prototypeGitDirAbsolutePath = getGitDirAbsolutePath(getProject());
@@ -253,22 +251,6 @@ public class RepositoryPredicateImpl extends MinimalEObjectImpl.Container implem
       return PROJECT_EDEFAULT == null ? project != null : !PROJECT_EDEFAULT.equals(project);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case PredicatesPackage.REPOSITORY_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
   /**

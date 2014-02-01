@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.provider;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicateItemProvider;
 import org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
@@ -30,7 +31,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class InclusionPredicateItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
+public class InclusionPredicateItemProvider extends PredicateItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**

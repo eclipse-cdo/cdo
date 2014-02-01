@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -19,15 +20,20 @@ import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.XMLUtil;
+import org.eclipse.net4j.util.XMLUtil.ElementHandler;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.BinaryResourceImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -90,6 +96,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FilterInputStream;
 import java.io.IOException;
@@ -568,10 +575,11 @@ public class TargletContainer extends AbstractBundleContainer
       {
         for (AutomaticSourceLocator sourceLocator : targlet.getSourceLocators())
         {
-          boolean locateNestedProjects = sourceLocator.isLocateNestedProjects();
           File rootFolder = new File(sourceLocator.getRootFolder());
+          EList<Predicate> predicates = sourceLocator.getPredicates();
+          boolean locateNestedProjects = sourceLocator.isLocateNestedProjects();
 
-          Map<IInstallableUnit, File> ius = analyzer.analyze(rootFolder, locateNestedProjects, monitor);
+          Map<IInstallableUnit, File> ius = analyzer.analyze(rootFolder, predicates, locateNestedProjects, monitor);
           sources.putAll(ius);
         }
 
@@ -1072,6 +1080,10 @@ public class TargletContainer extends AbstractBundleContainer
 
     private static final String SOURCE_LOCATOR_LOCATE_NESTED_PROJECTS = "locateNestedProjects";
 
+    private static final String PREDICATE = "predicate";
+
+    private static final String PREDICATE_HEX = "hex";
+
     private static final String REPOSITORY_LIST = "repositoryList";
 
     private static final String REPOSITORY_LIST_NAME = "name";
@@ -1132,11 +1144,22 @@ public class TargletContainer extends AbstractBundleContainer
                     }
                     else if (SOURCE_LOCATOR.equals(tag))
                     {
-                      AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE.createAutomaticSourceLocator();
+                      final AutomaticSourceLocator sourceLocator = SetupFactory.eINSTANCE
+                          .createAutomaticSourceLocator();
                       sourceLocator.setRootFolder(childElement.getAttribute(SOURCE_LOCATOR_ROOT_FOLDER));
                       sourceLocator.setLocateNestedProjects(Boolean.valueOf(childElement
                           .getAttribute(SOURCE_LOCATOR_LOCATE_NESTED_PROJECTS)));
                       targlet.getSourceLocators().add(sourceLocator);
+
+                      XMLUtil.handleChildElements(childElement, new ElementHandler()
+                      {
+                        public void handleElement(Element predicateElement) throws Exception
+                        {
+                          String hex = predicateElement.getAttribute(PREDICATE_HEX);
+                          Predicate predicate = fromHex(hex);
+                          sourceLocator.getPredicates().add(predicate);
+                        }
+                      });
                     }
                     else if (REPOSITORY_LIST.equals(tag))
                     {
@@ -1206,6 +1229,15 @@ public class TargletContainer extends AbstractBundleContainer
           sourceLocatorElement.setAttribute(SOURCE_LOCATOR_LOCATE_NESTED_PROJECTS,
               Boolean.toString(sourceLocator.isLocateNestedProjects()));
           targletElement.appendChild(sourceLocatorElement);
+
+          for (Predicate predicate : sourceLocator.getPredicates())
+          {
+            String hex = toHex(predicate);
+
+            Element predicateElement = document.createElement(PREDICATE);
+            predicateElement.setAttribute(PREDICATE_HEX, hex);
+            sourceLocatorElement.appendChild(predicateElement);
+          }
         }
 
         for (RepositoryList repositoryList : targlet.getRepositoryLists())
@@ -1229,6 +1261,44 @@ public class TargletContainer extends AbstractBundleContainer
       transformer.transform(new DOMSource(document), result);
 
       return result.getWriter();
+    }
+
+    private static <T extends EObject> T fromHex(String hex)
+    {
+      try
+      {
+        byte[] bytes = HexUtil.hexToBytes(hex);
+
+        Resource resource = new BinaryResourceImpl();
+        resource.load(new ByteArrayInputStream(bytes), null);
+
+        @SuppressWarnings("unchecked")
+        T root = (T)resource.getContents().get(0);
+        resource.getContents().clear();
+        return root;
+      }
+      catch (IOException ex)
+      {
+        throw new IORuntimeException(ex);
+      }
+    }
+
+    private static String toHex(EObject object)
+    {
+      try
+      {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        Resource resource = new BinaryResourceImpl();
+        resource.getContents().add(EcoreUtil.copy(object));
+        resource.save(baos, null);
+
+        return HexUtil.bytesToHex(baos.toByteArray());
+      }
+      catch (IOException ex)
+      {
+        throw new IORuntimeException(ex);
+      }
     }
   }
 }

@@ -183,6 +183,7 @@
     <genClasses ecoreClass="setup.ecore#//AutomaticSourceLocator">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/rootFolder"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//AutomaticSourceLocator/locateNestedProjects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//AutomaticSourceLocator/predicates"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//ComponentExtension">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//ComponentExtension/dependencies"/>
@@ -195,9 +196,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletImportTask/targletURI"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//TargletTask"/>
-    <genClasses ecoreClass="setup.ecore#//TargletContainer">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TargletContainer/targlets"/>
-    </genClasses>
     <genClasses ecoreClass="setup.ecore#//Targlet"/>
     <genClasses image="false" ecoreClass="setup.ecore#//TargletData">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletData/name"/>
@@ -206,6 +204,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//TargletData/repositoryLists"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletData/activeRepositoryList"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//TargletData/activeP2Repositories"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletData/includeSources"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//TargletData/includeAllPlatforms"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//RepositoryList">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//RepositoryList/p2Repositories"/>

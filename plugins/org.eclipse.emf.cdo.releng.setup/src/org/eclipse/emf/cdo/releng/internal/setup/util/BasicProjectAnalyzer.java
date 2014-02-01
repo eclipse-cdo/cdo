@@ -11,8 +11,13 @@
 package org.eclipse.emf.cdo.releng.internal.setup.util;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
 
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 
@@ -25,27 +30,28 @@ import java.util.Map;
  */
 public class BasicProjectAnalyzer<T>
 {
-  public Map<T, File> analyze(File folder, boolean locateNestedProjects, Visitor<T> visitor, IProgressMonitor monitor)
+  public Map<T, File> analyze(File folder, EList<Predicate> predicates, boolean locateNestedProjects,
+      Visitor<T> visitor, IProgressMonitor monitor)
   {
     Map<T, File> results = new HashMap<T, File>();
-    analyze(folder, locateNestedProjects, results, visitor, monitor);
+    analyze(folder, predicates, locateNestedProjects, results, visitor, monitor);
     return results;
   }
 
-  private void analyze(File folder, boolean locateNestedProjects, Map<T, File> results, Visitor<T> visitor,
-      IProgressMonitor monitor)
+  private void analyze(File folder, EList<Predicate> predicates, boolean locateNestedProjects, Map<T, File> results,
+      Visitor<T> visitor, IProgressMonitor monitor)
   {
     if (monitor != null && monitor.isCanceled())
     {
       throw new OperationCanceledException();
     }
 
-    File projectFile = new File(folder, ".project");
-    if (projectFile.exists())
+    IProject project = PredicatesFactory.eINSTANCE.loadProject(folder);
+    if (matches(project, predicates))
     {
       try
       {
-        T result = analyzeProject(projectFile, folder, visitor, monitor);
+        T result = analyzeProject(folder, visitor, monitor);
         if (result != null)
         {
           File cextFile = new File(folder, "component.ext");
@@ -86,14 +92,13 @@ public class BasicProjectAnalyzer<T>
         File file = listFiles[i];
         if (file.isDirectory())
         {
-          analyze(file, locateNestedProjects, results, visitor, monitor);
+          analyze(file, predicates, locateNestedProjects, results, visitor, monitor);
         }
       }
     }
   }
 
-  private T analyzeProject(File projectFile, File folder, Visitor<T> visitor, IProgressMonitor monitor)
-      throws Exception
+  private T analyzeProject(File folder, Visitor<T> visitor, IProgressMonitor monitor) throws Exception
   {
     File featureFile = new File(folder, "feature.xml");
     if (featureFile.exists())
@@ -120,6 +125,29 @@ public class BasicProjectAnalyzer<T>
     }
 
     return null;
+  }
+
+  private boolean matches(IProject project, EList<Predicate> predicates)
+  {
+    if (project == null)
+    {
+      return false;
+    }
+
+    if (predicates == null || predicates.isEmpty())
+    {
+      return true;
+    }
+
+    for (Predicate predicate : predicates)
+    {
+      if (predicate.matches(project))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   protected T filter(T result)

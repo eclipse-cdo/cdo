@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.IUGenerator.FeatureIUGenerator;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -104,7 +105,11 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     roots.add(component("org.eclipse.sdk.feature.group"));
 
     // Sources
-    targlet.getSourceLocators().add(sourceLocator("C:/cdo", false));
+    AutomaticSourceLocator sourceLocator = sourceLocator("C:/cdo", false);
+    sourceLocator.getPredicates().add(
+        PredicatesFactory.eINSTANCE.createNotPredicate(PredicatesFactory.eINSTANCE
+            .createNamePredicate("org\\.eclipse\\.net4j.*")));
+    targlet.getSourceLocators().add(sourceLocator);
 
     // Repos
     RepositoryList repositoryList = SetupFactory.eINSTANCE.createRepositoryList();
@@ -118,6 +123,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     repos.add(repository("http://download.eclipse.org/egit/updates-stable-nightly"));
     repos.add(repository("http://download.eclipse.org/mylyn/snapshots/weekly"));
     repos.add(repository("http://download.eclipse.org/technology/nebula/snapshot"));
+    repos.add(repository("https://hudson.eclipse.org/hudson/job/emf-cdo-integration/lastSuccessfulBuild/artifact"));
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());
 

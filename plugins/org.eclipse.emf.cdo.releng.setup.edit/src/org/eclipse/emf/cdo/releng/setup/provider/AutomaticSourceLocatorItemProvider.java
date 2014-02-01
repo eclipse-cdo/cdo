@@ -10,11 +10,14 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsFactory;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -103,6 +106,39 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
   }
 
   /**
+   * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
+   * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
+   * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
+  {
+    if (childrenFeatures == null)
+    {
+      super.getChildrenFeatures(object);
+      childrenFeatures.add(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES);
+    }
+    return childrenFeatures;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EStructuralFeature getChildFeature(Object object, Object child)
+  {
+    // Check the type of the specified child object and return the proper feature to use for
+    // adding (see {@link AddCommand}) it as a child.
+
+    return super.getChildFeature(object, child);
+  }
+
+  /**
    * This returns AutomaticSourceLocator.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -156,6 +192,9 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
     case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
+    case SetupPackage.AUTOMATIC_SOURCE_LOCATOR__PREDICATES:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+      return;
     }
     super.notifyChanged(notification);
   }
@@ -171,6 +210,36 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNamePredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createRepositoryPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createAndPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createOrPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNotPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createNaturePredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createBuilderPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createFilePredicate()));
   }
 
 }

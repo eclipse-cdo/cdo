@@ -106,7 +106,7 @@ public class WorkingSetGroupImpl extends MinimalEObjectImpl.Container implements
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -190,7 +190,7 @@ public class WorkingSetGroupImpl extends MinimalEObjectImpl.Container implements
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

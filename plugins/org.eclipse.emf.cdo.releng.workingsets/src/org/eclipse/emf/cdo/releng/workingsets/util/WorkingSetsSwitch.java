@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.releng.workingsets.util;
 
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
-import org.eclipse.emf.cdo.releng.workingsets.*;
+import org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate;
+import org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetGroup;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
@@ -87,7 +89,9 @@ public class WorkingSetsSwitch<T> extends Switch<T>
       WorkingSet workingSet = (WorkingSet)theEObject;
       T result = caseWorkingSet(workingSet);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case WorkingSetsPackage.WORKING_SET_GROUP:
@@ -95,7 +99,9 @@ public class WorkingSetsSwitch<T> extends Switch<T>
       WorkingSetGroup workingSetGroup = (WorkingSetGroup)theEObject;
       T result = caseWorkingSetGroup(workingSetGroup);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case WorkingSetsPackage.EXCLUSION_PREDICATE:
@@ -103,9 +109,13 @@ public class WorkingSetsSwitch<T> extends Switch<T>
       ExclusionPredicate exclusionPredicate = (ExclusionPredicate)theEObject;
       T result = caseExclusionPredicate(exclusionPredicate);
       if (result == null)
+      {
         result = casePredicate(exclusionPredicate);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case WorkingSetsPackage.INCLUSION_PREDICATE:
@@ -113,9 +123,13 @@ public class WorkingSetsSwitch<T> extends Switch<T>
       InclusionPredicate inclusionPredicate = (InclusionPredicate)theEObject;
       T result = caseInclusionPredicate(inclusionPredicate);
       if (result == null)
+      {
         result = casePredicate(inclusionPredicate);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -174,9 +188,9 @@ public class WorkingSetsSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Inclusion Predicate</em>'.
    * <!-- begin-user-doc -->
-  	 * This implementation returns null;
-  	 * returning a non-null result will terminate the switch.
-  	 * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Inclusion Predicate</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
@@ -206,9 +220,9 @@ public class WorkingSetsSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
    * <!-- begin-user-doc -->
-       * This implementation returns null;
-       * returning a non-null result will terminate the switch, but this is the last case anyway.
-       * <!-- end-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch, but this is the last case anyway.
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)

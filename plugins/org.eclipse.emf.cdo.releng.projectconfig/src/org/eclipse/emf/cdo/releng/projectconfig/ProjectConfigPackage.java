@@ -444,6 +444,15 @@ public interface ProjectConfigPackage extends EPackage
   int INCLUSION_PREDICATE___MATCHES__IPROJECT = PredicatesPackage.PREDICATE___MATCHES__IPROJECT;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INCLUSION_PREDICATE___MATCHES__FILE = PredicatesPackage.PREDICATE___MATCHES__FILE;
+
+  /**
    * The number of operations of the '<em>Inclusion Predicate</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -488,6 +497,15 @@ public interface ProjectConfigPackage extends EPackage
    * @ordered
    */
   int EXCLUSION_PREDICATE___MATCHES__IPROJECT = PredicatesPackage.PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXCLUSION_PREDICATE___MATCHES__FILE = PredicatesPackage.PREDICATE___MATCHES__FILE;
 
   /**
    * The number of operations of the '<em>Exclusion Predicate</em>' class.

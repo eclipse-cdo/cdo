@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.workingsets;
 
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -90,7 +91,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Predicates</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -108,7 +109,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Working Set</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -126,7 +127,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The number of operations of the '<em>Working Set</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -172,7 +173,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The number of operations of the '<em>Working Set Group</em>' class.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -191,7 +192,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Excluded Working Sets</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -200,7 +201,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Exclusion Predicate</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -216,9 +217,18 @@ public interface WorkingSetsPackage extends EPackage
   int EXCLUSION_PREDICATE___MATCHES__IPROJECT = PredicatesPackage.PREDICATE___MATCHES__IPROJECT;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXCLUSION_PREDICATE___MATCHES__FILE = PredicatesPackage.PREDICATE___MATCHES__FILE;
+
+  /**
    * The number of operations of the '<em>Exclusion Predicate</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -227,7 +237,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.workingsets.impl.InclusionPredicateImpl <em>Inclusion Predicate</em>}' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.releng.workingsets.impl.InclusionPredicateImpl
    * @see org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetsPackageImpl#getInclusionPredicate()
    * @generated
@@ -237,7 +247,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Included Working Sets</b></em>' reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -246,7 +256,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Inclusion Predicate</em>' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -262,9 +272,18 @@ public interface WorkingSetsPackage extends EPackage
   int INCLUSION_PREDICATE___MATCHES__IPROJECT = PredicatesPackage.PREDICATE___MATCHES__IPROJECT;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INCLUSION_PREDICATE___MATCHES__FILE = PredicatesPackage.PREDICATE___MATCHES__FILE;
+
+  /**
    * The number of operations of the '<em>Inclusion Predicate</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -273,7 +292,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * The meta object id for the '<em>Project</em>' data type.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.core.resources.IProject
    * @see org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetsPackageImpl#getProject()
    * @generated
@@ -325,7 +344,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.workingsets.WorkingSet#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.releng.workingsets.WorkingSet#getName()
    * @see #getWorkingSet()
@@ -367,7 +386,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate <em>Exclusion Predicate</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Exclusion Predicate</em>'.
    * @see org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate
    * @generated
@@ -377,7 +396,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate#getExcludedWorkingSets <em>Excluded Working Sets</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the reference list '<em>Excluded Working Sets</em>'.
    * @see org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate#getExcludedWorkingSets()
    * @see #getExclusionPredicate()
@@ -388,7 +407,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate <em>Inclusion Predicate</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Inclusion Predicate</em>'.
    * @see org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate
    * @generated
@@ -398,7 +417,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate#getIncludedWorkingSets <em>Included Working Sets</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the reference list '<em>Included Working Sets</em>'.
    * @see org.eclipse.emf.cdo.releng.workingsets.InclusionPredicate#getIncludedWorkingSets()
    * @see #getInclusionPredicate()
@@ -409,7 +428,7 @@ public interface WorkingSetsPackage extends EPackage
   /**
    * Returns the meta object for data type '{@link org.eclipse.core.resources.IProject <em>Project</em>}'.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for data type '<em>Project</em>'.
    * @see org.eclipse.core.resources.IProject
    * @model instanceClass="org.eclipse.core.resources.IProject" serializeable="false"
@@ -478,7 +497,7 @@ public interface WorkingSetsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EAttribute WORKING_SET__NAME = eINSTANCE.getWorkingSet_Name();
@@ -512,7 +531,7 @@ public interface WorkingSetsPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.workingsets.impl.ExclusionPredicateImpl <em>Exclusion Predicate</em>}' class.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.workingsets.impl.ExclusionPredicateImpl
      * @see org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetsPackageImpl#getExclusionPredicate()
      * @generated
@@ -522,7 +541,7 @@ public interface WorkingSetsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Excluded Working Sets</b></em>' reference list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS = eINSTANCE.getExclusionPredicate_ExcludedWorkingSets();
@@ -530,7 +549,7 @@ public interface WorkingSetsPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.workingsets.impl.InclusionPredicateImpl <em>Inclusion Predicate</em>}' class.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.releng.workingsets.impl.InclusionPredicateImpl
      * @see org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetsPackageImpl#getInclusionPredicate()
      * @generated
@@ -540,7 +559,7 @@ public interface WorkingSetsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Included Working Sets</b></em>' reference list feature.
      * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @generated
      */
     EReference INCLUSION_PREDICATE__INCLUDED_WORKING_SETS = eINSTANCE.getInclusionPredicate_IncludedWorkingSets();
@@ -548,7 +567,7 @@ public interface WorkingSetsPackage extends EPackage
     /**
      * The meta object literal for the '<em>Project</em>' data type.
      * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+     * <!-- end-user-doc -->
      * @see org.eclipse.core.resources.IProject
      * @see org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetsPackageImpl#getProject()
      * @generated

@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
 import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
 import org.eclipse.emf.cdo.releng.setup.ComponentType;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil.ElementHandler;
 
+import org.eclipse.net4j.util.XMLUtil;
+import org.eclipse.net4j.util.XMLUtil.ElementHandler;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;

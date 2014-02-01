@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.projectconfig.provider;
 
+import org.eclipse.emf.cdo.releng.predicates.provider.PredicateItemProvider;
 import org.eclipse.emf.cdo.releng.projectconfig.InclusionPredicate;
 import org.eclipse.emf.cdo.releng.projectconfig.PreferenceProfile;
 import org.eclipse.emf.cdo.releng.projectconfig.ProjectConfigPackage;
@@ -26,7 +27,6 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -38,8 +38,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class InclusionPredicateItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class InclusionPredicateItemProvider extends PredicateItemProvider implements IEditingDomainItemProvider,
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -83,8 +83,8 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_InclusionPredicate_includedPreferenceProfiles_feature"), getString(
             "_UI_PropertyDescriptor_description", "_UI_InclusionPredicate_includedPreferenceProfiles_feature",
             "_UI_InclusionPredicate_type"),
-            ProjectConfigPackage.Literals.INCLUSION_PREDICATE__INCLUDED_PREFERENCE_PROFILES, true, false, true, null, null,
-            null)
+        ProjectConfigPackage.Literals.INCLUSION_PREDICATE__INCLUDED_PREFERENCE_PROFILES, true, false, true, null, null,
+        null)
     {
       @Override
       public Collection<?> getChoiceOfValues(Object object)

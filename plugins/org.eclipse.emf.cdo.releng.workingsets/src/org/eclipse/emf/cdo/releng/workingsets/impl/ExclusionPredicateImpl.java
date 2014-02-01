@@ -10,18 +10,17 @@
  */
 package org.eclipse.emf.cdo.releng.workingsets.impl;
 
+import org.eclipse.emf.cdo.releng.predicates.impl.PredicateImpl;
 import org.eclipse.emf.cdo.releng.workingsets.ExclusionPredicate;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSet;
 import org.eclipse.emf.cdo.releng.workingsets.WorkingSetsPackage;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 import org.eclipse.core.resources.IProject;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -37,7 +36,7 @@ import java.util.Collection;
  *
  * @generated
  */
-public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container implements ExclusionPredicate
+public class ExclusionPredicateImpl extends PredicateImpl implements ExclusionPredicate
 {
   /**
    * The cached value of the '{@link #getExcludedWorkingSets() <em>Excluded Working Sets</em>}' reference list.
@@ -90,6 +89,7 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     for (WorkingSet workingSet : getExcludedWorkingSets())
@@ -105,7 +105,7 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -169,22 +169,6 @@ public class ExclusionPredicateImpl extends MinimalEObjectImpl.Container impleme
       return excludedWorkingSets != null && !excludedWorkingSets.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case WorkingSetsPackage.EXCLUSION_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
 } // ExclusionPredicateImpl

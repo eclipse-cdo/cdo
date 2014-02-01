@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.setup.util;
+package org.eclipse.net4j.util;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,6 +25,7 @@ import java.io.IOException;
 
 /**
  * @author Eike Stepper
+ * @since 3.4
  */
 public final class XMLUtil
 {

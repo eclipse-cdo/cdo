@@ -25,10 +25,10 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.XMLUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.NotificationChain;

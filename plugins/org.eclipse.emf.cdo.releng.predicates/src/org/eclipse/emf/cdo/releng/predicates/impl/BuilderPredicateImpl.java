@@ -14,16 +14,12 @@ import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,7 +34,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @generated
  */
-public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implements BuilderPredicate
+public class BuilderPredicateImpl extends PredicateImpl implements BuilderPredicate
 {
   /**
    * The default value of the '{@link #getBuilder() <em>Builder</em>}' attribute.
@@ -112,6 +108,7 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     String builder = getBuilder();
@@ -200,22 +197,6 @@ public class BuilderPredicateImpl extends MinimalEObjectImpl.Container implement
       return BUILDER_EDEFAULT == null ? builder != null : !BUILDER_EDEFAULT.equals(builder);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case PredicatesPackage.BUILDER_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
   /**

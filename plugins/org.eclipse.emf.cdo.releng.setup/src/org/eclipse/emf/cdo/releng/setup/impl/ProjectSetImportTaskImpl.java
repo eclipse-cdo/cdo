@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 
+import org.eclipse.net4j.util.XMLUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;

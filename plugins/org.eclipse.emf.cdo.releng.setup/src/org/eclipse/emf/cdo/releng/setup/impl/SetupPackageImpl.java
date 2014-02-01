@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.setup.ApiBaselineTask;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask;
@@ -1882,6 +1883,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getAutomaticSourceLocator_Predicates()
+  {
+    return (EReference)automaticSourceLocatorEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getTargletTask()
   {
     return targletTaskEClass;
@@ -2817,6 +2828,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     automaticSourceLocatorEClass = createEClass(AUTOMATIC_SOURCE_LOCATOR);
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__ROOT_FOLDER);
     createEAttribute(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS);
+    createEReference(automaticSourceLocatorEClass, AUTOMATIC_SOURCE_LOCATOR__PREDICATES);
 
     componentExtensionEClass = createEClass(COMPONENT_EXTENSION);
     createEReference(componentExtensionEClass, COMPONENT_EXTENSION__DEPENDENCIES);
@@ -2993,6 +3005,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
+    PredicatesPackage thePredicatesPackage = (PredicatesPackage)EPackage.Registry.INSTANCE
+        .getEPackage(PredicatesPackage.eNS_URI);
     WorkingSetsPackage theWorkingSetsPackage = (WorkingSetsPackage)EPackage.Registry.INSTANCE
         .getEPackage(WorkingSetsPackage.eNS_URI);
 
@@ -3299,6 +3313,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getAutomaticSourceLocator_LocateNestedProjects(), ecorePackage.getEBoolean(),
         "locateNestedProjects", null, 0, 1, AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAutomaticSourceLocator_Predicates(), thePredicatesPackage.getPredicate(), null, "predicates",
+        null, 0, -1, AutomaticSourceLocator.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(componentExtensionEClass, ComponentExtension.class, "ComponentExtension", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

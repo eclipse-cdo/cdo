@@ -12,6 +12,10 @@ package org.eclipse.emf.cdo.releng.predicates;
 
 import org.eclipse.emf.ecore.EFactory;
 
+import org.eclipse.core.resources.IProject;
+
+import java.io.File;
+
 /**
  * <!-- begin-user-doc -->
  * The <b>Factory</b> for the model.
@@ -39,6 +43,8 @@ public interface PredicatesFactory extends EFactory
    */
   NamePredicate createNamePredicate();
 
+  NamePredicate createNamePredicate(String pattern);
+
   /**
    * Returns a new object of class '<em>Repository Predicate</em>'.
    * <!-- begin-user-doc -->
@@ -47,6 +53,8 @@ public interface PredicatesFactory extends EFactory
    * @generated
    */
   RepositoryPredicate createRepositoryPredicate();
+
+  RepositoryPredicate createRepositoryPredicate(IProject project);
 
   /**
    * Returns a new object of class '<em>And Predicate</em>'.
@@ -57,6 +65,8 @@ public interface PredicatesFactory extends EFactory
    */
   AndPredicate createAndPredicate();
 
+  AndPredicate createAndPredicate(Predicate... operands);
+
   /**
    * Returns a new object of class '<em>Or Predicate</em>'.
    * <!-- begin-user-doc -->
@@ -65,6 +75,8 @@ public interface PredicatesFactory extends EFactory
    * @generated
    */
   OrPredicate createOrPredicate();
+
+  OrPredicate createOrPredicate(Predicate... operands);
 
   /**
    * Returns a new object of class '<em>Not Predicate</em>'.
@@ -75,6 +87,8 @@ public interface PredicatesFactory extends EFactory
    */
   NotPredicate createNotPredicate();
 
+  NotPredicate createNotPredicate(Predicate operand);
+
   /**
    * Returns a new object of class '<em>Nature Predicate</em>'.
    * <!-- begin-user-doc -->
@@ -83,6 +97,8 @@ public interface PredicatesFactory extends EFactory
    * @generated
    */
   NaturePredicate createNaturePredicate();
+
+  NaturePredicate createNaturePredicate(String nature);
 
   /**
    * Returns a new object of class '<em>Builder Predicate</em>'.
@@ -93,6 +109,8 @@ public interface PredicatesFactory extends EFactory
    */
   BuilderPredicate createBuilderPredicate();
 
+  BuilderPredicate createBuilderPredicate(String builder);
+
   /**
    * Returns a new object of class '<em>File Predicate</em>'.
    * <!-- begin-user-doc -->
@@ -102,6 +120,10 @@ public interface PredicatesFactory extends EFactory
    */
   FilePredicate createFilePredicate();
 
+  FilePredicate createFilePredicate(String filePattern);
+
+  FilePredicate createFilePredicate(String filePattern, String contentPattern);
+
   /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
@@ -110,5 +132,7 @@ public interface PredicatesFactory extends EFactory
    * @generated
    */
   PredicatesPackage getPredicatesPackage();
+
+  IProject loadProject(File folder);
 
 } // PredicatesFactory

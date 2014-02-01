@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainerDescriptor.UpdateProblem;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.ResourceManager;
 import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.ecore.EClass;
@@ -149,10 +150,10 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
 
   static
   {
-    final Class<?>[] adapters = { ITreeContentProvider.class, ILabelProvider.class };
-
     IAdapterFactory factory = new IAdapterFactory()
     {
+      private final Class<?>[] adapters = { ITreeContentProvider.class, ILabelProvider.class };
+
       @SuppressWarnings("rawtypes")
       public Class[] getAdapterList()
       {
@@ -180,6 +181,15 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
     registerAdditionalAdpter(factory, SetupPackage.Literals.REPOSITORY_LIST);
     registerAdditionalAdpter(factory, SetupPackage.Literals.P2_REPOSITORY);
     registerAdditionalAdpter(factory, SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR);
+
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.AND_PREDICATE);
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.BUILDER_PREDICATE);
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.FILE_PREDICATE);
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.NAME_PREDICATE);
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.NATURE_PREDICATE);
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.NOT_PREDICATE);
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.OR_PREDICATE);
+    registerAdditionalAdpter(factory, PredicatesPackage.Literals.REPOSITORY_PREDICATE);
   }
 
   /**

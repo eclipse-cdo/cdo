@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
+import org.eclipse.emf.cdo.releng.internal.predicates.ExternalProject;
 import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
 import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
 import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
 import org.eclipse.emf.cdo.releng.predicates.OrPredicate;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesFactory;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
@@ -31,6 +33,9 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+
+import java.io.File;
+import java.util.Arrays;
 
 /**
  * <!-- begin-user-doc -->
@@ -77,6 +82,11 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     super();
   }
 
+  public IProject loadProject(File folder)
+  {
+    return ExternalProject.load(folder);
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -120,6 +130,8 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     {
     case PredicatesPackage.PROJECT:
       return createProjectFromString(eDataType, initialValue);
+    case PredicatesPackage.FILE:
+      return createFileFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -137,6 +149,8 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     {
     case PredicatesPackage.PROJECT:
       return convertProjectToString(eDataType, instanceValue);
+    case PredicatesPackage.FILE:
+      return convertFileToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -153,6 +167,13 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     return namePredicate;
   }
 
+  public NamePredicate createNamePredicate(String pattern)
+  {
+    NamePredicate result = createNamePredicate();
+    result.setPattern(pattern);
+    return result;
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -162,6 +183,13 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     RepositoryPredicateImpl repositoryPredicate = new RepositoryPredicateImpl();
     return repositoryPredicate;
+  }
+
+  public RepositoryPredicate createRepositoryPredicate(IProject project)
+  {
+    RepositoryPredicate result = createRepositoryPredicate();
+    result.setProject(project);
+    return result;
   }
 
   /**
@@ -175,6 +203,13 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     return andPredicate;
   }
 
+  public AndPredicate createAndPredicate(Predicate... operands)
+  {
+    AndPredicate result = createAndPredicate();
+    result.getOperands().addAll(Arrays.asList(operands));
+    return result;
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -184,6 +219,13 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     OrPredicateImpl orPredicate = new OrPredicateImpl();
     return orPredicate;
+  }
+
+  public OrPredicate createOrPredicate(Predicate... operands)
+  {
+    OrPredicate result = createOrPredicate();
+    result.getOperands().addAll(Arrays.asList(operands));
+    return result;
   }
 
   /**
@@ -197,6 +239,13 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     return notPredicate;
   }
 
+  public NotPredicate createNotPredicate(Predicate operand)
+  {
+    NotPredicate result = createNotPredicate();
+    result.setOperand(operand);
+    return result;
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -206,6 +255,13 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     NaturePredicateImpl naturePredicate = new NaturePredicateImpl();
     return naturePredicate;
+  }
+
+  public NaturePredicate createNaturePredicate(String nature)
+  {
+    NaturePredicate result = createNaturePredicate();
+    result.setNature(nature);
+    return result;
   }
 
   /**
@@ -219,6 +275,13 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     return builderPredicate;
   }
 
+  public BuilderPredicate createBuilderPredicate(String builder)
+  {
+    BuilderPredicate result = createBuilderPredicate();
+    result.setBuilder(builder);
+    return result;
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -228,6 +291,20 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     FilePredicateImpl filePredicate = new FilePredicateImpl();
     return filePredicate;
+  }
+
+  public FilePredicate createFilePredicate(String filePattern)
+  {
+    FilePredicate result = createFilePredicate();
+    result.setFilePattern(filePattern);
+    return result;
+  }
+
+  public FilePredicate createFilePredicate(String filePattern, String contentPattern)
+  {
+    FilePredicate result = createFilePredicate(filePattern);
+    result.setContentPattern(contentPattern);
+    return result;
   }
 
   /**
@@ -241,6 +318,7 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     {
       return null;
     }
+
     return WORKSPACE_ROOT.getProject(initialValue);
   }
 
@@ -255,8 +333,29 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     {
       return null;
     }
+
     IProject project = (IProject)instanceValue;
     return project.getName();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public File createFileFromString(EDataType eDataType, String initialValue)
+  {
+    return new File(initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String convertFileToString(EDataType eDataType, Object instanceValue)
+  {
+    return ((File)instanceValue).getAbsolutePath();
   }
 
   /**

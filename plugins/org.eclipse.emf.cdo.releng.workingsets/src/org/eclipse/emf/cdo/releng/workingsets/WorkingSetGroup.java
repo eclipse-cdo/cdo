@@ -49,7 +49,7 @@ public interface WorkingSetGroup extends EObject
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @model
    * @generated
    */

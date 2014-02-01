@@ -69,7 +69,7 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   /**
    * The cached value of the '{@link #getPredicates() <em>Predicates</em>}' containment reference list.
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getPredicates()
    * @generated
    * @ordered
@@ -89,7 +89,7 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
   /**
    * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getId()
    * @generated
    * @ordered
@@ -98,7 +98,7 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected WorkingSetImpl()
@@ -144,7 +144,7 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setId(String newId)
@@ -152,7 +152,9 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
     String oldId = id;
     id = newId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, WorkingSetsPackage.WORKING_SET__ID, oldId, id));
+    }
   }
 
   /**
@@ -175,7 +177,7 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getName()
@@ -193,7 +195,9 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, WorkingSetsPackage.WORKING_SET__NAME, oldName, name));
+    }
   }
 
   /**
@@ -318,14 +322,16 @@ public class WorkingSetImpl extends MinimalEObjectImpl.Container implements Work
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

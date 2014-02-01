@@ -18,13 +18,11 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.resources.IProject;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 /**
@@ -40,7 +38,7 @@ import java.util.Collection;
  *
  * @generated
  */
-public class AndPredicateImpl extends MinimalEObjectImpl.Container implements AndPredicate
+public class AndPredicateImpl extends PredicateImpl implements AndPredicate
 {
   /**
    * The cached value of the '{@link #getOperands() <em>Operands</em>}' containment reference list.
@@ -93,6 +91,7 @@ public class AndPredicateImpl extends MinimalEObjectImpl.Container implements An
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     for (Predicate operand : getOperands())
@@ -187,22 +186,6 @@ public class AndPredicateImpl extends MinimalEObjectImpl.Container implements An
       return operands != null && !operands.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case PredicatesPackage.AND_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
 } // AndPredicateImpl

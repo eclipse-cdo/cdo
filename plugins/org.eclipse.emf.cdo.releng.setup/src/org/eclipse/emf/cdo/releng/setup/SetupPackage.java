@@ -1790,13 +1790,22 @@ public interface SetupPackage extends EPackage
   int AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS = SOURCE_LOCATOR_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Predicates</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTOMATIC_SOURCE_LOCATOR__PREDICATES = SOURCE_LOCATOR_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Automatic Source Locator</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTOMATIC_SOURCE_LOCATOR_FEATURE_COUNT = SOURCE_LOCATOR_FEATURE_COUNT + 2;
+  int AUTOMATIC_SOURCE_LOCATOR_FEATURE_COUNT = SOURCE_LOCATOR_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletTaskImpl <em>Targlet Task</em>}' class.
@@ -5453,6 +5462,17 @@ public interface SetupPackage extends EPackage
   EAttribute getAutomaticSourceLocator_LocateNestedProjects();
 
   /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#getPredicates <em>Predicates</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Predicates</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#getPredicates()
+   * @see #getAutomaticSourceLocator()
+   * @generated
+   */
+  EReference getAutomaticSourceLocator_Predicates();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.TargletTask <em>Targlet Task</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -7381,6 +7401,14 @@ public interface SetupPackage extends EPackage
      */
     EAttribute AUTOMATIC_SOURCE_LOCATOR__LOCATE_NESTED_PROJECTS = eINSTANCE
         .getAutomaticSourceLocator_LocateNestedProjects();
+
+    /**
+     * The meta object literal for the '<em><b>Predicates</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AUTOMATIC_SOURCE_LOCATOR__PREDICATES = eINSTANCE.getAutomaticSourceLocator_Predicates();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletTaskImpl <em>Targlet Task</em>}' class.

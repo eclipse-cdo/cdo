@@ -59,14 +59,14 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass inclusionPredicateEClass = null;
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EDataType projectEDataType = null;
@@ -100,7 +100,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link WorkingSetsPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -113,7 +113,9 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
   public static WorkingSetsPackage init()
   {
     if (isInited)
+    {
       return (WorkingSetsPackage)EPackage.Registry.INSTANCE.getEPackage(WorkingSetsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     WorkingSetsPackageImpl theWorkingSetsPackage = (WorkingSetsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof WorkingSetsPackageImpl ? EPackage.Registry.INSTANCE
@@ -180,7 +182,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EAttribute getWorkingSet_Name()
@@ -220,7 +222,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getExclusionPredicate()
@@ -230,7 +232,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getExclusionPredicate_ExcludedWorkingSets()
@@ -240,7 +242,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getInclusionPredicate()
@@ -250,7 +252,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getInclusionPredicate_IncludedWorkingSets()
@@ -260,7 +262,7 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EDataType getProject()
@@ -295,7 +297,9 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -336,7 +340,9 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -369,30 +375,30 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
 
     EOperation op = initEOperation(getWorkingSet__Matches__IProject(), ecorePackage.getEBoolean(), "matches", 0, 1,
         IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getProject(), "project", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, getProject(), "project", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(workingSetGroupEClass, WorkingSetGroup.class, "WorkingSetGroup", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getWorkingSetGroup_WorkingSets(), this.getWorkingSet(), null, "workingSets", null, 0, -1,
+    initEReference(getWorkingSetGroup_WorkingSets(), getWorkingSet(), null, "workingSets", null, 0, -1,
         WorkingSetGroup.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    getWorkingSetGroup_WorkingSets().getEKeys().add(this.getWorkingSet_Name());
+    getWorkingSetGroup_WorkingSets().getEKeys().add(getWorkingSet_Name());
 
-    op = initEOperation(getWorkingSetGroup__GetWorkingSet__String(), this.getWorkingSet(), "getWorkingSet", 0, 1,
-        IS_UNIQUE, IS_ORDERED);
+    op = initEOperation(getWorkingSetGroup__GetWorkingSet__String(), getWorkingSet(), "getWorkingSet", 0, 1, IS_UNIQUE,
+        IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(exclusionPredicateEClass, ExclusionPredicate.class, "ExclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExclusionPredicate_ExcludedWorkingSets(), this.getWorkingSet(), null, "excludedWorkingSets",
-        null, 0, -1, ExclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExclusionPredicate_ExcludedWorkingSets(), getWorkingSet(), null, "excludedWorkingSets", null, 0,
+        -1, ExclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(inclusionPredicateEClass, InclusionPredicate.class, "InclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getInclusionPredicate_IncludedWorkingSets(), this.getWorkingSet(), null, "includedWorkingSets",
-        null, 0, -1, InclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
-        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInclusionPredicate_IncludedWorkingSets(), getWorkingSet(), null, "includedWorkingSets", null, 0,
+        -1, InclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(projectEDataType, IProject.class, "Project", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

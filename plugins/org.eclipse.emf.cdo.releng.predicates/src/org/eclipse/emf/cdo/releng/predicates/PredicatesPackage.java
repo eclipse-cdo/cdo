@@ -68,10 +68,10 @@ public interface PredicatesPackage extends EPackage
   PredicatesPackage eINSTANCE = org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.predicates.Predicate <em>Predicate</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.PredicateImpl <em>Predicate</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.predicates.Predicate
+   * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicateImpl
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getPredicate()
    * @generated
    */
@@ -96,13 +96,22 @@ public interface PredicatesPackage extends EPackage
   int PREDICATE___MATCHES__IPROJECT = 0;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PREDICATE___MATCHES__FILE = 1;
+
+  /**
    * The number of operations of the '<em>Predicate</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREDICATE_OPERATION_COUNT = 1;
+  int PREDICATE_OPERATION_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.NamePredicateImpl <em>Name Predicate</em>}' class.
@@ -140,6 +149,15 @@ public interface PredicatesPackage extends EPackage
    * @ordered
    */
   int NAME_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAME_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
 
   /**
    * The number of operations of the '<em>Name Predicate</em>' class.
@@ -188,6 +206,15 @@ public interface PredicatesPackage extends EPackage
   int REPOSITORY_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REPOSITORY_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
+
+  /**
    * The number of operations of the '<em>Repository Predicate</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -232,6 +259,15 @@ public interface PredicatesPackage extends EPackage
    * @ordered
    */
   int AND_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
 
   /**
    * The number of operations of the '<em>And Predicate</em>' class.
@@ -280,6 +316,15 @@ public interface PredicatesPackage extends EPackage
   int OR_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
+
+  /**
    * The number of operations of the '<em>Or Predicate</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -324,6 +369,15 @@ public interface PredicatesPackage extends EPackage
    * @ordered
    */
   int NOT_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NOT_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
 
   /**
    * The number of operations of the '<em>Not Predicate</em>' class.
@@ -372,6 +426,15 @@ public interface PredicatesPackage extends EPackage
   int NATURE_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NATURE_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
+
+  /**
    * The number of operations of the '<em>Nature Predicate</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -416,6 +479,15 @@ public interface PredicatesPackage extends EPackage
    * @ordered
    */
   int BUILDER_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BUILDER_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
 
   /**
    * The number of operations of the '<em>Builder Predicate</em>' class.
@@ -473,6 +545,15 @@ public interface PredicatesPackage extends EPackage
   int FILE_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
 
   /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
+
+  /**
    * The number of operations of the '<em>File Predicate</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -490,6 +571,16 @@ public interface PredicatesPackage extends EPackage
    * @generated
    */
   int PROJECT = 9;
+
+  /**
+   * The meta object id for the '<em>File</em>' data type.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see java.io.File
+   * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getFile()
+   * @generated
+   */
+  int FILE = 10;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.predicates.Predicate <em>Predicate</em>}'.
@@ -510,6 +601,16 @@ public interface PredicatesPackage extends EPackage
    * @generated
    */
   EOperation getPredicate__Matches__IProject();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.releng.predicates.Predicate#matches(java.io.File) <em>Matches</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Matches</em>' operation.
+   * @see org.eclipse.emf.cdo.releng.predicates.Predicate#matches(java.io.File)
+   * @generated
+   */
+  EOperation getPredicate__Matches__File();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.predicates.NamePredicate <em>Name Predicate</em>}'.
@@ -702,6 +803,17 @@ public interface PredicatesPackage extends EPackage
   EDataType getProject();
 
   /**
+   * Returns the meta object for data type '{@link java.io.File <em>File</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>File</em>'.
+   * @see java.io.File
+   * @model instanceClass="java.io.File"
+   * @generated
+   */
+  EDataType getFile();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -726,10 +838,10 @@ public interface PredicatesPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.predicates.Predicate <em>Predicate</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.PredicateImpl <em>Predicate</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.releng.predicates.Predicate
+     * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicateImpl
      * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getPredicate()
      * @generated
      */
@@ -742,6 +854,14 @@ public interface PredicatesPackage extends EPackage
      * @generated
      */
     EOperation PREDICATE___MATCHES__IPROJECT = eINSTANCE.getPredicate__Matches__IProject();
+
+    /**
+     * The meta object literal for the '<em><b>Matches</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation PREDICATE___MATCHES__FILE = eINSTANCE.getPredicate__Matches__File();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.NamePredicateImpl <em>Name Predicate</em>}' class.
@@ -904,6 +1024,16 @@ public interface PredicatesPackage extends EPackage
      * @generated
      */
     EDataType PROJECT = eINSTANCE.getProject();
+
+    /**
+     * The meta object literal for the '<em>File</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see java.io.File
+     * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getFile()
+     * @generated
+     */
+    EDataType FILE = eINSTANCE.getFile();
 
   }
 

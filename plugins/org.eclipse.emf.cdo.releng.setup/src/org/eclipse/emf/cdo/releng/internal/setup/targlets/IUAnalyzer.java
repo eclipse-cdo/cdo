@@ -16,13 +16,16 @@ import org.eclipse.emf.cdo.releng.internal.setup.targlets.IUGenerator.FeatureIUG
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectAnalyzer;
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectVisitor;
 import org.eclipse.emf.cdo.releng.internal.setup.util.EMFUtil;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.setup.ComponentDefinition;
 import org.eclipse.emf.cdo.releng.setup.ComponentExtension;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 
+import org.eclipse.net4j.util.XMLUtil;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -59,10 +62,11 @@ public class IUAnalyzer extends BasicProjectAnalyzer<IInstallableUnit>
     return ids;
   }
 
-  public Map<IInstallableUnit, File> analyze(File folder, boolean locateNestedProjects, IProgressMonitor monitor)
+  public Map<IInstallableUnit, File> analyze(File folder, EList<Predicate> predicates, boolean locateNestedProjects,
+      IProgressMonitor monitor)
   {
     Visitor<IInstallableUnit> visitor = new IUVisitor();
-    return analyze(folder, locateNestedProjects, visitor, monitor);
+    return analyze(folder, predicates, locateNestedProjects, visitor, monitor);
   }
 
   @Override

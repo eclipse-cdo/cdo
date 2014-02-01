@@ -14,10 +14,8 @@ import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -29,7 +27,6 @@ import org.eclipse.core.runtime.Status;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -47,7 +44,7 @@ import java.util.regex.PatternSyntaxException;
  *
  * @generated
  */
-public class FilePredicateImpl extends MinimalEObjectImpl.Container implements FilePredicate
+public class FilePredicateImpl extends PredicateImpl implements FilePredicate
 {
   /**
    * The default value of the '{@link #getFilePattern() <em>File Pattern</em>}' attribute.
@@ -167,6 +164,7 @@ public class FilePredicateImpl extends MinimalEObjectImpl.Container implements F
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     String filePattern = getFilePattern();
@@ -357,22 +355,6 @@ public class FilePredicateImpl extends MinimalEObjectImpl.Container implements F
           .equals(contentPattern);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case PredicatesPackage.FILE_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
   /**

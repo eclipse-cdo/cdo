@@ -14,14 +14,10 @@ import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.core.resources.IProject;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
@@ -36,7 +32,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @generated
  */
-public class NamePredicateImpl extends MinimalEObjectImpl.Container implements NamePredicate
+public class NamePredicateImpl extends PredicateImpl implements NamePredicate
 {
   /**
    * The default value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
@@ -110,6 +106,7 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     return pattern != null && project != null && project.getName().matches(pattern);
@@ -179,22 +176,6 @@ public class NamePredicateImpl extends MinimalEObjectImpl.Container implements N
       return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case PredicatesPackage.NAME_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
   /**

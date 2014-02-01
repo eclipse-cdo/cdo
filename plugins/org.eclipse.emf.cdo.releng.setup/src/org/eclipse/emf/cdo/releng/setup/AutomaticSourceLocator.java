@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.releng.setup;
 
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +26,7 @@ import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#getRootFolder <em>Root Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#isLocateNestedProjects <em>Locate Nested Projects</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator#getPredicates <em>Predicates</em>}</li>
  * </ul>
  * </p>
  *
@@ -83,5 +87,21 @@ public interface AutomaticSourceLocator extends SourceLocator, ProjectProvider
    * @generated
    */
   void setLocateNestedProjects(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Predicates</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.releng.predicates.Predicate}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Predicates</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Predicates</em>' containment reference list.
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getAutomaticSourceLocator_Predicates()
+   * @model containment="true" resolveProxies="true"
+   * @generated
+   */
+  EList<Predicate> getPredicates();
 
 } // AutomaticSourceLocator

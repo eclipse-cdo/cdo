@@ -22,9 +22,9 @@ import org.eclipse.emf.cdo.releng.setup.editor.ProjectTemplate;
 import org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl.MaterializationSniffer;
 import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
-import org.eclipse.emf.cdo.releng.setup.util.XMLUtil;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.XMLUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;

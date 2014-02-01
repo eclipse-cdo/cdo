@@ -14,15 +14,11 @@ import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,7 +33,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * @generated
  */
-public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements NaturePredicate
+public class NaturePredicateImpl extends PredicateImpl implements NaturePredicate
 {
   /**
    * The default value of the '{@link #getNature() <em>Nature</em>}' attribute.
@@ -111,6 +107,7 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Override
   public boolean matches(IProject project)
   {
     try
@@ -195,22 +192,6 @@ public class NaturePredicateImpl extends MinimalEObjectImpl.Container implements
       return NATURE_EDEFAULT == null ? nature != null : !NATURE_EDEFAULT.equals(nature);
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case PredicatesPackage.NATURE_PREDICATE___MATCHES__IPROJECT:
-      return matches((IProject)arguments.get(0));
-    }
-    return super.eInvoke(operationID, arguments);
   }
 
   /**

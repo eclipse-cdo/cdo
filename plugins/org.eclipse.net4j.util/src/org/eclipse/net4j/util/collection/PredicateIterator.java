@@ -28,6 +28,15 @@ public class PredicateIterator<T> extends AbstractFilteredIterator<T>
     this.predicate = predicate;
   }
 
+  /**
+   * @since 3.4
+   */
+  public PredicateIterator(Predicate<? super T> predicate, Iterator<T> delegate)
+  {
+    super(delegate);
+    this.predicate = predicate;
+  }
+
   public Predicate<? super T> getPredicate()
   {
     return predicate;

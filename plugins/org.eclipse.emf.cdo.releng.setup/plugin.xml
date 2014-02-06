@@ -125,6 +125,13 @@
                style="push"
                toolbarPath="setupGroup">
          </action>
+         <action
+               class="org.eclipse.emf.cdo.releng.internal.setup.targlets.ResetAction"
+               id="org.eclipse.emf.cdo.releng.internal.setup.targlets.ResetAction"
+               label="&amp;Reset"
+               style="push"
+               toolbarPath="setupGroup">
+         </action>
       </actionSet>
    </extension>
   -->

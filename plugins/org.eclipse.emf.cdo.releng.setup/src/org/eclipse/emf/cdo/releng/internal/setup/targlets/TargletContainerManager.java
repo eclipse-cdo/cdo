@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.equinox.internal.p2.engine.Phase;
@@ -66,6 +67,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -238,11 +240,22 @@ public final class TargletContainerManager
     }
   }
 
-  private void waitUntilInitialized() throws ProvisionException
+  private void waitUntilInitialized(IProgressMonitor monitor) throws ProvisionException
   {
     try
     {
-      initialized.await();
+      for (;;)
+      {
+        if (monitor.isCanceled())
+        {
+          throw new OperationCanceledException();
+        }
+
+        if (initialized.await(100, TimeUnit.MILLISECONDS))
+        {
+          break;
+        }
+      }
     }
     catch (InterruptedException ex)
     {
@@ -262,7 +275,7 @@ public final class TargletContainerManager
 
   public TargletContainerDescriptor getDescriptor(String id, IProgressMonitor monitor) throws ProvisionException
   {
-    waitUntilInitialized();
+    waitUntilInitialized(monitor);
 
     TargletContainerDescriptor descriptor = descriptors.get(id);
     if (descriptor == null)
@@ -277,7 +290,7 @@ public final class TargletContainerManager
 
   public IProfile getProfile(String digest, IProgressMonitor monitor) throws ProvisionException
   {
-    waitUntilInitialized();
+    waitUntilInitialized(monitor);
 
     String profileID = getProfileID(digest);
     return profileRegistry.getProfile(profileID);
@@ -286,7 +299,7 @@ public final class TargletContainerManager
   public IProfile getOrCreateProfile(String id, String environmentProperties, String nlProperty, String digest,
       IProgressMonitor monitor) throws ProvisionException
   {
-    waitUntilInitialized();
+    waitUntilInitialized(monitor);
 
     String profileID = getProfileID(digest);
     IProfile profile = profileRegistry.getProfile(profileID);

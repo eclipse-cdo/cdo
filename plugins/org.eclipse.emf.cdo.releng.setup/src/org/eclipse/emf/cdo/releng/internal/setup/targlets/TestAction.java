@@ -93,15 +93,31 @@ public class TestAction implements IWorkbenchWindowActionDelegate
 
   private static void initTargetPlatform() throws Exception
   {
-    // Targlets
+    // Container
+    TargletContainer container = getContainer();
+
+    // Name
+    String name = "Targlet 1";
+    EList<Targlet> targlets = container.getTarglets();
+    if (!targlets.isEmpty())
+    {
+      Targlet targlet = targlets.get(0);
+      if (name.equals(targlet.getName()))
+      {
+        name = "Targlet 2";
+      }
+    }
+
+    // Targlet
     Targlet targlet = SetupFactory.eINSTANCE.createTarglet();
-    targlet.setName("CDO Releng");
+    targlet.setName(name);
     targlet.setIncludeSources(true);
 
     // Roots
     EList<InstallableUnit> roots = targlet.getRoots();
     roots.add(component("org.eclipse.emf.cdo.releng.all.feature.group"));
     roots.add(component("org.eclipse.net4j.util.ui.feature.group"));
+    roots.add(component("org.eclipse.net4j.db.feature.group"));
     roots.add(component("org.eclipse.sdk.feature.group"));
 
     // Sources
@@ -126,9 +142,6 @@ public class TestAction implements IWorkbenchWindowActionDelegate
     repos.add(repository("https://hudson.eclipse.org/hudson/job/emf-cdo-integration/lastSuccessfulBuild/artifact"));
     targlet.getRepositoryLists().add(repositoryList);
     targlet.setActiveRepositoryList(repositoryList.getName());
-
-    // Container
-    TargletContainer container = getContainer();
     container.setTarglets(ECollections.singletonEList(targlet));
   }
 

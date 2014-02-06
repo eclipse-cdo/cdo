@@ -19,23 +19,26 @@ public interface SetupTaskMigrator
 
   public static final SetupTaskMigrator[] MIGRATORS = {
 
-      // v1
-      null,
+    // v1
+    null,
 
-      // v2: Add P2Task.isMergeDisabled(), Project.getRestrictions(), Branch.getRestrictions()
-      null,
+    // v2: Add P2Task.isMergeDisabled(), Project.getRestrictions(), Branch.getRestrictions()
+    null,
 
-      // v3: Add "setup.p2.pool.dir" and "setup.p2.pool.tp.dir" variables
-      null,
+    // v3: Add "setup.p2.pool.dir" and "setup.p2.pool.tp.dir" variables
+    null,
 
-      // v4: Move setup-eclipse.xmi to ${user.home}/.eclipse/org.eclipse.emf.cdo.releng.setup
-      null,
+    // v4: Move setup-eclipse.xmi to ${user.home}/.eclipse/org.eclipse.emf.cdo.releng.setup
+    null,
 
-      // v5: Add MylynQueriesTask and MylynBuildsTask
-      null,
+    // v5: Add MylynQueriesTask and MylynBuildsTask
+    null,
 
-      // v6: Add TargletTask and TargletImportTask
-      null,
+    // v6: Add TargletTask and TargletImportTask
+    null,
+
+    // v7: Add AutomaticSourceLocator.predicates
+    null,
 
   };
 

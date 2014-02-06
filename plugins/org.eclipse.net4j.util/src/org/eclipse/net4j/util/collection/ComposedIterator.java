@@ -10,7 +10,11 @@
  */
 package org.eclipse.net4j.util.collection;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * An iterator that is composed of multiple delegate iterators.
@@ -20,11 +24,21 @@ import java.util.Iterator;
  */
 public class ComposedIterator<T> extends AbstractIterator<T>
 {
-  private final Iterator<T>[] delegates;
+  private final Iterator<? extends Iterator<T>> delegates;
 
-  private int index;
+  private Iterator<T> currentDelegate;
 
   public ComposedIterator(Iterator<T>... delegates)
+  {
+    this(Arrays.asList(delegates));
+  }
+
+  public ComposedIterator(Collection<? extends Iterator<T>> delegates)
+  {
+    this(delegates.iterator());
+  }
+
+  public ComposedIterator(Iterator<? extends Iterator<T>> delegates)
   {
     this.delegates = delegates;
   }
@@ -32,17 +46,33 @@ public class ComposedIterator<T> extends AbstractIterator<T>
   @Override
   protected Object computeNextElement()
   {
-    Iterator<T> delegate = delegates[index];
-    while (delegate.hasNext())
+    if (currentDelegate == null)
     {
-      return delegate.next();
+      if (!delegates.hasNext())
+      {
+        return END_OF_DATA;
+      }
+
+      currentDelegate = delegates.next();
     }
 
-    if (++index < delegates.length)
+    if (currentDelegate.hasNext())
     {
-      return computeNextElement();
+      return currentDelegate.next();
     }
 
-    return END_OF_DATA;
+    currentDelegate = null;
+    return computeNextElement();
+  }
+
+  public static <T> Iterator<T> fromIterables(Collection<? extends Iterable<T>> iterables)
+  {
+    List<Iterator<T>> iterators = new ArrayList<Iterator<T>>();
+    for (Iterable<T> iterable : iterables)
+    {
+      iterators.add(iterable.iterator());
+    }
+
+    return new ComposedIterator<T>(iterators.iterator());
   }
 }

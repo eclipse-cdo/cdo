@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.collection;
 
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
@@ -75,4 +76,66 @@ public abstract class AbstractIterator<T> implements Iterator<T>
    * Returns the next iteration element, or {@link #END_OF_DATA} if the end of the iteration has been reached.
    */
   protected abstract Object computeNextElement();
+
+  /**
+   * @since 3.4
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> ListIterator<T> empty()
+  {
+    return (ListIterator<T>)EmptyIterator.INSTANCE;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class EmptyIterator implements ListIterator<Object>
+  {
+    private static final ListIterator<Object> INSTANCE = new EmptyIterator();
+
+    public boolean hasNext()
+    {
+      return false;
+    }
+
+    public Object next()
+    {
+      throw new NoSuchElementException();
+    }
+
+    public boolean hasPrevious()
+    {
+      return false;
+    }
+
+    public Object previous()
+    {
+      throw new NoSuchElementException();
+    }
+
+    public int nextIndex()
+    {
+      throw new NoSuchElementException();
+    }
+
+    public int previousIndex()
+    {
+      throw new NoSuchElementException();
+    }
+
+    public void remove()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void set(Object e)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void add(Object e)
+    {
+      throw new UnsupportedOperationException();
+    }
+  }
 }

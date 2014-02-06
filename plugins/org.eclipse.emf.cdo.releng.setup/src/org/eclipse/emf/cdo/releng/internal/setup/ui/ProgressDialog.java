@@ -73,6 +73,7 @@ import org.eclipse.ui.internal.progress.ProgressManager;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -396,7 +397,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     log(line, true);
   }
 
-  private void log(String line, boolean filter)
+  public void log(String line, boolean filter)
   {
     if (isCancelled())
     {
@@ -627,6 +628,10 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
                 Set<String> restartReasons = runnable.run(dialog);
                 result.set(restartReasons);
               }
+              catch (OperationCanceledException ex)
+              {
+                // Do nothing
+              }
               catch (Throwable ex)
               {
                 Activator.log(ex);
@@ -703,7 +708,8 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
       printStream = new PrintStream(out, false, "UTF-8");
       t.printStackTrace(printStream);
 
-      for (Throwable throwable = t; throwable != null; throwable = throwable.getCause())
+      for (Throwable throwable = t; throwable != null; throwable = throwable instanceof InvocationTargetException ? ((InvocationTargetException)throwable)
+          .getTargetException() : throwable.getCause())
       {
         if (throwable instanceof CoreException)
         {

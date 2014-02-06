@@ -1026,9 +1026,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
               IProgressMonitor monitor)
-          {
+              {
             return delegate.updatesFor(iu, context, monitor);
-          }
+              }
         };
 
         targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
@@ -1154,7 +1154,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
               Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
-              + versionRange);
+                  + versionRange);
           rootsToInstall.add(query);
         }
       }
@@ -1307,7 +1307,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         String contents = DownloadUtil.load(context.getURIConverter(), URI.createFileURI(iniFile.toString()), null);
         Pattern section = Pattern.compile(
             "^(-vmargs)([\n\r]+.*)\\z|^(-[^\\n\\r]*[\\n\\r]*)((?:^[^-][^\\n\\r]*)*[\\n\\r]*)", Pattern.MULTILINE
-                | Pattern.DOTALL);
+            | Pattern.DOTALL);
         Map<String, String> map = new LinkedHashMap<String, String>();
         for (Matcher matcher = section.matcher(contents); matcher.find();)
         {
@@ -1351,7 +1351,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
     if (EXIT_ERROR.equals(exitCode))
     {
-      throw new CoreException(Status.CANCEL_STATUS);
+      throw new OperationCanceledException();
     }
   }
 

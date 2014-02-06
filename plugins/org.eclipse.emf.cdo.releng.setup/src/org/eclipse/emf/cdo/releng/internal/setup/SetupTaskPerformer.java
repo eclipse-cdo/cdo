@@ -381,7 +381,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     log(line, true);
   }
 
-  private void log(String line, boolean filter)
+  public void log(String line, boolean filter)
   {
     if (progress != null)
     {
@@ -431,7 +431,7 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
       Activator.log(ex);
     }
 
-    progress.log(line);
+    progress.log(line, filter);
   }
 
   private PrintStream getLogStream()

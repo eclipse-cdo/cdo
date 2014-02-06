@@ -25,6 +25,8 @@ public interface ProgressLog
 
   public void log(String line);
 
+  public void log(String line, boolean filter);
+
   public void log(IStatus status);
 
   public void log(Throwable t);

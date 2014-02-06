@@ -617,6 +617,10 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
         {
         }
 
+        public void log(String line, boolean filter)
+        {
+        }
+
         public boolean isCancelled()
         {
           return false;

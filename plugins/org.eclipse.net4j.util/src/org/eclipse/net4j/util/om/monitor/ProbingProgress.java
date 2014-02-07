@@ -38,6 +38,64 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * An instrumented {@link Progress progress monitor} that automatically collects and reports usage statistics.
+ * <p>
+ * It is normally very challenging to find out how much time a program really spends in the different parts of the monitored methods or how often these
+ * parts get executed. Stepping through the program with a debugger obviously leads to distortion that renders the observations meaningless and adding
+ * extra code to measure a runtime scenario realisticly is not nice from a maintenance point of view.
+ * <p>
+ * As a solution to this problem this class offers the possibility to transparently instrument {@link Progress} instances such that they automatically
+ * collect and report all kinds of statistics that may help to enhance the user experience. Sometimes it would even indicate to remove some progress monitoring
+ * because it turns out that almost no time is being spent in a particular part of the program. Another typical result from the analysis is the understanding of
+ * <i>one time effects</i> that might need special consideration.
+ * <p>
+ * Instances of this class can be created explicitely with the {@link Progress#progress(IProgressMonitor, Probing) Progress.progress()} factory methods
+ * that take a {@link Probing} mode argument. Implicit (automatic) instrumentation can be controlled with the "<code>progress.probing</code>"
+ * {@link System#setProperty(String, String) system property} as follows:
+ * <dl>
+ * <dt> <code>off</code>
+ * <dd> All {@link Progress monitors} that are not created with an explicit probing mode will <b>not</b> collect any usage information. No extra heap space
+ *      or CPU time is allocated to these monitors.
+ * <dt> <code>standard</code>
+ * <dd> All {@link Progress monitors} that are not created with an explicit probing mode will collect and report only statistical usage information.
+ *      The amount of heap space allocated for this information is constant over time.
+ * <dt> <code>full</code>
+ * <dd> All {@link Progress monitors} that are not created with an explicit probing mode will store and report all collected probes.
+ *      The amount of heap space allocated for this information scales with the number of {@link Progress monitor} instances that are created over time.
+ * </dl>
+ * <p>
+ * Usage probes are collected when {@link Progress} methods are called or when the Java garbage collector collects unused {@link Progress} instances.
+ * The latter case is typically a consequence of not calling {@link #done()} explicitely, which is perfectly for production use but may lead to distortion
+ * in the {@link #fork()} probes. If probing is used at least occasionally it is strongly recommended to call {@link #done()} at the end of each
+ * monitored method; extra <code>finally {}</code> blocks are not necessary, though.
+ * <p>
+ * This class registers a {@link Runtime#addShutdownHook(Thread) shutdown hook} that dumps the probing results to the console when the program ends.
+ * By setting the "<code>progress.probing.trace</code>" {@link System#setProperty(String, String) system property} to the value "<code>true</code>"
+ * probing results are continuously dumped as they become available.
+ * <p>
+ * The probing results are formatted as tables per monitored method. Each row of a table corresponds to a call to the {@link #worked()} or {@link #fork()}
+ * method. The first column of a table displays the location of that call, the content of the following columns depends on the probing mode used for a monitored method.
+ * <p>
+ * Example of the probing mode {@link Probing#STANDARD STANDARD}:
+ * <p>
+ * <img src="doc-files/standard.png">
+ * <p>
+ * Example of the probing mode {@link Probing#FULL FULL}:
+ * <p>
+ * <img src="doc-files/full.png">
+ * <p>
+ * The tables in the two examples above have smooth borders that can only be displayed correctly in consoles with UTF-8 encoding. The console encoding
+ * can be configured on the <i>Common</i> tab of the launch configuration dialog. In addition the rendering of smooth table borders must be explicitely enabled
+ * by setting the "<code>progress.probing.borders</code>" {@link System#setProperty(String, String) system property} to the value "<code>smooth</code>".
+ * Without this setting tables are rendered with "-", "+" and "|" characters that display correctly regardless of the console encoding.
+ * <p>
+ * Quick navigation from the table cells to the corresponding code locations is supported by clickable links in the console tables. This way the
+ * collected information can be converted into real enhancements of the monitoring code quickly and easily.
+ * <p>
+ * <b>Important note</b>: Avoid to load this class (i.e., to call any of its methods) unless you intend to actually use probing monitors. When this class
+ * is loaded it spawns a thread to collect unused progress monitors and to free up the heap space allocated to their probes. The shutdown hook mentioned above
+ * is also registered when this class is loaded.
+ *
  * @author Eike Stepper
  * @since 3.4
  */
@@ -96,7 +154,7 @@ public final class ProbingProgress extends Progress
     this.forkTarget = forkTarget;
   }
 
-  public StackTraceElement getLocation()
+  StackTraceElement getLocation()
   {
     return location;
   }
@@ -329,9 +387,10 @@ public final class ProbingProgress extends Progress
 
     private static final int DEFAULT_COLUMNS = 3;
 
-    private static final boolean UTF_8 = "UTF-8".equalsIgnoreCase(System.getProperty("progress.probing.dumper"));
+    private static final boolean SMOOTH_BORDERS = "smooth".equalsIgnoreCase(System
+        .getProperty("progress.probing.borders"));
 
-    private static final Dumper DUMPER = UTF_8 ? Dumper.UTF8 : Dumper.ASCII;
+    private static final Dumper DUMPER = SMOOTH_BORDERS ? Dumper.UTF8 : Dumper.ASCII;
 
     private final StackTraceElement location;
 

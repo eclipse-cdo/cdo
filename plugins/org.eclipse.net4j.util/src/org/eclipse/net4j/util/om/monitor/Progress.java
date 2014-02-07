@@ -19,6 +19,45 @@ import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 
 /**
+ * A {@link IProgressMonitorWithBlocking progress monitor} that wraps a {@link SubMonitor} and adds some unique functionality.
+ * <p>
+ * Progress monitoring is generally quite invasive to the code that is monitored.
+ * At the same time progress monitoring itself is typically very hard to implement correctly.
+ * This class aims at reducing the invasiveness as much as possible while offering all the functionality needed
+ * to do the job right.
+ * <p>
+ * The following aspects of this class help to keep the progress monitoring code short and nice:
+ * <ul>
+ * <li> It offers the full functionality of {@link SubMonitor}, which already makes progress monitoring a lot easier.
+ *      Refer to the {@link SubMonitor} documentation or to this <a href="https://wiki.eclipse.org/Progress_Reporting">article</a> for details and examples.
+ * <li> Instead of {@link SubMonitor#newChild(int)} it offers the shorter method name {@link #fork(int)}.
+ * <li> In addition to the {@link SubMonitor#setWorkRemaining(int)} method it offers a {@link #skipped(int)} method, which redistributes the remaining work
+ *      according to the last skipped {@link #worked(int)} or {@link #fork(int)} call rather than on the sum of all subsequent calls.
+ * <li> It reduces the need to specify <i>tick</i> values by defining the value {@link #DEFAULT_TOTAL_TICKS 100} (as in 100%) as the default for <code>totalTicks</code>
+ *      and {@link #DEFAULT_TICKS 1} (as in 1%) for the <code>ticks</code> parameter in the {@link #worked()} and {@link #fork()} calls.
+ * </ul>
+ * <p>
+ * The following aspects of this class help to avoid common monitoring mistakes:
+ * <ul>
+ * <li> Basically all methods of this class implicitely check for cancelation, thereby ensuring that the monitored code is always cancelable by the user
+ *      without cluttering the code with repetitions of the following idiom:<pre>
+ *      if (monitor.isCanceled())
+ *      {
+ *        throw new OperationCanceledException();
+ *      }</pre>
+ * <li> It is normally very challenging to find out how much time a program really spends in the different parts of the monitored methods or how often these
+ *      parts get executed. Stepping through the program with a debugger obviously leads to distortion that renders the observations meaningless and adding
+ *      extra code to measure a runtime scenario realisticly is not nice from a maintenance point of view.
+ *      <br><br>
+ *      As a solution to this problem this class offers the possibility to transparently instrument {@link Progress} instances such that they automatically
+ *      collect and report all kinds of statistics that may help to enhance the user experience. Sometimes it would even indicate to remove some progress monitoring
+ *      because it turns out that almost no time is being spent in a particular part of the program. Another typical result from the analysis is the understanding of
+ *      <i>one time effects</i> that might need special consideration.
+ *      <br><br>
+ *      For details about this <i>probing</i> mode refer to {@link ProbingProgress}.
+ * </ul>
+ * <p>
+ *
  * @author Eike Stepper
  * @since 3.4
  */

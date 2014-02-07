@@ -65,7 +65,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * </dl>
  * <p>
  * Usage probes are collected when {@link Progress} methods are called or when the Java garbage collector collects unused {@link Progress} instances.
- * The latter case is typically a consequence of not calling {@link #done()} explicitely, which is perfectly for production use but may lead to distortion
+ * The latter case is typically a consequence of not calling {@link #done()} explicitely, which is perfect for production use but may lead to distortion
  * in the {@link #fork()} probes. If probing is used at least occasionally it is strongly recommended to call {@link #done()} at the end of each
  * monitored method; extra <code>finally {}</code> blocks are not necessary, though.
  * <p>

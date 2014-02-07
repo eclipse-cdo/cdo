@@ -269,7 +269,7 @@ public class Table extends RectangularRange
     Table table1 = new Table();
     table1.range(0, 0, 5, 5).subtractRange(0, 0, 7, 0).value(new Generator.Incrementer());
     table1.row(0).format(new DecimalFormat("Series 0")).value(new Generator.Incrementer(1));
-    System.out.println(table1.dump(0));
+    Dumper.UTF8.dump(System.out, table1, 0);
 
     Table table2 = new Table(2, 11);
     table2.row(0).alignment(Alignment.RIGHT);
@@ -277,11 +277,11 @@ public class Table extends RectangularRange
     table2.cell(1, 0).value("Percent");
 
     Range probes = table2.column(0, 1).value(new Generator.Incrementer(1));
-    for (Cell cell : probes.offset(1, 0).format(new DecimalFormat("0,00 %")))
+    for (Cell cell : probes.offset(1, 0).format(new DecimalFormat("0.00 %")))
     {
       cell.value(new Percent(probes, cell.offset(-1, 0)));
     }
 
-    System.out.println(table2.dump(0));
+    Dumper.UTF8.dump(System.out, table2, 0);
   }
 }

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.om.monitor;
 
 import org.eclipse.net4j.internal.util.table.Cell;
+import org.eclipse.net4j.internal.util.table.Dumper;
 import org.eclipse.net4j.internal.util.table.Formula;
 import org.eclipse.net4j.internal.util.table.Range;
 import org.eclipse.net4j.internal.util.table.Range.Alignment;
@@ -268,6 +269,11 @@ public final class ProbingProgress extends Progress
     monitor.start();
   }
 
+  public static void main(String[] args)
+  {
+    System.out.println("\u2502");
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -322,6 +328,10 @@ public final class ProbingProgress extends Progress
     public static final Format PERCENT = new DecimalFormat("0 %");
 
     private static final int DEFAULT_COLUMNS = 3;
+
+    private static final boolean UTF_8 = "UTF-8".equalsIgnoreCase(System.getProperty("progress.probing.dumper"));
+
+    private static final Dumper DUMPER = UTF_8 ? Dumper.UTF8 : Dumper.ASCII;
 
     private final StackTraceElement location;
 
@@ -438,7 +448,9 @@ public final class ProbingProgress extends Progress
         }
 
         rows[0].footer(table, rowCount);
-        System.out.println(table.dump(0, rowCount));
+
+        System.out.println();
+        DUMPER.dump(System.out, table, 0, rowCount);
       }
     }
 

@@ -46,7 +46,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -62,72 +61,46 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
   @Override
   public InputStream createInputStream(URI uri, Map<?, ?> options) throws IOException
   {
-    // UrlConnectionRetrieveFileTransfer fileTransfer = new UrlConnectionRetrieveFileTransfer();
+    File cacheFile = new File(SetupConstants.CACHE_FOLDER, FileUtil.encodeFileName(uri.toString()));
 
-    IContainer container = createContainer();
-    IRetrieveFileTransferContainerAdapter fileTransfer = (IRetrieveFileTransferContainerAdapter)container
-        .getAdapter(IRetrieveFileTransferContainerAdapter.class);
+    String username;
+    String password;
 
     String uriString = uri.toString();
     Proxy proxy = ProxySetupHelper.getProxy(uriString);
     if (proxy != null)
     {
-      fileTransfer.setProxy(proxy);
-
-      String username = proxy.getUsername();
-      String password = proxy.getPassword();
-      if (username != null)
-      {
-        fileTransfer.setConnectContextForAuthentication(ConnectContextFactory.createUsernamePasswordConnectContext(
-            username, password));
-      }
-      else if (password != null)
-      {
-        fileTransfer.setConnectContextForAuthentication(ConnectContextFactory.createPasswordConnectContext(password));
-      }
+      username = proxy.getUsername();
+      password = proxy.getPassword();
     }
-
-    class FileTransferListener implements IFileTransferListener
+    else
     {
-      public final CountDownLatch receiveLatch = new CountDownLatch(1);
-
-      public Exception exception;
-
-      public ByteArrayOutputStream out;
-
-      public void handleTransferEvent(IFileTransferEvent event)
-      {
-        if (event instanceof IIncomingFileTransferReceiveStartEvent)
-        {
-          out = new ByteArrayOutputStream();
-
-          try
-          {
-            ((IIncomingFileTransferReceiveStartEvent)event).receive(out);
-          }
-          catch (IOException ex)
-          {
-            exception = ex;
-          }
-        }
-        else if (event instanceof IIncomingFileTransferReceiveDoneEvent)
-        {
-          IIncomingFileTransferReceiveDoneEvent done = (IIncomingFileTransferReceiveDoneEvent)event;
-          Exception ex = done.getException();
-          if (ex != null)
-          {
-            exception = ex;
-          }
-
-          receiveLatch.countDown();
-        }
-      }
+      username = null;
+      password = null;
     }
 
-    File cacheFile = new File(SetupConstants.CACHE_FOLDER, FileUtil.encodeFileName(uri.toString()));
+    IContainer container = createContainer();
 
     for (int i = 0;; ++i)
     {
+      IRetrieveFileTransferContainerAdapter fileTransfer = (IRetrieveFileTransferContainerAdapter)container
+          .getAdapter(IRetrieveFileTransferContainerAdapter.class);
+
+      if (proxy != null)
+      {
+        fileTransfer.setProxy(proxy);
+
+        if (username != null)
+        {
+          fileTransfer.setConnectContextForAuthentication(ConnectContextFactory.createUsernamePasswordConnectContext(
+              username, password));
+        }
+        else if (password != null)
+        {
+          fileTransfer.setConnectContextForAuthentication(ConnectContextFactory.createPasswordConnectContext(password));
+        }
+      }
+
       FileTransferListener transferListener = new FileTransferListener();
 
       try
@@ -149,7 +122,7 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
 
       try
       {
-        transferListener.receiveLatch.await(60, TimeUnit.SECONDS);
+        transferListener.receiveLatch.await();
       }
       catch (InterruptedException ex)
       {
@@ -189,6 +162,46 @@ public class ECFURIHandlerImpl extends URIHandlerImpl
     catch (ContainerCreateException ex)
     {
       throw new IOException(ex);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class FileTransferListener implements IFileTransferListener
+  {
+    public final CountDownLatch receiveLatch = new CountDownLatch(1);
+
+    public Exception exception;
+
+    public ByteArrayOutputStream out;
+
+    public void handleTransferEvent(IFileTransferEvent event)
+    {
+      if (event instanceof IIncomingFileTransferReceiveStartEvent)
+      {
+        out = new ByteArrayOutputStream();
+
+        try
+        {
+          ((IIncomingFileTransferReceiveStartEvent)event).receive(out);
+        }
+        catch (IOException ex)
+        {
+          exception = ex;
+        }
+      }
+      else if (event instanceof IIncomingFileTransferReceiveDoneEvent)
+      {
+        IIncomingFileTransferReceiveDoneEvent done = (IIncomingFileTransferReceiveDoneEvent)event;
+        Exception ex = done.getException();
+        if (ex != null)
+        {
+          exception = ex;
+        }
+
+        receiveLatch.countDown();
+      }
     }
   }
 }

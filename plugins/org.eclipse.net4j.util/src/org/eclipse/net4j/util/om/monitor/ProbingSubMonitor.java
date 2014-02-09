@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.table.Cell;
 import org.eclipse.net4j.internal.util.table.Dumper;
 import org.eclipse.net4j.internal.util.table.Formula;
@@ -18,9 +19,6 @@ import org.eclipse.net4j.internal.util.table.Range.Alignment;
 import org.eclipse.net4j.internal.util.table.Table;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IProgressMonitorWithBlocking;
-import org.eclipse.core.runtime.ProgressMonitorWrapper;
-import org.eclipse.core.runtime.SubMonitor;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
@@ -38,55 +36,50 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * An instrumented {@link Progress progress monitor} that automatically collects and reports usage statistics.
+ * An instrumented {@link SubMonitor sub monitor} that automatically collects and reports usage statistics.
  * <p>
  * It is normally very challenging to find out how much time a program really spends in the different parts of the monitored methods or how often these
  * parts get executed. Stepping through the program with a debugger obviously leads to distortion that renders the observations meaningless and adding
  * extra code to measure a runtime scenario realisticly is not nice from a maintenance point of view.
  * <p>
- * As a solution to this problem this class offers the possibility to transparently instrument {@link Progress} instances such that they automatically
+ * As a solution to this problem this class offers the possibility to transparently instrument {@link SubMonitor} instances such that they automatically
  * collect and report all kinds of statistics that may help to enhance the user experience. Sometimes it would even indicate to remove some progress monitoring
  * because it turns out that almost no time is being spent in a particular part of the program. Another typical result from the analysis is the understanding of
  * <i>one time effects</i> that might need special consideration.
  * <p>
- * Instances of this class can be created explicitely with the {@link Progress#progress(IProgressMonitor, Probing) Progress.progress()} factory methods
- * that take a {@link Probing} mode argument. Implicit (automatic) instrumentation can be controlled with the "<code>progress.probing</code>"
+ * Instances of this class can be created explicitely with the {@link SubMonitor#convert(IProgressMonitor, SubMonitor.ProbingMode) Progress.progress()} factory methods
+ * that take a {@link SubMonitor.ProbingMode} argument. Implicit (automatic) instrumentation can be controlled with the "<code>submonitor.probing</code>"
  * {@link System#setProperty(String, String) system property} as follows:
  * <dl>
  * <dt> <code>off</code>
- * <dd> All {@link Progress monitors} that are not created with an explicit probing mode will <b>not</b> collect any usage information. No extra heap space
+ * <dd> All {@link SubMonitor monitors} that are not created with an explicit probing mode will <b>not</b> collect any usage information. No extra heap space
  *      or CPU time is allocated to these monitors.
  * <dt> <code>standard</code>
- * <dd> All {@link Progress monitors} that are not created with an explicit probing mode will collect and report only statistical usage information.
+ * <dd> All {@link SubMonitor monitors} that are not created with an explicit probing mode will collect and report only statistical usage information.
  *      The amount of heap space allocated for this information is constant over time.
  * <dt> <code>full</code>
- * <dd> All {@link Progress monitors} that are not created with an explicit probing mode will store and report all collected probes.
- *      The amount of heap space allocated for this information scales with the number of {@link Progress monitor} instances that are created over time.
+ * <dd> All {@link SubMonitor monitors} that are not created with an explicit probing mode will store and report all collected probes.
+ *      The amount of heap space allocated for this information scales with the number of {@link SubMonitor monitor} instances that are created over time.
  * </dl>
  * <p>
- * Usage probes are collected when {@link Progress} methods are called or when the Java garbage collector collects unused {@link Progress} instances.
- * The latter case is typically a consequence of not calling {@link #done()} explicitely, which is perfect for production use but may lead to distortion
- * in the {@link #fork()} probes. If probing is used at least occasionally it is strongly recommended to call {@link #done()} at the end of each
- * monitored method; extra <code>finally {}</code> blocks are not necessary, though.
- * <p>
  * This class registers a {@link Runtime#addShutdownHook(Thread) shutdown hook} that dumps the probing results to the console when the program ends.
- * By setting the "<code>progress.probing.trace</code>" {@link System#setProperty(String, String) system property} to the value "<code>true</code>"
+ * By setting the "<code>submonitor.probing.trace</code>" {@link System#setProperty(String, String) system property} to the value "<code>true</code>"
  * probing results are continuously dumped as they become available.
  * <p>
- * The probing results are formatted as tables per monitored method. Each row of a table corresponds to a call to the {@link #worked()} or {@link #fork()}
+ * The probing results are formatted as tables per monitored method. Each row of a table corresponds to a call to the {@link #worked()} or {@link #newChild()}
  * method. The first column of a table displays the location of that call, the content of the following columns depends on the probing mode used for a monitored method.
  * <p>
- * Example of the probing mode {@link Probing#STANDARD STANDARD}:
+ * Example of the probing mode {@link SubMonitor.ProbingMode#STANDARD STANDARD}:
  * <p>
  * <img src="doc-files/standard.png">
  * <p>
- * Example of the probing mode {@link Probing#FULL FULL}:
+ * Example of the probing mode {@link SubMonitor.ProbingMode#FULL FULL}:
  * <p>
  * <img src="doc-files/full.png">
  * <p>
  * The tables in the two examples above have smooth borders that can only be displayed correctly in consoles with UTF-8 encoding. The console encoding
  * can be configured on the <i>Common</i> tab of the launch configuration dialog. In addition the rendering of smooth table borders must be explicitely enabled
- * by setting the "<code>progress.probing.borders</code>" {@link System#setProperty(String, String) system property} to the value "<code>smooth</code>".
+ * by setting the "<code>submonitor.probing.borders</code>" {@link System#setProperty(String, String) system property} to the value "<code>smooth</code>".
  * Without this setting tables are rendered with "-", "+" and "|" characters that display correctly regardless of the console encoding.
  * <p>
  * Quick navigation from the table cells to the corresponding code locations is supported by clickable links in the console tables. This way the
@@ -99,29 +92,29 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Eike Stepper
  * @since 3.4
  */
-public final class ProbingProgress extends Progress
+public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.SubMonitor
 {
-  private static final boolean TRACE = Boolean.getBoolean("progress.probing.trace");
+  private static final boolean TRACE = Boolean.getBoolean("submonitor.probing.trace");
 
   private static final Map<StackTraceElement, Statistics> STATISTICS = new HashMap<StackTraceElement, Statistics>();
 
   private static final Map<Integer, KeyedWeakReference> MAP = new ConcurrentHashMap<Integer, KeyedWeakReference>();
 
-  private static final ReferenceQueue<ProbingProgress> QUEUE = new ReferenceQueue<ProbingProgress>();
+  private static final ReferenceQueue<ProbingSubMonitor> QUEUE = new ReferenceQueue<ProbingSubMonitor>();
 
   private static final AtomicInteger COUNTER = new AtomicInteger();
 
-  private static final long DONE = -1;
+  private static final String NAME1 = SubMonitor.class.getName();
 
-  private static final String NAME1 = Progress.class.getName();
+  private static final String NAME2 = ProbingSubMonitor.class.getName();
 
-  private static final String NAME2 = ProbingProgress.class.getName();
+  private static final String NAME3 = RootInfo.class.getName();
 
-  private static final String NAME3 = ForkedMonitor.class.getName();
+  private static final int FULL_MODE = 0x0010;
 
-  private static final String NAME4 = ProbingHelper.class.getName();
+  private static final int DONE_FLAG = 0x0020;
 
-  private final boolean full;
+  private final ProbingSubMonitor parent;
 
   private final int totalTicks;
 
@@ -129,7 +122,7 @@ public final class ProbingProgress extends Progress
 
   private final Map<StackTraceElement, Probe> probes = new HashMap<StackTraceElement, Probe>();
 
-  private final StackTraceElement location = determineLocation();
+  private StackTraceElement location = determineLocation();
 
   private long timeStamp = determineTimeStamp();
 
@@ -139,24 +132,41 @@ public final class ProbingProgress extends Progress
 
   private int forkTicks;
 
-  ProbingProgress(SubMonitor subMonitor, int totalTicks, boolean full)
+  ProbingSubMonitor(ProbingSubMonitor parent, RootInfo rootInfo, int totalWork, int availableToChildren, int flags,
+      boolean full)
   {
-    super(subMonitor, totalTicks);
-    this.totalTicks = totalTicks;
-    this.full = full;
+    super(rootInfo, totalWork, availableToChildren, flags | (full ? FULL_MODE : 0));
+    this.parent = parent;
+    totalTicks = totalWork;
+
+    if (parent != null)
+    {
+      parent.forkTarget = location;
+    }
 
     key = COUNTER.incrementAndGet();
     MAP.put(key, new KeyedWeakReference(key, this));
   }
 
-  void setForkTarget(StackTraceElement forkTarget)
+  @Override
+  SubMonitor createSubMonitor(RootInfo rootInfo, int totalWork, int availableToChildren, int flags)
   {
-    this.forkTarget = forkTarget;
+    timeStamp = determineTimeStamp();
+    forkLocation = determineLocation();
+    forkTicks = totalWork;
+
+    boolean full = (flags & FULL_MODE) != 0;
+    return new ProbingSubMonitor(this, rootInfo, totalWork, availableToChildren, flags, full);
   }
 
-  StackTraceElement getLocation()
+  @Override
+  void adjustLocation()
   {
-    return location;
+    location = determineLocation();
+    if (parent != null)
+    {
+      parent.forkTarget = location;
+    }
   }
 
   @Override
@@ -167,40 +177,46 @@ public final class ProbingProgress extends Progress
   }
 
   @Override
-  public IProgressMonitorWithBlocking fork(int work)
-  {
-    timeStamp = determineTimeStamp();
-    forkLocation = determineLocation();
-    forkTicks = work;
-    return new ForkedMonitor(this, super.fork(work));
-  }
-
-  @Override
   public void done()
   {
-    try
+    if ((flags & DONE_FLAG) == 0)
     {
-      finishProbe(this);
-      super.done();
-    }
-    finally
-    {
-      timeStamp = DONE;
-      forkLocation = null;
-      forkTarget = null;
-      forkTicks = 0;
+      flags |= DONE_FLAG;
 
-      MAP.remove(key);
+      try
+      {
+        finishProbe(this);
+        super.done();
+
+        if (parent != null)
+        {
+          parent.childDone();
+        }
+      }
+      finally
+      {
+        forkLocation = null;
+        forkTarget = null;
+        forkTicks = 0;
+
+        MAP.remove(key);
+      }
     }
   }
 
   @Override
-  public void forkDone()
+  public void childDone()
   {
     if (forkLocation != null)
     {
       probe(forkLocation, forkTicks);
     }
+  }
+
+  @Override
+  public String toString()
+  {
+    return shorten(location);
   }
 
   private void probe(int ticks)
@@ -211,22 +227,87 @@ public final class ProbingProgress extends Progress
 
   private void probe(StackTraceElement location, int ticks)
   {
-    long now = determineTimeStamp();
-    int time = (int)(Math.abs(now - timeStamp) / 1000000);
-
-    Probe probe = probes.get(location);
-    if (probe == null)
+    try
     {
-      probe = new Probe(location);
-      probes.put(location, probe);
+      long now = determineTimeStamp();
+      int time = (int)(Math.abs(now - timeStamp) / 1000000);
+
+      Probe probe = probes.get(location);
+      if (probe == null)
+      {
+        probe = new Probe(location);
+        probes.put(location, probe);
+      }
+
+      probe.update(forkTarget, ticks, time);
+
+      forkLocation = null;
+      forkTarget = null;
+      forkTicks = 0;
+      timeStamp = now;
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+  }
+
+  private static String shorten(StackTraceElement location)
+  {
+    String className = location.getClassName();
+
+    boolean lastCharWasDigit = false;
+    int length = className.length();
+    int i = length;
+    while (--i >= 0)
+    {
+      char c = className.charAt(i);
+      if ((c == '.' || c == '$') && !lastCharWasDigit)
+      {
+        ++i;
+        break;
+      }
+
+      lastCharWasDigit = Character.isDigit(c);
     }
 
-    probe.update(forkTarget, ticks, time);
+    StringBuilder builder = new StringBuilder();
+    builder.append(className, i, length);
+    builder.append('.');
+    builder.append(location.getMethodName());
 
-    forkLocation = null;
-    forkTarget = null;
-    forkTicks = 0;
-    timeStamp = now;
+    if (location.isNativeMethod())
+    {
+      builder.append("(Native Method)");
+    }
+    else
+    {
+      String fileName = location.getFileName();
+      int lineNumber = location.getLineNumber();
+      if (fileName != null && lineNumber >= 0)
+      {
+        builder.append('(');
+        builder.append(fileName);
+        builder.append(':');
+        builder.append(lineNumber);
+        builder.append(')');
+      }
+      else
+      {
+        if (fileName != null)
+        {
+          builder.append('(');
+          builder.append(fileName);
+          builder.append(')');
+        }
+        else
+        {
+          builder.append("(Unknown Source)");
+        }
+      }
+    }
+
+    return builder.toString();
   }
 
   private static StackTraceElement determineLocation()
@@ -237,7 +318,7 @@ public final class ProbingProgress extends Progress
       StackTraceElement stackTraceElement = stackTrace[i];
 
       String className = stackTraceElement.getClassName();
-      if (className != NAME1 && className != NAME2 && className != NAME3 && className != NAME4)
+      if (className != NAME1 && className != NAME2 && className != NAME3)
       {
         return stackTraceElement;
       }
@@ -251,18 +332,25 @@ public final class ProbingProgress extends Progress
     return System.nanoTime();
   }
 
-  private static void finishProbe(ProbingProgress progress)
+  private static void finishProbe(ProbingSubMonitor progress)
   {
-    StackTraceElement location = progress.location;
-
-    Statistics statistics = STATISTICS.get(location);
-    if (statistics == null)
+    try
     {
-      statistics = new Statistics(location);
-      STATISTICS.put(location, statistics);
-    }
+      StackTraceElement location = progress.location;
 
-    statistics.update(progress);
+      Statistics statistics = STATISTICS.get(location);
+      if (statistics == null)
+      {
+        statistics = new Statistics(location);
+        STATISTICS.put(location, statistics);
+      }
+
+      statistics.update(progress);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   public static void reportStatistics()
@@ -290,7 +378,7 @@ public final class ProbingProgress extends Progress
 
         for (KeyedWeakReference reference : MAP.values())
         {
-          ProbingProgress progress = reference.get();
+          ProbingSubMonitor progress = reference.get();
           if (progress != null)
           {
             finishProbe(progress);
@@ -313,8 +401,8 @@ public final class ProbingProgress extends Progress
           {
             MAP.remove(reference.key);
 
-            ProbingProgress progress = reference.get();
-            if (progress != null && progress.timeStamp != DONE)
+            ProbingSubMonitor progress = reference.get();
+            if (progress != null && (progress.flags & DONE_FLAG) == 0)
             {
               finishProbe(progress);
             }
@@ -327,48 +415,73 @@ public final class ProbingProgress extends Progress
     monitor.start();
   }
 
-  public static void main(String[] args)
-  {
-    System.out.println("\u2502");
-  }
-
   /**
    * @author Eike Stepper
    */
-  static final class ForkedMonitor extends ProgressMonitorWrapper
-  {
-    private final ProbingProgress progress;
-
-    public ForkedMonitor(ProbingProgress progress, IProgressMonitor monitor)
-    {
-      super(monitor);
-      this.progress = progress;
-    }
-
-    public ProbingProgress getProgress()
-    {
-      return progress;
-    }
-
-    @Override
-    public void done()
-    {
-      progress.forkDone();
-      super.done();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class KeyedWeakReference extends WeakReference<ProbingProgress>
+  private static final class KeyedWeakReference extends WeakReference<ProbingSubMonitor>
   {
     private final int key;
 
-    public KeyedWeakReference(int key, ProbingProgress progress)
+    public KeyedWeakReference(int key, ProbingSubMonitor progress)
     {
       super(progress);
       this.key = key;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class Probe
+  {
+    private final StackTraceElement location;
+
+    private StackTraceElement[] forkTargets;
+
+    private int ticks;
+
+    private int time;
+
+    public Probe(StackTraceElement location)
+    {
+      this.location = location;
+    }
+
+    public void update(StackTraceElement forkTarget, int ticks, int time)
+    {
+      this.ticks += ticks;
+      this.time += time;
+
+      if (forkTarget != null)
+      {
+        if (forkTargets == null)
+        {
+          forkTargets = new StackTraceElement[] { forkTarget };
+        }
+        else
+        {
+          for (int i = 0; i < forkTargets.length; i++)
+          {
+            StackTraceElement location = forkTargets[i];
+            if (location.equals(forkTarget))
+            {
+              return;
+            }
+          }
+
+          StackTraceElement[] newForkTargets = new StackTraceElement[forkTargets.length + 1];
+          System.arraycopy(forkTargets, 0, newForkTargets, 0, forkTargets.length);
+          newForkTargets[forkTargets.length] = forkTarget;
+
+          forkTargets = newForkTargets;
+        }
+      }
+    }
+
+    @Override
+    public String toString()
+    {
+      return location + " - " + time;
     }
   }
 
@@ -388,7 +501,7 @@ public final class ProbingProgress extends Progress
     private static final int DEFAULT_COLUMNS = 3;
 
     private static final boolean SMOOTH_BORDERS = "smooth".equalsIgnoreCase(System
-        .getProperty("progress.probing.borders"));
+        .getProperty("submonitor.probing.borders"));
 
     private static final Dumper DUMPER = SMOOTH_BORDERS ? Dumper.UTF8 : Dumper.ASCII;
 
@@ -405,7 +518,7 @@ public final class ProbingProgress extends Progress
       this.location = location;
     }
 
-    public void update(ProbingProgress progress)
+    public void update(ProbingSubMonitor progress)
     {
       totalTicks += progress.totalTicks;
 
@@ -434,9 +547,11 @@ public final class ProbingProgress extends Progress
         }
       }
 
+      boolean full = (progress.flags & FULL_MODE) != 0;
+
       for (Probe newProbe : progress.probes.values())
       {
-        Row row = Row.create(newProbe.location, progress.full);
+        Row row = Row.create(newProbe.location, full);
 
         if (columns > 0)
         {
@@ -511,61 +626,6 @@ public final class ProbingProgress extends Progress
         System.out.println();
         DUMPER.dump(System.out, table, 0, rowCount);
       }
-    }
-
-    private static String shorten(StackTraceElement location)
-    {
-      String className = location.getClassName();
-
-      int length = className.length();
-      int i = length;
-      while (--i >= 0)
-      {
-        char c = className.charAt(i);
-        if (c == '.' || c == '$')
-        {
-          ++i;
-          break;
-        }
-      }
-
-      StringBuilder builder = new StringBuilder();
-      builder.append(className, i, length);
-      builder.append('.');
-      builder.append(location.getMethodName());
-
-      if (location.isNativeMethod())
-      {
-        builder.append("(Native Method)");
-      }
-      else
-      {
-        String fileName = location.getFileName();
-        int lineNumber = location.getLineNumber();
-        if (fileName != null && lineNumber >= 0)
-        {
-          builder.append('(');
-          builder.append(fileName);
-          builder.append(':');
-          builder.append(lineNumber);
-          builder.append(')');
-        }
-        else
-        {
-          if (fileName != null)
-          {
-            builder.append('(');
-            builder.append(fileName);
-            builder.append(')');
-          }
-          else
-          {
-            builder.append("(Unknown Source)");
-          }
-        }
-      }
-
-      return builder.toString();
     }
 
     /**
@@ -823,7 +883,6 @@ public final class ProbingProgress extends Progress
         public void body(Table table, int row)
         {
           Range avgTimeRange = null;
-          // Range avgRatioRange = null;
 
           for (int i = 0; i < times.length; i++)
           {
@@ -839,7 +898,6 @@ public final class ProbingProgress extends Progress
               ratioCell.format(PERCENT).value(new Formula.Percent(table.column(timeCol, 1), timeCell));
 
               avgTimeRange = avgTimeRange == null ? timeCell : avgTimeRange.addRanges(timeCell);
-              // avgRatioRange = avgRatioRange == null ? ratioCell : avgRatioRange.addRanges(ratioCell);
             }
           }
 
@@ -864,62 +922,6 @@ public final class ProbingProgress extends Progress
           }
         }
       }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class Probe
-  {
-    private final StackTraceElement location;
-
-    private StackTraceElement[] forkTargets;
-
-    private int ticks;
-
-    private int time;
-
-    public Probe(StackTraceElement location)
-    {
-      this.location = location;
-    }
-
-    public void update(StackTraceElement forkTarget, int ticks, int time)
-    {
-      this.ticks += ticks;
-      this.time += time;
-
-      if (forkTarget != null)
-      {
-        if (forkTargets == null)
-        {
-          forkTargets = new StackTraceElement[] { forkTarget };
-        }
-        else
-        {
-          for (int i = 0; i < forkTargets.length; i++)
-          {
-            StackTraceElement location = forkTargets[i];
-            if (location.equals(forkTarget))
-            {
-              return;
-            }
-          }
-
-          StackTraceElement[] newForkTargets = new StackTraceElement[forkTargets.length + 1];
-          System.arraycopy(forkTargets, 0, newForkTargets, 0, forkTargets.length);
-          newForkTargets[forkTargets.length] = forkTarget;
-
-          forkTargets = newForkTargets;
-        }
-      }
-    }
-
-    @Override
-    public String toString()
-    {
-      return location + " - " + time;
     }
   }
 }

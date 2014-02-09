@@ -21,21 +21,34 @@ import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.om.monitor.SubMonitor;
+
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.dialogs.ProgressMonitorDialog;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.pde.core.target.ITargetDefinition;
 import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetPlatformService;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PlatformUI;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Eike Stepper
@@ -67,6 +80,7 @@ public class TestAction implements IWorkbenchWindowActionDelegate
   {
     try
     {
+      // testProgress();
       // generateFeatureIU();
       initTargetPlatform();
     }
@@ -75,6 +89,50 @@ public class TestAction implements IWorkbenchWindowActionDelegate
       Activator.log(ex);
       ErrorDialog.open(ex);
     }
+  }
+
+  private static void testProgress() throws Exception
+  {
+    Shell shell = PlatformUI.getWorkbench().getDisplay().getActiveShell();
+    new ProgressMonitorDialog(shell).run(true, true, new IRunnableWithProgress()
+    {
+      public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+      {
+        try
+        {
+          recurse(ResourcesPlugin.getWorkspace().getRoot(), monitor);
+        }
+        catch (OperationCanceledException ex)
+        {
+          //$FALL-THROUGH$
+        }
+        catch (CoreException ex)
+        {
+          throw new InvocationTargetException(ex);
+        }
+      }
+
+      public void recurse(IContainer container, IProgressMonitor monitor) throws CoreException
+      {
+        IResource[] members = container.members();
+
+        SubMonitor progress = SubMonitor.convert(monitor, members.length).detectCancelation();
+        progress.subTask(container.getFullPath().toString());
+
+        for (IResource member : members)
+        {
+          if (member instanceof IContainer)
+          {
+            ConcurrencyUtil.sleep(2);
+            recurse((IContainer)member, progress.newChild());
+          }
+          else
+          {
+            progress.skipped();
+          }
+        }
+      }
+    });
   }
 
   private static void generateFeatureIU() throws Exception

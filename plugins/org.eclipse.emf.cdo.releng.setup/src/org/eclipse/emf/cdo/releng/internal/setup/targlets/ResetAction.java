@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
-import org.eclipse.net4j.util.om.monitor.ProbingProgress;
+import org.eclipse.net4j.util.om.monitor.ProbingSubMonitor;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -44,8 +44,7 @@ public class ResetAction implements IWorkbenchWindowActionDelegate
   {
     try
     {
-      ProbingProgress.reportStatistics();
-      ProbingProgress.resetStatistics();
+      ProbingSubMonitor.resetStatistics();
     }
     catch (Throwable ex)
     {

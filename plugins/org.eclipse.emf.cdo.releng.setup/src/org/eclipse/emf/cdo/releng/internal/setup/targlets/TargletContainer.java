@@ -27,7 +27,7 @@ import org.eclipse.net4j.util.XMLUtil;
 import org.eclipse.net4j.util.XMLUtil.ElementHandler;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.om.monitor.Progress;
+import org.eclipse.net4j.util.om.monitor.SubMonitor;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -117,8 +117,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
-
-import static org.eclipse.net4j.util.om.monitor.Progress.progress;
 
 /**
  * @author Eike Stepper
@@ -447,7 +445,7 @@ public class TargletContainer extends AbstractBundleContainer
   {
     try
     {
-      Progress progress = progress(monitor);
+      SubMonitor progress = SubMonitor.convert(monitor, 100).detectCancelation();
       TargletContainerManager manager = TargletContainerManager.getInstance();
 
       String environmentProperties = getEnvironmentProperties();
@@ -456,13 +454,13 @@ public class TargletContainer extends AbstractBundleContainer
 
       IProfile profile = null;
 
-      TargletContainerDescriptor descriptor = manager.getDescriptor(id, progress.fork(2));
-      progress.forkDone();
+      TargletContainerDescriptor descriptor = manager.getDescriptor(id, progress.newChild(2));
+      progress.childDone();
       String workingDigest = descriptor.getWorkingDigest();
       if (workingDigest != null)
       {
-        profile = manager.getProfile(workingDigest, progress.fork(2));
-        progress.forkDone();
+        profile = manager.getProfile(workingDigest, progress.newChild(2));
+        progress.childDone();
       }
       else
       {
@@ -473,7 +471,7 @@ public class TargletContainer extends AbstractBundleContainer
       {
         try
         {
-          IProfile newProfile = updateProfile(environmentProperties, nlProperty, digest, progress.fork(86));
+          IProfile newProfile = updateProfile(environmentProperties, nlProperty, digest, progress.newChild(86));
           if (newProfile != null)
           {
             profile = newProfile;
@@ -492,7 +490,7 @@ public class TargletContainer extends AbstractBundleContainer
         progress.skipped(86);
       }
 
-      generateProfile(profile, progress.fork(10));
+      generateProfile(profile, progress.newChild(10));
       progress.done();
     }
     catch (Throwable t)
@@ -504,15 +502,15 @@ public class TargletContainer extends AbstractBundleContainer
 
   private void generateProfile(IProfile profile, IProgressMonitor monitor) throws CoreException
   {
-    Progress progress = progress(monitor);
+    SubMonitor progress = SubMonitor.convert(monitor, 100).detectCancelation();
 
     List<TargetBundle> bundles = new ArrayList<TargetBundle>();
     List<TargetFeature> features = new ArrayList<TargetFeature>();
 
     if (profile != null)
     {
-      IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), progress.fork(2));
-      generateUnits(result.toUnmodifiableSet(), bundles, features, progress.fork(98));
+      IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), progress.newChild(2));
+      generateUnits(result.toUnmodifiableSet(), bundles, features, progress.newChild(98));
     }
 
     fBundles = bundles.toArray(new TargetBundle[bundles.size()]);
@@ -523,7 +521,7 @@ public class TargletContainer extends AbstractBundleContainer
   private void generateUnits(Set<IInstallableUnit> units, List<TargetBundle> bundles, List<TargetFeature> features,
       IProgressMonitor monitor) throws CoreException
   {
-    Progress progress = progress(monitor, units.size());
+    SubMonitor progress = SubMonitor.convert(monitor, units.size()).detectCancelation();
 
     TargletContainerManager manager = TargletContainerManager.getInstance();
     IFileArtifactRepository cache = manager.getBundlePool();
@@ -595,14 +593,15 @@ public class TargletContainer extends AbstractBundleContainer
   private IProfile updateProfile(String environmentProperties, String nlProperty, String digest,
       IProgressMonitor monitor) throws ProvisionException
   {
-    Progress progress = progress(monitor);
+    SubMonitor progress = SubMonitor.convert(monitor, 100).detectCancelation();
 
     TargletContainerManager manager = TargletContainerManager.getInstance();
-    TargletContainerDescriptor descriptor = manager.getDescriptor(id, progress.fork());
-    progress.forkDone();
+    TargletContainerDescriptor descriptor = manager.getDescriptor(id, progress.newChild());
+    progress.childDone();
 
-    IProfile profile = descriptor.startUpdateTransaction(environmentProperties, nlProperty, digest, progress.fork());
-    progress.forkDone();
+    IProfile profile = descriptor
+        .startUpdateTransaction(environmentProperties, nlProperty, digest, progress.newChild());
+    progress.childDone();
 
     try
     {
@@ -633,8 +632,8 @@ public class TargletContainer extends AbstractBundleContainer
           boolean locateNestedProjects = sourceLocator.isLocateNestedProjects();
 
           Map<IInstallableUnit, File> ius = analyzer.analyze(rootFolder, predicates, locateNestedProjects,
-              progress.fork());
-          progress.forkDone();
+              progress.newChild());
+          progress.childDone();
 
           sources.putAll(ius);
         }
@@ -745,26 +744,26 @@ public class TargletContainer extends AbstractBundleContainer
       context.setProperty(ProvisioningContext.FOLLOW_REPOSITORY_REFERENCES, FALSE);
       context.setProperty(FOLLOW_ARTIFACT_REPOSITORY_REFERENCES, FALSE);
 
-      Version sourceIUVersion = getSourceIUVersion(profile, progress.fork());
-      progress.forkDone();
+      Version sourceIUVersion = getSourceIUVersion(profile, progress.newChild());
+      progress.childDone();
 
       IQuery<IInstallableUnit> query = new IUProfilePropertyQuery(IProfile.PROP_PROFILE_ROOT_IU, TRUE);
-      IQueryResult<IInstallableUnit> installedIUs = profile.query(query, progress.fork());
-      progress.forkDone();
+      IQueryResult<IInstallableUnit> installedIUs = profile.query(query, progress.newChild());
+      progress.childDone();
 
       IProfileChangeRequest request = manager.createProfileChangeRequest(profile);
       request.removeAll(installedIUs.toUnmodifiableSet());
 
-      IQueryable<IInstallableUnit> metadata = context.getMetadata(progress.fork());
-      progress.forkDone();
+      IQueryable<IInstallableUnit> metadata = context.getMetadata(progress.newChild());
+      progress.childDone();
 
       for (InstallableUnit root : roots)
       {
         IQuery<IInstallableUnit> iuQuery = QueryUtil.createIUQuery(root.getID(), root.getVersionRange());
         IQuery<IInstallableUnit> latestQuery = QueryUtil.createLatestQuery(iuQuery);
 
-        IQueryResult<IInstallableUnit> queryResult = metadata.query(latestQuery, progress.fork());
-        progress.forkDone();
+        IQueryResult<IInstallableUnit> queryResult = metadata.query(latestQuery, progress.newChild());
+        progress.childDone();
 
         for (IInstallableUnit iu : queryResult)
         {
@@ -773,27 +772,27 @@ public class TargletContainer extends AbstractBundleContainer
         }
       }
 
-      manager.planAndInstall(request, context, progress.fork());
-      progress.forkDone();
+      manager.planAndInstall(request, context, progress.newChild());
+      progress.childDone();
 
       if (isIncludeSources())
       {
-        IInstallableUnit iu = generateSourceIU(profile, sourceIUVersion, progress.fork());
-        progress.forkDone();
+        IInstallableUnit iu = generateSourceIU(profile, sourceIUVersion, progress.newChild());
+        progress.childDone();
 
         IProfileChangeRequest sourceRequest = manager.createProfileChangeRequest(profile);
         sourceRequest.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
         sourceRequest.add(iu);
 
-        manager.planAndInstall(sourceRequest, context, progress.fork());
-        progress.forkDone();
+        manager.planAndInstall(sourceRequest, context, progress.newChild());
+        progress.childDone();
       }
 
-      Set<File> projectLocations = getProjectLocations(profile, sources, progress.fork());
-      progress.forkDone();
+      Set<File> projectLocations = getProjectLocations(profile, sources, progress.newChild());
+      progress.childDone();
 
-      descriptor.commitUpdateTransaction(digest, projectLocations, progress.fork());
-      progress.forkDone();
+      descriptor.commitUpdateTransaction(digest, projectLocations, progress.newChild());
+      progress.childDone();
 
       progress.done();
       return profile;
@@ -970,7 +969,7 @@ public class TargletContainer extends AbstractBundleContainer
 
   private static Set<File> getProjectLocations(IProfile profile, Map<IInstallableUnit, File> sources,
       IProgressMonitor monitor)
-      {
+  {
     Set<File> projectLocations = new HashSet<File>();
     IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
     for (IInstallableUnit iu : result.toUnmodifiableSet())
@@ -983,7 +982,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
 
     return projectLocations;
-      }
+  }
 
   private static void updateWorkspace(final Set<File> projectLocations) throws Exception
   {
@@ -1266,7 +1265,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
 
     public static Writer toXML(String id, List<Targlet> targlets) throws ParserConfigurationException,
-    TransformerException
+        TransformerException
     {
       DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document document = docBuilder.newDocument();

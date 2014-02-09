@@ -411,21 +411,23 @@ public class TargletContainer extends AbstractBundleContainer
     this.target = target;
   }
 
-  /**
-   * TODO Check if PDE has added {@link AbstractBundleContainer#getResolveBundlesWork()}.
-   */
-  protected int getResolveBundlesWork()
-  {
-    return 100;
-  }
-
-  /**
-   * TODO Check if PDE has added {@link AbstractBundleContainer#getResolveFeaturesWork()}.
-   */
-  protected int getResolveFeaturesWork()
-  {
-    return 0;
-  }
+  // /**
+  // * TODO Check if PDE has added {@link AbstractBundleContainer#getResolveBundlesWork()}.
+  // */
+  // @Override
+  // protected int getResolveBundlesWork()
+  // {
+  // return 999;
+  // }
+  //
+  // /**
+  // * TODO Check if PDE has added {@link AbstractBundleContainer#getResolveFeaturesWork()}.
+  // */
+  // @Override
+  // protected int getResolveFeaturesWork()
+  // {
+  // return 1;
+  // }
 
   @Override
   protected TargetBundle[] resolveBundles(ITargetDefinition target, IProgressMonitor monitor) throws CoreException

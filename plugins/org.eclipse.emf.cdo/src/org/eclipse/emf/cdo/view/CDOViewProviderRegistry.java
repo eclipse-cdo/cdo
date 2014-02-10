@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * A global registry of {@link CDOViewProvider view provider} implementations.
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -41,7 +41,7 @@ public interface CDOViewProviderRegistry extends IContainer<CDOViewProvider>
    * <code>null</code> if no {@link CDOViewProvider view provider} in this registry can provide such a view. The
    * returned {@link Pair pair} contains the provider that provided the view or null if the view was already present in
    * the {@link CDOViewSet view set} of the resource set.
-   * 
+   *
    * @since 4.0
    */
   public Pair<CDOView, CDOViewProvider> provideViewWithInfo(URI uri, ResourceSet resourceSet);
@@ -55,7 +55,7 @@ public interface CDOViewProviderRegistry extends IContainer<CDOViewProvider>
   /**
    * Returns <code>true</code> if the given view provider instance is registered with this registry, <code>false</code>
    * otherwise.
-   * 
+   *
    * @since 4.0
    */
   public boolean hasViewProvider(CDOViewProvider viewProvider);

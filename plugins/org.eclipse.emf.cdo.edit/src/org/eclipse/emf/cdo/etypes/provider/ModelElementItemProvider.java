@@ -40,7 +40,7 @@ import java.util.List;
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.etypes.ModelElement} object.
  * <!-- begin-user-doc
  * -->
- * 
+ *
  * @since 4.0 <!-- end-user-doc -->
  * @generated
  */

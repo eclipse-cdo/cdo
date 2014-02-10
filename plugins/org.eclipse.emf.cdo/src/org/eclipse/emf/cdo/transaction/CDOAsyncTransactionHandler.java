@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 /**
  * Asynchronously executes a delegate handler's pre-event methods. The delegate handler's code may access the
  * {@link CDOView view} without causing deadlocks.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  */

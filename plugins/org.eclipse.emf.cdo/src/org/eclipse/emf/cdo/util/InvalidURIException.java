@@ -21,7 +21,7 @@ import java.text.MessageFormat;
 
 /**
  * An unchecked exception being thrown to indicate problems with the {@link URI} of a {@link CDOResource resource}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.transaction;
 
 /**
  * An empty default implementation of {@link CDOTransactionHandler2}.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */

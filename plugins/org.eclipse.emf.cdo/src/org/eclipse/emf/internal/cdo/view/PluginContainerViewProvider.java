@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * Provides <code>CDOView</code> from <code>CDOSession</code> registered in IPluginContainer
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class PluginContainerViewProvider extends ManagedContainerViewProvider

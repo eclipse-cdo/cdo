@@ -16,7 +16,7 @@ import java.util.Set;
 
 /**
  * A strategy used to customize the default conflict resolution behaviour of {@link CDOTransaction transactions}.
- * 
+ *
  * @see CDOTransaction.Options#addConflictResolver(CDOConflictResolver)
  * @author Eike Stepper
  * @since 2.0
@@ -40,7 +40,7 @@ public interface CDOConflictResolver
 
   /**
    * A mix-in interface for {@link CDOConflictResolver conflict resolvers} that need to know about non-conflicting invalidations.
-   * 
+   *
    * @author Eike Stepper
    * @since 4.3
    */

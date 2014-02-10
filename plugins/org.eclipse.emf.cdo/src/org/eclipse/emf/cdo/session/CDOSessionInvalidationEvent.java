@@ -25,7 +25,7 @@ import java.util.Map;
  * A {@link CDOSessionEvent session event} fired when passive updates (commit notifications) are being received from a
  * remote repository. {@link CDOSession.Options#setPassiveUpdateEnabled(boolean) Passive updates} must be enabled for
  * this event to be fired.
- * 
+ *
  * @author Eike Stepper
  * @see CDOInvalidationNotification
  * @see CDOAdapterPolicy
@@ -40,7 +40,7 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOCommitI
   /**
    * Returns the transaction that was committed and thereby caused this event to be emitted if this transaction is
    * local, or <code>null</code> if the transaction was remote.
-   * 
+   *
    * @since 4.0
    */
   public CDOTransaction getLocalTransaction();

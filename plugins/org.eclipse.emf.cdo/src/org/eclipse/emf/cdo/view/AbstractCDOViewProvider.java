@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 /**
  * Base logic to handle CDOViewProvider priority and regular expression.
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 2.0
  * @apiviz.exclude
@@ -89,7 +89,7 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider
 
   /**
    * Must be overwritten for non-canonical URI formats!
-   * 
+   *
    * @since 4.0
    */
   public URI getResourceURI(CDOView view, String path)

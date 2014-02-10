@@ -47,7 +47,7 @@ import java.util.List;
  * factory convert EMF adapter notifications into calls to {@link #fireNotifyChanged fireNotifyChanged}. The adapters
  * also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
  * begin-user-doc -->
- * 
+ *
  * @since 4.0 <!-- end-user-doc -->
  * @generated
  */
@@ -81,7 +81,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory imple
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -108,7 +108,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory imple
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.etypes.Annotation} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AnnotationItemProvider annotationItemProvider;
@@ -182,7 +182,7 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory imple
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -255,14 +255,16 @@ public class EtypesItemProviderAdapterFactory extends EtypesAdapterFactory imple
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void dispose()
   {
     if (annotationItemProvider != null)
+    {
       annotationItemProvider.dispose();
+    }
   }
 
 }

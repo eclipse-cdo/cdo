@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -24,7 +24,7 @@ import org.eclipse.emf.common.notify.Adapter;
  * This special marker interface is intended to be used with {@link CDOAdapterPolicy#CDO}. Note that you can also define
  * your own {@link CDOAdapterPolicy adapter policy} and {@link Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)
  * register} it with the {@link CDOView view} to make your own adapters trigger change subscription.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @apiviz.uses {@link CDONotification} - - receives

@@ -24,7 +24,7 @@ import java.util.Set;
  * A {@link CDOViewEvent view event} fired when passive updates (commit notifications) are being received from a remote
  * repository. {@link Options#setPassiveUpdateEnabled(boolean) Passive updates} must be enabled for this event to be
  * fired.
- * 
+ *
  * @see CDOSessionInvalidationEvent
  * @see CDOInvalidationNotification
  * @see CDOAdapterPolicy
@@ -49,7 +49,7 @@ public interface CDOViewInvalidationEvent extends CDOViewEvent
   /**
    * Returns a map with the {@link CDORevisionDelta change deltas} per object. Note that this map may contain object/
    * <code>null</code> mappings, if the delta is not available!
-   * 
+   *
    * @since 4.0
    */
   public Map<CDOObject, CDORevisionDelta> getRevisionDeltas();

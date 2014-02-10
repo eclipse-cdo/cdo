@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.CDOState;
 /**
  * Call-back handler used by {@link CDOView views} to tell implementors of this interface about {@link CDOState state}
  * changes of {@link CDOObject objects}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @see CDOView#addObjectHandler(CDOObjectHandler)

@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Model Element</b></em>'.
- * 
+ *
  * @since 4.0 <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -76,7 +76,7 @@ public abstract class ModelElementImpl extends CDOObjectImpl implements ModelEle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public Annotation getAnnotation(String source)

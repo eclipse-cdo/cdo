@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -47,7 +47,7 @@ import java.util.List;
  * factory convert EMF adapter notifications into calls to {@link #fireNotifyChanged fireNotifyChanged}. The adapters
  * also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
  * begin-user-doc --> @since 2.0 <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory implements ComposeableAdapterFactory,
@@ -80,7 +80,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -131,7 +131,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.eresource.CDOResource} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected CDOResourceItemProvider cdoResourceItemProvider;
@@ -156,7 +156,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.eresource.CDOBinaryResource} instances.
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
@@ -182,7 +182,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.eresource.CDOTextResource} instances.
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
@@ -257,7 +257,7 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -330,20 +330,28 @@ public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void dispose()
   {
     if (cdoResourceFolderItemProvider != null)
+    {
       cdoResourceFolderItemProvider.dispose();
+    }
     if (cdoResourceItemProvider != null)
+    {
       cdoResourceItemProvider.dispose();
+    }
     if (cdoBinaryResourceItemProvider != null)
+    {
       cdoBinaryResourceItemProvider.dispose();
+    }
     if (cdoTextResourceItemProvider != null)
+    {
       cdoTextResourceItemProvider.dispose();
+    }
   }
 
 }

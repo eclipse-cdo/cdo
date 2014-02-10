@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EFactory;
 /**
  * <!-- begin-user-doc --> The <b>Factory</b> for the Eresource model. It provides a create method for each non-abstract
  * class of the model.
- * 
+ *
  * @apiviz.exclude
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
@@ -34,7 +34,7 @@ public interface EresourceFactory extends EFactory
   /**
    * Returns a new object of class '<em>CDO Resource Folder</em>'.
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 2.0<!-- end-user-doc -->
    * @return a new object of class '<em>CDO Resource Folder</em>'.
    * @generated
@@ -52,7 +52,7 @@ public interface EresourceFactory extends EFactory
   /**
    * Returns a new object of class '<em>CDO Binary Resource</em>'.
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @return a new object of class '<em>CDO Binary Resource</em>'.
    * @generated
@@ -62,7 +62,7 @@ public interface EresourceFactory extends EFactory
   /**
    * Returns a new object of class '<em>CDO Text Resource</em>'.
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @return a new object of class '<em>CDO Text Resource</em>'.
    * @generated

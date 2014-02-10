@@ -24,7 +24,7 @@ import java.text.MessageFormat;
 /**
  * Exception occurs when an object isn't valid anymore. It was valid when we create it, but not anymore. The cause could
  * be that another {@link CDOTransaction} removed it.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

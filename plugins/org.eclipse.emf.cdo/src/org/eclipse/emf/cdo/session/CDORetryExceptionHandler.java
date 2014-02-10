@@ -17,7 +17,7 @@ import java.text.MessageFormat;
 /**
  * A {@link ExceptionHandler session exection handler} that retries the failed protocol operation a configurable number
  * of times.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */

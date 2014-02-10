@@ -23,7 +23,7 @@ import java.util.concurrent.locks.Lock;
 /**
  * A read or write lock on an {@link CDOObject object} as returned by {@link CDOObject#cdoReadLock()} or
  * {@link CDOObject#cdoWriteLock()}.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 
 /**
  * Base class for <code>ManagedContainer</code> based <code>CDOViewProvider</code>
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 2.0
  * @apiviz.exclude

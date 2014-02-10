@@ -17,7 +17,7 @@ package org.eclipse.emf.cdo.transaction;
  * A marker interface for use with {@link CDOTransaction#addTransactionHandler(CDOTransactionHandlerBase)
  * CDOTransaction.addTransactionHandler()} and
  * {@link CDOTransaction#removeTransactionHandler(CDOTransactionHandlerBase) CDOTransaction.removeTransactionHandler()}.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */

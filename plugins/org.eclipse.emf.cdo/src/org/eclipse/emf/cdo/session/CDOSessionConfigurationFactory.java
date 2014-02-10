@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.session;
 
 /**
  * Creates {@link CDOSessionConfiguration session configuration} instances.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @apiviz.landmark

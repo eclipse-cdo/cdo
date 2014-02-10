@@ -290,14 +290,14 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
 
   /**
    * Returns a list of the instances of the given type.
-   * 
+   *
    * @since 4.3
    */
   public <T extends EObject> List<T> queryInstances(EClass type);
 
   /**
    * Returns an iterator over the instances of the given type. The underlying query will be executed asynchronously.
-   * 
+   *
    * @since 4.3
    */
   public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type);
@@ -312,7 +312,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @param sourceReferences
    *          The reference features that referencing objects are requested for, or an empty array if all reference
    *          features are to be used in the request.
-   *          
+   *
    * @since 4.0
    * @see CDOView#queryXRefs(Set, EReference...)
    * @see CDOView#queryXRefsAsync(Set, EReference...)
@@ -394,7 +394,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
 
   /**
    * Reloads the given {@link CDOObject objects} from the repository.
-   * 
+   *
    * @deprecated As of 4.3 no longer supported because it is unsafe to reload single objects.
    */
   @Deprecated

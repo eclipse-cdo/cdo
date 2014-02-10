@@ -16,7 +16,7 @@ package org.eclipse.emf.cdo.transaction;
  * Creates a save point in a {@link CDOUserTransaction} that can be used to roll back a part of the transaction.
  * <p>
  * <b>Note:</b> Save points do not flush to disk. Everything is done in memory on the client side.
- * 
+ *
  * @author Simon McDuff
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

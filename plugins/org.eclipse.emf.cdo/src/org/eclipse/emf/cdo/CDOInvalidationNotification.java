@@ -26,7 +26,7 @@ import org.eclipse.emf.common.notify.Notification;
  * enabled for the view. Since the notifications are constructed out of the information in a
  * {@link CDOSessionInvalidationEvent} (i.e. {@link CDOID CDOIDs}) they don't carry detailed change deltas. All the
  * methods related to change deltas throw {@link UnsupportedOperationException UnsupportedOperationExceptions}.
- * 
+ *
  * @author Simon McDuff
  * @see CDOSessionInvalidationEvent
  * @see CDOAdapterPolicy

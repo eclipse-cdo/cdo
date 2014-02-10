@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model.
- * 
+ *
  * @since 4.0 <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.etypes.EtypesPackage
  * @generated

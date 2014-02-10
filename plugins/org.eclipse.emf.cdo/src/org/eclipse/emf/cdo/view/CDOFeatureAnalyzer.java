@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Eike Stepper - maintenance
@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * A call-back interface that is called by a {@link CDOView view} on each model read access.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @apiviz.exclude

@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * A policy that allows to specify valid {@link Adapter} / {@link EObject} combinations.
- * 
+ *
  * @author Simon McDuff
  * @see CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)
  * @see CDOView.Options#setStrongReferencePolicy(CDOAdapterPolicy)
@@ -92,7 +92,7 @@ public interface CDOAdapterPolicy
   /**
    * Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behaviour,
    * <code>false</code> otherwise.
-   * 
+   *
    * @see CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)
    * @see CDOView.Options#setStrongReferencePolicy(CDOAdapterPolicy)
    */

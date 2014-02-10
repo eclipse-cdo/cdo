@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>.
- * 
+ *
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * @generated
  */
@@ -44,7 +44,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     try
     {
       EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Eresource/4.0.0"); //$NON-NLS-1$ 
+          .getEFactory("http://www.eclipse.org/emf/CDO/Eresource/4.0.0"); //$NON-NLS-1$
       if (theEresourceFactory != null)
       {
         return theEresourceFactory;
@@ -71,20 +71,19 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("cast")
   @Override
   public EObject create(EClass eClass)
   {
     switch (eClass.getClassifierID())
     {
     case EresourcePackage.CDO_RESOURCE_FOLDER:
-      return (EObject)createCDOResourceFolder();
+      return createCDOResourceFolder();
     case EresourcePackage.CDO_RESOURCE:
-      return (EObject)createCDOResource();
+      return createCDOResource();
     case EresourcePackage.CDO_BINARY_RESOURCE:
-      return (EObject)createCDOBinaryResource();
+      return createCDOBinaryResource();
     case EresourcePackage.CDO_TEXT_RESOURCE:
-      return (EObject)createCDOTextResource();
+      return createCDOTextResource();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -124,7 +123,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 2.0 <!-- end-user-doc -->
    * @generated
    */
@@ -146,7 +145,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
@@ -158,7 +157,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.1 <!-- end-user-doc -->
    * @generated
    */
@@ -170,7 +169,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public URI createURIFromString(EDataType eDataType, String initialValue)
@@ -180,7 +179,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public String convertURIToString(EDataType eDataType, Object instanceValue)

@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionEvent.MessageReceived;
  * Represents a remote session that is connected to the same repository as the
  * {@link CDORemoteSessionManager#getLocalSession() local session} that the {@link #getManager() remote session manager}
  * points to.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -48,7 +48,7 @@ public interface CDORemoteSession extends Comparable<CDORemoteSession>
 
   /**
    * Sends a unicast message to this remote session if it is subscribed.
-   * 
+   *
    * @return <code>true</code> if the server received the custom data message, <code>false</code> otherwise.
    *         <b>Note:</b> No assumption must be made on whether the recipient session received the message and was able
    *         to handle it adequately!

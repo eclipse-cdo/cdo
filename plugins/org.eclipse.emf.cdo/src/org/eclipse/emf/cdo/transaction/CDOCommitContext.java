@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * Provides a context for commit operations.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

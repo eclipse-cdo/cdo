@@ -19,7 +19,7 @@ import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO Resource Node</b></em>'.
- * 
+ *
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
  *
@@ -102,7 +102,7 @@ public interface CDOResourceNode extends CDOObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getName <em>Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -128,7 +128,7 @@ public interface CDOResourceNode extends CDOObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getPath <em>Path</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Path</em>' attribute.
    * @see #getPath()

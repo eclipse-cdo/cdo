@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.session.CDOSession.Options;
 /**
  * Represents facilities that can receive
  * {@link org.eclipse.emf.cdo.session.CDOSession.Options#setPassiveUpdateEnabled(boolean) passive updates}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -39,7 +39,7 @@ public interface CDOUpdatable
   /**
    * Blocks the calling thread until a commit operation with the given time stamp (or higher) has occured or the given
    * timeout has expired.
-   * 
+   *
    * @return <code>true</code> if the specified commit operation has occured within the given timeout period,
    *         <code>false</code> otherwise.
    */

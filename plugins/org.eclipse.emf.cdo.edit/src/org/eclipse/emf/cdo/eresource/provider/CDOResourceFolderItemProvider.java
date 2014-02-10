@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.eresource.CDOResourceFolder} object. <!--
  * begin-user-doc -->
- * 
+ *
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
  * @since 2.0
@@ -116,7 +116,7 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -128,7 +128,7 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
 
   /**
    * Returns the parent of the folder. Might be another folder, or the root resource
-   * 
+   *
    * @ADDED
    */
   @Override

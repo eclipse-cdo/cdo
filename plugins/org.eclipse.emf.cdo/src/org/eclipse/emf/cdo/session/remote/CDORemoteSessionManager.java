@@ -40,7 +40,7 @@ import java.util.Set;
  * <li> {@link CDORemoteSessionEvent.MessageReceived} to deliver custom data
  * {@link CDORemoteSession#sendMessage(CDORemoteSessionMessage) sent} from other sessions .
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -69,7 +69,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
    * <li>At least one {@link IListener listener} is registered with this remote session manager.
    * <li>{@link #isForceSubscription() Force subscription} is <code>true</code>.
    * </ol>
-   * 
+   *
    * @see #addListener(IListener)
    * @see #setForceSubscription(boolean)
    */
@@ -79,7 +79,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
    * Returns <code>true</code> if this CDORemoteSessionManager shall be subscribed to changes in the set of remote
    * sessions and delivers {@link MessageReceived custom data events} even if no {@link IListener listener} is
    * registered, <code>false</code> otherwise.
-   * 
+   *
    * @see #addListener(IListener)
    * @see #setForceSubscription(boolean)
    */
@@ -88,7 +88,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
   /**
    * Enables or disables subscription to changes in the set of remote sessions even if no {@link IListener listener} is
    * registered.
-   * 
+   *
    * @see #addListener(IListener)
    * @see #setForceSubscription(boolean)
    */
@@ -96,7 +96,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
 
   /**
    * Sends a multicast message to the subscribed recipients.
-   * 
+   *
    * @return The set of {@link CDORemoteSession recipients} that the message has been forwarded to by the server.
    *         <b>Note:</b> No assumption must be made on whether a recipient session received the message and was able to
    *         handle it adequately!
@@ -107,7 +107,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
   /**
    * Same as {@link #sendMessage(CDORemoteSessionMessage, CDORemoteSession...)} but with a recipients {@link Collection
    * collection}.
-   * 
+   *
    * @since 3.0
    */
   public Set<CDORemoteSession> sendMessage(CDORemoteSessionMessage message, Collection<CDORemoteSession> recipients);
@@ -116,7 +116,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
    * An {@link IEvent event} that is fired by a {@link #getSource() remote session manager} after the
    * {@link CDORemoteSessionManager#isSubscribed() subscription mode} of the
    * {@link CDORemoteSessionManager#getLocalSession() local session} changed.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.0
    * @noextend This interface is not intended to be extended by clients.
@@ -138,7 +138,7 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
 
   /**
    * A default adapter for all kinds of {@link CDORemoteSession remote session} related events.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.0
    */

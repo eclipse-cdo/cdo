@@ -99,16 +99,16 @@ public interface CDOObject extends EObject, CDOWithID
 
   /**
    * Returns the {@link CDORevision revision} of this object, or <code>null</code> if this object does currently not
-   * have a revision and loadOnDemand is <code>false</code>. The revision is used to store all modeled data of this object, 
+   * have a revision and loadOnDemand is <code>false</code>. The revision is used to store all modeled data of this object,
    * together with some technical data required by the framework.
-   * 
+   *
    * @since 4.3
    */
   public CDORevision cdoRevision(boolean loadOnDemand);
 
   /**
    * Returns the permission of the current {@link CDOSession session}'s user for this object.
-   * 
+   *
    * @since 4.3
    */
   public CDOPermission cdoPermission();

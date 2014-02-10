@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
  * It is important since these objects could changed and we need to keep a reference to {@link EObject} until the end.
  * It is the reason why {@link CDOStore} always call {@link InternalCDOView#convertObjectToID(Object, boolean)} with
  * true.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

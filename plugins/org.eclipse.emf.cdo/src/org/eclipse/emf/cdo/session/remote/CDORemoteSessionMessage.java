@@ -25,7 +25,7 @@ import java.text.MessageFormat;
 
 /**
  * A message from a {@link CDORemoteSession remote session}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -79,7 +79,7 @@ public final class CDORemoteSessionMessage
   /**
    * Returns the type of this message that enables {@link IListener message handlers} to decide whether to react on this
    * message or not.
-   * 
+   *
    * @return the message type, never <code>null</code>.
    */
   public String getType()
@@ -89,7 +89,7 @@ public final class CDORemoteSessionMessage
 
   /**
    * Returns the priority of this message.
-   * 
+   *
    * @return the message priority, never <code>null</code>.
    */
   public Priority getPriority()
@@ -170,7 +170,7 @@ public final class CDORemoteSessionMessage
 
   /**
    * Enumerates the possible {@link CDORemoteSessionMessage remote session message} priorities.
-   * 
+   *
    * @author Eike Stepper
    */
   public enum Priority

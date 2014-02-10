@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * Collects and updates {@link CDOFetchRule fetch rules} for {@link CDORevision revisions}, usually based on
  * {@link CDOFeatureAnalyzer feature analyzer} statistics.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

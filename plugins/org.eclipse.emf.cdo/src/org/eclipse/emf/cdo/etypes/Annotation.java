@@ -16,7 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Annotation</b></em>'.
- * 
+ *
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
@@ -56,7 +56,7 @@ public interface Annotation extends ModelElement
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.etypes.Annotation#getSource <em>Source</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Source</em>' attribute.
    * @see #getSource()

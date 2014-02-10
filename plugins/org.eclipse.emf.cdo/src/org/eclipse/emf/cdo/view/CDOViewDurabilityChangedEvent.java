@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.view;
 /**
  * A {@link CDOViewEvent view event} fired when a {@link CDOView view} has been made
  * {@link CDOView#enableDurableLocking(boolean) durable} or volatile.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

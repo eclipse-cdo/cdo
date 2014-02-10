@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Annotation</b></em>'.
- * 
+ *
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * <p>

@@ -28,6 +28,7 @@ import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -52,7 +53,7 @@ public class DiffieHellman
 
     private final String realm;
 
-    private final KeyAgreement keyAgree;
+    private final PrivateKey privateKey;
 
     private final Challenge challenge;
 
@@ -67,9 +68,7 @@ public class DiffieHellman
         keyPairGenerator.initialize(dhParamSpec);
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
-        // Create and initialize DH KeyAgreement object
-        keyAgree = KeyAgreement.getInstance("DH");
-        keyAgree.init(keyPair.getPrivate());
+        privateKey = keyPair.getPrivate();
 
         // Encode public key
         byte[] pubKeyEnc = keyPair.getPublic().getEncoded();
@@ -111,6 +110,10 @@ public class DiffieHellman
         KeyFactory keyFactory = KeyFactory.getInstance("DH");
         X509EncodedKeySpec x509KeySpec = new X509EncodedKeySpec(response.getClientPubKeyEnc());
         PublicKey pubKey = keyFactory.generatePublic(x509KeySpec);
+
+        // Create and initialize DH KeyAgreement object
+        KeyAgreement keyAgree = KeyAgreement.getInstance("DH");
+        keyAgree.init(privateKey);
 
         // Use Client's public key for the first (and only) phase of her version of the DH protocol.
         keyAgree.doPhase(pubKey, true);

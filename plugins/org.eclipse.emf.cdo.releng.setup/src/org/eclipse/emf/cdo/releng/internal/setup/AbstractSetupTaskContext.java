@@ -254,7 +254,12 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   public String expandString(String string)
   {
-    return expandString(string, null);
+    return expandString(string, false);
+  }
+
+  public String expandString(String string, boolean secure)
+  {
+    return expandString(string, null, secure);
   }
 
   public Set<String> getVariables(String string)
@@ -284,7 +289,12 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     return result;
   }
 
-  public String expandString(String string, Set<String> keys)
+  protected String expandString(String string, Set<String> keys)
+  {
+    return expandString(string, keys, false);
+  }
+
+  private String expandString(String string, Set<String> keys, boolean secure)
   {
     if (string == null)
     {
@@ -321,17 +331,28 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
         String value = lookup(key);
         if (value == null)
         {
-          if (keys != null)
+          value = lookupSecurely(key); // If the value is in secure store, don't prompt for it
+
+          if (value == null || !secure)
           {
-            unresolved = true;
-            keys.add(key);
+            if (value == null && keys != null)
+            {
+              unresolved = true;
+              keys.add(key);
+            }
+            else if (!unresolved)
+            {
+              result.append(matcher.group());
+            }
           }
-          else
+
+          if (!secure)
           {
-            result.append(matcher.group());
+            value = null;
           }
         }
-        else
+
+        if (value != null)
         {
           String filters = matcher.group(4);
           if (filters != null)
@@ -360,6 +381,59 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
     result.append(string.substring(previous));
     return result.toString();
+  }
+
+  public static void main(String[] args) throws Exception
+  {
+    final Map<Object, Object> secureMap = new HashMap<Object, Object>();
+    secureMap.put("foo\\secure.id", "stepper");
+
+    AbstractSetupTaskContext context = new AbstractSetupTaskContext(null)
+    {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      protected String lookupSecurely(String key)
+      {
+        return (String)secureMap.get(key);
+      }
+
+      public boolean isCancelled()
+      {
+        return false;
+      }
+
+      public void log(String line)
+      {
+      }
+
+      public void log(String line, boolean filter)
+      {
+      }
+
+      public void log(IStatus status)
+      {
+      }
+
+      public void log(Throwable t)
+      {
+      }
+    };
+
+    context.put("user.id", "stepper");
+
+    Set<String> keys = new HashSet<String>();
+    System.out.println(context.expandString("${bogus.id}", keys, false) + " --> " + keys);
+    keys.clear();
+    System.out.println(context.expandString("${bogus.id}", keys, true) + " --> " + keys);
+    keys.clear();
+    System.out.println(context.expandString("${user.id}", keys, false) + " --> " + keys);
+    keys.clear();
+    System.out.println(context.expandString("${user.id}", keys, true) + " --> " + keys);
+    keys.clear();
+    System.out.println(context.expandString("${foo\\secure.id}", keys, false) + " --> " + keys);
+    keys.clear();
+    System.out.println(context.expandString("${foo\\secure.id}", keys, true) + " --> " + keys);
   }
 
   public URI redirect(URI uri)
@@ -468,6 +542,12 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
       return object.toString();
     }
 
+    return null;
+  }
+
+  protected String lookupSecurely(String key)
+  {
+    // TODO for Julian
     return null;
   }
 
@@ -588,50 +668,5 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   public interface StringFilter
   {
     public String filter(String value);
-  }
-
-  public static void main(String[] args)
-  {
-    for (String value : new String[] { "$${foo}", "${foo|uri}", "${bar}", "$$", "{$$}", "${$foo}}", "${${foo}}",
-        "${${poo}}", "$a$b" })
-    {
-      Set<String> keys = new HashSet<String>();
-      AbstractSetupTaskContext context = new AbstractSetupTaskContext(Trigger.BOOTSTRAP)
-      {
-        private static final long serialVersionUID = 1L;
-
-        {
-          put("foo", "d:/stuff/junk");
-          put("poo", "foo");
-        }
-
-        public void log(Throwable t)
-        {
-        }
-
-        public void log(IStatus status)
-        {
-        }
-
-        public void log(String line)
-        {
-        }
-
-        public void log(String line, boolean filter)
-        {
-        }
-
-        public boolean isCancelled()
-        {
-          return false;
-        }
-      };
-
-      String expandedString = context.expandString(value, keys);
-      System.err.println("'" + value + "' -> '" + expandedString + "' -> '" + context.expandString(value) + "' -> "
-          + context.getVariables(value) + " ->" + keys);
-
-      System.err.println("  '" + value + "' -> '" + escape(value) + "' -> '" + context.expandString(escape(value)));
-    }
   }
 }

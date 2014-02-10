@@ -16,4 +16,6 @@ package org.eclipse.emf.cdo.releng.setup.util;
 public interface StringExpander
 {
   public String expandString(String string);
+
+  public String expandString(String string, boolean secure);
 }

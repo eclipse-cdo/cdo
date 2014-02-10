@@ -29,7 +29,7 @@ import java.util.Map;
  * <p>
  * </p>
  *
- * @generated NOT
+ * @generated
  */
 public abstract class CDOFileResourceImpl<IO> extends CDOResourceLeafImpl implements CDOFileResource<IO>
 {

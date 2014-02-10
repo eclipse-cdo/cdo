@@ -107,7 +107,7 @@ public class EresourceAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseCDOFileResource(CDOFileResource<?> object)
+    public <IO> Adapter caseCDOFileResource(CDOFileResource<IO> object)
     {
       return createCDOFileResourceAdapter();
     }

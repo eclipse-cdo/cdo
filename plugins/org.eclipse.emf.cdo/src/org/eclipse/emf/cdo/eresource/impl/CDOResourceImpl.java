@@ -89,7 +89,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>CDO Resource</b></em>'.
  *
- * @extends Resource.Internal
+ * @extends InternalCDOResource
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -108,7 +108,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @generated
  */
-public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOResource
+@SuppressWarnings("unused")
+public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource, InternalCDOResource
 {
   private static final EReference CDO_RESOURCE_CONTENTS = EresourcePackage.eINSTANCE.getCDOResource_Contents();
 
@@ -1195,7 +1196,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
    * @return the URI converter.
    * @ADDED
    */
-  @SuppressWarnings("unused")
   private URIConverter getURIConverter()
   {
     return getResourceSet() == null ? getDefaultURIConverter() : getResourceSet().getURIConverter();

@@ -811,7 +811,7 @@ public interface EresourcePackage extends EPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for data type '<em>Diagnostic</em>'.
    * @see org.eclipse.emf.ecore.resource.Resource.Diagnostic
-   * @model instanceClass="org.eclipse.emf.ecore.resource.Resource.Diagnostic" serializeable="false"
+   * @model instanceClass="org.eclipse.emf.ecore.resource.Resource$Diagnostic" serializeable="false"
    * @generated
    */
   EDataType getDiagnostic();

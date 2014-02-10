@@ -22,13 +22,13 @@ import org.eclipse.emf.cdo.common.lob.CDOLob;
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOFileResource()
  * @model abstract="true"
- * @generated NOT
+ * @generated
  */
 public interface CDOFileResource<IO> extends CDOResourceLeaf
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @model kind="operation" dataType="org.eclipse.emf.cdo.etypes.Lob" required="true"
+   * @model kind="operation" dataType="org.eclipse.emf.cdo.etypes.Lob<IO>" required="true"
    * @generated
    */
   CDOLob<IO> getContents();

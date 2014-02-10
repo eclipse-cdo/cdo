@@ -30,7 +30,7 @@ import java.io.InputStream;
  * </ul>
  * </p>
  *
- * @generated NOT
+ * @generated
  */
 public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream> implements CDOBinaryResource
 {

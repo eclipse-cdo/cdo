@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.eresource.provider;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+//import org.eclipse.emf.cdo.eresource.EresourceFactory;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
+//import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -201,6 +203,17 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   public Object getImage(Object object)
   {
     return overlayImage(object, getResourceLocator().getImage("full/obj16/CDOResource")); //$NON-NLS-1$
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected boolean shouldComposeCreationImage()
+  {
+    return true;
   }
 
   /**

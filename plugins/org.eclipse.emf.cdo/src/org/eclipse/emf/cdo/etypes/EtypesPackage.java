@@ -17,7 +17,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 /**
- * <!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
+ * <!-- begin-user-doc -->
+ * The <b>Package</b> for the model. It contains accessors for the meta objects to represent
  * <ul>
  * <li>each class,</li>
  * <li>each feature of each class,</li>
@@ -26,7 +27,8 @@ import org.eclipse.emf.ecore.EReference;
  * </ul>
  *
  * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->
+ * @noimplement This interface is not intended to be implemented by clients.
+ * <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.etypes.EtypesFactory
  * @model kind="package"
  * @generated
@@ -187,6 +189,28 @@ public interface EtypesPackage extends EPackage
   int LOB = 4;
 
   /**
+   * The meta object id for the '<em>Input Stream</em>' data type.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see java.io.InputStream
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getInputStream()
+   * @generated
+   */
+  int INPUT_STREAM = 5;
+
+  /**
+   * The meta object id for the '<em>Reader</em>' data type.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @see java.io.Reader
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getReader()
+   * @generated
+   */
+  int READER = 6;
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.etypes.ModelElement <em>Model Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    *
@@ -301,6 +325,30 @@ public interface EtypesPackage extends EPackage
    * @generated
    */
   EDataType getLob();
+
+  /**
+   * Returns the meta object for data type '{@link java.io.InputStream <em>Input Stream</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Input Stream</em>'.
+   * @see java.io.InputStream
+   * @model instanceClass="java.io.InputStream" serializeable="false"
+   * @generated
+   */
+  EDataType getInputStream();
+
+  /**
+   * Returns the meta object for data type '{@link java.io.Reader <em>Reader</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Reader</em>'.
+   * @see java.io.Reader
+   * @model instanceClass="java.io.Reader" serializeable="false"
+   * @generated
+   */
+  EDataType getReader();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -419,6 +467,28 @@ public interface EtypesPackage extends EPackage
      * @generated
      */
     EDataType LOB = eINSTANCE.getLob();
+
+    /**
+     * The meta object literal for the '<em>Input Stream</em>' data type.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see java.io.InputStream
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getInputStream()
+     * @generated
+     */
+    EDataType INPUT_STREAM = eINSTANCE.getInputStream();
+
+    /**
+     * The meta object literal for the '<em>Reader</em>' data type.
+     * <!-- begin-user-doc -->
+     * @since 4.3
+     * <!-- end-user-doc -->
+     * @see java.io.Reader
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getReader()
+     * @generated
+     */
+    EDataType READER = eINSTANCE.getReader();
 
   }
 

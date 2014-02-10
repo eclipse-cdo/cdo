@@ -24,8 +24,10 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
+
+import java.io.InputStream;
+import java.io.Reader;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
@@ -53,6 +55,20 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * @generated
    */
   private EDataType lobEDataType = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType inputStreamEDataType = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType readerEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -114,9 +130,6 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
         .get(eNS_URI) : new EtypesPackageImpl());
 
     isInited = true;
-
-    // Initialize simple dependencies
-    EcorePackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theEtypesPackage.createPackageContents();
@@ -216,6 +229,28 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EDataType getInputStream()
+  {
+    return inputStreamEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.3
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EDataType getReader()
+  {
+    return readerEDataType;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -277,6 +312,8 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     blobEDataType = createEDataType(BLOB);
     clobEDataType = createEDataType(CLOB);
     lobEDataType = createEDataType(LOB);
+    inputStreamEDataType = createEDataType(INPUT_STREAM);
+    readerEDataType = createEDataType(READER);
   }
 
   /**
@@ -304,10 +341,8 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
-    // Obtain other dependent packages
-    EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-
     // Create type parameters
+    addETypeParameter(lobEDataType, "IO"); //$NON-NLS-1$
 
     // Set bounds for type parameters
 
@@ -324,17 +359,17 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
         "annotations", null, 0, -1, ModelElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     EOperation op = addEOperation(modelElementEClass, getAnnotation(), "getAnnotation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-    addEParameter(op, theEcorePackage.getEString(), "source", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    addEParameter(op, ecorePackage.getEString(), "source", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(annotationEClass, Annotation.class,
         "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(
         getAnnotation_Source(),
-        theEcorePackage.getEString(),
+        ecorePackage.getEString(),
         "source", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getAnnotation_Details(),
-        theEcorePackage.getEStringToStringMapEntry(),
+        ecorePackage.getEStringToStringMapEntry(),
         null,
         "details", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
@@ -344,19 +379,22 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
         "modelElement", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getAnnotation_Contents(),
-        theEcorePackage.getEObject(),
+        ecorePackage.getEObject(),
         null,
         "contents", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
     initEReference(
         getAnnotation_References(),
-        theEcorePackage.getEObject(),
+        ecorePackage.getEObject(),
         null,
         "references", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
     // Initialize data types
-    initEDataType(blobEDataType, CDOBlob.class, "Blob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEDataType(clobEDataType, CDOClob.class, "Clob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEDataType(lobEDataType, CDOLob.class, "Lob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(blobEDataType, CDOBlob.class, "Blob", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(clobEDataType, CDOClob.class, "Clob", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(lobEDataType, CDOLob.class, "Lob", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(inputStreamEDataType, InputStream.class,
+        "InputStream", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEDataType(readerEDataType, Reader.class, "Reader", !IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
     // Create resource
     createResource(eNS_URI);

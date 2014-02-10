@@ -69,6 +69,60 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/eresource/util/EresourceSwitch.java" type="org.eclipse.emf.cdo.eresource.util.EresourceSwitch">
+        <filter id="420679712">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.eresource.util.EresourceSwitch.caseCDOFileResource(CDOFileResource&lt;?&gt;)"/>
+                <message_argument value="IO"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/etypes/EtypesPackage.java" type="org.eclipse.emf.cdo.etypes.EtypesPackage$Literals">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.EtypesPackage.Literals"/>
+                <message_argument value="INPUT_STREAM"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.EtypesPackage.Literals"/>
+                <message_argument value="READER"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/etypes/impl/EtypesFactoryImpl.java" type="org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl"/>
+                <message_argument value="convertBlobToString(EDataType, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl"/>
+                <message_argument value="convertClobToString(EDataType, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl"/>
+                <message_argument value="convertLobToString(EDataType, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl"/>
+                <message_argument value="createBlobFromString(EDataType, String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.etypes.impl.EtypesFactoryImpl"/>
+                <message_argument value="createClobFromString(EDataType, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/session/CDORepositoryInfo.java" type="org.eclipse.emf.cdo.session.CDORepositoryInfo">
         <filter id="571473929">
             <message_arguments>

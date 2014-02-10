@@ -16,19 +16,21 @@
 
    <extension-point id="viewProviders" name="%extension-point.name.0" schema="schema/viewProviders.exsd"/>
 
-   <extension
-  			point="org.eclipse.emf.ecore.generated_package">
-     <package
-       		uri="http://www.eclipse.org/emf/CDO/Eresource/4.0.0"
-       		class="org.eclipse.emf.cdo.eresource.EresourcePackage"
-       		genModel="model/eresource.genmodel"/>
-     <package
-           class="org.eclipse.emf.cdo.etypes.EtypesPackage"
-           genModel="model/etypes.genmodel"
-           uri="http://www.eclipse.org/emf/CDO/Etypes/4.0.0">
-     </package>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated etypes -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/Etypes/4.0.0"
+            class="org.eclipse.emf.cdo.etypes.EtypesPackage"
+            genModel="model/etypes.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated eresource -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/Eresource/4.0.0"
+            class="org.eclipse.emf.cdo.eresource.EresourcePackage"
+            genModel="model/eresource.genmodel"/>
+   </extension>
 
    <extension
          point="org.eclipse.emf.ecore.protocol_parser">

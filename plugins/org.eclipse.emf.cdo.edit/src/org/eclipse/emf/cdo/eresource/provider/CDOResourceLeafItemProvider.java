@@ -68,14 +68,14 @@ public class CDOResourceLeafItemProvider extends CDOResourceNodeItemProvider imp
   }
 
   /**
-   * This returns CDOResourceLeaf.gif.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Object getImage(Object object)
+  protected boolean shouldComposeCreationImage()
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/CDOResourceLeaf")); //$NON-NLS-1$
+    return true;
   }
 
   /**

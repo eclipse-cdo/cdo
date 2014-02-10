@@ -31,7 +31,7 @@ import java.io.Reader;
  * </p>
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOTextResource()
- * @model
+ * @model superTypes="org.eclipse.emf.cdo.eresource.CDOFileResource<org.eclipse.emf.cdo.etypes.Reader>"
  * @generated
  */
 public interface CDOTextResource extends CDOFileResource<Reader>
@@ -47,7 +47,8 @@ public interface CDOTextResource extends CDOFileResource<Reader>
    * @return the value of the '<em>Contents</em>' attribute.
    * @see #setContents(CDOClob)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOTextResource_Contents()
-   * @model dataType="org.eclipse.emf.cdo.etypes.Clob" required="true"
+   * @model dataType="org.eclipse.emf.cdo.etypes.Clob" required="true" transient="true"
+   *        annotation="http://www.eclipse.org/emf/CDO persistent='true'"
    * @generated
    */
   CDOClob getContents();

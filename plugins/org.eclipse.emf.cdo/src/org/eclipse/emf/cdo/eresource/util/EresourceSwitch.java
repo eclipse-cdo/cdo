@@ -24,6 +24,8 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
 
+//import org.eclipse.emf.cdo.eresource.*;
+
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
@@ -69,7 +71,7 @@ public class EresourceSwitch<T>
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated NOT
+   * @generated
    */
   protected T doSwitch(EClass theEClass, EObject theEObject)
   {
@@ -77,7 +79,6 @@ public class EresourceSwitch<T>
     {
       return doSwitch(theEClass.getClassifierID(), theEObject);
     }
-
     List<EClass> eSuperTypes = theEClass.getESuperTypes();
     return eSuperTypes.isEmpty() ? defaultCase(theEObject) : doSwitch(eSuperTypes.get(0), theEObject);
   }
@@ -279,16 +280,17 @@ public class EresourceSwitch<T>
 
   /**
    * Returns the result of interpreting the object as an instance of '<em>CDO File Resource</em>'.
-   * <!-- begin-user-doc
-   * --> This implementation returns null; returning a non-null result will terminate the switch.
+   * <!-- begin-user-doc -->
+   * This implementation returns null; returning a non-null result will terminate the switch.
    *
-   * @since 4.1 <!-- end-user-doc -->
+   * @since 4.1
+   * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>CDO File Resource</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated NOT
+   * @generated
    */
-  public T caseCDOFileResource(CDOFileResource<?> object)
+  public <IO> T caseCDOFileResource(CDOFileResource<IO> object)
   {
     return null;
   }

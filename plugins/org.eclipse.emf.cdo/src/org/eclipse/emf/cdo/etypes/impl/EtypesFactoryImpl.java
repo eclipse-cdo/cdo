@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.etypes.impl;
 
-import org.eclipse.emf.cdo.common.lob.CDOBlob;
-import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
@@ -42,8 +40,7 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   {
     try
     {
-      EtypesFactory theEtypesFactory = (EtypesFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Etypes/4.0.0"); //$NON-NLS-1$
+      EtypesFactory theEtypesFactory = (EtypesFactory)EPackage.Registry.INSTANCE.getEFactory(EtypesPackage.eNS_URI);
       if (theEtypesFactory != null)
       {
         return theEtypesFactory;
@@ -91,12 +88,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case EtypesPackage.BLOB:
-      return createBlobFromString(eDataType, initialValue);
-    case EtypesPackage.CLOB:
-      return createClobFromString(eDataType, initialValue);
-    case EtypesPackage.LOB:
-      return createLobFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -111,12 +102,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   {
     switch (eDataType.getClassifierID())
     {
-    case EtypesPackage.BLOB:
-      return convertBlobToString(eDataType, instanceValue);
-    case EtypesPackage.CLOB:
-      return convertClobToString(eDataType, instanceValue);
-    case EtypesPackage.LOB:
-      return convertLobToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -141,57 +126,6 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   public CDOLob<?> createLobFromString(EDataType eDataType, String initialValue)
   {
     return (CDOLob<?>)super.createFromString(eDataType, initialValue);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   *
-   * @since 4.1 <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertLobToString(EDataType eDataType, Object instanceValue)
-  {
-    return super.convertToString(eDataType, instanceValue);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   *
-   * @since 4.1 <!-- end-user-doc -->
-   * @generated
-   */
-  public CDOBlob createBlobFromString(EDataType eDataType, String initialValue)
-  {
-    return (CDOBlob)super.createFromString(eDataType, initialValue);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   *
-   * @since 4.1 <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertBlobToString(EDataType eDataType, Object instanceValue)
-  {
-    return super.convertToString(eDataType, instanceValue);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public CDOClob createClobFromString(EDataType eDataType, String initialValue)
-  {
-    return (CDOClob)super.createFromString(eDataType, initialValue);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertClobToString(EDataType eDataType, Object instanceValue)
-  {
-    return super.convertToString(eDataType, instanceValue);
   }
 
   /**

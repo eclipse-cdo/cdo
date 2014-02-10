@@ -29,8 +29,8 @@ import java.io.InputStream;
  * </p>
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOBinaryResource()
- * @model
- * @generated NOT
+ * @model superTypes="org.eclipse.emf.cdo.eresource.CDOFileResource<org.eclipse.emf.cdo.etypes.InputStream>"
+ * @generated
  */
 public interface CDOBinaryResource extends CDOFileResource<InputStream>
 {
@@ -45,7 +45,8 @@ public interface CDOBinaryResource extends CDOFileResource<InputStream>
    * @return the value of the '<em>Contents</em>' attribute.
    * @see #setContents(CDOBlob)
    * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOBinaryResource_Contents()
-   * @model dataType="org.eclipse.emf.cdo.etypes.Blob" required="true"
+   * @model dataType="org.eclipse.emf.cdo.etypes.Blob" required="true" transient="true"
+   *        annotation="http://www.eclipse.org/emf/CDO persistent='true'"
    * @generated
    */
   CDOBlob getContents();

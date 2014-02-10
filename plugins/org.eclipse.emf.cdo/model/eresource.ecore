@@ -16,16 +16,16 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CDOResourceFolder" eSuperTypes="#//CDOResourceNode">
     <eOperations name="addResourceFolder" eType="#//CDOResourceFolder">
-      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="addResource" eType="#//CDOResource">
-      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="addTextResource" eType="#//CDOTextResource">
-      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="addBinaryResource" eType="#//CDOBinaryResource">
-      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="#//CDOResourceNode" containment="true" resolveProxies="false" eOpposite="#//CDOResourceNode/folder"/>
@@ -36,8 +36,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRI" eType="#//URI" volatile="true"
         transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
-        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
-        containment="true" resolveProxies="false"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject" containment="true"
+        resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modified" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="loaded" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -51,25 +51,44 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="warnings" upperBound="-1"
         eType="#//Diagnostic" changeable="false" volatile="true" transient="true"
         derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeStamp" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//ELong"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeStamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
         transient="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="ResourceSet" instanceClassName="org.eclipse.emf.ecore.resource.ResourceSet"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EDataType" name="URI" instanceClassName="org.eclipse.emf.common.util.URI"/>
-  <eClassifiers xsi:type="ecore:EDataType" name="Diagnostic" instanceClassName="org.eclipse.emf.ecore.resource.Resource.Diagnostic"
+  <eClassifiers xsi:type="ecore:EDataType" name="Diagnostic" instanceClassName="org.eclipse.emf.ecore.resource.Resource$Diagnostic"
       serializable="false"/>
   <eClassifiers xsi:type="ecore:EClass" name="CDOResourceLeaf" abstract="true" eSuperTypes="#//CDOResourceNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="CDOFileResource" abstract="true" eSuperTypes="#//CDOResourceLeaf">
-    <eOperations name="getContents" lowerBound="1" eType="ecore:EDataType etypes.ecore#//Lob"/>
+    <eTypeParameters name="IO"/>
+    <eOperations name="getContents" lowerBound="1">
+      <eGenericType eClassifier="ecore:EDataType etypes.ecore#//Lob">
+        <eTypeArguments eTypeParameter="#//CDOFileResource/IO"/>
+      </eGenericType>
+    </eOperations>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CDOBinaryResource" eSuperTypes="#//CDOFileResource">
+  <eClassifiers xsi:type="ecore:EClass" name="CDOBinaryResource">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contents" lowerBound="1"
-        eType="ecore:EDataType etypes.ecore#//Blob"/>
+        eType="ecore:EDataType etypes.ecore#//Blob" transient="true">
+      <eAnnotations source="http://www.eclipse.org/emf/CDO">
+        <details key="persistent" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eGenericSuperTypes eClassifier="#//CDOFileResource">
+      <eTypeArguments eClassifier="ecore:EDataType etypes.ecore#//InputStream"/>
+    </eGenericSuperTypes>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CDOTextResource" eSuperTypes="#//CDOFileResource">
+  <eClassifiers xsi:type="ecore:EClass" name="CDOTextResource">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contents" lowerBound="1"
-        eType="ecore:EDataType etypes.ecore#//Clob"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+        eType="ecore:EDataType etypes.ecore#//Clob" transient="true">
+      <eAnnotations source="http://www.eclipse.org/emf/CDO">
+        <details key="persistent" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="encoding" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eGenericSuperTypes eClassifier="#//CDOFileResource">
+      <eTypeArguments eClassifier="ecore:EDataType etypes.ecore#//Reader"/>
+    </eGenericSuperTypes>
   </eClassifiers>
 </ecore:EPackage>

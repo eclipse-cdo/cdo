@@ -44,7 +44,7 @@ public class EresourceFactoryImpl extends EFactoryImpl implements EresourceFacto
     try
     {
       EresourceFactory theEresourceFactory = (EresourceFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/Eresource/4.0.0"); //$NON-NLS-1$
+          .getEFactory(EresourcePackage.eNS_URI);
       if (theEresourceFactory != null)
       {
         return theEresourceFactory;

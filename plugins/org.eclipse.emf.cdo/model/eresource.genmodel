@@ -8,7 +8,7 @@
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
     featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" testsPluginID="org.eclipse.emf.cdo.editor"
     optimizedHasChildren="true" tableProviders="true" colorProviders="true" fontProviders="true"
-    runtimeVersion="2.6" usedGenPackages="platform:/plugin/org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore etypes.genmodel#//etypes">
+    runtimeVersion="2.6" usedGenPackages="etypes.genmodel#//etypes">
   <foreignModel>eresource.ecore</foreignModel>
   <genPackages prefix="Eresource" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="eresource.ecore#/">
@@ -46,7 +46,7 @@
       <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/warnings"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eresource.ecore#//CDOResource/timeStamp"/>
     </genClasses>
-    <genClasses ecoreClass="eresource.ecore#//CDOResourceLeaf"/>
+    <genClasses image="false" ecoreClass="eresource.ecore#//CDOResourceLeaf"/>
     <genClasses ecoreClass="eresource.ecore#//CDOFileResource">
       <genOperations ecoreOperation="eresource.ecore#//CDOFileResource/getContents"/>
     </genClasses>

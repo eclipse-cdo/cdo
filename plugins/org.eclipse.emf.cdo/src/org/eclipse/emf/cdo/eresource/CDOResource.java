@@ -18,6 +18,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+//import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -201,7 +202,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  EList<Diagnostic> getErrors();
+  EList<Resource.Diagnostic> getErrors();
 
   /**
    * Returns the value of the '<em><b>Warnings</b></em>' attribute list.
@@ -213,7 +214,7 @@ public interface CDOResource extends CDOResourceLeaf, Resource
    * @model dataType="org.eclipse.emf.cdo.eresource.Diagnostic" transient="true" changeable="false" volatile="true" derived="true"
    * @generated
    */
-  EList<Diagnostic> getWarnings();
+  EList<Resource.Diagnostic> getWarnings();
 
   /**
    * Returns the value of the '<em><b>Time Stamp</b></em>' attribute.

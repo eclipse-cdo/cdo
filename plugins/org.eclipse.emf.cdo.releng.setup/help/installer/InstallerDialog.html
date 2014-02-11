@@ -35,7 +35,7 @@
           <image src="indent.png"><image src="3.png"></image>
         </td>
         <td>
-          <a href="#folders"> Enter the Installation Folders </a>
+          <a href="#folders"> Enter the Install Folder </a>
         </td>
       </tr>
       <tr>
@@ -91,7 +91,7 @@
 
     <p> <image src="indent.png"><image src="eclipse-selection.png"></image> </p>
 
-    <h3><a name="folders"></a><font color="#194c7f">Enter the Installation Folders</font></h3>
+    <h3><a name="folders"></a><font color="#194c7f">Enter the Install Folder</font></h3>
 
     <p> The installer enforces a well-defined and recognizable file system structure under the common install folder.
       This structure consists of project folders which contain branch folders. Each branch folder contains a
@@ -101,28 +101,10 @@
 
     <p> <image src="indent.png"><image src="filesystem-structure.png"></image> </p>
 
-    <p> By default the <b>install folder</b> is your home folder. You can change it to any location on your disk.
+    <p> By default the install folder is your home folder. You can change it to any location on your disk.
       It is recommended to use short paths without spaces or other characters that may be critical on your platform. </p>
 
     <p> <image src="indent.png"><image src="install-folder.png"></image> </p>
-
-    <p> By default the <b>bundle pool</b> is located directly under the install folder (see above). You can change it to any location on your disk.
-      It is recommended to use short paths without spaces or other characters that may be critical on your platform.</p>
-
-    <p> Keep in mind that the bundle pool allocates quite some space on your disk and significantly speeds up the process of installating the development environments.
-      Even if you change the install folder you may want keep the path to an existing bundle pool. </p>
-
-    <p> <image src="indent.png"><image src="bundle-pool.png"></image> </p>
-
-    <p> The aforementioned bundle pool is controlled by a p2 agent, which is located in the 'p2' folder under that bundle pool and
-      associates each installation that uses that bundle pool with a profile in the agent's profile registry.
-      Some projects provision their target platform with tools such as Buckminster that also make use of a shared bundle pool.</p>
-
-    <p> These target platforms cannot be associated with a p2 agent profile because they are not installations. They require a separate bundle pool.
-      By default this <b> target platform bundle pool</b> is located directly under the install folder (see above). You can change it to any location on your disk.
-      It is recommended to use short paths without spaces or other characters that may be critical on your platform. </p>
-
-    <p> <image src="indent.png"><image src="bundle-pool-tp.png"></image> </p>
 
     <h3><a name="install"></a><font color="#194c7f">Start the Installation</font></h3>
 

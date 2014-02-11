@@ -3,6 +3,16 @@
   <branches name="master">
     <setupTasks xsi:type="setup:P2Task">
       <installableUnits id="org.eclipse.emf.sdk.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.ide_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.java_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.pde_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.team_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.gerrit.feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.bugzilla_feature.feature.group"/>
+      <installableUnits id="org.eclipse.mylyn.git.feature.group"/>
+      <installableUnits id="org.eclipse.egit.feature.group"/>
+      <installableUnits id="org.eclipse.egit.mylyn.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.projectcopy.feature.group"/>
       <installableUnits id="org.eclipse.emf.cdo.releng.version.feature.group"/>
       <installableUnits id="org.eclipse.emf.ecoretools.sdk.feature.group" versionRange="[1.0.0,2.0.0)"/>

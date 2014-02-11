@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ASCII"?>
+<setup:ComponentExtension setup:toolVersion="8" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
+  <dependencies id="org.eclipse.emf.cdo.site.feature.group"/>
+  <dependencies id="org.eclipse.emf.cdo.releng.release"/>
+  <dependencies id="org.eclipse.emf.cdo.releng.version.tests"/>
+  <dependencies id="org.eclipse.emf.cdo.examples.client"/>
+  <dependencies id="org.eclipse.emf.cdo.examples.client.offline"/>
+  <dependencies id="org.eclipse.emf.cdo.examples.master"/>
+  <dependencies id="org.eclipse.emf.cdo.examples.clone"/>
+  <dependencies id="org.eclipse.emf.cdo.efs"/>
+  <dependencies id="org.eclipse.emf.cdo.ui.efs"/>
+  <dependencies id="org.eclipse.platform.feature.group"/>
+  <dependencies id="org.eclipse.jdt.feature.group"/>
+  <dependencies id="org.eclipse.pde.feature.group"/>
+  <dependencies id="org.eclipse.emf.feature.group"/>
+  <dependencies id="org.eclipse.ocl.feature.group"/>
+  <dependencies id="org.eclipse.emf.compare.feature.group"/>
+  <dependencies id="org.eclipse.emf.compare.ide.ui.feature.group"/>
+  <dependencies id="org.eclipse.emf.transaction.feature.group"/>
+  <dependencies id="org.eclipse.emf.workspace.feature.group"/>
+  <dependencies id="org.eclipse.emf.teneo.hibernate.feature.group"/>
+  <dependencies id="org.eclipse.swtbot.feature.group"/>
+  <dependencies id="org.eclipse.swtbot.eclipse.feature.group"/>
+  <dependencies id="org.eclipse.swtbot.eclipse.gef.feature.group"/>
+  <dependencies id="com.mysql.jdbc.feature.group"/>
+  <dependencies id="org.hsqldb.feature.group"/>
+  <dependencies id="org.postgresql.feature.group"/>
+  <dependencies id="com.db4o.feature.group"/>
+  <dependencies id="org.hibernate.feature.group"/>
+  <dependencies id="org.dom4j.feature.group"/>
+  <dependencies id="javax.persistence.feature.group"/>
+  <dependencies id="javax.annotation"/>
+  <dependencies id="oracle.database.driver"/>
+</setup:ComponentExtension>

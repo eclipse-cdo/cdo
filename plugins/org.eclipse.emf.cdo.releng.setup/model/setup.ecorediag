@@ -687,6 +687,10 @@
         <element xmi:type="ecore:EAttribute" href="setup.ecore#//BasicMaterializationTask/targetPlatform"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_MVAjgQmrEeOuXPWwsMY9fA"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_RXTpMJLmEeOzEuQrWGiCsg" type="2001">
+        <element xmi:type="ecore:EAttribute" href="setup.ecore#//BasicMaterializationTask/bundlePool"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_RXTpMZLmEeOzEuQrWGiCsg"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_kJnngkLrEeO5EtrbFL2WrA"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_kJnng0LrEeO5EtrbFL2WrA"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_kJnnhELrEeO5EtrbFL2WrA"/>
@@ -698,7 +702,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_kJnAcULrEeO5EtrbFL2WrA" fontColor="4210752" fontName="Segoe UI" fontHeight="10" fillColor="15053796" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="setup.ecore#//BasicMaterializationTask"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kJnAckLrEeO5EtrbFL2WrA" x="210" y="817"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kJnAckLrEeO5EtrbFL2WrA" x="210" y="800"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_pSD-oEMEEeO5EtrbFL2WrA" type="1005">
     <children xmi:type="notation:Node" xmi:id="_pSElsEMEEeO5EtrbFL2WrA" type="4010"/>

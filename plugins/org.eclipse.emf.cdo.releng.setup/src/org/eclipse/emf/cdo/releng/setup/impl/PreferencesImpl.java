@@ -32,8 +32,6 @@ import java.util.Collection;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getInstallFolder <em>Install Folder</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getBundlePoolFolder <em>Bundle Pool Folder</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getBundlePoolFolderTP <em>Bundle Pool Folder TP</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl#getAcceptedLicenses <em>Accepted Licenses</em>}</li>
  * </ul>
  * </p>
@@ -61,46 +59,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
    * @ordered
    */
   protected String installFolder = INSTALL_FOLDER_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getBundlePoolFolder() <em>Bundle Pool Folder</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePoolFolder()
-   * @generated
-   * @ordered
-   */
-  protected static final String BUNDLE_POOL_FOLDER_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getBundlePoolFolder() <em>Bundle Pool Folder</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePoolFolder()
-   * @generated
-   * @ordered
-   */
-  protected String bundlePoolFolder = BUNDLE_POOL_FOLDER_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getBundlePoolFolderTP() <em>Bundle Pool Folder TP</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePoolFolderTP()
-   * @generated
-   * @ordered
-   */
-  protected static final String BUNDLE_POOL_FOLDER_TP_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getBundlePoolFolderTP() <em>Bundle Pool Folder TP</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBundlePoolFolderTP()
-   * @generated
-   * @ordered
-   */
-  protected String bundlePoolFolderTP = BUNDLE_POOL_FOLDER_TP_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getAcceptedLicenses() <em>Accepted Licenses</em>}' attribute list.
@@ -164,58 +122,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getBundlePoolFolder()
-  {
-    return bundlePoolFolder;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBundlePoolFolder(String newBundlePoolFolder)
-  {
-    String oldBundlePoolFolder = bundlePoolFolder;
-    bundlePoolFolder = newBundlePoolFolder;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER,
-          oldBundlePoolFolder, bundlePoolFolder));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getBundlePoolFolderTP()
-  {
-    return bundlePoolFolderTP;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBundlePoolFolderTP(String newBundlePoolFolderTP)
-  {
-    String oldBundlePoolFolderTP = bundlePoolFolderTP;
-    bundlePoolFolderTP = newBundlePoolFolderTP;
-    if (eNotificationRequired())
-    {
-      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER_TP,
-          oldBundlePoolFolderTP, bundlePoolFolderTP));
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<LicenseInfo> getAcceptedLicenses()
   {
     if (acceptedLicenses == null)
@@ -258,10 +164,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     {
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       return getInstallFolder();
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
-      return getBundlePoolFolder();
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER_TP:
-      return getBundlePoolFolderTP();
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       return getAcceptedLicenses();
     }
@@ -281,12 +183,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     {
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       setInstallFolder((String)newValue);
-      return;
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
-      setBundlePoolFolder((String)newValue);
-      return;
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER_TP:
-      setBundlePoolFolderTP((String)newValue);
       return;
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       getAcceptedLicenses().clear();
@@ -309,12 +205,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       setInstallFolder(INSTALL_FOLDER_EDEFAULT);
       return;
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
-      setBundlePoolFolder(BUNDLE_POOL_FOLDER_EDEFAULT);
-      return;
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER_TP:
-      setBundlePoolFolderTP(BUNDLE_POOL_FOLDER_TP_EDEFAULT);
-      return;
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       getAcceptedLicenses().clear();
       return;
@@ -334,12 +224,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     {
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
       return INSTALL_FOLDER_EDEFAULT == null ? installFolder != null : !INSTALL_FOLDER_EDEFAULT.equals(installFolder);
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
-      return BUNDLE_POOL_FOLDER_EDEFAULT == null ? bundlePoolFolder != null : !BUNDLE_POOL_FOLDER_EDEFAULT
-          .equals(bundlePoolFolder);
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER_TP:
-      return BUNDLE_POOL_FOLDER_TP_EDEFAULT == null ? bundlePoolFolderTP != null : !BUNDLE_POOL_FOLDER_TP_EDEFAULT
-          .equals(bundlePoolFolderTP);
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       return acceptedLicenses != null && !acceptedLicenses.isEmpty();
     }
@@ -362,10 +246,6 @@ public class PreferencesImpl extends SetupTaskContainerImpl implements Preferenc
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (installFolder: ");
     result.append(installFolder);
-    result.append(", bundlePoolFolder: ");
-    result.append(bundlePoolFolder);
-    result.append(", bundlePoolFolderTP: ");
-    result.append(bundlePoolFolderTP);
     result.append(", acceptedLicenses: ");
     result.append(acceptedLicenses);
     result.append(')');

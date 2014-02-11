@@ -39,15 +39,15 @@ public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, Stri
 
   public OS getOS();
 
-  public String getP2ProfileName();
-
-  public File getP2ProfileDir();
-
   public File getP2AgentDir();
 
   public File getP2PoolDir();
 
-  public File getP2PoolTPDir();
+  public File getP2ProfileDir();
+
+  public String getP2ProfileName();
+
+  public File getStateDir();
 
   public File getInstallDir();
 

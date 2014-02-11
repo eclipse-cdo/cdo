@@ -21,7 +21,7 @@ public class ProgressLogFilter
       "Reading saved build state for project ", "Reading resource change information for ",
       "Cleaning output folder for ", "Copying resources to the output folder", " adding component ",
       "Preparing to build", "Compiling ", "Analyzing ", "Comparing ", "Checking ", "Build done",
-      "Processing API deltas..." };
+      "Processing API deltas...", "Create." };
 
   private String lastLine;
 

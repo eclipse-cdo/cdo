@@ -986,85 +986,113 @@ public class TargletContainer extends AbstractBundleContainer
     return projectLocations;
   }
 
-  private static void updateWorkspace(final Set<File> projectLocations) throws Exception
+  public static void updateWorkspace(IProgressMonitor monitor) throws CoreException
   {
-    new Job("Import projects")
+    ITargetPlatformService service = null;
+
+    try
     {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
+      service = ServiceUtil.getService(ITargetPlatformService.class);
+      Set<File> projectLocations = new HashSet<File>();
+
+      ITargetDefinition target = service.getWorkspaceTargetDefinition();
+      if (target != null)
+      {
+        for (ITargetLocation location : target.getTargetLocations())
+        {
+          if (location instanceof TargletContainer)
+          {
+            TargletContainer container = (TargletContainer)location;
+            TargletContainerDescriptor descriptor = container.getDescriptor();
+            if (descriptor != null)
+            {
+              Set<File> workingProjects = descriptor.getWorkingProjects();
+              if (workingProjects != null)
+              {
+                projectLocations.addAll(workingProjects);
+              }
+            }
+          }
+        }
+      }
+
+      updateWorkspace(projectLocations, monitor);
+    }
+    catch (Exception ex)
+    {
+      TargletContainerManager.throwProvisionException(ex);
+    }
+    finally
+    {
+      ServiceUtil.ungetService(service);
+    }
+  }
+
+  private static void updateWorkspace(final Set<File> projectLocations, IProgressMonitor monitor) throws CoreException
+  {
+    final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+    workspace.run(new IWorkspaceRunnable()
+    {
+      public void run(IProgressMonitor monitor) throws CoreException
       {
         try
         {
-          final IWorkspace workspace = ResourcesPlugin.getWorkspace();
-          workspace.run(new IWorkspaceRunnable()
+          DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
+          IWorkspaceRoot root = workspace.getRoot();
+
+          for (File folder : projectLocations)
           {
-            public void run(IProgressMonitor monitor) throws CoreException
+            final AtomicReference<String> projectName = new AtomicReference<String>();
+
+            Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
+            XMLUtil.handleChildElements(rootElement, new ElementHandler()
             {
-              try
+              public void handleElement(Element element) throws Exception
               {
-                DocumentBuilder documentBuilder = XMLUtil.createDocumentBuilder();
-                IWorkspaceRoot root = workspace.getRoot();
-
-                for (File folder : projectLocations)
+                if ("name".equals(element.getTagName()))
                 {
-                  final AtomicReference<String> projectName = new AtomicReference<String>();
-
-                  Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
-                  XMLUtil.handleChildElements(rootElement, new ElementHandler()
-                  {
-                    public void handleElement(Element element) throws Exception
-                    {
-                      if ("name".equals(element.getTagName()))
-                      {
-                        projectName.set(element.getTextContent().trim());
-                      }
-                    }
-                  });
-
-                  String name = projectName.get();
-                  if (name != null && name.length() != 0)
-                  {
-                    File location = folder.getCanonicalFile();
-
-                    IProject project = root.getProject(name);
-                    if (project.exists())
-                    {
-                      File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
-                      if (!existingLocation.equals(location))
-                      {
-                        Activator.log("Project " + name + " exists in different location: " + existingLocation);
-                        continue;
-                      }
-                    }
-                    else
-                    {
-                      IProjectDescription projectDescription = workspace.newProjectDescription(name);
-                      projectDescription.setLocation(new Path(location.getAbsolutePath()));
-                      project.create(projectDescription, monitor);
-                    }
-
-                    if (!project.isOpen())
-                    {
-                      project.open(monitor);
-                    }
-                  }
+                  projectName.set(element.getTextContent().trim());
                 }
               }
-              catch (Exception ex)
+            });
+
+            String name = projectName.get();
+            if (name != null && name.length() != 0)
+            {
+              File location = folder.getCanonicalFile();
+
+              IProject project = root.getProject(name);
+              if (project.exists())
               {
-                TargletContainerManager.throwProvisionException(ex);
+                File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
+                if (!existingLocation.equals(location))
+                {
+                  Activator.log("Project " + name + " exists in different location: " + existingLocation);
+                  continue;
+                }
+              }
+              else
+              {
+                monitor.setTaskName("Importing project " + projectName);
+
+                IProjectDescription projectDescription = workspace.newProjectDescription(name);
+                projectDescription.setLocation(new Path(location.getAbsolutePath()));
+                project.create(projectDescription, monitor);
+              }
+
+              if (!project.isOpen())
+              {
+                project.open(monitor);
               }
             }
-          }, monitor);
-
-          return Status.OK_STATUS;
+          }
         }
         catch (Exception ex)
         {
-          return Activator.getStatus(ex);
+          TargletContainerManager.throwProvisionException(ex);
         }
       }
-    }.schedule();
+    }, monitor);
   }
 
   static
@@ -1076,44 +1104,22 @@ public class TargletContainer extends AbstractBundleContainer
       {
         if (event.getJob() instanceof LoadTargetDefinitionJob)
         {
-          ITargetPlatformService service = null;
-
-          try
+          new Job("Import projects")
           {
-            service = ServiceUtil.getService(ITargetPlatformService.class);
-            Set<File> projectLocations = new HashSet<File>();
-
-            ITargetDefinition target = service.getWorkspaceTargetDefinition();
-            if (target != null)
+            @Override
+            protected IStatus run(IProgressMonitor monitor)
             {
-              for (ITargetLocation location : target.getTargetLocations())
+              try
               {
-                if (location instanceof TargletContainer)
-                {
-                  TargletContainer container = (TargletContainer)location;
-                  TargletContainerDescriptor descriptor = container.getDescriptor();
-                  if (descriptor != null)
-                  {
-                    Set<File> workingProjects = descriptor.getWorkingProjects();
-                    if (workingProjects != null)
-                    {
-                      projectLocations.addAll(workingProjects);
-                    }
-                  }
-                }
+                updateWorkspace(monitor);
+                return Status.OK_STATUS;
+              }
+              catch (Exception ex)
+              {
+                return Activator.getStatus(ex);
               }
             }
-
-            updateWorkspace(projectLocations);
-          }
-          catch (Exception ex)
-          {
-            Activator.log(ex);
-          }
-          finally
-          {
-            ServiceUtil.ungetService(service);
-          }
+          }.schedule();
         }
       }
     });

@@ -544,31 +544,13 @@ public interface SetupPackage extends EPackage
   int PREFERENCES__INSTALL_FOLDER = SCOPE_ROOT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Bundle Pool Folder</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCES__BUNDLE_POOL_FOLDER = SCOPE_ROOT_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Bundle Pool Folder TP</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PREFERENCES__BUNDLE_POOL_FOLDER_TP = SCOPE_ROOT_FEATURE_COUNT + 2;
-
-  /**
    * The feature id for the '<em><b>Accepted Licenses</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PREFERENCES__ACCEPTED_LICENSES = SCOPE_ROOT_FEATURE_COUNT + 3;
+  int PREFERENCES__ACCEPTED_LICENSES = SCOPE_ROOT_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Preferences</em>' class.
@@ -577,7 +559,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PREFERENCES_FEATURE_COUNT = SCOPE_ROOT_FEATURE_COUNT + 4;
+  int PREFERENCES_FEATURE_COUNT = SCOPE_ROOT_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ApiBaselineTaskImpl <em>Api Baseline Task</em>}' class.
@@ -1502,13 +1484,22 @@ public interface SetupPackage extends EPackage
   int BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Bundle Pool</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BASIC_MATERIALIZATION_TASK__BUNDLE_POOL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Basic Materialization Task</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BASIC_MATERIALIZATION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
+  int BASIC_MATERIALIZATION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1572,6 +1563,15 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int BUCKMINSTER_IMPORT_TASK__TARGET_PLATFORM = BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM;
+
+  /**
+   * The feature id for the '<em><b>Bundle Pool</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BUCKMINSTER_IMPORT_TASK__BUNDLE_POOL = BASIC_MATERIALIZATION_TASK__BUNDLE_POOL;
 
   /**
    * The feature id for the '<em><b>Mspec</b></em>' attribute.
@@ -1653,6 +1653,15 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int MATERIALIZATION_TASK__TARGET_PLATFORM = BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM;
+
+  /**
+   * The feature id for the '<em><b>Bundle Pool</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MATERIALIZATION_TASK__BUNDLE_POOL = BASIC_MATERIALIZATION_TASK__BUNDLE_POOL;
 
   /**
    * The feature id for the '<em><b>Root Components</b></em>' containment reference list.
@@ -5923,6 +5932,17 @@ public interface SetupPackage extends EPackage
   EAttribute getBasicMaterializationTask_TargetPlatform();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getBundlePool <em>Bundle Pool</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Bundle Pool</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.BasicMaterializationTask#getBundlePool()
+   * @see #getBasicMaterializationTask()
+   * @generated
+   */
+  EAttribute getBasicMaterializationTask_BundlePool();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Component <em>Component</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6120,28 +6140,6 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getPreferences_InstallFolder();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolder <em>Bundle Pool Folder</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Bundle Pool Folder</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolder()
-   * @see #getPreferences()
-   * @generated
-   */
-  EAttribute getPreferences_BundlePoolFolder();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolderTP <em>Bundle Pool Folder TP</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Bundle Pool Folder TP</em>'.
-   * @see org.eclipse.emf.cdo.releng.setup.Preferences#getBundlePoolFolderTP()
-   * @see #getPreferences()
-   * @generated
-   */
-  EAttribute getPreferences_BundlePoolFolderTP();
 
   /**
    * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.releng.setup.Preferences#getAcceptedLicenses <em>Accepted Licenses</em>}'.
@@ -7771,6 +7769,14 @@ public interface SetupPackage extends EPackage
     EAttribute BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM = eINSTANCE.getBasicMaterializationTask_TargetPlatform();
 
     /**
+     * The meta object literal for the '<em><b>Bundle Pool</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BASIC_MATERIALIZATION_TASK__BUNDLE_POOL = eINSTANCE.getBasicMaterializationTask_BundlePool();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentImpl <em>Component</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7941,22 +7947,6 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute PREFERENCES__INSTALL_FOLDER = eINSTANCE.getPreferences_InstallFolder();
-
-    /**
-     * The meta object literal for the '<em><b>Bundle Pool Folder</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PREFERENCES__BUNDLE_POOL_FOLDER = eINSTANCE.getPreferences_BundlePoolFolder();
-
-    /**
-     * The meta object literal for the '<em><b>Bundle Pool Folder TP</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PREFERENCES__BUNDLE_POOL_FOLDER_TP = eINSTANCE.getPreferences_BundlePoolFolderTP();
 
     /**
      * The meta object literal for the '<em><b>Accepted Licenses</b></em>' attribute list feature.

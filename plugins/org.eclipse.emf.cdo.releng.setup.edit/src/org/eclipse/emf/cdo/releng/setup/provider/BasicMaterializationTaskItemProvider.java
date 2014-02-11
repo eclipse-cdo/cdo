@@ -62,6 +62,7 @@ public class BasicMaterializationTaskItemProvider extends SetupTaskItemProvider 
       super.getPropertyDescriptors(object);
 
       addTargetPlatformPropertyDescriptor(object);
+      addBundlePoolPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -81,6 +82,23 @@ public class BasicMaterializationTaskItemProvider extends SetupTaskItemProvider 
         getString("_UI_PropertyDescriptor_description", "_UI_BasicMaterializationTask_targetPlatform_feature",
             "_UI_BasicMaterializationTask_type"), SetupPackage.Literals.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM,
         true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Bundle Pool feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addBundlePoolPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_BasicMaterializationTask_bundlePool_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_BasicMaterializationTask_bundlePool_feature",
+            "_UI_BasicMaterializationTask_type"), SetupPackage.Literals.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL, true,
+        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -123,6 +141,7 @@ public class BasicMaterializationTaskItemProvider extends SetupTaskItemProvider 
     switch (notification.getFeatureID(BasicMaterializationTask.class))
     {
     case SetupPackage.BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM:
+    case SetupPackage.BASIC_MATERIALIZATION_TASK__BUNDLE_POOL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

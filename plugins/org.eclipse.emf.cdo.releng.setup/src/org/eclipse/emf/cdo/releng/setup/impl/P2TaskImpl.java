@@ -49,7 +49,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.internal.p2.director.app.DirectorApplication;
 import org.eclipse.equinox.internal.p2.director.app.ILog;
@@ -63,8 +62,6 @@ import org.eclipse.equinox.p2.engine.IProfileRegistry;
 import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
 import org.eclipse.equinox.p2.internal.repository.tools.MirrorApplication;
-import org.eclipse.equinox.p2.internal.repository.tools.RepositoryDescriptor;
-import org.eclipse.equinox.p2.internal.repository.tools.SlicingOptions;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.ILicense;
 import org.eclipse.equinox.p2.metadata.MetadataFactory;
@@ -92,7 +89,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -128,6 +124,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
   private static final Class<DirectorApplication> DIRECTOR_CLASS = DirectorApplication.class;
 
+  @SuppressWarnings("unused")
   private static final Class<MirrorApplication> MIRROR_CLASS = MirrorApplication.class;
 
   private static final Object FIRST_CALL_DETECTION_KEY = new Object();
@@ -1026,9 +1023,9 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           public IQueryResult<IInstallableUnit> updatesFor(IInstallableUnit iu, ProvisioningContext context,
               IProgressMonitor monitor)
-              {
+          {
             return delegate.updatesFor(iu, context, monitor);
-              }
+          }
         };
 
         targetAgent.registerService(IPlanner.SERVICE_NAME, planner);
@@ -1154,7 +1151,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           IQuery<IInstallableUnit> query = new PrettyQuery<IInstallableUnit>(QueryUtil.createIUQuery(id,
               Version.emptyVersion.equals(versionRange) ? VersionRange.emptyRange : versionRange), id + " "
-                  + versionRange);
+              + versionRange);
           rootsToInstall.add(query);
         }
       }
@@ -1307,7 +1304,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         String contents = DownloadUtil.load(context.getURIConverter(), URI.createFileURI(iniFile.toString()), null);
         Pattern section = Pattern.compile(
             "^(-vmargs)([\n\r]+.*)\\z|^(-[^\\n\\r]*[\\n\\r]*)((?:^[^-][^\\n\\r]*)*[\\n\\r]*)", Pattern.MULTILINE
-            | Pattern.DOTALL);
+                | Pattern.DOTALL);
         Map<String, String> map = new LinkedHashMap<String, String>();
         for (Matcher matcher = section.matcher(contents); matcher.find();)
         {
@@ -1381,125 +1378,128 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
   public MirrorRunnable mirror(final MirrorContext context, final File mirrorsDir, boolean includingLocals)
       throws Exception
   {
-    return new MirrorRunnable()
-    {
-      public void run(IProgressMonitor monitor) throws Exception
-      {
-        String targetURL = URI.createFileURI(context.getP2PoolTPDir().toString()).toString();
+    throw new UnsupportedOperationException();
 
-        SlicingOptions slicingOptions = new SlicingOptions();
-        slicingOptions.latestVersionOnly(true);
-        slicingOptions.everythingGreedy(false);
-
-        MirrorApplication app = new MirrorApplication()
-        {
-          @Override
-          public IStatus run(IProgressMonitor monitor) throws ProvisionException
-          {
-            IStatus mirrorStatus = Status.OK_STATUS;
-            monitor.beginTask("", 1 + 100 + 1000 + 100);
-
-            try
-            {
-              initializeRepos(new SubProgressMonitor(monitor, 1));
-              initializeIUs();
-
-              IQueryable<IInstallableUnit> slice = slice(new SubProgressMonitor(monitor, 100));
-
-              mirrorStatus = mirrorArtifacts(slice, new SubProgressMonitor(monitor, 1000));
-              mirrorMetadata(slice, new SubProgressMonitor(monitor, 100));
-            }
-            finally
-            {
-              finalizeRepositories();
-            }
-
-            if (mirrorStatus.isOK())
-            {
-              return Status.OK_STATUS;
-            }
-
-            return mirrorStatus;
-          }
-
-          private void initializeIUs()
-          {
-            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "initializeIUs");
-            ReflectUtil.invokeMethod(method, this);
-          }
-
-          @SuppressWarnings("unchecked")
-          private IQueryable<IInstallableUnit> slice(IProgressMonitor monitor)
-          {
-            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "slice", IProgressMonitor.class);
-            return (IQueryable<IInstallableUnit>)ReflectUtil.invokeMethod(method, this, monitor);
-          }
-
-          private IStatus mirrorArtifacts(IQueryable<IInstallableUnit> slice, IProgressMonitor monitor)
-          {
-            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "mirrorArtifacts", IQueryable.class,
-                IProgressMonitor.class);
-            return (IStatus)ReflectUtil.invokeMethod(method, this, slice, monitor);
-          }
-
-          private void mirrorMetadata(IQueryable<IInstallableUnit> slice, IProgressMonitor monitor)
-          {
-            Method method = ReflectUtil.getMethod(MIRROR_CLASS, "mirrorMetadata", IQueryable.class,
-                IProgressMonitor.class);
-            ReflectUtil.invokeMethod(method, this, slice, monitor);
-          }
-        };
-
-        app.setIncludePacked(false);
-        app.setVerbose(true);
-        app.setSlicingOptions(slicingOptions);
-
-        RepositoryDescriptor destination = new RepositoryDescriptor();
-        destination.setLocation(new java.net.URI(targetURL));
-        destination.setAppend(true);
-        app.addDestination(destination);
-
-        initSourceRepos(app, context, targetURL);
-        initRootIUs(app);
-
-        app.run(monitor);
-      }
-
-      private void initSourceRepos(MirrorApplication app, final MirrorContext context, String targetURL)
-          throws URISyntaxException
-      {
-        for (P2Repository p2Repository : getP2Repositories())
-        {
-          String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
-
-          RepositoryDescriptor descriptor = new RepositoryDescriptor();
-          descriptor.setLocation(new java.net.URI(sourceURL));
-          app.addSource(descriptor);
-
-          context.addRedirection(sourceURL, targetURL);
-        }
-      }
-
-      private void initRootIUs(MirrorApplication app)
-      {
-        EList<InstallableUnit> installableUnits = getInstallableUnits();
-        String[] rootIUs = new String[installableUnits.size()];
-        for (int i = 0; i < rootIUs.length; i++)
-        {
-          InstallableUnit installableUnit = installableUnits.get(i);
-          rootIUs[i] = installableUnit.getID();
-
-          VersionRange range = installableUnit.getVersionRange();
-          if (!VersionRange.emptyRange.equals(range))
-          {
-            rootIUs[i] += "/" + range;
-          }
-        }
-
-        Field field = ReflectUtil.getField(MIRROR_CLASS, "rootIUs");
-        ReflectUtil.setValue(field, app, rootIUs);
-      }
-    };
+    // // There's no longer a predefined bundle pool location for Buckminster
+    // return new MirrorRunnable()
+    // {
+    // public void run(IProgressMonitor monitor) throws Exception
+    // {
+    // String targetURL = URI.createFileURI(context.getP2PoolTPDir().toString()).toString();
+    //
+    // SlicingOptions slicingOptions = new SlicingOptions();
+    // slicingOptions.latestVersionOnly(true);
+    // slicingOptions.everythingGreedy(false);
+    //
+    // MirrorApplication app = new MirrorApplication()
+    // {
+    // @Override
+    // public IStatus run(IProgressMonitor monitor) throws ProvisionException
+    // {
+    // IStatus mirrorStatus = Status.OK_STATUS;
+    // monitor.beginTask("", 1 + 100 + 1000 + 100);
+    //
+    // try
+    // {
+    // initializeRepos(new SubProgressMonitor(monitor, 1));
+    // initializeIUs();
+    //
+    // IQueryable<IInstallableUnit> slice = slice(new SubProgressMonitor(monitor, 100));
+    //
+    // mirrorStatus = mirrorArtifacts(slice, new SubProgressMonitor(monitor, 1000));
+    // mirrorMetadata(slice, new SubProgressMonitor(monitor, 100));
+    // }
+    // finally
+    // {
+    // finalizeRepositories();
+    // }
+    //
+    // if (mirrorStatus.isOK())
+    // {
+    // return Status.OK_STATUS;
+    // }
+    //
+    // return mirrorStatus;
+    // }
+    //
+    // private void initializeIUs()
+    // {
+    // Method method = ReflectUtil.getMethod(MIRROR_CLASS, "initializeIUs");
+    // ReflectUtil.invokeMethod(method, this);
+    // }
+    //
+    // @SuppressWarnings("unchecked")
+    // private IQueryable<IInstallableUnit> slice(IProgressMonitor monitor)
+    // {
+    // Method method = ReflectUtil.getMethod(MIRROR_CLASS, "slice", IProgressMonitor.class);
+    // return (IQueryable<IInstallableUnit>)ReflectUtil.invokeMethod(method, this, monitor);
+    // }
+    //
+    // private IStatus mirrorArtifacts(IQueryable<IInstallableUnit> slice, IProgressMonitor monitor)
+    // {
+    // Method method = ReflectUtil.getMethod(MIRROR_CLASS, "mirrorArtifacts", IQueryable.class,
+    // IProgressMonitor.class);
+    // return (IStatus)ReflectUtil.invokeMethod(method, this, slice, monitor);
+    // }
+    //
+    // private void mirrorMetadata(IQueryable<IInstallableUnit> slice, IProgressMonitor monitor)
+    // {
+    // Method method = ReflectUtil.getMethod(MIRROR_CLASS, "mirrorMetadata", IQueryable.class,
+    // IProgressMonitor.class);
+    // ReflectUtil.invokeMethod(method, this, slice, monitor);
+    // }
+    // };
+    //
+    // app.setIncludePacked(false);
+    // app.setVerbose(true);
+    // app.setSlicingOptions(slicingOptions);
+    //
+    // RepositoryDescriptor destination = new RepositoryDescriptor();
+    // destination.setLocation(new java.net.URI(targetURL));
+    // destination.setAppend(true);
+    // app.addDestination(destination);
+    //
+    // initSourceRepos(app, context, targetURL);
+    // initRootIUs(app);
+    //
+    // app.run(monitor);
+    // }
+    //
+    // private void initSourceRepos(MirrorApplication app, final MirrorContext context, String targetURL)
+    // throws URISyntaxException
+    // {
+    // for (P2Repository p2Repository : getP2Repositories())
+    // {
+    // String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
+    //
+    // RepositoryDescriptor descriptor = new RepositoryDescriptor();
+    // descriptor.setLocation(new java.net.URI(sourceURL));
+    // app.addSource(descriptor);
+    //
+    // context.addRedirection(sourceURL, targetURL);
+    // }
+    // }
+    //
+    // private void initRootIUs(MirrorApplication app)
+    // {
+    // EList<InstallableUnit> installableUnits = getInstallableUnits();
+    // String[] rootIUs = new String[installableUnits.size()];
+    // for (int i = 0; i < rootIUs.length; i++)
+    // {
+    // InstallableUnit installableUnit = installableUnits.get(i);
+    // rootIUs[i] = installableUnit.getID();
+    //
+    // VersionRange range = installableUnit.getVersionRange();
+    // if (!VersionRange.emptyRange.equals(range))
+    // {
+    // rootIUs[i] += "/" + range;
+    // }
+    // }
+    //
+    // Field field = ReflectUtil.getField(MIRROR_CLASS, "rootIUs");
+    // ReflectUtil.setValue(field, app, rootIUs);
+    // }
+    // };
   }
 
   @Override

@@ -376,15 +376,18 @@ public class MaterializationTaskImpl extends BasicMaterializationTaskImpl implem
   @Override
   public MirrorRunnable mirror(MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception
   {
-    String targetURL = URI.createFileURI(context.getP2PoolTPDir().toString()).toString();
+    throw new UnsupportedOperationException();
 
-    for (P2Repository p2Repository : getP2Repositories())
-    {
-      String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
-      context.addRedirection(sourceURL, targetURL);
-    }
-
-    return null;
+    // // There's no longer a predefined bundle pool location for Buckminster
+    // String targetURL = URI.createFileURI(context.getP2PoolTPDir().toString()).toString();
+    //
+    // for (P2Repository p2Repository : getP2Repositories())
+    // {
+    // String sourceURL = context.redirect(URI.createURI(p2Repository.getURL())).toString();
+    // context.addRedirection(sourceURL, targetURL);
+    // }
+    //
+    // return null;
   }
 
   @Override

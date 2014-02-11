@@ -29,7 +29,6 @@ import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
@@ -164,10 +163,6 @@ public class InstallerDialog extends AbstractSetupDialog
   private ComboBoxViewerCellEditor cellEditor;
 
   private FileField installFolderField;
-
-  private FileField bundlePoolField;
-
-  private FileField bundlePoolTPField;
 
   private ToolItem updateToolItem;
 
@@ -519,8 +514,6 @@ public class InstallerDialog extends AbstractSetupDialog
                     {
                       viewer.setChecked(branch, checked);
                     }
-
-                    updateEnablements();
                   }
                 });
               }
@@ -533,7 +526,6 @@ public class InstallerDialog extends AbstractSetupDialog
               viewer.setChecked(branch, checked);
             }
 
-            updateEnablements();
             viewer.expandToLevel(project, 1);
           }
         }
@@ -561,7 +553,6 @@ public class InstallerDialog extends AbstractSetupDialog
                   viewer.setChecked(branch.getProject(), true);
                 }
 
-                updateEnablements();
                 viewer.editElement(branch, ECLIPSE_VERSION_COLUMN_INDEX);
               }
             });
@@ -570,7 +561,6 @@ public class InstallerDialog extends AbstractSetupDialog
           {
             Branch branch = (Branch)element;
             viewer.setChecked(branch.getProject(), false);
-            updateEnablements();
           }
         }
 
@@ -638,55 +628,6 @@ public class InstallerDialog extends AbstractSetupDialog
       public void valueChanged(String oldValue, String newValue) throws Exception
       {
         preferences.setInstallFolder(newValue);
-        EMFUtil.saveEObject(preferences);
-        validate();
-      }
-    });
-
-    bundlePoolField = new PropertyField.FileField("Bundle Pool")
-    {
-      @Override
-      protected String computeLinkedValue(String thisValue, String linkValue)
-      {
-        return new File(linkValue, ".p2pool-ide").getAbsolutePath();
-      }
-    };
-    bundlePoolField.setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for IDEs.");
-    bundlePoolField.setDialogText("Select Bundle Pool Folder");
-    bundlePoolField.setDialogMessage("Select a p2 bundle pool folder for IDEs.");
-    bundlePoolField.setLinkField(installFolderField);
-    bundlePoolField.fill(group);
-    bundlePoolField.setEnabled(false);
-    bundlePoolField.addValueListener(new ValueListener()
-    {
-      public void valueChanged(String oldValue, String newValue) throws Exception
-      {
-        preferences.setBundlePoolFolder(newValue);
-        EMFUtil.saveEObject(preferences);
-        validate();
-      }
-    });
-
-    bundlePoolTPField = new PropertyField.FileField("TP Bundle Pool")
-    {
-      @Override
-      protected String computeLinkedValue(String thisValue, String linkValue)
-      {
-        return new File(linkValue, ".p2pool-tp").getAbsolutePath();
-      }
-    };
-    bundlePoolTPField
-        .setToolTip("Points to the folder where the setup tool will create the p2 bundle pool for target platforms.");
-    bundlePoolTPField.setDialogText("Select TP Bundle Pool Folder");
-    bundlePoolTPField.setDialogMessage("Select a p2 bundle pool folder for target platforms.");
-    bundlePoolTPField.setLinkField(installFolderField);
-    bundlePoolTPField.fill(group);
-    bundlePoolTPField.setEnabled(false);
-    bundlePoolTPField.addValueListener(new ValueListener()
-    {
-      public void valueChanged(String oldValue, String newValue) throws Exception
-      {
-        preferences.setBundlePoolFolderTP(newValue);
         EMFUtil.saveEObject(preferences);
         validate();
       }
@@ -1131,17 +1072,11 @@ public class InstallerDialog extends AbstractSetupDialog
             }
 
             String installFolder;
-            String bundlePoolFolder;
-            String bundlePoolTPFolder;
-
             if (resourceSet.getURIConverter().exists(SetupConstants.PREFERENCES_URI, null))
             {
               Resource resource = loadResourceSafely(SetupConstants.PREFERENCES_URI);
               preferences = (Preferences)resource.getContents().get(0);
-
               installFolder = safe(preferences.getInstallFolder());
-              bundlePoolFolder = safe(preferences.getBundlePoolFolder());
-              bundlePoolTPFolder = safe(preferences.getBundlePoolFolderTP());
             }
             else
             {
@@ -1151,10 +1086,7 @@ public class InstallerDialog extends AbstractSetupDialog
               EMFUtil.saveEObject(preferences);
 
               File rootFolder = new File(SetupConstants.USER_HOME);
-
               installFolder = safe(getAbsolutePath(rootFolder));
-              bundlePoolFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-ide")));
-              bundlePoolTPFolder = safe(getAbsolutePath(new File(installFolder, ".p2pool-tp")));
             }
 
             ItemProvider input = new ItemProvider(adapterFactory);
@@ -1187,7 +1119,7 @@ public class InstallerDialog extends AbstractSetupDialog
               projects.add(project);
             }
 
-            initUI(metaIndexResource, input, installFolder, bundlePoolFolder, bundlePoolTPFolder);
+            initUI(metaIndexResource, input, installFolder);
           }
           catch (UpdateUtil.UpdatingException ex)
           {
@@ -1216,8 +1148,7 @@ public class InstallerDialog extends AbstractSetupDialog
     }
   }
 
-  private void initUI(final Resource metaIndexResource, final ItemProvider input, final String installFolder,
-      final String bundlePoolFolder, final String bundlePoolTPFolder)
+  private void initUI(final Resource metaIndexResource, final ItemProvider input, final String installFolder)
   {
     viewer.getControl().getDisplay().asyncExec(new Runnable()
     {
@@ -1251,20 +1182,6 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         installFolderField.setValue(installFolder);
-
-        if (bundlePoolFolder.length() != 0)
-        {
-          bundlePoolField.setValue(bundlePoolFolder);
-        }
-
-        bundlePoolField.setLinkedFromValue();
-
-        if (bundlePoolTPFolder.length() != 0)
-        {
-          bundlePoolTPField.setValue(bundlePoolTPFolder);
-        }
-
-        bundlePoolTPField.setLinkedFromValue();
 
         final Tree tree = viewer.getTree();
         final TreeColumn projectColumn = tree.getColumn(0);
@@ -1302,46 +1219,6 @@ public class InstallerDialog extends AbstractSetupDialog
         cellEditor.setInput(this);
       }
     });
-  }
-
-  private void updateEnablements()
-  {
-    boolean[] neededBundlePools = getNeededBundlePools();
-
-    bundlePoolField.setEnabled(neededBundlePools[0]);
-    bundlePoolTPField.setEnabled(neededBundlePools[1]);
-  }
-
-  private boolean[] getNeededBundlePools()
-  {
-    boolean[] result = { false, false };
-
-    for (Object element : viewer.getCheckedElements())
-    {
-      if (element instanceof Branch)
-      {
-        Branch branch = (Branch)element;
-
-        Setup setup = getSetup(branch);
-        if (setup != null)
-        {
-          EList<SetupTask> tasks = setup.getSetupTasks(true, null);
-          for (SetupTask task : tasks)
-          {
-            result[0] |= task.needsBundlePool();
-            result[1] |= task.needsBundlePoolTP();
-
-            if (result[0] && result[1])
-            {
-              // Exit early if both pools are needed
-              return result;
-            }
-          }
-        }
-      }
-    }
-
-    return result;
   }
 
   private Setup getSetup(Branch branch)

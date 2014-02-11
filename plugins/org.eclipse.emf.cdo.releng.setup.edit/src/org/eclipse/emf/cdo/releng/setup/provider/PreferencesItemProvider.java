@@ -63,8 +63,6 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
       super.getPropertyDescriptors(object);
 
       addInstallFolderPropertyDescriptor(object);
-      addBundlePoolFolderPropertyDescriptor(object);
-      addBundlePoolFolderTPPropertyDescriptor(object);
       addAcceptedLicensesPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
@@ -86,40 +84,6 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
             getString("_UI_PropertyDescriptor_description", "_UI_Preferences_installFolder_feature",
                 "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__INSTALL_FOLDER, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Bundle Pool Folder feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  protected void addBundlePoolFolderPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_Preferences_bundlePoolFolder_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_bundlePoolFolder_feature",
-            "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__BUNDLE_POOL_FOLDER, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, PropertiesViewer.EXPERT_FILTER));
-  }
-
-  /**
-   * This adds a property descriptor for the Bundle Pool Folder TP feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addBundlePoolFolderTPPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_Preferences_bundlePoolFolderTP_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Preferences_bundlePoolFolderTP_feature",
-            "_UI_Preferences_type"), SetupPackage.Literals.PREFERENCES__BUNDLE_POOL_FOLDER_TP, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -189,8 +153,6 @@ public class PreferencesItemProvider extends SetupTaskContainerItemProvider impl
     switch (notification.getFeatureID(Preferences.class))
     {
     case SetupPackage.PREFERENCES__INSTALL_FOLDER:
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER:
-    case SetupPackage.PREFERENCES__BUNDLE_POOL_FOLDER_TP:
     case SetupPackage.PREFERENCES__ACCEPTED_LICENSES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

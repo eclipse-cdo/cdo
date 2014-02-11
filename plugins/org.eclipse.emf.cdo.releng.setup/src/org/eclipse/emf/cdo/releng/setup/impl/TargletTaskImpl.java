@@ -13,6 +13,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Targlet;
 import org.eclipse.emf.cdo.releng.setup.TargletData;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
+import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 
@@ -37,6 +38,7 @@ import org.eclipse.pde.core.target.ITargetPlatformService;
 import org.eclipse.pde.core.target.LoadTargetDefinitionJob;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * <!-- begin-user-doc -->
@@ -632,6 +634,12 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
     return result.toString();
   }
 
+  @Override
+  public Set<Trigger> getValidTriggers()
+  {
+    return Trigger.IDE_TRIGGERS;
+  }
+
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     targlet = SetupFactory.eINSTANCE.createTarglet(this);
@@ -733,6 +741,8 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       {
         throw new CoreException(status);
       }
+
+      TargletContainer.updateWorkspace(new ProgressLogMonitor(context));
     }
     finally
     {

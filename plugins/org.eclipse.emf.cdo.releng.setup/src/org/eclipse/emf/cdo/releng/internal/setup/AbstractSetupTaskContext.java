@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.Setup;
+import org.eclipse.emf.cdo.releng.setup.SetupConstants;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
@@ -63,6 +64,18 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   private static final Pattern STRING_EXPANSION_PATTERN = Pattern.compile("\\$(\\{([^${}|]+)(\\|([^}]+))?}|\\$)");
 
   private static final Map<String, StringFilter> STRING_FILTER_REGISTRY = new HashMap<String, StringFilter>();
+
+  private static final String P2_AGENT_PATH = System.getProperty("setup.p2.agent");
+
+  private static final String P2_POOL_PATH = System.getProperty("setup.p2.pool");
+
+  private static final File P2_AGENT_DIR = P2_AGENT_PATH != null ? new File(P2_AGENT_PATH) : new File(
+      SetupConstants.USER_HOME, ".p2");
+
+  private static final File P2_POOL_DIR = P2_POOL_PATH != null ? new File(P2_POOL_PATH)
+      : new File(P2_AGENT_DIR, "pool");
+
+  private static final File STATE_DIR = new File(SetupConstants.USER_HOME, ".eclipse/org.eclipse.emf.cdo.releng.setup");
 
   private static final long serialVersionUID = 1L;
 
@@ -190,9 +203,10 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
       projectLabel = projectName;
     }
 
+    put(KEY_STATE_DIR, getStateDir());
     put(KEY_INSTALL_DIR, getInstallDir());
+    put(KEY_P2_AGENT_DIR, getP2AgentDir());
     put(KEY_P2_POOL_DIR, getP2PoolDir());
-    put(KEY_P2_POOL_TP_DIR, getP2PoolTPDir());
     put(KEY_PROJECT_DIR, getProjectDir());
     put(KEY_BRANCH_DIR, getBranchDir());
     put(KEY_ECLIPSE_DIR, getEclipseDir());
@@ -451,10 +465,14 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     return OS.INSTANCE;
   }
 
-  public String getP2ProfileName()
+  public File getP2AgentDir()
   {
-    String profileName = getBranchDir().toString();
-    return SetupUtil.encodePath(profileName);
+    return P2_AGENT_DIR;
+  }
+
+  public File getP2PoolDir()
+  {
+    return P2_POOL_DIR;
   }
 
   public File getP2ProfileDir()
@@ -462,31 +480,15 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     return new File(getP2AgentDir(), "org.eclipse.equinox.p2.engine/profileRegistry/" + getP2ProfileName() + ".profile");
   }
 
-  public File getP2AgentDir()
+  public String getP2ProfileName()
   {
-    return new File(getP2PoolDir(), "p2");
+    String profileName = getBranchDir().toString();
+    return SetupUtil.encodePath(profileName);
   }
 
-  public File getP2PoolDir()
+  public File getStateDir()
   {
-    String bundlePoolFolder = preferences.getBundlePoolFolder();
-    if (StringUtil.isEmpty(bundlePoolFolder))
-    {
-      return new File(getInstallDir(), ".p2pool-ide");
-    }
-
-    return new File(bundlePoolFolder);
-  }
-
-  public File getP2PoolTPDir()
-  {
-    String bundlePoolFolderTP = preferences.getBundlePoolFolderTP();
-    if (StringUtil.isEmpty(bundlePoolFolderTP))
-    {
-      return new File(getInstallDir(), ".p2pool-tp");
-    }
-
-    return new File(bundlePoolFolderTP);
+    return STATE_DIR;
   }
 
   public File getInstallDir()

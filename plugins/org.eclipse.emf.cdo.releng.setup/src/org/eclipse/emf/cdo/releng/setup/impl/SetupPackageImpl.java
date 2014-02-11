@@ -2313,6 +2313,16 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getBasicMaterializationTask_BundlePool()
+  {
+    return (EAttribute)basicMaterializationTaskEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getComponent()
   {
     return componentEClass;
@@ -2503,29 +2513,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPreferences_BundlePoolFolder()
-  {
-    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPreferences_BundlePoolFolderTP()
-  {
-    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getPreferences_AcceptedLicenses()
   {
-    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)preferencesEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2743,8 +2733,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     preferencesEClass = createEClass(PREFERENCES);
     createEAttribute(preferencesEClass, PREFERENCES__INSTALL_FOLDER);
-    createEAttribute(preferencesEClass, PREFERENCES__BUNDLE_POOL_FOLDER);
-    createEAttribute(preferencesEClass, PREFERENCES__BUNDLE_POOL_FOLDER_TP);
     createEAttribute(preferencesEClass, PREFERENCES__ACCEPTED_LICENSES);
 
     setupEClass = createEClass(SETUP);
@@ -2804,6 +2792,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
 
     basicMaterializationTaskEClass = createEClass(BASIC_MATERIALIZATION_TASK);
     createEAttribute(basicMaterializationTaskEClass, BASIC_MATERIALIZATION_TASK__TARGET_PLATFORM);
+    createEAttribute(basicMaterializationTaskEClass, BASIC_MATERIALIZATION_TASK__BUNDLE_POOL);
 
     buckminsterImportTaskEClass = createEClass(BUCKMINSTER_IMPORT_TASK);
     createEAttribute(buckminsterImportTaskEClass, BUCKMINSTER_IMPORT_TASK__MSPEC);
@@ -3121,12 +3110,6 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getPreferences_InstallFolder(), ecorePackage.getEString(), "installFolder", null, 1, 1,
         Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
-    initEAttribute(getPreferences_BundlePoolFolder(), ecorePackage.getEString(), "bundlePoolFolder", null, 0, 1,
-        Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEAttribute(getPreferences_BundlePoolFolderTP(), ecorePackage.getEString(), "bundlePoolFolderTP", null, 0, 1,
-        Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
     initEAttribute(getPreferences_AcceptedLicenses(), getLicenseInfo(), "acceptedLicenses", null, 0, -1,
         Preferences.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
@@ -3263,6 +3246,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getBasicMaterializationTask_TargetPlatform(), ecorePackage.getEString(), "targetPlatform",
         "${setup.branch.dir/tp}", 1, 1, BasicMaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBasicMaterializationTask_BundlePool(), ecorePackage.getEString(), "bundlePool",
+        "${setup.state.dir/buckminster/pool}", 0, 1, BasicMaterializationTask.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(buckminsterImportTaskEClass, BuckminsterImportTask.class, "BuckminsterImportTask", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

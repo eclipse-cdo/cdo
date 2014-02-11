@@ -6,8 +6,35 @@
     <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile" value="Warning"/>
   </setupTasks>
   <branches name="master">
+    <setupTasks xsi:type="setup:ContextVariableTask" name="p2.orbit.version" value="S20140116105218"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${setup.branch.dir/git/mylyn.tasks}" remoteURI="ssh://git.eclipse.org:29418/mylyn/org.eclipse.mylyn.tasks" checkoutBranch="master"/>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.0" documentation="Generated from C:\develop\git\org.eclipse.mylyn.tasks\org.eclipse.mylyn.tasks-target\mylyn-tasks-e3.6.target">
+    <setupTasks xsi:type="setup:TargletTask" name="Mylyn Tasks">
+      <roots id="org.eclipse.sdk.feature.group"/>
+      <roots id="org.eclipse.mylyn.bugzilla.rest.feature.group"/>
+      <roots id="org.eclipse.mylyn.bugzilla.rest.core.tests"/>
+      <roots id="org.eclipse.mylyn.bugzilla.rest.ui.tests"/>
+      <roots id="org.eclipse.mylyn.commons.sdk.feature.group.feature.group"/>
+      <roots id="org.eclipse.mylyn.commons.tck.feature.group.feature.group"/>
+      <roots id="org.eclipse.mylyn.context.core"/>
+      <roots id="org.eclipse.mylyn.help.sdk"/>
+      <roots id="org.eclipse.mylyn.sdk_feature.feature.group"/>
+      <roots id="org.eclipse.mylyn.tasks.activity.tests"/>
+      <roots id="org.eclipse.mylyn.tasks.core.tests"/>
+      <roots id="org.eclipse.mylyn.tasks.ide.feature.group"/>
+      <roots id="org.eclipse.mylyn.tasks.index.feature.group"/>
+      <roots id="org.eclipse.mylyn.tasks.index.tests"/>
+      <roots id="org.eclipse.mylyn.test_feature.feature.group"/>
+      <roots id="org.eclipse.mylyn.trac.core.tests"/>
+      <roots id="org.eclipse.mylyn.trac.ui.tests"/>
+      <sourceLocators rootFolder="${setup.branch.dir/git/mylyn.tasks}"/>
+      <repositoryLists name="Luna Dependencies">
+        <p2Repositories url="http://download.eclipse.org/releases/luna"/>
+        <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/3.9"/>
+        <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/nightly/commons"/>
+        <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/${p2.orbit.version}/repository"/>
+      </repositoryLists>
+    </setupTasks>
+    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.1" disabled="true" documentation="Generated from C:\develop\git\org.eclipse.mylyn.tasks\org.eclipse.mylyn.tasks-target\mylyn-tasks-e3.6.target">
       <rootComponents name="org.eclipse.mylyn.bugzilla.releng" type="unknown"/>
       <rootComponents name="org.eclipse.mylyn.bugzilla.rest"/>
       <rootComponents name="org.eclipse.mylyn.bugzilla.rest.core.tests" type="osgi.bundle"/>
@@ -30,40 +57,37 @@
       <rootComponents name="org.eclipse.mylyn.trac.ui.tests" type="osgi.bundle"/>
       <rootComponents name="org.eclipse.sdk.ide" type="osgi.bundle"/>
       <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/mylyn.tasks}"/>
-      <p2Repositories url="http://download.eclipse.org/releases/luna"/>
       <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/S20131024145017/repository"/>
-      <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/3.9"/>
-      <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/nightly/commons"/>
     </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="Tasks">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.tasks.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.5 //@branches[name='master']/@setupTasks.4/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Bugzilla">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.bugzilla.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.5 //@branches[name='master']/@setupTasks.4/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Trac">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.trac.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.5 //@branches[name='master']/@setupTasks.4/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="OSLC">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.oslc.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.5 //@branches[name='master']/@setupTasks.4/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Help">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.mylyn\.help.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.2/@workingSets.5 //@branches[name='master']/@setupTasks.2/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.5 //@branches[name='master']/@setupTasks.4/@workingSets.6"/>
         </predicates>
       </workingSets>
       <workingSets name="Tests">

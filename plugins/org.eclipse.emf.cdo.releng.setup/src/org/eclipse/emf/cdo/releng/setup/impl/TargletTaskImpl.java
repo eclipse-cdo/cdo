@@ -527,7 +527,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       return repositoryLists != null && !repositoryLists.isEmpty();
     case SetupPackage.TARGLET_TASK__ACTIVE_REPOSITORY_LIST:
       return ACTIVE_REPOSITORY_LIST_EDEFAULT == null ? activeRepositoryList != null : !ACTIVE_REPOSITORY_LIST_EDEFAULT
-          .equals(activeRepositoryList);
+      .equals(activeRepositoryList);
     case SetupPackage.TARGLET_TASK__ACTIVE_P2_REPOSITORIES:
       return !getActiveP2Repositories().isEmpty();
     case SetupPackage.TARGLET_TASK__INCLUDE_SOURCES:
@@ -644,6 +644,11 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
   {
     targlet = SetupFactory.eINSTANCE.createTarglet(this);
 
+    if (context.getTrigger() == Trigger.MANUAL)
+    {
+      return true;
+    }
+
     ITargetPlatformService service = null;
 
     try
@@ -690,10 +695,21 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
     try
     {
       service = ServiceUtil.getService(ITargetPlatformService.class);
+
+      if (target == null)
+      {
+        target = getTarget(context, service);
+      }
+
       if (target == null)
       {
         target = service.newTarget();
         target.setName(TARGET_NAME);
+      }
+
+      if (targletContainer == null)
+      {
+        targletContainer = getTargletContainer();
       }
 
       EList<Targlet> targlets;

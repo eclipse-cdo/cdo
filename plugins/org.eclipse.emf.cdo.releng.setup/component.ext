@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<setup:ComponentExtension setup:toolVersion="7" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
+<setup:ComponentExtension setup:toolVersion="8" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
   <dependencies id="org.eclipse.sdk.feature.group"/>
   <dependencies id="org.eclipse.emf.sdk.feature.group"/>
   <dependencies id="org.eclipse.egit.feature.group"/>
-  <dependencies id="org.eclipse.buckminster.core.feature.feature.group"/>
   <dependencies id="org.eclipse.mylyn.sdk_feature.feature.group"/>
   <dependencies id="org.eclipse.mylyn.bugzilla_feature.feature.group"/>
   <dependencies id="org.eclipse.mylyn.builds.sdk.feature.group"/>
+  <dependencies id="org.eclipse.buckminster.core.feature.feature.group"/>
+  <dependencies id="org.eclipse.buckminster.pde"/>
 </setup:ComponentExtension>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<setup:Configuration setup:toolVersion="5" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
+<setup:Configuration setup:toolVersion="8" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
   <setupTasks xsi:type="setup:CompoundSetupTask" name="Global Variables">
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a 1.4 compatible JDK/JRE for architecture ${os.arch}." type="FOLDER" name="jre.1.4.location"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a 1.5 compatible JDK/JRE for architecture ${os.arch}." type="FOLDER" name="jre.1.5.location"/>
@@ -34,7 +34,7 @@
   <projects href="file:/example.setup#/"/>
   <projects href="setups/buckminster.setup#/" name="Buckminster" label="Buckminster"/>
   <projects href="../org.eclipse.emf.cdo.releng/local.setup#/" name="CDO" label="CDO Model Repository"/>
-  <projects href="../org.eclipse.emf.cdo.releng/releng.setup#/" name="CDO.Releng" label="CDO Release Engineering"/>
+  <projects href="setups/releng.setup#/" name="CDO.Releng" label="CDO Release Engineering"/>
   <projects href="setups/egit.setup#/" name="EGit" label="Eclipse Git Team Provider"/>
   <projects href="setups/Platform.setup#/" name="Platform" label="Eclipse Platform SDK"/>
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/features/org.eclipse.emf.sdk-feature/Core.setup#/" name="EMF" label="EMF Core SDK"/>

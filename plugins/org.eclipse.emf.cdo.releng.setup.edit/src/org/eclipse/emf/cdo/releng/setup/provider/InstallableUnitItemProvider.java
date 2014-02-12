@@ -40,8 +40,10 @@ import java.util.List;
  * @generated
  */
 public class InstallableUnitItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
+  private static final String FEATURE_SUFFIX = ".feature.group";
+
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
@@ -102,7 +104,7 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
         getString("_UI_InstallableUnit_versionRange_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_InstallableUnit_versionRange_feature",
             "_UI_InstallableUnit_type"), SetupPackage.Literals.INSTALLABLE_UNIT__VERSION_RANGE, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -120,12 +122,21 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
    * This returns InstallableUnit.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/InstallableUnit"));
+    String key = "full/obj16/InstallableUnit";
+
+    InstallableUnit installableUnit = (InstallableUnit)object;
+    String id = installableUnit.getID();
+    if (id != null && id.endsWith(FEATURE_SUFFIX))
+    {
+      key += "_Feature";
+    }
+
+    return overlayImage(object, getResourceLocator().getImage(key));
   }
 
   /**
@@ -150,8 +161,20 @@ public class InstallableUnitItemProvider extends ItemProviderAdapter implements 
   {
     InstallableUnit installableUnit = (InstallableUnit)object;
     String label = installableUnit.getID();
+    if (label == null || label.length() == 0)
+    {
+      label = getString("_UI_InstallableUnit_type");
+    }
+    else
+    {
+      if (label.endsWith(FEATURE_SUFFIX))
+      {
+        label = label.substring(0, label.length() - FEATURE_SUFFIX.length());
+      }
+    }
+
     VersionRange versionRange = installableUnit.getVersionRange();
-    return (label == null || label.length() == 0 ? getString("_UI_InstallableUnit_type") : label)
+    return label
         + (versionRange == null || VersionRange.emptyRange.equals(versionRange) ? "" : " " + versionRange.toString());
   }
 

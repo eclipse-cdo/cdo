@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
 import org.eclipse.emf.cdo.releng.setup.util.OS;
 import org.eclipse.emf.cdo.releng.setup.util.ServiceUtil;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -949,7 +950,7 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     Set<File> directories = new LinkedHashSet<File>();
     directories.add(new File("").getAbsoluteFile());
-    directories.add(new File(System.getProperty("user.dir")).getAbsoluteFile());
+    directories.add(new File(SetupUtil.getProperty("user.dir")).getAbsoluteFile());
     directories.add(new File(SetupConstants.USER_HOME).getAbsoluteFile());
 
     List<Project> projects = new ArrayList<Project>();

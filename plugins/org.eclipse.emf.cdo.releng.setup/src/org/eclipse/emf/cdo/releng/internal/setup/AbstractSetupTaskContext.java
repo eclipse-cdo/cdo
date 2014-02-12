@@ -65,9 +65,9 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   private static final Map<String, StringFilter> STRING_FILTER_REGISTRY = new HashMap<String, StringFilter>();
 
-  private static final String P2_AGENT_PATH = System.getProperty("setup.p2.agent");
+  private static final String P2_AGENT_PATH = SetupUtil.getProperty("setup.p2.agent");
 
-  private static final String P2_POOL_PATH = System.getProperty("setup.p2.pool");
+  private static final String P2_POOL_PATH = SetupUtil.getProperty("setup.p2.pool");
 
   private static final File P2_AGENT_DIR = P2_AGENT_PATH != null ? new File(P2_AGENT_PATH) : new File(
       SetupConstants.USER_HOME, ".p2");
@@ -221,6 +221,11 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     put(KEY_WS, Platform.getWS());
 
     put(PROP_RELENG_URL, RELENG_URL);
+
+    for (Map.Entry<String, String> entry : System.getenv().entrySet())
+    {
+      put(entry.getKey(), entry.getValue());
+    }
 
     for (Map.Entry<Object, Object> entry : System.getProperties().entrySet())
     {
@@ -534,6 +539,23 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
   protected final void setPerforming(boolean performing)
   {
     this.performing = performing;
+  }
+
+  @Override
+  public Object get(Object key)
+  {
+    Object value = super.get(key);
+    if (value == null && key instanceof String)
+    {
+      String name = (String)key;
+      if (name.indexOf('.') != -1)
+      {
+        name = name.replace('.', '_');
+        value = super.get(name);
+      }
+    }
+
+    return value;
   }
 
   protected String lookup(String key)

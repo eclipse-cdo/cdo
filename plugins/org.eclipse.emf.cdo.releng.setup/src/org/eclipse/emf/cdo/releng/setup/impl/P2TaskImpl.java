@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.releng.setup.Trigger;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
 import org.eclipse.emf.cdo.releng.setup.util.DownloadUtil;
 import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -120,7 +121,7 @@ import java.util.regex.Pattern;
  */
 public class P2TaskImpl extends SetupTaskImpl implements P2Task
 {
-  private static final boolean SKIP = "true".equals(System.getProperty(SetupConstants.PROP_P2_TASK_SKIP));
+  private static final boolean SKIP = "true".equals(SetupUtil.getProperty(SetupConstants.PROP_P2_TASK_SKIP));
 
   private static final Class<DirectorApplication> DIRECTOR_CLASS = DirectorApplication.class;
 

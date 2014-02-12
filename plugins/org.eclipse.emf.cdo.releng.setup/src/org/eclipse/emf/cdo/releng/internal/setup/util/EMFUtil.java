@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResource;
 import org.eclipse.emf.cdo.releng.setup.util.SetupResourceFactoryImpl;
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -59,7 +60,7 @@ public final class EMFUtil extends Plugin
   public static final URI META_INDEX_URI = URI
       .createURI("http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng.setup/MetaIndex.setup");
 
-  public static final String EXAMPLE_URI = System.getProperty(SetupConstants.PROP_EXAMPLE_URI);
+  public static final String EXAMPLE_URI = SetupUtil.getProperty(SetupConstants.PROP_EXAMPLE_URI);
 
   public static final URI EXAMPLE_PROXY_URI = URI.createURI("file:/example.setup");
 
@@ -158,7 +159,7 @@ public final class EMFUtil extends Plugin
 
   private static URI getSetupURI(ResourceSet resourceSet)
   {
-    String prop = System.getProperty(SetupConstants.PROP_SETUP_URI);
+    String prop = SetupUtil.getProperty(SetupConstants.PROP_SETUP_URI);
     if (prop == null)
     {
       return ECLIPSE_INDEX_URI;
@@ -236,7 +237,7 @@ public final class EMFUtil extends Plugin
 
   private static URI getRedirectedBranchURI()
   {
-    String uri = System.getProperty(SetupConstants.PROP_SETUP_BRANCH_URI);
+    String uri = SetupUtil.getProperty(SetupConstants.PROP_SETUP_BRANCH_URI);
     if (uri == null)
     {
       return null;

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
+
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -38,7 +40,7 @@ public class ErrorDialog extends MessageDialog
   private ErrorDialog(Throwable detail)
   {
     super(null, ProgressDialog.SHELL_TEXT, ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup",
-        "icons/install_wiz.gif"), "Internal error" + System.getProperty("line.separator") + detail.getMessage(),
+        "icons/install_wiz.gif"), "Internal error" + SetupUtil.getProperty("line.separator") + detail.getMessage(),
         MessageDialog.ERROR, new String[] { IDialogConstants.OK_LABEL, IDialogConstants.SHOW_DETAILS_LABEL }, 0);
     throwable = detail;
     setShellStyle(SWT.SHELL_TRIM | SWT.BORDER | SWT.APPLICATION_MODAL);

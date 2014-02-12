@@ -112,7 +112,7 @@ public abstract class OS
 
   public void writeText(File file, List<String> lines)
   {
-    String nl = System.getProperty("line.separator");
+    String nl = SetupUtil.getProperty("line.separator");
     FileOutputStream out = null;
 
     try

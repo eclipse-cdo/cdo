@@ -21,6 +21,32 @@ public final class SetupUtil
   {
   }
 
+  public static String getProperty(String key)
+  {
+    return getProperty(key, null);
+  }
+
+  public static String getProperty(String key, String defaultValue)
+  {
+    String value = System.getProperty(key);
+    if (value == null)
+    {
+      value = System.getenv(key);
+      if (value == null && key.indexOf('.') != -1)
+      {
+        key = key.replace('.', '_');
+        value = getProperty(key, defaultValue);
+      }
+    }
+
+    if (value == null)
+    {
+      value = defaultValue;
+    }
+
+    return value;
+  }
+
   public static String escape(String string)
   {
     return AbstractSetupTaskContext.escape(string);

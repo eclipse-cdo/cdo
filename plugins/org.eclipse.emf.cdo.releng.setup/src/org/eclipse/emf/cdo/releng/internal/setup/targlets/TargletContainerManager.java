@@ -74,7 +74,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class TargletContainerManager
 {
-  public static final File AGENT_FOLDER = new File(System.getProperty("user.home"), ".p2"); //$NON-NLS-1$
+  public static final File AGENT_FOLDER = new File(SetupUtil.getProperty("user.home"), ".p2"); //$NON-NLS-1$
 
   public static final File POOL_FOLDER = new File(AGENT_FOLDER, "pool"); //$NON-NLS-1$
 

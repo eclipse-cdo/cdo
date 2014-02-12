@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.setup;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.setup.util.SetupUtil;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -67,19 +68,19 @@ public interface SetupConstants
 
   public static final String PROP_SETUP_BRANCH_URI = "setup.branch.uri";
 
-  public static final String RELENG_URL = System.getProperty(PROP_RELENG_URL, Activator.CDO_URL).replace('\\', '/');
+  public static final String RELENG_URL = SetupUtil.getProperty(PROP_RELENG_URL, Activator.CDO_URL).replace('\\', '/');
 
-  public static final boolean META_INDEX = "true".equalsIgnoreCase(System.getProperty(PROP_META_INDEX, "false"));
+  public static final boolean META_INDEX = "true".equalsIgnoreCase(SetupUtil.getProperty(PROP_META_INDEX, "false"));
 
-  public static final boolean SETUP_IDE = "true".equalsIgnoreCase(System.getProperty(PROP_SETUP_IDE, "false"));
+  public static final boolean SETUP_IDE = "true".equalsIgnoreCase(SetupUtil.getProperty(PROP_SETUP_IDE, "false"));
 
-  public static final boolean SETUP_SKIP = "true".equalsIgnoreCase(System.getProperty(PROP_SETUP_SKIP, "false"));
+  public static final boolean SETUP_SKIP = "true".equalsIgnoreCase(SetupUtil.getProperty(PROP_SETUP_SKIP, "false"));
 
   public static final String PREF_SKIP_STARTUP_TASKS = "skip.startup.tasks";
 
   public static final String PREF_LOG_UNNEEDED_TASKS = "log.unneeded.tasks";
 
-  public static final String USER_HOME = System.getProperty("user.home", ".");
+  public static final String USER_HOME = SetupUtil.getProperty("user.home", ".");
 
   public static final String PREFERENCES_NAME = "setup-eclipse.xmi";
 

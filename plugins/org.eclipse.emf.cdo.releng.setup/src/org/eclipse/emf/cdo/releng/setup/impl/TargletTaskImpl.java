@@ -3,6 +3,9 @@
 package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainer;
+import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainerDescriptor;
+import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainerDescriptor.UpdateProblem;
+import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainerManager;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -30,6 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.pde.core.target.ITargetDefinition;
 import org.eclipse.pde.core.target.ITargetHandle;
@@ -527,7 +531,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       return repositoryLists != null && !repositoryLists.isEmpty();
     case SetupPackage.TARGLET_TASK__ACTIVE_REPOSITORY_LIST:
       return ACTIVE_REPOSITORY_LIST_EDEFAULT == null ? activeRepositoryList != null : !ACTIVE_REPOSITORY_LIST_EDEFAULT
-      .equals(activeRepositoryList);
+          .equals(activeRepositoryList);
     case SetupPackage.TARGLET_TASK__ACTIVE_P2_REPOSITORIES:
       return !getActiveP2Repositories().isEmpty();
     case SetupPackage.TARGLET_TASK__INCLUDE_SOURCES:
@@ -748,17 +752,30 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
         }
       }
 
+      IProgressMonitor monitor = new ProgressLogMonitor(context);
+
       targletContainer.setTarglets(targlets);
-      target.resolve(new ProgressLogMonitor(context));
+      target.resolve(monitor);
+
+      String containerID = targletContainer.getID();
+      TargletContainerManager manager = TargletContainerManager.getInstance();
+      TargletContainerDescriptor descriptor = manager.getDescriptor(containerID, monitor);
+
+      UpdateProblem updateProblem = descriptor.getUpdateProblem();
+      if (updateProblem != null)
+      {
+        IStatus status = updateProblem.toStatus();
+        throw new CoreException(status);
+      }
 
       LoadTargetDefinitionJob job = new LoadTargetDefinitionJob(target);
-      IStatus status = job.run(new ProgressLogMonitor(context));
+      IStatus status = job.run(monitor);
       if (status.getSeverity() == IStatus.ERROR)
       {
         throw new CoreException(status);
       }
 
-      TargletContainer.updateWorkspace(new ProgressLogMonitor(context));
+      TargletContainer.updateWorkspace(monitor);
     }
     finally
     {

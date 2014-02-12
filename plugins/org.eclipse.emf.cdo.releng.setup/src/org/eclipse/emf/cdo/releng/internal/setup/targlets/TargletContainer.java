@@ -492,7 +492,7 @@ public class TargletContainer extends AbstractBundleContainer
         progress.skipped(86);
       }
 
-      generateProfile(profile, progress.newChild(10));
+      generateUnits(profile, progress.newChild(10));
       progress.done();
     }
     catch (Throwable t)
@@ -502,7 +502,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
   }
 
-  private void generateProfile(IProfile profile, IProgressMonitor monitor) throws CoreException
+  private void generateUnits(IProfile profile, IProgressMonitor monitor) throws CoreException
   {
     SubMonitor progress = SubMonitor.convert(monitor, 100).detectCancelation();
 

@@ -834,6 +834,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           {
             doPerformNeededSetupTasks();
           }
+          catch (CoreException ex)
+          {
+            throw ex;
+          }
           catch (Exception ex)
           {
             throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));

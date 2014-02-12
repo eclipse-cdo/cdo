@@ -42,46 +42,17 @@
         <p2Repositories url="http://download.eclipse.org/jetty/updates/jetty-bundles-7.x/7.6.14.v20131031"/>
       </repositoryLists>
     </setupTasks>
-    <setupTasks xsi:type="setup:MaterializationTask" requirements="//@branches[name='master']/@setupTasks.1" disabled="true" documentation="Generated from C:\develop\egit\master\git\egit.git\org.eclipse.egit.target\egit-4.4.target">
-      <rootComponents name="org.eclipse.jgit.ant" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.ant.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.console" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.http.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.java7"/>
-      <rootComponents name="org.eclipse.jgit.java7.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.junit"/>
-      <rootComponents name="org.eclipse.jgit.pgm"/>
-      <rootComponents name="org.eclipse.jgit.pgm.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.target" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.jgit.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.egit"/>
-      <rootComponents name="org.eclipse.egit.core.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.egit.mylyn"/>
-      <rootComponents name="org.eclipse.egit.mylyn.ui.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.egit.target" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.egit.ui.test" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.platform"/>
-      <rootComponents name="org.eclipse.sdk.ide" type="osgi.bundle"/>
-      <rootComponents name="org.eclipse.emf.sdk.feature.group"/>
-      <rootComponents name="org.eclipse.jetty.bundles.f" versionRange="[7.6.0,8.0.0)"/>
-      <rootComponents name="org.eclipse.swtbot.eclipse.feature.group"/>
-      <rootComponents name="org.eclipse.swtbot.eclipse.test.junit.feature.group"/>
-      <rootComponents name="org.eclipse.swtbot.feature.group"/>
-      <rootComponents name="javax.servlet" type="osgi.bundle" versionRange="[2.5.0,2.6.0)"/>
-      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/jgit}"/>
-      <sourceLocators xsi:type="setup:AutomaticSourceLocator" rootFolder="${setup.branch.dir/git/egit}"/>
-    </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="EGit">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.egit.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.5/@workingSets.2 //@branches[name='master']/@setupTasks.5/@workingSets.3"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.2 //@branches[name='master']/@setupTasks.4/@workingSets.3"/>
         </predicates>
       </workingSets>
       <workingSets name="JGit">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:NamePredicate" pattern="org\.eclipse\.jgit.*"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.5/@workingSets.2 //@branches[name='master']/@setupTasks.5/@workingSets.3"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.4/@workingSets.2 //@branches[name='master']/@setupTasks.4/@workingSets.3"/>
         </predicates>
       </workingSets>
       <workingSets name="Tests">

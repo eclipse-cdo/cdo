@@ -75,6 +75,7 @@ import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.pde.core.target.ITargetDefinition;
+import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetLocationFactory;
 import org.eclipse.pde.core.target.ITargetPlatformService;
@@ -971,7 +972,7 @@ public class TargletContainer extends AbstractBundleContainer
 
   private static Set<File> getProjectLocations(IProfile profile, Map<IInstallableUnit, File> sources,
       IProgressMonitor monitor)
-  {
+      {
     Set<File> projectLocations = new HashSet<File>();
     IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUAnyQuery(), monitor);
     for (IInstallableUnit iu : result.toUnmodifiableSet())
@@ -984,7 +985,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
 
     return projectLocations;
-  }
+      }
 
   public static void updateWorkspace(IProgressMonitor monitor) throws CoreException
   {
@@ -994,8 +995,22 @@ public class TargletContainer extends AbstractBundleContainer
     {
       service = ServiceUtil.getService(ITargetPlatformService.class);
       Set<File> projectLocations = new HashSet<File>();
+      ITargetDefinition target = null;
 
-      ITargetDefinition target = service.getWorkspaceTargetDefinition();
+      try
+      {
+        target = service.getWorkspaceTargetDefinition();
+      }
+      catch (NoSuchMethodError ex)
+      {
+        // Handle gracefully that getWorkspaceTargetDefinition() has been added in Eclipse 4.4
+        ITargetHandle handle = service.getWorkspaceTargetHandle();
+        if (handle != null)
+        {
+          target = handle.getTargetDefinition();
+        }
+      }
+
       if (target != null)
       {
         for (ITargetLocation location : target.getTargetLocations())
@@ -1273,7 +1288,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
 
     public static Writer toXML(String id, List<Targlet> targlets) throws ParserConfigurationException,
-        TransformerException
+    TransformerException
     {
       DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
       Document document = docBuilder.newDocument();

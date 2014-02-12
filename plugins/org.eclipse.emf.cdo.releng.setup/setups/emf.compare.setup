@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project setup:toolVersion="8" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0" name="EMF.Compare" label="EMF Compare">
+  <branches name="master">
+    <setupTasks xsi:type="setup:ContextVariableTask" name="p2.orbit.version" value="S20140116105218"/>
+    <setupTasks xsi:type="setup:GitCloneTask" location="${setup.branch.dir/git/org.eclipse.emf.compare.git}" remoteURI="ssh://git.eclipse.org:29418/emfcompare/org.eclipse.emf.compare.git" checkoutBranch="master"/>
+    <setupTasks xsi:type="setup:TargletTask" name="EMF Compare">
+      <roots id="org.eclipse.sdk.feature.group"/>
+      <roots id="org.eclipse.emf.compare.feature.group"/>
+      <roots id="org.eclipse.emf.compare.diagram.ecoretools.feature.group"/>
+      <roots id="org.eclipse.emf.compare.diagram.ecoretools.tests"/>
+      <roots id="org.eclipse.emf.compare.diagram.gmf.feature.group"/>
+      <roots id="org.eclipse.emf.compare.diagram.ide.ecoretools.tests"/>
+      <roots id="org.eclipse.emf.compare.diagram.papyrus.feature.group"/>
+      <roots id="org.eclipse.emf.compare.diagram.papyrus.tests"/>
+      <roots id="org.eclipse.emf.compare.ide.tests"/>
+      <roots id="org.eclipse.emf.compare.ide.ui.feature.group"/>
+      <roots id="org.eclipse.emf.compare.ide.ui.tests"/>
+      <roots id="org.eclipse.emf.compare.rcp.ui.feature.group"/>
+      <roots id="org.eclipse.emf.compare.rcp.ui.tests"/>
+      <roots id="org.eclipse.emf.compare.tests"/>
+      <roots id="org.eclipse.emf.compare.uml2.feature.group"/>
+      <roots id="org.eclipse.emf.compare.uml2.tests"/>
+      <roots id="org.eclipse.egit.feature.group"/>
+      <roots id="org.eclipse.emf.ecoretools.sdk.feature.group" versionRange="[1.2.0,2.0.0)"/>
+      <roots id="org.eclipse.emf.emfstore.fuzzy.feature.feature.group"/>
+      <roots id="org.eclipse.emf.emfstore.modelmutator.feature.feature.group"/>
+      <roots id="org.eclipse.emf.sdk.feature.group"/>
+      <roots id="org.eclipse.gmf.runtime.sdk.feature.group"/>
+      <roots id="org.eclipse.papyrus.sdk.feature.feature.group"/>
+      <roots id="org.eclipse.uml2.sdk.feature.group"/>
+      <sourceLocators rootFolder="${setup.branch.dir/git/org.eclipse.emf.compare.git}"/>
+      <repositoryLists name="Luna Dependencies">
+        <p2Repositories url="http://download.eclipse.org/releases/helios"/>
+        <p2Repositories url="http://download.eclipse.org/releases/luna"/>
+        <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/${p2.orbit.version}/repository"/>
+        <p2Repositories url="http://download.eclipse.org/emf-store/milestones/archive/0.9.3.M5"/>
+      </repositoryLists>
+    </setupTasks>
+  </branches>
+</setup:Project>

@@ -20,6 +20,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.command.AddCommand;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -47,10 +48,11 @@ import java.util.Set;
  * @generated
  */
 public class ExclusionPredicateItemProvider extends PredicateItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   public static void filterCircularWorkingSets(EObject root, Collection<?> objects)
   {
+    Resource resource = root.eResource();
     for (EObject eObject = root.eContainer(); eObject != null; eObject = eObject.eContainer())
     {
       if (eObject instanceof WorkingSet)
@@ -61,7 +63,8 @@ public class ExclusionPredicateItemProvider extends PredicateItemProvider implem
           if (value instanceof WorkingSet)
           {
             WorkingSet workingSet = (WorkingSet)value;
-            if (workingSet == eObject || getReachableWorkingSets(workingSet).contains(eObject))
+            if (workingSet == eObject || workingSet.eResource() != resource
+                || getReachableWorkingSets(workingSet).contains(eObject))
             {
               it.remove();
             }
@@ -143,7 +146,7 @@ public class ExclusionPredicateItemProvider extends PredicateItemProvider implem
         getString("_UI_ExclusionPredicate_excludedWorkingSets_feature"), getString(
             "_UI_PropertyDescriptor_description", "_UI_ExclusionPredicate_excludedWorkingSets_feature",
             "_UI_ExclusionPredicate_type"), WorkingSetsPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS,
-        true, false, true, null, null, null)
+            true, false, true, null, null, null)
     {
       @Override
       public Collection<?> getChoiceOfValues(Object object)

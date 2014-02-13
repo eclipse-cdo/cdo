@@ -29,7 +29,6 @@
     <setupTasks xsi:type="setup:EclipsePreferenceTask" key="instance/org.eclipse.jdt.core/org.eclipse.jdt.core.compiler.problem.unclosedCloseable" value="ignore"/>
     <setupTasks xsi:type="setup:EclipsePreferenceTask" key="/instance/org.eclipse.pde.api.tools/missing_default_api_profile" value="Ignore"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="Location of CDO's Git clone." name="git.clone" value="${setup.branch.dir/git/cdo.releng}" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ContextVariableTask" name="p2.orbit.version" value="S20140116105218"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.releng.bugzilla.version" value="4.3" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.baseline.version" value="4.2" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder location of the workspace for the self hosting setup IDE." name="launcher.setup.ide.ws" value="" stringSubstitution="true"/>
@@ -47,7 +46,7 @@
         <p2Repositories url="https://hudson.eclipse.org/hudson/job/emf-cdo-integration/lastSuccessfulBuild/artifact"/>
         <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
         <p2Repositories url="http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones"/>
-        <p2Repositories url="http://download.eclipse.org/tools/orbit/downloads/drops/${p2.orbit.version}/repository"/>
+        <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
         <p2Repositories url="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
         <p2Repositories url="http://download.eclipse.org/tools/gef/updates/milestones"/>
         <p2Repositories url="http://download.eclipse.org/egit/updates"/>
@@ -91,7 +90,7 @@
       <workingSets name="Releng">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.emf.cdo.releng.release"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.13/@workingSets.0 //@branches[name='master']/@setupTasks.13/@workingSets.1 //@branches[name='master']/@setupTasks.13/@workingSets.2 //@branches[name='master']/@setupTasks.13/@workingSets.3 //@branches[name='master']/@setupTasks.13/@workingSets.4 //@branches[name='master']/@setupTasks.13/@workingSets.5 //@branches[name='master']/@setupTasks.13/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.12/@workingSets.0 //@branches[name='master']/@setupTasks.12/@workingSets.1 //@branches[name='master']/@setupTasks.12/@workingSets.2 //@branches[name='master']/@setupTasks.12/@workingSets.3 //@branches[name='master']/@setupTasks.12/@workingSets.4 //@branches[name='master']/@setupTasks.12/@workingSets.5 //@branches[name='master']/@setupTasks.12/@workingSets.6"/>
         </predicates>
       </workingSets>
     </setupTasks>

@@ -7,7 +7,6 @@
 	<rm:property mutable="true" key="train" value="luna"/>
 	<rm:property mutable="true" key="platform.version" value="4.4milestones"/>
 	<rm:property mutable="true" key="emf.version" value="2.10milestones"/>
-	<rm:property mutable="true" key="orbit.version" value="S20131206110810"/>
 
 	<!-- Locators -->
 
@@ -166,9 +165,7 @@
 
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/orbit/downloads/drops/{0}/repository">
-				<bc:propertyRef key="orbit.version"/>
-			</rm:uri>
+      <rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
 		</rm:provider>
 
 		<!-- TENEO -->

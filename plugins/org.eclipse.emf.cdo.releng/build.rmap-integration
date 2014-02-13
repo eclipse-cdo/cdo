@@ -6,7 +6,6 @@
 
 	<rm:property mutable="true" key="platform.version" value="3.8"/>
 	<rm:property mutable="true" key="emf.version" value="2.9-I-builds"/>
-	<rm:property mutable="true" key="orbit.version" value="R20130517111416"/>
 
 	<rm:property mutable="true" key="git.clone" value="${user.home}/git/cdo"/>
 	<rm:property mutable="true" key="build.type" value="N"/>
@@ -138,9 +137,7 @@
 
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/orbit/downloads/drops/{0}/repository">
-				<bc:propertyRef key="orbit.version"/>
-			</rm:uri>
+			<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
 		</rm:provider>
 
 		<!-- TENEO -->

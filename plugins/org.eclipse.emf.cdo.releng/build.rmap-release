@@ -6,7 +6,6 @@
 
 	<rm:property mutable="true" key="platform.version" value="4.4"/>
 	<rm:property mutable="true" key="emf.version" value="2.10"/>
-	<rm:property mutable="true" key="orbit.version" value="I20130816141634"/>
 
 	<!-- Locators -->
 
@@ -41,7 +40,7 @@
 			</rm:uri>
 		</rm:provider>
 	</rm:searchPath>
-	
+
 	<rm:searchPath name="p2">
 
 		<!-- PLATFORM -->
@@ -158,9 +157,7 @@
 
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/orbit/downloads/drops/{0}/repository">
-				<bc:propertyRef key="orbit.version"/>
-			</rm:uri>
+			<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
 		</rm:provider>
 
 		<!-- TENEO -->

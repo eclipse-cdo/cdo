@@ -2,13 +2,24 @@
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
+import org.eclipse.emf.cdo.releng.setup.Component;
+import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
+import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.P2Repository;
+import org.eclipse.emf.cdo.releng.setup.RepositoryList;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
+import org.eclipse.emf.cdo.releng.setup.SourceLocator;
 import org.eclipse.emf.cdo.releng.setup.TargletTask;
 
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.command.CompoundCommand;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.edit.command.AddCommand;
+import org.eclipse.emf.edit.command.CommandParameter;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -19,6 +30,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -250,6 +262,83 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.TARGLET_DATA__REPOSITORY_LISTS,
         SetupFactory.eINSTANCE.createRepositoryList()));
+  }
+
+  @Override
+  protected Command factorAddCommand(EditingDomain domain, CommandParameter commandParameter)
+  {
+    Collection<?> collection = commandParameter.getCollection();
+    if (collection != null)
+    {
+      for (Object value : collection)
+      {
+        if (value instanceof MaterializationTask)
+        {
+          MaterializationTask materializationTask = (MaterializationTask)value;
+          if (materializationTask.eContainer() == null)
+          {
+            TargletTask targletTask = (TargletTask)commandParameter.getOwner();
+
+            CompoundCommand result = new CompoundCommand("Copy Materialization contents",
+                "Copy the contents of the materialization task");
+
+            List<InstallableUnit> installableUnits = new ArrayList<InstallableUnit>();
+            for (Component component : materializationTask.getRootComponents())
+            {
+              switch (component.getType())
+              {
+              case OSGI_BUNDLE:
+              {
+                InstallableUnit installableUnit = SetupFactory.eINSTANCE.createInstallableUnit();
+                String name = component.getName();
+                installableUnit.setID(name);
+                installableUnit.setVersionRange(component.getVersionRange());
+                installableUnits.add(installableUnit);
+                break;
+              }
+              case ECLIPSE_FEATURE:
+              {
+                InstallableUnit installableUnit = SetupFactory.eINSTANCE.createInstallableUnit();
+                String name = component.getName();
+                if (name != null)
+                {
+                  installableUnit.setID(name + ".feature.group");
+                }
+                installableUnit.setVersionRange(component.getVersionRange());
+                installableUnits.add(installableUnit);
+                break;
+              }
+              }
+            }
+
+            if (!installableUnits.isEmpty())
+            {
+              result.appendIfCanExecute(AddCommand.create(domain, targletTask,
+                  SetupPackage.Literals.TARGLET_DATA__ROOTS, installableUnits));
+            }
+
+            List<SourceLocator> sourceLocators = new ArrayList<SourceLocator>(materializationTask.getSourceLocators());
+            materializationTask.getSourceLocators().clear();
+            result.appendIfCanExecute(AddCommand.create(domain, targletTask,
+                SetupPackage.Literals.TARGLET_DATA__SOURCE_LOCATORS, sourceLocators));
+
+            List<P2Repository> p2Repositories = materializationTask.getP2Repositories();
+            if (!p2Repositories.isEmpty())
+            {
+              RepositoryList repositoryList = SetupFactory.eINSTANCE.createRepositoryList();
+              repositoryList.getP2Repositories().addAll(p2Repositories);
+              repositoryList.setName("Default");
+              result.appendIfCanExecute(AddCommand.create(domain, targletTask,
+                  SetupPackage.Literals.TARGLET_DATA__REPOSITORY_LISTS, repositoryList));
+            }
+
+            return result;
+          }
+        }
+      }
+    }
+
+    return super.factorAddCommand(domain, commandParameter);
   }
 
 }

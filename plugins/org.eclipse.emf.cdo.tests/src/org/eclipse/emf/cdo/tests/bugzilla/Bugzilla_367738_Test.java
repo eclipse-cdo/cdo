@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IConfig;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -126,6 +127,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     assertEquals(customer, oldValue);
   }
 
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testOldValue_ContainmentControl() throws Exception
   {
     Customer customer = getModel1Factory().createCustomer();
@@ -148,6 +150,7 @@ public class Bugzilla_367738_Test extends AbstractCDOTest
     assertEquals(0, adapter.getNotifications().length);
   }
 
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testOldValue_ContainmentUncontrol() throws Exception
   {
     Customer customer = getModel1Factory().createCustomer();

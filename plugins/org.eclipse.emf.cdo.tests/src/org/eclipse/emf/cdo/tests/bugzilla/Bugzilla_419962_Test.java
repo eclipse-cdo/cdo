@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
@@ -31,7 +32,7 @@ import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 /**
  * Bug 419962 - CommitConflictException after CDOMergingConflictResolver.resolveConflicts().
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_419962_Test extends AbstractCDOTest
@@ -105,6 +106,7 @@ public class Bugzilla_419962_Test extends AbstractCDOTest
     super.tearDown();
   }
 
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testConflict() throws Exception
   {
     Customer customer5A = getModel1Factory().createCustomer();

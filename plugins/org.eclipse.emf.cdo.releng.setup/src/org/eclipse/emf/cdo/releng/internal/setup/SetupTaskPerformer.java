@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Julian Enoch - Add support for secure context variables
  */
 package org.eclipse.emf.cdo.releng.internal.setup;
 
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContainer;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
+import org.eclipse.emf.cdo.releng.setup.VariableType;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLog;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogFilter;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogRunnable;
@@ -624,21 +626,30 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     {
       put(contextVariableTask.getName(), contextVariableTask.getValue());
 
-      EList<SetupTask> targetSetupTasks = setupTasks;
-      for (EObject container = contextVariableTask.eContainer(); container != null; container = container.eContainer())
+      // Save passwords to the secure storage
+      if (contextVariableTask.getType() == VariableType.PASSWORD)
       {
-        if (container instanceof ConfigurableItem)
-        {
-          targetSetupTasks = findOrCreate(itemDelegator, (ConfigurableItem)container, setupTasks).getSetupTasks();
-          break;
-        }
+        saveSecurePreference(contextVariableTask.getName(), contextVariableTask.getValue());
       }
+      else
+      {
+        EList<SetupTask> targetSetupTasks = setupTasks;
+        for (EObject container = contextVariableTask.eContainer(); container != null; container = container
+            .eContainer())
+        {
+          if (container instanceof ConfigurableItem)
+          {
+            targetSetupTasks = findOrCreate(itemDelegator, (ConfigurableItem)container, setupTasks).getSetupTasks();
+            break;
+          }
+        }
 
-      ContextVariableTask userPreference = SetupFactory.eINSTANCE.createContextVariableTask();
-      userPreference.setName(contextVariableTask.getName());
-      userPreference.setValue(contextVariableTask.getValue());
+        ContextVariableTask userPreference = SetupFactory.eINSTANCE.createContextVariableTask();
+        userPreference.setName(contextVariableTask.getName());
+        userPreference.setValue(contextVariableTask.getValue());
 
-      targetSetupTasks.add(userPreference);
+        targetSetupTasks.add(userPreference);
+      }
     }
 
     try

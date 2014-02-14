@@ -65,6 +65,8 @@ public class MylynBuildsTaskItemProvider extends SetupTaskItemProvider implement
 
       addConnectorKindPropertyDescriptor(object);
       addServerURLPropertyDescriptor(object);
+      addUserIDPropertyDescriptor(object);
+      addPasswordPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -100,6 +102,40 @@ public class MylynBuildsTaskItemProvider extends SetupTaskItemProvider implement
         getString("_UI_MylynBuildsTask_serverURL_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_MylynBuildsTask_serverURL_feature",
             "_UI_MylynBuildsTask_type"), SetupPackage.Literals.MYLYN_BUILDS_TASK__SERVER_URL, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the User ID feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addUserIDPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_MylynBuildsTask_userID_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_MylynBuildsTask_userID_feature",
+            "_UI_MylynBuildsTask_type"), SetupPackage.Literals.MYLYN_BUILDS_TASK__USER_ID, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Password feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addPasswordPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_MylynBuildsTask_password_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_MylynBuildsTask_password_feature",
+            "_UI_MylynBuildsTask_type"), SetupPackage.Literals.MYLYN_BUILDS_TASK__PASSWORD, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -190,6 +226,8 @@ public class MylynBuildsTaskItemProvider extends SetupTaskItemProvider implement
     {
     case SetupPackage.MYLYN_BUILDS_TASK__CONNECTOR_KIND:
     case SetupPackage.MYLYN_BUILDS_TASK__SERVER_URL:
+    case SetupPackage.MYLYN_BUILDS_TASK__USER_ID:
+    case SetupPackage.MYLYN_BUILDS_TASK__PASSWORD:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case SetupPackage.MYLYN_BUILDS_TASK__BUILD_PLANS:

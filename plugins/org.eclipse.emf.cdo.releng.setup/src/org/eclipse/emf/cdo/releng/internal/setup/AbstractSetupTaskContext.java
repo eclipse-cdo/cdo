@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Julian Enoch - Add support for secure context variables
  */
 package org.eclipse.emf.cdo.releng.internal.setup;
 
@@ -40,9 +41,13 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.equinox.security.storage.ISecurePreferences;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.equinox.security.storage.StorageException;
 import org.eclipse.swt.widgets.Shell;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -76,6 +81,8 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
       : new File(P2_AGENT_DIR, "pool");
 
   private static final File STATE_DIR = new File(SetupConstants.USER_HOME, ".eclipse/org.eclipse.emf.cdo.releng.setup");
+
+  protected static final String SECURE_STORAGE_NODE = "org.eclipse.emf.cdo.releng.setup";
 
   private static final long serialVersionUID = 1L;
 
@@ -404,17 +411,148 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   public static void main(String[] args) throws Exception
   {
-    final Map<Object, Object> secureMap = new HashMap<Object, Object>();
-    secureMap.put("foo\\secure.id", "stepper");
+    class SecurePreferencesMock implements ISecurePreferences
+    {
+      private Map<String, SecurePreferencesMock> nodes = new HashMap<String, SecurePreferencesMock>();
+
+      private Map<String, String> values = new HashMap<String, String>();
+
+      public void removeNode()
+      {
+      }
+
+      public void remove(String key)
+      {
+      }
+
+      public void putLong(String key, long value, boolean encrypt) throws StorageException
+      {
+      }
+
+      public void putInt(String key, int value, boolean encrypt) throws StorageException
+      {
+      }
+
+      public void putFloat(String key, float value, boolean encrypt) throws StorageException
+      {
+      }
+
+      public void putDouble(String key, double value, boolean encrypt) throws StorageException
+      {
+      }
+
+      public void putByteArray(String key, byte[] value, boolean encrypt) throws StorageException
+      {
+      }
+
+      public void putBoolean(String key, boolean value, boolean encrypt) throws StorageException
+      {
+      }
+
+      public void put(String key, String value, boolean encrypt) throws StorageException
+      {
+        values.put(key, value);
+      }
+
+      public ISecurePreferences parent()
+      {
+        return null;
+      }
+
+      public boolean nodeExists(String pathName)
+      {
+        SecurePreferencesMock prefs = nodes.get(pathName);
+        return prefs != null;
+      }
+
+      public ISecurePreferences node(String pathName)
+      {
+        SecurePreferencesMock prefs = nodes.get(pathName);
+        if (prefs == null)
+        {
+          prefs = new SecurePreferencesMock();
+          nodes.put(pathName, prefs);
+        }
+        return prefs;
+      }
+
+      public String name()
+      {
+        return null;
+      }
+
+      public String[] keys()
+      {
+        return null;
+      }
+
+      public boolean isEncrypted(String key) throws StorageException
+      {
+        return false;
+      }
+
+      public long getLong(String key, long def) throws StorageException
+      {
+        return 0;
+      }
+
+      public int getInt(String key, int def) throws StorageException
+      {
+        return 0;
+      }
+
+      public float getFloat(String key, float def) throws StorageException
+      {
+        return 0;
+      }
+
+      public double getDouble(String key, double def) throws StorageException
+      {
+        return 0;
+      }
+
+      public byte[] getByteArray(String key, byte[] def) throws StorageException
+      {
+        return null;
+      }
+
+      public boolean getBoolean(String key, boolean def) throws StorageException
+      {
+        return false;
+      }
+
+      public String get(String key, String def) throws StorageException
+      {
+        return values.get(key);
+      }
+
+      public void flush() throws IOException
+      {
+      }
+
+      public void clear()
+      {
+      }
+
+      public String[] childrenNames()
+      {
+        return null;
+      }
+
+      public String absolutePath()
+      {
+        return null;
+      }
+    }
 
     AbstractSetupTaskContext context = new AbstractSetupTaskContext(null)
     {
       private static final long serialVersionUID = 1L;
 
       @Override
-      protected String lookupSecurely(String key)
+      public ISecurePreferences getSecurePreferences()
       {
-        return (String)secureMap.get(key);
+        return new SecurePreferencesMock();
       }
 
       public boolean isCancelled()
@@ -440,6 +578,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
     };
 
     context.put("user.id", "stepper");
+    context.saveSecurePreference("foo\\secure.id", "stepper");
 
     Set<String> keys = new HashSet<String>();
     System.out.println(context.expandString("${bogus.id}", keys, false) + " --> " + keys);
@@ -571,8 +710,44 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   protected String lookupSecurely(String key)
   {
-    // TODO for Julian
-    return null;
+    String newValue = null;
+
+    ISecurePreferences securePreferences = getSecurePreferences();
+    if (securePreferences.nodeExists(SECURE_STORAGE_NODE))
+    {
+      ISecurePreferences node = securePreferences.node(SECURE_STORAGE_NODE);
+
+      try
+      {
+        newValue = node.get(key, null);
+      }
+      catch (StorageException ex)
+      {
+        log(ex);
+      }
+    }
+
+    return newValue;
+  }
+
+  protected void saveSecurePreference(String name, String value)
+  {
+    ISecurePreferences securePreferences = getSecurePreferences();
+    ISecurePreferences node = securePreferences.node(SECURE_STORAGE_NODE);
+
+    try
+    {
+      node.put(name, value, true);
+    }
+    catch (StorageException ex)
+    {
+      log(ex);
+    }
+  }
+
+  protected ISecurePreferences getSecurePreferences()
+  {
+    return SecurePreferencesFactory.getDefault();
   }
 
   protected String filter(String value, String filterName)

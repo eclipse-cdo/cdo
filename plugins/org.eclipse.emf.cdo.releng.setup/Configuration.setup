@@ -7,6 +7,10 @@
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a 1.7 compatible JDK/JRE for architecture ${os.arch}." type="FOLDER" name="jre.1.7.location"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The folder containing a 1.8 compatible JDK/JRE for architecture ${os.arch}." type="FOLDER" name="jre.1.8.location"/>
     <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse user ID for Git/Gerrit commits.  Use 'anonymous' if you have no Eclipse user ID." name="git.user.id" label="Eclipse user ID for Git/Gerrit"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse author name for Git/Gerrit commits.  Leave empty if you're not a registered Git author or don't plan to commit to Git." name="git.author.name" label="Eclipse author name for Git/Gerrit"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse author email for Git/Gerrit commits.  Leave empty if you're not a registered Git author or don't plan to commit to Git." name="git.author.email" label="Eclipse author email for Git/Gerrit"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse user ID for Bugzilla/Hudson.  Leave empty if you don't have an account or don't plan to submit bugs." name="eclipse.user.id" label="Eclipse user ID for Bugzilla/Hudson (typically an email address)"/>
+    <setupTasks xsi:type="setup:ContextVariableTask" documentation="The Eclipse password for Bugzilla/Hudson.  Leave empty if you don't have an account or don't plan to submit bugs." type="PASSWORD" name="eclipse.user.password" label="Eclipse password for Bugzilla/Hudson"/>
   </setupTasks>
   <setupTasks xsi:type="setup:CompoundSetupTask" name="Eclipse Tasks">
     <setupTasks xsi:type="setup:ContextVariableTask" name="train.name"/>

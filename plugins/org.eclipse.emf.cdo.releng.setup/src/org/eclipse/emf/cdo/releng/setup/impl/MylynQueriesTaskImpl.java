@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Julian Enoch - Add authentication to build server
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.Trigger;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,6 +32,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.mylyn.commons.net.AuthenticationCredentials;
+import org.eclipse.mylyn.commons.net.AuthenticationType;
 import org.eclipse.mylyn.internal.tasks.core.RepositoryQuery;
 import org.eclipse.mylyn.internal.tasks.ui.TasksUiPlugin;
 import org.eclipse.mylyn.internal.tasks.ui.util.TasksUiInternal;
@@ -55,6 +59,8 @@ import java.util.Set;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getRepositoryURL <em>Repository URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getUserID <em>User ID</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getPassword <em>Password</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl#getQueries <em>Queries</em>}</li>
  * </ul>
  * </p>
@@ -103,6 +109,46 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
    * @ordered
    */
   protected String repositoryURL = REPOSITORY_URL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getUserID() <em>User ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUserID()
+   * @generated
+   * @ordered
+   */
+  protected static final String USER_ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getUserID() <em>User ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getUserID()
+   * @generated
+   * @ordered
+   */
+  protected String userID = USER_ID_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getPassword() <em>Password</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPassword()
+   * @generated
+   * @ordered
+   */
+  protected static final String PASSWORD_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getPassword() <em>Password</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPassword()
+   * @generated
+   * @ordered
+   */
+  protected String password = PASSWORD_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getQueries() <em>Queries</em>}' containment reference list.
@@ -209,6 +255,57 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getUserID()
+  {
+    return userID;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setUserID(String newUserID)
+  {
+    String oldUserID = userID;
+    userID = newUserID;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERIES_TASK__USER_ID, oldUserID, userID));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getPassword()
+  {
+    return password;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPassword(String newPassword)
+  {
+    String oldPassword = password;
+    password = newPassword;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.MYLYN_QUERIES_TASK__PASSWORD, oldPassword,
+          password));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
@@ -251,6 +348,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       return getConnectorKind();
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       return getRepositoryURL();
+    case SetupPackage.MYLYN_QUERIES_TASK__USER_ID:
+      return getUserID();
+    case SetupPackage.MYLYN_QUERIES_TASK__PASSWORD:
+      return getPassword();
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       return getQueries();
     }
@@ -273,6 +374,12 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       setRepositoryURL((String)newValue);
+      return;
+    case SetupPackage.MYLYN_QUERIES_TASK__USER_ID:
+      setUserID((String)newValue);
+      return;
+    case SetupPackage.MYLYN_QUERIES_TASK__PASSWORD:
+      setPassword((String)newValue);
       return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       getQueries().clear();
@@ -298,6 +405,12 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       setRepositoryURL(REPOSITORY_URL_EDEFAULT);
       return;
+    case SetupPackage.MYLYN_QUERIES_TASK__USER_ID:
+      setUserID(USER_ID_EDEFAULT);
+      return;
+    case SetupPackage.MYLYN_QUERIES_TASK__PASSWORD:
+      setPassword(PASSWORD_EDEFAULT);
+      return;
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       getQueries().clear();
       return;
@@ -319,6 +432,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       return CONNECTOR_KIND_EDEFAULT == null ? connectorKind != null : !CONNECTOR_KIND_EDEFAULT.equals(connectorKind);
     case SetupPackage.MYLYN_QUERIES_TASK__REPOSITORY_URL:
       return REPOSITORY_URL_EDEFAULT == null ? repositoryURL != null : !REPOSITORY_URL_EDEFAULT.equals(repositoryURL);
+    case SetupPackage.MYLYN_QUERIES_TASK__USER_ID:
+      return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
+    case SetupPackage.MYLYN_QUERIES_TASK__PASSWORD:
+      return PASSWORD_EDEFAULT == null ? password != null : !PASSWORD_EDEFAULT.equals(password);
     case SetupPackage.MYLYN_QUERIES_TASK__QUERIES:
       return queries != null && !queries.isEmpty();
     }
@@ -343,6 +460,10 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
     result.append(connectorKind);
     result.append(", repositoryURL: ");
     result.append(repositoryURL);
+    result.append(", userID: ");
+    result.append(userID);
+    result.append(", password: ");
+    result.append(password);
     result.append(')');
     return result.toString();
   }
@@ -438,6 +559,15 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
       {
         context.log("Adding " + connectorKind + " repository: " + repositoryURL);
         repository = new TaskRepository(connectorKind, repositoryURL);
+
+        String userID = task.getUserID();
+        String password = context.expandString(task.getPassword(), true);
+        if (!StringUtil.isEmpty(userID) && !StringUtil.isEmpty(password))
+        {
+          AuthenticationCredentials credentials = new AuthenticationCredentials(userID, password);
+          repository.setCredentials(AuthenticationType.REPOSITORY, credentials, true);
+        }
+
         TasksUi.getRepositoryManager().addRepository(repository);
       }
 

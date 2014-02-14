@@ -22,6 +22,8 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getConnectorKind <em>Connector Kind</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getRepositoryURL <em>Repository URL</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getUserID <em>User ID</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getPassword <em>Password</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getQueries <em>Queries</em>}</li>
  * </ul>
  * </p>
@@ -102,5 +104,57 @@ public interface MylynQueriesTask extends SetupTask
    * @generated
    */
   EList<Query> getQueries();
+
+  /**
+   * Returns the value of the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>User ID</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>User ID</em>' attribute.
+   * @see #setUserID(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueriesTask_UserID()
+   * @model
+   * @generated
+   */
+  String getUserID();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getUserID <em>User ID</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>User ID</em>' attribute.
+   * @see #getUserID()
+   * @generated
+   */
+  void setUserID(String value);
+
+  /**
+   * Returns the value of the '<em><b>Password</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Password</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Password</em>' attribute.
+   * @see #setPassword(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getMylynQueriesTask_Password()
+   * @model
+   * @generated
+   */
+  String getPassword();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getPassword <em>Password</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Password</em>' attribute.
+   * @see #getPassword()
+   * @generated
+   */
+  void setPassword(String value);
 
 } // MylynQueriesTask

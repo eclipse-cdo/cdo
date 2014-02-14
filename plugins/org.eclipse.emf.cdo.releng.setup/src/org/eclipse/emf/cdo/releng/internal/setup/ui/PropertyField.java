@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Julian Enoch - Expand the functionality for PASSWORD variables
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
@@ -365,6 +366,8 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
    */
   public static class TextField<H extends Control> extends PropertyField<Text, H>
   {
+    private final boolean secret;
+
     private PropertyField<?, ?> linkField;
 
     private Composite mainControl;
@@ -375,11 +378,23 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
 
     public TextField()
     {
+      this(null, false);
+    }
+
+    public TextField(boolean secret)
+    {
+      this(null, secret);
     }
 
     public TextField(String labelText)
     {
+      this(labelText, false);
+    }
+
+    public TextField(String labelText, boolean secret)
+    {
       super(labelText);
+      this.secret = false;
     }
 
     public final PropertyField<?, ?> getLinkField()
@@ -527,7 +542,13 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
 
     private Text createText(Composite parent)
     {
-      final Text text = new Text(parent, SWT.BORDER);
+      int style = SWT.BORDER;
+      if (secret)
+      {
+        style |= SWT.PASSWORD;
+      }
+
+      final Text text = new Text(parent, style);
 
       String toolTip = getToolTip();
       if (toolTip != null)
@@ -567,9 +588,19 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     {
     }
 
+    public TextButtonField(boolean secret)
+    {
+      super(secret);
+    }
+
     public TextButtonField(String labelText)
     {
       super(labelText);
+    }
+
+    public TextButtonField(String labelText, boolean secret)
+    {
+      super(labelText, secret);
     }
 
     public final String getButtonText()

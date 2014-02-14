@@ -1525,7 +1525,27 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EReference getMylynQueriesTask_Queries()
   {
-    return (EReference)mylynQueriesTaskEClass.getEStructuralFeatures().get(2);
+    return (EReference)mylynQueriesTaskEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynQueriesTask_UserID()
+  {
+    return (EAttribute)mylynQueriesTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynQueriesTask_Password()
+  {
+    return (EAttribute)mylynQueriesTaskEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1645,7 +1665,27 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EReference getMylynBuildsTask_BuildPlans()
   {
-    return (EReference)mylynBuildsTaskEClass.getEStructuralFeatures().get(2);
+    return (EReference)mylynBuildsTaskEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynBuildsTask_UserID()
+  {
+    return (EAttribute)mylynBuildsTaskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMylynBuildsTask_Password()
+  {
+    return (EAttribute)mylynBuildsTaskEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -2927,6 +2967,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     mylynQueriesTaskEClass = createEClass(MYLYN_QUERIES_TASK);
     createEAttribute(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__CONNECTOR_KIND);
     createEAttribute(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__REPOSITORY_URL);
+    createEAttribute(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__USER_ID);
+    createEAttribute(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__PASSWORD);
     createEReference(mylynQueriesTaskEClass, MYLYN_QUERIES_TASK__QUERIES);
 
     queryEClass = createEClass(QUERY);
@@ -2942,6 +2984,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     mylynBuildsTaskEClass = createEClass(MYLYN_BUILDS_TASK);
     createEAttribute(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__CONNECTOR_KIND);
     createEAttribute(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__SERVER_URL);
+    createEAttribute(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__USER_ID);
+    createEAttribute(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__PASSWORD);
     createEReference(mylynBuildsTaskEClass, MYLYN_BUILDS_TASK__BUILD_PLANS);
 
     buildPlanEClass = createEClass(BUILD_PLAN);
@@ -3539,6 +3583,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEAttribute(getMylynQueriesTask_RepositoryURL(), ecorePackage.getEString(), "repositoryURL", null, 1, 1,
         MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQueriesTask_UserID(), ecorePackage.getEString(), "userID", null, 0, 1,
+        MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynQueriesTask_Password(), ecorePackage.getEString(), "password", null, 0, 1,
+        MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEReference(getMylynQueriesTask_Queries(), getQuery(), getQuery_Task(), "queries", null, 0, -1,
         MylynQueriesTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3568,6 +3618,11 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         "org.eclipse.mylyn.hudson", 1, 1, MylynBuildsTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getMylynBuildsTask_ServerURL(), ecorePackage.getEString(), "serverURL", null, 1, 1,
+        MylynBuildsTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynBuildsTask_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, MylynBuildsTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMylynBuildsTask_Password(), ecorePackage.getEString(), "password", null, 0, 1,
         MylynBuildsTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEReference(getMylynBuildsTask_BuildPlans(), getBuildPlan(), null, "buildPlans", null, 1, -1,

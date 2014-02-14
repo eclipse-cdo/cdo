@@ -3761,13 +3761,31 @@ public interface SetupPackage extends EPackage
   int MYLYN_QUERIES_TASK__REPOSITORY_URL = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__USER_ID = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Password</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_QUERIES_TASK__PASSWORD = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>Queries</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MYLYN_QUERIES_TASK__QUERIES = SETUP_TASK_FEATURE_COUNT + 2;
+  int MYLYN_QUERIES_TASK__QUERIES = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Mylyn Queries Task</em>' class.
@@ -3776,7 +3794,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MYLYN_QUERIES_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+  int MYLYN_QUERIES_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Task</b></em>' container reference.
@@ -3923,13 +3941,31 @@ public interface SetupPackage extends EPackage
   int MYLYN_BUILDS_TASK__SERVER_URL = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__USER_ID = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Password</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MYLYN_BUILDS_TASK__PASSWORD = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>Build Plans</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MYLYN_BUILDS_TASK__BUILD_PLANS = SETUP_TASK_FEATURE_COUNT + 2;
+  int MYLYN_BUILDS_TASK__BUILD_PLANS = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Mylyn Builds Task</em>' class.
@@ -3938,7 +3974,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MYLYN_BUILDS_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
+  int MYLYN_BUILDS_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -5096,6 +5132,28 @@ public interface SetupPackage extends EPackage
   EReference getMylynQueriesTask_Queries();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getUserID <em>User ID</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>User ID</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getUserID()
+   * @see #getMylynQueriesTask()
+   * @generated
+   */
+  EAttribute getMylynQueriesTask_UserID();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getPassword <em>Password</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Password</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynQueriesTask#getPassword()
+   * @see #getMylynQueriesTask()
+   * @generated
+   */
+  EAttribute getMylynQueriesTask_Password();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Query <em>Query</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -5225,6 +5283,28 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EReference getMylynBuildsTask_BuildPlans();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getUserID <em>User ID</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>User ID</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getUserID()
+   * @see #getMylynBuildsTask()
+   * @generated
+   */
+  EAttribute getMylynBuildsTask_UserID();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getPassword <em>Password</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Password</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.MylynBuildsTask#getPassword()
+   * @see #getMylynBuildsTask()
+   * @generated
+   */
+  EAttribute getMylynBuildsTask_Password();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.BuildPlan <em>Build Plan</em>}'.
@@ -7096,6 +7176,22 @@ public interface SetupPackage extends EPackage
     EReference MYLYN_QUERIES_TASK__QUERIES = eINSTANCE.getMylynQueriesTask_Queries();
 
     /**
+     * The meta object literal for the '<em><b>User ID</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_QUERIES_TASK__USER_ID = eINSTANCE.getMylynQueriesTask_UserID();
+
+    /**
+     * The meta object literal for the '<em><b>Password</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_QUERIES_TASK__PASSWORD = eINSTANCE.getMylynQueriesTask_Password();
+
+    /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl <em>Query</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -7196,6 +7292,22 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EReference MYLYN_BUILDS_TASK__BUILD_PLANS = eINSTANCE.getMylynBuildsTask_BuildPlans();
+
+    /**
+     * The meta object literal for the '<em><b>User ID</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_BUILDS_TASK__USER_ID = eINSTANCE.getMylynBuildsTask_UserID();
+
+    /**
+     * The meta object literal for the '<em><b>Password</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MYLYN_BUILDS_TASK__PASSWORD = eINSTANCE.getMylynBuildsTask_Password();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl <em>Build Plan</em>}' class.

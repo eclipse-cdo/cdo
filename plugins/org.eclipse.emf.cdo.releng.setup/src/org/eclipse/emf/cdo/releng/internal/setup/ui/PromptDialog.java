@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Julian Enoch - Expand the functionality for PASSWORD variables
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
@@ -183,6 +184,9 @@ public class PromptDialog extends AbstractSetupDialog
       fileField.setDialogText("Folder Selection");
       fileField.setDialogMessage("Select a folder.");
       return fileField;
+
+    case PASSWORD:
+      return new PropertyField.TextField<Control>(true);
     }
 
     return new PropertyField.TextField<Control>();

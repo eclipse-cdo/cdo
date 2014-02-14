@@ -100,11 +100,11 @@
          point="org.eclipse.ui.actionSets">
       <actionSet
             id="org.eclipse.emf.cdo.releng.setup.editor.actionSet"
-            label="Setup Actions"
+            label="Oomph Actions"
             visible="true">
          <menu
                id="setupMenu"
-               label="Setup &amp;Menu">
+               label="&amp;Oomph">
             <separator
                   name="setupGroup">
             </separator>
@@ -124,28 +124,28 @@
                class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
                id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
                icon="icons/Branch.gif"
-               label="Setup &amp;Branch"
+               label="Oomph &amp;Branch"
                style="push"
                toolbarPath="setupGroup"
-               tooltip="Opens an editor on the current setup branch">
+               tooltip="Opens an editor on the current Oomph branch">
          </action>
          <action
                class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenPreferencesAction"
                id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenPreferencesAction"
                icon="icons/prefs.gif"
-               label="&amp;Setup Preferences"
+               label="&amp;Oomph Preferences"
                style="push"
                toolbarPath="setupGroup"
-               tooltip="Opens an editor on the setup preferences">
+               tooltip="Opens an editor on the Oomph user preferences">
          </action>
          <action
                class="org.eclipse.emf.cdo.releng.setup.presentation.actions.PerformSetupAction"
                id="org.eclipse.emf.cdo.releng.setup.presentation.actions.PerformSetupAction"
                icon="icons/update.gif"
-               label="&amp;Perform Setup"
+               label="&amp;Re-Oomph"
                style="push"
                toolbarPath="setupGroup"
-               tooltip="Perform setup tasks">
+               tooltip="Perform Oomph setup tasks">
          </action>
       </actionSet>
    </extension>

@@ -40,7 +40,7 @@ import java.util.List;
  * @generated
  */
 public class InstallableUnitItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   private static final String FEATURE_SUFFIX = ".feature.group";
 
@@ -104,7 +104,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_InstallableUnit_versionRange_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_InstallableUnit_versionRange_feature",
             "_UI_InstallableUnit_type"), SetupPackage.Literals.INSTALLABLE_UNIT__VERSION_RANGE, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

@@ -51,8 +51,7 @@ import java.net.URL;
  */
 public abstract class AbstractSetupDialog extends TitleAreaDialog
 {
-  public static final String SHELL_TEXT = "Development Environment "
-      + (SetupConstants.SETUP_IDE ? "Setup" : "Installer");
+  public static final String SHELL_TEXT = "Eclipse Oomph" + (SetupConstants.SETUP_IDE ? "" : " Installer");
 
   private String title;
 

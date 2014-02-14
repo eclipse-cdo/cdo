@@ -58,7 +58,7 @@
             category="org.eclipse.emf.cdo.releng.ui.preferences.RelengPreferencePage"
             id="org.eclipse.emf.cdo.releng.setup.SetupPreferencePage"
             class="org.eclipse.emf.cdo.releng.internal.setup.ui.SetupPreferencePage"
-            name="Setup Tool Configuration">
+            name="Oomph Configuration">
       </page>
    </extension>
 
@@ -104,7 +104,7 @@
       </locationProvider>
    </extension>
 
-  <!--
+<!--
    <extension
          point="org.eclipse.ui.actionSets">
       <actionSet
@@ -113,7 +113,7 @@
             visible="true">
          <menu
                id="setupMenu"
-               label="Setup &amp;Menu">
+               label="&amp;Oomph">
             <separator
                   name="setupGroup">
             </separator>
@@ -134,6 +134,6 @@
          </action>
       </actionSet>
    </extension>
-  -->
+-->
 
 </plugin>

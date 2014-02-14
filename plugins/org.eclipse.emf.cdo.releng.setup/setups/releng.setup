@@ -55,7 +55,7 @@
       </repositoryLists>
     </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
-      <workingSets name="Development Environment Setup">
+      <workingSets name="Eclipse Oomph">
         <predicates xsi:type="predicates:NamePredicate" pattern=".*\.setup.*"/>
       </workingSets>
       <workingSets name="Project Configuration">

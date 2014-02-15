@@ -1,0 +1,6 @@
+org.eclipse.emf.cdo.releng.setup
+org.eclipse.emf.cdo.releng.setup.editor
+org.eclipse.emf.cdo.releng.setup.impl
+org.eclipse.emf.cdo.releng.setup.log
+org.eclipse.emf.cdo.releng.setup.provider
+org.eclipse.emf.cdo.releng.setup.util

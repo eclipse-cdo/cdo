@@ -1,34 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Version Management Tool Documentation" topic="html/Overview.html">
+<toc label="Eclipse Oomph Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
-  <topic label="Version Management" href="html/guide/index.html">
-    <topic label="Understanding Versions" href="html/guide/Understanding.html" />
-    <topic label="Setting Up Version Managment" href="html/guide/setup/index.html">
-      <topic label="Adding Version Management to Projects" href="html/guide/setup/AddBuilder.html" />
-      <topic label="Configuring Version Management of Projects" href="html/guide/setup/ConfigureBuilder.html" />
-      <topic label="Removing Version Management from Projects" href="html/guide/setup/RemoveBuilder.html" />
-    </topic>
-    <topic label="Version Manager Checks" href="html/guide/checks/index.html">
-      <topic label="Checking Plug-in Dependency Ranges" href="html/guide/checks/DependencyRanges.html" />
-      <topic label="Checking that Features have a Feature Nature" href="html/guide/checks/FeatureNature.html" />
-      <topic label="Checking Package Export Versions and Package Import Version Ranges" href="html/guide/checks/PackageExports.html" />
-      <topic label="Checking Proper Qualifier Convention" href="html/guide/checks/Qualifier.html" />
-      <topic label="Checking whether Components are Managed and Used" href="html/guide/checks/ReferencedElements.html" />
-      <topic label="Checking whether or not the PDE Schema Builder is Needed" href="html/guide/checks/SchemaBuilder.html" />
-    </topic>
+  <topic label="User's Guide" href="html/users/index.html">
+    <topic label="Using the Installer" href="html/users/InstallerUsage.html" />
+    <topic label="Managing User Preferences" href="html/users/UserPreferences.html" />
+  </topic>
+  <topic label="Author's Guide" href="html/authors/index.html">
+    <topic label="Understanding the Setup Engine" href="html/authors/SetupEngine.html" />
+    <topic label="The Anatomy of a Setup Task" href="html/authors/TaskAnatomy.html" />
+    <topic label="Using the Setup Model Wizard" href="html/authors/WizardUsage.html" />
+    <topic label="Using the Setup Model Editor" href="html/authors/EditorUsage.html" />
+  </topic>
+  <topic label="Extender's Guide" href="html/extenders/index.html">
+    <topic label="Developing Custom Setup Tasks" href="html/extenders/CustomTasks.html" />
+    <topic label="Developing Custom Project Templates" href="html/extenders/ProjectTemplates.html" />
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
-      <topic label="Version Management" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.releng.version" href="javadoc/org/eclipse/emf/cdo/releng/version/package-summary.html" icon="package" />
+      <topic label="Eclipse Oomph" href="javadoc/org/eclipse/emf/cdo/releng/setup/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.releng.setup" href="javadoc/org/eclipse/emf/cdo/releng/setup/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.releng.setup.impl" href="javadoc/org/eclipse/emf/cdo/releng/setup/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.releng.setup.log" href="javadoc/org/eclipse/emf/cdo/releng/setup/log/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.releng.setup.util" href="javadoc/org/eclipse/emf/cdo/releng/setup/util/package-summary.html" icon="package" />
+      </topic>
+      <topic label="Eclipse Oomph Edit Support" href="javadoc/org/eclipse/emf/cdo/releng/setup/provider/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.releng.setup.provider" href="javadoc/org/eclipse/emf/cdo/releng/setup/provider/package-summary.html" icon="package" />
+      </topic>
+      <topic label="Eclipse Oomph Editor" href="javadoc/org/eclipse/emf/cdo/releng/setup/editor/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.releng.setup.editor" href="javadoc/org/eclipse/emf/cdo/releng/setup/editor/package-summary.html" icon="package" />
       </topic>
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
-    <topic label="Homepage" href="http://www.eclipse.org/cdo" icon="external" />
-    <topic label="Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />
+    <topic label="Wiki" href="https://wiki.eclipse.org/Eclipse_Oomph_Installer" icon="external" />
   </topic>
   <topic label="Legal" href="about.html" />
 </toc>

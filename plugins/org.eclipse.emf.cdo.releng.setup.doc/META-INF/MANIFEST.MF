@@ -12,9 +12,9 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=opti
  org.eclipse.emf.cdo.releng.setup.edit;bundle-version="[1.0.0,2.0.0)";resolution:=optional,
  org.eclipse.emf.cdo.releng.setup.editor;bundle-version="[1.0.0,2.0.0)";resolution:=optional
 Export-Package: org.eclipse.emf.cdo.releng.setup.doc;version="1.0.0",
- org.eclipse.emf.cdo.releng.setup.doc.guide;version="1.0.0",
- org.eclipse.emf.cdo.releng.setup.doc.guide.authoring;version="1.0.0",
- org.eclipse.emf.cdo.releng.setup.doc.guide.installer;version="1.0.0",
+ org.eclipse.emf.cdo.releng.setup.doc.guide.users;version="1.0.0",
+ org.eclipse.emf.cdo.releng.setup.doc.guide.authors;version="1.0.0",
+ org.eclipse.emf.cdo.releng.setup.doc.guide.extenders;version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.doc.online;version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.doc.reference;version="1.0.0",
  org.eclipse.emf.cdo.releng.setup.doc.reference.api;version="1.0.0"

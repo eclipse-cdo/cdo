@@ -284,8 +284,8 @@
 
 			<package name="org.eclipse.emf.cdo.releng.setup.doc" />
 			<package name="org.eclipse.emf.cdo.releng.setup.doc.guide" />
-			<package name="org.eclipse.emf.cdo.releng.setup.doc.guide.checks" />
-			<package name="org.eclipse.emf.cdo.releng.setup.doc.guide.setup" />
+			<package name="org.eclipse.emf.cdo.releng.setup.doc.guide.authoring" />
+			<package name="org.eclipse.emf.cdo.releng.setup.doc.guide.installer" />
 			<package name="org.eclipse.emf.cdo.releng.setup.doc.online" />
 			<package name="org.eclipse.emf.cdo.releng.setup.doc.reference" />
 			<package name="org.eclipse.emf.cdo.releng.setup.doc.reference.api" />

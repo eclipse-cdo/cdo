@@ -406,7 +406,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
    * This adds a property descriptor for the Documentation feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   protected void addDocumentationPropertyDescriptor(Object object)
   {
@@ -415,7 +415,7 @@ public class SetupTaskItemProvider extends ItemProviderAdapter implements IEditi
         getString("_UI_SetupTask_documentation_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_SetupTask_documentation_feature", "_UI_SetupTask_type"),
         SetupPackage.Literals.SETUP_TASK__DOCUMENTATION, true, true, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, PropertiesViewer.EXPERT_FILTER));
+        null, null));
   }
 
   /**

@@ -8,6 +8,7 @@
     <packages name="org.eclipse.net4j.connector"/>
     <packages name="org.eclipse.net4j.protocol"/>
     <packages name="org.eclipse.net4j.signal"/>
+    <packages name="org.eclipse.net4j.signal.confirmation"/>
     <packages name="org.eclipse.net4j.signal.heartbeat"/>
     <packages name="org.eclipse.net4j.signal.security"/>
     <packages name="org.eclipse.net4j.signal.wrapping"/>

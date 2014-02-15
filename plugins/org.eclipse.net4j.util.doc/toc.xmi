@@ -5,6 +5,7 @@
     <packages name="org.eclipse.net4j.util.cache"/>
     <packages name="org.eclipse.net4j.util.collection"/>
     <packages name="org.eclipse.net4j.util.concurrent"/>
+    <packages name="org.eclipse.net4j.util.confirmation"/>
     <packages name="org.eclipse.net4j.util.container"/>
     <packages name="org.eclipse.net4j.util.container.delegate"/>
     <packages name="org.eclipse.net4j.util.event"/>
@@ -29,6 +30,7 @@
   <article:Plugin name="org.eclipse.net4j.util.ui" label="Net4j Utilities UI">
     <packages name="org.eclipse.net4j.util.ui"/>
     <packages name="org.eclipse.net4j.util.ui.actions"/>
+    <packages name="org.eclipse.net4j.util.ui.confirmation"/>
     <packages name="org.eclipse.net4j.util.ui.container"/>
     <packages name="org.eclipse.net4j.util.ui.dnd"/>
     <packages name="org.eclipse.net4j.util.ui.handlers"/>

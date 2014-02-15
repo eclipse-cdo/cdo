@@ -8,7 +8,7 @@
  * Contributors:
  *   IBM - Initial API and implementation
  */
-package org.eclipse.emf.cdo.releng.preferences.action;
+package org.eclipse.emf.cdo.releng.preferences.presentation.actions;
 
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
 import org.eclipse.emf.cdo.releng.preferences.presentation.PreferencesEditorPlugin;

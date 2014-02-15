@@ -4,6 +4,5 @@
     <packages name="org.eclipse.emf.cdo.releng.version"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.releng.version.digest" label="Version Management Digest Validator"/>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.ui" label="Version Management UI"/>
   <article:Plugin name="org.eclipse.emf.cdo.releng.version.ui" label="Version Management UI"/>
 </xmi:XMI>

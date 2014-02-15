@@ -63,7 +63,7 @@
                id="org.eclipse.emf.cdo.releng.preferences.action.OpenEditorAction"
                label="Open Editor"
                menubarPath="additions"
-               class="org.eclipse.emf.cdo.releng.preferences.action.OpenEditorAction"
+               class="org.eclipse.emf.cdo.releng.preferences.presentation.actions.OpenEditorAction"
                enablesFor="1"/>
       </objectContribution>
    </extension>
@@ -76,7 +76,7 @@
                id="org.eclipse.emf.cdo.releng.preferences.action.ShowInExplorerAction"
                label="Show in Package Explorer"
                menubarPath="additions"
-               class="org.eclipse.emf.cdo.releng.preferences.action.ShowInExplorerAction"
+               class="org.eclipse.emf.cdo.releng.preferences.presentation.actions.ShowInExplorerAction"
                enablesFor="1"/>
       </objectContribution>
    </extension>

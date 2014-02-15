@@ -8,9 +8,9 @@ Bundle-Activator: org.eclipse.emf.cdo.releng.preferences.presentation.Preference
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.releng.preferences.action;version="1.0.0",
- org.eclipse.emf.cdo.releng.preferences.presentation;version="1.0.0",
- org.eclipse.emf.cdo.releng.preferences.presentation.handlers;version="1.0.0"
+Export-Package: org.eclipse.emf.cdo.releng.preferences.presentation;version="1.0.0";x-friends:="org.eclipse.emf.cdo.releng.projectconfig.editor",
+ org.eclipse.emf.cdo.releng.preferences.presentation.actions;version="1.0.0";x-friends:="org.eclipse.emf.cdo.releng.projectconfig.editor",
+ org.eclipse.emf.cdo.releng.preferences.presentation.handlers;version="1.0.0";x-friends:="org.eclipse.emf.cdo.releng.projectconfig.editor"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.resources;visibility:=reexport;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.releng.preferences.edit;visibility:=reexport;bundle-version="[1.0.0,2.0.0)",

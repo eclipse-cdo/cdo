@@ -1,2 +1,49 @@
 <?xml version="1.0" encoding="ASCII"?>
-<article:Plugin xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0" name="org.eclipse.emf.cdo.releng.doc" label="Documentation Generator"/>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
+  <article:Plugin name="org.eclipse.emf.cdo.releng.apireports" label="API Report Generator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.buildstamp" label="Build Time Stamp Generator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.doc" label="Documentation Generator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.workingsets" label="Dynamic Working Sets">
+    <packages name="org.eclipse.emf.cdo.releng.workingsets"/>
+    <packages name="org.eclipse.emf.cdo.releng.workingsets.impl"/>
+    <packages name="org.eclipse.emf.cdo.releng.workingsets.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.workingsets.edit" label="Dynamic Working Sets Edit Support">
+    <packages name="org.eclipse.emf.cdo.releng.workingsets.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.workingsets.editor" label="Dynamic Working Sets Editor"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.gitbash" label="Git Bash"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.launches" label="Launch Decorator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.manifests" label="Manifest Opener"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.tasks" label="Mylyn Task Overview"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.preferences" label="Preference Management">
+    <packages name="org.eclipse.emf.cdo.releng.preferences"/>
+    <packages name="org.eclipse.emf.cdo.releng.preferences.impl"/>
+    <packages name="org.eclipse.emf.cdo.releng.preferences.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.preferences.edit" label="Preference Management Edit Support">
+    <packages name="org.eclipse.emf.cdo.releng.preferences.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.preferences.editor" label="Preference Management Editor"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.projectconfig" label="Project Configuration">
+    <packages name="org.eclipse.emf.cdo.releng.projectconfig"/>
+    <packages name="org.eclipse.emf.cdo.releng.projectconfig.impl"/>
+    <packages name="org.eclipse.emf.cdo.releng.projectconfig.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.projectconfig.edit" label="Project Configuration Edit Support">
+    <packages name="org.eclipse.emf.cdo.releng.projectconfig.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.projectconfig.editor" label="Project Configuration Editor"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.projectcopy" label="Project Copy"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.predicates" label="Project Predicates">
+    <packages name="org.eclipse.emf.cdo.releng.predicates"/>
+    <packages name="org.eclipse.emf.cdo.releng.predicates.impl"/>
+    <packages name="org.eclipse.emf.cdo.releng.predicates.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.predicates.edit" label="Project Predicates Edit Support">
+    <packages name="org.eclipse.emf.cdo.releng.predicates.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.relativepaths" label="Relative Path Creator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.ui" label="Version Management UI"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.winexplorer" label="Windows Explorer"/>
+</xmi:XMI>

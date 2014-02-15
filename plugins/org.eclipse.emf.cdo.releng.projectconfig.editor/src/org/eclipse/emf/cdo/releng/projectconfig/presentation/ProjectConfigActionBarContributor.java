@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.releng.projectconfig.presentation;
 
 import org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate;
 import org.eclipse.emf.cdo.releng.preferences.PreferenceNode;
-import org.eclipse.emf.cdo.releng.preferences.action.ShowInExplorerAction;
+import org.eclipse.emf.cdo.releng.preferences.presentation.actions.ShowInExplorerAction;
 import org.eclipse.emf.cdo.releng.projectconfig.Project;
 import org.eclipse.emf.cdo.releng.projectconfig.WorkspaceConfiguration;
 

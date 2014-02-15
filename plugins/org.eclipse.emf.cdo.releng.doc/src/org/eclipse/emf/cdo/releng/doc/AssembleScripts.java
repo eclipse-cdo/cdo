@@ -112,9 +112,10 @@ public class AssembleScripts
         javaDoc.generateTocXmi();
       }
 
+      System.out.println();
       ANTLIB.generate();
-      ANTLIB.generateDocsTxt();
       ANTLIB.generateDebug();
+      ANTLIB.generateDocsTxt();
       System.out.println();
 
       for (JavaDoc javaDoc : ANTLIB.getJavaDocs())

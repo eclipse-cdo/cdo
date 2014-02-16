@@ -50,7 +50,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.custom.SashForm;
@@ -417,7 +416,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     final String message = line + "\n";
     final Date date = new Date();
 
-    asyncExec(new Runnable()
+    UIUtil.asyncExec(new Runnable()
     {
       public void run()
       {
@@ -450,7 +449,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   public void task(final SetupTask setupTask)
   {
-    UIUtil.getDisplay().asyncExec(new Runnable()
+    UIUtil.asyncExec(new Runnable()
     {
       public void run()
       {
@@ -502,7 +501,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
   public void setFinished()
   {
     Job.getJobManager().setProgressProvider(ProgressManager.getInstance());
-    asyncExec(new Runnable()
+    UIUtil.asyncExec(new Runnable()
     {
       public void run()
       {
@@ -518,27 +517,6 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
         }
       }
     });
-  }
-
-  private void asyncExec(Runnable runnable)
-  {
-    try
-    {
-      UIUtil.getDisplay().asyncExec(runnable);
-    }
-    catch (NullPointerException ex)
-    {
-      //$FALL-THROUGH$
-    }
-    catch (SWTException ex)
-    {
-      if (ex.code != SWT.ERROR_WIDGET_DISPOSED)
-      {
-        throw ex;
-      }
-
-      //$FALL-THROUGH$
-    }
   }
 
   private void appendText(String string)
@@ -667,7 +645,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
             }
           };
 
-          UIUtil.getDisplay().asyncExec(new Runnable()
+          UIUtil.asyncExec(new Runnable()
           {
             public void run()
             {
@@ -688,7 +666,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
       }
       else
       {
-        UIUtil.getDisplay().asyncExec(jobRunnable);
+        UIUtil.asyncExec(jobRunnable);
       }
     }
     catch (Throwable ex)

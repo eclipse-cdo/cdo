@@ -755,7 +755,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       IProgressMonitor monitor = new ProgressLogMonitor(context);
 
       targletContainer.setTarglets(targlets);
-      target.resolve(monitor);
+      targletContainer.forceUpdate(monitor);
 
       String containerID = targletContainer.getID();
       TargletContainerManager manager = TargletContainerManager.getInstance();

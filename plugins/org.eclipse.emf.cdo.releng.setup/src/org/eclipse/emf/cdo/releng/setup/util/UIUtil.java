@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.releng.internal.setup.ui.ErrorDialog;
 
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Control;
@@ -120,7 +122,7 @@ public final class UIUtil
   }
 
   public static void runInProgressDialog(Shell shell, IRunnableWithProgress runnable) throws InvocationTargetException,
-      InterruptedException
+  InterruptedException
   {
     ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell)
     {
@@ -150,7 +152,7 @@ public final class UIUtil
   {
     if (async)
     {
-      display.asyncExec(runnable);
+      asyncExec(display, runnable);
     }
     else
     {
@@ -162,6 +164,60 @@ public final class UIUtil
       {
         display.syncExec(runnable);
       }
+    }
+  }
+
+  public static void asyncExec(final Runnable runnable)
+  {
+    final Display display = getDisplay();
+    if (display != null)
+    {
+      asyncExec(display, runnable);
+    }
+  }
+
+  public static void asyncExec(final Display display, final Runnable runnable)
+  {
+    try
+    {
+      if (display.isDisposed())
+      {
+        return;
+      }
+
+      display.asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          if (display.isDisposed())
+          {
+            return;
+          }
+
+          try
+          {
+            runnable.run();
+          }
+          catch (SWTException ex)
+          {
+            if (ex.code != SWT.ERROR_WIDGET_DISPOSED)
+            {
+              throw ex;
+            }
+
+            //$FALL-THROUGH$
+          }
+        }
+      });
+    }
+    catch (SWTException ex)
+    {
+      if (ex.code != SWT.ERROR_WIDGET_DISPOSED)
+      {
+        throw ex;
+      }
+
+      //$FALL-THROUGH$
     }
   }
 }

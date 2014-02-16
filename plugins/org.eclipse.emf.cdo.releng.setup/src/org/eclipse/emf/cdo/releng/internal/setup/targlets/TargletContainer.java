@@ -127,6 +127,8 @@ public class TargletContainer extends AbstractBundleContainer
 {
   public static final String TYPE = "Targlet";
 
+  private static final ThreadLocal<Boolean> FORCE_UPDATE = new ThreadLocal<Boolean>();
+
   private static final String FOLLOW_ARTIFACT_REPOSITORY_REFERENCES = "org.eclipse.equinox.p2.director.followArtifactRepositoryReferences";
 
   private static final String FEATURE_SUFFIX = ".feature.group";
@@ -470,7 +472,9 @@ public class TargletContainer extends AbstractBundleContainer
         progress.skipped(2);
       }
 
-      if (profile == null || !workingDigest.equals(digest) && descriptor.getUpdateProblem() == null)
+      if (profile == null || //
+          !workingDigest.equals(digest) && descriptor.getUpdateProblem() == null || //
+          FORCE_UPDATE.get() == Boolean.TRUE)
       {
         try
         {
@@ -550,9 +554,9 @@ public class TargletContainer extends AbstractBundleContainer
       throws CoreException
   {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
-    for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
+    for (Iterator<IArtifactKey> it = artifacts.iterator(); it.hasNext();)
     {
-      File file = repo.getArtifactFile(iterator2.next());
+      File file = repo.getArtifactFile(it.next());
       if (file != null)
       {
         TargetBundle bundle = new TargetBundle(file);
@@ -565,14 +569,27 @@ public class TargletContainer extends AbstractBundleContainer
       throws CoreException
   {
     Collection<IArtifactKey> artifacts = unit.getArtifacts();
-    for (Iterator<IArtifactKey> iterator2 = artifacts.iterator(); iterator2.hasNext();)
+    for (Iterator<IArtifactKey> it = artifacts.iterator(); it.hasNext();)
     {
-      File file = repo.getArtifactFile(iterator2.next());
+      File file = repo.getArtifactFile(it.next());
       if (file != null)
       {
         TargetFeature feature = new TargetFeature(file);
         features.add(feature);
       }
+    }
+  }
+
+  public void forceUpdate(IProgressMonitor monitor) throws CoreException
+  {
+    try
+    {
+      FORCE_UPDATE.set(Boolean.TRUE);
+      target.resolve(monitor);
+    }
+    finally
+    {
+      FORCE_UPDATE.remove();
     }
   }
 
@@ -1013,18 +1030,22 @@ public class TargletContainer extends AbstractBundleContainer
 
       if (target != null)
       {
-        for (ITargetLocation location : target.getTargetLocations())
+        ITargetLocation[] targetLocations = target.getTargetLocations();
+        if (targetLocations != null)
         {
-          if (location instanceof TargletContainer)
+          for (ITargetLocation location : targetLocations)
           {
-            TargletContainer container = (TargletContainer)location;
-            TargletContainerDescriptor descriptor = container.getDescriptor();
-            if (descriptor != null)
+            if (location instanceof TargletContainer)
             {
-              Set<File> workingProjects = descriptor.getWorkingProjects();
-              if (workingProjects != null)
+              TargletContainer container = (TargletContainer)location;
+              TargletContainerDescriptor descriptor = container.getDescriptor();
+              if (descriptor != null)
               {
-                projectLocations.addAll(workingProjects);
+                Set<File> workingProjects = descriptor.getWorkingProjects();
+                if (workingProjects != null)
+                {
+                  projectLocations.addAll(workingProjects);
+                }
               }
             }
           }

@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -40,7 +41,9 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -48,6 +51,8 @@ import java.util.List;
 public class PromptDialog extends AbstractSetupDialog
 {
   private final List<SetupTaskPerformer> setupTaskPerformers;
+
+  private final Map<URI, ContextVariableTask> contextVariables = new LinkedHashMap<URI, ContextVariableTask>();
 
   private Font headerFont;
 
@@ -98,12 +103,23 @@ public class PromptDialog extends AbstractSetupDialog
       List<ContextVariableTask> variables = setupTaskPerformer.getUnresolvedVariables();
       if (!variables.isEmpty())
       {
-        createHeader(composite, setupTaskPerformer);
-
+        boolean first = true;
         for (ContextVariableTask variable : variables)
         {
-          PropertyField<?, ?> field = createField(variable);
-          field.fill(composite);
+          URI uri = EcoreUtil.getURI(variable);
+          if (!contextVariables.containsKey(uri))
+          {
+            contextVariables.put(uri, variable);
+
+            if (first)
+            {
+              createHeader(composite, setupTaskPerformer);
+              first = false;
+            }
+
+            PropertyField<?, ?> field = createField(variable);
+            field.fill(composite);
+          }
         }
       }
     }
@@ -197,15 +213,12 @@ public class PromptDialog extends AbstractSetupDialog
     Button okButton = getButton(IDialogConstants.OK_ID);
     if (okButton != null)
     {
-      for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+      for (ContextVariableTask variable : contextVariables.values())
       {
-        for (ContextVariableTask variable : setupTaskPerformer.getUnresolvedVariables())
+        if (StringUtil.isEmpty(variable.getValue()))
         {
-          if (StringUtil.isEmpty(variable.getValue()))
-          {
-            okButton.setEnabled(false);
-            return;
-          }
+          okButton.setEnabled(false);
+          return;
         }
       }
 

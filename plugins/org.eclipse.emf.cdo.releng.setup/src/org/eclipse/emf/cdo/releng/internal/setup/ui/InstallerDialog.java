@@ -701,14 +701,15 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     try
     {
-      install();
+      if (install())
+      {
+        super.okPressed();
+      }
     }
     catch (Throwable ex)
     {
       UIUtil.handleException(ex);
     }
-
-    super.okPressed();
   }
 
   protected boolean update(final boolean needsEarlyConfirmation)
@@ -1364,13 +1365,42 @@ public class InstallerDialog extends AbstractSetupDialog
     return false;
   }
 
-  private void install() throws Exception
+  private boolean install() throws Exception
   {
     final Object[] checkedElements = viewer.getCheckedElements();
     final String installFolder = installFolderField.getValue();
 
     File folder = new File(installFolder);
     folder.mkdirs();
+
+    List<SetupTaskPerformer> allTriggerSetupTaskPerformers = new ArrayList<SetupTaskPerformer>();
+    for (Object checkedElement : checkedElements)
+    {
+      if (checkedElement instanceof Branch)
+      {
+        Branch branch = (Branch)checkedElement;
+        Setup setup = getSetup(branch);
+        if (setup != null)
+        {
+          setup.eResource().setURI(getSetupURI(branch));
+          EMFUtil.saveEObject(setup);
+
+          SetupTaskPerformer performer = new SetupTaskPerformer(null, installFolder, setup);
+          if (performer.getUndeclaredVariables().isEmpty() && !performer.getUnresolvedVariables().isEmpty())
+          {
+            allTriggerSetupTaskPerformers.add(performer);
+          }
+        }
+      }
+    }
+
+    if (!allTriggerSetupTaskPerformers.isEmpty())
+    {
+      if (!ProgressDialog.promptUnresolvedVariables(getShell(), allTriggerSetupTaskPerformers))
+      {
+        return false;
+      }
+    }
 
     final List<SetupTaskPerformer> setupTaskPerformers = new ArrayList<SetupTaskPerformer>();
     for (Object checkedElement : checkedElements)
@@ -1407,6 +1437,8 @@ public class InstallerDialog extends AbstractSetupDialog
         return null;
       }
     }, setupTaskPerformers);
+
+    return true;
   }
 
   private void install(SetupTaskPerformer performer) throws Exception

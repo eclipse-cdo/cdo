@@ -28,7 +28,13 @@ import org.eclipse.emf.cdo.releng.setup.presentation.SetupEditorPlugin;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EContentsEList;
+import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.runtime.CoreException;
@@ -39,7 +45,13 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -87,19 +99,55 @@ public class PerformSetupAction extends AbstractSetupAction
             + EcoreUtil.getURI(eclipse)));
       }
 
-      for (Resource resource : setupTaskPerformer.getResourceSet().getResources())
+      Map<URI, List<String>> brokenProxies = new LinkedHashMap<URI, List<String>>();
+      for (Iterator<EObject> it = EcoreUtil.getAllContents(setupTaskPerformer.getTriggeredSetupTasks()); it.hasNext();)
       {
-        for (Resource.Diagnostic diagnostic : resource.getErrors())
+        EObject referencingEObject = it.next();
+        for (EContentsEList.FeatureIterator<EObject> it2 = (FeatureIterator<EObject>)referencingEObject
+            .eCrossReferences().iterator(); it2.hasNext();)
         {
-          String message = diagnostic.getMessage();
-          if (diagnostic instanceof Throwable)
+          EObject referencedEObject = it2.next();
+          if (referencedEObject.eIsProxy())
           {
-            status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, (Throwable)diagnostic));
+            URI proxyURI = ((InternalEObject)referencedEObject).eProxyURI();
+            List<String> messages = brokenProxies.get(proxyURI);
+            if (messages == null)
+            {
+              messages = new ArrayList<String>();
+              brokenProxies.put(proxyURI, messages);
+            }
+
+            messages.add("The object " + EcoreUtil.getURI(referencingEObject) + " has a feature '"
+                + it2.feature().getName() + "' with an unresolved proxy: ");
           }
-          else
+        }
+      }
+
+      Set<Resource> brokenResources = new HashSet<Resource>();
+      ResourceSet resourceSet = setupTaskPerformer.getResourceSet();
+      for (Map.Entry<URI, List<String>> entry : brokenProxies.entrySet())
+      {
+        URI uri = entry.getKey();
+        Resource resource = resourceSet.getResource(uri.trimFragment(), false);
+        if (resource != null && brokenResources.add(resource))
+        {
+          for (Resource.Diagnostic diagnostic : resource.getErrors())
           {
-            status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message));
+            String message = diagnostic.getMessage();
+            if (diagnostic instanceof Throwable)
+            {
+              status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message, (Throwable)diagnostic));
+            }
+            else
+            {
+              status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message));
+            }
           }
+        }
+
+        for (String message : entry.getValue())
+        {
+          status.add(new Status(IStatus.ERROR, Activator.PLUGIN_ID, message + uri));
         }
       }
 

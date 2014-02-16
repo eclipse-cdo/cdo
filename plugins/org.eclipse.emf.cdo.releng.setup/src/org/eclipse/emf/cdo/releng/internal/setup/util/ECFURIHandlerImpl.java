@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.releng.setup.util.FileUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 
 import org.eclipse.ecf.core.ContainerCreateException;
@@ -45,6 +46,7 @@ import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -52,6 +54,24 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ECFURIHandlerImpl extends URIHandlerImpl
 {
+  @Override
+  public Map<String, ?> getAttributes(URI uri, Map<?, ?> options)
+  {
+    if (uri.scheme().startsWith("http"))
+    {
+      Set<String> requestedAttributes = getRequestedAttributes(options);
+      if (requestedAttributes != null && requestedAttributes.contains(URIConverter.ATTRIBUTE_READ_ONLY)
+          && requestedAttributes.size() == 1)
+      {
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put(URIConverter.ATTRIBUTE_READ_ONLY, true);
+        return result;
+      }
+    }
+
+    return super.getAttributes(uri, options);
+  }
+
   @Override
   public boolean exists(URI uri, Map<?, ?> options)
   {

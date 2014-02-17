@@ -394,7 +394,7 @@ public abstract class PropertyField<CONTROL extends Control, HELPER extends Cont
     public TextField(String labelText, boolean secret)
     {
       super(labelText);
-      this.secret = false;
+      this.secret = secret;
     }
 
     public final PropertyField<?, ?> getLinkField()

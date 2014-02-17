@@ -399,7 +399,7 @@ public abstract class BasicMaterializationTaskImpl extends SetupTaskImpl impleme
           updateBundlePool(context, tp.getAbsolutePath(), tpPool.getAbsolutePath());
         }
 
-        if (context.isCancelled())
+        if (context.isCanceled())
         {
           throw new InterruptedException();
         }

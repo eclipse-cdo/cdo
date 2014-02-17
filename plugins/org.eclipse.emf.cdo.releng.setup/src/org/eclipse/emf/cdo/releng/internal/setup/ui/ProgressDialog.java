@@ -102,7 +102,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   private Button cancelButton;
 
-  private boolean cancelled;
+  private boolean canceled;
 
   private ProgressLogFilter logFilter = new ProgressLogFilter();
 
@@ -324,7 +324,12 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        cancelled = true;
+        canceled = true;
+        for (SetupTaskPerformer setupTaskPerformer : setupTaskPerformers)
+        {
+          setupTaskPerformer.setCanceled(true);
+        }
+
         setFinished();
       }
     });
@@ -386,9 +391,9 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     return super.close();
   }
 
-  public boolean isCancelled()
+  public boolean isCanceled()
   {
-    return cancelled;
+    return canceled;
   }
 
   public void log(String line)
@@ -398,7 +403,7 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   public void log(String line, boolean filter)
   {
-    if (isCancelled())
+    if (isCanceled())
     {
       throw new OperationCanceledException();
     }

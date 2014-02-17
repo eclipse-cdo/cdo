@@ -35,7 +35,7 @@ public class ProgressLogMonitor extends ProgressMonitorWrapper
   @Override
   public boolean isCanceled()
   {
-    return super.isCanceled() || log.isCancelled();
+    return super.isCanceled() || log.isCanceled();
   }
 
   @Override

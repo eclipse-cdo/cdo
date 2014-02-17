@@ -864,7 +864,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
 
       public boolean isCancelled()
       {
-        return context.isCancelled();
+        return context.isCanceled();
       }
 
       public void endTask()

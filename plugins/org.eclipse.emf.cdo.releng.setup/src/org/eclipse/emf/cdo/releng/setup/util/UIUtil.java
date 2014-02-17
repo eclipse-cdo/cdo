@@ -122,7 +122,7 @@ public final class UIUtil
   }
 
   public static void runInProgressDialog(Shell shell, IRunnableWithProgress runnable) throws InvocationTargetException,
-  InterruptedException
+      InterruptedException
   {
     ProgressMonitorDialog dialog = new ProgressMonitorDialog(shell)
     {

@@ -1213,7 +1213,7 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     {
       public void log(String message)
       {
-        if (context.isCancelled())
+        if (context.isCanceled())
         {
           throw new OperationCanceledException();
         }

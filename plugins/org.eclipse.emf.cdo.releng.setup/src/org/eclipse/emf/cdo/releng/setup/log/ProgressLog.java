@@ -21,7 +21,7 @@ public interface ProgressLog
 {
   public static final AtomicReference<ProgressLog> INSTANCE = new AtomicReference<ProgressLog>();
 
-  public boolean isCancelled();
+  public boolean isCanceled();
 
   public void log(String line);
 

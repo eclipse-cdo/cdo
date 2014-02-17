@@ -247,7 +247,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   public void checkCancelation()
   {
-    if (isCancelled())
+    if (isCanceled())
     {
       throw new OperationCanceledException();
     }
@@ -555,7 +555,7 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
         return new SecurePreferencesMock();
       }
 
-      public boolean isCancelled()
+      public boolean isCanceled()
       {
         return false;
       }

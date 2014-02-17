@@ -523,6 +523,11 @@ public final class TargletContainerManager
 
   public static void throwProvisionException(Throwable t) throws ProvisionException
   {
+    if (t instanceof OperationCanceledException)
+    {
+      throw (OperationCanceledException)t;
+    }
+
     if (t instanceof ProvisionException)
     {
       throw (ProvisionException)t;

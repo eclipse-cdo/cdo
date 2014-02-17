@@ -72,6 +72,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
@@ -108,6 +109,8 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
   private static final long serialVersionUID = 1L;
 
   private static ProgressLog progress;
+
+  private boolean canceled;
 
   private EList<SetupTask> triggeredSetupTasks;
 
@@ -350,14 +353,24 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
     return copyMap;
   }
 
-  public boolean isCancelled()
+  public boolean isCanceled()
   {
+    if (canceled)
+    {
+      return true;
+    }
+
     if (progress != null)
     {
-      return progress.isCancelled();
+      return progress.isCanceled();
     }
 
     return false;
+  }
+
+  public void setCanceled(boolean canceled)
+  {
+    this.canceled = canceled;
   }
 
   public void task(SetupTask setupTask)
@@ -844,6 +857,10 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           try
           {
             doPerformNeededSetupTasks();
+          }
+          catch (OperationCanceledException ex)
+          {
+            throw ex;
           }
           catch (CoreException ex)
           {

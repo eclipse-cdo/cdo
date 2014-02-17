@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -502,7 +503,6 @@ public class TargletContainer extends AbstractBundleContainer
     }
     catch (Throwable t)
     {
-      Activator.log(t);
       TargletContainerManager.throwProvisionException(t);
     }
   }
@@ -816,6 +816,11 @@ public class TargletContainer extends AbstractBundleContainer
 
       progress.done();
       return profile;
+    }
+    catch (OperationCanceledException t)
+    {
+      descriptor.rollbackUpdateTransaction(t, monitor);
+      throw t;
     }
     catch (Throwable t)
     {

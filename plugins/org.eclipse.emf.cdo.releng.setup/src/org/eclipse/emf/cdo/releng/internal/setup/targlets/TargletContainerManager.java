@@ -19,16 +19,21 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.equinox.internal.p2.engine.DownloadManager;
+import org.eclipse.equinox.internal.p2.engine.InstallableUnitOperand;
+import org.eclipse.equinox.internal.p2.engine.InstallableUnitPhase;
 import org.eclipse.equinox.internal.p2.engine.Phase;
 import org.eclipse.equinox.internal.p2.engine.PhaseSet;
 import org.eclipse.equinox.internal.p2.engine.phases.Collect;
 import org.eclipse.equinox.internal.p2.engine.phases.Install;
 import org.eclipse.equinox.internal.p2.engine.phases.Property;
+import org.eclipse.equinox.internal.p2.engine.phases.Uninstall;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.IProvisioningAgentProvider;
 import org.eclipse.equinox.p2.core.ProvisionException;
@@ -38,10 +43,14 @@ import org.eclipse.equinox.p2.engine.IProfile;
 import org.eclipse.equinox.p2.engine.IProfileRegistry;
 import org.eclipse.equinox.p2.engine.IProvisioningPlan;
 import org.eclipse.equinox.p2.engine.ProvisioningContext;
+import org.eclipse.equinox.p2.engine.spi.ProvisioningAction;
+import org.eclipse.equinox.p2.metadata.IArtifactKey;
+import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.planner.IPlanner;
 import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepository;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
+import org.eclipse.equinox.p2.repository.artifact.IArtifactRequest;
 import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
 import org.eclipse.pde.core.target.ITargetDefinition;
 import org.eclipse.pde.core.target.ITargetHandle;
@@ -63,6 +72,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -110,6 +120,12 @@ public final class TargletContainerManager
   private IEngine engine;
 
   private Map<String, TargletContainerDescriptor> descriptors;
+
+  private static final String NATIVE_ARTIFACTS = "nativeArtifacts"; //$NON-NLS-1$
+
+  private static final String NATIVE_TYPE = "org.eclipse.equinox.p2.native"; //$NON-NLS-1$
+
+  private static final String PARM_OPERAND = "operand"; //$NON-NLS-1$
 
   private TargletContainerManager() throws ProvisionException
   {
@@ -346,7 +362,7 @@ public final class TargletContainerManager
     }
   }
 
-  public IFileArtifactRepository getBundlePool() throws ProvisionException
+  public IArtifactRepositoryManager getArtifactRepositoryManager() throws ProvisionException
   {
     IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
         .getService(IArtifactRepositoryManager.SERVICE_NAME);
@@ -355,6 +371,12 @@ public final class TargletContainerManager
       throw new ProvisionException("Artifact respository manager could not be loaded");
     }
 
+    return manager;
+  }
+
+  public IFileArtifactRepository getBundlePool() throws ProvisionException
+  {
+    IArtifactRepositoryManager manager = getArtifactRepositoryManager();
     URI uri = POOL_FOLDER.toURI();
 
     try
@@ -516,11 +538,12 @@ public final class TargletContainerManager
 
   private static IPhaseSet createPhaseSet()
   {
-    List<Phase> phases = new ArrayList<Phase>(4);
+    ArrayList<Phase> phases = new ArrayList<Phase>(4);
     phases.add(new Collect(100));
     phases.add(new Property(1));
+    phases.add(new Uninstall(50, true));
     phases.add(new Install(50));
-    // phases.add(new CollectNativesPhase(100));
+    phases.add(new CollectNativesPhase(100));
 
     return new PhaseSet(phases.toArray(new Phase[phases.size()]));
   }
@@ -553,5 +576,106 @@ public final class TargletContainerManager
     }
 
     return instance;
+  }
+
+  /**
+   * @author Pascal Rapicault
+   */
+  private static final class CollectNativesPhase extends InstallableUnitPhase
+  {
+    public CollectNativesPhase(int weight)
+    {
+      super(NATIVE_ARTIFACTS, weight);
+    }
+
+    @Override
+    protected List<ProvisioningAction> getActions(InstallableUnitOperand operand)
+    {
+      IInstallableUnit installableUnit = operand.second();
+      if (installableUnit != null && installableUnit.getTouchpointType().getId().equals(NATIVE_TYPE))
+      {
+        List<ProvisioningAction> list = new ArrayList<ProvisioningAction>(1);
+        list.add(new CollectNativesAction());
+        return list;
+      }
+
+      return null;
+    }
+
+    @Override
+    protected IStatus initializePhase(IProgressMonitor monitor, IProfile profile, Map<String, Object> parameters)
+    {
+      parameters.put(NATIVE_ARTIFACTS, new ArrayList<Object>());
+      parameters.put(PARM_PROFILE, profile);
+      return null;
+    }
+
+    @Override
+    protected IStatus completePhase(IProgressMonitor monitor, IProfile profile, Map<String, Object> parameters)
+    {
+      @SuppressWarnings("unchecked")
+      List<IArtifactRequest> artifactRequests = (List<IArtifactRequest>)parameters.get(NATIVE_ARTIFACTS);
+      ProvisioningContext context = (ProvisioningContext)parameters.get(PARM_CONTEXT);
+      IProvisioningAgent agent = (IProvisioningAgent)parameters.get(PARM_AGENT);
+      DownloadManager downloadManager = new DownloadManager(context, agent);
+      for (Iterator<IArtifactRequest> it = artifactRequests.iterator(); it.hasNext();)
+      {
+        downloadManager.add(it.next());
+      }
+
+      return downloadManager.start(monitor);
+    }
+  }
+
+  /**
+   * @author Pascal Rapicault
+   */
+  private static final class CollectNativesAction extends ProvisioningAction
+  {
+    @Override
+    public IStatus execute(Map<String, Object> parameters)
+    {
+      InstallableUnitOperand operand = (InstallableUnitOperand)parameters.get(PARM_OPERAND);
+      IInstallableUnit installableUnit = operand.second();
+      if (installableUnit == null)
+      {
+        return Status.OK_STATUS;
+      }
+
+      try
+      {
+        Collection<?> toDownload = installableUnit.getArtifacts();
+        if (toDownload == null)
+        {
+          return Status.OK_STATUS;
+        }
+
+        @SuppressWarnings("unchecked")
+        List<IArtifactRequest> artifactRequests = (List<IArtifactRequest>)parameters.get(NATIVE_ARTIFACTS);
+
+        IArtifactRepository artifactRepository = getInstance().getBundlePool();
+        IArtifactRepositoryManager manager = getInstance().getArtifactRepositoryManager();
+
+        for (Iterator<?> it = toDownload.iterator(); it.hasNext();)
+        {
+          IArtifactKey keyToDownload = (IArtifactKey)it.next();
+          IArtifactRequest request = manager.createMirrorRequest(keyToDownload, artifactRepository, null, null);
+          artifactRequests.add(request);
+        }
+      }
+      catch (CoreException ex)
+      {
+        return ex.getStatus();
+      }
+
+      return Status.OK_STATUS;
+    }
+
+    @Override
+    public IStatus undo(Map<String, Object> parameters)
+    {
+      // Nothing to do for now
+      return Status.OK_STATUS;
+    }
   }
 }

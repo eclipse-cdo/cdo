@@ -445,14 +445,18 @@ public final class TargletContainerManager
       {
         try
         {
-          ITargetDefinition definition = targetHandle.getTargetDefinition();
-          for (ITargetLocation targetLocation : definition.getTargetLocations())
+          ITargetDefinition target = targetHandle.getTargetDefinition();
+          ITargetLocation[] targetLocations = target.getTargetLocations();
+          if (targetLocations != null)
           {
-            if (targetLocation instanceof TargletContainer)
+            for (ITargetLocation location : targetLocations)
             {
-              TargletContainer targletContainer = (TargletContainer)targetLocation;
-              String id = targletContainer.getID();
-              ids.add(id);
+              if (location instanceof TargletContainer)
+              {
+                TargletContainer targletContainer = (TargletContainer)location;
+                String id = targletContainer.getID();
+                ids.add(id);
+              }
             }
           }
         }

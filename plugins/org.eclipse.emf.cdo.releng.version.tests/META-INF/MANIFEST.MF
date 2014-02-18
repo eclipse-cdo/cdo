@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.releng.version.tests
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.1.1.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -18,5 +18,5 @@ Require-Bundle: org.eclipse.equinox.ds;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.cdo.releng.version.digest;bundle-version="[1.0.0,2.0.0)",
  org.eclipse.emf.cdo.releng.version.ui;bundle-version="[1.0.0,2.0.0)",
  org.junit;bundle-version="[4.0.0,5.0.0)"
-Export-Package: org.eclipse.emf.cdo.releng.version.tests;version="1.1.0"
+Export-Package: org.eclipse.emf.cdo.releng.version.tests;version="1.1.1"
 Bundle-Activator: org.eclipse.emf.cdo.releng.version.tests.Activator

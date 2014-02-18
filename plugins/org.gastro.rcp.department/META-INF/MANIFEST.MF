@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: CDO Electronic Restaurant Example RCP Department
 Bundle-SymbolicName: org.gastro.rcp.department; singleton:=true
-Bundle-Version: 4.0.200.qualifier
+Bundle-Version: 4.0.201.qualifier
 Bundle-Activator: org.gastro.rcp.internal.department.Activator
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.gastro.rcp;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Export-Package: com.swtdesigner;version="4.0.200";x-internal:=true,
- org.gastro.rcp.internal.department;version="4.0.200";x-internal:=true
+ org.gastro.rcp.internal.department;version="4.0.201";x-internal:=true

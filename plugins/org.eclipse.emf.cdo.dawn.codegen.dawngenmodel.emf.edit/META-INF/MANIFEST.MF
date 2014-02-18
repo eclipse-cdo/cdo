@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.edit;singleton:=true
-Bundle-Version: 1.0.100.qualifier
+Bundle-Version: 1.0.101.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.emf.dawnEmfGenmodel.provider.DawnGenModelEditPlugin$Implementation
 Bundle-Vendor: %providerName

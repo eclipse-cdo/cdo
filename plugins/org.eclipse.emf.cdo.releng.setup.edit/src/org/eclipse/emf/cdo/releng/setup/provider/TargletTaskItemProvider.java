@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
@@ -41,7 +49,7 @@ import java.util.List;
  * @generated
  */
 public class TargletTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -105,7 +113,7 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
         getString("_UI_TargletData_activeRepositoryList_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_activeRepositoryList_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__ACTIVE_REPOSITORY_LIST, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -122,7 +130,7 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
         getString("_UI_TargletData_includeSources_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_includeSources_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__INCLUDE_SOURCES, true, false, false,
-        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -139,7 +147,7 @@ public class TargletTaskItemProvider extends SetupTaskItemProvider implements IE
         getString("_UI_TargletData_includeAllPlatforms_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_includeAllPlatforms_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__INCLUDE_ALL_PLATFORMS, true, false, false,
-        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**

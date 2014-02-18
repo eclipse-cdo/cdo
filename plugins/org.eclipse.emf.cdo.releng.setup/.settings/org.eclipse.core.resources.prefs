@@ -4,6 +4,7 @@ encoding//model/setup.ecore=UTF-8
 encoding//model/setup.ecorediag=UTF-8
 encoding//setups/egit.setup=UTF-8
 encoding//setups/mylyn.tasks.setup=UTF-8
+encoding//setups/releng.setup=UTF-8
 encoding/Configuration.setup=UTF-8
 encoding/Configuration2.setup=UTF-8
 encoding/MetaIndex.setup=ASCII

@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
@@ -29,8 +37,8 @@ import java.util.List;
  * @generated
  */
 public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvider implements
-    IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-    IItemPropertySource
+IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -76,7 +84,7 @@ public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvi
         getString("_UI_ComponentDefinition_iD_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_ComponentDefinition_iD_feature",
             "_UI_ComponentDefinition_type"), SetupPackage.Literals.COMPONENT_DEFINITION__ID, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -93,7 +101,7 @@ public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvi
         getString("_UI_ComponentDefinition_version_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_ComponentDefinition_version_feature",
             "_UI_ComponentDefinition_type"), SetupPackage.Literals.COMPONENT_DEFINITION__VERSION, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

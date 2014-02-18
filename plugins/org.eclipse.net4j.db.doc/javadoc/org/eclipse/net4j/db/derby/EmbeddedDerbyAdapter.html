@@ -1,337 +1,329 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!--NewPage-->
-<HTML>
-<HEAD>
+<!-- NewPage -->
+<html lang="de">
+<head>
 
-<TITLE>
-EmbeddedDerbyAdapter (Net4j DB Framework Documentation)
-</TITLE>
-
-<META NAME="date" CONTENT="">
-
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../../html/book.css" TITLE="Style">
-<LINK REL ="stylesheet" TYPE="text/css" HREF="../../../../../stylesheet.css" TITLE="Style">
-
-<SCRIPT type="text/javascript">
-function windowTitle()
-{
+<title>EmbeddedDerbyAdapter (Net4j DB Framework Documentation)</title>
+<meta name="date" content="2014-02-18">
+<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+</head>
+<body>
+<script type="text/javascript"><!--
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="EmbeddedDerbyAdapter (Net4j DB Framework Documentation)";
     }
-}
-</SCRIPT>
-<NOSCRIPT>
-</NOSCRIPT>
-
-</HEAD>
-
-<BODY BGCOLOR="white" onload="windowTitle();">
-<HR>
-
-
+//-->
+</script>
+<noscript>
+<div>JavaScript is disabled on your browser.</div>
+</noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<A NAME="navbar_top"><!-- --></A>
-<A HREF="#skip-navbar_top" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_top_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/EmbeddedDerbyAdapter.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="EmbeddedDerbyAdapter.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="topNav"><a name="navbar_top">
+<!--   -->
+</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/EmbeddedDerbyAdapter.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><span class="strong">Prev Class</span></a></li>
+<li>Next Class</li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" target="_top">Frames</a></li>
+<li><a href="EmbeddedDerbyAdapter.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_top">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_top");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#methods_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;METHOD</FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_top"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_classes_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#methods_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Method</li>
+</ul>
+</div>
+<a name="skip-navbar_top">
+<!--   -->
+</a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-
-<HR>
 <!-- ======== START OF CLASS DATA ======== -->
-<H2>
-<FONT SIZE="-1">
-org.eclipse.net4j.db.derby</FONT>
-<BR>
-Class EmbeddedDerbyAdapter</H2>
-<PRE>
-<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">org.eclipse.net4j.spi.db.DBAdapter</A>
-      <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">org.eclipse.net4j.db.derby.DerbyAdapter</A>
-          <IMG SRC="../../../../../resources/inherit.gif" ALT="extended by "><B>org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter</B>
-</PRE>
-<DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></DD>
-</DL>
-<HR>
-<DL>
-  <DT>public class <B>EmbeddedDerbyAdapter</B>
-  <DD>extends <A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</A>
-</DL>
-
+<div class="header">
+<div class="subTitle">org.eclipse.net4j.db.derby</div>
+<h2 title="Class EmbeddedDerbyAdapter" class="title">Class EmbeddedDerbyAdapter</h2>
+</div>
+<div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="DerbyAdapter.html" title="DerbyAdapter" alt="" coords="36,6,137,31"/>
 <area shape="rect" id="node2" href="EmbeddedDerbyAdapter.html" title="EmbeddedDerbyAdapter" alt="" coords="5,71,168,97"/>
 </map>
-
-<CENTER><IMG SRC="EmbeddedDerbyAdapter.png" USEMAP="#APIVIZ" BORDER="0"></CENTER>
-
-
-
-<P>
-A <A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><CODE>Derby adapter</CODE></A> for <a href="http://db.apache.org/derby/papers/DerbyTut/embedded_intro.html">embedded</a> databases.
-<P>
-
-<P>
-<DL>
-<DT><B>Since:</B></DT>
-  <DD>2.0</DD>
-</DL>
-<HR>
-
-<P>
+<div id="apivizContainer" style="text-align: center;"><img src="EmbeddedDerbyAdapter.png" usemap="#APIVIZ" border="0"></div>
+<ul class="inheritance">
+<li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">org.eclipse.net4j.spi.db.DBAdapter</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">org.eclipse.net4j.db.derby.DerbyAdapter</a></li>
+<li>
+<ul class="inheritance">
+<li>org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="description">
+<ul class="blockList">
+<li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dd>
+</dl>
+<hr>
+<br>
+<pre>public class <span class="strong">EmbeddedDerbyAdapter</span>
+extends <a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</a></pre>
+<div class="block">A <a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><code>Derby adapter</code></a> for <a href="http://db.apache.org/derby/papers/DerbyTut/embedded_intro.html">embedded</a> databases.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>2.0</dd></dl>
+</li>
+</ul>
+</div>
+<div class="summary">
+<ul class="blockList">
+<li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-
-<A NAME="nested_class_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Nested Class Summary</B></FONT></TH>
-</TR>
-</TABLE>
-&nbsp;<A NAME="nested_classes_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Nested classes/interfaces inherited from class org.eclipse.net4j.spi.db.<A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.eclipse.net4j.spi.db.<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></h3>
+<code><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- =========== FIELD SUMMARY =========== -->
-
-<A NAME="field_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Field Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A></CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html#NAME">NAME</A></B></CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Fields inherited from class org.eclipse.net4j.db.derby.<A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#VERSION">VERSION</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="fields_inherited_from_class_org.eclipse.net4j.db.IDBAdapter"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Fields inherited from interface org.eclipse.net4j.db.<A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/IDBAdapter.html#REGISTRY">REGISTRY</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html#NAME">NAME</a></strong></code>&nbsp;</td>
+</tr>
+</table>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;org.eclipse.net4j.db.derby.<a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</a></h3>
+<code><a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#VERSION">VERSION</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.net4j.db.IDBAdapter">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.db.<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></h3>
+<code><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#REGISTRY">REGISTRY</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-
-<A NAME="constructor_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Constructor Summary</B></FONT></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../../../../org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html#EmbeddedDerbyAdapter()">EmbeddedDerbyAdapter</A></B>()</CODE>
-
-<BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</TD>
-</TR>
-</TABLE>
-&nbsp;
+<ul class="blockList">
+<li class="blockList"><a name="constructor_summary">
+<!--   -->
+</a>
+<h3>Constructor Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html#EmbeddedDerbyAdapter()">EmbeddedDerbyAdapter</a></strong>()</code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
-
-<A NAME="method_summary"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
-<B>Method Summary</B></FONT></TH>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.db.derby.<A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#getReservedWords()">getReservedWords</A>, <A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#getTypeName(org.eclipse.net4j.db.ddl.IDBField)">getTypeName</A>, <A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</A>, <A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</A>, <A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</A>, <A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isValidFirstChar(char)">isValidFirstChar</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class org.eclipse.net4j.spi.db.<A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)">adaptType</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, java.util.List)">addIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndexField(java.lang.StringBuilder, org.eclipse.net4j.db.ddl.IDBField)">addIndexField</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#alterTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">alterTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String[])">appendFieldDefs</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable)">appendFieldNames</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConstraints(org.eclipse.net4j.db.ddl.IDBTable)">createConstraints</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)">createFieldDefinition</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)">createFieldDefinitions</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBIndex, org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">createIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.sql.Statement, int)">createIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndexFields(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createIndexFields</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createJDBCDataSource()">createJDBCDataSource</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createPrimaryKey</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">createTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">createTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTables(java.lang.Iterable, java.sql.Connection)">createTables</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">doCreateTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBIndex, org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">dropIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">dropIndex</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">dropPrimaryKey</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">dropTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">dropTable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTables(java.lang.Iterable, java.sql.Connection)">dropTables</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.PreparedStatement)">format</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.ResultSet)">format</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDefaultDBLength(org.eclipse.net4j.db.DBType)">getDefaultDBLength</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)">getDropTableSQL</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getJDBCDriver()">getJDBCDriver</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getMaxFieldNameLength()">getMaxFieldNameLength</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getMaxTableNameLength()">getMaxTableNameLength</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getName()">getName</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getSQL92ReservedWords()">getSQL92ReservedWords</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getVersion()">getVersion</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isPrimaryKeyShadow(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField[])">isPrimaryKeyShadow</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord(java.lang.String)">isReservedWord</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)">isTypeIndexable</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readFields(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable)">readFields</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices(java.sql.Connection, java.sql.DatabaseMetaData, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)">readIndices</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices(java.sql.Connection, java.sql.ResultSet, org.eclipse.net4j.db.ddl.IDBTable, int, int, int, int)">readIndices</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema)">readSchema</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema(java.sql.Connection, java.lang.String)">readSchema</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)">sqlModifyField</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField(java.lang.String, java.lang.String, java.lang.String)">sqlModifyField</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#toString()">toString</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#updateSchema(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">updateSchema</A>, <A HREF="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#validateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">validateTable</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class java.lang.<A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A></B></TH>
-</TR>
-<TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</A>, <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</A></CODE></TD>
-</TR>
-</TABLE>
-&nbsp;
-<P>
-
+<ul class="blockList">
+<li class="blockList"><a name="method_summary">
+<!--   -->
+</a>
+<h3>Method Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.db.derby.<a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</a></h3>
+<code><a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#getReservedWords()">getReservedWords</a>, <a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#getTypeName(org.eclipse.net4j.db.ddl.IDBField)">getTypeName</a>, <a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isColumnNotFoundException(java.sql.SQLException)">isColumnNotFoundException</a>, <a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isDuplicateKeyException(java.sql.SQLException)">isDuplicateKeyException</a>, <a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isTableNotFoundException(java.sql.SQLException)">isTableNotFoundException</a>, <a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html#isValidFirstChar(char)">isValidFirstChar</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.eclipse.net4j.spi.db.<a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></h3>
+<code><a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)">adaptType</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, java.util.List)">addIndex</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#addIndexField(java.lang.StringBuilder, org.eclipse.net4j.db.ddl.IDBField)">addIndexField</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#alterTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">alterTable</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldDefs(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String[])">appendFieldDefs</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#appendFieldNames(java.lang.Appendable, org.eclipse.net4j.db.ddl.IDBTable)">appendFieldNames</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createConstraints(org.eclipse.net4j.db.ddl.IDBTable)">createConstraints</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)">createFieldDefinition</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)">createFieldDefinitions</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBIndex, org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">createIndex</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.sql.Statement, int)">createIndex</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createIndex</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createIndexFields(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createIndexFields</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createJDBCDataSource()">createJDBCDataSource</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">createPrimaryKey</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">createTable</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">createTable</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#createTables(java.lang.Iterable, java.sql.Connection)">createTables</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">doCreateTable</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBIndex, org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)">dropIndex</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">dropIndex</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex, java.lang.StringBuilder)">dropPrimaryKey</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, org.eclipse.net4j.db.ddl.delta.IDBTableDelta)">dropTable</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">dropTable</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#dropTables(java.lang.Iterable, java.sql.Connection)">dropTables</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.PreparedStatement)">format</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#format(java.sql.ResultSet)">format</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDefaultDBLength(org.eclipse.net4j.db.DBType)">getDefaultDBLength</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getDropTableSQL(org.eclipse.net4j.db.ddl.IDBTable)">getDropTableSQL</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)">getFieldLength</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getJDBCDriver()">getJDBCDriver</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getMaxFieldNameLength()">getMaxFieldNameLength</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getMaxTableNameLength()">getMaxTableNameLength</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getName()">getName</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getSQL92ReservedWords()">getSQL92ReservedWords</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#getVersion()">getVersion</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isPrimaryKeyShadow(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String, org.eclipse.net4j.db.ddl.IDBIndex.Type, org.eclipse.net4j.db.ddl.IDBField[])">isPrimaryKeyShadow</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isReservedWord(java.lang.String)">isReservedWord</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)">isTypeIndexable</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readFields(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBTable)">readFields</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices(java.sql.Connection, java.sql.DatabaseMetaData, org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)">readIndices</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readIndices(java.sql.Connection, java.sql.ResultSet, org.eclipse.net4j.db.ddl.IDBTable, int, int, int, int)">readIndices</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema)">readSchema</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#readSchema(java.sql.Connection, java.lang.String)">readSchema</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)">sqlModifyField</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField(java.lang.String, java.lang.String, java.lang.String)">sqlModifyField</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField, java.lang.String)">sqlRenameField</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#toString()">toString</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#updateSchema(java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema, org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)">updateSchema</a>, <a href="../../../../../org/eclipse/net4j/spi/db/DBAdapter.html#validateTable(org.eclipse.net4j.db.ddl.IDBTable, java.sql.Statement)">validateTable</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="details">
+<ul class="blockList">
+<li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-
-<A NAME="field_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Field Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="NAME"><!-- --></A><H3>
-NAME</H3>
-<PRE>
-public static final <A HREF="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>NAME</B></PRE>
-<DL>
-<DL>
-<DT><B>See Also:</B><DD><A HREF="../../../../../constant-values.html#org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter.NAME">Constant Field Values</A></DL>
-</DL>
-
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="NAME">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>NAME</h4>
+<pre>public static final&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> NAME</pre>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../constant-values.html#org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter.NAME">Constant Field Values</a></dd></dl>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-
-<A NAME="constructor_detail"><!-- --></A>
-<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
-<TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
-<TH ALIGN="left" COLSPAN="1"><FONT SIZE="+2">
-<B>Constructor Detail</B></FONT></TH>
-</TR>
-</TABLE>
-
-<A NAME="EmbeddedDerbyAdapter()"><!-- --></A><H3>
-EmbeddedDerbyAdapter</H3>
-<PRE>
-public <B>EmbeddedDerbyAdapter</B>()</PRE>
-<DL>
-</DL>
+<ul class="blockList">
+<li class="blockList"><a name="constructor_detail">
+<!--   -->
+</a>
+<h3>Constructor Detail</h3>
+<a name="EmbeddedDerbyAdapter()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>EmbeddedDerbyAdapter</h4>
+<pre>public&nbsp;EmbeddedDerbyAdapter()</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <!-- ========= END OF CLASS DATA ========= -->
-<HR>
-
-
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<A NAME="navbar_bottom"><!-- --></A>
-<A HREF="#skip-navbar_bottom" title="Skip navigation links"></A>
-<TABLE BORDER="0" WIDTH="100%" CELLPADDING="1" CELLSPACING="0" SUMMARY="">
-<TR>
-<TD COLSPAN=2 BGCOLOR="#EEEEFF" CLASS="NavBarCell1">
-<A NAME="navbar_bottom_firstrow"><!-- --></A>
-<TABLE BORDER="0" CELLPADDING="0" CELLSPACING="3" SUMMARY="">
-  <TR ALIGN="center" VALIGN="top">
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../overview-summary.html"><FONT CLASS="NavBarFont1"><B>Overview</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="package-summary.html"><FONT CLASS="NavBarFont1"><B>Package</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#FFFFFF" CLASS="NavBarCell1Rev"> &nbsp;<FONT CLASS="NavBarFont1Rev"><B>Class</B></FONT>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="class-use/EmbeddedDerbyAdapter.html"><FONT CLASS="NavBarFont1"><B>Use</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../deprecated-list.html"><FONT CLASS="NavBarFont1"><B>Deprecated</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../index-all.html"><FONT CLASS="NavBarFont1"><B>Index</B></FONT></A>&nbsp;</TD>
-  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1">    <A HREF="../../../../../help-doc.html"><FONT CLASS="NavBarFont1"><B>Help</B></FONT></A>&nbsp;</TD>
-  </TR>
-</TABLE>
-</TD>
-<TD ALIGN="right" VALIGN="top" ROWSPAN=3><EM>
-</EM>
-</TD>
-</TR>
-
-<TR>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;NEXT CLASS</FONT></TD>
-<TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-  <A HREF="../../../../../index.html?org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" target="_top"><B>FRAMES</B></A>  &nbsp;
-&nbsp;<A HREF="EmbeddedDerbyAdapter.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
-&nbsp;<SCRIPT type="text/javascript">
-  <!--
+<div class="bottomNav"><a name="navbar_bottom">
+<!--   -->
+</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+<!--   -->
+</a>
+<ul class="navList" title="Navigation">
+<li><a href="../../../../../overview-summary.html">Overview</a></li>
+<li><a href="package-summary.html">Package</a></li>
+<li class="navBarCell1Rev">Class</li>
+<li><a href="class-use/EmbeddedDerbyAdapter.html">Use</a></li>
+<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../help-doc.html">Help</a></li>
+</ul>
+</div>
+<div class="subNav">
+<ul class="navList">
+<li><a href="../../../../../org/eclipse/net4j/db/derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><span class="strong">Prev Class</span></a></li>
+<li>Next Class</li>
+</ul>
+<ul class="navList">
+<li><a href="../../../../../index.html?org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" target="_top">Frames</a></li>
+<li><a href="EmbeddedDerbyAdapter.html" target="_top">No Frames</a></li>
+</ul>
+<ul class="navList" id="allclasses_navbar_bottom">
+<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+</ul>
+<div>
+<script type="text/javascript"><!--
+  allClassesLink = document.getElementById("allclasses_navbar_bottom");
   if(window==top) {
-    document.writeln('<A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>');
+    allClassesLink.style.display = "block";
+  }
+  else {
+    allClassesLink.style.display = "none";
   }
   //-->
-</SCRIPT>
-<NOSCRIPT>
-  <A HREF="../../../../../allclasses-noframe.html"><B>All Classes</B></A>
-</NOSCRIPT>
-
-
-</FONT></TD>
-</TR>
-<TR>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-  SUMMARY:&nbsp;<A HREF="#nested_classes_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter">NESTED</A>&nbsp;|&nbsp;<A HREF="#field_summary">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_summary">CONSTR</A>&nbsp;|&nbsp;<A HREF="#methods_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter">METHOD</A></FONT></TD>
-<TD VALIGN="top" CLASS="NavBarCell3"><FONT SIZE="-2">
-DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&nbsp;METHOD</FONT></TD>
-</TR>
-</TABLE>
-<A NAME="skip-navbar_bottom"></A>
+</script>
+</div>
+<div>
+<ul class="subNavList">
+<li>Summary:&nbsp;</li>
+<li><a href="#nested_classes_inherited_from_class_org.eclipse.net4j.spi.db.DBAdapter">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#methods_inherited_from_class_org.eclipse.net4j.db.derby.DerbyAdapter">Method</a></li>
+</ul>
+<ul class="subNavList">
+<li>Detail:&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Method</li>
+</ul>
+</div>
+<a name="skip-navbar_bottom">
+<!--   -->
+</a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-
-<HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+</body>
+</html>

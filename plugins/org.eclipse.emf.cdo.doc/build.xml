@@ -505,6 +505,8 @@
 		</javadoc>
 	</target>
 
-	<target name="build" depends="build.java, build.schema, build.article" />
+  <target name="build" depends="build.java, build.schema, build.article">
+    <fixcrlf srcdir="${project.path}" includes="**/*.html" />
+  </target>
 
 </project>

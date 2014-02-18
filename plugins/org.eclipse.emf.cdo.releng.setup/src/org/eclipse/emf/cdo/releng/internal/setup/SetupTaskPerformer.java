@@ -72,8 +72,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import java.io.File;
@@ -383,12 +381,12 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
 
   public void log(Throwable t)
   {
-    log(ProgressDialog.toString(t), false);
+    log(Activator.toString(t), false);
   }
 
   public void log(IStatus status)
   {
-    log(ProgressDialog.toString(status), false);
+    log(Activator.toString(status), false);
   }
 
   public void log(String line)
@@ -858,17 +856,9 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
           {
             doPerformNeededSetupTasks();
           }
-          catch (OperationCanceledException ex)
+          catch (Throwable t)
           {
-            throw ex;
-          }
-          catch (CoreException ex)
-          {
-            throw ex;
-          }
-          catch (Exception ex)
-          {
-            throw new CoreException(new Status(IStatus.ERROR, Activator.PLUGIN_ID, ex.getMessage(), ex));
+            Activator.coreException(t);
           }
         }
       }, null, IWorkspace.AVOID_UPDATE, null);

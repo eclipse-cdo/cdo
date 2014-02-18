@@ -127,7 +127,7 @@ public final class TargletContainerManager
 
   private static final String PARM_OPERAND = "operand"; //$NON-NLS-1$
 
-  private TargletContainerManager() throws ProvisionException
+  private TargletContainerManager() throws CoreException
   {
     BundleContext context = Activator.getBundleContext();
 
@@ -211,7 +211,7 @@ public final class TargletContainerManager
     }.schedule();
   }
 
-  private void initialize(IProgressMonitor monitor) throws ProvisionException
+  private void initialize(IProgressMonitor monitor) throws CoreException
   {
     if (WORKSPACE_STATE_FILE.exists())
     {
@@ -256,7 +256,7 @@ public final class TargletContainerManager
     }
   }
 
-  private void waitUntilInitialized(IProgressMonitor monitor) throws ProvisionException
+  private void waitUntilInitialized(IProgressMonitor monitor) throws CoreException
   {
     try
     {
@@ -280,7 +280,7 @@ public final class TargletContainerManager
 
     if (initializationProblem != null)
     {
-      throwProvisionException(initializationProblem);
+      Activator.coreException(initializationProblem);
     }
   }
 
@@ -289,7 +289,7 @@ public final class TargletContainerManager
     return agent;
   }
 
-  public TargletContainerDescriptor getDescriptor(String id, IProgressMonitor monitor) throws ProvisionException
+  public TargletContainerDescriptor getDescriptor(String id, IProgressMonitor monitor) throws CoreException
   {
     waitUntilInitialized(monitor);
 
@@ -304,7 +304,7 @@ public final class TargletContainerManager
     return descriptor;
   }
 
-  public IProfile getProfile(String digest, IProgressMonitor monitor) throws ProvisionException
+  public IProfile getProfile(String digest, IProgressMonitor monitor) throws CoreException
   {
     waitUntilInitialized(monitor);
 
@@ -313,7 +313,7 @@ public final class TargletContainerManager
   }
 
   public IProfile getOrCreateProfile(String id, String environmentProperties, String nlProperty, String digest,
-      IProgressMonitor monitor) throws ProvisionException
+      IProgressMonitor monitor) throws CoreException
   {
     waitUntilInitialized(monitor);
 
@@ -342,7 +342,7 @@ public final class TargletContainerManager
   }
 
   public void planAndInstall(IProfileChangeRequest request, ProvisioningContext context, IProgressMonitor monitor)
-      throws ProvisionException
+      throws CoreException
   {
     IProvisioningPlan plan = planner.getProvisioningPlan(request, context, monitor);
     if (!plan.getStatus().isOK())
@@ -362,7 +362,7 @@ public final class TargletContainerManager
     }
   }
 
-  public IArtifactRepositoryManager getArtifactRepositoryManager() throws ProvisionException
+  public IArtifactRepositoryManager getArtifactRepositoryManager() throws CoreException
   {
     IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
         .getService(IArtifactRepositoryManager.SERVICE_NAME);
@@ -374,7 +374,7 @@ public final class TargletContainerManager
     return manager;
   }
 
-  public IFileArtifactRepository getBundlePool() throws ProvisionException
+  public IFileArtifactRepository getBundlePool() throws CoreException
   {
     IArtifactRepositoryManager manager = getArtifactRepositoryManager();
     URI uri = POOL_FOLDER.toURI();
@@ -386,7 +386,7 @@ public final class TargletContainerManager
         return (IFileArtifactRepository)manager.loadRepository(uri, null);
       }
     }
-    catch (ProvisionException ex)
+    catch (CoreException ex)
     {
       //$FALL-THROUGH$
     }
@@ -548,27 +548,7 @@ public final class TargletContainerManager
     return new PhaseSet(phases.toArray(new Phase[phases.size()]));
   }
 
-  public static void throwProvisionException(Throwable t) throws ProvisionException
-  {
-    if (t instanceof OperationCanceledException)
-    {
-      throw (OperationCanceledException)t;
-    }
-
-    if (t instanceof ProvisionException)
-    {
-      throw (ProvisionException)t;
-    }
-
-    if (t instanceof Error)
-    {
-      throw (Error)t;
-    }
-
-    throw new ProvisionException(t.getMessage(), t);
-  }
-
-  public static synchronized TargletContainerManager getInstance() throws ProvisionException
+  public static synchronized TargletContainerManager getInstance() throws CoreException
   {
     if (instance == null)
     {

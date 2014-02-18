@@ -27,7 +27,6 @@ import org.eclipse.core.runtime.Plugin;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
-import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.engine.IProfile;
 import org.eclipse.equinox.p2.engine.IProfileRegistry;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
@@ -189,7 +188,7 @@ public final class UpdateUtil extends Plugin
       {
         addRepositories(agent, true, sub);
       }
-      catch (ProvisionException ex)
+      catch (CoreException ex)
       {
         return ex.getStatus();
       }
@@ -234,7 +233,7 @@ public final class UpdateUtil extends Plugin
         {
           addRepositories(agent, false, sub);
         }
-        catch (ProvisionException ex)
+        catch (CoreException ex)
         {
           return ex.getStatus();
         }
@@ -311,15 +310,14 @@ public final class UpdateUtil extends Plugin
     return false;
   }
 
-  private static void addRepositories(IProvisioningAgent agent, boolean metadata, SubMonitor sub)
-      throws ProvisionException
+  private static void addRepositories(IProvisioningAgent agent, boolean metadata, SubMonitor sub) throws CoreException
   {
     addRepository(agent, InstallerDialog.TRAIN_URL, metadata, sub.newChild(200));
     addRepository(agent, SetupConstants.RELENG_URL, metadata, sub.newChild(200));
   }
 
   private static void addRepository(IProvisioningAgent agent, String location, boolean metadata,
-      IProgressMonitor monitor) throws ProvisionException
+      IProgressMonitor monitor) throws CoreException
   {
     SubMonitor sub = SubMonitor.convert(monitor, "Loading " + location, 500);
 
@@ -343,7 +341,7 @@ public final class UpdateUtil extends Plugin
   }
 
   private static void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
-      throws ProvisionException
+      throws CoreException
   {
     IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
         .getService(IMetadataRepositoryManager.SERVICE_NAME);
@@ -356,7 +354,7 @@ public final class UpdateUtil extends Plugin
   }
 
   private static void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
-      throws ProvisionException
+      throws CoreException
   {
     IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
         .getService(IArtifactRepositoryManager.SERVICE_NAME);

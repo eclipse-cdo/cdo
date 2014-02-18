@@ -56,7 +56,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
@@ -169,7 +168,7 @@ public class TargletContainer extends AbstractBundleContainer
 
   private EList<Targlet> targlets = new BasicEList<Targlet>();
 
-  public TargletContainer(String id) throws ProvisionException
+  public TargletContainer(String id)
   {
     this.id = id;
   }
@@ -177,9 +176,8 @@ public class TargletContainer extends AbstractBundleContainer
   /**
    * Copies the passed targlets into this targlet container. Modifications of the passed targlets after the call
    * to this constructor won't have an impact on this targlet container.
-   * @throws ProvisionException
    */
-  private TargletContainer(String id, Collection<? extends TargletData> targlets) throws ProvisionException
+  private TargletContainer(String id, Collection<? extends TargletData> targlets)
   {
     this(id);
     basicSetTarglets(targlets);
@@ -459,7 +457,7 @@ public class TargletContainer extends AbstractBundleContainer
     return fFeatures;
   }
 
-  private void resolveUnits(IProgressMonitor monitor) throws ProvisionException
+  private void resolveUnits(IProgressMonitor monitor) throws CoreException
   {
     try
     {
@@ -497,7 +495,7 @@ public class TargletContainer extends AbstractBundleContainer
             profile = newProfile;
           }
         }
-        catch (ProvisionException ex)
+        catch (CoreException ex)
         {
           if (profile == null)
           {
@@ -515,7 +513,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
     catch (Throwable t)
     {
-      TargletContainerManager.throwProvisionException(t);
+      Activator.coreException(t);
     }
   }
 
@@ -616,14 +614,14 @@ public class TargletContainer extends AbstractBundleContainer
       updateProfile(environmentProperties, nlProperty, digest, monitor);
       return Status.OK_STATUS;
     }
-    catch (ProvisionException ex)
+    catch (CoreException ex)
     {
       return ex.getStatus();
     }
   }
 
   private IProfile updateProfile(String environmentProperties, String nlProperty, String digest,
-      IProgressMonitor monitor) throws ProvisionException
+      IProgressMonitor monitor) throws CoreException
   {
     SubMonitor progress = SubMonitor.convert(monitor, 100).detectCancelation();
 
@@ -825,21 +823,15 @@ public class TargletContainer extends AbstractBundleContainer
 
       descriptor.commitUpdateTransaction(digest, projectLocations, progress.newChild());
       progress.childDone();
-
-      progress.done();
-      return profile;
-    }
-    catch (OperationCanceledException t)
-    {
-      descriptor.rollbackUpdateTransaction(t, monitor);
-      throw t;
     }
     catch (Throwable t)
     {
       descriptor.rollbackUpdateTransaction(t, monitor);
-      Activator.log(t);
-      throw new ProvisionException("Targlet container couldn't be updated", t);
+      Activator.coreException(t);
     }
+
+    progress.done();
+    return profile;
   }
 
   private Version getSourceIUVersion(IProfile profile, IProgressMonitor monitor)
@@ -1073,7 +1065,7 @@ public class TargletContainer extends AbstractBundleContainer
     }
     catch (Exception ex)
     {
-      TargletContainerManager.throwProvisionException(ex);
+      Activator.coreException(ex);
     }
     finally
     {
@@ -1142,7 +1134,7 @@ public class TargletContainer extends AbstractBundleContainer
         }
         catch (Exception ex)
         {
-          TargletContainerManager.throwProvisionException(ex);
+          Activator.coreException(ex);
         }
       }
     }, monitor);
@@ -1201,7 +1193,7 @@ public class TargletContainer extends AbstractBundleContainer
       return null;
     }
 
-    public static TargletContainer fromXML(String xml) throws ProvisionException
+    public static TargletContainer fromXML(String xml) throws CoreException
     {
       try
       {
@@ -1233,7 +1225,7 @@ public class TargletContainer extends AbstractBundleContainer
       }
       catch (Exception ex)
       {
-        TargletContainerManager.throwProvisionException(ex);
+        Activator.coreException(ex);
       }
 
       return null;

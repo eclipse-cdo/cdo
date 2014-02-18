@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
@@ -127,7 +128,7 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
   }
 
   IProfile startUpdateTransaction(String environmentProperties, String nlProperty, String digest,
-      IProgressMonitor monitor) throws ProvisionException
+      IProgressMonitor monitor) throws CoreException
   {
     if (transactionProfile != null)
     {
@@ -140,7 +141,7 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
   }
 
   void commitUpdateTransaction(String digest, Set<File> projectLocations, IProgressMonitor monitor)
-      throws ProvisionException
+      throws CoreException
   {
     if (transactionProfile == null)
     {
@@ -155,7 +156,7 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
     saveDescriptors(monitor);
   }
 
-  void rollbackUpdateTransaction(Throwable t, IProgressMonitor monitor) throws ProvisionException
+  void rollbackUpdateTransaction(Throwable t, IProgressMonitor monitor) throws CoreException
   {
     transactionProfile = null;
     updateProblem = new UpdateProblem(t);
@@ -168,7 +169,7 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
     updateProblem = null;
   }
 
-  private static void saveDescriptors(IProgressMonitor monitor) throws ProvisionException
+  private static void saveDescriptors(IProgressMonitor monitor) throws CoreException
   {
     TargletContainerManager manager = TargletContainerManager.getInstance();
     manager.saveDescriptors(monitor);

@@ -34,7 +34,6 @@ import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedFontRegistry;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
@@ -69,10 +68,6 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.progress.ProgressManager;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -444,12 +439,14 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
 
   public void log(IStatus status)
   {
-    log(toString(status), false);
+    String string = Activator.toString(status);
+    log(string, false);
   }
 
   public void log(Throwable t)
   {
-    log(toString(t), false);
+    String string = Activator.toString(t);
+    log(string, false);
   }
 
   public void task(final SetupTask setupTask)
@@ -619,9 +616,6 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
               {
                 Activator.log(ex);
                 dialog.log(ex);
-
-                // IStatus status = Activator.getStatus(ex);
-                // dialog.log(status);
               }
               finally
               {
@@ -678,110 +672,6 @@ public class ProgressDialog extends AbstractSetupDialog implements ProgressLog
     {
       Activator.log(ex);
       ErrorDialog.open(ex);
-    }
-  }
-
-  public static String toString(Throwable t)
-  {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    PrintStream printStream;
-
-    try
-    {
-      printStream = new PrintStream(out, false, "UTF-8");
-      t.printStackTrace(printStream);
-
-      for (Throwable throwable = t; throwable != null; throwable = throwable instanceof InvocationTargetException ? ((InvocationTargetException)throwable)
-          .getTargetException() : throwable.getCause())
-      {
-        if (throwable instanceof CoreException)
-        {
-          IStatus status = ((CoreException)throwable).getStatus();
-          if (status != null)
-          {
-            deeplyPrint(status, printStream, 0);
-          }
-
-          break;
-        }
-      }
-
-      printStream.close();
-      return new String(out.toByteArray(), "UTF-8");
-    }
-    catch (UnsupportedEncodingException ex)
-    {
-      return t.toString();
-    }
-  }
-
-  public static String toString(IStatus status)
-  {
-    ByteArrayOutputStream out = new ByteArrayOutputStream();
-    PrintStream printStream;
-
-    try
-    {
-      printStream = new PrintStream(out, false, "UTF-8");
-      deeplyPrint(status, printStream, 0);
-      printStream.close();
-      return new String(out.toByteArray(), "UTF-8");
-    }
-    catch (UnsupportedEncodingException ex)
-    {
-      return status.getMessage();
-    }
-  }
-
-  private static void deeplyPrint(IStatus status, PrintStream strm, int level)
-  {
-    appendLevelPrefix(strm, level);
-    String msg = status.getMessage();
-    strm.println(msg);
-    Throwable cause = status.getException();
-    if (cause != null)
-    {
-      strm.print("Caused by: ");
-      if (!(msg.equals(cause.getMessage()) || msg.equals(cause.toString())))
-      {
-        deeplyPrint(cause, strm, level);
-      }
-    }
-
-    if (status.isMultiStatus())
-    {
-      IStatus[] children = status.getChildren();
-      for (int i = 0; i < children.length; i++)
-      {
-        deeplyPrint(children[i], strm, level + 1);
-      }
-    }
-  }
-
-  private static void deeplyPrint(Throwable t, PrintStream strm, int level)
-  {
-    if (t instanceof CoreException)
-    {
-      deeplyPrint(t, strm, level);
-    }
-    else
-    {
-      appendLevelPrefix(strm, level);
-      strm.println(t.toString());
-      Throwable cause = t.getCause();
-      if (cause != null)
-      {
-        strm.print("Caused by: "); //$NON-NLS-1$
-        deeplyPrint(cause, strm, level);
-      }
-    }
-  }
-
-  private static void appendLevelPrefix(PrintStream strm, int level)
-  {
-    for (int idx = 0; idx < level; ++idx)
-    {
-      strm.print(' ');
     }
   }
 

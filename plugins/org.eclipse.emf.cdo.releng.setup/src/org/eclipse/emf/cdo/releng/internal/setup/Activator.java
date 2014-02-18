@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.dynamichelpers.IExtensionTracker;
 import org.eclipse.swt.widgets.Display;
@@ -28,8 +29,11 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Eike Stepper
@@ -144,14 +148,14 @@ public class Activator extends AbstractUIPlugin
     super.stop(context);
   }
 
+  private static void log(String message, int severity)
+  {
+    log(new Status(severity, PLUGIN_ID, message));
+  }
+
   public static void log(String message)
   {
     log(message, IStatus.INFO);
-  }
-
-  protected static void log(String message, int severity)
-  {
-    plugin.getLog().log(new Status(severity, PLUGIN_ID, message));
   }
 
   public static void log(IStatus status)
@@ -187,6 +191,200 @@ public class Activator extends AbstractUIPlugin
     }
 
     return new Status(IStatus.INFO, PLUGIN_ID, obj.toString(), null);
+  }
+
+  public static void coreException(Throwable t) throws CoreException
+  {
+    if (t instanceof CoreException)
+    {
+      CoreException ex = (CoreException)t;
+      IStatus status = ex.getStatus();
+      if (status != null && status.getSeverity() == IStatus.CANCEL)
+      {
+        throw new OperationCanceledException();
+      }
+
+      throw ex;
+    }
+
+    if (t instanceof OperationCanceledException)
+    {
+      throw (OperationCanceledException)t;
+    }
+
+    if (t instanceof Error)
+    {
+      throw (Error)t;
+    }
+
+    IStatus status = getStatus(t);
+    throw new CoreException(status);
+  }
+
+  public static String toString(Throwable t)
+  {
+    return print(t);
+  }
+
+  public static String toString(IStatus status)
+  {
+    return print(status);
+  }
+
+  private static String print(Object object)
+  {
+    try
+    {
+      ByteArrayOutputStream out = new ByteArrayOutputStream();
+      PrintStream printStream = new PrintStream(out, false, "UTF-8");
+
+      print(object, null, printStream, 0, 0);
+
+      printStream.close();
+      return new String(out.toByteArray(), "UTF-8");
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      return object.toString();
+    }
+  }
+
+  private static void print(Object object, StackTraceElement[] extra, PrintStream stream, int level, int more)
+  {
+    if (object instanceof IStatus)
+    {
+      IStatus status = (IStatus)object;
+      indent(stream, level);
+
+      int severity = status.getSeverity();
+      switch (severity)
+      {
+      case IStatus.OK:
+        stream.print("OK");
+        break;
+
+      case IStatus.ERROR:
+        stream.print("ERROR");
+        break;
+
+      case IStatus.WARNING:
+        stream.print("WARNING");
+        break;
+
+      case IStatus.INFO:
+        stream.print("INFO");
+        break;
+
+      case IStatus.CANCEL:
+        stream.print("CANCEL");
+        break;
+
+      default:
+        stream.print("severity=");
+        stream.print(severity);
+      }
+
+      stream.print(": ");
+      stream.print(status.getPlugin());
+
+      stream.print(" code=");
+      stream.print(status.getCode());
+
+      stream.print(' ');
+      stream.println(status.getMessage());
+
+      Throwable t = status.getException();
+      if (t != null)
+      {
+        print(t, null, stream, level, more);
+      }
+      else if (extra != null)
+      {
+        print(extra, null, stream, level, more);
+      }
+
+      for (IStatus child : status.getChildren())
+      {
+        print(child, null, stream, level + 1, more);
+      }
+    }
+    else if (object instanceof CoreException)
+    {
+      CoreException ex = (CoreException)object;
+
+      IStatus status = ex.getStatus();
+      if (status.getException() == null)
+      {
+        extra = ex.getStackTrace();
+      }
+
+      print(status, extra, stream, level, more);
+    }
+    else if (object instanceof Throwable)
+    {
+      Throwable t = (Throwable)object;
+
+      indent(stream, level);
+      if (more != 0)
+      {
+        stream.print("Caused by: ");
+      }
+
+      stream.print(t.getClass().getName());
+
+      String msg = t.getLocalizedMessage();
+      if (msg != null && msg.length() != 0)
+      {
+        stream.print(": ");
+        stream.print(msg);
+      }
+
+      stream.println();
+
+      print(t.getStackTrace(), null, stream, level, more);
+
+      Throwable cause = t.getCause();
+      if (cause != null)
+      {
+        print(cause, null, stream, level, more + 1);
+      }
+
+      if (t instanceof InvocationTargetException)
+      {
+        Throwable targetException = ((InvocationTargetException)t).getTargetException();
+        print(targetException, null, stream, level + 1, more);
+      }
+    }
+    else if (object instanceof StackTraceElement[])
+    {
+      StackTraceElement[] stackTrace = (StackTraceElement[])object;
+      for (int i = 0; i < stackTrace.length - more; i++)
+      {
+        indent(stream, level + 1);
+        stream.print("at ");
+        stream.println(stackTrace[i].toString());
+      }
+
+      if (more != 0)
+      {
+        indent(stream, level + 1);
+        stream.print("... ");
+        stream.print(more);
+        stream.println(" more");
+      }
+    }
+    else if (extra != null)
+    {
+      print(extra, null, stream, level, more);
+    }
+  }
+
+  private static void indent(PrintStream stream, int level)
+  {
+    for (int i = 0; i < level; ++i)
+    {
+      stream.print("  ");
+    }
   }
 
   public static BundleContext getBundleContext()

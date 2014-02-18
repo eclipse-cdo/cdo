@@ -13,6 +13,13 @@ package org.eclipse.emf.cdo.releng.version.ui.quickfixes;
 import org.eclipse.emf.cdo.releng.version.ui.Activator;
 
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IWorkspaceRunnable;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageRegistry;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.views.markers.WorkbenchMarkerResolution;
@@ -82,6 +89,34 @@ public abstract class AbstractResolution extends WorkbenchMarkerResolution
   }
 
   protected abstract boolean isApplicable(IMarker marker) throws Exception;
+
+  @Override
+  public void run(final IMarker[] markers, IProgressMonitor monitor)
+  {
+    new Job("Applying Fixes")
+    {
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        try
+        {
+          ResourcesPlugin.getWorkspace().run(new IWorkspaceRunnable()
+          {
+            public void run(IProgressMonitor monitor) throws CoreException
+            {
+              AbstractResolution.super.run(markers, monitor);
+            }
+          }, monitor);
+
+          return Status.OK_STATUS;
+        }
+        catch (CoreException ex)
+        {
+          return ex.getStatus();
+        }
+      }
+    }.schedule();
+  }
 
   public final void run(IMarker marker)
   {

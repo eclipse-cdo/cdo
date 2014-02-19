@@ -42,7 +42,7 @@
     </setupTasks>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.releng.bugzilla.version" value="4.3" stringSubstitution="true"/>
     <setupTasks xsi:type="setup:ContextVariableTask" name="cdo.baseline.version" value="4.2" stringSubstitution="true"/>
-    <setupTasks xsi:type="setup:ApiBaselineTask" version="${cdo.baseline.version}" containerFolder="${setup.install.dir/cdo/.baselines}" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-${cdo.baseline.version}-baseline.zip/download"/>
+    <setupTasks xsi:type="setup:ApiBaselineTask" disabled="true" version="${cdo.baseline.version}" containerFolder="${setup.install.dir/cdo/.baselines}" zipLocation="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-${cdo.baseline.version}-baseline.zip/download"/>
     <setupTasks xsi:type="setup:GitCloneTask" location="${git.clone}" remoteURI="ssh://git.eclipse.org:29418/cdo/cdo" checkoutBranch="master"/>
     <setupTasks xsi:type="setup:TargletTask" name="CDO Releng">
       <roots id="org.eclipse.emf.cdo.releng.all.feature.group"/>

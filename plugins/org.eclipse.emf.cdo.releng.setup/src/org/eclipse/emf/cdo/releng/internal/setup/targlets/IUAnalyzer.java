@@ -41,6 +41,7 @@ import org.w3c.dom.Element;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -99,9 +100,14 @@ public class IUAnalyzer extends BasicProjectAnalyzer<IInstallableUnit>
     protected IInstallableUnit visitComponentDefinition(ComponentDefinition componentDefinition,
         IProgressMonitor monitor) throws Exception
     {
+      String id = componentDefinition.getID();
+      Version version = componentDefinition.getVersion();
+
       InstallableUnitDescription description = new InstallableUnitDescription();
-      description.setId(componentDefinition.getID());
-      description.setVersion(componentDefinition.getVersion());
+      description.setId(id);
+      description.setVersion(version);
+      description.addProvidedCapabilities(Collections.singleton(MetadataFactory.createProvidedCapability(
+          IInstallableUnit.NAMESPACE_IU_ID, id, version)));
 
       IInstallableUnit iu = MetadataFactory.createInstallableUnit(description);
       visitComponentExtension(componentDefinition, iu, monitor);

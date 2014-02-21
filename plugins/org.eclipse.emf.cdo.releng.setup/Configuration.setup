@@ -44,7 +44,7 @@
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/features/org.eclipse.emf.sdk-feature/Core.setup#/" name="EMF" label="EMF Core SDK"/>
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/features/org.eclipse.emf.rap.sdk-feature/RAP.setup#/" name="EMF.RAP" label="EMF RAP SDK"/>
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/features/org.eclipse.emf.gwt.sdk-feature/GWT.setup#/" name="EMF.GWT" label="EMF GWT SDK"/>
-  <projects href="http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git/plain/releng/org.eclipse.emf.ecp.releng/ecp.setup?h=develop#/" name="ECP" label="EMF Client Platform"/>
+  <projects href="http://git.eclipse.org/c/emfclient/org.eclipse.emf.ecp.core.git/plain/releng/org.eclipse.emf.ecp.releng/ecp.setup#/" name="ECP" label="EMF Client Platform"/>
   <projects href="http://git.eclipse.org/c/emfcompare/org.eclipse.emf.compare.git/plain/org.eclipse.emf.compare-parent/emf.compare.setup#/" name="EMF.Compare" label="EMF Compare"/>
   <projects href="setups/mylyn.tasks.setup#/" name="Mylyn.Tasks" label="Mylyn Tasks"/>
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/features/org.eclipse.emf.ecore.xcore.sdk-feature/Xcore.setup#/" name="Xcore" label="Xcore (with XSD, Xtext, Xtend, and Xbase)"/>

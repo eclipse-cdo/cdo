@@ -89,7 +89,7 @@ public class WorkingSetsPreferencePage extends PreferencePage implements IWorkbe
     super.contributeButtons(parent);
 
     GridLayout gridLayout = (GridLayout)parent.getLayout();
-    gridLayout.numColumns += 1;
+    gridLayout.numColumns += 2;
 
     Button editButton = new Button(parent, SWT.PUSH);
     editButton.setText("Edit...");
@@ -123,6 +123,29 @@ public class WorkingSetsPreferencePage extends PreferencePage implements IWorkbe
       }
     });
 
+    Button applyButton = new Button(parent, SWT.PUSH);
+    applyButton.setText("Apply");
+
+    Dialog.applyDialogFont(applyButton);
+    minButtonSize = applyButton.computeSize(SWT.DEFAULT, SWT.DEFAULT, true);
+    data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
+    data.widthHint = Math.max(widthHint, minButtonSize.x);
+
+    applyButton.setLayoutData(data);
+    applyButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        performApply();
+      }
+    });
+  }
+
+  @Override
+  protected void performApply()
+  {
+    WorkingSetManager.INSTANCE.apply();
   }
 
   protected void openWorkingSetsEditor()

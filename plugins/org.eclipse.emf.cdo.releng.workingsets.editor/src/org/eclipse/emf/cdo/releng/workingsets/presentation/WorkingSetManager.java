@@ -65,45 +65,15 @@ public class WorkingSetManager
 
   private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
 
+  public static final WorkingSetManager INSTANCE = new WorkingSetManager();
+
   private final IEclipsePreferences.IPreferenceChangeListener preferencesListener = new IEclipsePreferences.IPreferenceChangeListener()
   {
     public void preferenceChange(PreferenceChangeEvent event)
     {
       if (WorkingSetsUtil.WORKING_SET_GROUP_PREFERENCE_KEY.equals(event.getKey()))
       {
-        WorkingSetGroup oldWorkingSetGroup = workingSetGroup;
-
-        // Compute the working sets for the new working group.
-        workingSetGroup = WorkingSetsUtil.getWorkingSetGroup();
-
-        final EMap<String, Set<IAdaptable>> workingSets = new BasicEMap<String, Set<IAdaptable>>();
-
-        // Update the map to include null (to cause an delete) for any old working set not present in the new ones
-        for (WorkingSet workingSet : oldWorkingSetGroup.getWorkingSets())
-        {
-          String name = workingSet.getName();
-          workingSets.put(name, null);
-        }
-
-        // Update the map to include empty sets (to cause an add) for any new working set not already present.
-        for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
-        {
-          String name = workingSet.getName();
-          workingSets.put(name, new LinkedHashSet<IAdaptable>());
-        }
-
-        // Update the working sets for all the projects in the workspace and apply the result to the real working sets.
-        if (!workingSets.isEmpty())
-        {
-          Display.getDefault().asyncExec(new Runnable()
-          {
-            public void run()
-            {
-              updateProjects(workingSets);
-              apply(workingSets);
-            }
-          });
-        }
+        apply();
       }
     }
   };
@@ -520,5 +490,42 @@ public class WorkingSetManager
       }
     }
     return result;
+  }
+
+  public void apply()
+  {
+    WorkingSetGroup oldWorkingSetGroup = workingSetGroup;
+
+    // Compute the working sets for the new working group.
+    workingSetGroup = WorkingSetsUtil.getWorkingSetGroup();
+
+    final EMap<String, Set<IAdaptable>> workingSets = new BasicEMap<String, Set<IAdaptable>>();
+
+    // Update the map to include null (to cause an delete) for any old working set not present in the new ones
+    for (WorkingSet workingSet : oldWorkingSetGroup.getWorkingSets())
+    {
+      String name = workingSet.getName();
+      workingSets.put(name, null);
+    }
+
+    // Update the map to include empty sets (to cause an add) for any new working set not already present.
+    for (WorkingSet workingSet : workingSetGroup.getWorkingSets())
+    {
+      String name = workingSet.getName();
+      workingSets.put(name, new LinkedHashSet<IAdaptable>());
+    }
+
+    // Update the working sets for all the projects in the workspace and apply the result to the real working sets.
+    if (!workingSets.isEmpty())
+    {
+      Display.getDefault().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          updateProjects(workingSets);
+          apply(workingSets);
+        }
+      });
+    }
   }
 }

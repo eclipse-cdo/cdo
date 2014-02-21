@@ -86,8 +86,6 @@ public final class WorkingSetsEditorPlugin extends EMFPlugin
    */
   public static class Implementation extends EclipseUIPlugin
   {
-    private WorkingSetManager workingSetManager;
-
     /**
      * Creates an instance.
      * <!-- begin-user-doc -->
@@ -108,7 +106,7 @@ public final class WorkingSetsEditorPlugin extends EMFPlugin
     {
       super.start(context);
 
-      workingSetManager = new WorkingSetManager();
+      WorkingSetManager.INSTANCE.getClass();
     }
 
     @Override
@@ -116,7 +114,7 @@ public final class WorkingSetsEditorPlugin extends EMFPlugin
     {
       super.stop(context);
 
-      workingSetManager.dispose();
+      WorkingSetManager.INSTANCE.dispose();
     }
   }
 }

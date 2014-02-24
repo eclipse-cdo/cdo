@@ -35,9 +35,7 @@ import org.eclipse.equinox.internal.p2.engine.phases.Install;
 import org.eclipse.equinox.internal.p2.engine.phases.Property;
 import org.eclipse.equinox.internal.p2.engine.phases.Uninstall;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
-import org.eclipse.equinox.p2.core.IProvisioningAgentProvider;
 import org.eclipse.equinox.p2.core.ProvisionException;
-import org.eclipse.equinox.p2.engine.IEngine;
 import org.eclipse.equinox.p2.engine.IPhaseSet;
 import org.eclipse.equinox.p2.engine.IProfile;
 import org.eclipse.equinox.p2.engine.IProfileRegistry;
@@ -46,7 +44,6 @@ import org.eclipse.equinox.p2.engine.ProvisioningContext;
 import org.eclipse.equinox.p2.engine.spi.ProvisioningAction;
 import org.eclipse.equinox.p2.metadata.IArtifactKey;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
-import org.eclipse.equinox.p2.planner.IPlanner;
 import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepository;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
@@ -56,10 +53,6 @@ import org.eclipse.pde.core.target.ITargetDefinition;
 import org.eclipse.pde.core.target.ITargetHandle;
 import org.eclipse.pde.core.target.ITargetLocation;
 import org.eclipse.pde.core.target.ITargetPlatformService;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -82,19 +75,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public final class TargletContainerManager
+public final class TargletContainerManager extends P2
 {
-  public static final File AGENT_FOLDER = new File(SetupUtil.getProperty("user.home"), ".p2"); //$NON-NLS-1$
 
   public static final File POOL_FOLDER = new File(AGENT_FOLDER, "pool"); //$NON-NLS-1$
-
-  private static String AGENT_FILTER = "(locationURI=" + AGENT_FOLDER.toURI() + ")"; //$NON-NLS-1$
-
-  private static final String PROP_TARGLET_CONTAINER_WORKSPACE = "targlet.container.workspace"; //$NON-NLS-1$
-
-  private static final String PROP_TARGLET_CONTAINER_ID = "targlet.container.id"; //$NON-NLS-1$
-
-  private static final String PROP_TARGLET_CONTAINER_DIGEST = "targlet.container.digest"; //$NON-NLS-1$
 
   private static final String WORKSPACE_LOCATION = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
 
@@ -111,14 +95,6 @@ public final class TargletContainerManager
 
   private Throwable initializationProblem;
 
-  private IProvisioningAgent agent;
-
-  private IProfileRegistry profileRegistry;
-
-  private IPlanner planner;
-
-  private IEngine engine;
-
   private Map<String, TargletContainerDescriptor> descriptors;
 
   private static final String NATIVE_ARTIFACTS = "nativeArtifacts"; //$NON-NLS-1$
@@ -129,64 +105,6 @@ public final class TargletContainerManager
 
   private TargletContainerManager() throws CoreException
   {
-    BundleContext context = Activator.getBundleContext();
-
-    try
-    {
-      Collection<ServiceReference<IProvisioningAgent>> ref = null;
-
-      try
-      {
-        ref = context.getServiceReferences(IProvisioningAgent.class, AGENT_FILTER);
-      }
-      catch (InvalidSyntaxException ex)
-      {
-        // Can't happen because we write the filter ourselves
-      }
-
-      if (ref == null || ref.size() == 0)
-      {
-        throw new ProvisionException("Provisioning agent could not be loaded for " + AGENT_FOLDER);
-      }
-
-      agent = context.getService(ref.iterator().next());
-      context.ungetService(ref.iterator().next());
-    }
-    catch (Exception ex)
-    {
-      AGENT_FOLDER.mkdirs();
-      ServiceReference<IProvisioningAgentProvider> providerRef = context
-          .getServiceReference(IProvisioningAgentProvider.class);
-
-      try
-      {
-        IProvisioningAgentProvider provider = context.getService(providerRef);
-        agent = provider.createAgent(AGENT_FOLDER.toURI());
-      }
-      finally
-      {
-        context.ungetService(providerRef);
-      }
-    }
-
-    profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.SERVICE_NAME);
-    if (profileRegistry == null)
-    {
-      throw new ProvisionException("Profile registry could not be loaded");
-    }
-
-    planner = (IPlanner)agent.getService(IPlanner.SERVICE_NAME);
-    if (planner == null)
-    {
-      throw new ProvisionException("Planner could not be loaded");
-    }
-
-    engine = (IEngine)agent.getService(IEngine.SERVICE_NAME);
-    if (engine == null)
-    {
-      throw new ProvisionException("Engine could not be loaded");
-    }
-
     new Job("Initialize Targlet Containers")
     {
       @Override
@@ -230,6 +148,7 @@ public final class TargletContainerManager
     Set<String> workingDigests = new HashSet<String>();
     addWorkingDigests(workingDigests, descriptors);
 
+    IProfileRegistry profileRegistry = getProfileRegistry();
     for (IProfile profile : profileRegistry.getProfiles())
     {
       String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
@@ -284,11 +203,6 @@ public final class TargletContainerManager
     }
   }
 
-  public IProvisioningAgent getAgent()
-  {
-    return agent;
-  }
-
   public TargletContainerDescriptor getDescriptor(String id, IProgressMonitor monitor) throws CoreException
   {
     waitUntilInitialized(monitor);
@@ -309,6 +223,7 @@ public final class TargletContainerManager
     waitUntilInitialized(monitor);
 
     String profileID = getProfileID(digest);
+    IProfileRegistry profileRegistry = getProfileRegistry();
     return profileRegistry.getProfile(profileID);
   }
 
@@ -318,6 +233,7 @@ public final class TargletContainerManager
     waitUntilInitialized(monitor);
 
     String profileID = getProfileID(digest);
+    IProfileRegistry profileRegistry = getProfileRegistry();
     IProfile profile = profileRegistry.getProfile(profileID);
     if (profile == null)
     {
@@ -338,13 +254,13 @@ public final class TargletContainerManager
 
   public IProfileChangeRequest createProfileChangeRequest(IProfile profile)
   {
-    return planner.createChangeRequest(profile);
+    return getPlanner().createChangeRequest(profile);
   }
 
   public void planAndInstall(IProfileChangeRequest request, ProvisioningContext context, IProgressMonitor monitor)
       throws CoreException
   {
-    IProvisioningPlan plan = planner.getProvisioningPlan(request, context, monitor);
+    IProvisioningPlan plan = getPlanner().getProvisioningPlan(request, context, monitor);
     if (!plan.getStatus().isOK())
     {
       throw new ProvisionException(plan.getStatus());
@@ -353,25 +269,13 @@ public final class TargletContainerManager
     IPhaseSet phaseSet = createPhaseSet();
 
     @SuppressWarnings("restriction")
-    IStatus status = org.eclipse.equinox.internal.provisional.p2.director.PlanExecutionHelper.executePlan(plan, engine,
-        phaseSet, context, monitor);
+    IStatus status = org.eclipse.equinox.internal.provisional.p2.director.PlanExecutionHelper.executePlan(plan,
+        getEngine(), phaseSet, context, monitor);
 
     if (!status.isOK())
     {
       throw new ProvisionException(status);
     }
-  }
-
-  public IArtifactRepositoryManager getArtifactRepositoryManager() throws CoreException
-  {
-    IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent
-        .getService(IArtifactRepositoryManager.SERVICE_NAME);
-    if (manager == null)
-    {
-      throw new ProvisionException("Artifact respository manager could not be loaded");
-    }
-
-    return manager;
   }
 
   public IFileArtifactRepository getBundlePool() throws CoreException
@@ -422,6 +326,7 @@ public final class TargletContainerManager
       IOUtil.close(out);
     }
 
+    IProfileRegistry profileRegistry = getProfileRegistry();
     for (IProfile profile : profileRegistry.getProfiles())
     {
       String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
@@ -445,13 +350,6 @@ public final class TargletContainerManager
         removeProfile(profile);
       }
     }
-  }
-
-  private void removeProfile(IProfile profile)
-  {
-    String profileID = profile.getProfileId();
-    profileRegistry.removeProfile(profileID);
-    Activator.log("Profile " + profileID + " removed");
   }
 
   private static Set<String> getContainerIDs(IProgressMonitor monitor)
@@ -634,7 +532,7 @@ public final class TargletContainerManager
         List<IArtifactRequest> artifactRequests = (List<IArtifactRequest>)parameters.get(NATIVE_ARTIFACTS);
 
         IArtifactRepository artifactRepository = getInstance().getBundlePool();
-        IArtifactRepositoryManager manager = getInstance().getArtifactRepositoryManager();
+        IArtifactRepositoryManager manager = getArtifactRepositoryManager();
 
         for (Iterator<?> it = toDownload.iterator(); it.hasNext();)
         {

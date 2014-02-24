@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
+import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil;
 import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
@@ -682,7 +683,7 @@ public class TargletContainer extends AbstractBundleContainer
         }
       }
 
-      IProvisioningAgent agent = manager.getAgent();
+      IProvisioningAgent agent = P2.getAgent();
       IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager)agent
           .getService(IMetadataRepositoryManager.SERVICE_NAME);
       IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager)agent
@@ -782,6 +783,7 @@ public class TargletContainer extends AbstractBundleContainer
       progress.childDone();
 
       IProfileChangeRequest request = manager.createProfileChangeRequest(profile);
+      UpdateUtil.recordRepos(profile, request, uris);
       request.removeAll(installedIUs.toUnmodifiableSet());
 
       IQueryable<IInstallableUnit> metadata = context.getMetadata(progress.newChild());

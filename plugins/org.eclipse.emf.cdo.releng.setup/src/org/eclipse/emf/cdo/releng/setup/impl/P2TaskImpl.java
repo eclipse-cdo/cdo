@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.LicenseDialog;
+import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
 import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.P2Repository;
@@ -681,6 +682,13 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
         IStatus status = installOperation.resolveModal(monitor);
         if (status.getSeverity() != IStatus.ERROR && status.getSeverity() != IStatus.CANCEL)
         {
+          IProfileRegistry registry = (IProfileRegistry)session.getProvisioningAgent().getService(
+              IProfileRegistry.SERVICE_NAME);
+          IProfile profile = registry.getProfile(profileId);
+
+          IProfileChangeRequest request = installOperation.getProfileChangeRequest();
+          UpdateUtil.recordRepos(profile, request, repos);
+
           IProvisioningPlan provisioningPlan = installOperation.getProvisioningPlan();
           processLicenses(context, provisioningPlan, monitor);
 
@@ -929,9 +937,11 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     new File(destination).mkdirs();
 
     String repositories = makeList(context, p2Repositories, SetupPackage.Literals.P2_REPOSITORY__URL);
-    for (String repository : repositories.split(","))
+    final List<java.net.URI> repos = new ArrayList<java.net.URI>();
+    for (String uri : repositories.split(","))
     {
-      context.log("Using repository " + repository);
+      context.log("Using repository " + uri);
+      repos.add(new java.net.URI(uri));
     }
 
     context.log("Executing p2 director...");
@@ -1070,6 +1080,8 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
 
           public IProfile addProfile(String id, Map<String, String> properties) throws ProvisionException
           {
+            UpdateUtil.recordRepos(properties, repos);
+
             context.getOS().modifyProfileProperties(properties);
 
             // // Put the original registry back because it will be cast to SimpleProfileRegistry later on

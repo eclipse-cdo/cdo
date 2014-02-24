@@ -682,6 +682,16 @@ public class InstallerDialog extends AbstractSetupDialog
           }
         });
 
+    createToolItem(toolBar, "icons/install_pool.gif", "Profiles and bundle pools").addSelectionListener(
+        new SelectionAdapter()
+        {
+          @Override
+          public void widgetSelected(SelectionEvent e)
+          {
+            BundlePoolComposite.openDialog(viewer.getControl().getShell());
+          }
+        });
+
     updateToolItem = createToolItem(toolBar, "icons/install_update0.gif", "Update");
     updateToolItem.setDisabledImage(getDefaultImage("icons/install_searching0.gif"));
     updateToolItem.addSelectionListener(new SelectionAdapter()
@@ -701,7 +711,8 @@ public class InstallerDialog extends AbstractSetupDialog
   {
     try
     {
-      if (install())
+      boolean result = install();
+      if (result)
       {
         super.okPressed();
       }

@@ -33,6 +33,7 @@ import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.operations.ProvisioningJob;
 import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.UpdateOperation;
+import org.eclipse.equinox.p2.planner.IProfileChangeRequest;
 import org.eclipse.equinox.p2.query.IQueryResult;
 import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
@@ -43,10 +44,16 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -56,6 +63,8 @@ public final class UpdateUtil extends Plugin
 {
   public static final String SELF_HOSTING_PROFILE = "SelfHostingProfile";
 
+  public static final String PROP_REPO_LIST = "setup.repo.list";
+
   public static final IStatus UPDATE_FOUND_STATUS = new Status(IStatus.OK, Activator.PLUGIN_ID, "Updates found");
 
   public static final String PRODUCT_ID = "org.eclipse.emf.cdo.releng.setup.installer.product";
@@ -64,6 +73,52 @@ public final class UpdateUtil extends Plugin
 
   private UpdateUtil()
   {
+  }
+
+  public static void recordRepos(IProfile profile, IProfileChangeRequest request, List<java.net.URI> uris)
+  {
+    Set<URI> set = new LinkedHashSet<URI>(uris);
+    String list = profile.getProperty(PROP_REPO_LIST);
+
+    StringTokenizer tokenizer = new StringTokenizer(list, ",");
+    while (tokenizer.hasMoreTokens())
+    {
+      String uri = tokenizer.nextToken();
+
+      try
+      {
+        set.add(new URI(uri));
+      }
+      catch (URISyntaxException ex)
+      {
+        Activator.log(ex);
+      }
+    }
+
+    String repos = buildRepoList(set);
+    request.setProfileProperty(PROP_REPO_LIST, repos);
+  }
+
+  public static void recordRepos(Map<String, String> properties, List<java.net.URI> uris)
+  {
+    String repos = buildRepoList(uris);
+    properties.put(PROP_REPO_LIST, repos);
+  }
+
+  private static String buildRepoList(Collection<URI> uris)
+  {
+    StringBuilder builder = new StringBuilder();
+    for (URI uri : uris)
+    {
+      if (builder.length() != 0)
+      {
+        builder.append(',');
+      }
+
+      builder.append(uri);
+    }
+
+    return builder.toString();
   }
 
   public static boolean update(final Shell shell, final String[] iuPrefixes, final boolean needsEarlyConfirmation,
@@ -323,7 +378,7 @@ public final class UpdateUtil extends Plugin
 
     try
     {
-      java.net.URI uri = new java.net.URI(location);
+      URI uri = new URI(location);
 
       if (metadata)
       {
@@ -340,7 +395,7 @@ public final class UpdateUtil extends Plugin
     }
   }
 
-  private static void addMetadataRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
+  private static void addMetadataRepository(IProvisioningAgent agent, URI location, IProgressMonitor monitor)
       throws CoreException
   {
     IMetadataRepositoryManager manager = (IMetadataRepositoryManager)agent
@@ -353,7 +408,7 @@ public final class UpdateUtil extends Plugin
     manager.loadRepository(location, monitor);
   }
 
-  private static void addArtifactRepository(IProvisioningAgent agent, java.net.URI location, IProgressMonitor monitor)
+  private static void addArtifactRepository(IProvisioningAgent agent, URI location, IProgressMonitor monitor)
       throws CoreException
   {
     IArtifactRepositoryManager manager = (IArtifactRepositoryManager)agent

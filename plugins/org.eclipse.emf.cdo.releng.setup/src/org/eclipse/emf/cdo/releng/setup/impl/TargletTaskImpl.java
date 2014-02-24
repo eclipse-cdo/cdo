@@ -539,7 +539,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       return repositoryLists != null && !repositoryLists.isEmpty();
     case SetupPackage.TARGLET_TASK__ACTIVE_REPOSITORY_LIST:
       return ACTIVE_REPOSITORY_LIST_EDEFAULT == null ? activeRepositoryList != null : !ACTIVE_REPOSITORY_LIST_EDEFAULT
-      .equals(activeRepositoryList);
+          .equals(activeRepositoryList);
     case SetupPackage.TARGLET_TASK__ACTIVE_P2_REPOSITORIES:
       return !getActiveP2Repositories().isEmpty();
     case SetupPackage.TARGLET_TASK__INCLUDE_SOURCES:

@@ -507,7 +507,7 @@ public abstract class TargletDataImpl extends MinimalEObjectImpl.Container imple
       return repositoryLists != null && !repositoryLists.isEmpty();
     case SetupPackage.TARGLET_DATA__ACTIVE_REPOSITORY_LIST:
       return ACTIVE_REPOSITORY_LIST_EDEFAULT == null ? activeRepositoryList != null : !ACTIVE_REPOSITORY_LIST_EDEFAULT
-      .equals(activeRepositoryList);
+          .equals(activeRepositoryList);
     case SetupPackage.TARGLET_DATA__ACTIVE_P2_REPOSITORIES:
       return !getActiveP2Repositories().isEmpty();
     case SetupPackage.TARGLET_DATA__INCLUDE_SOURCES:

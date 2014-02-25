@@ -15,7 +15,9 @@ import org.eclipse.net4j.util.io.IOUtil;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -27,11 +29,12 @@ public class BundlePoolDamager
     Random random = new Random(System.currentTimeMillis());
 
     File[] files = new File("C:/Users/Stepper/.p2/pool2/plugins").listFiles();
-    for (int i = 0; i < 10; i++)
+    Set<File> damaged = new HashSet<File>();
+    while (damaged.size() < 10)
     {
       File file = files[random.nextInt(files.length)];
 
-      if (file.getName().endsWith(".jar"))
+      if (file.getName().endsWith(".jar") && damaged.add(file))
       {
         System.out.println("Damaging " + file);
 

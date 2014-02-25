@@ -688,7 +688,7 @@ public class InstallerDialog extends AbstractSetupDialog
           @Override
           public void widgetSelected(SelectionEvent e)
           {
-            BundlePoolComposite.openDialog(viewer.getControl().getShell());
+            BundlePoolDialog.open(viewer.getControl().getShell());
           }
         });
 

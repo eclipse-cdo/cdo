@@ -10,36 +10,16 @@
  */
 package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
-import org.eclipse.emf.cdo.releng.internal.setup.Activator;
-import org.eclipse.emf.cdo.releng.internal.setup.targlets.P2;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolComposite.Agent.AgentListener;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolComposite.Agent.BundlePool;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolComposite.Agent.BundlePool.Artifact;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolComposite.Agent.BundlePool.Profile;
-import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Artifact;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.BundlePool;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Listener;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Profile;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.SubMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.equinox.p2.core.ProvisionException;
-import org.eclipse.equinox.p2.engine.IProfile;
-import org.eclipse.equinox.p2.engine.IProfileRegistry;
-import org.eclipse.equinox.p2.metadata.IArtifactKey;
-import org.eclipse.equinox.p2.metadata.IInstallableUnit;
-import org.eclipse.equinox.p2.query.QueryUtil;
-import org.eclipse.equinox.p2.repository.IRepositoryManager;
-import org.eclipse.equinox.p2.repository.artifact.ArtifactKeyQuery;
-import org.eclipse.equinox.p2.repository.artifact.IArtifactDescriptor;
-import org.eclipse.equinox.p2.repository.artifact.IArtifactRepository;
-import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
-import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -78,26 +58,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.StringTokenizer;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
 
 /**
  * @author Eike Stepper
@@ -108,77 +75,150 @@ public class BundlePoolComposite extends Composite
 
   private final Set<ISelectionProvider> changingSelection = new HashSet<ISelectionProvider>();
 
-  private TableViewer bundlePoolsViewer;
+  private TableViewer bundlePoolViewer;
 
-  private TableViewer unusedArtifactsViewer;
+  private TableViewer artifactViewer;
 
-  private TableViewer damagedArchivesViewer;
+  private TableViewer profileViewer;
 
-  private TableViewer profilesViewer;
+  private Button selectAllArtifactsButton;
 
-  private Button deleteUnusedArtifactButton;
+  private Button selectUnusedArtifactsButton;
 
-  private Button deleteAllUnusedArtifactsButton;
+  private Button selectDamagedArchivesButton;
 
-  private Button repairDamagedArchiveButton;
+  private Button repairArchivesButton;
 
-  private Button repairAllDamagedArchivesButton;
+  private Button deleteArtifactsButton;
 
   // private Button deleteProfileButton;
 
-  private Agent agent;
+  private BundlePoolAnalyzer analyzer;
+
+  private BundlePool currentBundlePool;
 
   public BundlePoolComposite(final Composite parent, int style)
   {
     super(parent, style);
-    final Display display = getDisplay();
-
     GridLayout gridLayout = new GridLayout(1, false);
     gridLayout.marginWidth = 10;
     gridLayout.marginHeight = 10;
     setLayout(gridLayout);
 
-    Composite composite_3 = new Composite(this, SWT.NONE);
-    GridLayout gl_composite_3 = new GridLayout(1, false);
-    gl_composite_3.marginWidth = 0;
-    gl_composite_3.marginHeight = 0;
-    composite_3.setLayout(gl_composite_3);
-    composite_3.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+    createBundlePoolViewer();
 
-    bundlePoolsViewer = new TableViewer(composite_3, TABLE_STYLE);
-    Table bundlePoolsTable = bundlePoolsViewer.getTable();
-    bundlePoolsTable.setHeaderVisible(true);
-    GridData gd_bundlePoolsTable = new GridData(SWT.FILL, SWT.FILL, true, false);
-    gd_bundlePoolsTable.heightHint = 84;
-    bundlePoolsTable.setLayoutData(gd_bundlePoolsTable);
+    SashForm verticalSashForm = new SashForm(this, SWT.VERTICAL);
+    verticalSashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-    TableColumn bundlePoolColumn = new TableViewerColumn(bundlePoolsViewer, SWT.NONE).getColumn();
+    createArtifactViewer(verticalSashForm);
+    createProfileViewer(verticalSashForm);
+
+    verticalSashForm.setWeights(new int[] { 2, 1 });
+
+    addDisposeListener(new DisposeListener()
+    {
+      public void widgetDisposed(DisposeEvent e)
+      {
+        if (analyzer != null)
+        {
+          analyzer.dispose();
+        }
+      }
+    });
+
+    final Shell shell = getShell();
+    final Cursor oldCursor = shell.getCursor();
+    shell.setCursor(new Cursor(getDisplay(), SWT.CURSOR_WAIT));
+    setEnabled(false);
+
+    getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        initAgent();
+        shell.setCursor(oldCursor);
+        setEnabled(true);
+
+        bundlePoolViewer.setInput(analyzer);
+
+        getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            Collection<BundlePool> bundlePools = analyzer.getBundlePools().values();
+            if (!bundlePools.isEmpty())
+            {
+              bundlePoolViewer.setSelection(new StructuredSelection(bundlePools.iterator().next()));
+            }
+          }
+        });
+      }
+    });
+  }
+
+  private void createBundlePoolViewer()
+  {
+    Composite bundlePoolComposite = new Composite(this, SWT.NONE);
+    GridLayout bundlePoolLayout = new GridLayout(1, false);
+    bundlePoolLayout.marginWidth = 0;
+    bundlePoolLayout.marginHeight = 0;
+    bundlePoolComposite.setLayout(bundlePoolLayout);
+    bundlePoolComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
+
+    bundlePoolViewer = new TableViewer(bundlePoolComposite, TABLE_STYLE);
+    Table bundlePoolTable = bundlePoolViewer.getTable();
+    bundlePoolTable.setHeaderVisible(true);
+    GridData bundlePoolData = new GridData(SWT.FILL, SWT.FILL, true, false);
+    bundlePoolData.heightHint = 84;
+    bundlePoolTable.setLayoutData(bundlePoolData);
+
+    TableColumn bundlePoolColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
     bundlePoolColumn.setText("Bundle Pool");
-    bundlePoolColumn.setWidth(411);
+    bundlePoolColumn.setWidth(305);
     bundlePoolColumn.setResizable(false);
 
-    TableColumn bundlePoolArtifactsColumn = new TableViewerColumn(bundlePoolsViewer, SWT.NONE).getColumn();
-    bundlePoolArtifactsColumn.setText("Artifacts");
-    bundlePoolArtifactsColumn.setAlignment(SWT.RIGHT);
-    bundlePoolArtifactsColumn.setWidth(68);
+    TableColumn artifactsColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
+    artifactsColumn.setText("Artifacts");
+    artifactsColumn.setAlignment(SWT.RIGHT);
+    artifactsColumn.setWidth(63);
 
-    TableColumn bundlePoolUnusedArtifactsColumn = new TableViewerColumn(bundlePoolsViewer, SWT.NONE).getColumn();
-    bundlePoolUnusedArtifactsColumn.setText("Unused Artifacts");
-    bundlePoolUnusedArtifactsColumn.setAlignment(SWT.RIGHT);
-    bundlePoolUnusedArtifactsColumn.setWidth(108);
+    TableColumn unusedArtifactsColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
+    unusedArtifactsColumn.setText("Unused Artifacts");
+    unusedArtifactsColumn.setAlignment(SWT.RIGHT);
+    unusedArtifactsColumn.setWidth(105);
 
-    TableColumn bundlePoolDamagedArchivesColumn = new TableViewerColumn(bundlePoolsViewer, SWT.NONE).getColumn();
-    bundlePoolDamagedArchivesColumn.setText("Damaged Archives");
-    bundlePoolDamagedArchivesColumn.setAlignment(SWT.RIGHT);
-    bundlePoolDamagedArchivesColumn.setWidth(114);
+    TableColumn damagedArchivesColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
+    damagedArchivesColumn.setText("Damaged Archives");
+    damagedArchivesColumn.setAlignment(SWT.RIGHT);
+    damagedArchivesColumn.setWidth(118);
 
-    TableColumn bundlePoolProfilesColumn = new TableViewerColumn(bundlePoolsViewer, SWT.NONE).getColumn();
-    bundlePoolProfilesColumn.setText("Profiles");
-    bundlePoolProfilesColumn.setAlignment(SWT.RIGHT);
-    bundlePoolProfilesColumn.setWidth(72);
+    TableColumn profilesColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
+    profilesColumn.setText("Profiles");
+    profilesColumn.setAlignment(SWT.RIGHT);
+    profilesColumn.setWidth(55);
 
-    bundlePoolsViewer.setLabelProvider(new TableLabelProvider(display));
-    bundlePoolsViewer.setContentProvider(new BundlePoolsContentProvider());
+    bundlePoolViewer.setLabelProvider(new TableLabelProvider(getDisplay()));
+    bundlePoolViewer.setContentProvider(new BundlePoolContentProvider());
+    bundlePoolViewer.addSelectionChangedListener(new SelectionChangedListener()
+    {
+      @Override
+      protected void doSelectionChanged(SelectionChangedEvent event)
+      {
+        currentBundlePool = (BundlePool)((IStructuredSelection)event.getSelection()).getFirstElement();
+
+        artifactViewer.setInput(currentBundlePool);
+        artifactViewer.setSelection(StructuredSelection.EMPTY);
+        updateArtifactButtons();
+
+        profileViewer.setInput(currentBundlePool);
+        profileViewer.setSelection(StructuredSelection.EMPTY);
+
+        // bundlePoolMoveButton.setEnabled(true);
+        // bundlePoolDeleteButton.setEnabled(true);
+
+        // updateProfileButtons(currentBundlePool);
+      }
+    });
 
     // Composite composite = new Composite(composite_3, SWT.NONE);
     // composite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
@@ -211,153 +251,186 @@ public class BundlePoolComposite extends Composite
     // }
     // });
 
-    new Label(composite_3, SWT.NONE);
+    new Label(bundlePoolComposite, SWT.NONE);
+  }
 
-    SashForm verticalSashForm = new SashForm(this, SWT.VERTICAL);
-    verticalSashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+  private void createArtifactViewer(Composite parent)
+  {
+    Composite artifactComposite = new Composite(parent, SWT.NONE);
+    GridLayout artifactLayout = new GridLayout(1, false);
+    artifactLayout.marginWidth = 0;
+    artifactLayout.marginHeight = 0;
+    artifactComposite.setLayout(artifactLayout);
 
-    SashForm horizontalSashForm = new SashForm(verticalSashForm, SWT.HORIZONTAL);
+    artifactViewer = new TableViewer(artifactComposite, TABLE_STYLE | SWT.MULTI);
+    Table artifactTable = artifactViewer.getTable();
+    artifactTable.setHeaderVisible(true);
+    artifactTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    new SelectAllAdapter(artifactViewer);
 
-    Composite unusedArtifactsComposite = new Composite(horizontalSashForm, SWT.NONE);
-    GridLayout unusedArtifactsLayout = new GridLayout(1, false);
-    unusedArtifactsLayout.marginWidth = 0;
-    unusedArtifactsLayout.marginHeight = 0;
-    unusedArtifactsComposite.setLayout(unusedArtifactsLayout);
+    TableColumn artifactColumn = new TableViewerColumn(artifactViewer, SWT.NONE).getColumn();
+    artifactColumn.setText("Artifact");
+    artifactColumn.setWidth(569);
+    artifactColumn.setResizable(false);
 
-    unusedArtifactsViewer = new TableViewer(unusedArtifactsComposite, TABLE_STYLE | SWT.MULTI);
-    Table unusedArtifactsTable = unusedArtifactsViewer.getTable();
-    unusedArtifactsTable.setHeaderVisible(true);
-    unusedArtifactsTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    new SelectAllAdapter(unusedArtifactsViewer);
+    TableColumn profilesColumn = new TableViewerColumn(artifactViewer, SWT.NONE).getColumn();
+    profilesColumn.setText("Profiles");
+    profilesColumn.setAlignment(SWT.RIGHT);
+    profilesColumn.setWidth(56);
 
-    TableColumn unusedArtifactsColumn = new TableViewerColumn(unusedArtifactsViewer, SWT.NONE).getColumn();
-    unusedArtifactsColumn.setText("Unused Artifact");
-    unusedArtifactsColumn.setWidth(381);
-    unusedArtifactsColumn.setResizable(false);
+    artifactViewer.setContentProvider(new ArtifactContentProvider());
+    artifactViewer.setLabelProvider(new TableLabelProvider(getDisplay()));
+    artifactViewer.addSelectionChangedListener(new SelectionChangedListener()
+    {
+      @Override
+      protected void doSelectionChanged(SelectionChangedEvent event)
+      {
+        updateArtifactButtons();
+      }
 
-    unusedArtifactsViewer.setContentProvider(new UnusedArtifactsContentProvider());
-    unusedArtifactsViewer.setLabelProvider(new TableLabelProvider(display));
+      @Override
+      protected void triggerOtherSelections(SelectionChangedEvent event)
+      {
+        if (!changingSelection.contains(profileViewer))
+        {
+          Set<Profile> profiles = new HashSet<Profile>();
+          for (Artifact artifact : getSelectedArtifacts())
+          {
+            profiles.addAll(artifact.getProfiles());
+          }
 
-    Composite unusedArtifactsButtonBar = new Composite(unusedArtifactsComposite, SWT.NONE);
-    unusedArtifactsButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
-    GridLayout unusedArtifactsButtonBarLayout = new GridLayout(2, false);
-    unusedArtifactsButtonBarLayout.marginWidth = 0;
-    unusedArtifactsButtonBarLayout.marginHeight = 0;
-    unusedArtifactsButtonBar.setLayout(unusedArtifactsButtonBarLayout);
+          profileViewer.setSelection(new StructuredSelection(profiles.toArray()));
+        }
+      }
+    });
 
-    deleteUnusedArtifactButton = new Button(unusedArtifactsButtonBar, SWT.NONE);
-    deleteUnusedArtifactButton.setText("Delete");
-    deleteUnusedArtifactButton.setEnabled(false);
-    deleteUnusedArtifactButton.addSelectionListener(new SelectionAdapter()
+    Composite artifactButtonBar = new Composite(artifactComposite, SWT.NONE);
+    artifactButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
+    GridLayout artifactButtonBarLayout = new GridLayout(5, false);
+    artifactButtonBarLayout.marginWidth = 0;
+    artifactButtonBarLayout.marginHeight = 0;
+    artifactButtonBar.setLayout(artifactButtonBarLayout);
+
+    selectAllArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
+    selectAllArtifactsButton.setText("Select All");
+    selectAllArtifactsButton.setEnabled(false);
+    selectAllArtifactsButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        Artifact[] artifacts = getSelectedArtifacts(unusedArtifactsViewer);
-        deleteUnusedArtifacts(artifacts);
+        artifactViewer.setSelection(new StructuredSelection(currentBundlePool.getArtifacts()));
       }
     });
 
-    deleteAllUnusedArtifactsButton = new Button(unusedArtifactsButtonBar, SWT.NONE);
-    deleteAllUnusedArtifactsButton.setText("Delete All");
-    deleteAllUnusedArtifactsButton.setEnabled(false);
-    deleteAllUnusedArtifactsButton.addSelectionListener(new SelectionAdapter()
+    selectUnusedArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
+    selectUnusedArtifactsButton.setText("Select Unused");
+    selectUnusedArtifactsButton.setEnabled(false);
+    selectUnusedArtifactsButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        Artifact[] artifacts = getCurrentBundlePool().getUnusedArtifacts();
-        deleteUnusedArtifacts(artifacts);
+        artifactViewer.setSelection(new StructuredSelection(currentBundlePool.getUnusedArtifacts()));
       }
     });
 
-    new Label(unusedArtifactsComposite, SWT.NONE);
-
-    Composite damagedArchivesComposite = new Composite(horizontalSashForm, SWT.NONE);
-    GridLayout damagedArchivesLayout = new GridLayout(1, false);
-    damagedArchivesLayout.marginWidth = 0;
-    damagedArchivesLayout.marginHeight = 0;
-    damagedArchivesComposite.setLayout(damagedArchivesLayout);
-
-    damagedArchivesViewer = new TableViewer(damagedArchivesComposite, TABLE_STYLE | SWT.MULTI);
-    Table damagedArchivesTable = damagedArchivesViewer.getTable();
-    damagedArchivesTable.setHeaderVisible(true);
-    damagedArchivesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    new SelectAllAdapter(damagedArchivesViewer);
-
-    TableColumn damagedArchivesColumn = new TableViewerColumn(damagedArchivesViewer, SWT.NONE).getColumn();
-    damagedArchivesColumn.setText("Damaged Archive");
-    damagedArchivesColumn.setWidth(382);
-    damagedArchivesColumn.setResizable(false);
-
-    damagedArchivesViewer.setContentProvider(new DamagedArchivesContentProvider());
-    damagedArchivesViewer.setLabelProvider(new TableLabelProvider(display));
-
-    Composite damagedArchivesButtonBar = new Composite(damagedArchivesComposite, SWT.NONE);
-    damagedArchivesButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
-    GridLayout damagedArchivesButtonBarLayout = new GridLayout(2, false);
-    damagedArchivesButtonBarLayout.marginHeight = 0;
-    damagedArchivesButtonBarLayout.marginWidth = 0;
-    damagedArchivesButtonBar.setLayout(damagedArchivesButtonBarLayout);
-
-    repairDamagedArchiveButton = new Button(damagedArchivesButtonBar, SWT.NONE);
-    repairDamagedArchiveButton.setText("Repair");
-    repairDamagedArchiveButton.setEnabled(false);
-    repairDamagedArchiveButton.addSelectionListener(new SelectionAdapter()
+    selectDamagedArchivesButton = new Button(artifactButtonBar, SWT.NONE);
+    selectDamagedArchivesButton.setText("Select Damaged");
+    selectDamagedArchivesButton.setEnabled(false);
+    selectDamagedArchivesButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        Artifact[] artifacts = getSelectedArtifacts(damagedArchivesViewer);
-        repairDamagedArchives(artifacts);
+        artifactViewer.setSelection(new StructuredSelection(currentBundlePool.getDamagedArchives()));
       }
     });
 
-    repairAllDamagedArchivesButton = new Button(damagedArchivesButtonBar, SWT.NONE);
-    repairAllDamagedArchivesButton.setEnabled(false);
-    repairAllDamagedArchivesButton.setText("Repair All");
-    repairAllDamagedArchivesButton.addSelectionListener(new SelectionAdapter()
+    repairArchivesButton = new Button(artifactButtonBar, SWT.NONE);
+    repairArchivesButton.setText("Repair");
+    repairArchivesButton.setEnabled(false);
+    repairArchivesButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
-        Artifact[] artifacts = getCurrentBundlePool().getDamagedArchives();
-        repairDamagedArchives(artifacts);
+        Artifact[] artifacts = getSelectedArtifacts();
+        repairArchives(artifacts);
       }
     });
 
-    new Label(damagedArchivesComposite, SWT.NONE);
-    horizontalSashForm.setWeights(new int[] { 1, 1 });
+    deleteArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
+    deleteArtifactsButton.setText("Delete");
+    deleteArtifactsButton.setEnabled(false);
+    deleteArtifactsButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        Artifact[] artifacts = getSelectedArtifacts();
+        deleteArtifacts(artifacts);
+      }
+    });
 
-    Composite profilesComposite = new Composite(verticalSashForm, SWT.NONE);
-    GridLayout profilesLayout = new GridLayout(1, false);
-    profilesLayout.marginWidth = 0;
-    profilesLayout.marginHeight = 0;
-    profilesComposite.setLayout(profilesLayout);
+    new Label(artifactComposite, SWT.NONE);
+  }
 
-    profilesViewer = new TableViewer(profilesComposite, TABLE_STYLE | SWT.MULTI);
-    Table profilesTable = profilesViewer.getTable();
-    profilesTable.setHeaderVisible(true);
-    profilesTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    new SelectAllAdapter(profilesViewer);
+  private void createProfileViewer(Composite parent)
+  {
+    Composite profileComposite = new Composite(parent, SWT.NONE);
+    GridLayout profileLayout = new GridLayout(1, false);
+    profileLayout.marginWidth = 0;
+    profileLayout.marginHeight = 0;
+    profileComposite.setLayout(profileLayout);
 
-    TableColumn profileColumn = new TableViewerColumn(profilesViewer, SWT.NONE).getColumn();
+    profileViewer = new TableViewer(profileComposite, TABLE_STYLE | SWT.MULTI);
+    Table profileTable = profileViewer.getTable();
+    profileTable.setHeaderVisible(true);
+    profileTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    new SelectAllAdapter(profileViewer);
+
+    TableColumn profileColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
     profileColumn.setText("Profile");
-    profileColumn.setWidth(581);
+    profileColumn.setWidth(447);
     profileColumn.setResizable(false);
 
-    TableColumn profileArtifactsColumn = new TableViewerColumn(profilesViewer, SWT.NONE).getColumn();
-    profileArtifactsColumn.setText("Artifacts");
-    profileArtifactsColumn.setAlignment(SWT.RIGHT);
-    profileArtifactsColumn.setWidth(73);
+    TableColumn artifactsColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
+    artifactsColumn.setText("Artifacts");
+    artifactsColumn.setAlignment(SWT.RIGHT);
+    artifactsColumn.setWidth(62);
 
-    TableColumn profileDamagedArchivesColumn = new TableViewerColumn(profilesViewer, SWT.NONE).getColumn();
-    profileDamagedArchivesColumn.setText("Damaged Archives");
-    profileDamagedArchivesColumn.setAlignment(SWT.RIGHT);
-    profileDamagedArchivesColumn.setWidth(125);
+    TableColumn damagedArchivesColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
+    damagedArchivesColumn.setText("Damaged Archives");
+    damagedArchivesColumn.setAlignment(SWT.RIGHT);
+    damagedArchivesColumn.setWidth(117);
 
-    profilesViewer.setContentProvider(new ProfilesContentProvider());
-    profilesViewer.setLabelProvider(new TableLabelProvider(display));
+    profileViewer.setContentProvider(new ProfileContentProvider());
+    profileViewer.setLabelProvider(new TableLabelProvider(getDisplay()));
+    profileViewer.addSelectionChangedListener(new SelectionChangedListener()
+    {
+      @Override
+      protected void doSelectionChanged(SelectionChangedEvent event)
+      {
+        // BundlePool bundlePool = getCurrentBundlePool();
+        // updateProfileButtons(bundlePool);
+      }
+
+      @Override
+      protected void triggerOtherSelections(SelectionChangedEvent event)
+      {
+        if (!changingSelection.contains(artifactViewer))
+        {
+          Set<Artifact> artifacts = new HashSet<Artifact>();
+          for (Profile profile : getSelectedProfiles())
+          {
+            artifacts.addAll(profile.getArtifacts());
+          }
+
+          artifactViewer.setSelection(new StructuredSelection(new ArrayList<Artifact>(artifacts)));
+        }
+      }
+    });
 
     // Composite profilesButtonBar = new Composite(profilesComposite, SWT.NONE);
     // GridLayout profilesButtonBarLayout = new GridLayout(1, false);
@@ -378,150 +451,6 @@ public class BundlePoolComposite extends Composite
     // deleteProfiles(profiles);
     // }
     // });
-
-    verticalSashForm.setWeights(new int[] { 1, 1 });
-
-    bundlePoolsViewer.addSelectionChangedListener(new SelectionChangedListener()
-    {
-      @Override
-      protected void doSelectionChanged(SelectionChangedEvent event)
-      {
-        BundlePool bundlePool = getCurrentBundlePool();
-
-        unusedArtifactsViewer.setInput(bundlePool);
-        damagedArchivesViewer.setInput(bundlePool);
-        profilesViewer.setInput(bundlePool);
-
-        // bundlePoolMoveButton.setEnabled(true);
-        // bundlePoolDeleteButton.setEnabled(true);
-
-        updateUnusedArtifactButtons(bundlePool);
-        updateDamagedArchiveButtons(bundlePool);
-        // updateProfileButtons(bundlePool);
-      }
-    });
-
-    unusedArtifactsViewer.addSelectionChangedListener(new SelectionChangedListener()
-    {
-      @Override
-      protected void doSelectionChanged(SelectionChangedEvent event)
-      {
-        updateUnusedArtifactButtons(getCurrentBundlePool());
-      }
-
-      @Override
-      protected void triggerOtherSelections(SelectionChangedEvent event)
-      {
-        if (!changingSelection.contains(damagedArchivesViewer))
-        {
-          damagedArchivesViewer.setSelection(unusedArtifactsViewer.getSelection());
-        }
-      }
-    });
-
-    damagedArchivesViewer.addSelectionChangedListener(new SelectionChangedListener()
-    {
-      @Override
-      protected void doSelectionChanged(SelectionChangedEvent event)
-      {
-        updateDamagedArchiveButtons(getCurrentBundlePool());
-      }
-
-      @Override
-      protected void triggerOtherSelections(SelectionChangedEvent event)
-      {
-        IStructuredSelection selection = (IStructuredSelection)damagedArchivesViewer.getSelection();
-        if (!changingSelection.contains(unusedArtifactsViewer))
-        {
-          unusedArtifactsViewer.setSelection(selection);
-        }
-
-        if (!changingSelection.contains(profilesViewer))
-        {
-          Object[] artifacts = selection.toArray();
-          List<Profile> profiles = new ArrayList<Profile>();
-          for (Profile profile : getCurrentBundlePool().getProfiles())
-          {
-            for (int i = 0; i < artifacts.length; i++)
-            {
-              if (profile.getArtifacts().contains(artifacts[i]))
-              {
-                profiles.add(profile);
-                break;
-              }
-            }
-          }
-
-          profilesViewer.setSelection(new StructuredSelection(profiles));
-        }
-      }
-    });
-
-    profilesViewer.addSelectionChangedListener(new SelectionChangedListener()
-    {
-      @Override
-      protected void doSelectionChanged(SelectionChangedEvent event)
-      {
-        // BundlePool bundlePool = getCurrentBundlePool();
-        // updateProfileButtons(bundlePool);
-      }
-
-      @Override
-      protected void triggerOtherSelections(SelectionChangedEvent event)
-      {
-        if (!changingSelection.contains(damagedArchivesViewer))
-        {
-          Profile[] profiles = getSelectedProfiles(profilesViewer);
-          Set<Artifact> artifacts = new HashSet<Artifact>();
-          for (Profile profile : profiles)
-          {
-            artifacts.addAll(profile.getDamagedArchives());
-          }
-
-          damagedArchivesViewer.setSelection(new StructuredSelection(new ArrayList<Artifact>(artifacts)));
-        }
-      }
-    });
-
-    addDisposeListener(new DisposeListener()
-    {
-      public void widgetDisposed(DisposeEvent e)
-      {
-        if (agent != null)
-        {
-          agent.dispose();
-        }
-      }
-    });
-
-    final Shell shell = getShell();
-    final Cursor oldCursor = shell.getCursor();
-    shell.setCursor(new Cursor(display, SWT.CURSOR_WAIT));
-    setEnabled(false);
-
-    display.asyncExec(new Runnable()
-    {
-      public void run()
-      {
-        initAgent();
-        shell.setCursor(oldCursor);
-        setEnabled(true);
-
-        bundlePoolsViewer.setInput(agent);
-
-        display.asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            Collection<BundlePool> bundlePools = agent.getBundlePools().values();
-            if (!bundlePools.isEmpty())
-            {
-              bundlePoolsViewer.setSelection(new StructuredSelection(bundlePools.iterator().next()));
-            }
-          }
-        });
-      }
-    });
   }
 
   @Override
@@ -532,95 +461,78 @@ public class BundlePoolComposite extends Composite
 
   private void initAgent()
   {
-    final AgentListener agentListener = new AgentListener()
+    analyzer = new BundlePoolAnalyzer(new Listener()
     {
-      public void addedBundlePool(BundlePool bundlePool)
+      public void analyzerChanged(BundlePoolAnalyzer analyzer)
       {
+        if (analyzer == BundlePoolComposite.this.analyzer)
+        {
+          asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              bundlePoolViewer.refresh();
+              artifactViewer.refresh();
+              profileViewer.refresh();
+            }
+          });
+        }
       }
 
-      public void addedBundlePoolArtifact(final Artifact artifact)
+      public void bundlePoolChanged(final BundlePool bundlePool, final boolean artifacts, final boolean profiles)
       {
         asyncExec(new Runnable()
         {
           public void run()
           {
-            bundlePoolsViewer.update(artifact.getBundlePool(), null);
+            bundlePoolViewer.update(bundlePool, null);
+
+            if (bundlePool == currentBundlePool)
+            {
+              if (artifacts)
+              {
+                artifactViewer.refresh();
+
+                updateArtifactButtons();
+              }
+
+              if (profiles)
+              {
+                profileViewer.refresh();
+              }
+            }
           }
         });
       }
 
-      public void addedProfile(Profile profile)
+      public void profileChanged(final Profile profile)
       {
-      }
-
-      public void addedProfileArtifact(final Profile profile, Artifact artifact)
-      {
-        asyncExec(new Runnable()
+        if (profile.getBundlePool() == currentBundlePool)
         {
-          public void run()
+          asyncExec(new Runnable()
           {
-            profilesViewer.update(profile, null);
-          }
-        });
+            public void run()
+            {
+              profileViewer.update(profile, null);
+            }
+          });
+        }
       }
 
-      public void changedUnusedArtifacts(final BundlePool bundlePool)
+      public void artifactChanged(final Artifact artifact)
       {
-        asyncExec(new Runnable()
+        if (artifact.getBundlePool() == currentBundlePool)
         {
-          public void run()
+          asyncExec(new Runnable()
           {
-            bundlePoolsViewer.update(bundlePool, null);
-            unusedArtifactsViewer.refresh();
-            updateUnusedArtifactButtons(bundlePool);
-          }
-        });
+            public void run()
+            {
+              artifactViewer.update(artifact, null);
+            }
+          });
+        }
       }
-
-      public void damageStateChanged(final Artifact artifact)
-      {
-        asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            BundlePool bundlePool = artifact.getBundlePool();
-            bundlePoolsViewer.update(bundlePool, null);
-
-            unusedArtifactsViewer.refresh(true);
-            damagedArchivesViewer.refresh(true);
-            profilesViewer.refresh(true);
-
-            updateUnusedArtifactButtons(bundlePool);
-            updateDamagedArchiveButtons(bundlePool);
-          }
-        });
-      }
-
-      public void progressedDamagedArchiveAnalysis(final BundlePool bundlePool, int percent)
-      {
-        asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            bundlePoolsViewer.update(bundlePool, null);
-            updateDamagedArchiveButtons(bundlePool);
-          }
-        });
-      }
-
-      public void finishedDamagedArchiveAnalysis(final BundlePool bundlePool)
-      {
-        asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            updateDamagedArchiveButtons(bundlePool);
-          }
-        });
-      }
-    };
-
-    agent = new Agent(agentListener);
+    });
   }
 
   private void asyncExec(Runnable runnable)
@@ -632,38 +544,32 @@ public class BundlePoolComposite extends Composite
     }
   }
 
-  private BundlePool getCurrentBundlePool()
+  private Artifact[] getSelectedArtifacts()
   {
-    return (BundlePool)((IStructuredSelection)bundlePoolsViewer.getSelection()).getFirstElement();
-  }
-
-  private Artifact[] getSelectedArtifacts(TableViewer viewer)
-  {
-    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+    IStructuredSelection selection = (IStructuredSelection)artifactViewer.getSelection();
 
     @SuppressWarnings("unchecked")
     List<Artifact> artifacts = (List<Artifact>)(List<?>)selection.toList();
     return artifacts.toArray(new Artifact[artifacts.size()]);
   }
 
-  private Profile[] getSelectedProfiles(TableViewer viewer)
+  private Profile[] getSelectedProfiles()
   {
-    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+    IStructuredSelection selection = (IStructuredSelection)profileViewer.getSelection();
 
     @SuppressWarnings("unchecked")
     List<Profile> profiles = (List<Profile>)(List<?>)selection.toList();
     return profiles.toArray(new Profile[profiles.size()]);
   }
 
-  private void updateButton(TableViewer viewer, Button button, String text, boolean prompt)
+  private void updateButton(Button button, String text, int count, boolean prompt)
   {
-    IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
-    int size = selection.size();
-    if (size > 1)
+    if (count != 0)
     {
-      text += " (" + size + ")";
+      text += " " + count;
     }
 
+    text += " Selected";
     if (prompt)
     {
       text += "...";
@@ -675,26 +581,32 @@ public class BundlePoolComposite extends Composite
       button.getParent().getParent().layout(true);
     }
 
-    button.setEnabled(size != 0);
+    button.setEnabled(count != 0);
   }
 
-  private void updateUnusedArtifactButtons(BundlePool bundlePool)
+  private void updateArtifactButtons()
   {
-    if (bundlePool == getCurrentBundlePool())
+    if (currentBundlePool != null)
     {
-      updateButton(unusedArtifactsViewer, deleteUnusedArtifactButton, "Delete", false);
-      deleteAllUnusedArtifactsButton.setEnabled(bundlePool.getUnusedArtifactsCount() != 0);
+      selectAllArtifactsButton.setEnabled(currentBundlePool.getArtifactCount() != 0);
+      selectUnusedArtifactsButton.setEnabled(currentBundlePool.getUnusedArtifactsCount() != 0);
+      selectDamagedArchivesButton.setEnabled(currentBundlePool.getDamagedArchivesCount() != 0);
     }
-  }
 
-  private void updateDamagedArchiveButtons(BundlePool bundlePool)
-  {
-    if (bundlePool == getCurrentBundlePool())
+    Artifact[] artifacts = getSelectedArtifacts();
+    int count = artifacts.length;
+    updateButton(deleteArtifactsButton, "Delete", count, true);
+
+    for (int i = 0; i < artifacts.length; i++)
     {
-      updateButton(damagedArchivesViewer, repairDamagedArchiveButton, "Repair", false);
-      repairAllDamagedArchivesButton.setEnabled(bundlePool.getDamagedArchivesPercent() == 100
-          && bundlePool.getDamagedArchivesCount() != 0);
+      Artifact artifact = artifacts[i];
+      if (!artifact.isDamaged())
+      {
+        --count;
+      }
     }
+
+    updateButton(repairArchivesButton, "Repair", count, true);
   }
 
   // private void updateProfileButtons(BundlePool bundlePool)
@@ -715,7 +627,7 @@ public class BundlePoolComposite extends Composite
   // MessageDialog.openInformation(getShell(), AbstractSetupDialog.SHELL_TEXT, "Not yet implemented.");
   // }
 
-  private void deleteUnusedArtifacts(final Artifact[] artifacts)
+  private void deleteArtifacts(final Artifact[] artifacts)
   {
     try
     {
@@ -724,16 +636,10 @@ public class BundlePoolComposite extends Composite
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
           SubMonitor progress = SubMonitor.convert(monitor, "Deleting artifacts", artifacts.length).detectCancelation();
-          BundlePool bundlePool = artifacts[0].getBundlePool();
 
           for (Artifact artifact : artifacts)
           {
-            if (artifact.deleteIfUnused(progress))
-            {
-              artifact.setDamaged(false);
-              agent.listener.damageStateChanged(artifact);
-              agent.listener.changedUnusedArtifacts(bundlePool);
-            }
+            artifact.delete(progress.newChild());
           }
         }
       });
@@ -748,7 +654,7 @@ public class BundlePoolComposite extends Composite
     }
   }
 
-  private void repairDamagedArchives(final Artifact[] artifacts)
+  private void repairArchives(final Artifact[] artifacts)
   {
     try
     {
@@ -758,23 +664,9 @@ public class BundlePoolComposite extends Composite
         {
           SubMonitor progress = SubMonitor.convert(monitor, "Repairing archives", artifacts.length).detectCancelation();
 
-          IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
-          Set<URI> repositoryURIs = artifacts[0].getBundlePool().getRepositoryURIs();
-
           for (Artifact artifact : artifacts)
           {
-            if (repairDamagedArchive(artifact, repositoryManager, repositoryURIs, progress.newChild()))
-            {
-              artifact.setDamaged(false);
-
-              asyncExec(new Runnable()
-              {
-                public void run()
-                {
-                  damagedArchivesViewer.refresh();
-                }
-              });
-            }
+            artifact.repair(progress.newChild());
           }
         }
       });
@@ -789,153 +681,10 @@ public class BundlePoolComposite extends Composite
     }
   }
 
-  private boolean repairDamagedArchive(Artifact artifact, IArtifactRepositoryManager repositoryManager,
-      Set<URI> repositoryURIs, IProgressMonitor monitor)
-  {
-    SubMonitor progress = SubMonitor.convert(monitor, 2 * repositoryURIs.size()).detectCancelation();
-    BundlePool bundlePool = artifact.getBundlePool();
-
-    if (artifact.deleteIfUnused(progress))
-    {
-      agent.listener.changedUnusedArtifacts(bundlePool);
-      return true;
-    }
-
-    for (URI uri : repositoryURIs)
-    {
-      if (repairDamagedArchive(artifact, uri, repositoryManager, progress))
-      {
-        return true;
-      }
-    }
-
-    Set<URI> allURIs = new LinkedHashSet<URI>(bundlePool.getAgent().getRepositoryURIs());
-    allURIs.removeAll(repositoryURIs);
-
-    for (URI uri : allURIs)
-    {
-      if (repairDamagedArchive(artifact, uri, repositoryManager, progress))
-      {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  private boolean repairDamagedArchive(Artifact artifact, URI uri, IArtifactRepositoryManager repositoryManager,
-      SubMonitor progress)
-  {
-    try
-    {
-      IArtifactKey key = artifact.getKey();
-      File file = artifact.getFile();
-
-      IArtifactRepository repository = repositoryManager.loadRepository(uri, progress.newChild());
-      for (IArtifactDescriptor descriptor : repository.getArtifactDescriptors(key))
-      {
-        File tmp = new File(file.getAbsolutePath() + ".tmp");
-        FileOutputStream destination = null;
-
-        try
-        {
-          destination = new FileOutputStream(tmp);
-
-          IStatus status = repository.getArtifact(descriptor, destination, progress.newChild());
-          if (status.getSeverity() == IStatus.OK)
-          {
-            IOUtil.close(destination);
-            IOUtil.copyFile(tmp, file);
-            return true;
-          }
-        }
-        finally
-        {
-          IOUtil.close(destination);
-          if (!tmp.delete())
-          {
-            tmp.deleteOnExit();
-          }
-        }
-      }
-    }
-    catch (OperationCanceledException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      Activator.log(ex);
-    }
-
-    return false;
-  }
-
   // private void deleteProfiles(Profile[] profiles)
   // {
   // MessageDialog.openInformation(getShell(), AbstractSetupDialog.SHELL_TEXT, "Not yet implemented.");
   // }
-
-  public static void openDialog(Shell shell)
-  {
-    Dialog dialog = new Dialog(shell);
-    dialog.open();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class Dialog extends AbstractSetupDialog
-  {
-    Dialog(Shell parentShell)
-    {
-      super(parentShell, "Bundle Pool Management", 850, 750);
-      setShellStyle(SWT.TITLE | SWT.MAX | SWT.RESIZE | SWT.BORDER | SWT.APPLICATION_MODAL);
-    }
-
-    @Override
-    protected String getDefaultMessage()
-    {
-      return "Manage your bundle pools, delete unused artifacts and repair damaged archives";
-    }
-
-    @Override
-    protected void createUI(Composite parent)
-    {
-      BundlePoolComposite bundlePoolComposite = new BundlePoolComposite(parent, SWT.NONE);
-      bundlePoolComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-    }
-
-    @Override
-    protected void createButtonsForButtonBar(Composite parent)
-    {
-      createButton(parent, IDialogConstants.OK_ID, IDialogConstants.CLOSE_LABEL, true);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class SelectAllAdapter extends KeyAdapter
-  {
-    private final StructuredViewer viewer;
-
-    public SelectAllAdapter(StructuredViewer viewer)
-    {
-      this.viewer = viewer;
-      viewer.getControl().addKeyListener(this);
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e)
-    {
-      if ((e.stateMask & SWT.CONTROL) != 0 && e.keyCode == 'a')
-      {
-        IStructuredContentProvider contentProvider = (IStructuredContentProvider)viewer.getContentProvider();
-        viewer.setSelection(new StructuredSelection(contentProvider.getElements(viewer.getInput())));
-      }
-    }
-  }
 
   /**
    * @author Eike Stepper
@@ -967,6 +716,35 @@ public class BundlePoolComposite extends Composite
     }
   }
 
+  // private void deleteProfiles(Profile[] profiles)
+  // {
+  // MessageDialog.openInformation(getShell(), AbstractSetupDialog.SHELL_TEXT, "Not yet implemented.");
+  // }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class SelectAllAdapter extends KeyAdapter
+  {
+    private final StructuredViewer viewer;
+
+    public SelectAllAdapter(StructuredViewer viewer)
+    {
+      this.viewer = viewer;
+      viewer.getControl().addKeyListener(this);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+      if ((e.stateMask & SWT.CONTROL) != 0 && e.keyCode == 'a')
+      {
+        IStructuredContentProvider contentProvider = (IStructuredContentProvider)viewer.getContentProvider();
+        viewer.setSelection(new StructuredSelection(contentProvider.getElements(viewer.getInput())));
+      }
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -984,13 +762,7 @@ public class BundlePoolComposite extends Composite
         table.addControlListener(this);
       }
 
-      UIUtil.asyncExec(table.getDisplay(), new Runnable()
-      {
-        public void run()
-        {
-          controlResized(null);
-        }
-      });
+      apply();
     }
 
     @Override
@@ -1016,20 +788,31 @@ public class BundlePoolComposite extends Composite
         columns[0].setWidth(tableWidth);
       }
     }
+
+    public void apply()
+    {
+      UIUtil.asyncExec(table.getDisplay(), new Runnable()
+      {
+        public void run()
+        {
+          controlResized(null);
+        }
+      });
+    }
   }
 
   /**
    * @author Eike Stepper
    */
-  private static final class BundlePoolsContentProvider extends ColumnResizer
+  private static final class BundlePoolContentProvider extends ColumnResizer
   {
-    private Agent agent;
+    private BundlePoolAnalyzer agent;
 
     @Override
     public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
     {
       super.inputChanged(viewer, oldInput, newInput);
-      agent = (Agent)newInput;
+      agent = (BundlePoolAnalyzer)newInput;
     }
 
     public Object[] getElements(Object inputElement)
@@ -1047,7 +830,7 @@ public class BundlePoolComposite extends Composite
   /**
    * @author Eike Stepper
    */
-  private static final class UnusedArtifactsContentProvider extends ColumnResizer
+  private static final class ArtifactContentProvider extends ColumnResizer
   {
     private BundlePool bundlePool;
 
@@ -1060,7 +843,7 @@ public class BundlePoolComposite extends Composite
 
     public Object[] getElements(Object inputElement)
     {
-      return bundlePool.getUnusedArtifacts();
+      return bundlePool.getArtifacts();
     }
 
     public void dispose()
@@ -1071,31 +854,7 @@ public class BundlePoolComposite extends Composite
   /**
    * @author Eike Stepper
    */
-  private static final class DamagedArchivesContentProvider extends ColumnResizer
-  {
-    private BundlePool bundlePool;
-
-    @Override
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-    {
-      super.inputChanged(viewer, oldInput, newInput);
-      bundlePool = (BundlePool)newInput;
-    }
-
-    public Object[] getElements(Object inputElement)
-    {
-      return bundlePool.getDamagedArchives();
-    }
-
-    public void dispose()
-    {
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ProfilesContentProvider extends ColumnResizer
+  private static final class ProfileContentProvider extends ColumnResizer
   {
     private BundlePool bundlePool;
 
@@ -1138,7 +897,7 @@ public class BundlePoolComposite extends Composite
         case 0:
           return bundlePool.getLocation().getAbsolutePath();
         case 1:
-          return Integer.toString(bundlePool.getArtifacts().size());
+          return Integer.toString(bundlePool.getArtifactCount());
         case 2:
           return Integer.toString(bundlePool.getUnusedArtifactsCount());
         case 3:
@@ -1151,7 +910,13 @@ public class BundlePoolComposite extends Composite
       else if (element instanceof Artifact)
       {
         Artifact artifact = (Artifact)element;
-        return artifact.getRelativePath();
+        switch (columnIndex)
+        {
+        case 0:
+          return artifact.getRelativePath();
+        case 1:
+          return Integer.toString(artifact.getProfiles().size());
+        }
       }
       else if (element instanceof Profile)
       {
@@ -1177,24 +942,37 @@ public class BundlePoolComposite extends Composite
         if (element instanceof BundlePool)
         {
           BundlePool bundlePool = (BundlePool)element;
-          return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/obj16/bundlePool"
-              + (bundlePool.getDamagedArchivesCount() != 0 ? "Damaged" : "") + ".gif");
+          String key = "bundlePool";
+          if (bundlePool.getDamagedArchivesCount() != 0)
+          {
+            key += "Damaged";
+          }
+
+          return getPluginImage(key);
         }
 
         if (element instanceof Artifact)
         {
           Artifact artifact = (Artifact)element;
-          return ResourceManager.getPluginImage(
-              "org.eclipse.emf.cdo.releng.setup",
-              artifact.isFolder() ? "icons/obj16/artifactFolder.gif" : "icons/obj16/artifactArchive"
-                  + (artifact.isDamaged() ? "Damaged" : "") + ".gif");
+          String key = "artifact" + artifact.getType();
+          if (artifact.isDamaged())
+          {
+            key += "Damaged";
+          }
+
+          return getPluginImage(key);
         }
 
         if (element instanceof Profile)
         {
           Profile profile = (Profile)element;
-          return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup",
-              "icons/obj16/profile" + profile.getType() + (profile.isDamaged() ? "Damaged" : "") + ".gif");
+          String key = "profile" + profile.getType();
+          if (profile.isDamaged())
+          {
+            key += "Damaged";
+          }
+
+          return getPluginImage(key);
         }
       }
 
@@ -1219,724 +997,10 @@ public class BundlePoolComposite extends Composite
     {
       return null;
     }
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Agent
-  {
-    private final AgentListener listener;
-
-    private final Map<File, BundlePool> bundlePools = new HashMap<File, BundlePool>();
-
-    private final List<Job> analyzeProfileJobs = new ArrayList<Job>();
-
-    private Set<URI> repositoryURIs;
-
-    public Agent(AgentListener listener)
+    private static Image getPluginImage(String key)
     {
-      this.listener = listener;
-
-      IProfileRegistry profileRegistry = P2.getProfileRegistry();
-      for (IProfile p2Profile : profileRegistry.getProfiles())
-      {
-        String installFolder = p2Profile.getProperty(IProfile.PROP_INSTALL_FOLDER);
-        String cache = p2Profile.getProperty(IProfile.PROP_CACHE);
-        if (cache != null && !cache.equals(installFolder))
-        {
-          File location = new File(cache);
-
-          BundlePool bundlePool = bundlePools.get(location);
-          if (bundlePool == null)
-          {
-            bundlePool = new BundlePool(this, location);
-            bundlePools.put(location, bundlePool);
-
-            listener.addedBundlePool(bundlePool);
-          }
-
-          bundlePool.addProfile(p2Profile, installFolder);
-        }
-      }
-
-      for (BundlePool bundlePool : bundlePools.values())
-      {
-        Job job = bundlePool.analyze();
-        analyzeProfileJobs.add(job);
-      }
-    }
-
-    public void dispose()
-    {
-      for (Job job : analyzeProfileJobs)
-      {
-        job.cancel();
-      }
-
-      analyzeProfileJobs.clear();
-      bundlePools.clear();
-    }
-
-    public Map<File, BundlePool> getBundlePools()
-    {
-      return bundlePools;
-    }
-
-    public Set<URI> getRepositoryURIs()
-    {
-      if (repositoryURIs == null)
-      {
-        repositoryURIs = new LinkedHashSet<URI>();
-
-        IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
-        addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_ALL);
-        addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_DISABLED);
-        addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_LOCAL);
-        addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_NON_LOCAL);
-        addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_SYSTEM);
-        addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_NON_SYSTEM);
-
-        for (BundlePool bundlePool : bundlePools.values())
-        {
-          // Don't use possibly damaged local bundle pools for damage repair
-          repositoryURIs.remove(bundlePool.getLocation().toURI());
-        }
-      }
-
-      return repositoryURIs;
-    }
-
-    private void addURIs(Set<URI> repos, IArtifactRepositoryManager repositoryManager, int flag)
-    {
-      for (URI uri : repositoryManager.getKnownRepositories(flag))
-      {
-        repos.add(uri);
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    public interface AgentListener
-    {
-      public void addedBundlePool(BundlePool bundlePool);
-
-      public void addedBundlePoolArtifact(Artifact artifact);
-
-      public void addedProfile(Profile profile);
-
-      public void addedProfileArtifact(Profile profile, Artifact artifact);
-
-      public void changedUnusedArtifacts(BundlePool bundlePool);
-
-      public void progressedDamagedArchiveAnalysis(BundlePool bundlePool, int percent);
-
-      public void finishedDamagedArchiveAnalysis(BundlePool bundlePool);
-
-      public void damageStateChanged(Artifact artifact);
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    public static final class BundlePool implements Comparable<BundlePool>
-    {
-      private final Agent agent;
-
-      private final File location;
-
-      private final Set<URI> repositoryURIs = new LinkedHashSet<URI>();
-
-      private final List<Profile> profiles = new ArrayList<Profile>();
-
-      private final Map<IArtifactKey, Artifact> artifacts = new HashMap<IArtifactKey, Artifact>();
-
-      private final Set<Artifact> unusedArtifacts = new HashSet<Artifact>();
-
-      private final Set<Artifact> damagedArchives = new HashSet<Artifact>();
-
-      private int damagedArchivesPercent;
-
-      public BundlePool(Agent agent, File location)
-      {
-        this.agent = agent;
-        this.location = location;
-      }
-
-      public IFileArtifactRepository getP2BundlePool(IProgressMonitor monitor)
-      {
-        try
-        {
-          IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
-          return (IFileArtifactRepository)repositoryManager.loadRepository(location.toURI(), monitor);
-        }
-        catch (ProvisionException ex)
-        {
-          throw new IllegalStateException(ex);
-        }
-      }
-
-      public Agent getAgent()
-      {
-        return agent;
-      }
-
-      public File getLocation()
-      {
-        return location;
-      }
-
-      public Set<URI> getRepositoryURIs()
-      {
-        return repositoryURIs;
-      }
-
-      public int getProfilesCount()
-      {
-        synchronized (profiles)
-        {
-          return profiles.size();
-        }
-      }
-
-      public Profile[] getProfiles()
-      {
-        synchronized (profiles)
-        {
-          Collections.sort(profiles);
-          return profiles.toArray(new Profile[profiles.size()]);
-        }
-      }
-
-      public Profile addProfile(IProfile p2Profile, String installFolder)
-      {
-        Profile profile = new Profile(this, p2Profile, installFolder == null ? null : new File(installFolder));
-        repositoryURIs.addAll(profile.getRepositoryURIs());
-
-        synchronized (profiles)
-        {
-          profiles.add(profile);
-        }
-
-        agent.listener.addedProfile(profile);
-        return profile;
-      }
-
-      public Map<IArtifactKey, Artifact> getArtifacts()
-      {
-        return artifacts;
-      }
-
-      public int getUnusedArtifactsCount()
-      {
-        synchronized (unusedArtifacts)
-        {
-          return unusedArtifacts.size();
-        }
-      }
-
-      public Artifact[] getUnusedArtifacts()
-      {
-        Artifact[] array;
-        synchronized (unusedArtifacts)
-        {
-          array = unusedArtifacts.toArray(new Artifact[unusedArtifacts.size()]);
-        }
-
-        Arrays.sort(array);
-        return array;
-      }
-
-      public int getDamagedArchivesPercent()
-      {
-        return damagedArchivesPercent;
-      }
-
-      public int getDamagedArchivesCount()
-      {
-        synchronized (damagedArchives)
-        {
-          return damagedArchives.size();
-        }
-      }
-
-      public Artifact[] getDamagedArchives()
-      {
-        Artifact[] array;
-        synchronized (damagedArchives)
-        {
-          array = damagedArchives.toArray(new Artifact[damagedArchives.size()]);
-        }
-
-        Arrays.sort(array);
-        return array;
-      }
-
-      public int compareTo(BundlePool o)
-      {
-        return location.getAbsolutePath().compareTo(o.getLocation().getAbsolutePath());
-      }
-
-      @Override
-      public String toString()
-      {
-        return location.toString();
-      }
-
-      public Job analyze()
-      {
-        Job job = new Job("Analyzing bundle pool " + location)
-        {
-          @Override
-          protected IStatus run(IProgressMonitor monitor)
-          {
-            analyze(monitor);
-            return Status.OK_STATUS;
-          }
-        };
-
-        job.schedule();
-        return job;
-      }
-
-      private void analyze(IProgressMonitor monitor)
-      {
-        IFileArtifactRepository p2BundlePool = getP2BundlePool(monitor);
-        for (IArtifactKey key : p2BundlePool.query(ArtifactKeyQuery.ALL_KEYS, monitor))
-        {
-          checkCancelation(monitor);
-
-          File file = p2BundlePool.getArtifactFile(key);
-          Artifact artifact = new Artifact(this, key, file);
-
-          synchronized (artifacts)
-          {
-            artifacts.put(key, artifact);
-          }
-
-          agent.listener.addedBundlePoolArtifact(artifact);
-        }
-
-        analyzeUnusedArtifacts(monitor);
-        analyzeDamagedArchives(monitor);
-      }
-
-      private void analyzeUnusedArtifacts(IProgressMonitor monitor)
-      {
-        synchronized (unusedArtifacts)
-        {
-          unusedArtifacts.addAll(artifacts.values());
-        }
-
-        for (Profile profile : getProfiles())
-        {
-          checkCancelation(monitor);
-
-          profile.analyze(monitor);
-          synchronized (unusedArtifacts)
-          {
-            unusedArtifacts.removeAll(profile.getArtifacts());
-          }
-        }
-
-        agent.listener.changedUnusedArtifacts(this);
-      }
-
-      private void analyzeDamagedArchives(IProgressMonitor monitor)
-      {
-        int total = artifacts.size();
-        int i = 0;
-
-        for (Artifact artifact : artifacts.values())
-        {
-          checkCancelation(monitor);
-
-          File file = artifact.getFile();
-          if (file != null)
-          {
-            String path = file.getPath();
-            if (path.endsWith(".jar") || path.endsWith(".zip"))
-            {
-              monitor.subTask("Validating " + file);
-              if (!isValidZip(path))
-              {
-                artifact.setDamaged(true);
-              }
-            }
-          }
-
-          int percent = ++i * 100 / total;
-          if (percent != damagedArchivesPercent)
-          {
-            damagedArchivesPercent = percent;
-            agent.listener.progressedDamagedArchiveAnalysis(this, percent);
-          }
-        }
-
-        agent.listener.finishedDamagedArchiveAnalysis(this);
-      }
-
-      private static boolean isValidZip(String path)
-      {
-        ZipInputStream in = null;
-        ZipFile zip = null;
-
-        try
-        {
-          zip = new ZipFile(path);
-          in = new ZipInputStream(new FileInputStream(path));
-
-          ZipEntry entry = in.getNextEntry();
-          if (entry == null)
-          {
-            return false;
-          }
-
-          while (entry != null)
-          {
-            entry.getName();
-            entry.getCompressedSize();
-            entry.getCrc();
-
-            zip.getInputStream(entry);
-
-            entry = in.getNextEntry();
-          }
-
-          return true;
-        }
-        catch (Exception ex)
-        {
-          return false;
-        }
-        finally
-        {
-          IOUtil.close(zip);
-          IOUtil.close(in);
-        }
-      }
-
-      private static void checkCancelation(IProgressMonitor monitor)
-      {
-        if (monitor.isCanceled())
-        {
-          throw new OperationCanceledException();
-        }
-      }
-
-      /**
-       * @author Eike Stepper
-       */
-      public static final class Profile implements Comparable<Profile>
-      {
-        private final BundlePool bundlePool;
-
-        private final IProfile p2Profile;
-
-        private final File installFolder;
-
-        private final String type;
-
-        private final Set<URI> repositoryURIs = new LinkedHashSet<URI>();
-
-        private final Set<Artifact> artifacts = new HashSet<Artifact>();
-
-        public Profile(BundlePool bundlePool, IProfile p2Profile, File installFolder)
-        {
-          this.bundlePool = bundlePool;
-          this.p2Profile = p2Profile;
-          this.installFolder = installFolder;
-
-          if (P2.isTargletProfile(p2Profile))
-          {
-            type = "Targlet";
-          }
-          else if (installFolder != null)
-          {
-            type = "Eclipse";
-          }
-          else
-          {
-            type = "Unknown";
-          }
-
-          String repoList = p2Profile.getProperty(UpdateUtil.PROP_REPO_LIST);
-          if (repoList != null)
-          {
-            StringTokenizer tokenizer = new StringTokenizer(repoList, ",");
-            while (tokenizer.hasMoreTokens())
-            {
-              String uri = tokenizer.nextToken();
-
-              try
-              {
-                repositoryURIs.add(new URI(uri));
-              }
-              catch (URISyntaxException ex)
-              {
-                Activator.log(ex);
-              }
-            }
-          }
-        }
-
-        public BundlePool getBundlePool()
-        {
-          return bundlePool;
-        }
-
-        public String getID()
-        {
-          return p2Profile.getProfileId();
-        }
-
-        public File getInstallFolder()
-        {
-          return installFolder;
-        }
-
-        public String getType()
-        {
-          return type;
-        }
-
-        public Set<URI> getRepositoryURIs()
-        {
-          return repositoryURIs;
-        }
-
-        public Set<Artifact> getArtifacts()
-        {
-          return artifacts;
-        }
-
-        public boolean isDamaged()
-        {
-          for (Artifact artifact : artifacts)
-          {
-            if (artifact.isDamaged())
-            {
-              return true;
-            }
-          }
-
-          return false;
-        }
-
-        public int getDamagedArchivesCount()
-        {
-          int count = 0;
-          for (Artifact artifact : artifacts)
-          {
-            if (artifact.isDamaged())
-            {
-              ++count;
-            }
-          }
-
-          return count;
-        }
-
-        public List<Artifact> getDamagedArchives()
-        {
-          List<Artifact> list = new ArrayList<Artifact>();
-          for (Artifact artifact : artifacts)
-          {
-            if (artifact.isDamaged())
-            {
-              list.add(artifact);
-            }
-          }
-
-          return list;
-        }
-
-        public int compareTo(Profile o)
-        {
-          return getID().compareTo(o.getID());
-        }
-
-        public void analyze(IProgressMonitor monitor)
-        {
-          for (IInstallableUnit iu : p2Profile.query(QueryUtil.createIUAnyQuery(), monitor))
-          {
-            for (IArtifactKey key : iu.getArtifacts())
-            {
-              Artifact artifact = bundlePool.artifacts.get(key);
-              if (artifact != null)
-              {
-                artifacts.add(artifact);
-              }
-
-              bundlePool.agent.listener.addedProfileArtifact(this, artifact);
-            }
-          }
-        }
-
-        @Override
-        public String toString()
-        {
-          return getID();
-        }
-      }
-
-      /**
-       * @author Eike Stepper
-       */
-      public static final class Artifact implements Comparable<Artifact>
-      {
-        private final BundlePool bundlePool;
-
-        private final IArtifactKey key;
-
-        private final File file;
-
-        private final String relativePath;
-
-        private boolean damaged;
-
-        public Artifact(BundlePool bundlePool, IArtifactKey key, File file)
-        {
-          this.bundlePool = bundlePool;
-          this.key = key;
-          this.file = file;
-
-          int start = bundlePool.location.getAbsolutePath().length();
-          relativePath = file.getAbsolutePath().substring(start + 1);
-        }
-
-        public boolean deleteIfUnused(IProgressMonitor monitor)
-        {
-          synchronized (bundlePool.unusedArtifacts)
-          {
-            if (bundlePool.unusedArtifacts.remove(this))
-            {
-              IFileArtifactRepository p2BundlePool = bundlePool.getP2BundlePool(monitor);
-              p2BundlePool.removeDescriptor(key, monitor);
-              return true;
-            }
-          }
-
-          return false;
-        }
-
-        public boolean isUnused()
-        {
-          synchronized (bundlePool.unusedArtifacts)
-          {
-            return bundlePool.unusedArtifacts.contains(this);
-          }
-        }
-
-        public boolean isDamaged()
-        {
-          return damaged;
-        }
-
-        public void setDamaged(boolean damaged)
-        {
-          this.damaged = damaged;
-
-          synchronized (bundlePool.damagedArchives)
-          {
-            if (damaged)
-            {
-              bundlePool.damagedArchives.add(this);
-            }
-            else
-            {
-              bundlePool.damagedArchives.remove(this);
-            }
-          }
-
-          bundlePool.agent.listener.damageStateChanged(this);
-        }
-
-        public Agent getAgent()
-        {
-          return bundlePool.getAgent();
-        }
-
-        public BundlePool getBundlePool()
-        {
-          return bundlePool;
-        }
-
-        public IArtifactKey getKey()
-        {
-          return key;
-        }
-
-        public File getFile()
-        {
-          return file;
-        }
-
-        public boolean isFolder()
-        {
-          return file.isDirectory();
-        }
-
-        public String getRelativePath()
-        {
-          return relativePath;
-        }
-
-        public int compareTo(Artifact o)
-        {
-          return relativePath.compareTo(o.relativePath);
-        }
-
-        @Override
-        public int hashCode()
-        {
-          final int prime = 31;
-          int result = 1;
-          result = prime * result + (key == null ? 0 : key.hashCode());
-          return result;
-        }
-
-        @Override
-        public boolean equals(Object obj)
-        {
-          if (this == obj)
-          {
-            return true;
-          }
-
-          if (obj == null)
-          {
-            return false;
-          }
-
-          if (getClass() != obj.getClass())
-          {
-            return false;
-          }
-
-          Artifact other = (Artifact)obj;
-          if (key == null)
-          {
-            if (other.key != null)
-            {
-              return false;
-            }
-          }
-          else if (!key.equals(other.key))
-          {
-            return false;
-          }
-
-          return true;
-        }
-
-        @Override
-        public String toString()
-        {
-          return key.toString();
-        }
-      }
+      return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/obj16/" + key + ".gif");
     }
   }
 }

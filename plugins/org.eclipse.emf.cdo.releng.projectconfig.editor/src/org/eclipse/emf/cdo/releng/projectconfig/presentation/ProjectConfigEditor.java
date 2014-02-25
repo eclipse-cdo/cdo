@@ -96,7 +96,6 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -147,7 +146,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * This is an example of a ProjectConfig model editor.
@@ -1344,19 +1342,7 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
     }
 
     DiagnosticDecorator labelDecorator = new DiagnosticDecorator(editingDomain, selectionViewer,
-        ProjectConfigEditorPlugin.getPlugin().getDialogSettings())
-    {
-      @Override
-      protected BasicDiagnostic decorate(Map<Object, BasicDiagnostic> objects,
-          ITreeContentProvider treeContentProvider, Set<Object> visited, Object object, List<Integer> path)
-      {
-        if (object instanceof EObject)
-        {
-          return super.decorate(objects, treeContentProvider, visited, object, path);
-        }
-        return null;
-      }
-    };
+        ProjectConfigEditorPlugin.getPlugin().getDialogSettings());
     DecoratingColumLabelProvider labelProvider = new DecoratingColumLabelProvider(new AdapterFactoryLabelProvider(
         adapterFactory), labelDecorator);
     selectionViewer.setLabelProvider(labelProvider);

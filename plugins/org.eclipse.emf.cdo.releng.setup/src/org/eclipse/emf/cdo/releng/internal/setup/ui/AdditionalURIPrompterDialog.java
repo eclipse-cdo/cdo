@@ -13,18 +13,32 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Artifact;
 
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
+import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -33,19 +47,21 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
 {
   private List<Artifact> artifacts;
 
-  private Table artifactTable;
+  private Set<URI> repositories;
 
-  private Table repositoryTable;
+  private Set<URI> checkedRepositories = new HashSet<URI>();
 
-  private Composite artifactComposite;
-
-  private Composite repositoryComposite;
-
-  public AdditionalURIPrompterDialog(Shell parentShell, List<Artifact> artifacts)
+  public AdditionalURIPrompterDialog(Shell parentShell, List<Artifact> artifacts, Set<URI> repositories)
   {
-    super(parentShell, "Bundle Pool Management", 400, 500);
+    super(parentShell, "Bundle Pool Management", 600, 500);
     setShellStyle(SWT.TITLE | SWT.MAX | SWT.RESIZE | SWT.BORDER | SWT.APPLICATION_MODAL);
     this.artifacts = artifacts;
+    this.repositories = repositories;
+  }
+
+  public Set<URI> getCheckedRepositories()
+  {
+    return checkedRepositories;
   }
 
   @Override
@@ -58,47 +74,159 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
   @Override
   protected void createUI(Composite parent)
   {
-    GridLayout gridLayout = (GridLayout)parent.getLayout();
-    gridLayout.marginWidth = 10;
-    gridLayout.marginHeight = 10;
+    Composite mainComposite = new Composite(parent, SWT.NONE);
+    mainComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    GridLayout mainLayout = new GridLayout(1, false);
+    mainLayout.marginWidth = 10;
+    mainLayout.marginHeight = 10;
+    mainComposite.setLayout(mainLayout);
 
-    SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
-    sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    SashForm sashForm = new SashForm(mainComposite, SWT.VERTICAL);
+    sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-    artifactComposite = new Composite(sashForm, SWT.NONE);
-    GridLayout gl_artifactComposite = new GridLayout(1, false);
-    gl_artifactComposite.marginWidth = 0;
-    gl_artifactComposite.marginHeight = 0;
-    artifactComposite.setLayout(gl_artifactComposite);
+    Composite artifactComposite = new Composite(sashForm, SWT.NONE);
+    GridLayout artifactLayout = new GridLayout(1, false);
+    artifactLayout.marginWidth = 0;
+    artifactLayout.marginHeight = 0;
+    artifactComposite.setLayout(artifactLayout);
 
     Label artifactLabel = new Label(artifactComposite, SWT.NONE);
-    artifactLabel.setBounds(0, 0, 55, 15);
-    artifactLabel.setText("Remaining Artifacts:");
+    artifactLabel.setText("Remaining Damaged Artifacts:");
 
     TableViewer artifactViewer = new TableViewer(artifactComposite, SWT.BORDER | SWT.FULL_SELECTION);
-    artifactTable = artifactViewer.getTable();
-    artifactTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
-    artifactViewer.setLabelProvider(new BundlePoolComposite.TableLabelProvider(parent.getDisplay()));
+    artifactViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    artifactViewer.setSorter(new ViewerSorter());
+    artifactViewer.setLabelProvider(new BundlePoolComposite.TableLabelProvider(parent.getDisplay(), true));
     artifactViewer.setContentProvider(new ArrayContentProvider());
     artifactViewer.setInput(artifacts);
 
-    repositoryComposite = new Composite(sashForm, SWT.NONE);
-    GridLayout gl_repositoryComposite = new GridLayout(1, false);
-    gl_repositoryComposite.marginWidth = 0;
-    gl_repositoryComposite.marginHeight = 0;
-    repositoryComposite.setLayout(gl_repositoryComposite);
+    Composite repositoryComposite = new Composite(sashForm, SWT.NONE);
+    GridLayout repositoryLayout = new GridLayout(1, false);
+    repositoryLayout.marginTop = 10;
+    repositoryLayout.marginWidth = 0;
+    repositoryLayout.marginHeight = 0;
+    repositoryComposite.setLayout(repositoryLayout);
 
-    Label repositoryLabel = new Label(repositoryComposite, SWT.NONE);
-    repositoryLabel.setBounds(0, 0, 55, 15);
+    Composite repositoryHeader = new Composite(repositoryComposite, SWT.NONE);
+    repositoryHeader.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    GridLayout repositoryHeaderLayout = new GridLayout(2, false);
+    repositoryHeaderLayout.marginWidth = 0;
+    repositoryHeaderLayout.marginHeight = 0;
+    repositoryHeader.setLayout(repositoryHeaderLayout);
+
+    Label repositoryLabel = new Label(repositoryHeader, SWT.NONE);
+    repositoryLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     repositoryLabel.setText("Additional Repositories:");
 
-    CheckboxTableViewer repositoryViewer = CheckboxTableViewer.newCheckList(repositoryComposite, SWT.BORDER
+    ToolBar toolBar = new ToolBar(repositoryHeader, SWT.FLAT | SWT.RIGHT);
+    toolBar.setBounds(0, 0, 89, 23);
+
+    ToolItem checkAll = new ToolItem(toolBar, SWT.NONE);
+    checkAll.setToolTipText("Check all repositories");
+    checkAll.setImage(getDefaultImage("icons/obj16/checkAll.gif"));
+
+    ToolItem uncheckAll = new ToolItem(toolBar, SWT.NONE);
+    uncheckAll.setToolTipText("Uncheck all repositories");
+    uncheckAll.setImage(getDefaultImage("icons/obj16/uncheckAll.gif"));
+
+    final CheckboxTableViewer repositoryViewer = CheckboxTableViewer.newCheckList(repositoryComposite, SWT.BORDER
         | SWT.FULL_SELECTION);
-    repositoryTable = repositoryViewer.getTable();
-    repositoryTable.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
+    repositoryViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    repositoryViewer.setSorter(new ViewerSorter());
     repositoryViewer.setLabelProvider(new BundlePoolComposite.TableLabelProvider(parent.getDisplay()));
     repositoryViewer.setContentProvider(new ArrayContentProvider());
-    repositoryViewer.setInput(artifacts.get(0).getBundlePool().getRepositoryURIs());
+    repositoryViewer.setInput(repositories);
+    repositoryViewer.addCheckStateListener(new ICheckStateListener()
+    {
+      public void checkStateChanged(CheckStateChangedEvent event)
+      {
+        URI element = (URI)event.getElement();
+        if (event.getChecked())
+        {
+          checkedRepositories.add(element);
+        }
+        else
+        {
+          checkedRepositories.remove(element);
+        }
+      }
+    });
+
+    checkAll.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        repositoryViewer.setAllChecked(true);
+        checkedRepositories.addAll(repositories);
+      }
+    });
+
+    uncheckAll.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        repositoryViewer.setAllChecked(false);
+        checkedRepositories.clear();
+      }
+    });
+
+    Composite uriComposite = new Composite(repositoryComposite, SWT.NONE);
+    GridLayout uriLayout = new GridLayout(3, false);
+    uriLayout.marginWidth = 0;
+    uriLayout.marginHeight = 0;
+    uriComposite.setLayout(uriLayout);
+    uriComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+    Label uriLabel = new Label(uriComposite, SWT.NONE);
+    uriLabel.setText("URI:");
+
+    final AtomicReference<URI> enteredURI = new AtomicReference<URI>();
+    final Text uriText = new Text(uriComposite, SWT.BORDER);
+    uriText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+    final Button uriButton = new Button(uriComposite, SWT.NONE);
+    uriButton.setText("Add");
+    uriButton.setToolTipText("Add the entered URI to the repositories list");
+    uriButton.setEnabled(false);
+    uriButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        URI uri = enteredURI.get();
+        repositories.add(uri);
+
+        repositoryViewer.refresh();
+        repositoryViewer.setChecked(uri, true);
+        checkedRepositories.add(uri);
+
+        uriText.setText("");
+        uriText.setFocus();
+      }
+    });
+
+    uriText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        URI uri;
+
+        try
+        {
+          String text = uriText.getText();
+          uri = text.length() == 0 ? null : new URI(text);
+        }
+        catch (Exception ex)
+        {
+          uri = null;
+        }
+
+        enteredURI.set(uri);
+        uriButton.setEnabled(uri != null);
+      }
+    });
 
     sashForm.setWeights(new int[] { 1, 2 });
   }

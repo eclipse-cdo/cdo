@@ -68,6 +68,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -103,6 +104,8 @@ public class BundlePoolComposite extends Composite
 
   private BundlePoolAnalyzer analyzer;
 
+  // private Button deleteProfileButton;
+  
   private BundlePool currentBundlePool;
 
   public BundlePoolComposite(final Composite parent, int style)
@@ -204,12 +207,11 @@ public class BundlePoolComposite extends Composite
       {
         currentBundlePool = (BundlePool)((IStructuredSelection)event.getSelection()).getFirstElement();
 
-        artifactContentProvider.setInput(artifactViewer, currentBundlePool);
         artifactViewer.setSelection(StructuredSelection.EMPTY);
-        updateArtifactButtons();
+        artifactContentProvider.setInput(artifactViewer, currentBundlePool);
 
-        profileContentProvider.setInput(profileViewer, currentBundlePool);
         profileViewer.setSelection(StructuredSelection.EMPTY);
+        profileContentProvider.setInput(profileViewer, currentBundlePool);
 
         // bundlePoolMoveButton.setEnabled(true);
         // bundlePoolDeleteButton.setEnabled(true);
@@ -327,9 +329,6 @@ public class BundlePoolComposite extends Composite
       {
         String selection = filterCombo.getText();
         artifactContentProvider.setFilter(selection);
-        // artifactViewer.setItemCount(artifactContentProvider.getElements(currentBundlePool).length);
-        // artifactViewer.refresh();
-        updateArtifactButtons();
       }
     });
 
@@ -418,8 +417,6 @@ public class BundlePoolComposite extends Composite
       @Override
       protected void doSelectionChanged(SelectionChangedEvent event)
       {
-        // BundlePool bundlePool = getCurrentBundlePool();
-        // updateProfileButtons(bundlePool);
       }
 
       @Override
@@ -438,25 +435,6 @@ public class BundlePoolComposite extends Composite
       }
     });
 
-    // Composite profilesButtonBar = new Composite(profilesComposite, SWT.NONE);
-    // GridLayout profilesButtonBarLayout = new GridLayout(1, false);
-    // profilesButtonBarLayout.marginWidth = 0;
-    // profilesButtonBarLayout.marginHeight = 0;
-    // profilesButtonBar.setLayout(profilesButtonBarLayout);
-    // profilesButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
-    //
-    // deleteProfileButton = new Button(profilesButtonBar, SWT.NONE);
-    // deleteProfileButton.setText("Delete...");
-    // deleteProfileButton.setEnabled(false);
-    // deleteProfileButton.addSelectionListener(new SelectionAdapter()
-    // {
-    // @Override
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // Profile[] profiles = getSelectedProfiles(profilesViewer);
-    // deleteProfiles(profiles);
-    // }
-    // });
   }
 
   @Override
@@ -477,9 +455,9 @@ public class BundlePoolComposite extends Composite
           {
             public void run()
             {
-              bundlePoolViewer.refresh();
-              artifactViewer.refresh();
-              profileViewer.refresh();
+              bundlePoolContentProvider.refresh();
+              artifactContentProvider.refresh();
+              profileContentProvider.refresh();
 
               getDisplay().asyncExec(new Runnable()
               {
@@ -509,15 +487,12 @@ public class BundlePoolComposite extends Composite
             {
               if (artifacts)
               {
-                artifactViewer.refresh();
-                artifactViewer.setItemCount(artifactContentProvider.getElements(bundlePool).length);
-                updateArtifactButtons();
+                artifactContentProvider.refresh();
               }
 
               if (profiles)
               {
-                profileViewer.refresh();
-                profileViewer.setItemCount(profileContentProvider.getElements(bundlePool).length);
+                profileContentProvider.refresh();
               }
             }
           }
@@ -546,7 +521,14 @@ public class BundlePoolComposite extends Composite
           {
             public void run()
             {
-              artifactViewer.update(artifact, null);
+              if (ObjectUtil.equals(artifactContentProvider.getFilter(), TableContentProvider.SHOW_ALL))
+              {
+                artifactViewer.update(artifact, null);
+              }
+              else
+              {
+                artifactContentProvider.refresh();
+              }
             }
           });
         }
@@ -624,24 +606,6 @@ public class BundlePoolComposite extends Composite
     }
   }
 
-  // private void updateProfileButtons(BundlePool bundlePool)
-  // {
-  // if (bundlePool == getCurrentBundlePool())
-  // {
-  // updateButton(profilesViewer, deleteProfileButton, "Delete", true);
-  // }
-  // }
-  //
-  // private void moveBundlePool(BundlePool bundlePool)
-  // {
-  // MessageDialog.openInformation(getShell(), AbstractSetupDialog.SHELL_TEXT, "Not yet implemented.");
-  // }
-  //
-  // private void deleteBundlePool(final BundlePool bundlePool)
-  // {
-  // MessageDialog.openInformation(getShell(), AbstractSetupDialog.SHELL_TEXT, "Not yet implemented.");
-  // }
-
   private void deleteArtifacts(final Artifact[] artifacts)
   {
     try
@@ -659,7 +623,8 @@ public class BundlePoolComposite extends Composite
         }
       });
 
-      artifactViewer.refresh();
+      artifactContentProvider.refresh();
+      artifactViewer.setSelection(StructuredSelection.EMPTY);
     }
     catch (InvocationTargetException ex)
     {
@@ -675,7 +640,7 @@ public class BundlePoolComposite extends Composite
   {
     try
     {
-      final List<Artifact> remaining = new ArrayList<Artifact>();
+      final List<Artifact> remainingArtifacts = new ArrayList<Artifact>();
 
       UIUtil.runInProgressDialog(getShell(), new IRunnableWithProgress()
       {
@@ -688,15 +653,48 @@ public class BundlePoolComposite extends Composite
           {
             if (!artifact.repair(null, progress.newChild()))
             {
-              remaining.add(artifact);
+              remainingArtifacts.add(artifact);
             }
           }
         }
       });
 
-      if (!remaining.isEmpty())
+      artifactContentProvider.refresh();
+      artifactViewer.setSelection(StructuredSelection.EMPTY);
+
+      Set<URI> repositories = new HashSet<URI>(analyzer.getRepositoryURIs());
+      while (!remainingArtifacts.isEmpty())
       {
-        new AdditionalURIPrompterDialog(getShell(), remaining);
+        AdditionalURIPrompterDialog dialog = new AdditionalURIPrompterDialog(getShell(), remainingArtifacts,
+            repositories);
+        if (dialog.open() == AdditionalURIPrompterDialog.CANCEL)
+        {
+          break;
+        }
+
+        analyzer.getRepositoryURIs().addAll(repositories);
+
+        final Set<URI> checkedRepositories = dialog.getCheckedRepositories();
+        UIUtil.runInProgressDialog(getShell(), new IRunnableWithProgress()
+        {
+          public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
+          {
+            SubMonitor progress = SubMonitor.convert(monitor, Artifact.REPAIR_TASK_NAME, artifacts.length)
+                .detectCancelation();
+
+            for (Iterator<Artifact> it = remainingArtifacts.iterator(); it.hasNext();)
+            {
+              Artifact artifact = it.next();
+              if (artifact.repair(checkedRepositories, progress.newChild()))
+              {
+                it.remove();
+              }
+            }
+          }
+        });
+
+        repositories.removeAll(checkedRepositories);
+        artifactContentProvider.refresh();
       }
     }
     catch (InvocationTargetException ex)
@@ -780,9 +778,17 @@ public class BundlePoolComposite extends Composite
   {
     private final Color gray;
 
+    private boolean singleColumn;
+
+    public TableLabelProvider(Display display, boolean singleColumn)
+    {
+      this.singleColumn = singleColumn;
+      gray = display.getSystemColor(SWT.COLOR_DARK_GRAY);
+    }
+
     public TableLabelProvider(Display display)
     {
-      gray = display.getSystemColor(SWT.COLOR_DARK_GRAY);
+      this(display, false);
     }
 
     public String getColumnText(Object element, int columnIndex)
@@ -812,6 +818,11 @@ public class BundlePoolComposite extends Composite
         switch (columnIndex)
         {
         case 0:
+          if (singleColumn)
+          {
+            return artifact.getID() + " " + artifact.getVersion();
+          }
+
           return artifact.getID();
         case 1:
           return artifact.getVersion();
@@ -914,7 +925,7 @@ public class BundlePoolComposite extends Composite
    * @author Eike Stepper
    */
   private static abstract class TableContentProvider extends ControlAdapter implements IStructuredContentProvider,
-  ILazyContentProvider
+      ILazyContentProvider
   {
     public static final String SHOW_ALL = "Show All";
 
@@ -945,10 +956,8 @@ public class BundlePoolComposite extends Composite
         tableViewer.getTable().addControlListener(this);
       }
 
-      Object[] elements = getElements(input);
       tableViewer.setInput(input);
-      tableViewer.setItemCount(elements.length);
-      tableViewer.refresh();
+      refresh();
 
       ScrollBar verticalBar = tableViewer.getTable().getVerticalBar();
       if (verticalBar != null)
@@ -977,9 +986,18 @@ public class BundlePoolComposite extends Composite
       tableViewer.replace(element, index);
     }
 
-    public boolean isFiltered(String filter)
+    public void refresh()
     {
-      return ObjectUtil.equals(filter, this.filter);
+      if (tableViewer != null)
+      {
+        tableViewer.refresh();
+        tableViewer.setItemCount(getElements(input).length);
+      }
+    }
+
+    public String getFilter()
+    {
+      return filter;
     }
 
     public void setFilter(String filter)
@@ -990,8 +1008,8 @@ public class BundlePoolComposite extends Composite
         public void run()
         {
           tableViewer.setSelection(StructuredSelection.EMPTY);
-          tableViewer.setItemCount(getElements(input).length);
-          tableViewer.refresh();
+          refresh();
+          resizeColumns();
         }
       });
     }
@@ -1052,7 +1070,7 @@ public class BundlePoolComposite extends Composite
   /**
    * @author Eike Stepper
    */
-  private static final class BundlePoolContentProvider extends TableContentProvider
+  private final class BundlePoolContentProvider extends TableContentProvider
   {
     public Object[] getElements(Object input)
     {
@@ -1066,7 +1084,7 @@ public class BundlePoolComposite extends Composite
   /**
    * @author Eike Stepper
    */
-  private static final class ArtifactContentProvider extends TableContentProvider
+  private final class ArtifactContentProvider extends TableContentProvider
   {
     public static final String SHOW_UNUSED = "Unused";
 
@@ -1074,23 +1092,31 @@ public class BundlePoolComposite extends Composite
 
     public Object[] getElements(Object input)
     {
-      if (isFiltered(SHOW_UNUSED))
+      String filter = getFilter();
+      if (ObjectUtil.equals(filter, SHOW_UNUSED))
       {
         return ((BundlePool)input).getUnusedArtifacts();
       }
-      else if (isFiltered(SHOW_DAMAGED))
+      else if (ObjectUtil.equals(filter, SHOW_DAMAGED))
       {
         return ((BundlePool)input).getDamagedArtifacts();
       }
 
       return ((BundlePool)input).getArtifacts();
     }
+
+    @Override
+    public void refresh()
+    {
+      super.refresh();
+      updateArtifactButtons();
+    }
   }
 
   /**
    * @author Eike Stepper
    */
-  private static final class ProfileContentProvider extends TableContentProvider
+  private final class ProfileContentProvider extends TableContentProvider
   {
     public Object[] getElements(Object input)
     {

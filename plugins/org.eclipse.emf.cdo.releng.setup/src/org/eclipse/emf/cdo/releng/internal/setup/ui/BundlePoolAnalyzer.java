@@ -122,23 +122,23 @@ public final class BundlePoolAnalyzer
   {
     if (repositoryURIs == null)
     {
-      repositoryURIs = new LinkedHashSet<URI>();
-
+      repositoryURIs = new HashSet<URI>();
+  
       IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
-      addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_ALL);
-      addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_DISABLED);
-      addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_LOCAL);
-      addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_NON_LOCAL);
-      addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_SYSTEM);
+      // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_ALL);
+      // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_DISABLED);
+      // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_LOCAL);
+      // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_NON_LOCAL);
+      // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_SYSTEM);
       addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_NON_SYSTEM);
-
+  
       for (BundlePool bundlePool : bundlePools.values())
       {
         // Don't use possibly damaged local bundle pools for damage repair
         repositoryURIs.remove(bundlePool.getLocation().toURI());
       }
     }
-
+  
     return repositoryURIs;
   }
 
@@ -371,7 +371,6 @@ public final class BundlePoolAnalyzer
         checkCancelation(monitor);
 
         File file = p2BundlePool.getArtifactFile(key);
-
         Artifact artifact = new Artifact(this, key, file);
 
         synchronized (this)
@@ -461,36 +460,34 @@ public final class BundlePoolAnalyzer
           }
         }
 
-        File file = artifact.getFile();
-        if (file != null)
+        monitor.subTask("Validating " + artifact);
+        if (isDamaged(artifact))
         {
-          monitor.subTask("Validating " + file);
-          if (isDamaged(file, artifact.getType()))
+          synchronized (this)
           {
-            synchronized (this)
-            {
-              damagedArtifacts.add(artifact);
-              damagedArtifactsArray = null;
-            }
-
-            analyzer.handler.bundlePoolChanged(this, false, false);
-
-            artifact.setDamaged();
-            analyzer.handler.artifactChanged(artifact);
+            damagedArtifacts.add(artifact);
+            damagedArtifactsArray = null;
           }
+
+          analyzer.handler.bundlePoolChanged(this, false, false);
+
+          artifact.setDamaged();
+          analyzer.handler.artifactChanged(artifact);
         }
       }
 
       analyzer.handler.bundlePoolChanged(this, false, false);
     }
 
-    private static boolean isDamaged(File file, String type)
+    private static boolean isDamaged(Artifact artifact)
     {
-      if (!file.exists())
+      File file = artifact.getFile();
+      if (file == null || !file.exists())
       {
         return true;
       }
 
+      String type = artifact.getType();
       if (Artifact.TYPE_PLUGIN.equals(type))
       {
         ZipInputStream in = null;
@@ -997,22 +994,6 @@ public final class BundlePoolAnalyzer
       {
         return true;
       }
-
-      // Set<URI> allURIs = new LinkedHashSet<URI>(bundlePool.analyzer.getRepositoryURIs());
-      // allURIs.removeAll(repositoryURIs);
-      // allURIs.removeAll(poolURIs);
-      //
-      // if (!allURIs.isEmpty())
-      // {
-      // allURIs = prompter.getAdditionalURIs(allURIs);
-      // if (!allURIs.isEmpty())
-      // {
-      // if (doRepair(allURIs, progress))
-      // {
-      // return true;
-      // }
-      // }
-      // }
 
       return false;
     }

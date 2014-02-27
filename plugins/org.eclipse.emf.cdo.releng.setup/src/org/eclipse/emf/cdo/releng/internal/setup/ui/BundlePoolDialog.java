@@ -23,7 +23,7 @@ public final class BundlePoolDialog extends AbstractSetupDialog
 {
   private BundlePoolDialog(Shell parentShell)
   {
-    super(parentShell, "Bundle Pool Management", 680, 750);
+    super(parentShell, "Bundle Pool Management", 750, 750);
     setShellStyle(SWT.TITLE | SWT.MAX | SWT.RESIZE | SWT.BORDER | SWT.APPLICATION_MODAL);
   }
 

@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.om.monitor.SubMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
@@ -37,7 +38,7 @@ import org.eclipse.equinox.p2.repository.artifact.IFileArtifactRepository;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
@@ -59,7 +61,7 @@ import java.util.zip.ZipInputStream;
  */
 public final class BundlePoolAnalyzer
 {
-  private final Listener listener;
+  private final Handler handler;
 
   private final Map<File, BundlePool> bundlePools = new HashMap<File, BundlePool>();
 
@@ -67,9 +69,9 @@ public final class BundlePoolAnalyzer
 
   private Set<URI> repositoryURIs;
 
-  public BundlePoolAnalyzer(Listener listener)
+  public BundlePoolAnalyzer(Handler handler)
   {
-    this.listener = listener;
+    this.handler = handler;
 
     IProfileRegistry profileRegistry = P2.getProfileRegistry();
     for (IProfile p2Profile : profileRegistry.getProfiles())
@@ -91,7 +93,7 @@ public final class BundlePoolAnalyzer
       }
     }
 
-    listener.analyzerChanged(this);
+    handler.analyzerChanged(this);
 
     for (BundlePool bundlePool : bundlePools.values())
     {
@@ -151,7 +153,7 @@ public final class BundlePoolAnalyzer
   /**
    * @author Eike Stepper
    */
-  public interface Listener
+  public interface Handler
   {
     public void analyzerChanged(BundlePoolAnalyzer analyzer);
 
@@ -179,27 +181,20 @@ public final class BundlePoolAnalyzer
 
     private final Set<Artifact> unusedArtifacts = new HashSet<Artifact>();
 
-    private final Set<Artifact> damagedArchives = new HashSet<Artifact>();
+    private final Set<Artifact> damagedArtifacts = new HashSet<Artifact>();
 
-    private int damagedArchivesPercent;
+    private int damagedArtifactsPercent;
+
+    private Artifact[] artifactsArray;
+
+    private Artifact[] unusedArtifactsArray;
+
+    private Artifact[] damagedArtifactsArray;
 
     public BundlePool(BundlePoolAnalyzer agent, File location)
     {
       analyzer = agent;
       this.location = location;
-    }
-
-    public IFileArtifactRepository getP2BundlePool(IProgressMonitor monitor)
-    {
-      try
-      {
-        IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
-        return (IFileArtifactRepository)repositoryManager.loadRepository(location.toURI(), monitor);
-      }
-      catch (ProvisionException ex)
-      {
-        throw new IllegalStateException(ex);
-      }
     }
 
     public BundlePoolAnalyzer getAnalyzer()
@@ -245,9 +240,13 @@ public final class BundlePoolAnalyzer
     {
       synchronized (this)
       {
-        Artifact[] array = artifacts.values().toArray(new Artifact[artifacts.size()]);
-        Arrays.sort(array);
-        return array;
+        if (artifactsArray == null)
+        {
+          artifactsArray = artifacts.values().toArray(new Artifact[artifacts.size()]);
+          Arrays.sort(artifactsArray);
+        }
+
+        return artifactsArray;
       }
     }
 
@@ -269,39 +268,43 @@ public final class BundlePoolAnalyzer
 
     public Artifact[] getUnusedArtifacts()
     {
-      Artifact[] array;
       synchronized (this)
       {
-        array = unusedArtifacts.toArray(new Artifact[unusedArtifacts.size()]);
+        if (unusedArtifactsArray == null)
+        {
+          unusedArtifactsArray = unusedArtifacts.toArray(new Artifact[unusedArtifacts.size()]);
+          Arrays.sort(unusedArtifactsArray);
+        }
+
+        return unusedArtifactsArray;
       }
-
-      Arrays.sort(array);
-      return array;
     }
 
-    public int getDamagedArchivesPercent()
+    public int getDamagedArtifactsPercent()
     {
-      return damagedArchivesPercent;
+      return damagedArtifactsPercent;
     }
 
-    public int getDamagedArchivesCount()
+    public int getDamagedArtifactsCount()
     {
-      synchronized (damagedArchives)
+      synchronized (damagedArtifacts)
       {
-        return damagedArchives.size();
+        return damagedArtifacts.size();
       }
     }
 
-    public Artifact[] getDamagedArchives()
+    public Artifact[] getDamagedArtifacts()
     {
-      Artifact[] array;
       synchronized (this)
       {
-        array = damagedArchives.toArray(new Artifact[damagedArchives.size()]);
-      }
+        if (damagedArtifactsArray == null)
+        {
+          damagedArtifactsArray = damagedArtifacts.toArray(new Artifact[damagedArtifacts.size()]);
+          Arrays.sort(damagedArtifactsArray);
+        }
 
-      Arrays.sort(array);
-      return array;
+        return damagedArtifactsArray;
+      }
     }
 
     public int compareTo(BundlePool o)
@@ -313,6 +316,19 @@ public final class BundlePoolAnalyzer
     public String toString()
     {
       return location.toString();
+    }
+
+    IFileArtifactRepository getP2BundlePool(IProgressMonitor monitor)
+    {
+      try
+      {
+        IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
+        return (IFileArtifactRepository)repositoryManager.loadRepository(location.toURI(), monitor);
+      }
+      catch (ProvisionException ex)
+      {
+        throw new IllegalStateException(ex);
+      }
     }
 
     Profile addProfile(IProfile p2Profile, String installFolder)
@@ -347,21 +363,30 @@ public final class BundlePoolAnalyzer
 
     private void analyze(IProgressMonitor monitor)
     {
+      Random random = new Random(System.currentTimeMillis());
+
       IFileArtifactRepository p2BundlePool = getP2BundlePool(monitor);
       for (IArtifactKey key : p2BundlePool.query(ArtifactKeyQuery.ALL_KEYS, monitor))
       {
         checkCancelation(monitor);
 
         File file = p2BundlePool.getArtifactFile(key);
+
         Artifact artifact = new Artifact(this, key, file);
 
         synchronized (this)
         {
           artifacts.put(key, artifact);
+          artifactsArray = null;
+        }
+
+        if (random.nextInt(100) < 2)
+        {
+          analyzer.handler.bundlePoolChanged(this, false, false);
         }
       }
 
-      analyzer.listener.bundlePoolChanged(this, true, false);
+      analyzer.handler.bundlePoolChanged(this, true, false);
 
       for (Profile profile : getProfiles())
       {
@@ -369,8 +394,10 @@ public final class BundlePoolAnalyzer
         profile.analyze(monitor);
       }
 
+      analyzer.handler.analyzerChanged(analyzer);
+
       analyzeUnusedArtifacts(monitor);
-      analyzeDamagedArchives(monitor);
+      analyzeDamagedArtifacts(monitor);
     }
 
     private void analyzeUnusedArtifacts(IProgressMonitor monitor)
@@ -383,13 +410,14 @@ public final class BundlePoolAnalyzer
           synchronized (this)
           {
             unusedArtifacts.add(artifact);
+            unusedArtifactsArray = null;
           }
 
-          analyzer.listener.bundlePoolChanged(this, false, false);
+          analyzer.handler.bundlePoolChanged(this, false, false);
         }
       }
 
-      analyzer.listener.bundlePoolChanged(this, true, false);
+      analyzer.handler.bundlePoolChanged(this, true, false);
     }
 
     private boolean analyzeUnusedArtifact(Artifact artifact, IProgressMonitor monitor)
@@ -406,7 +434,7 @@ public final class BundlePoolAnalyzer
       return true;
     }
 
-    private void analyzeDamagedArchives(IProgressMonitor monitor)
+    private void analyzeDamagedArtifacts(IProgressMonitor monitor)
     {
       Artifact[] artifacts = getArtifacts();
       int total = artifacts.length;
@@ -417,10 +445,10 @@ public final class BundlePoolAnalyzer
         checkCancelation(monitor);
 
         int percent = ++i * 100 / total;
-        if (percent != damagedArchivesPercent)
+        if (percent != damagedArtifactsPercent)
         {
-          damagedArchivesPercent = percent;
-          analyzer.listener.bundlePoolChanged(this, false, false);
+          damagedArtifactsPercent = percent;
+          analyzer.handler.bundlePoolChanged(this, false, false);
         }
 
         synchronized (artifact)
@@ -441,18 +469,19 @@ public final class BundlePoolAnalyzer
           {
             synchronized (this)
             {
-              damagedArchives.add(artifact);
+              damagedArtifacts.add(artifact);
+              damagedArtifactsArray = null;
             }
 
-            analyzer.listener.bundlePoolChanged(this, false, false);
+            analyzer.handler.bundlePoolChanged(this, false, false);
 
             artifact.setDamaged();
-            analyzer.listener.artifactChanged(artifact);
+            analyzer.handler.artifactChanged(artifact);
           }
         }
       }
 
-      analyzer.listener.bundlePoolChanged(this, false, false);
+      analyzer.handler.bundlePoolChanged(this, false, false);
     }
 
     private static boolean isDamaged(File file, String type)
@@ -462,7 +491,7 @@ public final class BundlePoolAnalyzer
         return true;
       }
 
-      if (Artifact.ARCHIVE.equals(type))
+      if (Artifact.TYPE_PLUGIN.equals(type))
       {
         ZipInputStream in = null;
         ZipFile zip = null;
@@ -534,7 +563,9 @@ public final class BundlePoolAnalyzer
 
     private final Set<Artifact> artifacts = new HashSet<Artifact>();
 
-    private final Set<Artifact> damagedArchives = new HashSet<Artifact>();
+    private final Set<Artifact> damagedArtifacts = new HashSet<Artifact>();
+
+    private Artifact[] damagedArtifactsArray;
 
     public Profile(BundlePool bundlePool, IProfile p2Profile, File installFolder)
     {
@@ -609,23 +640,29 @@ public final class BundlePoolAnalyzer
     {
       synchronized (bundlePool)
       {
-        return !damagedArchives.isEmpty();
+        return !damagedArtifacts.isEmpty();
       }
     }
 
-    public int getDamagedArchivesCount()
+    public int getDamagedArtifactsCount()
     {
       synchronized (bundlePool)
       {
-        return damagedArchives.size();
+        return damagedArtifacts.size();
       }
     }
 
-    public Artifact[] getDamagedArchives()
+    public Artifact[] getDamagedArtifacts()
     {
       synchronized (bundlePool)
       {
-        return damagedArchives.toArray(new Artifact[damagedArchives.size()]);
+        if (damagedArtifactsArray == null)
+        {
+          damagedArtifactsArray = damagedArtifacts.toArray(new Artifact[damagedArtifacts.size()]);
+          Arrays.sort(damagedArtifactsArray);
+        }
+
+        return damagedArtifactsArray;
       }
     }
 
@@ -655,7 +692,7 @@ public final class BundlePoolAnalyzer
               artifact.addProfile(this);
             }
 
-            bundlePool.analyzer.listener.profileChanged(this);
+            bundlePool.analyzer.handler.profileChanged(this);
           }
         }
       }
@@ -667,19 +704,21 @@ public final class BundlePoolAnalyzer
    */
   public static final class Artifact implements Comparable<Artifact>
   {
-    public static final String FOLDER = "Folder";
+    public static final String REPAIR_TASK_NAME = "Repairing artifacts";
 
-    public static final String ARCHIVE = "Archive";
+    public static final String TYPE_FEATURE = "Feature";
 
-    public static final String FILE = "File";
+    public static final String TYPE_PLUGIN = "Plugin";
+
+    public static final String TYPE_BINARY = "Binary";
 
     private final BundlePool bundlePool;
 
     private final IArtifactKey key;
 
-    private final File file;
+    private final String type;
 
-    private final String relativePath;
+    private final File file;
 
     private final List<Profile> profiles = new ArrayList<Profile>();
 
@@ -691,8 +730,19 @@ public final class BundlePoolAnalyzer
       this.key = key;
       this.file = file;
 
-      int start = bundlePool.location.getAbsolutePath().length();
-      relativePath = file.getAbsolutePath().substring(start + 1);
+      String classifier = key.getClassifier();
+      if ("org.eclipse.update.feature".equals(classifier))
+      {
+        type = TYPE_FEATURE;
+      }
+      else if ("osgi.bundle".equals(classifier))
+      {
+        type = TYPE_PLUGIN;
+      }
+      else
+      {
+        type = TYPE_BINARY;
+      }
     }
 
     public boolean isUnused()
@@ -715,35 +765,24 @@ public final class BundlePoolAnalyzer
       return key;
     }
 
+    public String getType()
+    {
+      return type;
+    }
+
+    public String getID()
+    {
+      return key.getId();
+    }
+
+    public String getVersion()
+    {
+      return key.getVersion().toString();
+    }
+
     public File getFile()
     {
       return file;
-    }
-
-    public boolean isFolder()
-    {
-      return file.isDirectory();
-    }
-
-    public String getType()
-    {
-      if (isFolder())
-      {
-        return FOLDER;
-      }
-
-      String path = file.getPath();
-      if (path.endsWith(".jar") || path.endsWith(".zip"))
-      {
-        return ARCHIVE;
-      }
-
-      return FILE;
-    }
-
-    public String getRelativePath()
-    {
-      return relativePath;
     }
 
     public List<Profile> getProfiles()
@@ -753,7 +792,17 @@ public final class BundlePoolAnalyzer
 
     public int compareTo(Artifact o)
     {
-      return relativePath.compareTo(o.relativePath);
+      int result = type.compareTo(o.type);
+      if (result == 0)
+      {
+        result = key.getId().compareTo(o.key.getId());
+        if (result == 0)
+        {
+          result = key.getVersion().compareTo(o.key.getVersion());
+        }
+      }
+
+      return result;
     }
 
     @Override
@@ -802,7 +851,7 @@ public final class BundlePoolAnalyzer
     @Override
     public String toString()
     {
-      return key.toString();
+      return key.getId() + " " + key.getVersion();
     }
 
     void addProfile(Profile profile)
@@ -817,55 +866,71 @@ public final class BundlePoolAnalyzer
       {
         synchronized (bundlePool)
         {
-          profile.damagedArchives.add(this);
+          profile.damagedArtifacts.add(this);
+          profile.damagedArtifactsArray = null;
         }
 
-        bundlePool.analyzer.listener.profileChanged(profile);
+        bundlePool.analyzer.handler.profileChanged(profile);
       }
     }
 
     public synchronized void delete(IProgressMonitor monitor)
     {
-      IFileArtifactRepository p2BundlePool = bundlePool.getP2BundlePool(monitor);
-      p2BundlePool.removeDescriptor(key, monitor);
-
       if (isUnused())
       {
-        damaged = false;
-
-        synchronized (bundlePool)
-        {
-          bundlePool.unusedArtifacts.remove(this);
-          bundlePool.artifacts.remove(key);
-          bundlePool.damagedArchives.remove(this);
-        }
-
-        bundlePool.analyzer.listener.bundlePoolChanged(bundlePool, true, false);
+        deleteUnused(monitor);
       }
       else
       {
+        monitor.subTask("Deleting " + this);
+        IOUtil.delete(file);
         damaged = true;
+
         synchronized (bundlePool)
         {
-          bundlePool.damagedArchives.add(this);
+          bundlePool.damagedArtifacts.add(this);
+          bundlePool.damagedArtifactsArray = null;
         }
 
-        bundlePool.analyzer.listener.bundlePoolChanged(bundlePool, false, false);
-        bundlePool.analyzer.listener.artifactChanged(this);
+        bundlePool.analyzer.handler.bundlePoolChanged(bundlePool, false, false);
+        bundlePool.analyzer.handler.artifactChanged(this);
 
         for (Profile profile : profiles)
         {
           synchronized (bundlePool)
           {
-            profile.damagedArchives.add(this);
+            profile.damagedArtifacts.add(this);
+            profile.damagedArtifactsArray = null;
           }
 
-          bundlePool.analyzer.listener.profileChanged(profile);
+          bundlePool.analyzer.handler.profileChanged(profile);
         }
       }
     }
 
-    public synchronized boolean repair(IProgressMonitor monitor)
+    private void deleteUnused(IProgressMonitor monitor)
+    {
+      monitor.subTask("Deleting " + this);
+      IFileArtifactRepository p2BundlePool = bundlePool.getP2BundlePool(monitor);
+      p2BundlePool.removeDescriptor(key, monitor);
+      damaged = false;
+
+      synchronized (bundlePool)
+      {
+        bundlePool.artifacts.remove(key);
+        bundlePool.artifactsArray = null;
+
+        bundlePool.unusedArtifacts.remove(this);
+        bundlePool.unusedArtifactsArray = null;
+
+        bundlePool.damagedArtifacts.remove(this);
+        bundlePool.damagedArtifactsArray = null;
+      }
+
+      bundlePool.analyzer.handler.bundlePoolChanged(bundlePool, true, false);
+    }
+
+    public synchronized boolean repair(Set<URI> repositoryURIs, IProgressMonitor monitor)
     {
       if (!damaged)
       {
@@ -874,31 +939,34 @@ public final class BundlePoolAnalyzer
 
       if (isUnused())
       {
-        delete(monitor);
+        deleteUnused(monitor);
         return true;
       }
 
-      if (doRepair(monitor))
+      monitor.subTask("Repairing " + this);
+      if (repositoryURIs == null ? doRepair(monitor) : doRepair(repositoryURIs, monitor))
       {
         damaged = false;
-        bundlePool.analyzer.listener.artifactChanged(this);
+        bundlePool.analyzer.handler.artifactChanged(this);
 
         synchronized (bundlePool)
         {
-          bundlePool.damagedArchives.remove(this);
+          bundlePool.damagedArtifacts.remove(this);
+          bundlePool.damagedArtifactsArray = null;
         }
 
         for (Profile profile : profiles)
         {
           synchronized (bundlePool)
           {
-            profile.damagedArchives.remove(this);
+            profile.damagedArtifacts.remove(this);
+            profile.damagedArtifactsArray = null;
           }
 
-          bundlePool.analyzer.listener.profileChanged(profile);
+          bundlePool.analyzer.handler.profileChanged(profile);
         }
 
-        bundlePool.analyzer.listener.bundlePoolChanged(bundlePool, false, false);
+        bundlePool.analyzer.handler.bundlePoolChanged(bundlePool, false, false);
         return true;
       }
 
@@ -908,27 +976,53 @@ public final class BundlePoolAnalyzer
     private boolean doRepair(IProgressMonitor monitor)
     {
       Set<URI> repositoryURIs = bundlePool.getRepositoryURIs();
-      SubMonitor progress = SubMonitor.convert(monitor, 2 * repositoryURIs.size()).detectCancelation();
+      SubMonitor progress = SubMonitor.convert(monitor, repositoryURIs.size()).detectCancelation();
+
+      Set<URI> poolURIs = new HashSet<URI>();
+      for (BundlePool pool : bundlePool.analyzer.getBundlePools().values())
+      {
+        if (pool != bundlePool)
+        {
+          URI uri = pool.getLocation().toURI();
+          poolURIs.add(uri);
+        }
+      }
+
+      if (doRepair(poolURIs, progress))
+      {
+        return true;
+      }
+
       if (doRepair(repositoryURIs, progress))
       {
         return true;
       }
 
-      Set<URI> allURIs = new LinkedHashSet<URI>(bundlePool.analyzer.getRepositoryURIs());
-      allURIs.removeAll(repositoryURIs);
-      if (doRepair(allURIs, progress))
-      {
-        return true;
-      }
+      // Set<URI> allURIs = new LinkedHashSet<URI>(bundlePool.analyzer.getRepositoryURIs());
+      // allURIs.removeAll(repositoryURIs);
+      // allURIs.removeAll(poolURIs);
+      //
+      // if (!allURIs.isEmpty())
+      // {
+      // allURIs = prompter.getAdditionalURIs(allURIs);
+      // if (!allURIs.isEmpty())
+      // {
+      // if (doRepair(allURIs, progress))
+      // {
+      // return true;
+      // }
+      // }
+      // }
 
       return false;
     }
 
-    private boolean doRepair(Set<URI> repositoryURIs, SubMonitor progress)
+    private boolean doRepair(Set<URI> repositoryURIs, IProgressMonitor monitor)
     {
+      SubMonitor progress = SubMonitor.convert(monitor, repositoryURIs.size()).detectCancelation();
       for (URI uri : repositoryURIs)
       {
-        if (doRepair(uri, progress))
+        if (doRepair(uri, progress.newChild()))
         {
           return true;
         }
@@ -939,48 +1033,63 @@ public final class BundlePoolAnalyzer
 
     private boolean doRepair(URI repositoryURI, SubMonitor progress)
     {
+      IFileArtifactRepository p2BundlePool = bundlePool.getP2BundlePool(progress.newChild());
+      IArtifactDescriptor[] oldDescriptors = null;
+
       try
       {
+        oldDescriptors = p2BundlePool.getArtifactDescriptors(key);
+        p2BundlePool.removeDescriptors(oldDescriptors, progress.newChild());
+
         IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
         IArtifactRepository repository = repositoryManager.loadRepository(repositoryURI, progress.newChild());
+        progress.setTaskName(REPAIR_TASK_NAME);
 
         for (IArtifactDescriptor descriptor : repository.getArtifactDescriptors(key))
         {
-          File tmp = new File(file.getAbsolutePath() + ".tmp");
-          FileOutputStream destination = null;
+          OutputStream destination = null;
 
           try
           {
-            destination = new FileOutputStream(tmp);
+            destination = p2BundlePool.getOutputStream(descriptor);
 
             IStatus status = repository.getArtifact(descriptor, destination, progress.newChild());
             if (status.getSeverity() == IStatus.OK)
             {
-              IOUtil.close(destination);
-              IOUtil.copyFile(tmp, file);
               return true;
             }
           }
           finally
           {
             IOUtil.close(destination);
-            if (!tmp.delete())
-            {
-              tmp.deleteOnExit();
-            }
           }
         }
       }
       catch (OperationCanceledException ex)
       {
+        restoreDescriptors(p2BundlePool, oldDescriptors);
         throw ex;
+      }
+      catch (Error err)
+      {
+        restoreDescriptors(p2BundlePool, oldDescriptors);
+        throw err;
       }
       catch (Exception ex)
       {
+        restoreDescriptors(p2BundlePool, oldDescriptors);
         Activator.log(ex);
       }
 
       return false;
+    }
+
+    private void restoreDescriptors(IFileArtifactRepository p2BundlePool, IArtifactDescriptor[] oldDescriptors)
+    {
+      if (oldDescriptors != null && oldDescriptors.length != 0)
+      {
+        p2BundlePool.addDescriptors(oldDescriptors, new NullProgressMonitor());
+      }
     }
   }
 }

@@ -83,7 +83,7 @@ public abstract class AbstractSetupDialog extends TitleAreaDialog
 
   protected AbstractSetupDialog(Shell parentShell, String title, int width, int height)
   {
-    this(parentShell, title, width, height, Activator.getDefault().getBundle());
+    this(parentShell, title, width, height, Activator.getDefault() == null ? null : Activator.getDefault().getBundle());
   }
 
   public String getTitle()

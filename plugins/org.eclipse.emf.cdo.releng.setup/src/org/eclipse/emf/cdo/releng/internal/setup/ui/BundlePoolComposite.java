@@ -12,16 +12,18 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Artifact;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.BundlePool;
-import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Listener;
+import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Handler;
 import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Profile;
 import org.eclipse.emf.cdo.releng.setup.util.UIUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.om.monitor.SubMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.ILazyContentProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -38,6 +40,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.KeyAdapter;
@@ -50,6 +53,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
@@ -58,12 +62,14 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -71,23 +77,25 @@ import java.util.Set;
  */
 public class BundlePoolComposite extends Composite
 {
-  private static final int TABLE_STYLE = SWT.BORDER | SWT.FULL_SELECTION | SWT.NO_SCROLL | SWT.V_SCROLL;
+  private static final int TABLE_STYLE = SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL | SWT.NO_SCROLL | SWT.V_SCROLL;
 
   private final Set<ISelectionProvider> changingSelection = new HashSet<ISelectionProvider>();
 
   private TableViewer bundlePoolViewer;
 
+  private BundlePoolContentProvider bundlePoolContentProvider;
+
   private TableViewer artifactViewer;
+
+  private ArtifactContentProvider artifactContentProvider;
 
   private TableViewer profileViewer;
 
+  private ProfileContentProvider profileContentProvider;
+
   private Button selectAllArtifactsButton;
 
-  private Button selectUnusedArtifactsButton;
-
-  private Button selectDamagedArchivesButton;
-
-  private Button repairArchivesButton;
+  private Button repairArtifactsButton;
 
   private Button deleteArtifactsButton;
 
@@ -113,7 +121,7 @@ public class BundlePoolComposite extends Composite
     createArtifactViewer(verticalSashForm);
     createProfileViewer(verticalSashForm);
 
-    verticalSashForm.setWeights(new int[] { 2, 1 });
+    verticalSashForm.setWeights(new int[] { 3, 1 });
 
     addDisposeListener(new DisposeListener()
     {
@@ -136,22 +144,11 @@ public class BundlePoolComposite extends Composite
       public void run()
       {
         initAgent();
+
         shell.setCursor(oldCursor);
         setEnabled(true);
 
-        bundlePoolViewer.setInput(analyzer);
-
-        getDisplay().asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            Collection<BundlePool> bundlePools = analyzer.getBundlePools().values();
-            if (!bundlePools.isEmpty())
-            {
-              bundlePoolViewer.setSelection(new StructuredSelection(bundlePools.iterator().next()));
-            }
-          }
-        });
+        bundlePoolContentProvider.setInput(bundlePoolViewer, analyzer);
       }
     });
   }
@@ -187,18 +184,19 @@ public class BundlePoolComposite extends Composite
     unusedArtifactsColumn.setAlignment(SWT.RIGHT);
     unusedArtifactsColumn.setWidth(105);
 
-    TableColumn damagedArchivesColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
-    damagedArchivesColumn.setText("Damaged Archives");
-    damagedArchivesColumn.setAlignment(SWT.RIGHT);
-    damagedArchivesColumn.setWidth(118);
+    TableColumn damagedArtifactsColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
+    damagedArtifactsColumn.setText("Damaged Artifacts");
+    damagedArtifactsColumn.setAlignment(SWT.RIGHT);
+    damagedArtifactsColumn.setWidth(125);
 
     TableColumn profilesColumn = new TableViewerColumn(bundlePoolViewer, SWT.NONE).getColumn();
     profilesColumn.setText("Profiles");
     profilesColumn.setAlignment(SWT.RIGHT);
     profilesColumn.setWidth(55);
 
+    bundlePoolContentProvider = new BundlePoolContentProvider();
+    bundlePoolViewer.setContentProvider(bundlePoolContentProvider);
     bundlePoolViewer.setLabelProvider(new TableLabelProvider(getDisplay()));
-    bundlePoolViewer.setContentProvider(new BundlePoolContentProvider());
     bundlePoolViewer.addSelectionChangedListener(new SelectionChangedListener()
     {
       @Override
@@ -206,11 +204,11 @@ public class BundlePoolComposite extends Composite
       {
         currentBundlePool = (BundlePool)((IStructuredSelection)event.getSelection()).getFirstElement();
 
-        artifactViewer.setInput(currentBundlePool);
+        artifactContentProvider.setInput(artifactViewer, currentBundlePool);
         artifactViewer.setSelection(StructuredSelection.EMPTY);
         updateArtifactButtons();
 
-        profileViewer.setInput(currentBundlePool);
+        profileContentProvider.setInput(profileViewer, currentBundlePool);
         profileViewer.setSelection(StructuredSelection.EMPTY);
 
         // bundlePoolMoveButton.setEnabled(true);
@@ -270,15 +268,20 @@ public class BundlePoolComposite extends Composite
 
     TableColumn artifactColumn = new TableViewerColumn(artifactViewer, SWT.NONE).getColumn();
     artifactColumn.setText("Artifact");
-    artifactColumn.setWidth(569);
+    artifactColumn.setWidth(365);
     artifactColumn.setResizable(false);
+
+    TableColumn versionVersion = new TableViewerColumn(artifactViewer, SWT.NONE).getColumn();
+    versionVersion.setText("Version");
+    versionVersion.setWidth(205);
 
     TableColumn profilesColumn = new TableViewerColumn(artifactViewer, SWT.NONE).getColumn();
     profilesColumn.setText("Profiles");
     profilesColumn.setAlignment(SWT.RIGHT);
     profilesColumn.setWidth(56);
 
-    artifactViewer.setContentProvider(new ArtifactContentProvider());
+    artifactContentProvider = new ArtifactContentProvider();
+    artifactViewer.setContentProvider(artifactContentProvider);
     artifactViewer.setLabelProvider(new TableLabelProvider(getDisplay()));
     artifactViewer.addSelectionChangedListener(new SelectionChangedListener()
     {
@@ -305,11 +308,30 @@ public class BundlePoolComposite extends Composite
     });
 
     Composite artifactButtonBar = new Composite(artifactComposite, SWT.NONE);
-    artifactButtonBar.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
+    artifactButtonBar.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false));
     GridLayout artifactButtonBarLayout = new GridLayout(5, false);
     artifactButtonBarLayout.marginWidth = 0;
     artifactButtonBarLayout.marginHeight = 0;
     artifactButtonBar.setLayout(artifactButtonBarLayout);
+
+    final Combo filterCombo = new Combo(artifactButtonBar, SWT.READ_ONLY);
+    filterCombo.add(ArtifactContentProvider.SHOW_ALL);
+    filterCombo.add(ArtifactContentProvider.SHOW_UNUSED);
+    filterCombo.add(ArtifactContentProvider.SHOW_DAMAGED);
+    filterCombo.select(0);
+    filterCombo.pack();
+    filterCombo.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        String selection = filterCombo.getText();
+        artifactContentProvider.setFilter(selection);
+        // artifactViewer.setItemCount(artifactContentProvider.getElements(currentBundlePool).length);
+        // artifactViewer.refresh();
+        updateArtifactButtons();
+      }
+    });
 
     selectAllArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
     selectAllArtifactsButton.setText("Select All");
@@ -323,46 +345,29 @@ public class BundlePoolComposite extends Composite
       }
     });
 
-    selectUnusedArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
-    selectUnusedArtifactsButton.setText("Select Unused");
-    selectUnusedArtifactsButton.setEnabled(false);
-    selectUnusedArtifactsButton.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        artifactViewer.setSelection(new StructuredSelection(currentBundlePool.getUnusedArtifacts()));
-      }
-    });
+    new Label(artifactButtonBar, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-    selectDamagedArchivesButton = new Button(artifactButtonBar, SWT.NONE);
-    selectDamagedArchivesButton.setText("Select Damaged");
-    selectDamagedArchivesButton.setEnabled(false);
-    selectDamagedArchivesButton.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        artifactViewer.setSelection(new StructuredSelection(currentBundlePool.getDamagedArchives()));
-      }
-    });
-
-    repairArchivesButton = new Button(artifactButtonBar, SWT.NONE);
-    repairArchivesButton.setText("Repair");
-    repairArchivesButton.setEnabled(false);
-    repairArchivesButton.addSelectionListener(new SelectionAdapter()
+    repairArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
+    repairArtifactsButton.setText("Repair");
+    repairArtifactsButton.setEnabled(false);
+    repairArtifactsButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
         Artifact[] artifacts = getSelectedArtifacts();
-        repairArchives(artifacts);
+        repairArtifacts(artifacts);
       }
     });
 
     deleteArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
     deleteArtifactsButton.setText("Delete");
     deleteArtifactsButton.setEnabled(false);
+    new Label(artifactButtonBar, SWT.NONE);
+    new Label(artifactButtonBar, SWT.NONE);
+    new Label(artifactButtonBar, SWT.NONE);
+    new Label(artifactButtonBar, SWT.NONE);
+    new Label(artifactButtonBar, SWT.NONE);
     deleteArtifactsButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
@@ -400,12 +405,13 @@ public class BundlePoolComposite extends Composite
     artifactsColumn.setAlignment(SWT.RIGHT);
     artifactsColumn.setWidth(62);
 
-    TableColumn damagedArchivesColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
-    damagedArchivesColumn.setText("Damaged Archives");
-    damagedArchivesColumn.setAlignment(SWT.RIGHT);
-    damagedArchivesColumn.setWidth(117);
+    TableColumn damagedArtifactsColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
+    damagedArtifactsColumn.setText("Damaged Artifacts");
+    damagedArtifactsColumn.setAlignment(SWT.RIGHT);
+    damagedArtifactsColumn.setWidth(125);
 
-    profileViewer.setContentProvider(new ProfileContentProvider());
+    profileContentProvider = new ProfileContentProvider();
+    profileViewer.setContentProvider(profileContentProvider);
     profileViewer.setLabelProvider(new TableLabelProvider(getDisplay()));
     profileViewer.addSelectionChangedListener(new SelectionChangedListener()
     {
@@ -461,9 +467,9 @@ public class BundlePoolComposite extends Composite
 
   private void initAgent()
   {
-    analyzer = new BundlePoolAnalyzer(new Listener()
+    analyzer = new BundlePoolAnalyzer(new Handler()
     {
-      public void analyzerChanged(BundlePoolAnalyzer analyzer)
+      public void analyzerChanged(final BundlePoolAnalyzer analyzer)
       {
         if (analyzer == BundlePoolComposite.this.analyzer)
         {
@@ -474,6 +480,18 @@ public class BundlePoolComposite extends Composite
               bundlePoolViewer.refresh();
               artifactViewer.refresh();
               profileViewer.refresh();
+
+              getDisplay().asyncExec(new Runnable()
+              {
+                public void run()
+                {
+                  Object[] elements = bundlePoolContentProvider.getElements(analyzer);
+                  if (elements.length != 0)
+                  {
+                    bundlePoolViewer.setSelection(new StructuredSelection(elements[0]));
+                  }
+                }
+              });
             }
           });
         }
@@ -492,13 +510,14 @@ public class BundlePoolComposite extends Composite
               if (artifacts)
               {
                 artifactViewer.refresh();
-
+                artifactViewer.setItemCount(artifactContentProvider.getElements(bundlePool).length);
                 updateArtifactButtons();
               }
 
               if (profiles)
               {
                 profileViewer.refresh();
+                profileViewer.setItemCount(profileContentProvider.getElements(bundlePool).length);
               }
             }
           }
@@ -562,51 +581,47 @@ public class BundlePoolComposite extends Composite
     return profiles.toArray(new Profile[profiles.size()]);
   }
 
-  private void updateButton(Button button, String text, int count, boolean prompt)
+  private boolean updateButton(Button button, String text, int count, String suffix)
   {
+    button.setEnabled(count != 0);
     if (count != 0)
     {
       text += " " + count;
     }
 
-    text += " Selected";
-    if (prompt)
-    {
-      text += "...";
-    }
+    text += suffix;
 
     if (!button.getText().equals(text))
     {
       button.setText(text);
-      button.getParent().getParent().layout(true);
+      return true;
     }
 
-    button.setEnabled(count != 0);
+    return false;
   }
 
   private void updateArtifactButtons()
   {
+    boolean changed = false;
+
     if (currentBundlePool != null)
     {
-      selectAllArtifactsButton.setEnabled(currentBundlePool.getArtifactCount() != 0);
-      selectUnusedArtifactsButton.setEnabled(currentBundlePool.getUnusedArtifactsCount() != 0);
-      selectDamagedArchivesButton.setEnabled(currentBundlePool.getDamagedArchivesCount() != 0);
+      Object[] elements = artifactContentProvider.getElements(currentBundlePool);
+      changed |= updateButton(selectAllArtifactsButton, "Select All", elements.length, "");
     }
 
     Artifact[] artifacts = getSelectedArtifacts();
     int count = artifacts.length;
-    updateButton(deleteArtifactsButton, "Delete", count, true);
 
-    for (int i = 0; i < artifacts.length; i++)
+    changed |= updateButton(deleteArtifactsButton, "Delete", count, " Selected");
+    changed |= updateButton(repairArtifactsButton, "Repair", count, " Selected");
+
+    if (changed)
     {
-      Artifact artifact = artifacts[i];
-      if (!artifact.isDamaged())
-      {
-        --count;
-      }
+      Composite parent = repairArtifactsButton.getParent();
+      parent.pack();
+      parent.getParent().layout();
     }
-
-    updateButton(repairArchivesButton, "Repair", count, true);
   }
 
   // private void updateProfileButtons(BundlePool bundlePool)
@@ -643,6 +658,8 @@ public class BundlePoolComposite extends Composite
           }
         }
       });
+
+      artifactViewer.refresh();
     }
     catch (InvocationTargetException ex)
     {
@@ -654,22 +671,33 @@ public class BundlePoolComposite extends Composite
     }
   }
 
-  private void repairArchives(final Artifact[] artifacts)
+  private void repairArtifacts(final Artifact[] artifacts)
   {
     try
     {
+      final List<Artifact> remaining = new ArrayList<Artifact>();
+
       UIUtil.runInProgressDialog(getShell(), new IRunnableWithProgress()
       {
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
-          SubMonitor progress = SubMonitor.convert(monitor, "Repairing archives", artifacts.length).detectCancelation();
+          SubMonitor progress = SubMonitor.convert(monitor, Artifact.REPAIR_TASK_NAME, artifacts.length)
+              .detectCancelation();
 
           for (Artifact artifact : artifacts)
           {
-            artifact.repair(progress.newChild());
+            if (!artifact.repair(null, progress.newChild()))
+            {
+              remaining.add(artifact);
+            }
           }
         }
       });
+
+      if (!remaining.isEmpty())
+      {
+        new AdditionalURIPrompterDialog(getShell(), remaining);
+      }
     }
     catch (InvocationTargetException ex)
     {
@@ -748,137 +776,7 @@ public class BundlePoolComposite extends Composite
   /**
    * @author Eike Stepper
    */
-  protected static abstract class ColumnResizer extends ControlAdapter implements IStructuredContentProvider
-  {
-    private Table table;
-
-    private int lastWidth = -1;
-
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-    {
-      if (table == null)
-      {
-        table = ((TableViewer)viewer).getTable();
-        table.addControlListener(this);
-      }
-
-      apply();
-    }
-
-    @Override
-    public void controlResized(ControlEvent e)
-    {
-      int tableWidth = table.getSize().x;
-      if (tableWidth != lastWidth)
-      {
-        lastWidth = tableWidth;
-
-        ScrollBar bar = table.getVerticalBar();
-        if (bar != null && bar.isVisible())
-        {
-          tableWidth -= bar.getSize().x;
-        }
-
-        final TableColumn[] columns = table.getColumns();
-        for (int i = 1; i < columns.length; i++)
-        {
-          tableWidth -= columns[i].getWidth();
-        }
-
-        columns[0].setWidth(tableWidth);
-      }
-    }
-
-    public void apply()
-    {
-      UIUtil.asyncExec(table.getDisplay(), new Runnable()
-      {
-        public void run()
-        {
-          controlResized(null);
-        }
-      });
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class BundlePoolContentProvider extends ColumnResizer
-  {
-    private BundlePoolAnalyzer agent;
-
-    @Override
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-    {
-      super.inputChanged(viewer, oldInput, newInput);
-      agent = (BundlePoolAnalyzer)newInput;
-    }
-
-    public Object[] getElements(Object inputElement)
-    {
-      List<BundlePool> bundlePools = new ArrayList<BundlePool>(agent.getBundlePools().values());
-      Collections.sort(bundlePools);
-      return bundlePools.toArray();
-    }
-
-    public void dispose()
-    {
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ArtifactContentProvider extends ColumnResizer
-  {
-    private BundlePool bundlePool;
-
-    @Override
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-    {
-      super.inputChanged(viewer, oldInput, newInput);
-      bundlePool = (BundlePool)newInput;
-    }
-
-    public Object[] getElements(Object inputElement)
-    {
-      return bundlePool.getArtifacts();
-    }
-
-    public void dispose()
-    {
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ProfileContentProvider extends ColumnResizer
-  {
-    private BundlePool bundlePool;
-
-    @Override
-    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
-    {
-      super.inputChanged(viewer, oldInput, newInput);
-      bundlePool = (BundlePool)newInput;
-    }
-
-    public Object[] getElements(Object inputElement)
-    {
-      return bundlePool.getProfiles();
-    }
-
-    public void dispose()
-    {
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class TableLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
+  public static final class TableLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
   {
     private final Color gray;
 
@@ -901,8 +799,9 @@ public class BundlePoolComposite extends Composite
         case 2:
           return Integer.toString(bundlePool.getUnusedArtifactsCount());
         case 3:
-          int percent = bundlePool.getDamagedArchivesPercent();
-          return Integer.toString(bundlePool.getDamagedArchivesCount()) + (percent == 100 ? "" : " (" + percent + "%)");
+          int percent = bundlePool.getDamagedArtifactsPercent();
+          return Integer.toString(bundlePool.getDamagedArtifactsCount())
+              + (percent == 100 ? "" : " (" + percent + "%)");
         case 4:
           return Integer.toString(bundlePool.getProfilesCount());
         }
@@ -913,8 +812,10 @@ public class BundlePoolComposite extends Composite
         switch (columnIndex)
         {
         case 0:
-          return artifact.getRelativePath();
+          return artifact.getID();
         case 1:
+          return artifact.getVersion();
+        case 2:
           return Integer.toString(artifact.getProfiles().size());
         }
       }
@@ -928,11 +829,11 @@ public class BundlePoolComposite extends Composite
         case 1:
           return Integer.toString(profile.getArtifacts().size());
         case 2:
-          return Integer.toString(profile.getDamagedArchivesCount());
+          return Integer.toString(profile.getDamagedArtifactsCount());
         }
       }
 
-      return element.toString();
+      return String.valueOf(element);
     }
 
     public Image getColumnImage(Object element, int columnIndex)
@@ -943,7 +844,7 @@ public class BundlePoolComposite extends Composite
         {
           BundlePool bundlePool = (BundlePool)element;
           String key = "bundlePool";
-          if (bundlePool.getDamagedArchivesCount() != 0)
+          if (bundlePool.getDamagedArtifactsCount() != 0)
           {
             key += "Damaged";
           }
@@ -974,6 +875,11 @@ public class BundlePoolComposite extends Composite
 
           return getPluginImage(key);
         }
+
+        if (element instanceof URI)
+        {
+          return getPluginImage("repository");
+        }
       }
 
       return null;
@@ -1001,6 +907,194 @@ public class BundlePoolComposite extends Composite
     private static Image getPluginImage(String key)
     {
       return ResourceManager.getPluginImage("org.eclipse.emf.cdo.releng.setup", "icons/obj16/" + key + ".gif");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static abstract class TableContentProvider extends ControlAdapter implements IStructuredContentProvider,
+  ILazyContentProvider
+  {
+    public static final String SHOW_ALL = "Show All";
+
+    private static final int FIRST_TIME = -1;
+
+    private final ControlListener columnListener = new ControlAdapter()
+    {
+      @Override
+      public void controlResized(ControlEvent e)
+      {
+        resizeColumns(true);
+      }
+    };
+
+    private TableViewer tableViewer;
+
+    private Object input;
+
+    private String filter = SHOW_ALL;
+
+    private int lastWidth = FIRST_TIME;
+
+    public void setInput(TableViewer viewer, Object input)
+    {
+      if (tableViewer == null)
+      {
+        tableViewer = viewer;
+        tableViewer.getTable().addControlListener(this);
+      }
+
+      Object[] elements = getElements(input);
+      tableViewer.setInput(input);
+      tableViewer.setItemCount(elements.length);
+      tableViewer.refresh();
+
+      ScrollBar verticalBar = tableViewer.getTable().getVerticalBar();
+      if (verticalBar != null)
+      {
+        verticalBar.setSelection(verticalBar.getMinimum());
+      }
+
+      resizeColumns();
+    }
+
+    public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
+    {
+      input = newInput;
+    }
+
+    public void dispose()
+    {
+      input = null;
+      tableViewer = null;
+    }
+
+    public void updateElement(int index)
+    {
+      Object[] elements = getElements(input);
+      Object element = index < elements.length ? elements[index] : null;
+      tableViewer.replace(element, index);
+    }
+
+    public boolean isFiltered(String filter)
+    {
+      return ObjectUtil.equals(filter, this.filter);
+    }
+
+    public void setFilter(String filter)
+    {
+      this.filter = filter;
+      UIUtil.asyncExec(tableViewer.getTable().getDisplay(), new Runnable()
+      {
+        public void run()
+        {
+          tableViewer.setSelection(StructuredSelection.EMPTY);
+          tableViewer.setItemCount(getElements(input).length);
+          tableViewer.refresh();
+        }
+      });
+    }
+
+    @Override
+    public void controlResized(ControlEvent e)
+    {
+      resizeColumns(false);
+    }
+
+    public void resizeColumns()
+    {
+      Table table = tableViewer.getTable();
+      if (!table.isDisposed())
+      {
+        UIUtil.asyncExec(table.getDisplay(), new Runnable()
+        {
+          public void run()
+          {
+            resizeColumns(true);
+          }
+        });
+      }
+    }
+
+    private void resizeColumns(boolean force)
+    {
+      Table table = tableViewer.getTable();
+      int tableWidth = table.getSize().x;
+      if (force || tableWidth != lastWidth)
+      {
+        boolean firstTime = lastWidth == FIRST_TIME;
+        lastWidth = tableWidth;
+
+        ScrollBar bar = table.getVerticalBar();
+        if (bar != null && bar.isVisible())
+        {
+          tableWidth -= bar.getSize().x;
+        }
+
+        final TableColumn[] columns = table.getColumns();
+        for (int i = 1; i < columns.length; i++)
+        {
+          TableColumn column = columns[i];
+          tableWidth -= column.getWidth();
+
+          if (firstTime)
+          {
+            column.addControlListener(columnListener);
+          }
+        }
+
+        columns[0].setWidth(tableWidth);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class BundlePoolContentProvider extends TableContentProvider
+  {
+    public Object[] getElements(Object input)
+    {
+      Map<File, BundlePool> map = ((BundlePoolAnalyzer)input).getBundlePools();
+      BundlePool[] bundlePools = map.values().toArray(new BundlePool[map.size()]);
+      Arrays.sort(bundlePools);
+      return bundlePools;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ArtifactContentProvider extends TableContentProvider
+  {
+    public static final String SHOW_UNUSED = "Unused";
+
+    public static final String SHOW_DAMAGED = "Damaged";
+
+    public Object[] getElements(Object input)
+    {
+      if (isFiltered(SHOW_UNUSED))
+      {
+        return ((BundlePool)input).getUnusedArtifacts();
+      }
+      else if (isFiltered(SHOW_DAMAGED))
+      {
+        return ((BundlePool)input).getDamagedArtifacts();
+      }
+
+      return ((BundlePool)input).getArtifacts();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ProfileContentProvider extends TableContentProvider
+  {
+    public Object[] getElements(Object input)
+    {
+      return ((BundlePool)input).getProfiles();
     }
   }
 }

@@ -212,6 +212,7 @@ public class BundlePoolComposite extends Composite
     });
 
     new Label(bundlePoolComposite, SWT.NONE);
+    bundlePoolContentProvider.setInput(bundlePoolViewer, null); // trigger resizeColumns
   }
 
   private void createArtifactViewer(Composite parent)
@@ -338,6 +339,7 @@ public class BundlePoolComposite extends Composite
     });
 
     new Label(artifactComposite, SWT.NONE);
+    artifactContentProvider.setInput(artifactViewer, null); // trigger resizeColumns
   }
 
   private void createProfileViewer(Composite parent)
@@ -396,6 +398,7 @@ public class BundlePoolComposite extends Composite
       }
     });
 
+    profileContentProvider.setInput(profileViewer, null); // trigger resizeColumns
   }
 
   @Override
@@ -623,16 +626,19 @@ public class BundlePoolComposite extends Composite
       artifactContentProvider.refresh();
       artifactViewer.setSelection(StructuredSelection.EMPTY);
 
+      boolean firstTime = true;
       Set<URI> repositories = new HashSet<URI>(analyzer.getRepositoryURIs());
+
       while (!remainingArtifacts.isEmpty())
       {
-        AdditionalURIPrompterDialog dialog = new AdditionalURIPrompterDialog(getShell(), remainingArtifacts,
+        AdditionalURIPrompterDialog dialog = new AdditionalURIPrompterDialog(getShell(), firstTime, remainingArtifacts,
             repositories);
         if (dialog.open() == AdditionalURIPrompterDialog.CANCEL)
         {
           break;
         }
 
+        firstTime = false;
         analyzer.getRepositoryURIs().addAll(repositories);
 
         final Set<URI> checkedRepositories = dialog.getCheckedRepositories();
@@ -907,8 +913,11 @@ public class BundlePoolComposite extends Composite
         tableViewer.getTable().addControlListener(this);
       }
 
-      tableViewer.setInput(input);
-      refresh();
+      if (input != null)
+      {
+        tableViewer.setInput(input);
+        refresh();
+      }
 
       ScrollBar verticalBar = tableViewer.getTable().getVerticalBar();
       if (verticalBar != null)
@@ -939,7 +948,7 @@ public class BundlePoolComposite extends Composite
 
     public void refresh()
     {
-      if (tableViewer != null)
+      if (tableViewer != null && input != null)
       {
         tableViewer.refresh();
         tableViewer.setItemCount(getElements(input).length);

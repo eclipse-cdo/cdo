@@ -123,7 +123,7 @@ public final class BundlePoolAnalyzer
     if (repositoryURIs == null)
     {
       repositoryURIs = new HashSet<URI>();
-  
+
       IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
       // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_ALL);
       // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_DISABLED);
@@ -131,14 +131,14 @@ public final class BundlePoolAnalyzer
       // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_NON_LOCAL);
       // addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_SYSTEM);
       addURIs(repositoryURIs, repositoryManager, IRepositoryManager.REPOSITORIES_NON_SYSTEM);
-  
+
       for (BundlePool bundlePool : bundlePools.values())
       {
         // Don't use possibly damaged local bundle pools for damage repair
         repositoryURIs.remove(bundlePool.getLocation().toURI());
       }
     }
-  
+
     return repositoryURIs;
   }
 
@@ -190,6 +190,8 @@ public final class BundlePoolAnalyzer
     private Artifact[] unusedArtifactsArray;
 
     private Artifact[] damagedArtifactsArray;
+
+    private IFileArtifactRepository p2BundlePool;
 
     public BundlePool(BundlePoolAnalyzer agent, File location)
     {
@@ -318,17 +320,22 @@ public final class BundlePoolAnalyzer
       return location.toString();
     }
 
-    IFileArtifactRepository getP2BundlePool(IProgressMonitor monitor)
+    synchronized IFileArtifactRepository getP2BundlePool(IProgressMonitor monitor)
     {
-      try
+      if (p2BundlePool == null)
       {
-        IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
-        return (IFileArtifactRepository)repositoryManager.loadRepository(location.toURI(), monitor);
+        try
+        {
+          IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
+          p2BundlePool = (IFileArtifactRepository)repositoryManager.loadRepository(location.toURI(), monitor);
+        }
+        catch (ProvisionException ex)
+        {
+          throw new IllegalStateException(ex);
+        }
       }
-      catch (ProvisionException ex)
-      {
-        throw new IllegalStateException(ex);
-      }
+
+      return p2BundlePool;
     }
 
     Profile addProfile(IProfile p2Profile, String installFolder)
@@ -487,8 +494,8 @@ public final class BundlePoolAnalyzer
         return true;
       }
 
-      String type = artifact.getType();
-      if (Artifact.TYPE_PLUGIN.equals(type))
+      String name = file.getName();
+      if (name.endsWith(".jar") || name.endsWith(".zip"))
       {
         ZipInputStream in = null;
         ZipFile zip = null;
@@ -789,13 +796,13 @@ public final class BundlePoolAnalyzer
 
     public int compareTo(Artifact o)
     {
-      int result = type.compareTo(o.type);
+      int result = key.getId().compareTo(o.key.getId());
       if (result == 0)
       {
-        result = key.getId().compareTo(o.key.getId());
+        result = key.getVersion().compareTo(o.key.getVersion());
         if (result == 0)
         {
-          result = key.getVersion().compareTo(o.key.getVersion());
+          result = type.compareTo(o.type);
         }
       }
 
@@ -973,26 +980,36 @@ public final class BundlePoolAnalyzer
     private boolean doRepair(IProgressMonitor monitor)
     {
       Set<URI> repositoryURIs = bundlePool.getRepositoryURIs();
-      SubMonitor progress = SubMonitor.convert(monitor, repositoryURIs.size()).detectCancelation();
+      SubMonitor progress = SubMonitor.convert(monitor, 1 + repositoryURIs.size()).detectCancelation();
 
       Set<URI> poolURIs = new HashSet<URI>();
       for (BundlePool pool : bundlePool.analyzer.getBundlePools().values())
       {
         if (pool != bundlePool)
         {
-          URI uri = pool.getLocation().toURI();
-          poolURIs.add(uri);
+          Artifact otherArtifact = pool.getArtifact(key);
+          if (otherArtifact != null && !otherArtifact.isDamaged())
+          {
+            URI uri = pool.getLocation().toURI();
+            poolURIs.add(uri);
+          }
         }
       }
 
-      if (doRepair(poolURIs, progress))
+      if (!poolURIs.isEmpty())
       {
-        return true;
+        if (doRepair(poolURIs, progress))
+        {
+          return true;
+        }
       }
 
-      if (doRepair(repositoryURIs, progress))
+      if (!repositoryURIs.isEmpty())
       {
-        return true;
+        if (doRepair(repositoryURIs, progress))
+        {
+          return true;
+        }
       }
 
       return false;
@@ -1015,26 +1032,32 @@ public final class BundlePoolAnalyzer
     private boolean doRepair(URI repositoryURI, SubMonitor progress)
     {
       IFileArtifactRepository p2BundlePool = bundlePool.getP2BundlePool(progress.newChild());
-      IArtifactDescriptor[] oldDescriptors = null;
+      IArtifactDescriptor[] localDescriptors = null;
 
       try
       {
-        oldDescriptors = p2BundlePool.getArtifactDescriptors(key);
-        p2BundlePool.removeDescriptors(oldDescriptors, progress.newChild());
+        localDescriptors = p2BundlePool.getArtifactDescriptors(key);
+        if (localDescriptors == null || localDescriptors.length == 0)
+        {
+          return false;
+        }
+
+        p2BundlePool.removeDescriptors(localDescriptors, progress.newChild());
 
         IArtifactRepositoryManager repositoryManager = P2.getArtifactRepositoryManager();
         IArtifactRepository repository = repositoryManager.loadRepository(repositoryURI, progress.newChild());
         progress.setTaskName(REPAIR_TASK_NAME);
 
-        for (IArtifactDescriptor descriptor : repository.getArtifactDescriptors(key))
+        IArtifactDescriptor[] remoteDescriptors = repository.getArtifactDescriptors(key);
+        for (IArtifactDescriptor remoteDescriptor : remoteDescriptors)
         {
           OutputStream destination = null;
 
           try
           {
-            destination = p2BundlePool.getOutputStream(descriptor);
+            destination = p2BundlePool.getOutputStream(localDescriptors[0]);
 
-            IStatus status = repository.getArtifact(descriptor, destination, progress.newChild());
+            IStatus status = repository.getArtifact(remoteDescriptor, destination, progress.newChild());
             if (status.getSeverity() == IStatus.OK)
             {
               return true;
@@ -1048,17 +1071,17 @@ public final class BundlePoolAnalyzer
       }
       catch (OperationCanceledException ex)
       {
-        restoreDescriptors(p2BundlePool, oldDescriptors);
+        restoreDescriptors(p2BundlePool, localDescriptors);
         throw ex;
       }
       catch (Error err)
       {
-        restoreDescriptors(p2BundlePool, oldDescriptors);
+        restoreDescriptors(p2BundlePool, localDescriptors);
         throw err;
       }
       catch (Exception ex)
       {
-        restoreDescriptors(p2BundlePool, oldDescriptors);
+        restoreDescriptors(p2BundlePool, localDescriptors);
         Activator.log(ex);
       }
 
@@ -1069,7 +1092,14 @@ public final class BundlePoolAnalyzer
     {
       if (oldDescriptors != null && oldDescriptors.length != 0)
       {
-        p2BundlePool.addDescriptors(oldDescriptors, new NullProgressMonitor());
+        try
+        {
+          p2BundlePool.addDescriptors(oldDescriptors, new NullProgressMonitor());
+        }
+        catch (Exception ex)
+        {
+          Activator.log(ex);
+        }
       }
     }
   }

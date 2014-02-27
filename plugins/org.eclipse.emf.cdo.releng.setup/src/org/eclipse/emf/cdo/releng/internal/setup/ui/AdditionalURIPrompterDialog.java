@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.releng.internal.setup.ui;
 
 import org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolAnalyzer.Artifact;
 
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -43,18 +44,24 @@ import java.util.concurrent.atomic.AtomicReference;
 /**
  * @author Eike Stepper
  */
-public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
+public final class AdditionalURIPrompterDialog extends AbstractSetupDialog implements ICheckStateListener
 {
+  private final Set<URI> checkedRepositories = new HashSet<URI>();
+
+  private boolean firstTime;
+
   private List<Artifact> artifacts;
 
   private Set<URI> repositories;
 
-  private Set<URI> checkedRepositories = new HashSet<URI>();
+  private CheckboxTableViewer repositoryViewer;
 
-  public AdditionalURIPrompterDialog(Shell parentShell, List<Artifact> artifacts, Set<URI> repositories)
+  public AdditionalURIPrompterDialog(Shell parentShell, boolean firstTime, List<Artifact> artifacts,
+      Set<URI> repositories)
   {
     super(parentShell, "Bundle Pool Management", 600, 500);
     setShellStyle(SWT.TITLE | SWT.MAX | SWT.RESIZE | SWT.BORDER | SWT.APPLICATION_MODAL);
+    this.firstTime = firstTime;
     this.artifacts = artifacts;
     this.repositories = repositories;
   }
@@ -67,8 +74,9 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
   @Override
   protected String getDefaultMessage()
   {
-    return "Some artifacts could not be downloaded from the repositories listed in the profiles.\n"
-        + "Select additional repositories and try again.";
+    return "Some artifacts could not be downloaded from the "
+        + (firstTime ? "repositories listed in the profiles" : "previously checked repositories") + ".\n"
+        + "Please check additional repositories and try again.";
   }
 
   @Override
@@ -129,28 +137,13 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
     uncheckAll.setToolTipText("Uncheck all repositories");
     uncheckAll.setImage(getDefaultImage("icons/obj16/uncheckAll.gif"));
 
-    final CheckboxTableViewer repositoryViewer = CheckboxTableViewer.newCheckList(repositoryComposite, SWT.BORDER
-        | SWT.FULL_SELECTION);
+    repositoryViewer = CheckboxTableViewer.newCheckList(repositoryComposite, SWT.BORDER | SWT.FULL_SELECTION);
     repositoryViewer.getTable().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     repositoryViewer.setSorter(new ViewerSorter());
     repositoryViewer.setLabelProvider(new BundlePoolComposite.TableLabelProvider(parent.getDisplay()));
     repositoryViewer.setContentProvider(new ArrayContentProvider());
     repositoryViewer.setInput(repositories);
-    repositoryViewer.addCheckStateListener(new ICheckStateListener()
-    {
-      public void checkStateChanged(CheckStateChangedEvent event)
-      {
-        URI element = (URI)event.getElement();
-        if (event.getChecked())
-        {
-          checkedRepositories.add(element);
-        }
-        else
-        {
-          checkedRepositories.remove(element);
-        }
-      }
-    });
+    repositoryViewer.addCheckStateListener(this);
 
     checkAll.addSelectionListener(new SelectionAdapter()
     {
@@ -158,7 +151,7 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
       public void widgetSelected(SelectionEvent e)
       {
         repositoryViewer.setAllChecked(true);
-        checkedRepositories.addAll(repositories);
+        checkStateChanged(null);
       }
     });
 
@@ -168,7 +161,7 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
       public void widgetSelected(SelectionEvent e)
       {
         repositoryViewer.setAllChecked(false);
-        checkedRepositories.clear();
+        checkStateChanged(null);
       }
     });
 
@@ -200,7 +193,7 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
 
         repositoryViewer.refresh();
         repositoryViewer.setChecked(uri, true);
-        checkedRepositories.add(uri);
+        checkStateChanged(null);
 
         uriText.setText("");
         uriText.setFocus();
@@ -229,5 +222,24 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog
     });
 
     sashForm.setWeights(new int[] { 1, 2 });
+  }
+
+  @Override
+  protected void createButtonsForButtonBar(Composite parent)
+  {
+    super.createButtonsForButtonBar(parent);
+    checkStateChanged(null);
+
+  }
+
+  public void checkStateChanged(CheckStateChangedEvent event)
+  {
+    checkedRepositories.clear();
+    for (Object object : repositoryViewer.getCheckedElements())
+    {
+      checkedRepositories.add((URI)object);
+    }
+
+    getButton(IDialogConstants.OK_ID).setEnabled(!checkedRepositories.isEmpty());
   }
 }

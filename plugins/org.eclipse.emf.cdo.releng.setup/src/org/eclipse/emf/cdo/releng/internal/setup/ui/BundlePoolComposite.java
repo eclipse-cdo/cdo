@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2014 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -100,18 +100,8 @@ public class BundlePoolComposite extends Composite
 
   private Button deleteArtifactsButton;
 
-  // private Button deleteProfileButton;
-
-  // private Button deleteProfileButton;
-  
   private BundlePoolAnalyzer analyzer;
 
-  // private Button deleteProfileButton;
-  
-  // private Button deleteProfileButton;
-  
-  // private Button deleteProfileButton;
-  
   private BundlePool currentBundlePool;
 
   public BundlePoolComposite(final Composite parent, int style)
@@ -218,44 +208,8 @@ public class BundlePoolComposite extends Composite
 
         profileViewer.setSelection(StructuredSelection.EMPTY);
         profileContentProvider.setInput(profileViewer, currentBundlePool);
-
-        // bundlePoolMoveButton.setEnabled(true);
-        // bundlePoolDeleteButton.setEnabled(true);
-
-        // updateProfileButtons(currentBundlePool);
       }
     });
-
-    // Composite composite = new Composite(composite_3, SWT.NONE);
-    // composite.setLayoutData(new GridData(SWT.RIGHT, SWT.FILL, true, false));
-    // GridLayout gl_composite = new GridLayout(2, false);
-    // gl_composite.marginWidth = 0;
-    // gl_composite.marginHeight = 0;
-    // composite.setLayout(gl_composite);
-    //
-    // final Button bundlePoolMoveButton = new Button(composite, SWT.NONE);
-    // bundlePoolMoveButton.setText("Move...");
-    // bundlePoolMoveButton.setEnabled(false);
-    // bundlePoolMoveButton.addSelectionListener(new SelectionAdapter()
-    // {
-    // @Override
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // moveBundlePool(getCurrentBundlePool());
-    // }
-    // });
-    //
-    // final Button bundlePoolDeleteButton = new Button(composite, SWT.NONE);
-    // bundlePoolDeleteButton.setText("Delete All Artifacts...");
-    // bundlePoolDeleteButton.setEnabled(false);
-    // bundlePoolDeleteButton.addSelectionListener(new SelectionAdapter()
-    // {
-    // @Override
-    // public void widgetSelected(SelectionEvent e)
-    // {
-    // deleteBundlePool(getCurrentBundlePool());
-    // }
-    // });
 
     new Label(bundlePoolComposite, SWT.NONE);
   }
@@ -423,6 +377,7 @@ public class BundlePoolComposite extends Composite
       @Override
       protected void doSelectionChanged(SelectionChangedEvent event)
       {
+        // Do nothing
       }
 
       @Override
@@ -713,11 +668,6 @@ public class BundlePoolComposite extends Composite
     }
   }
 
-  // private void deleteProfiles(Profile[] profiles)
-  // {
-  // MessageDialog.openInformation(getShell(), AbstractSetupDialog.SHELL_TEXT, "Not yet implemented.");
-  // }
-
   /**
    * @author Eike Stepper
    */
@@ -747,11 +697,6 @@ public class BundlePoolComposite extends Composite
       // Subclasses may override
     }
   }
-
-  // private void deleteProfiles(Profile[] profiles)
-  // {
-  // MessageDialog.openInformation(getShell(), AbstractSetupDialog.SHELL_TEXT, "Not yet implemented.");
-  // }
 
   /**
    * @author Eike Stepper

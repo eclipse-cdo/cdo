@@ -104,12 +104,16 @@ public class BundlePoolComposite extends Composite
 
   // private Button deleteProfileButton;
   
-  private BundlePool currentBundlePool;
-
   private BundlePoolAnalyzer analyzer;
 
   // private Button deleteProfileButton;
   
+  // private Button deleteProfileButton;
+  
+  // private Button deleteProfileButton;
+  
+  private BundlePool currentBundlePool;
+
   public BundlePoolComposite(final Composite parent, int style)
   {
     super(parent, style);

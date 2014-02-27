@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2014 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -89,7 +89,7 @@ public final class AdditionalURIPrompterDialog extends AbstractSetupDialog imple
     mainLayout.marginHeight = 10;
     mainComposite.setLayout(mainLayout);
 
-    SashForm sashForm = new SashForm(mainComposite, SWT.VERTICAL);
+    SashForm sashForm = new SashForm(mainComposite, SWT.SMOOTH | SWT.VERTICAL);
     sashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
     Composite artifactComposite = new Composite(sashForm, SWT.NONE);

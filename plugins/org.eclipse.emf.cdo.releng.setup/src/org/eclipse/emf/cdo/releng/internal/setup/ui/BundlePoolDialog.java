@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2004-2014 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -30,13 +30,13 @@ public final class BundlePoolDialog extends AbstractSetupDialog
   @Override
   protected String getDefaultMessage()
   {
-    return "Manage your bundle pools, delete unused artifacts and repair damaged archives.";
+    return "Manage your bundle pools, delete unused artifacts and repair damaged artifacts.";
   }
 
   @Override
   protected void createUI(Composite parent)
   {
-    BundlePoolComposite bundlePoolComposite = new BundlePoolComposite(parent, SWT.NONE);
+    BundlePoolComposite bundlePoolComposite = new BundlePoolComposite(parent, 10, SWT.NONE);
     bundlePoolComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
   }
 

@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.om.monitor.SubMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILazyContentProvider;
@@ -48,7 +49,6 @@ import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -58,7 +58,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ScrollBar;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
@@ -104,17 +103,17 @@ public class BundlePoolComposite extends Composite
 
   private BundlePool currentBundlePool;
 
-  public BundlePoolComposite(final Composite parent, int style)
+  public BundlePoolComposite(final Composite parent, int margin, int style)
   {
     super(parent, style);
     GridLayout gridLayout = new GridLayout(1, false);
-    gridLayout.marginWidth = 10;
-    gridLayout.marginHeight = 10;
+    gridLayout.marginWidth = margin;
+    gridLayout.marginHeight = margin;
     setLayout(gridLayout);
 
     createBundlePoolViewer();
 
-    SashForm verticalSashForm = new SashForm(this, SWT.VERTICAL);
+    SashForm verticalSashForm = new SashForm(this, SWT.SMOOTH | SWT.VERTICAL);
     verticalSashForm.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
     createArtifactViewer(verticalSashForm);
@@ -133,18 +132,12 @@ public class BundlePoolComposite extends Composite
       }
     });
 
-    final Shell shell = getShell();
-    final Cursor oldCursor = shell.getCursor();
-    shell.setCursor(new Cursor(getDisplay(), SWT.CURSOR_WAIT));
     setEnabled(false);
-
     getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {
         initAgent();
-
-        shell.setCursor(oldCursor);
         setEnabled(true);
 
         bundlePoolContentProvider.setInput(bundlePoolViewer, analyzer);
@@ -308,7 +301,7 @@ public class BundlePoolComposite extends Composite
     new Label(artifactButtonBar, SWT.NONE).setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
     repairArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
-    repairArtifactsButton.setText("Repair");
+    repairArtifactsButton.setText("Repair Selected");
     repairArtifactsButton.setEnabled(false);
     repairArtifactsButton.addSelectionListener(new SelectionAdapter()
     {
@@ -321,20 +314,25 @@ public class BundlePoolComposite extends Composite
     });
 
     deleteArtifactsButton = new Button(artifactButtonBar, SWT.NONE);
-    deleteArtifactsButton.setText("Delete");
+    deleteArtifactsButton.setText("Delete Selected...");
     deleteArtifactsButton.setEnabled(false);
-    new Label(artifactButtonBar, SWT.NONE);
-    new Label(artifactButtonBar, SWT.NONE);
-    new Label(artifactButtonBar, SWT.NONE);
-    new Label(artifactButtonBar, SWT.NONE);
-    new Label(artifactButtonBar, SWT.NONE);
     deleteArtifactsButton.addSelectionListener(new SelectionAdapter()
     {
       @Override
       public void widgetSelected(SelectionEvent e)
       {
         Artifact[] artifacts = getSelectedArtifacts();
-        deleteArtifacts(artifacts);
+        int len = artifacts.length;
+        String message = "Do you really want to delete " + len + " artifact" + (len == 1 ? "" : "s") + "?\n\n"
+            + "Note 1: Unused artifacts can always safely be deleted. "
+            + "They will be deleted physically from your disk and logically from your bundle pool.\n\n"
+            + "Note 2: Artifacts used in your profiles will be deleted only physically from your disk. "
+            + "Repairing them is possible if they are still available for download from a p2 repository.";
+
+        if (MessageDialog.openQuestion(getShell(), AbstractSetupDialog.SHELL_TEXT, message))
+        {
+          deleteArtifacts(artifacts);
+        }
       }
     });
 
@@ -369,7 +367,17 @@ public class BundlePoolComposite extends Composite
     TableColumn damagedArtifactsColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
     damagedArtifactsColumn.setText("Damaged Artifacts");
     damagedArtifactsColumn.setAlignment(SWT.RIGHT);
-    damagedArtifactsColumn.setWidth(125);
+    damagedArtifactsColumn.setWidth(120);
+
+    TableColumn rootsColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
+    rootsColumn.setText("Roots");
+    rootsColumn.setAlignment(SWT.RIGHT);
+    rootsColumn.setWidth(50);
+
+    TableColumn repositoriesColumn = new TableViewerColumn(profileViewer, SWT.NONE).getColumn();
+    repositoriesColumn.setText("Repositories");
+    repositoriesColumn.setAlignment(SWT.RIGHT);
+    repositoriesColumn.setWidth(82);
 
     profileContentProvider = new ProfileContentProvider();
     profileViewer.setContentProvider(profileContentProvider);
@@ -559,7 +567,7 @@ public class BundlePoolComposite extends Composite
     Artifact[] artifacts = getSelectedArtifacts();
     int count = artifacts.length;
 
-    changed |= updateButton(deleteArtifactsButton, "Delete", count, " Selected");
+    changed |= updateButton(deleteArtifactsButton, "Delete", count, " Selected...");
     changed |= updateButton(repairArtifactsButton, "Repair", count, " Selected");
 
     if (changed)
@@ -798,6 +806,10 @@ public class BundlePoolComposite extends Composite
           return Integer.toString(profile.getArtifacts().size());
         case 2:
           return Integer.toString(profile.getDamagedArtifactsCount());
+        case 3:
+          return Integer.toString(0);
+        case 4:
+          return Integer.toString(profile.getRepositoryURIs().size());
         }
       }
 
@@ -882,7 +894,7 @@ public class BundlePoolComposite extends Composite
    * @author Eike Stepper
    */
   private static abstract class TableContentProvider extends ControlAdapter implements IStructuredContentProvider,
-      ILazyContentProvider
+  ILazyContentProvider
   {
     public static final String SHOW_ALL = "Show All";
 

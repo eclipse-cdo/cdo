@@ -682,7 +682,7 @@ public class InstallerDialog extends AbstractSetupDialog
           }
         });
 
-    createToolItem(toolBar, "icons/install_pool.gif", "Profiles and bundle pools").addSelectionListener(
+    createToolItem(toolBar, "icons/install_pool.gif", "Bundle pool management").addSelectionListener(
         new SelectionAdapter()
         {
           @Override
@@ -1592,12 +1592,12 @@ public class InstallerDialog extends AbstractSetupDialog
         }
 
         Arrays.sort(rows, new Comparator<String[]>()
-        {
+            {
           public int compare(String[] o1, String[] o2)
           {
             return o1[0].compareTo(o2[0]);
           }
-        });
+            });
 
         Color blue = getShell().getDisplay().getSystemColor(SWT.COLOR_BLUE);
 

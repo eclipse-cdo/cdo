@@ -60,6 +60,12 @@
             class="org.eclipse.emf.cdo.releng.internal.setup.ui.SetupPreferencePage"
             name="Oomph Configuration">
       </page>
+      <page
+            category="org.eclipse.emf.cdo.releng.ui.preferences.RelengPreferencePage"
+            id="org.eclipse.emf.cdo.releng.setup.BundlePoolPreferencePage"
+            class="org.eclipse.emf.cdo.releng.internal.setup.ui.BundlePoolPreferencePage"
+            name="Bundle Pool Management">
+      </page>
    </extension>
 
    <extension

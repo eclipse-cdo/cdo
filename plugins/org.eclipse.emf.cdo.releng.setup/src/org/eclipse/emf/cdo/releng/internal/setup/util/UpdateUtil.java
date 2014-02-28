@@ -63,6 +63,8 @@ public final class UpdateUtil extends Plugin
 {
   public static final String SELF_HOSTING_PROFILE = "SelfHostingProfile";
 
+  public static final String PROP_ROOT_LIST = "setup.root.list";
+
   public static final String PROP_REPO_LIST = "setup.repo.list";
 
   public static final IStatus UPDATE_FOUND_STATUS = new Status(IStatus.OK, Activator.PLUGIN_ID, "Updates found");
@@ -313,7 +315,7 @@ public final class UpdateUtil extends Plugin
 
   public static Pair<String, List<IInstallableUnit>> getInstalledUnits(ProvisioningSession session,
       String... iuPrefixes)
-  {
+      {
     IProvisioningAgent agent = session.getProvisioningAgent();
     IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
     IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
@@ -344,7 +346,7 @@ public final class UpdateUtil extends Plugin
     }
 
     return Pair.create(profile.getProfileId(), ius);
-  }
+      }
 
   public static boolean hasPrefix(String id)
   {

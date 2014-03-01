@@ -82,18 +82,21 @@ public final class UpdateUtil extends Plugin
     Set<URI> set = new LinkedHashSet<URI>(uris);
     String list = profile.getProperty(PROP_REPO_LIST);
 
-    StringTokenizer tokenizer = new StringTokenizer(list, ",");
-    while (tokenizer.hasMoreTokens())
+    if (list != null)
     {
-      String uri = tokenizer.nextToken();
+      StringTokenizer tokenizer = new StringTokenizer(list, ",");
+      while (tokenizer.hasMoreTokens())
+      {
+        String uri = tokenizer.nextToken();
 
-      try
-      {
-        set.add(new URI(uri));
-      }
-      catch (URISyntaxException ex)
-      {
-        Activator.log(ex);
+        try
+        {
+          set.add(new URI(uri));
+        }
+        catch (URISyntaxException ex)
+        {
+          Activator.log(ex);
+        }
       }
     }
 
@@ -315,7 +318,7 @@ public final class UpdateUtil extends Plugin
 
   public static Pair<String, List<IInstallableUnit>> getInstalledUnits(ProvisioningSession session,
       String... iuPrefixes)
-      {
+  {
     IProvisioningAgent agent = session.getProvisioningAgent();
     IProfileRegistry profileRegistry = (IProfileRegistry)agent.getService(IProfileRegistry.class.getName());
     IProfile profile = profileRegistry.getProfile(IProfileRegistry.SELF);
@@ -346,7 +349,7 @@ public final class UpdateUtil extends Plugin
     }
 
     return Pair.create(profile.getProfileId(), ius);
-      }
+  }
 
   public static boolean hasPrefix(String id)
   {

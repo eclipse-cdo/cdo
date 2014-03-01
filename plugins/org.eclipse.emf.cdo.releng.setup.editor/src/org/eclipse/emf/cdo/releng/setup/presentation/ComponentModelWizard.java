@@ -132,7 +132,7 @@ public abstract class ComponentModelWizard extends Wizard implements INewWizard
     }
     else
     {
-      IWizardPage page = createPage();
+      IWizardPage page = createPage(file);
       page.setTitle(getModelName());
       page.setDescription("Create a new " + modelName + " file.");
 
@@ -231,7 +231,7 @@ public abstract class ComponentModelWizard extends Wizard implements INewWizard
 
   protected abstract EObject createModel();
 
-  protected abstract IWizardPage createPage();
+  protected abstract IWizardPage createPage(IFile file);
 
   protected abstract String getErrorMessage(IFile file);
 
@@ -292,9 +292,11 @@ public abstract class ComponentModelWizard extends Wizard implements INewWizard
     }
 
     @Override
-    protected IWizardPage createPage()
+    protected IWizardPage createPage(IFile file)
     {
       model = SetupFactory.eINSTANCE.createComponentDefinition();
+      model.setID(file.getProject().getName());
+      model.setVersion(Version.createOSGi(1, 0, 0));
 
       return new WizardPage(getModelName())
       {
@@ -412,7 +414,7 @@ public abstract class ComponentModelWizard extends Wizard implements INewWizard
     }
 
     @Override
-    protected IWizardPage createPage()
+    protected IWizardPage createPage(IFile file)
     {
       return new WizardPage(getModelName())
       {

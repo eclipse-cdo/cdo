@@ -829,6 +829,7 @@ public class TargletContainer extends AbstractBundleContainer
     catch (Throwable t)
     {
       descriptor.rollbackUpdateTransaction(t, monitor);
+      Activator.log(t);
       Activator.coreException(t);
     }
 

@@ -772,8 +772,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       UpdateProblem updateProblem = descriptor.getUpdateProblem();
       if (updateProblem != null)
       {
-        IStatus status = updateProblem.toStatus();
-        throw new CoreException(status);
+        throw new CoreException(updateProblem);
       }
 
       LoadTargetDefinitionJob job = new LoadTargetDefinitionJob(target);

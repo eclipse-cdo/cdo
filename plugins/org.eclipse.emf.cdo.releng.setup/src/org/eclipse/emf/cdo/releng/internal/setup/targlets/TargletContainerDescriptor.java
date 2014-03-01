@@ -178,9 +178,9 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
   /**
    * @author Eike Stepper
    */
-  public static final class UpdateProblem implements Serializable
+  public static final class UpdateProblem implements Serializable, IStatus
   {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     private static final UpdateProblem[] NO_CHILDREN = {};
 
@@ -191,6 +191,8 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
     private int severity;
 
     private int code;
+
+    private Throwable exception;
 
     private UpdateProblem[] children;
 
@@ -209,6 +211,7 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
       message = status.getMessage();
       severity = status.getSeverity();
       code = status.getCode();
+      exception = status.getException();
 
       IStatus[] statusChildren = status.getChildren();
       if (statusChildren != null && statusChildren.length != 0)
@@ -242,14 +245,34 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
       return code;
     }
 
+    public Throwable getException()
+    {
+      return exception;
+    }
+
     public UpdateProblem[] getChildren()
     {
-      return children == null ? NO_CHILDREN : children;
+      return isMultiStatus() ? children : NO_CHILDREN;
+    }
+
+    public boolean isMultiStatus()
+    {
+      return children != null;
+    }
+
+    public boolean isOK()
+    {
+      return severity == OK;
+    }
+
+    public boolean matches(int severityMask)
+    {
+      return (severity & severityMask) != 0;
     }
 
     public IStatus toStatus()
     {
-      if (children != null)
+      if (isMultiStatus())
       {
         IStatus[] statusChildren = new IStatus[children.length];
         for (int i = 0; i < children.length; i++)
@@ -257,10 +280,10 @@ public final class TargletContainerDescriptor implements Serializable, Comparabl
           statusChildren[i] = children[i].toStatus();
         }
 
-        return new MultiStatus(plugin, code, statusChildren, message, null);
+        return new MultiStatus(plugin, code, statusChildren, message, exception);
       }
 
-      return new Status(severity, plugin, code, message, null);
+      return new Status(severity, plugin, code, message, exception);
     }
 
     @Override

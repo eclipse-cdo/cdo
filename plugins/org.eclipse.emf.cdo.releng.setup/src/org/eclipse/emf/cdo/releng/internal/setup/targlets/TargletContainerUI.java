@@ -237,6 +237,10 @@ public class TargletContainerUI implements IAdapterFactory, ITargetLocationEdito
             children.add(status);
             parents.put(status, location);
 
+            // TODO Uncomment when bug 429373 is fixed
+            // children.add(updateProblem);
+            // parents.put(updateProblem, location);
+
             if (descriptor.getWorkingDigest() != null)
             {
               IStatus info = Activator.getStatus("Location content is available from the last working profile.");

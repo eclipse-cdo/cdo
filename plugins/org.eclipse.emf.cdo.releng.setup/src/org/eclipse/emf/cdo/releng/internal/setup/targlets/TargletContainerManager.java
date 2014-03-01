@@ -133,9 +133,17 @@ public final class TargletContainerManager extends P2
   {
     if (WORKSPACE_STATE_FILE.exists())
     {
-      descriptors = loadDescriptors(WORKSPACE_STATE_FILE);
+      try
+      {
+        descriptors = loadDescriptors(WORKSPACE_STATE_FILE);
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
+      }
     }
-    else
+
+    if (descriptors == null)
     {
       descriptors = new HashMap<String, TargletContainerDescriptor>();
     }
@@ -151,26 +159,33 @@ public final class TargletContainerManager extends P2
     IProfileRegistry profileRegistry = getProfileRegistry();
     for (IProfile profile : profileRegistry.getProfiles())
     {
-      String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
-      if (workspace != null)
+      try
       {
-        if (workspaces.add(workspace))
+        String workspace = profile.getProperty(PROP_TARGLET_CONTAINER_WORKSPACE);
+        if (workspace != null)
         {
-          File file = new File(workspace, WORKSPACE_STATE_RELATIVE_PATH);
-          if (file.exists())
+          if (workspaces.add(workspace))
           {
-            Map<String, TargletContainerDescriptor> workspaceDescriptors = loadDescriptors(file);
-            addWorkingDigests(workingDigests, workspaceDescriptors);
+            File file = new File(workspace, WORKSPACE_STATE_RELATIVE_PATH);
+            if (file.exists())
+            {
+              Map<String, TargletContainerDescriptor> workspaceDescriptors = loadDescriptors(file);
+              addWorkingDigests(workingDigests, workspaceDescriptors);
+            }
+          }
+
+          String digest = profile.getProperty(PROP_TARGLET_CONTAINER_DIGEST);
+          if (!workingDigests.contains(digest))
+          {
+            String profileID = profile.getProfileId();
+            profileRegistry.removeProfile(profileID);
+            Activator.log("Profile " + profileID + " for workspace " + workspace + " removed");
           }
         }
-
-        String digest = profile.getProperty(PROP_TARGLET_CONTAINER_DIGEST);
-        if (!workingDigests.contains(digest))
-        {
-          String profileID = profile.getProfileId();
-          profileRegistry.removeProfile(profileID);
-          Activator.log("Profile " + profileID + " for workspace " + workspace + " removed");
-        }
+      }
+      catch (Exception ex)
+      {
+        Activator.log(ex);
       }
     }
   }

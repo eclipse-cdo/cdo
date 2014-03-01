@@ -894,7 +894,7 @@ public class BundlePoolComposite extends Composite
    * @author Eike Stepper
    */
   private static abstract class TableContentProvider extends ControlAdapter implements IStructuredContentProvider,
-  ILazyContentProvider
+      ILazyContentProvider
   {
     public static final String SHOW_ALL = "Show All";
 

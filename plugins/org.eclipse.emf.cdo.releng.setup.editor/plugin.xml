@@ -121,22 +121,31 @@
          </action>
          -->
          <action
-               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
-               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
-               icon="icons/Branch.gif"
-               label="Oomph &amp;Branch"
-               style="push"
-               toolbarPath="setupGroup"
-               tooltip="Opens an editor on the current Oomph branch">
-         </action>
-         <action
                class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenPreferencesAction"
                id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenPreferencesAction"
                icon="icons/prefs.gif"
                label="&amp;Oomph Preferences"
                style="push"
                toolbarPath="setupGroup"
-               tooltip="Opens an editor on the Oomph user preferences">
+               tooltip="Open the Oomph preferences model">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenBranchAction"
+               icon="icons/Branch.gif"
+               label="Oomph &amp;Branch"
+               style="push"
+               toolbarPath="setupGroup"
+               tooltip="Open the Oomph branch model">
+         </action>
+         <action
+               class="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenLogAction"
+               id="org.eclipse.emf.cdo.releng.setup.presentation.actions.OpenLogAction"
+               icon="icons/Log.gif"
+               label="Oomph &amp;Log"
+               style="push"
+               toolbarPath="setupGroup"
+               tooltip="Open the Oomph log file">
          </action>
          <action
                class="org.eclipse.emf.cdo.releng.setup.presentation.actions.PerformSetupAction"
@@ -145,7 +154,7 @@
                label="&amp;Re-Oomph"
                style="push"
                toolbarPath="setupGroup"
-               tooltip="Perform Oomph setup tasks">
+               tooltip="Perform the Oomph setup tasks">
          </action>
       </actionSet>
    </extension>

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
+import org.eclipse.emf.cdo.releng.internal.setup.Activator;
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainer;
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainerDescriptor;
 import org.eclipse.emf.cdo.releng.internal.setup.targlets.TargletContainerDescriptor.UpdateProblem;
@@ -772,7 +773,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       UpdateProblem updateProblem = descriptor.getUpdateProblem();
       if (updateProblem != null)
       {
-        throw new CoreException(updateProblem);
+        Activator.coreException(new CoreException(updateProblem));
       }
 
       LoadTargetDefinitionJob job = new LoadTargetDefinitionJob(target);

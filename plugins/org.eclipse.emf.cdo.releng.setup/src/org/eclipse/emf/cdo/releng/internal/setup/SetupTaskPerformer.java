@@ -897,6 +897,11 @@ public class SetupTaskPerformer extends AbstractSetupTaskContext
         }
       }
     }
+    catch (Exception ex)
+    {
+      log(ex);
+      throw ex;
+    }
     finally
     {
       // if (getTrigger() != Trigger.BOOTSTRAP)

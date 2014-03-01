@@ -596,7 +596,11 @@ public class TargletContainer extends AbstractBundleContainer
     try
     {
       FORCE_UPDATE.set(Boolean.TRUE);
-      target.resolve(monitor);
+      IStatus status = target.resolve(monitor);
+      if (!status.isOK())
+      {
+        Activator.coreException(new CoreException(status));
+      }
     }
     finally
     {

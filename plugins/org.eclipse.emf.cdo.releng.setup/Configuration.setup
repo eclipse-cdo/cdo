@@ -37,7 +37,7 @@
   </eclipseVersions>
   <projects href="file:/example.setup#/"/>
   <projects href="setups/buckminster.setup#/" name="Buckminster" label="Buckminster"/>
-  <projects href="../org.eclipse.emf.cdo.releng/local.setup#/" name="CDO" label="CDO Model Repository"/>
+  <projects href="http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/local.setup#/" name="CDO" label="CDO Model Repository"/>
   <projects href="setups/releng.setup#/" name="CDO.Releng" label="CDO Release Engineering"/>
   <projects href="setups/egit.setup#/" name="EGit" label="Eclipse Git Team Provider"/>
   <projects href="setups/Platform.setup#/" name="Platform" label="Eclipse Platform SDK"/>

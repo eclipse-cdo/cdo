@@ -33,7 +33,6 @@ import org.eclipse.equinox.internal.p2.engine.PhaseSet;
 import org.eclipse.equinox.internal.p2.engine.phases.Collect;
 import org.eclipse.equinox.internal.p2.engine.phases.Install;
 import org.eclipse.equinox.internal.p2.engine.phases.Property;
-import org.eclipse.equinox.internal.p2.engine.phases.Uninstall;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
 import org.eclipse.equinox.p2.core.ProvisionException;
 import org.eclipse.equinox.p2.engine.IPhaseSet;
@@ -451,10 +450,13 @@ public final class TargletContainerManager extends P2
 
   private static IPhaseSet createPhaseSet()
   {
-    ArrayList<Phase> phases = new ArrayList<Phase>(4);
+    List<Phase> phases = new ArrayList<Phase>(4);
     phases.add(new Collect(100));
     phases.add(new Property(1));
-    phases.add(new Uninstall(50, true));
+
+    // TODO This causes major problems (in targlet the source bundle install removes the real IUs every 2. time)
+    // phases.add(new Uninstall(50, true));
+
     phases.add(new Install(50));
     phases.add(new CollectNativesPhase(100));
 

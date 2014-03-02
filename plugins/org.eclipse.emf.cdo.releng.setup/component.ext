@@ -8,4 +8,6 @@
   <dependencies id="org.eclipse.mylyn.builds.sdk.feature.group"/>
   <dependencies id="org.eclipse.buckminster.core.feature.feature.group"/>
   <dependencies id="org.eclipse.buckminster.pde"/>
+  <dependencies id="javax.xml.bind"/>
+  <dependencies id="javax.xml.stream"/>
 </setup:ComponentExtension>

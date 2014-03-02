@@ -1,5 +1,7 @@
 bin/
 state/
+*.local.launch
+Copy of *.launch
 *~
 ~*.docx
 ~*.pptx

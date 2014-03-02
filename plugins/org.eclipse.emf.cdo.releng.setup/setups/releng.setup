@@ -112,5 +112,9 @@
       <queries summary="Features in ${cdo.releng.bugzilla.version}" url="https://bugs.eclipse.org/bugs/buglist.cgi?classification=Modeling&amp;product=EMF&amp;component=cdo.releng&amp;bug_status=UNCONFIRMED&amp;bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;version=${cdo.releng.bugzilla.version}&amp;bug_severity=enhancement"/>
       <queries summary="Resolved in ${cdo.releng.bugzilla.version}" url="https://bugs.eclipse.org/bugs/buglist.cgi?classification=Modeling&amp;product=EMF&amp;component=cdo.releng&amp;bug_status=RESOLVED&amp;resolution=FIXED&amp;version=${cdo.releng.bugzilla.version}"/>
     </setupTasks>
+    <setupTasks xsi:type="setup:MylynBuildsTask" serverURL="https://hudson.eclipse.org/cdo" userID="${eclipse.user.id}" password="${eclipse.user.password}">
+      <buildPlans name="emf-cdo-gerrit"/>
+      <buildPlans name="emf-cdo-integration"/>
+    </setupTasks>
   </branches>
 </setup:Project>

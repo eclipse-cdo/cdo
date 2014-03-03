@@ -37,8 +37,8 @@ import java.util.List;
  * @generated
  */
 public class ComponentDefinitionItemProvider extends ComponentExtensionItemProvider implements
-IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
-IItemPropertySource
+    IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+    IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -84,7 +84,7 @@ IItemPropertySource
         getString("_UI_ComponentDefinition_iD_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_ComponentDefinition_iD_feature",
             "_UI_ComponentDefinition_type"), SetupPackage.Literals.COMPONENT_DEFINITION__ID, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -101,7 +101,7 @@ IItemPropertySource
         getString("_UI_ComponentDefinition_version_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_ComponentDefinition_version_feature",
             "_UI_ComponentDefinition_type"), SetupPackage.Literals.COMPONENT_DEFINITION__VERSION, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

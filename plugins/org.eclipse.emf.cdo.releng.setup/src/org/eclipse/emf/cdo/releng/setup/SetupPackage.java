@@ -2699,13 +2699,22 @@ public interface SetupPackage extends EPackage
   int GIT_CLONE_TASK__REMOTE_URI = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Push URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__PUSH_URI = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>User ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int GIT_CLONE_TASK__USER_ID = SETUP_TASK_FEATURE_COUNT + 3;
+  int GIT_CLONE_TASK__USER_ID = SETUP_TASK_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
@@ -2714,7 +2723,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 4;
+  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 5;
 
   /**
    * The number of structural features of the '<em>Git Clone Task</em>' class.
@@ -2723,7 +2732,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 5;
+  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -4507,6 +4516,17 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getGitCloneTask_CheckoutBranch();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getPushURI <em>Push URI</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Push URI</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.GitCloneTask#getPushURI()
+   * @see #getGitCloneTask()
+   * @generated
+   */
+  EAttribute getGitCloneTask_PushURI();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getUserID <em>User ID</em>}'.
@@ -6680,6 +6700,14 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute GIT_CLONE_TASK__CHECKOUT_BRANCH = eINSTANCE.getGitCloneTask_CheckoutBranch();
+
+    /**
+     * The meta object literal for the '<em><b>Push URI</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute GIT_CLONE_TASK__PUSH_URI = eINSTANCE.getGitCloneTask_PushURI();
 
     /**
      * The meta object literal for the '<em><b>User ID</b></em>' attribute feature.

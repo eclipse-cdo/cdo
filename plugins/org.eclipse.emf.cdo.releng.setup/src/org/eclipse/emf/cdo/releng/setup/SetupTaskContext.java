@@ -64,4 +64,6 @@ public interface SetupTaskContext extends Map<Object, Object>, ProgressLog, Stri
   public URIConverter getURIConverter();
 
   public URI redirect(URI uri);
+
+  public String redirect(String uri);
 }

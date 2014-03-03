@@ -64,6 +64,7 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
       addLocationPropertyDescriptor(object);
       addRemoteNamePropertyDescriptor(object);
       addRemoteURIPropertyDescriptor(object);
+      addPushURIPropertyDescriptor(object);
       addUserIDPropertyDescriptor(object);
       addCheckoutBranchPropertyDescriptor(object);
     }
@@ -135,6 +136,22 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
         getString("_UI_PropertyDescriptor_description", "_UI_GitCloneTask_checkoutBranch_feature",
             "_UI_GitCloneTask_type"), SetupPackage.Literals.GIT_CLONE_TASK__CHECKOUT_BRANCH, true, false, false,
         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Push URI feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addPushURIPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_GitCloneTask_pushURI_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_GitCloneTask_pushURI_feature", "_UI_GitCloneTask_type"),
+        SetupPackage.Literals.GIT_CLONE_TASK__PUSH_URI, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+        null, null));
   }
 
   /**
@@ -212,6 +229,7 @@ public class GitCloneTaskItemProvider extends SetupTaskItemProvider implements I
     case SetupPackage.GIT_CLONE_TASK__LOCATION:
     case SetupPackage.GIT_CLONE_TASK__REMOTE_NAME:
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
+    case SetupPackage.GIT_CLONE_TASK__PUSH_URI:
     case SetupPackage.GIT_CLONE_TASK__USER_ID:
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

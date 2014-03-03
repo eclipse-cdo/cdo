@@ -596,7 +596,22 @@ public abstract class AbstractSetupTaskContext extends HashMap<Object, Object> i
 
   public URI redirect(URI uri)
   {
+    if (uri == null)
+    {
+      return null;
+    }
+
     return resourceSet.getURIConverter().normalize(uri);
+  }
+
+  public String redirect(String uri)
+  {
+    if (StringUtil.isEmpty(uri))
+    {
+      return null;
+    }
+
+    return redirect(URI.createURI(uri)).toString();
   }
 
   public URIConverter getURIConverter()

@@ -36,7 +36,7 @@ import java.util.List;
  */
 @SuppressWarnings("deprecation")
 public class TargletImportTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -81,7 +81,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_TargletImportTask_targletURI_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_TargletImportTask_targletURI_feature",
             "_UI_TargletImportTask_type"), SetupPackage.Literals.TARGLET_IMPORT_TASK__TARGLET_URI, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

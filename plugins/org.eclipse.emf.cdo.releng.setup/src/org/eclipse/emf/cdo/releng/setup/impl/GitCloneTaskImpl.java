@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Ericsson AB (Julian Enoch) - Bug 429520 - Support additional push URL
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
@@ -73,6 +74,7 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getRemoteName <em>Remote Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getRemoteURI <em>Remote URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getPushURI <em>Push URI</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getUserID <em>User ID</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl#getCheckoutBranch <em>Checkout Branch</em>}</li>
  * </ul>
@@ -141,6 +143,26 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
    * @ordered
    */
   protected String remoteURI = REMOTE_URI_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getPushURI() <em>Push URI</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPushURI()
+   * @generated
+   * @ordered
+   */
+  protected static final String PUSH_URI_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getPushURI() <em>Push URI</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPushURI()
+   * @generated
+   * @ordered
+   */
+  protected String pushURI = PUSH_URI_EDEFAULT;
 
   /**
    * The default value of the '{@link #getUserID() <em>User ID</em>}' attribute.
@@ -314,6 +336,31 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getPushURI()
+  {
+    return pushURI;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setPushURI(String newPushURI)
+  {
+    String oldPushURI = pushURI;
+    pushURI = newPushURI;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, SetupPackage.GIT_CLONE_TASK__PUSH_URI, oldPushURI, pushURI));
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getUserID()
   {
     return userID;
@@ -350,6 +397,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return getRemoteName();
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       return getRemoteURI();
+    case SetupPackage.GIT_CLONE_TASK__PUSH_URI:
+      return getPushURI();
     case SetupPackage.GIT_CLONE_TASK__USER_ID:
       return getUserID();
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
@@ -376,6 +425,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return;
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       setRemoteURI((String)newValue);
+      return;
+    case SetupPackage.GIT_CLONE_TASK__PUSH_URI:
+      setPushURI((String)newValue);
       return;
     case SetupPackage.GIT_CLONE_TASK__USER_ID:
       setUserID((String)newValue);
@@ -406,6 +458,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       setRemoteURI(REMOTE_URI_EDEFAULT);
       return;
+    case SetupPackage.GIT_CLONE_TASK__PUSH_URI:
+      setPushURI(PUSH_URI_EDEFAULT);
+      return;
     case SetupPackage.GIT_CLONE_TASK__USER_ID:
       setUserID(USER_ID_EDEFAULT);
       return;
@@ -432,11 +487,13 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return REMOTE_NAME_EDEFAULT == null ? remoteName != null : !REMOTE_NAME_EDEFAULT.equals(remoteName);
     case SetupPackage.GIT_CLONE_TASK__REMOTE_URI:
       return REMOTE_URI_EDEFAULT == null ? remoteURI != null : !REMOTE_URI_EDEFAULT.equals(remoteURI);
+    case SetupPackage.GIT_CLONE_TASK__PUSH_URI:
+      return PUSH_URI_EDEFAULT == null ? pushURI != null : !PUSH_URI_EDEFAULT.equals(pushURI);
     case SetupPackage.GIT_CLONE_TASK__USER_ID:
       return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       return CHECKOUT_BRANCH_EDEFAULT == null ? checkoutBranch != null : !CHECKOUT_BRANCH_EDEFAULT
-      .equals(checkoutBranch);
+          .equals(checkoutBranch);
     }
     return super.eIsSet(featureID);
   }
@@ -461,6 +518,8 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     result.append(remoteName);
     result.append(", remoteURI: ");
     result.append(remoteURI);
+    result.append(", pushURI: ");
+    result.append(pushURI);
     result.append(", userID: ");
     result.append(userID);
     result.append(", checkoutBranch: ");
@@ -478,15 +537,14 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     gitDelegate = GitUtil.create();
-    return gitDelegate.isNeeded(context, getLocation(), getCheckoutBranch(), getRemoteName());
+    return gitDelegate.isNeeded(context, this);
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
     if (gitDelegate != null)
     {
-      String remoteURI = context.redirect(URI.createURI(getRemoteURI())).toString();
-      gitDelegate.perform(context, getCheckoutBranch(), getRemoteName(), remoteURI, getUserID());
+      gitDelegate.perform(context, this);
     }
   }
 
@@ -503,7 +561,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
   @Override
   public MirrorRunnable mirror(final MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception
   {
-    String sourceURL = context.redirect(URI.createURI(getRemoteURI())).toString();
+    String sourceURL = context.redirect(getRemoteURI());
 
     final File local = new File(mirrorsDir, FileUtil.encodeFileName(sourceURL));
     String localURL = URI.createFileURI(local.getAbsolutePath()).toString();
@@ -538,11 +596,9 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
    */
   private interface GitDelegate
   {
-    public boolean isNeeded(SetupTaskContext context, String name, String checkoutBranch, String remoteName)
-        throws Exception;
+    public boolean isNeeded(SetupTaskContext context, GitCloneTaskImpl impl) throws Exception;
 
-    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI,
-        String userID) throws Exception;
+    public void perform(SetupTaskContext context, GitCloneTaskImpl impl) throws Exception;
 
     public void dispose();
   }
@@ -567,9 +623,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return new GitUtil();
     }
 
-    public boolean isNeeded(SetupTaskContext context, String location, String checkoutBranch, String remoteName)
-        throws Exception
+    public boolean isNeeded(SetupTaskContext context, GitCloneTaskImpl impl) throws Exception
     {
+      String location = impl.getLocation();
+
       workDir = new File(location);
       if (!workDir.isDirectory())
       {
@@ -595,7 +652,11 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
         }
 
         Repository repository = git.getRepository();
-        GitUtil.configureRepository(context, repository, checkoutBranch, remoteName);
+        String checkoutBranch = impl.getCheckoutBranch();
+        String remoteName = impl.getRemoteName();
+        String pushURI = context.redirect(impl.getPushURI());
+        String userID = impl.getUserID();
+        GitUtil.configureRepository(context, repository, checkoutBranch, remoteName, pushURI, userID);
 
         hasCheckout = repository.getAllRefs().containsKey("refs/heads/" + checkoutBranch);
         if (!hasCheckout)
@@ -618,18 +679,24 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       }
     }
 
-    public void perform(SetupTaskContext context, String checkoutBranch, String remoteName, String remoteURI,
-        String userID) throws Exception
+    public void perform(SetupTaskContext context, GitCloneTaskImpl impl) throws Exception
     {
       try
       {
+        String checkoutBranch = impl.getCheckoutBranch();
+        String remoteName = impl.getRemoteName();
+        String remoteURI = context.redirect(impl.getRemoteURI());
+        String userID = impl.getUserID();
+
         if (cachedGit == null)
         {
           cachedGit = GitUtil.cloneRepository(context, workDir, checkoutBranch, remoteName, remoteURI, userID);
           cachedRepository = cachedGit.getRepository();
+
           if (!URI.createURI(remoteURI).isFile())
           {
-            GitUtil.configureRepository(context, cachedRepository, checkoutBranch, remoteName);
+            String pushURI = context.redirect(impl.getPushURI());
+            GitUtil.configureRepository(context, cachedRepository, checkoutBranch, remoteName, pushURI, userID);
           }
         }
 
@@ -724,13 +791,14 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     }
 
     private static void configureRepository(SetupTaskContext context, Repository repository, String checkoutBranch,
-        String remoteName) throws Exception, IOException
+        String remoteName, String pushURI, String userID) throws Exception, IOException
     {
       StoredConfig config = repository.getConfig();
 
       boolean changed = false;
       changed |= configureLineEndingConversion(context, config);
       changed |= addPushRefSpec(context, config, checkoutBranch, remoteName);
+      changed |= addPushURI(context, config, remoteName, pushURI, userID);
       if (changed)
       {
         config.save();
@@ -782,6 +850,46 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       }
 
       return false;
+    }
+
+    private static boolean addPushURI(SetupTaskContext context, StoredConfig config, String remoteName, String pushURI,
+        String userID) throws Exception
+    {
+      boolean uriAdded = false;
+
+      if (!StringUtil.isEmpty(pushURI))
+      {
+        String remote;
+        URI baseURI = URI.createURI(pushURI);
+        if (baseURI.isFile())
+        {
+          remote = baseURI.toString();
+        }
+        else
+        {
+          remote = URI.createHierarchicalURI(baseURI.scheme(), userID + "@" + baseURI.authority(), baseURI.device(),
+              baseURI.segments(), baseURI.query(), baseURI.fragment()).toString();
+        }
+
+        URIish uri = new URIish(remote);
+        for (RemoteConfig remoteConfig : RemoteConfig.getAllRemoteConfigs(config))
+        {
+          if (remoteName.equals(remoteConfig.getName()))
+          {
+            if (context.isPerforming())
+            {
+              context.log("Adding push URI: " + remote);
+            }
+            uriAdded = remoteConfig.addPushURI(uri);
+            if (uriAdded)
+            {
+              remoteConfig.update(config);
+            }
+            break;
+          }
+        }
+      }
+      return uriAdded;
     }
 
     private static boolean hasGerritPushRefSpec(List<RefSpec> pushRefSpecs, String gerritQueue)

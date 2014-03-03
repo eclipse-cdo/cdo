@@ -40,7 +40,7 @@ import java.util.List;
  * @generated
  */
 public class TargletDataItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -104,7 +104,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_TargletData_activeRepositoryList_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_activeRepositoryList_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__ACTIVE_REPOSITORY_LIST, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -121,7 +121,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_TargletData_includeSources_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_includeSources_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__INCLUDE_SOURCES, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -138,7 +138,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_TargletData_includeAllPlatforms_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_TargletData_includeAllPlatforms_feature",
             "_UI_TargletData_type"), SetupPackage.Literals.TARGLET_DATA__INCLUDE_ALL_PLATFORMS, true, false, false,
-            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**

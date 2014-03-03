@@ -21,6 +21,7 @@ package org.eclipse.emf.cdo.releng.setup;
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getLocation <em>Location</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteName <em>Remote Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getRemoteURI <em>Remote URI</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getPushURI <em>Push URI</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getUserID <em>User ID</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getCheckoutBranch <em>Checkout Branch</em>}</li>
  * </ul>
@@ -138,6 +139,32 @@ public interface GitCloneTask extends SetupTask
    * @generated
    */
   void setCheckoutBranch(String value);
+
+  /**
+   * Returns the value of the '<em><b>Push URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Push URI</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Push URI</em>' attribute.
+   * @see #setPushURI(String)
+   * @see org.eclipse.emf.cdo.releng.setup.SetupPackage#getGitCloneTask_PushURI()
+   * @model
+   * @generated
+   */
+  String getPushURI();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.releng.setup.GitCloneTask#getPushURI <em>Push URI</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Push URI</em>' attribute.
+   * @see #getPushURI()
+   * @generated
+   */
+  void setPushURI(String value);
 
   /**
    * Returns the value of the '<em><b>User ID</b></em>' attribute.

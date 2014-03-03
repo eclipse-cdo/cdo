@@ -225,6 +225,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/remoteURI"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/userID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/checkoutBranch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//GitCloneTask/pushURI"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//ProjectSetImportTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//ProjectSetImportTask/uRL"/>
@@ -290,9 +291,9 @@
     <genClasses ecoreClass="setup.ecore#//MylynQueriesTask" labelFeature="#//setup/MylynQueriesTask/repositoryURL">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueriesTask/connectorKind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueriesTask/repositoryURL"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynQueriesTask/queries"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueriesTask/userID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynQueriesTask/password"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynQueriesTask/queries"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//Query">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference setup.ecore#//Query/task"/>
@@ -307,9 +308,9 @@
     <genClasses ecoreClass="setup.ecore#//MylynBuildsTask" labelFeature="#//setup/MylynBuildsTask/serverURL">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynBuildsTask/connectorKind"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynBuildsTask/serverURL"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynBuildsTask/buildPlans"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynBuildsTask/userID"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//MylynBuildsTask/password"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference setup.ecore#//MylynBuildsTask/buildPlans"/>
     </genClasses>
     <genClasses ecoreClass="setup.ecore#//BuildPlan">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute setup.ecore#//BuildPlan/name"/>

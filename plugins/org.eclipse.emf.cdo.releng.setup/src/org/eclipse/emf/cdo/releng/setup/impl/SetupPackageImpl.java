@@ -945,7 +945,17 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getGitCloneTask_CheckoutBranch()
   {
-    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGitCloneTask_PushURI()
+  {
+    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -955,7 +965,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    */
   public EAttribute getGitCloneTask_UserID()
   {
-    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)gitCloneTaskEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -2900,6 +2910,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__LOCATION);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__REMOTE_NAME);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__REMOTE_URI);
+    createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__PUSH_URI);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__USER_ID);
     createEAttribute(gitCloneTaskEClass, GIT_CLONE_TASK__CHECKOUT_BRANCH);
 
@@ -3434,6 +3445,8 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         GitCloneTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
     initEAttribute(getGitCloneTask_RemoteURI(), ecorePackage.getEString(), "remoteURI", null, 1, 1, GitCloneTask.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGitCloneTask_PushURI(), ecorePackage.getEString(), "pushURI", null, 0, 1, GitCloneTask.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getGitCloneTask_UserID(), ecorePackage.getEString(), "userID", "${git.user.id}", 0, 1,
         GitCloneTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,

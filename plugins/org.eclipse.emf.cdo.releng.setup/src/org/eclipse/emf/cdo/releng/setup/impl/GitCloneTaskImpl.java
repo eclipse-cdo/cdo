@@ -436,7 +436,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       return CHECKOUT_BRANCH_EDEFAULT == null ? checkoutBranch != null : !CHECKOUT_BRANCH_EDEFAULT
-          .equals(checkoutBranch);
+      .equals(checkoutBranch);
     }
     return super.eIsSet(featureID);
   }
@@ -718,7 +718,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       command.setRemote(remoteName);
       command.setBranchesToClone(Collections.singleton(checkoutBranch));
       command.setDirectory(workDir);
-      command.setTimeout(10);
+      command.setTimeout(60);
       command.setProgressMonitor(new ProgressLogWrapper(context));
       return command.call();
     }

@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -327,6 +329,19 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta
     }
 
     return changed;
+  }
+
+  public void adjustBranches(CDOBranchManager newBranchManager)
+  {
+    if (branch != null)
+    {
+      branch = newBranchManager.getBranch(branch.getID());
+    }
+
+    if (target instanceof CDOBranchAdjustable)
+    {
+      ((CDOBranchAdjustable)target).adjustBranches(newBranchManager);
+    }
   }
 
   public void accept(CDOFeatureDeltaVisitor visitor)

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
@@ -37,7 +38,7 @@ import java.util.List;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable
+public interface InternalCDORevision extends CDORevision, CDORevisionData, CDOReferenceAdjustable, CDOBranchAdjustable
 {
   /**
    * @since 4.2

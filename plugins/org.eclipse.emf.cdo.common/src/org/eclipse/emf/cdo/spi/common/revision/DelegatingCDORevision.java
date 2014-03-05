@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -69,6 +70,14 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
   {
     return getDelegate().adjustReferences(referenceAdjuster);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void adjustBranches(CDOBranchManager newBranchManager)
+  {
+    getDelegate().adjustBranches(newBranchManager);
   }
 
   public long getTimeStamp()

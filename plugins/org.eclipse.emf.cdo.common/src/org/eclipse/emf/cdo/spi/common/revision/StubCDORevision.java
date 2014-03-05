@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -289,6 +290,14 @@ public class StubCDORevision extends AbstractCDORevision
    * @since 4.0
    */
   public boolean adjustReferences(CDOReferenceAdjuster referenceAdjuster)
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void adjustBranches(CDOBranchManager newBranchManager)
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }

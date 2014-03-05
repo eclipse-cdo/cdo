@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
@@ -534,7 +535,16 @@ public class Session extends Container<IView> implements InternalSession
   @Override
   public String toString()
   {
-    String name = manager.getRepository().getName();
+    String name = "unknown";
+    if (manager != null)
+    {
+      InternalRepository repository = manager.getRepository();
+      if (repository != null)
+      {
+        name = repository.getName();
+      }
+    }
+
     if (userID != null && userID.length() != 0)
     {
       name = userID + "@" + name;

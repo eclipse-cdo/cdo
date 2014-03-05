@@ -11,8 +11,10 @@
 package org.eclipse.emf.cdo.internal.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 
 import org.eclipse.net4j.util.CheckUtil;
 
@@ -21,7 +23,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class CDOIDAndBranchImpl implements CDOIDAndBranch
+public class CDOIDAndBranchImpl implements CDOIDAndBranch, CDOBranchAdjustable
 {
   private CDOID id;
 
@@ -44,6 +46,12 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch
   public CDOBranch getBranch()
   {
     return branch;
+  }
+
+  public void adjustBranches(CDOBranchManager newBranchManager)
+  {
+    branch = newBranchManager.getBranch(branch.getID());
+    CheckUtil.checkArg(branch, "branch");
   }
 
   @Override

@@ -13,6 +13,8 @@
  */
 package org.eclipse.emf.cdo.spi.common.revision;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -829,6 +831,22 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
 
     return changed;
+  }
+
+  /**
+   * @since 4.3
+   */
+  public void adjustBranches(CDOBranchManager newBranchManager)
+  {
+    if (branchPoint != null)
+    {
+      CDOBranch branch = branchPoint.getBranch();
+      if (branch != null)
+      {
+        branch = newBranchManager.getBranch(branch.getID());
+        branchPoint = branch.getPoint(branchPoint.getTimeStamp());
+      }
+    }
   }
 
   public Object getValue(EStructuralFeature feature)

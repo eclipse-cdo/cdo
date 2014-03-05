@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
 import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
@@ -46,6 +47,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeKindCache;
@@ -265,7 +267,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     setLastReplicatedBranchID(branchID);
   }
 
-  public void handleCommitInfo(CDOCommitInfo commitInfo)
+  public void handleCommitInfo(final CDOCommitInfo commitInfo)
   {
     CDOBranch branch = commitInfo.getBranch();
     if (branch.isLocal())
@@ -273,11 +275,57 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       return;
     }
 
-    long timeStamp = commitInfo.getTimeStamp();
-    CDOBranchPoint head = branch.getHead();
+    // Convert branches from remoteSession to localRepository
+    InternalCDOBranchManager newBranchManager = getBranchManager();
+
+    for (CDOIDAndVersion key : commitInfo.getNewObjects())
+    {
+      if (key instanceof CDOBranchAdjustable)
+      {
+        CDOBranchAdjustable branchAdjustable = (CDOBranchAdjustable)key;
+        branchAdjustable.adjustBranches(newBranchManager);
+      }
+    }
+
+    for (CDORevisionKey key : commitInfo.getChangedObjects())
+    {
+      if (key instanceof CDOBranchAdjustable)
+      {
+        CDOBranchAdjustable branchAdjustable = (CDOBranchAdjustable)key;
+        branchAdjustable.adjustBranches(newBranchManager);
+      }
+    }
+
+    for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
+    {
+      if (key instanceof CDOBranchAdjustable)
+      {
+        CDOBranchAdjustable branchAdjustable = (CDOBranchAdjustable)key;
+        branchAdjustable.adjustBranches(newBranchManager);
+      }
+    }
+
+    final InternalCDOBranch newBranch = newBranchManager.getBranch(branch.getID());
+    CDOCommitInfo newCommitInfo = new DelegatingCommitInfo()
+    {
+      @Override
+      protected CDOCommitInfo getDelegate()
+      {
+        return commitInfo;
+      }
+
+      @Override
+      public CDOBranch getBranch()
+      {
+        return newBranch;
+      }
+    };
+
+    long timeStamp = newCommitInfo.getTimeStamp();
+    CDOBranchPoint head = newBranch.getHead();
 
     InternalTransaction transaction = replicatorSession.openTransaction(++lastTransactionID, head);
-    ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, commitInfo);
+    ReplicatorCommitContext commitContext = new ReplicatorCommitContext(transaction, newCommitInfo);
     commitContext.preWrite();
     boolean success = false;
 

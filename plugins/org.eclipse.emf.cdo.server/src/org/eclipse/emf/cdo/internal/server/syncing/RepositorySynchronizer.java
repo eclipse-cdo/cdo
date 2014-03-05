@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
@@ -399,7 +400,6 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         try
         {
           CDOSessionConfiguration masterConfiguration = remoteSessionConfigurationFactory.createSessionConfiguration();
-          masterConfiguration.setBranchManager(localRepository.getBranchManager());
           masterConfiguration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
           masterConfiguration.setLockNotificationMode(LockNotificationMode.ALWAYS);
 
@@ -715,6 +715,12 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
       try
       {
         StoreThreadLocal.setSession(localRepository.getReplicatorSession());
+
+        if (lockChangeInfo instanceof CDOBranchAdjustable)
+        {
+          ((CDOBranchAdjustable)lockChangeInfo).adjustBranches(localRepository.getBranchManager());
+        }
+
         localRepository.handleLockChangeInfo(lockChangeInfo);
       }
       finally

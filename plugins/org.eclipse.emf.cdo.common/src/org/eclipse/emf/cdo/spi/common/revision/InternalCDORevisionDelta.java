@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -28,7 +29,7 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @since 2.0
  */
-public interface InternalCDORevisionDelta extends CDORevisionDelta, CDOReferenceAdjustable
+public interface InternalCDORevisionDelta extends CDORevisionDelta, CDOReferenceAdjustable, CDOBranchAdjustable
 {
   /**
    * @since 3.0

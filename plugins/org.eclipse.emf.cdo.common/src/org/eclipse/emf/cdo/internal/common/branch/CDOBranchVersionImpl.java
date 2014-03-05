@@ -11,14 +11,16 @@
 package org.eclipse.emf.cdo.internal.common.branch;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 
 import java.text.MessageFormat;
 
 /**
  * @author Eike Stepper
  */
-public class CDOBranchVersionImpl implements CDOBranchVersion
+public class CDOBranchVersionImpl implements CDOBranchVersion, CDOBranchAdjustable
 {
   private CDOBranch branch;
 
@@ -28,6 +30,14 @@ public class CDOBranchVersionImpl implements CDOBranchVersion
   {
     this.branch = branch;
     this.version = version;
+  }
+
+  public void adjustBranches(CDOBranchManager newBranchManager)
+  {
+    if (branch != null)
+    {
+      branch = newBranchManager.getBranch(branch.getID());
+    }
   }
 
   public CDOBranch getBranch()

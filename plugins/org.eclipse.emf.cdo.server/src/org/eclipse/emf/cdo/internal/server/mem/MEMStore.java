@@ -358,13 +358,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader2, D
     if (branch != null)
     {
       iterator = new AbstractFilteredIterator<CommitInfo>(iterator)
-          {
+      {
         @Override
         protected boolean isValid(CommitInfo element)
         {
           return element.getBranch() == branch;
         }
-          };
+      };
     }
 
     while (iterator.hasNext())

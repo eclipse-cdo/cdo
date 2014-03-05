@@ -33,7 +33,7 @@ import java.text.MessageFormat;
  * @author Simon McDuff
  */
 public class CDOMoveFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOMoveFeatureDelta, ListIndexAffecting,
-WithIndex
+    WithIndex
 {
   private int oldPosition;
 

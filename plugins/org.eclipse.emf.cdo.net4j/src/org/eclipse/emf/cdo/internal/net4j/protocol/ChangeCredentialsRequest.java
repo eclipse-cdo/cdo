@@ -28,8 +28,7 @@ import java.io.IOException;
  */
 public class ChangeCredentialsRequest extends CDOClientRequestWithMonitoring<Boolean>
 {
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL,
-      ChangeCredentialsRequest.class);
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, ChangeCredentialsRequest.class);
 
   private final CredentialsUpdateOperation operation;
 

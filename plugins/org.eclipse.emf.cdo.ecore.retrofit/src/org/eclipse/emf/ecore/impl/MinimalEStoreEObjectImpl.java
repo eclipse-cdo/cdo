@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.FeatureMap;
 import org.eclipse.emf.ecore.util.FeatureMapUtil;
 
+
 /**
  * A minimal abstract implementation of '<em><b>EObject</b></em>' that delegates to a {@link org.eclipse.emf.ecore.InternalEObject.EStore store}.
  * It's extends {@link MinimalEObjectImpl} and does <b>not</b> introduce any additional fields.
@@ -37,13 +38,13 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
   {
     public void added(Notifier notifier, Adapter adapter)
     {
-      MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl)notifier;
+      MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl) notifier;
       object.eAdapterAdded(adapter);
     }
 
     public void removed(Notifier notifier, Adapter adapter)
     {
-      MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl)notifier;
+      MinimalEStoreEObjectImpl object = (MinimalEStoreEObjectImpl) notifier;
       object.eAdapterRemoved(adapter);
     }
   };
@@ -153,8 +154,8 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
   @Override
   protected boolean eDynamicIsSet(int dynamicFeatureID, EStructuralFeature eFeature)
   {
-    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eFeature.isTransient() ? eSettingDelegate(eFeature)
-        .dynamicIsSet(this, eSettings(), dynamicFeatureID) : eStore().isSet(this, eFeature);
+    return dynamicFeatureID < 0 ? eOpenIsSet(eFeature) : eFeature.isTransient() ? eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID)
+        : eStore().isSet(this, eFeature);
   }
 
   @SuppressWarnings("nls")
@@ -169,9 +170,8 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
 
         public EStoreEcoreEMap()
         {
-          super((EClass)eType, BasicEMap.Entry.class, null);
-          delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(
-              MinimalEStoreEObjectImpl.this, eStructuralFeature)
+          super((EClass) eType, BasicEMap.Entry.class, null);
+          delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(MinimalEStoreEObjectImpl.this, eStructuralFeature)
           {
             private static final long serialVersionUID = 1L;
 
@@ -182,8 +182,7 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
             }
 
             @Override
-            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject,
-                BasicEMap.Entry<Object, Object> oldObject)
+            protected void didSet(int index, BasicEMap.Entry<Object, Object> newObject, BasicEMap.Entry<Object, Object> oldObject)
             {
               didRemove(index, oldObject);
               didAdd(index, newObject);
@@ -257,7 +256,7 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
       EStructuralFeature eContainingFeature = eStore().getContainingFeature(this);
       if (eContainingFeature instanceof EReference)
       {
-        EReference eContainingReference = (EReference)eContainingFeature;
+        EReference eContainingReference = (EReference) eContainingFeature;
         EReference eOpposite = eContainingReference.getEOpposite();
         if (eOpposite != null)
         {
@@ -292,14 +291,14 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
       adapters = null;// Optimize possibly empty array
       if (oldAdapters != null) // Can't be empty array because of the optimization above
       {
-        ((EObservableAdapterList)eAdapters()).removeListener(ADAPTERS_LISTENER);
+        ((EObservableAdapterList) eAdapters()).removeListener(ADAPTERS_LISTENER);
       }
     }
     else
     {
       if (oldAdapters == null) // Can't be empty array because of the optimization above
       {
-        ((EObservableAdapterList)eAdapters()).addListener(ADAPTERS_LISTENER);
+        ((EObservableAdapterList) eAdapters()).addListener(ADAPTERS_LISTENER);
       }
     }
     super.eBasicSetAdapterArray(adapters);

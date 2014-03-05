@@ -401,15 +401,15 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
 
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
-      {
+  {
     getStore().rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
-      }
+  }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
-      {
+  {
     getStore().rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
-      }
+  }
 
   public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
   {

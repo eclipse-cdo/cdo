@@ -62,7 +62,7 @@ import java.util.Map;
  * @since 2.0
  */
 public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping implements IClassMappingAuditSupport,
-IClassMappingDeltaSupport
+    IClassMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
@@ -81,605 +81,605 @@ IClassMappingDeltaSupport
   private String sqlRawDeleteAttributes;
 
   private ThreadLocal<FeatureDeltaWriter> deltaWriter = new ThreadLocal<FeatureDeltaWriter>()
-      {
+  {
     @Override
     protected FeatureDeltaWriter initialValue()
     {
       return new FeatureDeltaWriter();
     }
-      };
+  };
 
-      public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
+  public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
+  {
+    super(mappingStrategy, eClass);
+    initSQLStrings();
+  }
+
+  private void initSQLStrings()
+  {
+    // ----------- Select Revision ---------------------------
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CREATED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_FEATURE);
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append("=? AND ("); //$NON-NLS-1$
+    String sqlSelectAttributesPrefix = builder.toString();
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append("=0)"); //$NON-NLS-1$
+    sqlSelectCurrentAttributes = builder.toString();
+
+    builder = new StringBuilder(sqlSelectAttributesPrefix);
+    builder.append(ATTRIBUTES_CREATED);
+    builder.append("<=? AND ("); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append("=0 OR "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append(">=?))"); //$NON-NLS-1$
+    sqlSelectAttributesByTime = builder.toString();
+
+    builder = new StringBuilder(sqlSelectAttributesPrefix);
+    builder.append("ABS(");
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append(")=?)"); //$NON-NLS-1$
+    sqlSelectAttributesByVersion = builder.toString();
+
+    // ----------- Insert Attributes -------------------------
+    builder = new StringBuilder();
+    builder.append("INSERT INTO "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append("("); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CREATED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_FEATURE);
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
+    builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
+    appendTypeMappingParameters(builder, getValueMappings());
+    appendFieldParameters(builder, getUnsettableFields());
+    appendFieldParameters(builder, getListSizeFields());
+    builder.append(")"); //$NON-NLS-1$
+    sqlInsertAttributes = builder.toString();
+
+    // ----------- Update to set revised ----------------
+    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" SET "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append("=? WHERE "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append("=0"); //$NON-NLS-1$
+    sqlReviseAttributes = builder.toString();
+
+    // ----------- Select all unrevised Object IDs ------
+    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append("=0"); //$NON-NLS-1$
+    sqlSelectAllObjectIDs = builder.toString();
+
+    // ----------- Raw delete one specific revision ------
+    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append("=?"); //$NON-NLS-1$
+    sqlRawDeleteAttributes = builder.toString();
+  }
+
+  public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
+  {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = null;
+
+    try
+    {
+      long timeStamp = revision.getTimeStamp();
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        super(mappingStrategy, eClass);
-        initSQLStrings();
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
+        idHandler.setCDOID(stmt, 1, revision.getID());
+        stmt.setLong(2, timeStamp);
+        stmt.setLong(3, timeStamp);
+      }
+      else
+      {
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+        idHandler.setCDOID(stmt, 1, revision.getID());
       }
 
-      private void initSQLStrings()
+      // Read singleval-attribute table always (even without modeled attributes!)
+      boolean success = readValuesFromStatement(stmt, revision, accessor);
+
+      // Read multival tables only if revision exists
+      if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
       {
-        // ----------- Select Revision ---------------------------
-        StringBuilder builder = new StringBuilder();
-        builder.append("SELECT "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_VERSION);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_CREATED);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_RESOURCE);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_CONTAINER);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_FEATURE);
-        appendTypeMappingNames(builder, getValueMappings());
-        appendFieldNames(builder, getUnsettableFields());
-        appendFieldNames(builder, getListSizeFields());
-        builder.append(" FROM "); //$NON-NLS-1$
-        builder.append(getTable());
-        builder.append(" WHERE "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_ID);
-        builder.append("=? AND ("); //$NON-NLS-1$
-        String sqlSelectAttributesPrefix = builder.toString();
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append("=0)"); //$NON-NLS-1$
-        sqlSelectCurrentAttributes = builder.toString();
-
-        builder = new StringBuilder(sqlSelectAttributesPrefix);
-        builder.append(ATTRIBUTES_CREATED);
-        builder.append("<=? AND ("); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append("=0 OR "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append(">=?))"); //$NON-NLS-1$
-        sqlSelectAttributesByTime = builder.toString();
-
-        builder = new StringBuilder(sqlSelectAttributesPrefix);
-        builder.append("ABS(");
-        builder.append(ATTRIBUTES_VERSION);
-        builder.append(")=?)"); //$NON-NLS-1$
-        sqlSelectAttributesByVersion = builder.toString();
-
-        // ----------- Insert Attributes -------------------------
-        builder = new StringBuilder();
-        builder.append("INSERT INTO "); //$NON-NLS-1$
-        builder.append(getTable());
-        builder.append("("); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_ID);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_VERSION);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_CREATED);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_RESOURCE);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_CONTAINER);
-        builder.append(", "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_FEATURE);
-        appendTypeMappingNames(builder, getValueMappings());
-        appendFieldNames(builder, getUnsettableFields());
-        appendFieldNames(builder, getListSizeFields());
-        builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
-        appendTypeMappingParameters(builder, getValueMappings());
-        appendFieldParameters(builder, getUnsettableFields());
-        appendFieldParameters(builder, getListSizeFields());
-        builder.append(")"); //$NON-NLS-1$
-        sqlInsertAttributes = builder.toString();
-
-        // ----------- Update to set revised ----------------
-        builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-        builder.append(getTable());
-        builder.append(" SET "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append("=? WHERE "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_ID);
-        builder.append("=? AND "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append("=0"); //$NON-NLS-1$
-        sqlReviseAttributes = builder.toString();
-
-        // ----------- Select all unrevised Object IDs ------
-        builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_ID);
-        builder.append(" FROM "); //$NON-NLS-1$
-        builder.append(getTable());
-        builder.append(" WHERE "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_REVISED);
-        builder.append("=0"); //$NON-NLS-1$
-        sqlSelectAllObjectIDs = builder.toString();
-
-        // ----------- Raw delete one specific revision ------
-        builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-        builder.append(getTable());
-        builder.append(" WHERE "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_ID);
-        builder.append("=? AND "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_VERSION);
-        builder.append("=?"); //$NON-NLS-1$
-        sqlRawDeleteAttributes = builder.toString();
+        readLists(accessor, revision, listChunk);
       }
 
-      public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
+      return success;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
+  {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion,
+        ReuseProbability.HIGH);
+
+    try
+    {
+      idHandler.setCDOID(stmt, 1, revision.getID());
+      stmt.setInt(2, revision.getVersion());
+
+      // Read singleval-attribute table always (even without modeled attributes!)
+      boolean success = readValuesFromStatement(stmt, revision, accessor);
+
+      // Read multival tables only if revision exists
+      if (success)
       {
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-        IDBPreparedStatement stmt = null;
-
-        try
-        {
-          long timeStamp = revision.getTimeStamp();
-          if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-          {
-            stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByTime, ReuseProbability.MEDIUM);
-            idHandler.setCDOID(stmt, 1, revision.getID());
-            stmt.setLong(2, timeStamp);
-            stmt.setLong(3, timeStamp);
-          }
-          else
-          {
-            stmt = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
-            idHandler.setCDOID(stmt, 1, revision.getID());
-          }
-
-          // Read singleval-attribute table always (even without modeled attributes!)
-          boolean success = readValuesFromStatement(stmt, revision, accessor);
-
-          // Read multival tables only if revision exists
-          if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
-          {
-            readLists(accessor, revision, listChunk);
-          }
-
-          return success;
-        }
-        catch (SQLException ex)
-        {
-          throw new DBException(ex);
-        }
-        finally
-        {
-          DBUtil.close(stmt);
-        }
+        readLists(accessor, revision, listChunk);
       }
 
-      public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
+      return success;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
+      boolean exactMatch, CDOBranchPoint branchPoint)
+  {
+    EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
+    long timeStamp = branchPoint.getTimeStamp();
+
+    ITypeMapping nameValueMapping = getValueMapping(nameFeature);
+    if (nameValueMapping == null)
+    {
+      throw new ImplementationError(nameFeature + " not found in ClassMapping " + this); //$NON-NLS-1$
+    }
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_ID);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append(">0 AND "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(nameValueMapping.getField());
+    if (name == null)
+    {
+      builder.append(" IS NULL"); //$NON-NLS-1$
+    }
+    else
+    {
+      builder.append(exactMatch ? "=? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    builder.append(" AND ("); //$NON-NLS-1$
+
+    if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+    {
+      builder.append(ATTRIBUTES_REVISED);
+      builder.append("=0)"); //$NON-NLS-1$
+    }
+    else
+    {
+      builder.append(ATTRIBUTES_CREATED);
+      builder.append("<=? AND ("); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_REVISED);
+      builder.append("=0 OR "); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_REVISED);
+      builder.append(">=?))"); //$NON-NLS-1$
+    }
+
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection()
+        .prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
+
+    try
+    {
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, folderId);
+
+      if (name != null)
       {
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-        IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion,
-            ReuseProbability.HIGH);
-
-        try
-        {
-          idHandler.setCDOID(stmt, 1, revision.getID());
-          stmt.setInt(2, revision.getVersion());
-
-          // Read singleval-attribute table always (even without modeled attributes!)
-          boolean success = readValuesFromStatement(stmt, revision, accessor);
-
-          // Read multival tables only if revision exists
-          if (success)
-          {
-            readLists(accessor, revision, listChunk);
-          }
-
-          return success;
-        }
-        catch (SQLException ex)
-        {
-          throw new DBException(ex);
-        }
-        finally
-        {
-          DBUtil.close(stmt);
-        }
+        String queryName = exactMatch ? name : name + "%"; //$NON-NLS-1$
+        nameValueMapping.setValue(stmt, column++, queryName);
       }
 
-      public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name,
-          boolean exactMatch, CDOBranchPoint branchPoint)
+      if (timeStamp != CDORevision.UNSPECIFIED_DATE)
       {
-        EStructuralFeature nameFeature = EresourcePackage.eINSTANCE.getCDOResourceNode_Name();
-        long timeStamp = branchPoint.getTimeStamp();
-
-        ITypeMapping nameValueMapping = getValueMapping(nameFeature);
-        if (nameValueMapping == null)
-        {
-          throw new ImplementationError(nameFeature + " not found in ClassMapping " + this); //$NON-NLS-1$
-        }
-
-        StringBuilder builder = new StringBuilder();
-        builder.append("SELECT "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_ID);
-        builder.append(" FROM "); //$NON-NLS-1$
-        builder.append(getTable());
-        builder.append(" WHERE "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_VERSION);
-        builder.append(">0 AND "); //$NON-NLS-1$
-        builder.append(ATTRIBUTES_CONTAINER);
-        builder.append("=? AND "); //$NON-NLS-1$
-        builder.append(nameValueMapping.getField());
-        if (name == null)
-        {
-          builder.append(" IS NULL"); //$NON-NLS-1$
-        }
-        else
-        {
-          builder.append(exactMatch ? "=? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
-        }
-
-        builder.append(" AND ("); //$NON-NLS-1$
-
-        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
-        {
-          builder.append(ATTRIBUTES_REVISED);
-          builder.append("=0)"); //$NON-NLS-1$
-        }
-        else
-        {
-          builder.append(ATTRIBUTES_CREATED);
-          builder.append("<=? AND ("); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
-          builder.append("=0 OR "); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
-          builder.append(">=?))"); //$NON-NLS-1$
-        }
-
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-        IDBPreparedStatement stmt = accessor.getDBConnection()
-            .prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
-
-        try
-        {
-          int column = 1;
-          idHandler.setCDOID(stmt, column++, folderId);
-
-          if (name != null)
-          {
-            String queryName = exactMatch ? name : name + "%"; //$NON-NLS-1$
-            nameValueMapping.setValue(stmt, column++, queryName);
-          }
-
-          if (timeStamp != CDORevision.UNSPECIFIED_DATE)
-          {
-            stmt.setLong(column++, timeStamp);
-            stmt.setLong(column++, timeStamp);
-          }
-
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("Created Resource Query: {0}", stmt.toString()); //$NON-NLS-1$
-          }
-
-          return stmt;
-        }
-        catch (SQLException ex)
-        {
-          DBUtil.close(stmt); // only release on error
-          throw new DBException(ex);
-        }
+        stmt.setLong(column++, timeStamp);
+        stmt.setLong(column++, timeStamp);
       }
 
-      public IDBPreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
+      if (TRACER.isEnabled())
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
-        }
-
-        return accessor.getDBConnection().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+        TRACER.format("Created Resource Query: {0}", stmt.toString()); //$NON-NLS-1$
       }
 
-      @Override
-      protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
+      return stmt;
+    }
+    catch (SQLException ex)
+    {
+      DBUtil.close(stmt); // only release on error
+      throw new DBException(ex);
+    }
+  }
+
+  public IDBPreparedStatement createObjectIDStatement(IDBStoreAccessor accessor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
+    }
+
+    return accessor.getDBConnection().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+  }
+
+  @Override
+  protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
+  {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
+
+    try
+    {
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, revision.getID());
+      stmt.setInt(column++, revision.getVersion());
+      stmt.setLong(column++, revision.getTimeStamp());
+      stmt.setLong(column++, revision.getRevised());
+      idHandler.setCDOID(stmt, column++, revision.getResourceID());
+      idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
+      stmt.setInt(column++, revision.getContainingFeatureID());
+
+      int isSetCol = column + getValueMappings().size();
+
+      for (ITypeMapping mapping : getValueMappings())
       {
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-        IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
-
-        try
+        EStructuralFeature feature = mapping.getFeature();
+        if (feature.isUnsettable())
         {
-          int column = 1;
-          idHandler.setCDOID(stmt, column++, revision.getID());
-          stmt.setInt(column++, revision.getVersion());
-          stmt.setLong(column++, revision.getTimeStamp());
-          stmt.setLong(column++, revision.getRevised());
-          idHandler.setCDOID(stmt, column++, revision.getResourceID());
-          idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
-          stmt.setInt(column++, revision.getContainingFeatureID());
-
-          int isSetCol = column + getValueMappings().size();
-
-          for (ITypeMapping mapping : getValueMappings())
+          if (revision.getValue(feature) == null)
           {
-            EStructuralFeature feature = mapping.getFeature();
-            if (feature.isUnsettable())
-            {
-              if (revision.getValue(feature) == null)
-              {
-                stmt.setBoolean(isSetCol++, false);
+            stmt.setBoolean(isSetCol++, false);
 
-                // also set value column to default value
-                mapping.setDefaultValue(stmt, column++);
-
-                continue;
-              }
-
-              stmt.setBoolean(isSetCol++, true);
-            }
-
-            mapping.setValueFromRevision(stmt, column++, revision);
-          }
-
-          Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
-          if (listSizeFields != null)
-          {
-            // isSetCol now points to the first listTableSize-column
-            column = isSetCol;
-
-            for (EStructuralFeature feature : listSizeFields.keySet())
-            {
-              CDOList list = revision.getList(feature);
-              stmt.setInt(column++, list.size());
-            }
-          }
-
-          DBUtil.update(stmt, true);
-        }
-        catch (SQLException e)
-        {
-          throw new DBException(e);
-        }
-        finally
-        {
-          DBUtil.close(stmt);
-        }
-      }
-
-      @Override
-      protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
-          OMMonitor mon)
-      {
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-        IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
-
-        try
-        {
-          int column = 1;
-          idHandler.setCDOID(stmt, column++, id);
-          stmt.setInt(column++, -version); // cdo_version
-          stmt.setLong(column++, timeStamp); // cdo_created
-          stmt.setLong(column++, CDOBranchPoint.UNSPECIFIED_DATE); // cdo_revised
-          idHandler.setCDOID(stmt, column++, CDOID.NULL); // resource
-          idHandler.setCDOID(stmt, column++, CDOID.NULL); // container
-          stmt.setInt(column++, 0); // containing feature ID
-
-          int isSetCol = column + getValueMappings().size();
-
-          for (ITypeMapping mapping : getValueMappings())
-          {
-            EStructuralFeature feature = mapping.getFeature();
-            if (feature.isUnsettable())
-            {
-              stmt.setBoolean(isSetCol++, false);
-            }
-
+            // also set value column to default value
             mapping.setDefaultValue(stmt, column++);
+
+            continue;
           }
 
-          Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
-          if (listSizeFields != null)
-          {
-            // list size columns begin after isSet-columns
-            column = isSetCol;
+          stmt.setBoolean(isSetCol++, true);
+        }
 
-            for (int i = 0; i < listSizeFields.size(); i++)
-            {
-              stmt.setInt(column++, 0);
-            }
-          }
-
-          DBUtil.update(stmt, true);
-        }
-        catch (SQLException e)
-        {
-          throw new DBException(e);
-        }
-        finally
-        {
-          DBUtil.close(stmt);
-        }
+        mapping.setValueFromRevision(stmt, column++, revision);
       }
 
-      @Override
-      protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
+      if (listSizeFields != null)
       {
-        IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes,
-            ReuseProbability.HIGH);
+        // isSetCol now points to the first listTableSize-column
+        column = isSetCol;
 
-        try
+        for (EStructuralFeature feature : listSizeFields.keySet())
         {
-          getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
-          stmt.setInt(2, version);
-          DBUtil.update(stmt, false);
-        }
-        catch (SQLException e)
-        {
-          throw new DBException(e);
-        }
-        finally
-        {
-          DBUtil.close(stmt);
+          CDOList list = revision.getList(feature);
+          stmt.setInt(column++, list.size());
         }
       }
 
-      @Override
-      protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
+      DBUtil.update(stmt, true);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp,
+      OMMonitor mon)
+  {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
+
+    try
+    {
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, -version); // cdo_version
+      stmt.setLong(column++, timeStamp); // cdo_created
+      stmt.setLong(column++, CDOBranchPoint.UNSPECIFIED_DATE); // cdo_revised
+      idHandler.setCDOID(stmt, column++, CDOID.NULL); // resource
+      idHandler.setCDOID(stmt, column++, CDOID.NULL); // container
+      stmt.setInt(column++, 0); // containing feature ID
+
+      int isSetCol = column + getValueMappings().size();
+
+      for (ITypeMapping mapping : getValueMappings())
       {
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-        IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReviseAttributes, ReuseProbability.HIGH);
+        EStructuralFeature feature = mapping.getFeature();
+        if (feature.isUnsettable())
+        {
+          stmt.setBoolean(isSetCol++, false);
+        }
 
-        try
-        {
-          stmt.setLong(1, revised);
-          idHandler.setCDOID(stmt, 2, id);
-
-          DBUtil.update(stmt, true);
-        }
-        catch (SQLException e)
-        {
-          throw new DBException(e);
-        }
-        finally
-        {
-          DBUtil.close(stmt);
-        }
+        mapping.setDefaultValue(stmt, column++);
       }
 
-      public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
-          OMMonitor monitor)
+      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
+      if (listSizeFields != null)
       {
-        Async async = null;
-        monitor.begin();
+        // list size columns begin after isSet-columns
+        column = isSetCol;
 
-        try
+        for (int i = 0; i < listSizeFields.size(); i++)
         {
-          try
-          {
-            async = monitor.forkAsync();
-            FeatureDeltaWriter writer = deltaWriter.get();
-            writer.process(accessor, delta, created);
-          }
-          finally
-          {
-            if (async != null)
-            {
-              async.stop();
-            }
-          }
-        }
-        finally
-        {
-          monitor.done();
+          stmt.setInt(column++, 0);
         }
       }
 
-      @Override
-      protected String getListXRefsWhere(QueryXRefsContext context)
+      DBUtil.update(stmt, true);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
+  {
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes,
+        ReuseProbability.HIGH);
+
+    try
+    {
+      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+      stmt.setInt(2, version);
+      DBUtil.update(stmt, false);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
+  {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReviseAttributes, ReuseProbability.HIGH);
+
+    try
+    {
+      stmt.setLong(1, revised);
+      idHandler.setCDOID(stmt, 2, id);
+
+      DBUtil.update(stmt, true);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  public void writeRevisionDelta(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
+      OMMonitor monitor)
+  {
+    Async async = null;
+    monitor.begin();
+
+    try
+    {
+      try
       {
-        if (CDOBranch.MAIN_BRANCH_ID != context.getBranch().getID())
-        {
-          throw new IllegalArgumentException("Non-audit mode does not support branch specification");
-        }
-
-        StringBuilder builder = new StringBuilder();
-        long timeStamp = context.getTimeStamp();
-        if (timeStamp == CDORevision.UNSPECIFIED_DATE)
-        {
-          builder.append(ATTRIBUTES_REVISED);
-          builder.append("=0"); //$NON-NLS-1$
-        }
-        else
-        {
-          builder.append(ATTRIBUTES_CREATED);
-          builder.append("<=");
-          builder.append(timeStamp);
-          builder.append(" AND ("); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
-          builder.append("=0 OR "); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
-          builder.append(">=");
-          builder.append(timeStamp);
-          builder.append(")"); //$NON-NLS-1$
-        }
-
-        return builder.toString();
+        async = monitor.forkAsync();
+        FeatureDeltaWriter writer = deltaWriter.get();
+        writer.process(accessor, delta, created);
       }
-
-      /**
-       * @author Stefan Winkler
-       */
-      private class FeatureDeltaWriter implements CDOFeatureDeltaVisitor
+      finally
       {
-        private IDBStoreAccessor accessor;
-
-        private long created;
-
-        private CDOID id;
-
-        private int oldVersion;
-
-        private InternalCDORevision newRevision;
-
-        private int branchId;
-
-        public void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
+        if (async != null)
         {
-          this.accessor = accessor;
-          this.created = created;
-          id = delta.getID();
-          branchId = delta.getBranch().getID();
-          oldVersion = delta.getVersion();
-
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, oldVersion + 1); //$NON-NLS-1$
-          }
-
-          InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
-              .getRevisionManager().getRevisionByVersion(id, delta, 0, true);
-
-          newRevision = originalRevision.copy();
-
-          newRevision.setVersion(oldVersion + 1);
-          newRevision.setBranchPoint(delta.getBranch().getPoint(created));
-
-          // process revision delta tree
-          delta.accept(this);
-
-          long revised = newRevision.getTimeStamp() - 1;
-          reviseOldRevision(accessor, id, delta.getBranch(), revised);
-
-          writeValues(accessor, newRevision);
-        }
-
-        public void visit(CDOMoveFeatureDelta delta)
-        {
-          throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-        }
-
-        public void visit(CDOAddFeatureDelta delta)
-        {
-          throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-        }
-
-        public void visit(CDORemoveFeatureDelta delta)
-        {
-          throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-        }
-
-        public void visit(CDOSetFeatureDelta delta)
-        {
-          delta.applyTo(newRevision);
-        }
-
-        public void visit(CDOUnsetFeatureDelta delta)
-        {
-          delta.applyTo(newRevision);
-        }
-
-        public void visit(CDOListFeatureDelta delta)
-        {
-          delta.applyTo(newRevision);
-          IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-          listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
-        }
-
-        public void visit(CDOClearFeatureDelta delta)
-        {
-          throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-        }
-
-        public void visit(CDOContainerFeatureDelta delta)
-        {
-          delta.applyTo(newRevision);
+          async.stop();
         }
       }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
+  protected String getListXRefsWhere(QueryXRefsContext context)
+  {
+    if (CDOBranch.MAIN_BRANCH_ID != context.getBranch().getID())
+    {
+      throw new IllegalArgumentException("Non-audit mode does not support branch specification");
+    }
+
+    StringBuilder builder = new StringBuilder();
+    long timeStamp = context.getTimeStamp();
+    if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+    {
+      builder.append(ATTRIBUTES_REVISED);
+      builder.append("=0"); //$NON-NLS-1$
+    }
+    else
+    {
+      builder.append(ATTRIBUTES_CREATED);
+      builder.append("<=");
+      builder.append(timeStamp);
+      builder.append(" AND ("); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_REVISED);
+      builder.append("=0 OR "); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_REVISED);
+      builder.append(">=");
+      builder.append(timeStamp);
+      builder.append(")"); //$NON-NLS-1$
+    }
+
+    return builder.toString();
+  }
+
+  /**
+   * @author Stefan Winkler
+   */
+  private class FeatureDeltaWriter implements CDOFeatureDeltaVisitor
+  {
+    private IDBStoreAccessor accessor;
+
+    private long created;
+
+    private CDOID id;
+
+    private int oldVersion;
+
+    private InternalCDORevision newRevision;
+
+    private int branchId;
+
+    public void process(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created)
+    {
+      this.accessor = accessor;
+      this.created = created;
+      id = delta.getID();
+      branchId = delta.getBranch().getID();
+      oldVersion = delta.getVersion();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, oldVersion + 1); //$NON-NLS-1$
+      }
+
+      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository()
+          .getRevisionManager().getRevisionByVersion(id, delta, 0, true);
+
+      newRevision = originalRevision.copy();
+
+      newRevision.setVersion(oldVersion + 1);
+      newRevision.setBranchPoint(delta.getBranch().getPoint(created));
+
+      // process revision delta tree
+      delta.accept(this);
+
+      long revised = newRevision.getTimeStamp() - 1;
+      reviseOldRevision(accessor, id, delta.getBranch(), revised);
+
+      writeValues(accessor, newRevision);
+    }
+
+    public void visit(CDOMoveFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDOAddFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDORemoveFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDOSetFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
+    }
+
+    public void visit(CDOUnsetFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
+    }
+
+    public void visit(CDOListFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
+      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
+      listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+    }
+
+    public void visit(CDOClearFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void visit(CDOContainerFeatureDelta delta)
+    {
+      delta.applyTo(newRevision);
+    }
+  }
 }

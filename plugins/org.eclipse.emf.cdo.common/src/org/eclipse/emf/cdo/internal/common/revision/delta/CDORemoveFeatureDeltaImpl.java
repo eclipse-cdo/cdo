@@ -30,7 +30,7 @@ import java.io.IOException;
  * @author Simon McDuff
  */
 public class CDORemoveFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl implements CDORemoveFeatureDelta,
-ListIndexAffecting
+    ListIndexAffecting
 {
   public CDORemoveFeatureDeltaImpl(EStructuralFeature feature, int index)
   {

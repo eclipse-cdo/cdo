@@ -488,7 +488,6 @@ public class P2TaskImpl extends SetupTaskImpl implements P2Task
     super.overrideFor(overriddenSetupTask);
 
     P2Task overriddenP2Task = (P2Task)overriddenSetupTask;
-
     getInstallableUnits().addAll(overriddenP2Task.getInstallableUnits());
     getP2Repositories().addAll(overriddenP2Task.getP2Repositories());
   }

@@ -688,7 +688,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
    * @generated
    */
-  int WORKING_SET_TASK = 42;
+  int WORKING_SET_TASK = 44;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl <em>Compound Setup Task</em>}' class.
@@ -819,7 +819,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
    * @generated
    */
-  int RESOURCE_COPY_TASK = 43;
+  int RESOURCE_COPY_TASK = 45;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
@@ -829,7 +829,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
    * @generated
    */
-  int TEXT_MODIFY_TASK = 45;
+  int TEXT_MODIFY_TASK = 47;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
@@ -839,7 +839,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
    * @generated
    */
-  int TEXT_MODIFICATION = 46;
+  int TEXT_MODIFICATION = 48;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
@@ -849,7 +849,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
    * @generated
    */
-  int KEY_BINDING_TASK = 47;
+  int KEY_BINDING_TASK = 49;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
@@ -859,7 +859,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
    * @generated
    */
-  int COMMAND_PARAMETER = 49;
+  int COMMAND_PARAMETER = 51;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
@@ -879,7 +879,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
    * @generated
    */
-  int RESOURCE_CREATION_TASK = 44;
+  int RESOURCE_CREATION_TASK = 46;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl <em>Materialization Task</em>}' class.
@@ -919,7 +919,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueryTask()
    * @generated
    */
-  int MYLYN_QUERY_TASK = 50;
+  int MYLYN_QUERY_TASK = 52;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
@@ -1864,7 +1864,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingContext()
    * @generated
    */
-  int KEY_BINDING_CONTEXT = 48;
+  int KEY_BINDING_CONTEXT = 50;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
@@ -1884,7 +1884,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
    * @generated
    */
-  int JRE_TASK = 56;
+  int JRE_TASK = 58;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl <em>File Association Task</em>}' class.
@@ -1904,7 +1904,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileEditor()
    * @generated
    */
-  int FILE_EDITOR = 41;
+  int FILE_EDITOR = 43;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl <em>Mylyn Queries Task</em>}' class.
@@ -1914,7 +1914,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueriesTask()
    * @generated
    */
-  int MYLYN_QUERIES_TASK = 51;
+  int MYLYN_QUERIES_TASK = 53;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl <em>Query</em>}' class.
@@ -1924,7 +1924,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQuery()
    * @generated
    */
-  int QUERY = 52;
+  int QUERY = 54;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.
@@ -1934,7 +1934,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQueryAttribute()
    * @generated
    */
-  int QUERY_ATTRIBUTE = 53;
+  int QUERY_ATTRIBUTE = 55;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl <em>Mylyn Builds Task</em>}' class.
@@ -1944,7 +1944,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynBuildsTask()
    * @generated
    */
-  int MYLYN_BUILDS_TASK = 54;
+  int MYLYN_BUILDS_TASK = 56;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl <em>Build Plan</em>}' class.
@@ -1954,7 +1954,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuildPlan()
    * @generated
    */
-  int BUILD_PLAN = 55;
+  int BUILD_PLAN = 57;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentExtensionImpl <em>Component Extension</em>}' class.
@@ -3050,6 +3050,134 @@ public interface SetupPackage extends EPackage
   int FILE_ASSOCIATION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl <em>File Associations Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileAssociationsTask()
+   * @generated
+   */
+  int FILE_ASSOCIATIONS_TASK = 41;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK__MAPPINGS = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>File Associations Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ASSOCIATIONS_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl <em>File Mapping</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileMapping()
+   * @generated
+   */
+  int FILE_MAPPING = 42;
+
+  /**
+   * The feature id for the '<em><b>File Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_MAPPING__FILE_PATTERN = 0;
+
+  /**
+   * The feature id for the '<em><b>Default Editor ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_MAPPING__DEFAULT_EDITOR_ID = 1;
+
+  /**
+   * The feature id for the '<em><b>Editors</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_MAPPING__EDITORS = 2;
+
+  /**
+   * The number of structural features of the '<em>File Mapping</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_MAPPING_FEATURE_COUNT = 3;
+
+  /**
    * The feature id for the '<em><b>ID</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4092,7 +4220,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 57;
+  int SETUP_TASK_SCOPE = 59;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -4102,7 +4230,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 58;
+  int TRIGGER = 60;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -4112,7 +4240,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 59;
+  int COMPONENT_TYPE = 61;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.VariableType <em>Variable Type</em>}' enum.
@@ -4122,7 +4250,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableType()
    * @generated
    */
-  int VARIABLE_TYPE = 60;
+  int VARIABLE_TYPE = 62;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -4132,7 +4260,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 63;
+  int URI = 65;
 
   /**
    * The meta object id for the '<em>License Info</em>' data type.
@@ -4142,7 +4270,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
-  int LICENSE_INFO = 64;
+  int LICENSE_INFO = 66;
 
   /**
    * The meta object id for the '<em>Version</em>' data type.
@@ -4152,7 +4280,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersion()
    * @generated
    */
-  int VERSION = 65;
+  int VERSION = 67;
 
   /**
    * The meta object id for the '<em>Version Range</em>' data type.
@@ -4162,7 +4290,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
    * @generated
    */
-  int VERSION_RANGE = 66;
+  int VERSION_RANGE = 68;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MetaIndex <em>Meta Index</em>}'.
@@ -4268,7 +4396,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 62;
+  int EXCEPTION = 64;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -4278,7 +4406,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 61;
+  int TRIGGER_SET = 63;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -5495,6 +5623,70 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EReference getFileAssociationTask_Editors();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationsTask <em>File Associations Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>File Associations Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.FileAssociationsTask
+   * @generated
+   */
+  EClass getFileAssociationsTask();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationsTask#getMappings <em>Mappings</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Mappings</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.FileAssociationsTask#getMappings()
+   * @see #getFileAssociationsTask()
+   * @generated
+   */
+  EReference getFileAssociationsTask_Mappings();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.FileMapping <em>File Mapping</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>File Mapping</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.FileMapping
+   * @generated
+   */
+  EClass getFileMapping();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.FileMapping#getFilePattern <em>File Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>File Pattern</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.FileMapping#getFilePattern()
+   * @see #getFileMapping()
+   * @generated
+   */
+  EAttribute getFileMapping_FilePattern();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.setup.FileMapping#getDefaultEditorID <em>Default Editor ID</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Default Editor ID</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.FileMapping#getDefaultEditorID()
+   * @see #getFileMapping()
+   * @generated
+   */
+  EAttribute getFileMapping_DefaultEditorID();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.FileMapping#getEditors <em>Editors</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Editors</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.FileMapping#getEditors()
+   * @see #getFileMapping()
+   * @generated
+   */
+  EReference getFileMapping_Editors();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.FileEditor <em>File Editor</em>}'.
@@ -7476,6 +7668,58 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EReference FILE_ASSOCIATION_TASK__EDITORS = eINSTANCE.getFileAssociationTask_Editors();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl <em>File Associations Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileAssociationsTask()
+     * @generated
+     */
+    EClass FILE_ASSOCIATIONS_TASK = eINSTANCE.getFileAssociationsTask();
+
+    /**
+     * The meta object literal for the '<em><b>Mappings</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FILE_ASSOCIATIONS_TASK__MAPPINGS = eINSTANCE.getFileAssociationsTask_Mappings();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl <em>File Mapping</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileMapping()
+     * @generated
+     */
+    EClass FILE_MAPPING = eINSTANCE.getFileMapping();
+
+    /**
+     * The meta object literal for the '<em><b>File Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FILE_MAPPING__FILE_PATTERN = eINSTANCE.getFileMapping_FilePattern();
+
+    /**
+     * The meta object literal for the '<em><b>Default Editor ID</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FILE_MAPPING__DEFAULT_EDITOR_ID = eINSTANCE.getFileMapping_DefaultEditorID();
+
+    /**
+     * The meta object literal for the '<em><b>Editors</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FILE_MAPPING__EDITORS = eINSTANCE.getFileMapping_Editors();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl <em>File Editor</em>}' class.

@@ -45,6 +45,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
+@SuppressWarnings("deprecation")
 public class SetupItemProviderAdapterFactory extends SetupAdapterFactory implements ComposeableAdapterFactory,
     IChangeNotifier, IDisposable, IChildCreationExtender
 {
@@ -602,7 +603,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("deprecation")
   protected MylynQueryTaskItemProvider mylynQueryTaskItemProvider;
 
   /**
@@ -611,7 +611,6 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("deprecation")
   @Override
   public Adapter createMylynQueryTaskAdapter()
   {
@@ -871,6 +870,56 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     }
 
     return fileAssociationTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.FileAssociationsTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected FileAssociationsTaskItemProvider fileAssociationsTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileAssociationsTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createFileAssociationsTaskAdapter()
+  {
+    if (fileAssociationsTaskItemProvider == null)
+    {
+      fileAssociationsTaskItemProvider = new FileAssociationsTaskItemProvider(this);
+    }
+
+    return fileAssociationsTaskItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.FileMapping} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected FileMappingItemProvider fileMappingItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileMapping}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createFileMappingAdapter()
+  {
+    if (fileMappingItemProvider == null)
+    {
+      fileMappingItemProvider = new FileMappingItemProvider(this);
+    }
+
+    return fileMappingItemProvider;
   }
 
   /**
@@ -1624,6 +1673,14 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (fileAssociationTaskItemProvider != null)
     {
       fileAssociationTaskItemProvider.dispose();
+    }
+    if (fileAssociationsTaskItemProvider != null)
+    {
+      fileAssociationsTaskItemProvider.dispose();
+    }
+    if (fileMappingItemProvider != null)
+    {
+      fileMappingItemProvider.dispose();
     }
     if (fileEditorItemProvider != null)
     {

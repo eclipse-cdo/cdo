@@ -45,6 +45,7 @@ import java.util.Set;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>File Association Task</b></em>'.
+ * @deprecated Use {@link FileAssociationsTaskImpl}.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -57,6 +58,7 @@ import java.util.Set;
  *
  * @generated
  */
+@Deprecated
 @SuppressWarnings("restriction")
 public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssociationTask
 {
@@ -422,7 +424,7 @@ public class FileAssociationTaskImpl extends SetupTaskImpl implements FileAssoci
       public void run(SetupTaskContext context) throws Exception
       {
         registry.setFileEditorMappings(mappings.values().toArray(new FileEditorMapping[mappings.size()]));
-        registry.saveAssociations(); // TODO This call takes comparingly long. Optimize!
+        registry.saveAssociations(); // This call takes comparingly long. Use FileAssociationsTaskImpl.
 
         PrefUtil.savePrefs();
       }

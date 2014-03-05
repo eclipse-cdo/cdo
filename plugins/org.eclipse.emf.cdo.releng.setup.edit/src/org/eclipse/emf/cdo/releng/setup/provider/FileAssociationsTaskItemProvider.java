@@ -1,44 +1,32 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationsTask;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileAssociationsTask} object.
  * <!-- begin-user-doc -->
- * @deprecated Use {@link FileAssociationsTaskItemProvider}.
  * <!-- end-user-doc -->
  * @generated
  */
-@Deprecated
-public class FileAssociationTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+public class FileAssociationsTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -47,7 +35,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
    * <!-- end-user-doc -->
    * @generated
    */
-  public FileAssociationTaskItemProvider(AdapterFactory adapterFactory)
+  public FileAssociationsTaskItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -65,44 +53,8 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
     {
       super.getPropertyDescriptors(object);
 
-      addFilePatternPropertyDescriptor(object);
-      addDefaultEditorIDPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
-  }
-
-  /**
-   * This adds a property descriptor for the File Pattern feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addFilePatternPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_FileAssociationTask_filePattern_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_FileAssociationTask_filePattern_feature",
-            "_UI_FileAssociationTask_type"), SetupPackage.Literals.FILE_ASSOCIATION_TASK__FILE_PATTERN, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Default Editor ID feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addDefaultEditorIDPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_FileAssociationTask_defaultEditorID_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_FileAssociationTask_defaultEditorID_feature",
-            "_UI_FileAssociationTask_type"), SetupPackage.Literals.FILE_ASSOCIATION_TASK__DEFAULT_EDITOR_ID, true,
-        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -119,7 +71,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.FILE_ASSOCIATION_TASK__EDITORS);
+      childrenFeatures.add(SetupPackage.Literals.FILE_ASSOCIATIONS_TASK__MAPPINGS);
     }
     return childrenFeatures;
   }
@@ -139,7 +91,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-   * This returns FileAssociationTask.gif.
+   * This returns FileAssociationsTask.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -147,7 +99,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/FileAssociationTask"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/FileAssociationsTask"));
   }
 
   /**
@@ -170,8 +122,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   @Override
   public String getText(Object object)
   {
-    String label = ((FileAssociationTask)object).getFilePattern();
-    return label == null || label.length() == 0 ? getString("_UI_FileAssociationTask_type") : label;
+    return getString("_UI_FileAssociationsTask_type");
   }
 
   /**
@@ -186,13 +137,9 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(FileAssociationTask.class))
+    switch (notification.getFeatureID(FileAssociationsTask.class))
     {
-    case SetupPackage.FILE_ASSOCIATION_TASK__FILE_PATTERN:
-    case SetupPackage.FILE_ASSOCIATION_TASK__DEFAULT_EDITOR_ID:
-      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-      return;
-    case SetupPackage.FILE_ASSOCIATION_TASK__EDITORS:
+    case SetupPackage.FILE_ASSOCIATIONS_TASK__MAPPINGS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -211,8 +158,8 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.FILE_ASSOCIATION_TASK__EDITORS,
-        SetupFactory.eINSTANCE.createFileEditor()));
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.FILE_ASSOCIATIONS_TASK__MAPPINGS,
+        SetupFactory.eINSTANCE.createFileMapping()));
   }
 
 }

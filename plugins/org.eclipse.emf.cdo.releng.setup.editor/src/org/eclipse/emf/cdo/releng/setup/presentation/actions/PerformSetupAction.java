@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.releng.internal.setup.ui.ProgressDialog;
 import org.eclipse.emf.cdo.releng.internal.setup.util.UpdateUtil.UpdatingException;
 import org.eclipse.emf.cdo.releng.setup.Branch;
 import org.eclipse.emf.cdo.releng.setup.Eclipse;
-import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.Setup;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupTask;
@@ -187,13 +187,13 @@ public class PerformSetupAction extends AbstractSetupAction
 
   private SetupTask createTestTask()
   {
-    // KeyBindingTask task = SetupFactory.eINSTANCE.createKeyBindingTask();
-    // task.setKeys("F12");
-    // task.setCommand("org.eclipse.emf.cdo.releng.OpenManifest");
+    KeyBindingTask task = SetupFactory.eINSTANCE.createKeyBindingTask();
+    task.setKeys("F12");
+    task.setCommand("org.eclipse.emf.cdo.releng.OpenManifest");
 
-    FileAssociationTask task = SetupFactory.eINSTANCE.createFileAssociationTask();
-    task.setFilePattern(".project");
-    task.setDefaultEditorID("com.objfac.xmleditor.XMLEditor");
+    // FileAssociationTask task = SetupFactory.eINSTANCE.createFileAssociationTask();
+    // task.setFilePattern(".project");
+    // task.setDefaultEditorID("com.objfac.xmleditor.XMLEditor");
 
     return task;
   }

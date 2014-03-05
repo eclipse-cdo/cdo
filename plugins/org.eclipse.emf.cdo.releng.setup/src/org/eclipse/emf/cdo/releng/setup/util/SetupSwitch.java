@@ -28,7 +28,9 @@ import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationsTask;
 import org.eclipse.emf.cdo.releng.setup.FileEditor;
+import org.eclipse.emf.cdo.releng.setup.FileMapping;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
@@ -706,6 +708,30 @@ public class SetupSwitch<T> extends Switch<T>
       {
         result = caseSetupTask(fileAssociationTask);
       }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.FILE_ASSOCIATIONS_TASK:
+    {
+      FileAssociationsTask fileAssociationsTask = (FileAssociationsTask)theEObject;
+      T result = caseFileAssociationsTask(fileAssociationsTask);
+      if (result == null)
+      {
+        result = caseSetupTask(fileAssociationsTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.FILE_MAPPING:
+    {
+      FileMapping fileMapping = (FileMapping)theEObject;
+      T result = caseFileMapping(fileMapping);
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -1502,6 +1528,38 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseFileAssociationTask(FileAssociationTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>File Associations Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>File Associations Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFileAssociationsTask(FileAssociationsTask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>File Mapping</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>File Mapping</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFileMapping(FileMapping object)
   {
     return null;
   }

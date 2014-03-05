@@ -27,7 +27,9 @@ import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationsTask;
 import org.eclipse.emf.cdo.releng.setup.FileEditor;
+import org.eclipse.emf.cdo.releng.setup.FileMapping;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
@@ -208,6 +210,10 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createEclipsePreferenceTask();
     case SetupPackage.FILE_ASSOCIATION_TASK:
       return createFileAssociationTask();
+    case SetupPackage.FILE_ASSOCIATIONS_TASK:
+      return createFileAssociationsTask();
+    case SetupPackage.FILE_MAPPING:
+      return createFileMapping();
     case SetupPackage.FILE_EDITOR:
       return createFileEditor();
     case SetupPackage.WORKING_SET_TASK:
@@ -690,6 +696,28 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     FileAssociationTaskImpl fileAssociationTask = new FileAssociationTaskImpl();
     return fileAssociationTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FileAssociationsTask createFileAssociationsTask()
+  {
+    FileAssociationsTaskImpl fileAssociationsTask = new FileAssociationsTaskImpl();
+    return fileAssociationsTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FileMapping createFileMapping()
+  {
+    FileMappingImpl fileMapping = new FileMappingImpl();
+    return fileMapping;
   }
 
   /**

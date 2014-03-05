@@ -304,11 +304,31 @@ public interface SetupFactory extends EFactory
   /**
    * Returns a new object of class '<em>File Association Task</em>'.
    * <!-- begin-user-doc -->
+   * @deprecated Use {@link #createFileAssociationsTask()}.
    * <!-- end-user-doc -->
    * @return a new object of class '<em>File Association Task</em>'.
    * @generated
    */
+  @Deprecated
   FileAssociationTask createFileAssociationTask();
+
+  /**
+   * Returns a new object of class '<em>File Associations Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>File Associations Task</em>'.
+   * @generated
+   */
+  FileAssociationsTask createFileAssociationsTask();
+
+  /**
+   * Returns a new object of class '<em>File Mapping</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>File Mapping</em>'.
+   * @generated
+   */
+  FileMapping createFileMapping();
 
   /**
    * Returns a new object of class '<em>File Editor</em>'.

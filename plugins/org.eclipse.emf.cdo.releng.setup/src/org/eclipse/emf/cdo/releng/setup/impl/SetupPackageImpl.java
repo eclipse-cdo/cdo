@@ -30,7 +30,9 @@ import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationsTask;
 import org.eclipse.emf.cdo.releng.setup.FileEditor;
+import org.eclipse.emf.cdo.releng.setup.FileMapping;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
@@ -323,6 +325,20 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass fileAssociationTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fileAssociationsTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fileMappingEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1863,6 +1879,66 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getFileAssociationsTask()
+  {
+    return fileAssociationsTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFileAssociationsTask_Mappings()
+  {
+    return (EReference)fileAssociationsTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFileMapping()
+  {
+    return fileMappingEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFileMapping_FilePattern()
+  {
+    return (EAttribute)fileMappingEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFileMapping_DefaultEditorID()
+  {
+    return (EAttribute)fileMappingEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFileMapping_Editors()
+  {
+    return (EReference)fileMappingEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getFileEditor()
   {
     return fileEditorEClass;
@@ -2929,6 +3005,14 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(fileAssociationTaskEClass, FILE_ASSOCIATION_TASK__DEFAULT_EDITOR_ID);
     createEReference(fileAssociationTaskEClass, FILE_ASSOCIATION_TASK__EDITORS);
 
+    fileAssociationsTaskEClass = createEClass(FILE_ASSOCIATIONS_TASK);
+    createEReference(fileAssociationsTaskEClass, FILE_ASSOCIATIONS_TASK__MAPPINGS);
+
+    fileMappingEClass = createEClass(FILE_MAPPING);
+    createEAttribute(fileMappingEClass, FILE_MAPPING__FILE_PATTERN);
+    createEAttribute(fileMappingEClass, FILE_MAPPING__DEFAULT_EDITOR_ID);
+    createEReference(fileMappingEClass, FILE_MAPPING__EDITORS);
+
     fileEditorEClass = createEClass(FILE_EDITOR);
     createEAttribute(fileEditorEClass, FILE_EDITOR__ID);
 
@@ -3089,6 +3173,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     targetPlatformTaskEClass.getESuperTypes().add(getSetupTask());
     eclipsePreferenceTaskEClass.getESuperTypes().add(getSetupTask());
     fileAssociationTaskEClass.getESuperTypes().add(getSetupTask());
+    fileAssociationsTaskEClass.getESuperTypes().add(getSetupTask());
     workingSetTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCopyTaskEClass.getESuperTypes().add(getSetupTask());
     resourceCreationTaskEClass.getESuperTypes().add(getSetupTask());
@@ -3487,6 +3572,24 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     initEReference(getFileAssociationTask_Editors(), getFileEditor(), null, "editors", null, 0, -1,
         FileAssociationTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fileAssociationsTaskEClass, FileAssociationsTask.class, "FileAssociationsTask", !IS_ABSTRACT,
+        !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFileAssociationsTask_Mappings(), getFileMapping(), null, "mappings", null, 1, -1,
+        FileAssociationsTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fileMappingEClass, FileMapping.class, "FileMapping", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFileMapping_FilePattern(), ecorePackage.getEString(), "filePattern", null, 1, 1,
+        FileMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEAttribute(getFileMapping_DefaultEditorID(), ecorePackage.getEString(), "defaultEditorID", null, 0, 1,
+        FileMapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getFileMapping_Editors(), getFileEditor(), null, "editors", null, 0, -1, FileMapping.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(fileEditorEClass, FileEditor.class, "FileEditor", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

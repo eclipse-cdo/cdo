@@ -1,23 +1,17 @@
-/*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.setup.provider;
 
-import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileMapping;
 import org.eclipse.emf.cdo.releng.setup.SetupFactory;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -25,20 +19,19 @@ import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileAssociationTask} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.setup.FileMapping} object.
  * <!-- begin-user-doc -->
- * @deprecated Use {@link FileAssociationsTaskItemProvider}.
  * <!-- end-user-doc -->
  * @generated
  */
-@Deprecated
-public class FileAssociationTaskItemProvider extends SetupTaskItemProvider implements IEditingDomainItemProvider,
+public class FileMappingItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
@@ -47,7 +40,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
    * <!-- end-user-doc -->
    * @generated
    */
-  public FileAssociationTaskItemProvider(AdapterFactory adapterFactory)
+  public FileMappingItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -80,12 +73,11 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   protected void addFilePatternPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_FileAssociationTask_filePattern_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_FileAssociationTask_filePattern_feature",
-            "_UI_FileAssociationTask_type"), SetupPackage.Literals.FILE_ASSOCIATION_TASK__FILE_PATTERN, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_FileMapping_filePattern_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_FileMapping_filePattern_feature", "_UI_FileMapping_type"),
+        SetupPackage.Literals.FILE_MAPPING__FILE_PATTERN, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -99,10 +91,10 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
     itemPropertyDescriptors.add(createItemPropertyDescriptor(
         ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
         getResourceLocator(),
-        getString("_UI_FileAssociationTask_defaultEditorID_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_FileAssociationTask_defaultEditorID_feature",
-            "_UI_FileAssociationTask_type"), SetupPackage.Literals.FILE_ASSOCIATION_TASK__DEFAULT_EDITOR_ID, true,
-        false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        getString("_UI_FileMapping_defaultEditorID_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_FileMapping_defaultEditorID_feature",
+            "_UI_FileMapping_type"), SetupPackage.Literals.FILE_MAPPING__DEFAULT_EDITOR_ID, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -119,7 +111,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(SetupPackage.Literals.FILE_ASSOCIATION_TASK__EDITORS);
+      childrenFeatures.add(SetupPackage.Literals.FILE_MAPPING__EDITORS);
     }
     return childrenFeatures;
   }
@@ -139,7 +131,18 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   }
 
   /**
-   * This returns FileAssociationTask.gif.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public boolean hasChildren(Object object)
+  {
+    return hasChildren(object, true);
+  }
+
+  /**
+   * This returns FileMapping.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -147,7 +150,7 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/FileAssociationTask"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/FileMapping"));
   }
 
   /**
@@ -170,8 +173,8 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   @Override
   public String getText(Object object)
   {
-    String label = ((FileAssociationTask)object).getFilePattern();
-    return label == null || label.length() == 0 ? getString("_UI_FileAssociationTask_type") : label;
+    String label = ((FileMapping)object).getFilePattern();
+    return label == null || label.length() == 0 ? getString("_UI_FileMapping_type") : label;
   }
 
   /**
@@ -186,13 +189,13 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(FileAssociationTask.class))
+    switch (notification.getFeatureID(FileMapping.class))
     {
-    case SetupPackage.FILE_ASSOCIATION_TASK__FILE_PATTERN:
-    case SetupPackage.FILE_ASSOCIATION_TASK__DEFAULT_EDITOR_ID:
+    case SetupPackage.FILE_MAPPING__FILE_PATTERN:
+    case SetupPackage.FILE_MAPPING__DEFAULT_EDITOR_ID:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
-    case SetupPackage.FILE_ASSOCIATION_TASK__EDITORS:
+    case SetupPackage.FILE_MAPPING__EDITORS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -211,8 +214,20 @@ public class FileAssociationTaskItemProvider extends SetupTaskItemProvider imple
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.FILE_ASSOCIATION_TASK__EDITORS,
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.FILE_MAPPING__EDITORS,
         SetupFactory.eINSTANCE.createFileEditor()));
+  }
+
+  /**
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ResourceLocator getResourceLocator()
+  {
+    return ((IChildCreationExtender)adapterFactory).getResourceLocator();
   }
 
 }

@@ -28,7 +28,9 @@ import org.eclipse.emf.cdo.releng.setup.Eclipse;
 import org.eclipse.emf.cdo.releng.setup.EclipseIniTask;
 import org.eclipse.emf.cdo.releng.setup.EclipsePreferenceTask;
 import org.eclipse.emf.cdo.releng.setup.FileAssociationTask;
+import org.eclipse.emf.cdo.releng.setup.FileAssociationsTask;
 import org.eclipse.emf.cdo.releng.setup.FileEditor;
+import org.eclipse.emf.cdo.releng.setup.FileMapping;
 import org.eclipse.emf.cdo.releng.setup.GitCloneTask;
 import org.eclipse.emf.cdo.releng.setup.Index;
 import org.eclipse.emf.cdo.releng.setup.InstallableUnit;
@@ -382,6 +384,18 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseFileAssociationTask(FileAssociationTask object)
     {
       return createFileAssociationTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseFileAssociationsTask(FileAssociationsTask object)
+    {
+      return createFileAssociationsTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseFileMapping(FileMapping object)
+    {
+      return createFileMappingAdapter();
     }
 
     @Override
@@ -977,6 +991,36 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createFileAssociationTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.FileAssociationsTask <em>File Associations Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.FileAssociationsTask
+   * @generated
+   */
+  public Adapter createFileAssociationsTaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.FileMapping <em>File Mapping</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.FileMapping
+   * @generated
+   */
+  public Adapter createFileMappingAdapter()
   {
     return null;
   }

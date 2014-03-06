@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -185,7 +186,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         cachedSources = new ListTargetAdding[initialCapacity];
       }
       else
-      // i.e. unprocessedFeatureDeltas != null
+        // i.e. unprocessedFeatureDeltas != null
       {
         int requiredCapacity = 1 + cachedIndices[0] + unprocessedFeatureDeltas.size();
         if (cachedIndices.length < requiredCapacity)
@@ -226,163 +227,31 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   private boolean cleanupWithNewDelta(CDOFeatureDelta featureDelta)
   {
     EStructuralFeature feature = getFeature();
-    if ((feature instanceof EReference || FeatureMapUtil.isFeatureMap(feature))
-        && featureDelta instanceof CDORemoveFeatureDelta)
+    switch (featureDelta.getType())
     {
-      int indexToRemove = ((CDORemoveFeatureDelta)featureDelta).getIndex();
-      reconstructAddedIndicesWithNoCopy();
-
-      for (int i = 1; i <= cachedIndices[0]; i++)
+    case REMOVE:
+    {
+      if (feature instanceof EReference || FeatureMapUtil.isFeatureMap(feature))
       {
-        int index = cachedIndices[i];
-        if (indexToRemove == index)
+        Boolean result = cleanupWithNewRemoveDelta((CDORemoveFeatureDelta)featureDelta);
+        if (result != null)
         {
-          // The previous implementation set the value of the feature delta to CDOID.NULL. Databinding and probably
-          // others don't really like it. We now remove the ADD (or SET which seems to appear in CDOListFeatureDelta
-          // during opposite adjustment!? Why???) and patch the other feature deltas.
-          // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=310574
-
-          ListTargetAdding delta = cachedSources[i];
-
-          // We use a "floating" index which is the index (in the list) of the item to remove at the time when the
-          // object was still in the list. This index evolves with the feature deltas.
-          int floatingIndex = delta.getIndex();
-
-          // First updates cachedSources and cachedIndices using CDORemoveFeatureDelta.
-          ListIndexAffecting affecting = (ListIndexAffecting)featureDelta;
-          affecting.affectIndices(cachedSources, cachedIndices);
-
-          // Then adjusts the remaining feature deltas.
-          boolean skip = true;
-          ListIterator<CDOFeatureDelta> iterator = listChanges.listIterator();
-
-          while (iterator.hasNext())
-          {
-            CDOFeatureDelta fd = iterator.next();
-
-            // We only need to process feature deltas that come after the ADD (or SET) to be removed.
-            if (skip)
-            {
-              if (fd == delta)
-              {
-                // Found the ADD (or SET) feature delta that we need to remove. So remove it from the list and start
-                // processing the next feature deltas.
-                skip = false;
-                iterator.remove();
-
-                // SET
-                if (fd instanceof CDOSetFeatureDelta)
-                {
-                  // If the removed delta is SET we add the REMOVE to the feature deltas. We do not need to adjust the
-                  // other feature deltas because SET do not modify the list.
-                  return true;
-                }
-              }
-
-              continue;
-            }
-
-            // ADD
-            if (fd instanceof CDOAddFeatureDelta)
-            {
-              // Increases the floating index if the ADD came in front of the item.
-              if (((CDOAddFeatureDelta)fd).getIndex() <= floatingIndex)
-              {
-                ++floatingIndex;
-              }
-
-              // Adjusts the feature delta too.
-              ((WithIndex)fd).adjustAfterRemoval(floatingIndex);
-            }
-
-            // REMOVE
-            else if (fd instanceof CDORemoveFeatureDelta)
-            {
-              int idx = floatingIndex;
-              // Decreases the floating index if the REMOVE came in front of the item.
-              if (((CDORemoveFeatureDelta)fd).getIndex() <= floatingIndex)
-              {
-                --floatingIndex;
-              }
-
-              // Adjusts the feature delta too.
-              ((WithIndex)fd).adjustAfterRemoval(idx);
-            }
-
-            // MOVE
-            else if (fd instanceof CDOMoveFeatureDelta)
-            {
-              // Remembers the positions before we patch them.
-              int from = ((CDOMoveFeatureDelta)fd).getOldPosition();
-              int to = ((CDOMoveFeatureDelta)fd).getNewPosition();
-
-              if (floatingIndex == from)
-              {
-                // We are moving the "to be deleted" item. So we update our floating index and remove the MOVE. It has
-                // no effect on the list.
-                floatingIndex = to;
-                iterator.remove();
-              }
-              else
-              {
-                // In the other cases, we need to patch the positions.
-
-                // If the old position is greater or equal to the current position of the item to be removed (remember,
-                // that's our floating index), decrease the position.
-                int patchedFrom = floatingIndex <= from ? from - 1 : from;
-
-                // The new position requires more care. We need to know the direction of the move (left-to-right or
-                // right-to-left).
-                int patchedTo;
-                if (from > to)
-                {
-                  // left-to-right. Only decreases the position if it is strictly greater than the current item
-                  // position.
-                  patchedTo = floatingIndex < to ? to - 1 : to;
-                }
-                else
-                {
-                  // right-to-left. Decreases the position if it is greater or equal than the current item position.
-                  patchedTo = floatingIndex <= to ? to - 1 : to;
-                }
-
-                // We can now update our floating index. We use the original positions because the floating index
-                // represents the item "to be deleted" before it was actually removed.
-                if (from < floatingIndex && floatingIndex <= to)
-                {
-                  --floatingIndex;
-                }
-                else if (to <= floatingIndex && floatingIndex < from)
-                {
-                  ++floatingIndex;
-                }
-
-                // And finally adjust the feature delta.
-                if (patchedFrom == patchedTo)
-                {
-                  // Source and destination are the same so just remove the feature delta.
-                  iterator.remove();
-                }
-                else
-                {
-                  ((CDOMoveFeatureDeltaImpl)fd).setOldPosition(patchedFrom);
-                  ((CDOMoveFeatureDeltaImpl)fd).setNewPosition(patchedTo);
-                }
-              }
-            }
-
-            // SET
-            else if (fd instanceof CDOSetFeatureDelta)
-            {
-              // Adjusts the feature delta too.
-              ((WithIndex)fd).adjustAfterRemoval(floatingIndex);
-            }
-          }
-
-          // If the removed delta was ADD so we do not add the REMOVE to the feature deltas.
-          return false;
+          return result;
         }
       }
+
+      break;
+    }
+    case SET:
+    {
+      Boolean result = cleanupWithNewSetDelta((CDOSetFeatureDelta)featureDelta);
+      if (result != null)
+      {
+        return result;
+      }
+
+      break;
+    }
     }
 
     if (cachedIndices != null)
@@ -396,6 +265,285 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
     }
 
     return true;
+  }
+
+  private Boolean cleanupWithNewRemoveDelta(CDORemoveFeatureDelta removeFeatureDelta)
+  {
+    int indexToRemove = removeFeatureDelta.getIndex();
+    reconstructAddedIndicesWithNoCopy();
+
+    for (int i = 1; i <= cachedIndices[0]; i++)
+    {
+      int index = cachedIndices[i];
+      if (indexToRemove == index)
+      {
+        // The previous implementation set the value of the feature delta to CDOID.NULL. Databinding and probably
+        // others don't really like it. We now remove the ADD (or SET which seems to appear in CDOListFeatureDelta
+        // during opposite adjustment!? Why???) and patch the other feature deltas.
+        // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=310574
+
+        ListTargetAdding delta = cachedSources[i];
+
+        // We use a "floating" index which is the index (in the list) of the item to remove at the time when the
+        // object was still in the list. This index evolves with the feature deltas.
+        int floatingIndex = delta.getIndex();
+
+        // First updates cachedSources and cachedIndices using CDORemoveFeatureDelta.
+        ListIndexAffecting affecting = (ListIndexAffecting)removeFeatureDelta;
+        affecting.affectIndices(cachedSources, cachedIndices);
+
+        // Then adjusts the remaining feature deltas.
+        boolean skip = true;
+        ListIterator<CDOFeatureDelta> iterator = listChanges.listIterator();
+
+        while (iterator.hasNext())
+        {
+          CDOFeatureDelta fd = iterator.next();
+
+          // We only need to process feature deltas that come after the ADD (or SET) to be removed.
+          if (skip)
+          {
+            if (fd == delta)
+            {
+              // Found the ADD (or SET) feature delta that we need to remove. So remove it from the list and start
+              // processing the next feature deltas.
+              skip = false;
+              iterator.remove();
+
+              // SET
+              if (fd instanceof CDOSetFeatureDelta)
+              {
+                // If the removed delta is SET we add the REMOVE to the feature deltas. We do not need to adjust the
+                // other feature deltas because SET do not modify the list.
+                return true;
+              }
+            }
+
+            continue;
+          }
+
+          // ADD
+          if (fd instanceof CDOAddFeatureDelta)
+          {
+            // Increases the floating index if the ADD came in front of the item.
+            if (((CDOAddFeatureDelta)fd).getIndex() <= floatingIndex)
+            {
+              ++floatingIndex;
+            }
+
+            // Adjusts the feature delta too.
+            ((WithIndex)fd).adjustAfterRemoval(floatingIndex);
+          }
+
+          // REMOVE
+          else if (fd instanceof CDORemoveFeatureDelta)
+          {
+            int idx = floatingIndex;
+            // Decreases the floating index if the REMOVE came in front of the item.
+            if (((CDORemoveFeatureDelta)fd).getIndex() <= floatingIndex)
+            {
+              --floatingIndex;
+            }
+
+            // Adjusts the feature delta too.
+            ((WithIndex)fd).adjustAfterRemoval(idx);
+          }
+
+          // MOVE
+          else if (fd instanceof CDOMoveFeatureDelta)
+          {
+            // Remembers the positions before we patch them.
+            int from = ((CDOMoveFeatureDelta)fd).getOldPosition();
+            int to = ((CDOMoveFeatureDelta)fd).getNewPosition();
+
+            if (floatingIndex == from)
+            {
+              // We are moving the "to be deleted" item. So we update our floating index and remove the MOVE. It has
+              // no effect on the list.
+              floatingIndex = to;
+              iterator.remove();
+            }
+            else
+            {
+              // In the other cases, we need to patch the positions.
+
+              // If the old position is greater or equal to the current position of the item to be removed (remember,
+              // that's our floating index), decrease the position.
+              int patchedFrom = floatingIndex <= from ? from - 1 : from;
+
+              // The new position requires more care. We need to know the direction of the move (left-to-right or
+              // right-to-left).
+              int patchedTo;
+              if (from > to)
+              {
+                // left-to-right. Only decreases the position if it is strictly greater than the current item
+                // position.
+                patchedTo = floatingIndex < to ? to - 1 : to;
+              }
+              else
+              {
+                // right-to-left. Decreases the position if it is greater or equal than the current item position.
+                patchedTo = floatingIndex <= to ? to - 1 : to;
+              }
+
+              // We can now update our floating index. We use the original positions because the floating index
+              // represents the item "to be deleted" before it was actually removed.
+              if (from < floatingIndex && floatingIndex <= to)
+              {
+                --floatingIndex;
+              }
+              else if (to <= floatingIndex && floatingIndex < from)
+              {
+                ++floatingIndex;
+              }
+
+              // And finally adjust the feature delta.
+              if (patchedFrom == patchedTo)
+              {
+                // Source and destination are the same so just remove the feature delta.
+                iterator.remove();
+              }
+              else
+              {
+                ((CDOMoveFeatureDeltaImpl)fd).setOldPosition(patchedFrom);
+                ((CDOMoveFeatureDeltaImpl)fd).setNewPosition(patchedTo);
+              }
+            }
+          }
+
+          // SET
+          else if (fd instanceof CDOSetFeatureDelta)
+          {
+            // Adjusts the feature delta too.
+            ((WithIndex)fd).adjustAfterRemoval(floatingIndex);
+          }
+        }
+
+        // If the removed delta was ADD so we do not add the REMOVE to the feature deltas.
+        return false;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * A new SET feature delta can interfere with former ADD or SET deltas.
+   */
+  private Boolean cleanupWithNewSetDelta(CDOSetFeatureDelta featureDelta)
+  {
+    final class DeltaProxy implements InternalCDOFeatureDelta.WithIndex
+    {
+      private final int indexIntoListChanges;
+
+      private int index;
+
+      public DeltaProxy(int indexIntoListChanges, int index)
+      {
+        this.indexIntoListChanges = indexIntoListChanges;
+        this.index = index;
+      }
+
+      public int getIndexIntoListChanges()
+      {
+        return indexIntoListChanges;
+      }
+
+      public int getIndex()
+      {
+        return index;
+      }
+
+      public void adjustAfterAddition(int index)
+      {
+        if (index <= this.index)
+        {
+          ++this.index;
+        }
+      }
+
+      public void adjustAfterRemoval(int index)
+      {
+        if (index < this.index && this.index > 0)
+        {
+          --this.index;
+        }
+      }
+    }
+
+    int size = listChanges.size();
+    List<DeltaProxy> proxies = new ArrayList<DeltaProxy>();
+
+    for (int i = 0; i < size; i++)
+    {
+      CDOFeatureDelta fd = listChanges.get(i);
+      switch (fd.getType())
+      {
+      case MOVE:
+      {
+        int oldPosition = ((CDOMoveFeatureDelta)fd).getOldPosition();
+        int newPosition = ((CDOMoveFeatureDelta)fd).getNewPosition();
+        for (DeltaProxy proxy : proxies)
+        {
+          proxy.adjustAfterRemoval(oldPosition);
+          proxy.adjustAfterAddition(newPosition);
+        }
+
+        break;
+      }
+
+      case REMOVE:
+      {
+        int index = ((CDORemoveFeatureDelta)fd).getIndex();
+        for (DeltaProxy proxy : proxies)
+        {
+          proxy.adjustAfterRemoval(index);
+        }
+
+        break;
+      }
+
+      case ADD:
+      {
+        int index = ((CDOAddFeatureDelta)fd).getIndex();
+        for (DeltaProxy proxy : proxies)
+        {
+          proxy.adjustAfterAddition(index);
+        }
+
+        proxies.add(new DeltaProxy(i, index));
+        break;
+      }
+
+      case SET:
+      {
+        int index = ((CDOSetFeatureDelta)fd).getIndex();
+        proxies.add(new DeltaProxy(i, index));
+        break;
+      }
+      }
+    }
+
+    int index = featureDelta.getIndex();
+    for (DeltaProxy proxy : proxies)
+    {
+      if (proxy.getIndex() == index)
+      {
+        int indexIntoListChanges = proxy.getIndexIntoListChanges();
+        CDOFeatureDelta featureDeltaToModify = listChanges.get(indexIntoListChanges);
+        if (featureDeltaToModify.getType() == CDOFeatureDelta.Type.ADD)
+        {
+          ((CDOAddFeatureDeltaImpl)featureDeltaToModify).setValue(featureDelta.getValue());
+          return false;
+        }
+
+        // Here featureDeltaToModify is a SET delta
+        listChanges.remove(indexIntoListChanges); // Replace the SET delta that existed for this index
+        break;
+      }
+    }
+
+    return null;
   }
 
   public void add(CDOFeatureDelta featureDelta)

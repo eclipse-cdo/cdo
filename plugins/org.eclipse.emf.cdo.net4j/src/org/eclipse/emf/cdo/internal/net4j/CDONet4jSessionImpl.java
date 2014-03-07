@@ -16,6 +16,8 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
@@ -240,9 +242,14 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
 
     try
     {
+      String userID = getUserID();
+      boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
+      PassiveUpdateMode passiveUpdateMode = options().getPassiveUpdateMode();
+      LockNotificationMode lockNotificationMode = options().getLockNotificationMode();
+
       // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
-      OpenSessionResult result = protocol.openSession(repositoryName, getUserID(), options().isPassiveUpdateEnabled(),
-          options().getPassiveUpdateMode(), options().getLockNotificationMode());
+      OpenSessionResult result = protocol.openSession(repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode,
+          lockNotificationMode);
 
       if (result == null)
       {

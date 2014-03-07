@@ -16,7 +16,9 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
 import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
@@ -59,11 +61,19 @@ public abstract class AbstractOMTest extends TestCase
 
   public static final long DEFAULT_TIMEOUT_EXPECTED = 3 * 1000;
 
-  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractOMTest.class);
-
   public static boolean EXTERNAL_LOG;
 
   public static boolean SUPPRESS_OUTPUT;
+
+  private static final IListener DUMPER = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      IOUtil.OUT().println(event);
+    }
+  };
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractOMTest.class);
 
   private static boolean consoleEnabled;
 
@@ -621,6 +631,39 @@ public abstract class AbstractOMTest extends TestCase
       if (consoleEnabled && TRACER.isEnabled())
       {
         TRACER.trace("--> " + m); //$NON-NLS-1$
+      }
+    }
+  }
+
+  public static void dumpEvents(Object notifier)
+  {
+    dumpEvents(notifier, true);
+  }
+
+  public static void dumpEvents(Object notifier, boolean on)
+  {
+    if (notifier instanceof INotifier)
+    {
+      INotifier iNotifier = (INotifier)notifier;
+      IListener[] listeners = iNotifier.getListeners();
+
+      boolean wasOn = false;
+      for (int i = 0; i < listeners.length; i++)
+      {
+        if (listeners[i] == DUMPER)
+        {
+          wasOn = true;
+          break;
+        }
+      }
+
+      if (on && !wasOn)
+      {
+        iNotifier.addListener(DUMPER);
+      }
+      else if (!on && wasOn)
+      {
+        iNotifier.removeListener(DUMPER);
       }
     }
   }

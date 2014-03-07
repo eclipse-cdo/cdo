@@ -13,13 +13,12 @@ package org.eclipse.net4j.util.container;
 import org.eclipse.net4j.util.container.IContainerEventVisitor.Filtered;
 import org.eclipse.net4j.util.event.Event;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A default {@link IContainerEvent container event} implementation.
- * 
+ *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
  * @apiviz.exclude
@@ -121,17 +120,21 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
   }
 
   @Override
-  public String toString()
+  protected String formatAdditionalParameters()
   {
     StringBuilder builder = new StringBuilder();
     for (IContainerDelta<E> delta : getDeltas())
     {
-      builder.append(", "); //$NON-NLS-1$
+      if (builder.length() != 0)
+      {
+        builder.append(", "); //$NON-NLS-1$
+      }
+
       builder.append(delta.getKind());
       builder.append("="); //$NON-NLS-1$
       builder.append(delta.getElement());
     }
 
-    return MessageFormat.format("ContainerEvent[source={0}{1}]", getSource(), builder.toString()); //$NON-NLS-1$
+    return builder.toString();
   }
 }

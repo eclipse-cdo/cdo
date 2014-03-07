@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.config;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
 /**
  * @author Eike Stepper
@@ -38,4 +39,6 @@ public interface ISessionConfig extends IConfig
   public CDOSession openSession();
 
   public CDOSession openSession(String repositoryName);
+
+  public CDOSession openSession(CDOSessionConfiguration configuration);
 }

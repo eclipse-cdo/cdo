@@ -607,7 +607,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return refresh(false);
   }
 
-  private long refresh(boolean enablePassiveUpdates)
+  protected final long refresh(boolean enablePassiveUpdates)
   {
     Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
     Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();

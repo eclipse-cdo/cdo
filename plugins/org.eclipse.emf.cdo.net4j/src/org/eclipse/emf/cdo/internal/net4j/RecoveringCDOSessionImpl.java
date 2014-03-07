@@ -137,7 +137,11 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       runnable.run(newSessionProtocol);
     }
 
-    fireEvent(createRecoveryFinishedEvent());
+    boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
+    refresh(passiveUpdateEnabled);
+
+    CDOSessionEvent event = createRecoveryFinishedEvent();
+    fireEvent(event);
   }
 
   protected void handleProtocolChange(CDOSessionProtocol oldProtocol, CDOSessionProtocol newProtocol)
@@ -185,7 +189,8 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
 
   protected IConnector getTCPConnector(String description)
   {
-    return Net4jUtil.getConnector(getContainer(), "tcp", description, connectorTimeout);
+    IManagedContainer container = getContainer();
+    return Net4jUtil.getConnector(container, "tcp", description, connectorTimeout);
   }
 
   protected List<AfterRecoveryRunnable> recoverSession()

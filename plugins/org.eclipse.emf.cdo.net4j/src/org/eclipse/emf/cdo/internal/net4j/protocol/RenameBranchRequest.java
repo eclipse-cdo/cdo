@@ -42,6 +42,6 @@ public class RenameBranchRequest extends CDOClientRequest<Boolean>
   @Override
   protected Boolean confirming(CDODataInput in) throws IOException
   {
-    return true;
+    return in.readBoolean();
   }
 }

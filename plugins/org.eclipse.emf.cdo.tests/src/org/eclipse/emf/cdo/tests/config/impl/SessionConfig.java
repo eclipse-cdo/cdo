@@ -159,6 +159,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       configuration.setCredentialsProvider(credentialsProvider);
     }
 
+    return openSession(configuration);
+  }
+
+  public CDOSession openSession(CDOSessionConfiguration configuration)
+  {
     CDOSession session = configuration.openSession();
     configureSession(session);
     session.addListener(sessionListener);

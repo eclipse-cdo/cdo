@@ -13,28 +13,37 @@ package org.eclipse.emf.cdo.internal.net4j;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 
+import org.eclipse.net4j.util.event.Event;
+
 /**
  * @author Caspar De Groot
  */
-public class CDOSessionRecoveryEventImpl implements CDOSessionRecoveryEvent
+public class CDOSessionRecoveryEventImpl extends Event implements CDOSessionRecoveryEvent
 {
-  private CDOSession source;
+  private static final long serialVersionUID = 1L;
 
   private Type type;
 
   public CDOSessionRecoveryEventImpl(CDOSession source, Type type)
   {
+    super(source);
     this.type = type;
-    this.source = source;
   }
 
+  @Override
   public CDOSession getSource()
   {
-    return source;
+    return (CDOSession)super.getSource();
   }
 
   public Type getType()
   {
     return type;
+  }
+
+  @Override
+  protected String formatAdditionalParameters()
+  {
+    return "type=" + type;
   }
 }

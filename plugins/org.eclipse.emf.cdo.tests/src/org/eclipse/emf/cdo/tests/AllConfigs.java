@@ -52,6 +52,7 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(UnsetTest.class);
     testClasses.add(StateMachineTest.class);
     testClasses.add(SessionTest.class);
+    testClasses.add(ReconnectingSessionTest.class);
     testClasses.add(RevisionManagerTest.class);
     testClasses.add(RevisionManagerClientSideTest.class);
     testClasses.add(BranchingTest.class);

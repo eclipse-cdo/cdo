@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 
 /**
  * @author Caspar De Groot
@@ -87,6 +88,10 @@ public class ReconnectingCDOSessionImpl extends RecoveringCDOSessionImpl
         newConnector = createTCPConnector(getUseHeartBeat());
       }
       catch (ConnectorException ex)
+      {
+        failedAttempts++;
+      }
+      catch (LifecycleException ex)
       {
         failedAttempts++;
       }

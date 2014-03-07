@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore.NoChangeSets;
@@ -367,6 +368,16 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     determineCodeLink();
     ISessionConfig sessionConfig = getSessionConfig();
     return sessionConfig.openSession(repositoryName);
+  }
+
+  /**
+   * @category Session
+   */
+  public CDOSession openSession(CDOSessionConfiguration configuration)
+  {
+    determineCodeLink();
+    ISessionConfig sessionConfig = getSessionConfig();
+    return sessionConfig.openSession(configuration);
   }
 
   /**

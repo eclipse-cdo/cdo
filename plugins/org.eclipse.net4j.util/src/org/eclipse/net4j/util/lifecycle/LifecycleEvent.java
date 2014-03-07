@@ -52,4 +52,10 @@ public class LifecycleEvent extends Event implements ILifecycleEvent
   {
     return kind;
   }
+
+  @Override
+  protected String formatAdditionalParameters()
+  {
+    return "kind=" + kind;
+  }
 }

@@ -112,7 +112,7 @@ public class Bugzilla_411927_Test extends AbstractCDOTest
   }
 
   private void executeTestWith(FailureTime failureTime) throws ConcurrentAccessException, CommitException,
-  InterruptedException
+      InterruptedException
   {
     disableConsole();
     initRepository(failureTime);

@@ -48,7 +48,7 @@ import java.util.Set;
  * @generated
  */
 public class ExclusionPredicateItemProvider extends PredicateItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   public static void filterCircularWorkingSets(EObject root, Collection<?> objects)
   {
@@ -146,7 +146,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_ExclusionPredicate_excludedWorkingSets_feature"), getString(
             "_UI_PropertyDescriptor_description", "_UI_ExclusionPredicate_excludedWorkingSets_feature",
             "_UI_ExclusionPredicate_type"), WorkingSetsPackage.Literals.EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS,
-            true, false, true, null, null, null)
+        true, false, true, null, null, null)
     {
       @Override
       public Collection<?> getChoiceOfValues(Object object)

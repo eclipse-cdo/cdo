@@ -81,7 +81,7 @@ public abstract class DBConfig extends RepositoryConfig
     {
       dbAdapter = createDBAdapter();
     }
-  
+
     return dbAdapter;
   }
 

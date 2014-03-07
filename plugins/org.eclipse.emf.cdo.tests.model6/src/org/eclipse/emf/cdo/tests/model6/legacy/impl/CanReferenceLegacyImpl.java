@@ -394,4 +394,4 @@ public class CanReferenceLegacyImpl extends EObjectImpl implements CanReferenceL
     return super.eIsSet(featureID);
   }
 
-} //CanReferenceLegacyImpl
+} // CanReferenceLegacyImpl

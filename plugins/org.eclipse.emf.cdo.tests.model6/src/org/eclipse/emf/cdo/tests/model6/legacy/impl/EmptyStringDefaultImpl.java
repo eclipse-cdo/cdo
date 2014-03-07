@@ -182,4 +182,4 @@ public class EmptyStringDefaultImpl extends EObjectImpl implements EmptyStringDe
     return result.toString();
   }
 
-} //EmptyStringDefaultImpl
+} // EmptyStringDefaultImpl

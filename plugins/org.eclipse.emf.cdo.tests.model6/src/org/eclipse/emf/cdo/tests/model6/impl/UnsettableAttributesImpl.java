@@ -1010,4 +1010,4 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
     return eIsSet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_STRING);
   }
 
-} //UnsettableAttributesImpl
+} // UnsettableAttributesImpl

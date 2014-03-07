@@ -132,4 +132,4 @@ public class CanReferenceLegacyImpl extends CDOObjectImpl implements CanReferenc
     return (EList<EObject>)eGet(Model6Package.Literals.CAN_REFERENCE_LEGACY__MULTIPLE_REFERENCE, true);
   }
 
-} //CanReferenceLegacyImpl
+} // CanReferenceLegacyImpl

@@ -36,6 +36,8 @@ public abstract class CDOMigratorUtil
 
   public static final String PLUGIN_VARIABLE = "CDO=org.eclipse.emf.cdo"; //$NON-NLS-1$
 
+  public static final String PROVIDER_ROOT_EXTENDS_CLASS = "org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"; //$NON-NLS-1$
+
   private CDOMigratorUtil()
   {
   }
@@ -52,7 +54,8 @@ public abstract class CDOMigratorUtil
     if (genModel.getFeatureDelegation() != featureDelegation)
     {
       genModel.setFeatureDelegation(featureDelegation);
-      builder.append(Messages.getString("CDOMigrator.4")); //$NON-NLS-1$
+      builder.append(Messages.getString("CDOMigratorUtil.4")); //$NON-NLS-1$
+      builder.append(" "); //$NON-NLS-1$
       builder.append(featureDelegation);
       builder.append("\n"); //$NON-NLS-1$
     }
@@ -60,7 +63,8 @@ public abstract class CDOMigratorUtil
     if (!ROOT_EXTENDS_CLASS.equals(genModel.getRootExtendsClass()))
     {
       genModel.setRootExtendsClass(ROOT_EXTENDS_CLASS);
-      builder.append(Messages.getString("CDOMigrator.6")); //$NON-NLS-1$
+      builder.append(Messages.getString("CDOMigratorUtil.6")); //$NON-NLS-1$
+      builder.append(" "); //$NON-NLS-1$
       builder.append(ROOT_EXTENDS_CLASS);
       builder.append("\n"); //$NON-NLS-1$
     }
@@ -68,7 +72,8 @@ public abstract class CDOMigratorUtil
     if (!ROOT_EXTENDS_INTERFACE.equals(genModel.getRootExtendsInterface()))
     {
       genModel.setRootExtendsInterface(ROOT_EXTENDS_INTERFACE);
-      builder.append(Messages.getString("CDOMigrator.8")); //$NON-NLS-1$
+      builder.append(Messages.getString("CDOMigratorUtil.8")); //$NON-NLS-1$
+      builder.append(" "); //$NON-NLS-1$
       builder.append(ROOT_EXTENDS_INTERFACE);
       builder.append("\n"); //$NON-NLS-1$
     }
@@ -77,8 +82,18 @@ public abstract class CDOMigratorUtil
     if (!pluginVariables.contains(PLUGIN_VARIABLE))
     {
       pluginVariables.add(PLUGIN_VARIABLE);
-      builder.append(Messages.getString("CDOMigrator.10")); //$NON-NLS-1$
+      builder.append(Messages.getString("CDOMigratorUtil.10")); //$NON-NLS-1$
+      builder.append(" "); //$NON-NLS-1$
       builder.append(PLUGIN_VARIABLE);
+      builder.append("\n"); //$NON-NLS-1$
+    }
+
+    if (!PROVIDER_ROOT_EXTENDS_CLASS.equals(genModel.getProviderRootExtendsClass()))
+    {
+      genModel.setProviderRootExtendsClass(PROVIDER_ROOT_EXTENDS_CLASS);
+      builder.append(Messages.getString("CDOMigratorUtil.9")); //$NON-NLS-1$
+      builder.append(" "); //$NON-NLS-1$
+      builder.append(PROVIDER_ROOT_EXTENDS_CLASS);
       builder.append("\n"); //$NON-NLS-1$
     }
 
@@ -90,7 +105,7 @@ public abstract class CDOMigratorUtil
       try
       {
         modelProject.create(new NullProgressMonitor());
-        builder.append(Messages.getString("CDOMigrator.12") + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        builder.append(Messages.getString("CDOMigratorUtil.12") + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
       }
       catch (CoreException ex)
       {
@@ -103,7 +118,7 @@ public abstract class CDOMigratorUtil
       try
       {
         modelProject.open(new NullProgressMonitor());
-        builder.append(Messages.getString("CDOMigrator.13") + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        builder.append(Messages.getString("CDOMigratorUtil.13") + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
       }
       catch (CoreException ex)
       {

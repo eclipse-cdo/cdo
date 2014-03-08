@@ -6,9 +6,9 @@
     editorPluginClass="" updateClasspath="false" nonNLSMarkers="true" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
     rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" testsPluginID="org.eclipse.emf.cdo.editor"
-    optimizedHasChildren="true" tableProviders="true" colorProviders="true" fontProviders="true"
-    runtimeVersion="2.6" usedGenPackages="etypes.genmodel#//etypes">
+    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"
+    testsPluginID="org.eclipse.emf.cdo.editor" optimizedHasChildren="true" tableProviders="true"
+    colorProviders="true" fontProviders="true" runtimeVersion="2.6" usedGenPackages="etypes.genmodel#//etypes">
   <foreignModel>eresource.ecore</foreignModel>
   <genPackages prefix="Eresource" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="eresource.ecore#/">
@@ -48,6 +48,7 @@
     </genClasses>
     <genClasses image="false" ecoreClass="eresource.ecore#//CDOResourceLeaf"/>
     <genClasses ecoreClass="eresource.ecore#//CDOFileResource">
+      <genTypeParameters ecoreTypeParameter="eresource.ecore#//CDOFileResource/IO"/>
       <genOperations ecoreOperation="eresource.ecore#//CDOFileResource/getContents"/>
     </genClasses>
     <genClasses ecoreClass="eresource.ecore#//CDOBinaryResource">

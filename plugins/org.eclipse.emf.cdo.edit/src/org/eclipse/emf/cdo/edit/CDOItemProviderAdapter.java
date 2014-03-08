@@ -96,6 +96,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
       addDirectResourceDescriptor(object);
       addReadLockedDescriptor(object);
       addWriteLockedDescriptor(object);
+      addWriteOptionDescriptor(object);
       addAdaptersDescriptor(object);
       addChangeSubscriptionPoliciesDescriptor(object);
       addURIDescriptor(object);
@@ -169,6 +170,14 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
+   * @since 4.3
+   */
+  protected void addWriteOptionDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(new WriteOptionDescriptor());
+  }
+
+  /**
    * @since 2.0
    */
   protected void addAdaptersDescriptor(Object object)
@@ -194,7 +203,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
   /**
    * Base abstract to add CDO debug information to PropertiesView. Users wanting to add new information to the
-   * Properties View can subclass this class instead of directly implementing {@link IItemPropertyDescriptor}.
+   * Properties view can subclass this class instead of directly implementing {@link IItemPropertyDescriptor}.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -303,7 +312,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link CDOID} of a {@link CDOObject} to the Properties View.
+   * Adds the {@link CDOID} of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -347,7 +356,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the version of a {@link CDOObject} to the Properties View.
+   * Adds the version of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -414,7 +423,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link CDOState state} of a {@link CDOObject} to the Properties View.
+   * Adds the {@link CDOState state} of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -463,7 +472,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the associate {@link CDOView view} of a {@link CDOObject} to the Properties View.
+   * Adds the associate {@link CDOView view} of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -512,7 +521,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link EObject#eContainer() eContainer} of a {@link CDOObject} to the Properties View.
+   * Adds the {@link EObject#eContainer() eContainer} of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -590,7 +599,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link InternalEObject#eDirectResource() direct resource} of a {@link CDOObject} to the Properties View.
+   * Adds the {@link InternalEObject#eDirectResource() direct resource} of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -657,7 +666,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link CDOLock read lock} of a {@link CDOObject} to the Properties View.
+   * Adds the {@link CDOLock read lock} of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -728,7 +737,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link CDOLock write lock} of a {@link CDOObject} to the Properties View.
+   * Adds the {@link CDOLock write lock} of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -799,7 +808,78 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link EObject#eAdapters() eAdapters} list of a {@link CDOObject} to the Properties View.
+   * Adds the {@link CDOLock write option} of a {@link CDOObject} to the Properties view.
+   *
+   * @since 4.3
+   * @author Eike Stepper
+   */
+  public static class WriteOptionDescriptor extends CDOPropertyDescriptor
+  {
+    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.34"); //$NON-NLS-1$
+
+    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.35"); //$NON-NLS-1$
+
+    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.36"); //$NON-NLS-1$
+
+    public WriteOptionDescriptor()
+    {
+    }
+
+    public Object getPropertyValue(Object object)
+    {
+      if (object instanceof EObject)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)object);
+        if (cdoObject.cdoView() != null)
+        {
+          return cdoObject.cdoWriteOption();
+        }
+      }
+
+      return null;
+    }
+
+    public String getDescription(Object object)
+    {
+      return DESCRIPTION;
+    }
+
+    public String getDisplayName(Object object)
+    {
+      return DISPLAY_NAME;
+    }
+
+    public Object getFeature(Object object)
+    {
+      return FEATURE_ID;
+    }
+
+    public String getId(Object object)
+    {
+      return FEATURE_ID;
+    }
+
+    @Override
+    public IItemLabelProvider getLabelProvider(Object object)
+    {
+      return new DefaultLabelProvider()
+      {
+        @Override
+        public String getText(Object object)
+        {
+          if (object instanceof CDOLock)
+          {
+            return String.valueOf(((CDOLock)object).isLocked());
+          }
+
+          return null;
+        }
+      };
+    }
+  }
+
+  /**
+   * Adds the {@link EObject#eAdapters() eAdapters} list of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -848,7 +928,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the change subscription policies list of a {@link CDOObject} to the Properties View.
+   * Adds the change subscription policies list of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort
@@ -927,7 +1007,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the URI of a {@link CDOObject} to the Properties View.
+   * Adds the URI of a {@link CDOObject} to the Properties view.
    *
    * @since 2.0
    * @author Victor Roldan Betancort

@@ -6,16 +6,20 @@
     updateClasspath="false" nonNLSMarkers="true" rootExtendsInterface="org.eclipse.emf.cdo.CDOObject"
     rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl" reflectiveDelegation="true"
     codeFormatting="true" testsDirectory="" importerID="org.eclipse.emf.importer.ecore"
-    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" testsPluginID="org.eclipse.emf.cdo.editor"
-    optimizedHasChildren="true" tableProviders="true" colorProviders="true" fontProviders="true"
-    runtimeVersion="2.6">
+    featureDelegation="Reflective" complianceLevel="5.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"
+    testsPluginID="org.eclipse.emf.cdo.editor" optimizedHasChildren="true" tableProviders="true"
+    colorProviders="true" fontProviders="true" runtimeVersion="2.6">
   <foreignModel>etypes.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Etypes" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="etypes.ecore#/">
     <genDataTypes ecoreDataType="etypes.ecore#//Blob"/>
     <genDataTypes ecoreDataType="etypes.ecore#//Clob"/>
-    <genDataTypes ecoreDataType="etypes.ecore#//Lob"/>
+    <genDataTypes ecoreDataType="etypes.ecore#//Lob">
+      <genTypeParameters ecoreTypeParameter="etypes.ecore#//Lob/IO"/>
+    </genDataTypes>
+    <genDataTypes ecoreDataType="etypes.ecore#//InputStream"/>
+    <genDataTypes ecoreDataType="etypes.ecore#//Reader"/>
     <genClasses image="false" ecoreClass="etypes.ecore#//ModelElement">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference etypes.ecore#//ModelElement/annotations"/>
       <genOperations ecoreOperation="etypes.ecore#//ModelElement/getAnnotation">

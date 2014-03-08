@@ -1197,7 +1197,38 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return createUnorderedList(eStructuralFeature);
     }
 
-    return super.createList(eStructuralFeature);
+    return new EStoreEObjectImpl.BasicEStoreEList<Object>(this, eStructuralFeature)
+    {
+      private static final long serialVersionUID = 1L;
+
+      @Override
+      public boolean contains(Object object)
+      {
+        if (isEObject())
+        {
+          int size = size();
+
+          boolean result = delegateContains(object);
+          if (hasProxies() && !result)
+          {
+            for (int i = 0; i < size; ++i)
+            {
+              EObject eObject = resolveProxy((EObject)delegateGet(i));
+              if (eObject == object)
+              {
+                return true;
+              }
+            }
+          }
+
+          return result;
+        }
+
+        return delegateContains(object);
+      }
+    };
+
+    // return super.createList(eStructuralFeature);
   }
 
   private boolean isMap(EStructuralFeature eStructuralFeature)
@@ -1755,6 +1786,32 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       }
 
       return oldObject;
+    }
+
+    @Override
+    public boolean contains(Object object)
+    {
+      if (isEObject())
+      {
+        int size = size();
+
+        boolean result = delegateContains(object);
+        if (hasProxies() && !result)
+        {
+          for (int i = 0; i < size; ++i)
+          {
+            EObject eObject = resolveProxy((EObject)delegateGet(i));
+            if (eObject == object)
+            {
+              return true;
+            }
+          }
+        }
+
+        return result;
+      }
+
+      return delegateContains(object);
     }
   }
 

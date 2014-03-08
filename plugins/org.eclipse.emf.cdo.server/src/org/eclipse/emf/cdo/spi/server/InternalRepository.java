@@ -259,7 +259,7 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   /**
    * @since 4.0
    */
-  public void initSystemPackages();
+  public void initSystemPackages(boolean firstStart);
 
   /**
    * @since 4.0

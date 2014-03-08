@@ -1837,32 +1837,45 @@ public class Repository extends Container<Object> implements InternalRepository
     }
   }
 
-  public void initSystemPackages()
+  public void initSystemPackages(boolean firstStart)
   {
-    List<InternalCDOPackageUnit> units = new ArrayList<InternalCDOPackageUnit>();
-    units.add(initPackage(EcorePackage.eINSTANCE));
-    units.add(initPackage(EresourcePackage.eINSTANCE));
-    units.add(initPackage(EtypesPackage.eINSTANCE));
-
-    if (initialPackages != null)
-    {
-      for (EPackage initialPackage : initialPackages)
-      {
-        if (!packageRegistry.containsKey(initialPackage.getNsURI()))
-        {
-          units.add(initPackage(initialPackage));
-        }
-      }
-    }
-
     IStoreAccessor writer = store.getWriter(null);
     StoreThreadLocal.setAccessor(writer);
 
     try
     {
-      InternalCDOPackageUnit[] systemUnits = units.toArray(new InternalCDOPackageUnit[units.size()]);
-      writer.writePackageUnits(systemUnits, new Monitor());
-      writer.commit(new Monitor());
+      List<InternalCDOPackageUnit> list = new ArrayList<InternalCDOPackageUnit>();
+      if (firstStart)
+      {
+        list.add(initPackage(EcorePackage.eINSTANCE));
+        list.add(initPackage(EresourcePackage.eINSTANCE));
+        list.add(initPackage(EtypesPackage.eINSTANCE));
+      }
+
+      boolean nonSystemPackages = false;
+      if (initialPackages != null)
+      {
+        for (EPackage initialPackage : initialPackages)
+        {
+          if (!packageRegistry.containsKey(initialPackage.getNsURI()))
+          {
+            list.add(initPackage(initialPackage));
+            nonSystemPackages = true;
+          }
+        }
+      }
+
+      if (nonSystemPackages && !firstStart)
+      {
+        OM.LOG.info("Initial packages are about to be pre-registered. They may not become part of replications.");
+      }
+
+      if (!list.isEmpty())
+      {
+        InternalCDOPackageUnit[] initialUnits = list.toArray(new InternalCDOPackageUnit[list.size()]);
+        writer.writePackageUnits(initialUnits, new Monitor());
+        writer.commit(new Monitor());
+      }
     }
     finally
     {
@@ -2062,11 +2075,12 @@ public class Repository extends Container<Object> implements InternalRepository
 
       if (store.isFirstStart())
       {
-        initSystemPackages();
+        initSystemPackages(true);
         initRootResource();
       }
       else
       {
+        initSystemPackages(false);
         readPackageUnits();
         readRootResource();
       }

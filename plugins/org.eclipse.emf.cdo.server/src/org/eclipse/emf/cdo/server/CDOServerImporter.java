@@ -173,7 +173,7 @@ public abstract class CDOServerImporter
       repository.initMainBranch(branchManager, created);
       LifecycleUtil.activate(branchManager);
 
-      repository.initSystemPackages();
+      repository.initSystemPackages(true);
       repository.setRootResourceID(root);
 
       // InternalSession session = repository.getSessionManager().openSession(null);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013, 2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.security.PatternStyle;
 import org.eclipse.emf.cdo.security.ResourceFilter;
@@ -541,6 +542,8 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
   }
 
   /**
+   * Matches the path of a {@link CDOResourceNode resource node}.
+   *
    * @author Eike Stepper
    */
   public interface Matcher
@@ -551,6 +554,8 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
   }
 
   /**
+   * Matches the path of a {@link CDOResourceNode resource node} against a {@link #path} string.
+   *
    * @author Eike Stepper
    */
   protected static abstract class PathMatcher implements Matcher

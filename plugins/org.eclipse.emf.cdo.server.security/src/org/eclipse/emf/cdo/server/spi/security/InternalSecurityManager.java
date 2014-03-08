@@ -56,16 +56,16 @@ public interface InternalSecurityManager extends ISecurityManager
     /**
      * Called <b>before</b> the commit is security checked and passed to the repository.
      *
-     * @param user the committing user or <code>null</code> if this commit is 
+     * @param user the committing user or <code>null</code> if this commit is
      * {@link ISecurityManager#modify(ISecurityManager.RealmOperation, boolean) triggered} by the system.
-     * 
+     *
      * @see CommitHandler2
      */
     public void handleCommit(InternalSecurityManager securityManager, CommitContext commitContext, User user);
 
     /**
      * Creates {@link CommitHandler} instances.
-     * 
+     *
      * @author Eike Stepper
      * @since 4.3
      */
@@ -96,6 +96,8 @@ public interface InternalSecurityManager extends ISecurityManager
     public void handleCommitted(InternalSecurityManager securityManager, CommitContext commitContext);
 
     /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
      * @author Eike Stepper
      */
     public static abstract class WithUser implements CommitHandler2

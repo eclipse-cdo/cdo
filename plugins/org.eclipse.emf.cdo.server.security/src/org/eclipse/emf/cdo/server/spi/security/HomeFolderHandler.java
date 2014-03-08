@@ -222,6 +222,8 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
   }
 
   /**
+   * Creates {@link CommitHandler} instances.
+   *
    * @author Eike Stepper
    */
   public static class Factory extends InternalSecurityManager.CommitHandler.Factory implements ContainerAware

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013, 2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -20,8 +20,9 @@ import org.w3c.dom.Document;
 import java.util.Map;
 
 /**
- * @author Christian W. Damus (CEA LIST)
+ * Manages repository configurations.
  *
+ * @author Christian W. Damus (CEA LIST)
  * @since 4.2
  */
 public interface CDORepositoryConfigurationManager extends ILifecycle
@@ -42,7 +43,7 @@ public interface CDORepositoryConfigurationManager extends ILifecycle
   public void authenticateAdministrator() throws SecurityException;
 
   /**
-   * Specification of the factory API for {@link CDORepositoryConfigurationManager}s.
+   * Specification of the factory API for {@link CDORepositoryConfigurationManager repository configuration managers}.
    *
    * @author Christian W. Damus (CEA LIST)
    */

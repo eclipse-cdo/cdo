@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013, 2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,8 +13,9 @@ package org.eclipse.emf.cdo.spi.server;
 import java.util.concurrent.Callable;
 
 /**
- * @author Christian W. Damus (CEA LIST)
+ * Static utility methods for binding {@link IAuthenticationProtocol authentication protocols} to the current thread.
  *
+ * @author Christian W. Damus (CEA LIST)
  * @since 4.3
  */
 public final class AuthenticationUtil
@@ -43,16 +44,16 @@ public final class AuthenticationUtil
    */
   public static <V> Callable<V> authenticatingOperation(IAuthenticationProtocol authenticationProtocol,
       final Callable<V> operation)
-  {
+      {
     return new AuthenticatingOperation<V>(authenticationProtocol)
-    {
+        {
       @Override
       protected V doCall() throws Exception
       {
         return operation.call();
       }
-    };
-  }
+        };
+      }
 
   /**
    * Encapsulation of an administrative operation requiring (potentially) client

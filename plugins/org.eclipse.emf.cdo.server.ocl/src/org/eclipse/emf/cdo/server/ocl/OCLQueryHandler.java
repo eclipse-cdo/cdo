@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -86,7 +86,7 @@ public class OCLQueryHandler implements IQueryHandler
   /**
    * Query parameter indicating the {@link EClass} to set as the implicit root class of the type
    * hierarchy.  The default is {@code null}.
-   * 
+   *
    * @since 4.2
    */
   public static final String IMPLICIT_ROOT_CLASS_PARAMETER = "cdoImplicitRootClass";
@@ -495,6 +495,8 @@ public class OCLQueryHandler implements IQueryHandler
   }
 
   /**
+   * An abstraction of the {@link EClassifier classifier} and/or {@link EObject obejct} of an OCL query context parameter.
+   *
    * @author Eike Stepper
    * @since 4.2
    */

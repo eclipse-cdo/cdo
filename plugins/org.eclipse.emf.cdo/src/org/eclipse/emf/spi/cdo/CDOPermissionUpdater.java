@@ -18,6 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * A {@link org.eclipse.emf.cdo.session.CDOSession.Options#setPermissionUpdater(CDOPermissionUpdater) pluggable}
+ * strategy for updating the permissions of a set of {@link CDORevision revisions}.
+ *
  * @author Eike Stepper
  * @since 4.3
  */

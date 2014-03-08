@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2012 - 2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -121,7 +121,7 @@ public abstract class PermissionImpl extends CDOObjectImpl implements Permission
 
   /**
    * Should be overridden in subclasses to do proper impact analysis!
-   * 
+   *
    * @since 4.3
    */
   public boolean isImpacted(CommitImpactContext context)
@@ -130,6 +130,9 @@ public abstract class PermissionImpl extends CDOObjectImpl implements Permission
   }
 
   /**
+   * A description of the current commit that is used to {@link PermissionImpl#isImpacted(CommitImpactContext) determine}
+   * the impact of this commit on the configured {@link Permission permissions}.
+   *
    * @author Eike Stepper
    * @since 4.3
    */

@@ -42,6 +42,7 @@ public class Bugzilla_427773_Test extends AbstractCDOTest
     super.setUp();
   }
 
+  @CleanRepositoriesAfter(reason = "Repository not used again")
   public void testParallelAuthenticatedSessionOpening() throws Exception
   {
     getRepository();

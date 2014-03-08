@@ -1,4 +1,12 @@
-/**
+/*
+ * Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.releng.setup.impl;
 
@@ -271,7 +279,7 @@ public class FileMappingImpl extends MinimalEObjectImpl.Container implements Fil
       return FILE_PATTERN_EDEFAULT == null ? filePattern != null : !FILE_PATTERN_EDEFAULT.equals(filePattern);
     case SetupPackage.FILE_MAPPING__DEFAULT_EDITOR_ID:
       return DEFAULT_EDITOR_ID_EDEFAULT == null ? defaultEditorID != null : !DEFAULT_EDITOR_ID_EDEFAULT
-          .equals(defaultEditorID);
+      .equals(defaultEditorID);
     case SetupPackage.FILE_MAPPING__EDITORS:
       return editors != null && !editors.isEmpty();
     }

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
 import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
 import org.eclipse.emf.cdo.tests.model6.Root;
@@ -56,6 +57,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
   /**
    * Ensures that when creating and then deleting an element from an empty containment list, the {@link CDOTransaction}'s new objects map is empty.
    */
+  @Skips(IConfig.CAPABILITY_ALL)
   public void testUndoElementCreationOnEmptyList() throws Exception
   {
     // Testing on an empty containment list
@@ -117,6 +119,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
    * <li>commit</li>
    * </ul>
    */
+  @Skips(IConfig.CAPABILITY_ALL)
   public void testUndoSeveralElementsCreation() throws Exception
   {
     // Step 1: create first element (c1)

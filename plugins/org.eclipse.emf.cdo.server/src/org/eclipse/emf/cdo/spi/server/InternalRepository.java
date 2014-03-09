@@ -258,6 +258,13 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
 
   /**
    * @since 4.0
+   * @deprecated As of 4.3 use {@link #initSystemPackages()}.
+   */
+  @Deprecated
+  public void initSystemPackages();
+
+  /**
+   * @since 4.3
    */
   public void initSystemPackages(boolean firstStart);
 

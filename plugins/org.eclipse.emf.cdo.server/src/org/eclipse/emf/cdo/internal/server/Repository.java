@@ -480,7 +480,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
       int referenceChunk, int prefetchDepth)
-  {
+      {
     for (RevisionInfo info : infos)
     {
       CDOID id = info.getID();
@@ -578,7 +578,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return null;
-  }
+      }
 
   private InternalCDORevision loadRevisionTarget(CDOID id, CDOBranchPoint branchPoint, int referenceChunk,
       IStoreAccessor accessor)
@@ -1198,8 +1198,8 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       throw new IllegalArgumentException(
           MessageFormat
-              .format(
-                  "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
+          .format(
+              "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
     }
 
     long currentTimeStamp = getTimeStamp();
@@ -1207,8 +1207,8 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       throw new IllegalArgumentException(
           MessageFormat
-              .format(
-                  "timeStamp ({0}) > current time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(currentTimeStamp))); //$NON-NLS-1$
+          .format(
+              "timeStamp ({0}) > current time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(currentTimeStamp))); //$NON-NLS-1$
     }
   }
 
@@ -1423,7 +1423,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
-  {
+      {
     CDOBranchPoint target = targetInfo.getBranchPoint();
     CDOBranchPoint source = sourceInfo.getBranchPoint();
 
@@ -1481,7 +1481,7 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       monitor.done();
     }
-  }
+      }
 
   private void loadMergeData(Set<CDOID> ids, CDORevisionAvailabilityInfo info, OMMonitor monitor)
   {
@@ -1587,7 +1587,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch,
       boolean isSupportingBranches)
-  {
+      {
     List<Object> lockables = new ArrayList<Object>();
     for (CDORevisionKey revKey : revisionKeys)
     {
@@ -1603,7 +1603,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return lockables;
-  }
+      }
 
   public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive,
       long timeout)
@@ -1835,6 +1835,12 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       optimisticLockingTimeout = Long.valueOf(valueTimeout);
     }
+  }
+
+  @Deprecated
+  public void initSystemPackages()
+  {
+    initSystemPackages(true);
   }
 
   public void initSystemPackages(boolean firstStart)

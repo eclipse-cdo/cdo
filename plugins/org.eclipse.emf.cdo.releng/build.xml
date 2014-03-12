@@ -809,7 +809,7 @@
             <arg value="-r" />
             <arg value="http://download.eclipse.org/tools/buckminster/headless-4.3" />
             <arg value="-r" />
-            <arg value="http://download.eclipse.org/eclipse/updates/4.3" />
+            <arg value="http://download.eclipse.org/releases/kepler/201402280900" />
             <arg value="-r" />
             <arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
             <arg value="-d" />

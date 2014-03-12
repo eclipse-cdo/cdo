@@ -828,6 +828,7 @@
             <arg value="org.eclipse.pde.api.tools.ee.feature.feature.group" />
           </args>
         </eclipse>
+      	<!--
         <eclipse app="director">
           <properties>
             <sysproperty key="org.eclipse.update.jarprocessor.pack200" value="/shared/common/jdk1.6.0-latest/bin" />
@@ -847,6 +848,7 @@
             <arg value="org.eclipse.emf.cdo.releng.apireports.feature.group" />
           </args>
         </eclipse>
+-->
 
         <!-- See http://wiki.eclipse.org/Hudson#Configuring_a_proxy_for_the_p2_director -->
         <copy file="${releng}/${build.location}/org.eclipse.core.net.prefs"
@@ -1082,6 +1084,7 @@
           </then>
         </if>
 
+      	<!--
         <if>
           <not>
             <equals arg1="${skip.generate.apireports}" arg2="true" />
@@ -1090,6 +1093,7 @@
             <generate.apireports />
           </then>
         </if>
+        -->
 
         <if>
           <not>

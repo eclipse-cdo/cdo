@@ -1837,6 +1837,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   protected void doDeactivate() throws Exception
   {
+    if (viewSet != null && viewSet.getResourceSet() != null)
+    {
+      viewSet.getResourceSet().getURIConverter().getURIHandlers().remove(getURIHandler());
+    }
     viewSet = null;
     objects = null;
     store = null;

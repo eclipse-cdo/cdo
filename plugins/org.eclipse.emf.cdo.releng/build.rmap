@@ -4,7 +4,6 @@
 
 	<!-- Properties -->
 
-	<rm:property mutable="true" key="platform.version" value="3.8"/>
 	<rm:property mutable="true" key="emf.version" value="2.9"/>
 
 	<!-- Locators -->
@@ -37,9 +36,7 @@
 
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/{0}">
-				<bc:propertyRef key="platform.version"/>
-			</rm:uri>
+			<rm:uri format="http://download.eclipse.org/eclipse/updates/3.8/R-3.8.2-201301310800"/>
 		</rm:provider>
 
 		<!-- EMF -->

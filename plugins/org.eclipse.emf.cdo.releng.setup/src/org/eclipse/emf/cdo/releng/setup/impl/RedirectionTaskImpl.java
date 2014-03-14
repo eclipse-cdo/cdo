@@ -246,6 +246,12 @@ public class RedirectionTaskImpl extends SetupTaskImpl implements RedirectionTas
     return result.toString();
   }
 
+  @Override
+  public int getPriority()
+  {
+    return PRIORITY;
+  }
+
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     URI sourceURI = URI.createURI(getSourceURL());

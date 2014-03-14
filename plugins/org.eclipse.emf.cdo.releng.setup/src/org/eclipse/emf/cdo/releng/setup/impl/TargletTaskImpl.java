@@ -540,7 +540,7 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
       return repositoryLists != null && !repositoryLists.isEmpty();
     case SetupPackage.TARGLET_TASK__ACTIVE_REPOSITORY_LIST:
       return ACTIVE_REPOSITORY_LIST_EDEFAULT == null ? activeRepositoryList != null : !ACTIVE_REPOSITORY_LIST_EDEFAULT
-      .equals(activeRepositoryList);
+          .equals(activeRepositoryList);
     case SetupPackage.TARGLET_TASK__ACTIVE_P2_REPOSITORIES:
       return !getActiveP2Repositories().isEmpty();
     case SetupPackage.TARGLET_TASK__INCLUDE_SOURCES:
@@ -712,6 +712,14 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
 
   public void perform(SetupTaskContext context) throws Exception
   {
+    for (RepositoryList repositoryList : targlet.getRepositoryLists())
+    {
+      for (P2Repository p2Repository : repositoryList.getP2Repositories())
+      {
+        context.log("Using " + p2Repository.getURL());
+      }
+    }
+
     ITargetPlatformService service = null;
 
     try

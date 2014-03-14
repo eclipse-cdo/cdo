@@ -29,6 +29,8 @@ package org.eclipse.emf.cdo.releng.setup;
  */
 public interface RedirectionTask extends SetupTask
 {
+  public static final int PRIORITY = DEFAULT_PRIORITY + 1;
+
   /**
    * Returns the value of the '<em><b>Source URL</b></em>' attribute.
    * <!-- begin-user-doc -->

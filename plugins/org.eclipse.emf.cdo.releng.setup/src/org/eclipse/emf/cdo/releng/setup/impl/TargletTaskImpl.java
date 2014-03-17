@@ -661,7 +661,8 @@ public class TargletTaskImpl extends SetupTaskImpl implements TargletTask
     {
       for (P2Repository p2Repository : repositoryList.getP2Repositories())
       {
-        String url = context.redirect(p2Repository.getURL());
+        String url = p2Repository.getURL();
+        url = context.redirect(url);
         p2Repository.setURL(url);
       }
     }

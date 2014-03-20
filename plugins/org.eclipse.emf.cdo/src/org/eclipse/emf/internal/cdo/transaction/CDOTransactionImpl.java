@@ -803,7 +803,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     conflict -= resolved;
 
-    Map<CDOID, CDOObject> dirtyObjects = getLastSavepoint().getDirtyObjects();
+    Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
     setDirty(!dirtyObjects.isEmpty());
   }
 

@@ -39,6 +39,7 @@
   <projects href="setups/buckminster.setup#/" name="Buckminster" label="Buckminster"/>
   <projects href="http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/local.setup#/" name="CDO" label="CDO Model Repository"/>
   <projects href="setups/releng.setup#/" name="CDO.Releng" label="CDO Release Engineering"/>
+  <projects href="http://git.eclipse.org/c/recommenders/org.eclipse.recommenders.git/plain/tools/recommenders.setup#/" name="Recommenders" label="Code Recommenders"/>
   <projects href="setups/egit.setup#/" name="EGit" label="Eclipse Git Team Provider"/>
   <projects href="setups/Platform.setup#/" name="Platform" label="Eclipse Platform SDK"/>
   <projects href="http://git.eclipse.org/c/emf/org.eclipse.emf.git/plain/features/org.eclipse.emf.sdk-feature/Core.setup#/" name="EMF" label="EMF Core SDK"/>

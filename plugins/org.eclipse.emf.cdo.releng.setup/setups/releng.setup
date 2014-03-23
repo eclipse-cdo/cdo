@@ -105,6 +105,7 @@
           <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.emf.cdo.releng.release"/>
           <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.5/@workingSets.0 //@branches[name='master']/@setupTasks.5/@workingSets.1 //@branches[name='master']/@setupTasks.5/@workingSets.2 //@branches[name='master']/@setupTasks.5/@workingSets.3 //@branches[name='master']/@setupTasks.5/@workingSets.4 //@branches[name='master']/@setupTasks.5/@workingSets.5 //@branches[name='master']/@setupTasks.5/@workingSets.6"/>
         </predicates>
+        <predicates xsi:type="predicates:FilePredicate" filePattern="setup-eclipse.xmi"/>
       </workingSets>
     </setupTasks>
     <setupTasks xsi:type="setup:MylynQueriesTask" repositoryURL="https://bugs.eclipse.org/bugs" userID="${eclipse.user.id}" password="${eclipse.user.password}">

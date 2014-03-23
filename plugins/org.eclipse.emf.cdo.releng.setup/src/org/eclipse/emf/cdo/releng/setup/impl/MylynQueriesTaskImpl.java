@@ -622,7 +622,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
 
     private boolean isQueryDifferent(Query query, RepositoryQuery repositoryQuery) throws Exception
     {
-      String url = query.getURL();
+      String url = StringUtil.safe(query.getURL());
       if (!ObjectUtil.equals(repositoryQuery.getUrl(), url))
       {
         return true;
@@ -639,7 +639,7 @@ public class MylynQueriesTaskImpl extends SetupTaskImpl implements MylynQueriesT
 
     private void configureQuery(SetupTaskContext context, Query query, RepositoryQuery repositoryQuery)
     {
-      String url = query.getURL();
+      String url = StringUtil.safe(query.getURL());
       if (!ObjectUtil.equals(url, repositoryQuery.getUrl()))
       {
         context.log("Setting query URL = " + url);

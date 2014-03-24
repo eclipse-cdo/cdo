@@ -398,6 +398,15 @@ public interface SetupFactory extends EFactory
   RepositoryList createRepositoryList();
 
   /**
+   * Returns a new object of class '<em>Projects Import Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Projects Import Task</em>'.
+   * @generated
+   */
+  ProjectsImportTask createProjectsImportTask();
+
+  /**
    * Returns a new object of class '<em>Redirection Task</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

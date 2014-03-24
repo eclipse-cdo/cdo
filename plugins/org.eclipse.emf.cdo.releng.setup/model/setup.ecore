@@ -111,6 +111,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RedirectionTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceURL" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetURL" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EclipseIniTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="option" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -147,6 +153,24 @@
         <details key="name" value="url"/>
       </eAnnotations>
     </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GitCloneTask" eSuperTypes="#//SetupTask">
+    <eAnnotations source="http://www.eclipse.org/CDO/releng/setup/enablement">
+      <details key="variableName" value="setup.egit.p2"/>
+      <details key="repository" value="http://download.eclipse.org/egit/updates"/>
+      <details key="installableUnits" value="org.eclipse.egit.feature.group"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="origin"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteURI" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pushURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="${git.user.id}"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="checkoutBranch" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BasicMaterializationTask" abstract="true"
       eSuperTypes="#//SetupTask">
@@ -238,11 +262,15 @@
         eType="#//P2Repository" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RedirectionTask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceURL" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetURL" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectsImportTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceLocators" lowerBound="1"
+        upperBound="-1" eType="#//AutomaticSourceLocator" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ProjectSetImportTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TargetPlatformTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ApiBaselineTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
@@ -251,30 +279,6 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="${setup.project.dir/.baselines}"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="zipLocation" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="GitCloneTask" eSuperTypes="#//SetupTask">
-    <eAnnotations source="http://www.eclipse.org/CDO/releng/setup/enablement">
-      <details key="variableName" value="setup.egit.p2"/>
-      <details key="repository" value="http://download.eclipse.org/egit/updates"/>
-      <details key="installableUnits" value="org.eclipse.egit.feature.group"/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="location" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteName" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="origin"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="remoteURI" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pushURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="${git.user.id}"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="checkoutBranch" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProjectSetImportTask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="uRL" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TargetPlatformTask" eSuperTypes="#//SetupTask">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EclipsePreferenceTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

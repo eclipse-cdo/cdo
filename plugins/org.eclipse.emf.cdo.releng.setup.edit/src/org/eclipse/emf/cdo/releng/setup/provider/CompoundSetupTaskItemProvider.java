@@ -203,6 +203,9 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
         SetupFactory.eINSTANCE.createContextVariableTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createRedirectionTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createEclipseIniTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
@@ -210,6 +213,9 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createP2Task()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createGitCloneTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createBuckminsterImportTask()));
@@ -227,19 +233,16 @@ public class CompoundSetupTaskItemProvider extends SetupTaskItemProvider impleme
         SetupFactory.eINSTANCE.createTargletTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
-        SetupFactory.eINSTANCE.createRedirectionTask()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
-        SetupFactory.eINSTANCE.createApiBaselineTask()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
-        SetupFactory.eINSTANCE.createGitCloneTask()));
+        SetupFactory.eINSTANCE.createProjectsImportTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createProjectSetImportTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createTargetPlatformTask()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
+        SetupFactory.eINSTANCE.createApiBaselineTask()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.SETUP_TASK_CONTAINER__SETUP_TASKS,
         SetupFactory.eINSTANCE.createEclipsePreferenceTask()));

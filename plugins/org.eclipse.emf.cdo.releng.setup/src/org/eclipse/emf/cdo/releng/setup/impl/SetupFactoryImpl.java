@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
+import org.eclipse.emf.cdo.releng.setup.ProjectsImportTask;
 import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
@@ -165,6 +166,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createContextVariableTask();
     case SetupPackage.VARIABLE_CHOICE:
       return createVariableChoice();
+    case SetupPackage.REDIRECTION_TASK:
+      return createRedirectionTask();
     case SetupPackage.ECLIPSE_INI_TASK:
       return createEclipseIniTask();
     case SetupPackage.LINK_LOCATION_TASK:
@@ -175,6 +178,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createInstallableUnit();
     case SetupPackage.P2_REPOSITORY:
       return createP2Repository();
+    case SetupPackage.GIT_CLONE_TASK:
+      return createGitCloneTask();
     case SetupPackage.BUCKMINSTER_IMPORT_TASK:
       return createBuckminsterImportTask();
     case SetupPackage.MATERIALIZATION_TASK:
@@ -199,16 +204,14 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createTarglet();
     case SetupPackage.REPOSITORY_LIST:
       return createRepositoryList();
-    case SetupPackage.REDIRECTION_TASK:
-      return createRedirectionTask();
-    case SetupPackage.API_BASELINE_TASK:
-      return createApiBaselineTask();
-    case SetupPackage.GIT_CLONE_TASK:
-      return createGitCloneTask();
+    case SetupPackage.PROJECTS_IMPORT_TASK:
+      return createProjectsImportTask();
     case SetupPackage.PROJECT_SET_IMPORT_TASK:
       return createProjectSetImportTask();
     case SetupPackage.TARGET_PLATFORM_TASK:
       return createTargetPlatformTask();
+    case SetupPackage.API_BASELINE_TASK:
+      return createApiBaselineTask();
     case SetupPackage.ECLIPSE_PREFERENCE_TASK:
       return createEclipsePreferenceTask();
     case SetupPackage.FILE_ASSOCIATION_TASK:
@@ -841,6 +844,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     RepositoryListImpl repositoryList = new RepositoryListImpl();
     return repositoryList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ProjectsImportTask createProjectsImportTask()
+  {
+    ProjectsImportTaskImpl projectsImportTask = new ProjectsImportTaskImpl();
+    return projectsImportTask;
   }
 
   /**

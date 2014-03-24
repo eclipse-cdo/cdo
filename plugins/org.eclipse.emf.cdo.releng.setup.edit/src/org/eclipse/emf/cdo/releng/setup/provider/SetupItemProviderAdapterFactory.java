@@ -1098,6 +1098,31 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ProjectsImportTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ProjectsImportTaskItemProvider projectsImportTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.ProjectsImportTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createProjectsImportTaskAdapter()
+  {
+    if (projectsImportTaskItemProvider == null)
+    {
+      projectsImportTaskItemProvider = new ProjectsImportTaskItemProvider(this);
+    }
+
+    return projectsImportTaskItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.RedirectionTask} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1607,6 +1632,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       variableChoiceItemProvider.dispose();
     }
+    if (redirectionTaskItemProvider != null)
+    {
+      redirectionTaskItemProvider.dispose();
+    }
     if (eclipseIniTaskItemProvider != null)
     {
       eclipseIniTaskItemProvider.dispose();
@@ -1626,6 +1655,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (p2RepositoryItemProvider != null)
     {
       p2RepositoryItemProvider.dispose();
+    }
+    if (gitCloneTaskItemProvider != null)
+    {
+      gitCloneTaskItemProvider.dispose();
     }
     if (buckminsterImportTaskItemProvider != null)
     {
@@ -1675,17 +1708,9 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     {
       repositoryListItemProvider.dispose();
     }
-    if (redirectionTaskItemProvider != null)
+    if (projectsImportTaskItemProvider != null)
     {
-      redirectionTaskItemProvider.dispose();
-    }
-    if (apiBaselineTaskItemProvider != null)
-    {
-      apiBaselineTaskItemProvider.dispose();
-    }
-    if (gitCloneTaskItemProvider != null)
-    {
-      gitCloneTaskItemProvider.dispose();
+      projectsImportTaskItemProvider.dispose();
     }
     if (projectSetImportTaskItemProvider != null)
     {
@@ -1694,6 +1719,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (targetPlatformTaskItemProvider != null)
     {
       targetPlatformTaskItemProvider.dispose();
+    }
+    if (apiBaselineTaskItemProvider != null)
+    {
+      apiBaselineTaskItemProvider.dispose();
     }
     if (eclipsePreferenceTaskItemProvider != null)
     {

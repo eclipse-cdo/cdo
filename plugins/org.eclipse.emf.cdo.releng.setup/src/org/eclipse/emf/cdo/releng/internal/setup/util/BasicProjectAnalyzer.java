@@ -38,6 +38,47 @@ public class BasicProjectAnalyzer<T>
     return results;
   }
 
+  public Map<IProject, File> collectProjects(File folder, EList<Predicate> predicates, boolean locatedNestedProjects,
+      IProgressMonitor monitor)
+  {
+    Map<IProject, File> results = new HashMap<IProject, File>();
+    collectProjects(folder, predicates, locatedNestedProjects, results, monitor);
+    return results;
+  }
+
+  private void collectProjects(File folder, EList<Predicate> predicates, boolean locateNestedProjects,
+      Map<IProject, File> results, IProgressMonitor monitor)
+  {
+    if (monitor != null && monitor.isCanceled())
+    {
+      throw new OperationCanceledException();
+    }
+
+    IProject project = PredicatesFactory.eINSTANCE.loadProject(folder);
+    if (matches(project, predicates))
+    {
+      results.put(project, folder);
+
+      if (!locateNestedProjects)
+      {
+        return;
+      }
+    }
+
+    File[] listFiles = folder.listFiles();
+    if (listFiles != null)
+    {
+      for (int i = 0; i < listFiles.length; i++)
+      {
+        File file = listFiles[i];
+        if (file.isDirectory())
+        {
+          collectProjects(file, predicates, locateNestedProjects, results, monitor);
+        }
+      }
+    }
+  }
+
   private void analyze(File folder, EList<Predicate> predicates, boolean locateNestedProjects, Map<T, File> results,
       Visitor<T> visitor, IProgressMonitor monitor)
   {

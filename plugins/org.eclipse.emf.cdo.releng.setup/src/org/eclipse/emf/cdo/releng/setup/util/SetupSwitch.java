@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
+import org.eclipse.emf.cdo.releng.setup.ProjectsImportTask;
 import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
@@ -367,6 +368,20 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
+    case SetupPackage.REDIRECTION_TASK:
+    {
+      RedirectionTask redirectionTask = (RedirectionTask)theEObject;
+      T result = caseRedirectionTask(redirectionTask);
+      if (result == null)
+      {
+        result = caseSetupTask(redirectionTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
     case SetupPackage.ECLIPSE_INI_TASK:
     {
       EclipseIniTask eclipseIniTask = (EclipseIniTask)theEObject;
@@ -423,6 +438,20 @@ public class SetupSwitch<T> extends Switch<T>
     {
       P2Repository p2Repository = (P2Repository)theEObject;
       T result = caseP2Repository(p2Repository);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.GIT_CLONE_TASK:
+    {
+      GitCloneTask gitCloneTask = (GitCloneTask)theEObject;
+      T result = caseGitCloneTask(gitCloneTask);
+      if (result == null)
+      {
+        result = caseSetupTask(gitCloneTask);
+      }
       if (result == null)
       {
         result = defaultCase(theEObject);
@@ -631,41 +660,13 @@ public class SetupSwitch<T> extends Switch<T>
       }
       return result;
     }
-    case SetupPackage.REDIRECTION_TASK:
+    case SetupPackage.PROJECTS_IMPORT_TASK:
     {
-      RedirectionTask redirectionTask = (RedirectionTask)theEObject;
-      T result = caseRedirectionTask(redirectionTask);
+      ProjectsImportTask projectsImportTask = (ProjectsImportTask)theEObject;
+      T result = caseProjectsImportTask(projectsImportTask);
       if (result == null)
       {
-        result = caseSetupTask(redirectionTask);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.API_BASELINE_TASK:
-    {
-      ApiBaselineTask apiBaselineTask = (ApiBaselineTask)theEObject;
-      T result = caseApiBaselineTask(apiBaselineTask);
-      if (result == null)
-      {
-        result = caseSetupTask(apiBaselineTask);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case SetupPackage.GIT_CLONE_TASK:
-    {
-      GitCloneTask gitCloneTask = (GitCloneTask)theEObject;
-      T result = caseGitCloneTask(gitCloneTask);
-      if (result == null)
-      {
-        result = caseSetupTask(gitCloneTask);
+        result = caseSetupTask(projectsImportTask);
       }
       if (result == null)
       {
@@ -694,6 +695,20 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseSetupTask(targetPlatformTask);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.API_BASELINE_TASK:
+    {
+      ApiBaselineTask apiBaselineTask = (ApiBaselineTask)theEObject;
+      T result = caseApiBaselineTask(apiBaselineTask);
+      if (result == null)
+      {
+        result = caseSetupTask(apiBaselineTask);
       }
       if (result == null)
       {
@@ -1703,6 +1718,22 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseRepositoryList(RepositoryList object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Projects Import Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Projects Import Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseProjectsImportTask(ProjectsImportTask object)
   {
     return null;
   }

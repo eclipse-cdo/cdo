@@ -189,7 +189,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getInstallableUnit()
    * @generated
    */
-  int INSTALLABLE_UNIT = 18;
+  int INSTALLABLE_UNIT = 19;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.P2RepositoryImpl <em>P2 Repository</em>}' class.
@@ -199,7 +199,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Repository()
    * @generated
    */
-  int P2_REPOSITORY = 19;
+  int P2_REPOSITORY = 20;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.PreferencesImpl <em>Preferences</em>}' class.
@@ -229,7 +229,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLinkLocationTask()
    * @generated
    */
-  int LINK_LOCATION_TASK = 16;
+  int LINK_LOCATION_TASK = 17;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipsePreferenceTaskImpl <em>Eclipse Preference Task</em>}' class.
@@ -239,7 +239,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipsePreferenceTask()
    * @generated
    */
-  int ECLIPSE_PREFERENCE_TASK = 40;
+  int ECLIPSE_PREFERENCE_TASK = 41;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SetupImpl <em>Setup</em>}' class.
@@ -259,7 +259,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getP2Task()
    * @generated
    */
-  int P2_TASK = 17;
+  int P2_TASK = 18;
 
   /**
    * The feature id for the '<em><b>Setup Tasks</b></em>' containment reference list.
@@ -569,7 +569,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getApiBaselineTask()
    * @generated
    */
-  int API_BASELINE_TASK = 36;
+  int API_BASELINE_TASK = 40;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.GitCloneTaskImpl <em>Git Clone Task</em>}' class.
@@ -579,7 +579,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getGitCloneTask()
    * @generated
    */
-  int GIT_CLONE_TASK = 37;
+  int GIT_CLONE_TASK = 21;
 
   /**
    * The feature id for the '<em><b>Branch</b></em>' reference.
@@ -688,7 +688,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getWorkingSetTask()
    * @generated
    */
-  int WORKING_SET_TASK = 45;
+  int WORKING_SET_TASK = 46;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CompoundSetupTaskImpl <em>Compound Setup Task</em>}' class.
@@ -789,7 +789,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuckminsterImportTask()
    * @generated
    */
-  int BUCKMINSTER_IMPORT_TASK = 21;
+  int BUCKMINSTER_IMPORT_TASK = 23;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.EclipseIniTaskImpl <em>Eclipse Ini Task</em>}' class.
@@ -799,7 +799,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getEclipseIniTask()
    * @generated
    */
-  int ECLIPSE_INI_TASK = 15;
+  int ECLIPSE_INI_TASK = 16;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BasicMaterializationTaskImpl <em>Basic Materialization Task</em>}' class.
@@ -809,7 +809,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBasicMaterializationTask()
    * @generated
    */
-  int BASIC_MATERIALIZATION_TASK = 20;
+  int BASIC_MATERIALIZATION_TASK = 22;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ResourceCopyTaskImpl <em>Resource Copy Task</em>}' class.
@@ -819,7 +819,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCopyTask()
    * @generated
    */
-  int RESOURCE_COPY_TASK = 46;
+  int RESOURCE_COPY_TASK = 47;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModifyTaskImpl <em>Text Modify Task</em>}' class.
@@ -829,7 +829,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModifyTask()
    * @generated
    */
-  int TEXT_MODIFY_TASK = 48;
+  int TEXT_MODIFY_TASK = 49;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TextModificationImpl <em>Text Modification</em>}' class.
@@ -839,7 +839,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTextModification()
    * @generated
    */
-  int TEXT_MODIFICATION = 49;
+  int TEXT_MODIFICATION = 50;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingTaskImpl <em>Key Binding Task</em>}' class.
@@ -849,7 +849,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingTask()
    * @generated
    */
-  int KEY_BINDING_TASK = 50;
+  int KEY_BINDING_TASK = 51;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.CommandParameterImpl <em>Command Parameter</em>}' class.
@@ -859,7 +859,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getCommandParameter()
    * @generated
    */
-  int COMMAND_PARAMETER = 52;
+  int COMMAND_PARAMETER = 53;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ContextVariableTaskImpl <em>Context Variable Task</em>}' class.
@@ -879,7 +879,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getResourceCreationTask()
    * @generated
    */
-  int RESOURCE_CREATION_TASK = 47;
+  int RESOURCE_CREATION_TASK = 48;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MaterializationTaskImpl <em>Materialization Task</em>}' class.
@@ -889,7 +889,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMaterializationTask()
    * @generated
    */
-  int MATERIALIZATION_TASK = 22;
+  int MATERIALIZATION_TASK = 24;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.SourceLocatorImpl <em>Source Locator</em>}' class.
@@ -899,7 +899,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSourceLocator()
    * @generated
    */
-  int SOURCE_LOCATOR = 24;
+  int SOURCE_LOCATOR = 26;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentImpl <em>Component</em>}' class.
@@ -909,7 +909,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponent()
    * @generated
    */
-  int COMPONENT = 23;
+  int COMPONENT = 25;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueryTaskImpl <em>Mylyn Query Task</em>}' class.
@@ -919,7 +919,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueryTask()
    * @generated
    */
-  int MYLYN_QUERY_TASK = 53;
+  int MYLYN_QUERY_TASK = 54;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.AutomaticSourceLocatorImpl <em>Automatic Source Locator</em>}' class.
@@ -929,7 +929,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getAutomaticSourceLocator()
    * @generated
    */
-  int AUTOMATIC_SOURCE_LOCATOR = 26;
+  int AUTOMATIC_SOURCE_LOCATOR = 28;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ManualSourceLocatorImpl <em>Manual Source Locator</em>}' class.
@@ -939,7 +939,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getManualSourceLocator()
    * @generated
    */
-  int MANUAL_SOURCE_LOCATOR = 25;
+  int MANUAL_SOURCE_LOCATOR = 27;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.
@@ -949,7 +949,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRedirectionTask()
    * @generated
    */
-  int REDIRECTION_TASK = 35;
+  int REDIRECTION_TASK = 15;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1104,6 +1104,307 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int VARIABLE_CHOICE_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletTaskImpl <em>Targlet Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletTask()
+   * @generated
+   */
+  int TARGLET_TASK = 33;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImpl <em>Targlet</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTarglet()
+   * @generated
+   */
+  int TARGLET = 34;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RepositoryListImpl <em>Repository List</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.RepositoryListImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRepositoryList()
+   * @generated
+   */
+  int REPOSITORY_LIST = 36;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl <em>Project Set Import Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectSetImportTask()
+   * @generated
+   */
+  int PROJECT_SET_IMPORT_TASK = 38;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingContextImpl <em>Key Binding Context</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.KeyBindingContextImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingContext()
+   * @generated
+   */
+  int KEY_BINDING_CONTEXT = 52;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
+   * @generated
+   */
+  int TARGET_PLATFORM_TASK = 39;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl <em>JRE Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
+   * @generated
+   */
+  int JRE_TASK = 60;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl <em>File Association Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileAssociationTask()
+   * @generated
+   */
+  int FILE_ASSOCIATION_TASK = 42;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl <em>File Editor</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileEditor()
+   * @generated
+   */
+  int FILE_EDITOR = 45;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl <em>Mylyn Queries Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueriesTask()
+   * @generated
+   */
+  int MYLYN_QUERIES_TASK = 55;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl <em>Query</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.QueryImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQuery()
+   * @generated
+   */
+  int QUERY = 56;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQueryAttribute()
+   * @generated
+   */
+  int QUERY_ATTRIBUTE = 57;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl <em>Mylyn Builds Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynBuildsTask()
+   * @generated
+   */
+  int MYLYN_BUILDS_TASK = 58;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl <em>Build Plan</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuildPlan()
+   * @generated
+   */
+  int BUILD_PLAN = 59;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentExtensionImpl <em>Component Extension</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ComponentExtensionImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentExtension()
+   * @generated
+   */
+  int COMPONENT_EXTENSION = 29;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentDefinitionImpl <em>Component Definition</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ComponentDefinitionImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentDefinition()
+   * @generated
+   */
+  int COMPONENT_DEFINITION = 30;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl <em>Targlet Import Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletImportTask()
+   * @generated
+   */
+  int TARGLET_IMPORT_TASK = 32;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl <em>Targlet Data</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletData()
+   * @generated
+   */
+  int TARGLET_DATA = 35;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl <em>File Associations Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileAssociationsTask()
+   * @generated
+   */
+  int FILE_ASSOCIATIONS_TASK = 43;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl <em>File Mapping</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileMapping()
+   * @generated
+   */
+  int FILE_MAPPING = 44;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MavenImportTaskImpl <em>Maven Import Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.MavenImportTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMavenImportTask()
+   * @generated
+   */
+  int MAVEN_IMPORT_TASK = 31;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectsImportTaskImpl <em>Projects Import Task</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.setup.impl.ProjectsImportTaskImpl
+   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectsImportTask()
+   * @generated
+   */
+  int PROJECTS_IMPORT_TASK = 37;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Source URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Target URL</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Redirection Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REDIRECTION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1419,6 +1720,123 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int P2_REPOSITORY_FEATURE_COUNT = 1;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Location</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__LOCATION = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Remote Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__REMOTE_NAME = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Remote URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__REMOTE_URI = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Push URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__PUSH_URI = SETUP_TASK_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>User ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__USER_ID = SETUP_TASK_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 5;
+
+  /**
+   * The number of structural features of the '<em>Git Clone Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -1817,156 +2235,6 @@ public interface SetupPackage extends EPackage
   int AUTOMATIC_SOURCE_LOCATOR_FEATURE_COUNT = SOURCE_LOCATOR_FEATURE_COUNT + 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletTaskImpl <em>Targlet Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletTask()
-   * @generated
-   */
-  int TARGLET_TASK = 31;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImpl <em>Targlet</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTarglet()
-   * @generated
-   */
-  int TARGLET = 32;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RepositoryListImpl <em>Repository List</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.RepositoryListImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getRepositoryList()
-   * @generated
-   */
-  int REPOSITORY_LIST = 34;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl <em>Project Set Import Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.ProjectSetImportTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectSetImportTask()
-   * @generated
-   */
-  int PROJECT_SET_IMPORT_TASK = 38;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.KeyBindingContextImpl <em>Key Binding Context</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.KeyBindingContextImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getKeyBindingContext()
-   * @generated
-   */
-  int KEY_BINDING_CONTEXT = 51;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl <em>Target Platform Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.TargetPlatformTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargetPlatformTask()
-   * @generated
-   */
-  int TARGET_PLATFORM_TASK = 39;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl <em>JRE Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.JRETaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getJRETask()
-   * @generated
-   */
-  int JRE_TASK = 59;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl <em>File Association Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.FileAssociationTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileAssociationTask()
-   * @generated
-   */
-  int FILE_ASSOCIATION_TASK = 41;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl <em>File Editor</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.FileEditorImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileEditor()
-   * @generated
-   */
-  int FILE_EDITOR = 44;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl <em>Mylyn Queries Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynQueriesTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynQueriesTask()
-   * @generated
-   */
-  int MYLYN_QUERIES_TASK = 54;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryImpl <em>Query</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.QueryImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQuery()
-   * @generated
-   */
-  int QUERY = 55;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl <em>Query Attribute</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.QueryAttributeImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getQueryAttribute()
-   * @generated
-   */
-  int QUERY_ATTRIBUTE = 56;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl <em>Mylyn Builds Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.MylynBuildsTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMylynBuildsTask()
-   * @generated
-   */
-  int MYLYN_BUILDS_TASK = 57;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl <em>Build Plan</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.BuildPlanImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getBuildPlan()
-   * @generated
-   */
-  int BUILD_PLAN = 58;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentExtensionImpl <em>Component Extension</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.ComponentExtensionImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentExtension()
-   * @generated
-   */
-  int COMPONENT_EXTENSION = 27;
-
-  /**
    * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1983,16 +2251,6 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int COMPONENT_EXTENSION_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ComponentDefinitionImpl <em>Component Definition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.ComponentDefinitionImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentDefinition()
-   * @generated
-   */
-  int COMPONENT_DEFINITION = 28;
 
   /**
    * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
@@ -2029,56 +2287,6 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int COMPONENT_DEFINITION_FEATURE_COUNT = COMPONENT_EXTENSION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl <em>Targlet Import Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletImportTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletImportTask()
-   * @generated
-   */
-  int TARGLET_IMPORT_TASK = 30;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl <em>Targlet Data</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.TargletDataImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTargletData()
-   * @generated
-   */
-  int TARGLET_DATA = 33;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl <em>File Associations Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.FileAssociationsTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileAssociationsTask()
-   * @generated
-   */
-  int FILE_ASSOCIATIONS_TASK = 42;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl <em>File Mapping</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.FileMappingImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getFileMapping()
-   * @generated
-   */
-  int FILE_MAPPING = 43;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.impl.MavenImportTaskImpl <em>Maven Import Task</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.releng.setup.impl.MavenImportTaskImpl
-   * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getMavenImportTask()
-   * @generated
-   */
-  int MAVEN_IMPORT_TASK = 29;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2555,7 +2763,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+  int PROJECTS_IMPORT_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
 
   /**
    * The feature id for the '<em><b>Restrictions</b></em>' reference list.
@@ -2564,7 +2772,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+  int PROJECTS_IMPORT_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
 
   /**
    * The feature id for the '<em><b>Disabled</b></em>' attribute.
@@ -2573,7 +2781,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__DISABLED = SETUP_TASK__DISABLED;
+  int PROJECTS_IMPORT_TASK__DISABLED = SETUP_TASK__DISABLED;
 
   /**
    * The feature id for the '<em><b>Scope</b></em>' attribute.
@@ -2582,7 +2790,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__SCOPE = SETUP_TASK__SCOPE;
+  int PROJECTS_IMPORT_TASK__SCOPE = SETUP_TASK__SCOPE;
 
   /**
    * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
@@ -2591,7 +2799,7 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+  int PROJECTS_IMPORT_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' attribute.
@@ -2600,241 +2808,25 @@ public interface SetupPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+  int PROJECTS_IMPORT_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
 
   /**
-   * The feature id for the '<em><b>Source URL</b></em>' attribute.
+   * The feature id for the '<em><b>Source Locators</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__SOURCE_URL = SETUP_TASK_FEATURE_COUNT + 0;
+  int PROJECTS_IMPORT_TASK__SOURCE_LOCATORS = SETUP_TASK_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Target URL</b></em>' attribute.
+   * The number of structural features of the '<em>Projects Import Task</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REDIRECTION_TASK__TARGET_URL = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Redirection Task</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REDIRECTION_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Version</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__VERSION = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Container Folder</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__CONTAINER_FOLDER = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Zip Location</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK__ZIP_LOCATION = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Api Baseline Task</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int API_BASELINE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Requirements</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
-
-  /**
-   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
-
-  /**
-   * The feature id for the '<em><b>Disabled</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__DISABLED = SETUP_TASK__DISABLED;
-
-  /**
-   * The feature id for the '<em><b>Scope</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__SCOPE = SETUP_TASK__SCOPE;
-
-  /**
-   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
-
-  /**
-   * The feature id for the '<em><b>Documentation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
-
-  /**
-   * The feature id for the '<em><b>Location</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__LOCATION = SETUP_TASK_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Remote Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__REMOTE_NAME = SETUP_TASK_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Remote URI</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__REMOTE_URI = SETUP_TASK_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Push URI</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__PUSH_URI = SETUP_TASK_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>User ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__USER_ID = SETUP_TASK_FEATURE_COUNT + 4;
-
-  /**
-   * The feature id for the '<em><b>Checkout Branch</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK__CHECKOUT_BRANCH = SETUP_TASK_FEATURE_COUNT + 5;
-
-  /**
-   * The number of structural features of the '<em>Git Clone Task</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GIT_CLONE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 6;
+  int PROJECTS_IMPORT_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -2979,6 +2971,96 @@ public interface SetupPackage extends EPackage
    * @ordered
    */
   int TARGET_PLATFORM_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Requirements</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__REQUIREMENTS = SETUP_TASK__REQUIREMENTS;
+
+  /**
+   * The feature id for the '<em><b>Restrictions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__RESTRICTIONS = SETUP_TASK__RESTRICTIONS;
+
+  /**
+   * The feature id for the '<em><b>Disabled</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__DISABLED = SETUP_TASK__DISABLED;
+
+  /**
+   * The feature id for the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__SCOPE = SETUP_TASK__SCOPE;
+
+  /**
+   * The feature id for the '<em><b>Excluded Triggers</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__EXCLUDED_TRIGGERS = SETUP_TASK__EXCLUDED_TRIGGERS;
+
+  /**
+   * The feature id for the '<em><b>Documentation</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__DOCUMENTATION = SETUP_TASK__DOCUMENTATION;
+
+  /**
+   * The feature id for the '<em><b>Version</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__VERSION = SETUP_TASK_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Container Folder</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__CONTAINER_FOLDER = SETUP_TASK_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Zip Location</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK__ZIP_LOCATION = SETUP_TASK_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Api Baseline Task</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int API_BASELINE_TASK_FEATURE_COUNT = SETUP_TASK_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Requirements</b></em>' reference list.
@@ -4302,7 +4384,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getSetupTaskScope()
    * @generated
    */
-  int SETUP_TASK_SCOPE = 60;
+  int SETUP_TASK_SCOPE = 61;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.Trigger <em>Trigger</em>}' enum.
@@ -4312,7 +4394,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTrigger()
    * @generated
    */
-  int TRIGGER = 61;
+  int TRIGGER = 62;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.ComponentType <em>Component Type</em>}' enum.
@@ -4322,7 +4404,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getComponentType()
    * @generated
    */
-  int COMPONENT_TYPE = 62;
+  int COMPONENT_TYPE = 63;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.setup.VariableType <em>Variable Type</em>}' enum.
@@ -4332,7 +4414,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVariableType()
    * @generated
    */
-  int VARIABLE_TYPE = 63;
+  int VARIABLE_TYPE = 64;
 
   /**
    * The meta object id for the '<em>URI</em>' data type.
@@ -4342,7 +4424,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getURI()
    * @generated
    */
-  int URI = 66;
+  int URI = 67;
 
   /**
    * The meta object id for the '<em>License Info</em>' data type.
@@ -4352,7 +4434,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getLicenseInfo()
    * @generated
    */
-  int LICENSE_INFO = 67;
+  int LICENSE_INFO = 68;
 
   /**
    * The meta object id for the '<em>Version</em>' data type.
@@ -4362,7 +4444,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersion()
    * @generated
    */
-  int VERSION = 68;
+  int VERSION = 69;
 
   /**
    * The meta object id for the '<em>Version Range</em>' data type.
@@ -4372,7 +4454,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getVersionRange()
    * @generated
    */
-  int VERSION_RANGE = 69;
+  int VERSION_RANGE = 70;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.MetaIndex <em>Meta Index</em>}'.
@@ -4478,7 +4560,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getException()
    * @generated
    */
-  int EXCEPTION = 65;
+  int EXCEPTION = 66;
 
   /**
    * The meta object id for the '<em>Trigger Set</em>' data type.
@@ -4488,7 +4570,7 @@ public interface SetupPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getTriggerSet()
    * @generated
    */
-  int TRIGGER_SET = 64;
+  int TRIGGER_SET = 65;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.Configuration <em>Configuration</em>}'.
@@ -6025,6 +6107,27 @@ public interface SetupPackage extends EPackage
    * @generated
    */
   EAttribute getRepositoryList_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.ProjectsImportTask <em>Projects Import Task</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Projects Import Task</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ProjectsImportTask
+   * @generated
+   */
+  EClass getProjectsImportTask();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.releng.setup.ProjectsImportTask#getSourceLocators <em>Source Locators</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Source Locators</em>'.
+   * @see org.eclipse.emf.cdo.releng.setup.ProjectsImportTask#getSourceLocators()
+   * @see #getProjectsImportTask()
+   * @generated
+   */
+  EReference getProjectsImportTask_SourceLocators();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.setup.RedirectionTask <em>Redirection Task</em>}'.
@@ -8032,6 +8135,24 @@ public interface SetupPackage extends EPackage
      * @generated
      */
     EAttribute REPOSITORY_LIST__NAME = eINSTANCE.getRepositoryList_Name();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.ProjectsImportTaskImpl <em>Projects Import Task</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.setup.impl.ProjectsImportTaskImpl
+     * @see org.eclipse.emf.cdo.releng.setup.impl.SetupPackageImpl#getProjectsImportTask()
+     * @generated
+     */
+    EClass PROJECTS_IMPORT_TASK = eINSTANCE.getProjectsImportTask();
+
+    /**
+     * The meta object literal for the '<em><b>Source Locators</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROJECTS_IMPORT_TASK__SOURCE_LOCATORS = eINSTANCE.getProjectsImportTask_SourceLocators();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.setup.impl.RedirectionTaskImpl <em>Redirection Task</em>}' class.

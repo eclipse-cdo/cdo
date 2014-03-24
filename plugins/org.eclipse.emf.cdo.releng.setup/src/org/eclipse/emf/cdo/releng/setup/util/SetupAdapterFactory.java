@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.releng.setup.P2Task;
 import org.eclipse.emf.cdo.releng.setup.Preferences;
 import org.eclipse.emf.cdo.releng.setup.Project;
 import org.eclipse.emf.cdo.releng.setup.ProjectSetImportTask;
+import org.eclipse.emf.cdo.releng.setup.ProjectsImportTask;
 import org.eclipse.emf.cdo.releng.setup.Query;
 import org.eclipse.emf.cdo.releng.setup.RedirectionTask;
 import org.eclipse.emf.cdo.releng.setup.RepositoryList;
@@ -232,6 +233,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseRedirectionTask(RedirectionTask object)
+    {
+      return createRedirectionTaskAdapter();
+    }
+
+    @Override
     public Adapter caseEclipseIniTask(EclipseIniTask object)
     {
       return createEclipseIniTaskAdapter();
@@ -259,6 +266,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseP2Repository(P2Repository object)
     {
       return createP2RepositoryAdapter();
+    }
+
+    @Override
+    public Adapter caseGitCloneTask(GitCloneTask object)
+    {
+      return createGitCloneTaskAdapter();
     }
 
     @Override
@@ -352,21 +365,9 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseRedirectionTask(RedirectionTask object)
+    public Adapter caseProjectsImportTask(ProjectsImportTask object)
     {
-      return createRedirectionTaskAdapter();
-    }
-
-    @Override
-    public Adapter caseApiBaselineTask(ApiBaselineTask object)
-    {
-      return createApiBaselineTaskAdapter();
-    }
-
-    @Override
-    public Adapter caseGitCloneTask(GitCloneTask object)
-    {
-      return createGitCloneTaskAdapter();
+      return createProjectsImportTaskAdapter();
     }
 
     @Override
@@ -379,6 +380,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseTargetPlatformTask(TargetPlatformTask object)
     {
       return createTargetPlatformTaskAdapter();
+    }
+
+    @Override
+    public Adapter caseApiBaselineTask(ApiBaselineTask object)
+    {
+      return createApiBaselineTaskAdapter();
     }
 
     @Override
@@ -1148,6 +1155,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createRepositoryListAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.ProjectsImportTask <em>Projects Import Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.ProjectsImportTask
+   * @generated
+   */
+  public Adapter createProjectsImportTaskAdapter()
   {
     return null;
   }

@@ -158,6 +158,11 @@
 			<rm:uri format="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
 		</rm:provider>
 
+		<!-- M2E -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/technology/m2e/milestones/1.5"/>
+		</rm:provider>
+
 		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshot"/>

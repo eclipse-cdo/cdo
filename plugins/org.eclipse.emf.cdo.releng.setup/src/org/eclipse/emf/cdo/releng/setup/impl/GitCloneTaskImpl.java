@@ -35,6 +35,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.egit.core.RepositoryUtil;
 import org.eclipse.jgit.api.CheckoutCommand;
 import org.eclipse.jgit.api.CloneCommand;
@@ -53,6 +54,8 @@ import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.transport.RefSpec;
 import org.eclipse.jgit.transport.RemoteConfig;
 import org.eclipse.jgit.transport.URIish;
+
+import org.osgi.framework.Bundle;
 
 import java.io.File;
 import java.io.IOException;
@@ -493,7 +496,7 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       return USER_ID_EDEFAULT == null ? userID != null : !USER_ID_EDEFAULT.equals(userID);
     case SetupPackage.GIT_CLONE_TASK__CHECKOUT_BRANCH:
       return CHECKOUT_BRANCH_EDEFAULT == null ? checkoutBranch != null : !CHECKOUT_BRANCH_EDEFAULT
-          .equals(checkoutBranch);
+      .equals(checkoutBranch);
     }
     return super.eIsSet(featureID);
   }
@@ -683,6 +686,13 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
     {
       try
       {
+        // Force start egit to make sure we get the association
+        Bundle egitCore = Platform.getBundle("org.eclipse.egit.core");
+        if (egitCore != null)
+        {
+          egitCore.start();
+        }
+
         String checkoutBranch = impl.getCheckoutBranch();
         String remoteName = impl.getRemoteName();
         String remoteURI = context.redirect(impl.getRemoteURI());

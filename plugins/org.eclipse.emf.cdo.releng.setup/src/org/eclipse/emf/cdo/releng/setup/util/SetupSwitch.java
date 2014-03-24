@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MavenImportTask;
 import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
@@ -543,6 +544,20 @@ public class SetupSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseComponentExtension(componentDefinition);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case SetupPackage.MAVEN_IMPORT_TASK:
+    {
+      MavenImportTask mavenImportTask = (MavenImportTask)theEObject;
+      T result = caseMavenImportTask(mavenImportTask);
+      if (result == null)
+      {
+        result = caseSetupTask(mavenImportTask);
       }
       if (result == null)
       {
@@ -1464,6 +1479,22 @@ public class SetupSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseJRETask(JRETask object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Maven Import Task</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Maven Import Task</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMavenImportTask(MavenImportTask object)
   {
     return null;
   }

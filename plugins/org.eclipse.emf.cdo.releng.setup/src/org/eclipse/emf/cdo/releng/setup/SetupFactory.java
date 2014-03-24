@@ -274,6 +274,15 @@ public interface SetupFactory extends EFactory
   JRETask createJRETask();
 
   /**
+   * Returns a new object of class '<em>Maven Import Task</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Maven Import Task</em>'.
+   * @generated
+   */
+  MavenImportTask createMavenImportTask();
+
+  /**
    * Returns a new object of class '<em>Component Extension</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

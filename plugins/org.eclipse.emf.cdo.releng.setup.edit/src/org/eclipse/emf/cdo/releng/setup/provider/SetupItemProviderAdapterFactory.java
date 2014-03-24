@@ -773,6 +773,31 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.MavenImportTask} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected MavenImportTaskItemProvider mavenImportTaskItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.setup.MavenImportTask}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createMavenImportTaskAdapter()
+  {
+    if (mavenImportTaskItemProvider == null)
+    {
+      mavenImportTaskItemProvider = new MavenImportTaskItemProvider(this);
+    }
+
+    return mavenImportTaskItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.setup.ComponentExtension} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1629,6 +1654,10 @@ public class SetupItemProviderAdapterFactory extends SetupAdapterFactory impleme
     if (componentDefinitionItemProvider != null)
     {
       componentDefinitionItemProvider.dispose();
+    }
+    if (mavenImportTaskItemProvider != null)
+    {
+      mavenImportTaskItemProvider.dispose();
     }
     if (targletImportTaskItemProvider != null)
     {

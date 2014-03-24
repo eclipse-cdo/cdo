@@ -65,6 +65,7 @@
         <p2Repositories url="http://download.eclipse.org/egit/updates"/>
         <p2Repositories url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
         <p2Repositories url="http://download.eclipse.org/technology/nebula/snapshot"/>
+        <p2Repositories url="http://download.eclipse.org/technology/m2e/milestones/1.5"/>
       </repositoryLists>
     </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">

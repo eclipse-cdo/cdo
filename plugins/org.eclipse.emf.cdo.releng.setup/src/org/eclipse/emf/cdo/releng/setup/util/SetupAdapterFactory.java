@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.releng.setup.KeyBindingTask;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MavenImportTask;
 import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
@@ -312,6 +313,12 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
     public Adapter caseComponentDefinition(ComponentDefinition object)
     {
       return createComponentDefinitionAdapter();
+    }
+
+    @Override
+    public Adapter caseMavenImportTask(MavenImportTask object)
+    {
+      return createMavenImportTaskAdapter();
     }
 
     @Override
@@ -931,6 +938,21 @@ public class SetupAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createJRETaskAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.setup.MavenImportTask <em>Maven Import Task</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.setup.MavenImportTask
+   * @generated
+   */
+  public Adapter createMavenImportTaskAdapter()
   {
     return null;
   }

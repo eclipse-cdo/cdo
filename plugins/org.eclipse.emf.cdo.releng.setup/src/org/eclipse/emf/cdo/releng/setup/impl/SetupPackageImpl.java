@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MavenImportTask;
 import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
@@ -297,6 +298,13 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * @generated
    */
   private EClass jreTaskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mavenImportTaskEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1769,6 +1777,26 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getMavenImportTask()
+  {
+    return mavenImportTaskEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMavenImportTask_SourceLocators()
+  {
+    return (EReference)mavenImportTaskEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getComponentExtension()
   {
     return componentExtensionEClass;
@@ -2952,6 +2980,9 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     createEAttribute(componentDefinitionEClass, COMPONENT_DEFINITION__ID);
     createEAttribute(componentDefinitionEClass, COMPONENT_DEFINITION__VERSION);
 
+    mavenImportTaskEClass = createEClass(MAVEN_IMPORT_TASK);
+    createEReference(mavenImportTaskEClass, MAVEN_IMPORT_TASK__SOURCE_LOCATORS);
+
     targletImportTaskEClass = createEClass(TARGLET_IMPORT_TASK);
     createEAttribute(targletImportTaskEClass, TARGLET_IMPORT_TASK__TARGLET_URI);
 
@@ -3162,6 +3193,7 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
     manualSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     automaticSourceLocatorEClass.getESuperTypes().add(getSourceLocator());
     componentDefinitionEClass.getESuperTypes().add(getComponentExtension());
+    mavenImportTaskEClass.getESuperTypes().add(getSetupTask());
     targletImportTaskEClass.getESuperTypes().add(getSetupTask());
     targletTaskEClass.getESuperTypes().add(getSetupTask());
     targletTaskEClass.getESuperTypes().add(getTargletData());
@@ -3455,6 +3487,12 @@ public class SetupPackageImpl extends EPackageImpl implements SetupPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComponentDefinition_Version(), getVersion(), "version", "1.0.0", 0, 1, ComponentDefinition.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(mavenImportTaskEClass, MavenImportTask.class, "MavenImportTask", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMavenImportTask_SourceLocators(), getAutomaticSourceLocator(), null, "sourceLocators", null, 1,
+        -1, MavenImportTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(targletImportTaskEClass, TargletImportTask.class, "TargletImportTask", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

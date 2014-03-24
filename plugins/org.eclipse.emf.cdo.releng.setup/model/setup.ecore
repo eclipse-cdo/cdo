@@ -207,6 +207,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="#//Version"
         defaultValueLiteral="1.0.0"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MavenImportTask" eSuperTypes="#//SetupTask">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sourceLocators" lowerBound="1"
+        upperBound="-1" eType="#//AutomaticSourceLocator" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TargletImportTask" eSuperTypes="#//SetupTask">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targletURI" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

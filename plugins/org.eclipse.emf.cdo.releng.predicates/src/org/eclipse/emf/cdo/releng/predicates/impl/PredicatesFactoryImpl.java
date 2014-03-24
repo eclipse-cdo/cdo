@@ -84,7 +84,12 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
 
   public IProject loadProject(File folder)
   {
-    return ExternalProject.load(folder);
+    return loadProject(folder, ProjectDescriptionFactory.ECLIPSE);
+  }
+
+  public IProject loadProject(File folder, ProjectDescriptionFactory... factories)
+  {
+    return ExternalProject.load(folder, factories);
   }
 
   /**

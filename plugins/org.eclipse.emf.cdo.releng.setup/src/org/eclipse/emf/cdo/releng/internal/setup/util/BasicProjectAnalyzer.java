@@ -127,7 +127,12 @@ public class BasicProjectAnalyzer<T>
     return null;
   }
 
-  private boolean matches(IProject project, EList<Predicate> predicates)
+  protected T filter(T result)
+  {
+    return result;
+  }
+
+  public static boolean matches(IProject project, EList<Predicate> predicates)
   {
     if (project == null)
     {
@@ -148,10 +153,5 @@ public class BasicProjectAnalyzer<T>
     }
 
     return false;
-  }
-
-  protected T filter(T result)
-  {
-    return result;
   }
 }

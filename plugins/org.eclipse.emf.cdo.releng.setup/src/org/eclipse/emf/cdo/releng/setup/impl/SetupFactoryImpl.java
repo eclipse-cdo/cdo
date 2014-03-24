@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.releng.setup.LicenseInfo;
 import org.eclipse.emf.cdo.releng.setup.LinkLocationTask;
 import org.eclipse.emf.cdo.releng.setup.ManualSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.MaterializationTask;
+import org.eclipse.emf.cdo.releng.setup.MavenImportTask;
 import org.eclipse.emf.cdo.releng.setup.MetaIndex;
 import org.eclipse.emf.cdo.releng.setup.MylynBuildsTask;
 import org.eclipse.emf.cdo.releng.setup.MylynQueriesTask;
@@ -188,6 +189,8 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
       return createComponentExtension();
     case SetupPackage.COMPONENT_DEFINITION:
       return createComponentDefinition();
+    case SetupPackage.MAVEN_IMPORT_TASK:
+      return createMavenImportTask();
     case SetupPackage.TARGLET_IMPORT_TASK:
       return createTargletImportTask();
     case SetupPackage.TARGLET_TASK:
@@ -652,6 +655,17 @@ public class SetupFactoryImpl extends EFactoryImpl implements SetupFactory
   {
     JRETaskImpl jreTask = new JRETaskImpl();
     return jreTask;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MavenImportTask createMavenImportTask()
+  {
+    MavenImportTaskImpl mavenImportTask = new MavenImportTaskImpl();
+    return mavenImportTask;
   }
 
   /**

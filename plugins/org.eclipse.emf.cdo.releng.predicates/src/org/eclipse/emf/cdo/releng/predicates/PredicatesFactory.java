@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.releng.predicates;
 
+import org.eclipse.emf.cdo.releng.internal.predicates.ExternalProject.AbstractXMLDescriptionFactory.Eclipse;
+
 import org.eclipse.emf.ecore.EFactory;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 
 import java.io.File;
 
@@ -134,5 +137,19 @@ public interface PredicatesFactory extends EFactory
   PredicatesPackage getPredicatesPackage();
 
   IProject loadProject(File folder);
+
+  IProject loadProject(File folder, ProjectDescriptionFactory... factories);
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface ProjectDescriptionFactory
+  {
+    public static final ProjectDescriptionFactory ECLIPSE = new Eclipse();
+
+    public static final ProjectDescriptionFactory MAVEN = new Eclipse();
+
+    public IProjectDescription createDescription(File folder) throws Exception;
+  }
 
 } // PredicatesFactory

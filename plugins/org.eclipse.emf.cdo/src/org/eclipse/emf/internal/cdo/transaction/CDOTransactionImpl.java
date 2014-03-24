@@ -886,7 +886,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return (CDOResource)getObject(id);
       }
     }
-    catch (Exception ignore)
+    catch (TransactionException e)
+    {
+      // A TimeoutException or another exception due to client/server communication issue does not allow to know if
+      // resource exists
+      throw e;
+    }
+    catch (CDOException ignore)
     {
       // Just create the missing resource
     }
@@ -903,13 +909,26 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public synchronized CDOTextResource getOrCreateTextResource(String path)
   {
-    CDOTextResource resource = getTextResource(path);
-    if (resource == null)
+    try
     {
-      resource = createTextResource(path);
+      CDOID id = getResourceNodeID(path);
+      if (!CDOIDUtil.isNull(id))
+      {
+        return (CDOTextResource)getObject(id);
+      }
+    }
+    catch (TransactionException e)
+    {
+      // A TimeoutException or another exception due to client/server communication issue does not allow to know if
+      // resource exists
+      throw e;
+    }
+    catch (CDOException ignore)
+    {
+      // Just create the missing resource
     }
 
-    return resource;
+    return createTextResource(path);
   }
 
   public synchronized CDOBinaryResource createBinaryResource(String path)
@@ -921,13 +940,26 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   public synchronized CDOBinaryResource getOrCreateBinaryResource(String path)
   {
-    CDOBinaryResource resource = getBinaryResource(path);
-    if (resource == null)
+    try
     {
-      resource = createBinaryResource(path);
+      CDOID id = getResourceNodeID(path);
+      if (!CDOIDUtil.isNull(id))
+      {
+        return (CDOBinaryResource)getObject(id);
+      }
+    }
+    catch (TransactionException e)
+    {
+      // A TimeoutException or another exception due to client/server communication issue does not allow to know if
+      // resource exists
+      throw e;
+    }
+    catch (CDOException ignore)
+    {
+      // Just create the missing resource
     }
 
-    return resource;
+    return createBinaryResource(path);
   }
 
   private void createFileResource(String path, CDOFileResource<?> resource)
@@ -986,9 +1018,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         return (CDOResourceFolder)getObject(id);
       }
     }
-    catch (Exception ignore)
+    catch (TransactionException e)
     {
-      // Just create the missing folder
+      // A TimeoutException or another exception due to client/server communication issue does not allow to know if
+      // resource exists
+      throw e;
+    }
+    catch (CDOException ignore)
+    {
+      // Just create the missing resource
     }
 
     return createResourceFolder(path);

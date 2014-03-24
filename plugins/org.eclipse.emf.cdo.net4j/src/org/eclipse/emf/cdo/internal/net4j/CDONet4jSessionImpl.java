@@ -205,7 +205,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   private CDOClientProtocol createProtocol()
   {
     CDOClientProtocol protocol = new CDOClientProtocol();
-    protocol.setTimeout(signalTimeout);
     protocol.setInfraStructure(this);
     if (streamWrapper != null)
     {
@@ -213,6 +212,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     protocol.open(connector);
+    protocol.setTimeout(signalTimeout);
     return protocol;
   }
 

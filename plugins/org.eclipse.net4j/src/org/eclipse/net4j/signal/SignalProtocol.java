@@ -107,17 +107,42 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   }
 
   /**
+   * Equivalent to calling SignalProtocol.setTimeout(timeout, false).
+   * 
    * @since 2.0
    */
   public void setTimeout(long timeout)
   {
-    long oldTimeout = this.timeout;
-    handleSetTimeOut(timeout);
+    setTimeout(timeout, false);
+  }
 
-    if (oldTimeout != this.timeout && isActive())
+  /**
+   * Update the timeout used for signal end of stream waiting time.
+   * 
+   * @param timeout the new timeout
+   * @param useOldTimeoutToSendNewOne true to use the old timeout, false to use the new specified one to sent to server side the new specified timeout
+   * @return true if the new specified timeout has correctly been sent
+   * 
+   * NOTE: this second parameter is useful mostly for test to be able to set a to small timeout
+   * @since 4.3
+   */
+  public boolean setTimeout(long timeout, boolean useOldTimeoutToSendNewOne)
+  {
+    boolean timeoutSent = false;
+    long oldTimeout = this.timeout;
+    if (!useOldTimeoutToSendNewOne)
     {
-      sendSetTimeout();
+      handleSetTimeOut(timeout);
     }
+    if (oldTimeout != timeout && isActive())
+    {
+      timeoutSent = sendSetTimeout();
+    }
+    if (timeoutSent && useOldTimeoutToSendNewOne)
+    {
+      handleSetTimeOut(timeout);
+    }
+    return timeoutSent;
   }
 
   public IStreamWrapper getStreamWrapper()
@@ -259,17 +284,6 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     }
 
     return MessageFormat.format("SignalProtocol[{0}]", getType()); //$NON-NLS-1$
-  }
-
-  @Override
-  protected void doAfterActivate() throws Exception
-  {
-    super.doAfterActivate();
-
-    if (timeout != DEFAULT_TIMEOUT)
-    {
-      sendSetTimeout();
-    }
   }
 
   @Override
@@ -505,19 +519,21 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     }
   }
 
-  void sendSetTimeout()
+  boolean sendSetTimeout()
   {
+    boolean timeoutSent = false;
     if (isSendingTimeoutChanges())
     {
       try
       {
-        new SetTimeoutRequest(this, this.timeout).send();
+        timeoutSent = new SetTimeoutRequest(this, this.timeout).send();
       }
       catch (Exception ex)
       {
         throw WrappedException.wrap(ex);
       }
     }
+    return timeoutSent;
   }
 
   private void fireSignalScheduledEvent(Signal signal)

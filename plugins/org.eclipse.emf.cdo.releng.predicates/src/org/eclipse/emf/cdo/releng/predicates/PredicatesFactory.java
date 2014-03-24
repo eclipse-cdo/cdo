@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.releng.predicates;
 
 import org.eclipse.emf.cdo.releng.internal.predicates.ExternalProject.AbstractXMLDescriptionFactory.Eclipse;
+import org.eclipse.emf.cdo.releng.internal.predicates.ExternalProject.AbstractXMLDescriptionFactory.Maven;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -147,7 +148,7 @@ public interface PredicatesFactory extends EFactory
   {
     public static final ProjectDescriptionFactory ECLIPSE = new Eclipse();
 
-    public static final ProjectDescriptionFactory MAVEN = new Eclipse();
+    public static final ProjectDescriptionFactory MAVEN = new Maven();
 
     public IProjectDescription createDescription(File folder) throws Exception;
   }

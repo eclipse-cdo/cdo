@@ -23,7 +23,9 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.eclipse.m2e.core.embedder.MavenModelManager;
 import org.eclipse.m2e.core.project.IProjectConfigurationManager;
@@ -54,6 +56,8 @@ import java.util.Set;
  */
 public class MavenImportTaskImpl extends SetupTaskImpl implements MavenImportTask
 {
+  private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
+
   /**
    * The cached value of the '{@link #getSourceLocators() <em>Source Locators</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -63,8 +67,6 @@ public class MavenImportTaskImpl extends SetupTaskImpl implements MavenImportTas
    * @ordered
    */
   protected EList<AutomaticSourceLocator> sourceLocators;
-
-  private transient MavenDelegate mavenDelegate;
 
   /**
    * <!-- begin-user-doc -->
@@ -194,51 +196,46 @@ public class MavenImportTaskImpl extends SetupTaskImpl implements MavenImportTas
 
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
-    mavenDelegate = MavenUtil.create();
-    return mavenDelegate.isNeeded(context, this);
+    EList<AutomaticSourceLocator> sourceLocators = getSourceLocators();
+    if (sourceLocators.isEmpty())
+    {
+      return false;
+    }
+
+    if (context.getTrigger() != Trigger.MANUAL)
+    {
+      for (IProject project : ROOT.getProjects())
+      {
+        IPath projectFolder = project.getLocation();
+        for (AutomaticSourceLocator sourceLocator : sourceLocators)
+        {
+          Path rootFolder = new Path(sourceLocator.getRootFolder());
+          if (rootFolder.isPrefixOf(projectFolder))
+          {
+            // In STARTUP trigger don't perform if there's already at least 1 project from the source locators
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
   }
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    if (mavenDelegate != null)
-    {
-      mavenDelegate.perform(context, this);
-    }
+    MavenUtil.perform(context, this);
   }
 
   /**
    * @author Eike Stepper
    */
-  private interface MavenDelegate
+  private static final class MavenUtil
   {
-    public boolean isNeeded(SetupTaskContext context, MavenImportTaskImpl impl) throws Exception;
-
-    public void perform(SetupTaskContext context, MavenImportTaskImpl impl) throws Exception;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class MavenUtil implements MavenDelegate
-  {
-    private static final IWorkspaceRoot ROOT = ResourcesPlugin.getWorkspace().getRoot();
-
-    private Set<MavenProjectInfo> projectInfos = new LinkedHashSet<MavenProjectInfo>();
-
-    private static MavenDelegate create()
+    public static void perform(SetupTaskContext context, MavenImportTaskImpl impl) throws Exception
     {
-      return new MavenUtil();
-    }
-
-    public boolean isNeeded(SetupTaskContext context, MavenImportTaskImpl impl) throws Exception
-    {
-      EList<AutomaticSourceLocator> sourceLocators = impl.getSourceLocators();
-      if (sourceLocators.isEmpty())
-      {
-        return false;
-      }
-
       List<String> folders = new ArrayList<String>();
+      EList<AutomaticSourceLocator> sourceLocators = impl.getSourceLocators();
 
       for (AutomaticSourceLocator sourceLocator : sourceLocators)
       {
@@ -246,19 +243,29 @@ public class MavenImportTaskImpl extends SetupTaskImpl implements MavenImportTas
       }
 
       MavenModelManager modelManager = MavenPlugin.getMavenModelManager();
-      LocalProjectScanner projectScanner = new LocalProjectScanner(null, folders, false, modelManager);
-      projectScanner.run(new ProgressLogMonitor(context));
+      IProgressMonitor monitor = new ProgressLogMonitor(context);
 
+      LocalProjectScanner projectScanner = new LocalProjectScanner(null, folders, false, modelManager);
+      projectScanner.run(monitor);
+
+      Set<MavenProjectInfo> projectInfos = new LinkedHashSet<MavenProjectInfo>();
       for (Iterator<MavenProjectInfo> it = projectScanner.getProjects().iterator(); it.hasNext();)
       {
         MavenProjectInfo projectInfo = it.next();
-        processMavenProject(projectInfo, sourceLocators);
+        processMavenProject(projectInfo, projectInfos, sourceLocators);
       }
 
-      return !projectInfos.isEmpty();
+      if (!projectInfos.isEmpty())
+      {
+        ProjectImportConfiguration configuration = new ProjectImportConfiguration();
+
+        IProjectConfigurationManager projectConfigurationManager = MavenPlugin.getProjectConfigurationManager();
+        projectConfigurationManager.importProjects(projectInfos, configuration, monitor);
+      }
     }
 
-    private void processMavenProject(MavenProjectInfo projectInfo, EList<AutomaticSourceLocator> sourceLocators)
+    private static void processMavenProject(MavenProjectInfo projectInfo, Set<MavenProjectInfo> projectInfos,
+        EList<AutomaticSourceLocator> sourceLocators)
     {
       File folder = projectInfo.getPomFile().getParentFile();
 
@@ -277,11 +284,11 @@ public class MavenImportTaskImpl extends SetupTaskImpl implements MavenImportTas
 
       for (MavenProjectInfo childProjectInfo : projectInfo.getProjects())
       {
-        processMavenProject(childProjectInfo, sourceLocators);
+        processMavenProject(childProjectInfo, projectInfos, sourceLocators);
       }
     }
 
-    private boolean matches(IProject project, EList<AutomaticSourceLocator> sourceLocators)
+    private static boolean matches(IProject project, EList<AutomaticSourceLocator> sourceLocators)
     {
       for (AutomaticSourceLocator sourceLocator : sourceLocators)
       {
@@ -296,15 +303,6 @@ public class MavenImportTaskImpl extends SetupTaskImpl implements MavenImportTas
       }
 
       return true;
-    }
-
-    public void perform(SetupTaskContext context, MavenImportTaskImpl impl) throws Exception
-    {
-      ProjectImportConfiguration configuration = new ProjectImportConfiguration();
-      IProgressMonitor monitor = new ProgressLogMonitor(context);
-
-      IProjectConfigurationManager projectConfigurationManager = MavenPlugin.getProjectConfigurationManager();
-      projectConfigurationManager.importProjects(projectInfos, configuration, monitor);
     }
   }
 

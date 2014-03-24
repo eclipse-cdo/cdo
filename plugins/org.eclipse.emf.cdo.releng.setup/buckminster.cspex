@@ -5,11 +5,13 @@
 		<cs:dependency name="org.eclipse.jgit" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.egit" componentType="eclipse.feature"/>
 
-		<cs:dependency name="org.apache.httpcomponents.httpcore" componentType="osgi.bundle" versionDesignator="4.2.5"/>
-		<cs:dependency name="org.apache.httpcomponents.httpclient" componentType="osgi.bundle" versionDesignator="4.2.6"/>
 		<cs:dependency name="org.eclipse.mylyn.sdk_feature" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.mylyn.bugzilla_feature" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.mylyn.builds.sdk" componentType="eclipse.feature"/>
+		<cs:dependency name="org.apache.httpcomponents.httpcore" componentType="osgi.bundle" versionDesignator="4.2.5"/>
+		<cs:dependency name="org.apache.httpcomponents.httpclient" componentType="osgi.bundle" versionDesignator="4.2.6"/>
+
+		<cs:dependency name="org.eclipse.m2e.feature" componentType="eclipse.feature"/>
 
 		<cs:dependency name="org.eclipse.buckminster.core.feature" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.buckminster.git.feature" componentType="eclipse.feature"/>

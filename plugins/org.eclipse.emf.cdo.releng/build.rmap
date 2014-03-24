@@ -163,6 +163,11 @@
 			<rm:uri format="http://download.eclipse.org/technology/m2e/milestones/1.5"/>
 		</rm:provider>
 
+		<!-- WEB TOOLS -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/webtools/repository/luna"/>
+		</rm:provider>
+
 		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshot"/>

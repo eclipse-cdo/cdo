@@ -279,7 +279,7 @@ public class FileMappingImpl extends MinimalEObjectImpl.Container implements Fil
       return FILE_PATTERN_EDEFAULT == null ? filePattern != null : !FILE_PATTERN_EDEFAULT.equals(filePattern);
     case SetupPackage.FILE_MAPPING__DEFAULT_EDITOR_ID:
       return DEFAULT_EDITOR_ID_EDEFAULT == null ? defaultEditorID != null : !DEFAULT_EDITOR_ID_EDEFAULT
-      .equals(defaultEditorID);
+          .equals(defaultEditorID);
     case SetupPackage.FILE_MAPPING__EDITORS:
       return editors != null && !editors.isEmpty();
     }

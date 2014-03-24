@@ -40,7 +40,7 @@ import java.util.List;
  * @generated
  */
 public class FileMappingItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -102,7 +102,7 @@ IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, II
         getString("_UI_FileMapping_defaultEditorID_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_FileMapping_defaultEditorID_feature",
             "_UI_FileMapping_type"), SetupPackage.Literals.FILE_MAPPING__DEFAULT_EDITOR_ID, true, false, false,
-            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

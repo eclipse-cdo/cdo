@@ -540,12 +540,14 @@
             	  <available file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/setup-eclipse.ini" />
                 <then>
                 	<echo file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/setup-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
+                	<replaceregexp file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/setup-eclipse.ini" match="-Dreleng.url=https://" replace="-Dreleng.url=http://" byline="true" />
                 </then>
               </if>
               <if>
             	  <available file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/Contents/MacOS/@{profile}-eclipse.ini" />
                 <then>
                 	<echo file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/Contents/MacOS/@{profile}-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
+                	<replaceregexp file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/Contents/MacOS/@{profile}-eclipse.ini" match="-Dreleng.url=https://" replace="-Dreleng.url=http://" byline="true" />
                 </then>
               </if>
             </then>

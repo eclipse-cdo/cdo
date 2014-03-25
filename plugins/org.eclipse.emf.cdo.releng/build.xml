@@ -578,11 +578,22 @@
     </sequential>
   </macrodef>
 
+  <!-- ==================== -->
+  <!-- Check Commit Message -->
+  <!-- ==================== -->
+
+  <target name="check.commit.msg" if="GERRIT_CHANGE_SUBJECT">
+  	<condition property="commit.msg.ok" value="true">
+  		<matches pattern="^\[[1-9][0-9]*\] .*$" string="${GERRIT_CHANGE_SUBJECT}"/>
+  	</condition>
+  	<fail message="The commit message is not of the form '[bug-id] bug-subject'." unless="commit.msg.ok"/>
+  </target>
+
   <!-- =========== -->
   <!-- Init Hudson -->
   <!-- =========== -->
 
-  <target name="init.hudson" if="env.HUDSON_URL">
+  <target name="init.hudson" if="env.HUDSON_URL" depends="check.commit.msg">
     <property name="build.root" value="${env.WORKSPACE}" />
     <property name="build.location" value="hudson" />
     <property name="build.timestamp" value="${env.BUILD_ID}" />
@@ -729,7 +740,6 @@
     <property file="${build.qualifier.tmp}" />
   	<property name="build.qualifier" value="${build.type}${build.qualifier.date}" />
   	<property name="build.version" value="v${build.qualifier.date}" />
-
 
     <!-- build-info.xml -->
     <echoxml file="${build.root}/build-info.xml">

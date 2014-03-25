@@ -69,6 +69,9 @@
         <p2Repositories url="http://download.eclipse.org/webtools/repository/luna"/>
       </repositoryLists>
     </setupTasks>
+    <setupTasks xsi:type="setup:ProjectsImportTask">
+      <sourceLocators rootFolder="${git.clone/plugins/org.eclipse.emf.cdo.releng}"/>
+    </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">
       <workingSets name="Eclipse Oomph">
         <predicates xsi:type="predicates:NamePredicate" pattern=".*\.setup.*"/>
@@ -105,7 +108,7 @@
       <workingSets name="Releng">
         <predicates xsi:type="predicates:AndPredicate">
           <operands xsi:type="predicates:RepositoryPredicate" project="org.eclipse.emf.cdo.releng.release"/>
-          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.5/@workingSets.0 //@branches[name='master']/@setupTasks.5/@workingSets.1 //@branches[name='master']/@setupTasks.5/@workingSets.2 //@branches[name='master']/@setupTasks.5/@workingSets.3 //@branches[name='master']/@setupTasks.5/@workingSets.4 //@branches[name='master']/@setupTasks.5/@workingSets.5 //@branches[name='master']/@setupTasks.5/@workingSets.6"/>
+          <operands xsi:type="workingsets:ExclusionPredicate" excludedWorkingSets="//@branches[name='master']/@setupTasks.6/@workingSets.0 //@branches[name='master']/@setupTasks.6/@workingSets.1 //@branches[name='master']/@setupTasks.6/@workingSets.2 //@branches[name='master']/@setupTasks.6/@workingSets.3 //@branches[name='master']/@setupTasks.6/@workingSets.4 //@branches[name='master']/@setupTasks.6/@workingSets.5 //@branches[name='master']/@setupTasks.6/@workingSets.6"/>
         </predicates>
         <predicates xsi:type="predicates:FilePredicate" filePattern="setup-eclipse.xmi"/>
       </workingSets>

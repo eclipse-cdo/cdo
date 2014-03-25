@@ -251,4 +251,4 @@ public class ProjectsImportTaskImpl extends SetupTaskImpl implements ProjectsImp
     return null;
   }
 
-} // ImportProjectTaskImpl
+} // ProjectsImportTaskImpl

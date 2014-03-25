@@ -122,7 +122,7 @@ public class ProjectsImportTaskItemProvider extends SetupTaskItemProvider implem
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_ImportProjectTask_type");
+    return getString("_UI_ProjectsImportTask_type");
   }
 
   /**

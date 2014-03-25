@@ -38,4 +38,4 @@ public interface ProjectsImportTask extends SetupTask
    * @generated
    */
   EList<AutomaticSourceLocator> getSourceLocators();
-} // ImportProjectTask
+} // ProjectsImportTask

@@ -330,6 +330,22 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     return result;
   }
 
+  public void perform(SetupTaskContext context) throws Exception
+  {
+    if (!file.exists())
+    {
+      context.log("Skipping because " + file + " does not exist");
+      return;
+    }
+
+    if (contents != null || createNewContent(context))
+    {
+      context.log("Changing " + file + " (" + getLabel(getValue()) + ")");
+      context.getOS().writeText(file, contents);
+      context.setRestartNeeded("The eclipse.ini file has changed.");
+    }
+  }
+
   private boolean createNewContent(SetupTaskContext context)
   {
     List<String> oldContents = context.getOS().readText(file);
@@ -380,15 +396,5 @@ public class EclipseIniTaskImpl extends SetupTaskImpl implements EclipseIniTask
     }
 
     return !contents.equals(oldContents);
-  }
-
-  public void perform(SetupTaskContext context) throws Exception
-  {
-    if (contents != null || createNewContent(context))
-    {
-      context.log("Changing " + file + " (" + getLabel(getValue()) + ")");
-      context.getOS().writeText(file, contents);
-      context.setRestartNeeded("The eclipse.ini file has changed.");
-    }
   }
 } // EclipseIniTaskImpl

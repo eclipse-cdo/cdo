@@ -4,6 +4,7 @@ package org.eclipse.emf.cdo.releng.setup.impl;
 
 import org.eclipse.emf.cdo.releng.internal.setup.util.BasicProjectAnalyzer;
 import org.eclipse.emf.cdo.releng.internal.setup.util.WorkspaceUtil;
+import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.ProjectsImportTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
@@ -23,6 +24,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -219,15 +221,22 @@ public class ProjectsImportTaskImpl extends SetupTaskImpl implements ProjectsImp
 
   public void perform(SetupTaskContext context) throws Exception
   {
-    EList<AutomaticSourceLocator> locators = getSourceLocators();
-    for (AutomaticSourceLocator source : locators)
+    List<File> projectFolders = new ArrayList<File>();
+    BasicProjectAnalyzer<IProject> analyzer = new BasicProjectAnalyzer<IProject>();
+    ProgressLogMonitor monitor = new ProgressLogMonitor(context);
+
+    for (AutomaticSourceLocator source : getSourceLocators())
     {
-      context.log("Importing projects from " + source.getRootFolder());
-      Map<IProject, File> projects = new BasicProjectAnalyzer<IProject>().collectProjects(
-          new File(source.getRootFolder()), source.getPredicates(), source.isLocateNestedProjects(),
-          new ProgressLogMonitor(context));
-      WorkspaceUtil.importProjects(projects.values(), new ProgressLogMonitor(context));
+      File rootFolder = new File(source.getRootFolder());
+      EList<Predicate> predicates = source.getPredicates();
+      boolean locateNestedProjects = source.isLocateNestedProjects();
+
+      context.log("Importing projects from " + rootFolder);
+      Map<IProject, File> projects = analyzer.collectProjects(rootFolder, predicates, locateNestedProjects, monitor);
+      projectFolders.addAll(projects.values());
     }
+
+    WorkspaceUtil.importProjects(projectFolders, monitor);
   }
 
   @Override

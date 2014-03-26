@@ -73,6 +73,11 @@ public final class WorkspaceUtil
   public static int importProjects(final Collection<File> projectLocations, IProgressMonitor monitor)
       throws CoreException
   {
+    if (projectLocations.isEmpty())
+    {
+      return 0;
+    }
+
     final AtomicInteger count = new AtomicInteger();
     WORKSPACE.run(new IWorkspaceRunnable()
     {

@@ -112,11 +112,11 @@ public class BasicProjectAnalyzer<T>
           {
             results.put(result, folder);
           }
+        }
 
-          if (!locateNestedProjects)
-          {
-            return;
-          }
+        if (!locateNestedProjects)
+        {
+          return;
         }
       }
       catch (Exception ex)

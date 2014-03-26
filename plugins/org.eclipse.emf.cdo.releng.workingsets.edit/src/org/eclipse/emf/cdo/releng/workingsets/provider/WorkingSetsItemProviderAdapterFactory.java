@@ -312,13 +312,13 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
     {
       workingSetGroupItemProvider.dispose();
     }
-    if (exclusionPredicateItemProvider != null)
-    {
-      exclusionPredicateItemProvider.dispose();
-    }
     if (inclusionPredicateItemProvider != null)
     {
       inclusionPredicateItemProvider.dispose();
+    }
+    if (exclusionPredicateItemProvider != null)
+    {
+      exclusionPredicateItemProvider.dispose();
     }
   }
 
@@ -375,10 +375,10 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
       public Object caseAndPredicate(AndPredicate object)
       {
         newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,
-            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
 
         newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,
-            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
+            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
 
         return null;
       }
@@ -392,10 +392,10 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
       public Object caseOrPredicate(OrPredicate object)
       {
         newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.OR_PREDICATE__OPERANDS,
-            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
 
         newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.OR_PREDICATE__OPERANDS,
-            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
+            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
 
         return null;
       }
@@ -409,10 +409,10 @@ public class WorkingSetsItemProviderAdapterFactory extends WorkingSetsAdapterFac
       public Object caseNotPredicate(NotPredicate object)
       {
         newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,
-            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
 
         newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,
-            WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
+            WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
 
         return null;
       }

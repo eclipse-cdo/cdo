@@ -135,12 +135,19 @@ public class FilePredicateItemProvider extends PredicateItemProvider implements 
   {
     FilePredicate filePredicate = (FilePredicate)object;
     String label = filePredicate.getFilePattern();
-    label = label == null ? "" : label;
+    if (label == null || label.length() == 0)
+    {
+      return getString("_UI_FilePredicate_type");
+    }
+
+    label = "File at " + label;
+
     String contentPattern = filePredicate.getContentPattern();
     if (contentPattern != null)
     {
-      label += " -> " + contentPattern;
+      label += " with content like " + contentPattern;
     }
+
     return label;
   }
 

@@ -122,6 +122,56 @@ public class PredicatesItemProviderAdapterFactory extends PredicatesAdapterFacto
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.predicates.CommentPredicate} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected CommentPredicateItemProvider commentPredicateItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.predicates.CommentPredicate}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createCommentPredicateAdapter()
+  {
+    if (commentPredicateItemProvider == null)
+    {
+      commentPredicateItemProvider = new CommentPredicateItemProvider(this);
+    }
+
+    return commentPredicateItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.predicates.LocationPredicate} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected LocationPredicateItemProvider locationPredicateItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.releng.predicates.LocationPredicate}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createLocationPredicateAdapter()
+  {
+    if (locationPredicateItemProvider == null)
+    {
+      locationPredicateItemProvider = new LocationPredicateItemProvider(this);
+    }
+
+    return locationPredicateItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -440,6 +490,14 @@ public class PredicatesItemProviderAdapterFactory extends PredicatesAdapterFacto
     if (namePredicateItemProvider != null)
     {
       namePredicateItemProvider.dispose();
+    }
+    if (commentPredicateItemProvider != null)
+    {
+      commentPredicateItemProvider.dispose();
+    }
+    if (locationPredicateItemProvider != null)
+    {
+      locationPredicateItemProvider.dispose();
     }
     if (repositoryPredicateItemProvider != null)
     {

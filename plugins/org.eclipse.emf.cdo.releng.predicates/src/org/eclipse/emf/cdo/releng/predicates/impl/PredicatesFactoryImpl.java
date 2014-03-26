@@ -13,7 +13,9 @@ package org.eclipse.emf.cdo.releng.predicates.impl;
 import org.eclipse.emf.cdo.releng.internal.predicates.ExternalProject;
 import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
 import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
+import org.eclipse.emf.cdo.releng.predicates.CommentPredicate;
 import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
+import org.eclipse.emf.cdo.releng.predicates.LocationPredicate;
 import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
@@ -104,6 +106,10 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
     {
     case PredicatesPackage.NAME_PREDICATE:
       return createNamePredicate();
+    case PredicatesPackage.COMMENT_PREDICATE:
+      return createCommentPredicate();
+    case PredicatesPackage.LOCATION_PREDICATE:
+      return createLocationPredicate();
     case PredicatesPackage.REPOSITORY_PREDICATE:
       return createRepositoryPredicate();
     case PredicatesPackage.AND_PREDICATE:
@@ -170,6 +176,28 @@ public class PredicatesFactoryImpl extends EFactoryImpl implements PredicatesFac
   {
     NamePredicateImpl namePredicate = new NamePredicateImpl();
     return namePredicate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CommentPredicate createCommentPredicate()
+  {
+    CommentPredicateImpl commentPredicate = new CommentPredicateImpl();
+    return commentPredicate;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LocationPredicate createLocationPredicate()
+  {
+    LocationPredicateImpl locationPredicate = new LocationPredicateImpl();
+    return locationPredicate;
   }
 
   public NamePredicate createNamePredicate(String pattern)

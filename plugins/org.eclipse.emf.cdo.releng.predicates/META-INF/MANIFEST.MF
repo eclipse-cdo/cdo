@@ -3,6 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.releng.predicates;singleton:=true
 Bundle-Version: 1.0.200.qualifier
 Bundle-ClassPath: .
+Bundle-Activator: org.eclipse.emf.cdo.releng.internal.predicates.PredicatesPlugin$Implementation
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin

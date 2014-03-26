@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.predicates.util;
 
 import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
 import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
+import org.eclipse.emf.cdo.releng.predicates.CommentPredicate;
 import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
+import org.eclipse.emf.cdo.releng.predicates.LocationPredicate;
 import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
@@ -105,6 +107,34 @@ public class PredicatesSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = casePredicate(namePredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case PredicatesPackage.COMMENT_PREDICATE:
+    {
+      CommentPredicate commentPredicate = (CommentPredicate)theEObject;
+      T result = caseCommentPredicate(commentPredicate);
+      if (result == null)
+      {
+        result = casePredicate(commentPredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case PredicatesPackage.LOCATION_PREDICATE:
+    {
+      LocationPredicate locationPredicate = (LocationPredicate)theEObject;
+      T result = caseLocationPredicate(locationPredicate);
+      if (result == null)
+      {
+        result = casePredicate(locationPredicate);
       }
       if (result == null)
       {
@@ -243,6 +273,38 @@ public class PredicatesSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseNamePredicate(NamePredicate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Comment Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Comment Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCommentPredicate(CommentPredicate object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Location Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Location Predicate</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocationPredicate(LocationPredicate object)
   {
     return null;
   }

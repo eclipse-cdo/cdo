@@ -26,11 +26,12 @@
                org.eclipse.emf.edit.provider.IItemPropertySource"/>
    </extension>
 
+   <!--
    <extension point="org.eclipse.emf.edit.childCreationExtenders">
-      <!-- @generated projectconfig -->
       <extender
             uri="http://www.eclipse.org/CDO/releng/predicates/1.0"
             class="org.eclipse.emf.cdo.releng.projectconfig.provider.ProjectConfigItemProviderAdapterFactory$PredicatesChildCreationExtender"/>
    </extension>
+   -->
 
 </plugin>

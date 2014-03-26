@@ -221,13 +221,19 @@ public class WorkingSetItemProvider extends ItemProviderAdapter implements IEdit
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
     newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
-        WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
-
-    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
         WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
 
     newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
         PredicatesFactory.eINSTANCE.createNamePredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createCommentPredicate()));
+
+    newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
+        PredicatesFactory.eINSTANCE.createLocationPredicate()));
 
     newChildDescriptors.add(createChildParameter(WorkingSetsPackage.Literals.WORKING_SET__PREDICATES,
         PredicatesFactory.eINSTANCE.createRepositoryPredicate()));

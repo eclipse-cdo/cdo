@@ -503,6 +503,12 @@ public class PreferenceProfileItemProvider extends ItemProviderAdapter implement
         PredicatesFactory.eINSTANCE.createNamePredicate()));
 
     newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREDICATES,
+        PredicatesFactory.eINSTANCE.createCommentPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREDICATES,
+        PredicatesFactory.eINSTANCE.createLocationPredicate()));
+
+    newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREDICATES,
         PredicatesFactory.eINSTANCE.createRepositoryPredicate()));
 
     newChildDescriptors.add(createChildParameter(ProjectConfigPackage.Literals.PREFERENCE_PROFILE__PREDICATES,

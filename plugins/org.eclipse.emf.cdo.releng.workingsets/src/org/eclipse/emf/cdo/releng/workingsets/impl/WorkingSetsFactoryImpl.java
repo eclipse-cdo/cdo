@@ -81,10 +81,10 @@ public class WorkingSetsFactoryImpl extends EFactoryImpl implements WorkingSetsF
       return createWorkingSet();
     case WorkingSetsPackage.WORKING_SET_GROUP:
       return createWorkingSetGroup();
-    case WorkingSetsPackage.EXCLUSION_PREDICATE:
-      return createExclusionPredicate();
     case WorkingSetsPackage.INCLUSION_PREDICATE:
       return createInclusionPredicate();
+    case WorkingSetsPackage.EXCLUSION_PREDICATE:
+      return createExclusionPredicate();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }

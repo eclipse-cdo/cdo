@@ -123,7 +123,7 @@ public class NamePredicateItemProvider extends PredicateItemProvider implements 
   public String getText(Object object)
   {
     String label = ((NamePredicate)object).getPattern();
-    return label == null ? "" : label;
+    return label == null || label.length() == 0 ? getString("_UI_NamePredicate_type") : "Name like " + label;
   }
 
   /**

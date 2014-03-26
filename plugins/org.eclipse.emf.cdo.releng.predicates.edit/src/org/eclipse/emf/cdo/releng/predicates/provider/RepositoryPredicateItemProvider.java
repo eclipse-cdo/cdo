@@ -139,7 +139,7 @@ public class RepositoryPredicateItemProvider extends PredicateItemProvider imple
   public String getText(Object object)
   {
     IProject project = ((RepositoryPredicate)object).getProject();
-    return project == null ? "" : project.getName();
+    return project == null ? getString("_UI_RepositoryPredicate_type") : "In same repository as " + project.getName();
   }
 
   /**

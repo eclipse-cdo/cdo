@@ -313,11 +313,11 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
     createEReference(workingSetGroupEClass, WORKING_SET_GROUP__WORKING_SETS);
     createEOperation(workingSetGroupEClass, WORKING_SET_GROUP___GET_WORKING_SET__STRING);
 
-    exclusionPredicateEClass = createEClass(EXCLUSION_PREDICATE);
-    createEReference(exclusionPredicateEClass, EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS);
-
     inclusionPredicateEClass = createEClass(INCLUSION_PREDICATE);
     createEReference(inclusionPredicateEClass, INCLUSION_PREDICATE__INCLUDED_WORKING_SETS);
+
+    exclusionPredicateEClass = createEClass(EXCLUSION_PREDICATE);
+    createEReference(exclusionPredicateEClass, EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS);
 
     // Create data types
     projectEDataType = createEDataType(PROJECT);
@@ -359,8 +359,8 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    exclusionPredicateEClass.getESuperTypes().add(thePredicatesPackage.getPredicate());
     inclusionPredicateEClass.getESuperTypes().add(thePredicatesPackage.getPredicate());
+    exclusionPredicateEClass.getESuperTypes().add(thePredicatesPackage.getPredicate());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(workingSetEClass, WorkingSet.class, "WorkingSet", !IS_ABSTRACT, !IS_INTERFACE,
@@ -388,16 +388,16 @@ public class WorkingSetsPackageImpl extends EPackageImpl implements WorkingSetsP
         IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEClass(exclusionPredicateEClass, ExclusionPredicate.class, "ExclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExclusionPredicate_ExcludedWorkingSets(), getWorkingSet(), null, "excludedWorkingSets", null, 0,
-        -1, ExclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(inclusionPredicateEClass, InclusionPredicate.class, "InclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getInclusionPredicate_IncludedWorkingSets(), getWorkingSet(), null, "includedWorkingSets", null, 0,
         -1, InclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(exclusionPredicateEClass, ExclusionPredicate.class, "ExclusionPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExclusionPredicate_ExcludedWorkingSets(), getWorkingSet(), null, "excludedWorkingSets", null, 0,
+        -1, ExclusionPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types

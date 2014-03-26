@@ -1,16 +1,8 @@
-/*
- * Copyright (c) 2013, 2014 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.predicates.provider;
 
-import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
+import org.eclipse.emf.cdo.releng.predicates.LocationPredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -25,32 +17,25 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.core.resources.IProjectNatureDescriptor;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.ResourcesPlugin;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.predicates.NaturePredicate} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.releng.predicates.LocationPredicate} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NaturePredicateItemProvider extends PredicateItemProvider implements IEditingDomainItemProvider,
+public class LocationPredicateItemProvider extends PredicateItemProvider implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
-  private static final IWorkspace WORKSPACE = ResourcesPlugin.getWorkspace();
-
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public NaturePredicateItemProvider(AdapterFactory adapterFactory)
+  public LocationPredicateItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -68,40 +53,30 @@ public class NaturePredicateItemProvider extends PredicateItemProvider implement
     {
       super.getPropertyDescriptors(object);
 
-      addNaturePropertyDescriptor(object);
+      addPatternPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Nature feature.
+   * This adds a property descriptor for the Pattern feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
-  protected void addNaturePropertyDescriptor(Object object)
+  protected void addPatternPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_NaturePredicate_nature_feature"), getString(
-        "_UI_PropertyDescriptor_description", "_UI_NaturePredicate_nature_feature", "_UI_NaturePredicate_type"),
-        PredicatesPackage.Literals.NATURE_PREDICATE__NATURE, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null)
-    {
-      @Override
-      public Collection<?> getChoiceOfValues(Object object)
-      {
-        List<String> result = new ArrayList<String>();
-        for (IProjectNatureDescriptor descriptor : WORKSPACE.getNatureDescriptors())
-        {
-          result.add(descriptor.getNatureId());
-        }
-        return result;
-      }
-    });
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(
+        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(),
+        getString("_UI_LocationPredicate_pattern_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_LocationPredicate_pattern_feature",
+            "_UI_LocationPredicate_type"), PredicatesPackage.Literals.LOCATION_PREDICATE__PATTERN, true, false, false,
+        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
-   * This returns NaturePredicate.gif.
+   * This returns LocationPredicate.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -109,7 +84,7 @@ public class NaturePredicateItemProvider extends PredicateItemProvider implement
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/NaturePredicate"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/LocationPredicate"));
   }
 
   /**
@@ -132,8 +107,8 @@ public class NaturePredicateItemProvider extends PredicateItemProvider implement
   @Override
   public String getText(Object object)
   {
-    String label = ((NaturePredicate)object).getNature();
-    return label == null || label.length() == 0 ? getString("_UI_NaturePredicate_type") : "Has nature " + label;
+    String label = ((LocationPredicate)object).getPattern();
+    return label == null || label.length() == 0 ? getString("_UI_LocationPredicate_type") : "Location like " + label;
   }
 
   /**
@@ -148,9 +123,9 @@ public class NaturePredicateItemProvider extends PredicateItemProvider implement
   {
     updateChildren(notification);
 
-    switch (notification.getFeatureID(NaturePredicate.class))
+    switch (notification.getFeatureID(LocationPredicate.class))
     {
-    case PredicatesPackage.NATURE_PREDICATE__NATURE:
+    case PredicatesPackage.LOCATION_PREDICATE__PATTERN:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

@@ -169,6 +169,116 @@ public interface PredicatesPackage extends EPackage
   int NAME_PREDICATE_OPERATION_COUNT = PREDICATE_OPERATION_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.CommentPredicateImpl <em>Comment Predicate</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.predicates.impl.CommentPredicateImpl
+   * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getCommentPredicate()
+   * @generated
+   */
+  int COMMENT_PREDICATE = 2;
+
+  /**
+   * The feature id for the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT_PREDICATE__PATTERN = PREDICATE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Comment Predicate</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT_PREDICATE_FEATURE_COUNT = PREDICATE_FEATURE_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
+
+  /**
+   * The number of operations of the '<em>Comment Predicate</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT_PREDICATE_OPERATION_COUNT = PREDICATE_OPERATION_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.LocationPredicateImpl <em>Location Predicate</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.releng.predicates.impl.LocationPredicateImpl
+   * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getLocationPredicate()
+   * @generated
+   */
+  int LOCATION_PREDICATE = 3;
+
+  /**
+   * The feature id for the '<em><b>Pattern</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION_PREDICATE__PATTERN = PREDICATE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Location Predicate</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION_PREDICATE_FEATURE_COUNT = PREDICATE_FEATURE_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION_PREDICATE___MATCHES__IPROJECT = PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION_PREDICATE___MATCHES__FILE = PREDICATE___MATCHES__FILE;
+
+  /**
+   * The number of operations of the '<em>Location Predicate</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION_PREDICATE_OPERATION_COUNT = PREDICATE_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.RepositoryPredicateImpl <em>Repository Predicate</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -176,7 +286,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getRepositoryPredicate()
    * @generated
    */
-  int REPOSITORY_PREDICATE = 2;
+  int REPOSITORY_PREDICATE = 4;
 
   /**
    * The feature id for the '<em><b>Project</b></em>' attribute.
@@ -231,7 +341,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getAndPredicate()
    * @generated
    */
-  int AND_PREDICATE = 3;
+  int AND_PREDICATE = 5;
 
   /**
    * The feature id for the '<em><b>Operands</b></em>' containment reference list.
@@ -286,7 +396,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getOrPredicate()
    * @generated
    */
-  int OR_PREDICATE = 4;
+  int OR_PREDICATE = 6;
 
   /**
    * The feature id for the '<em><b>Operands</b></em>' containment reference list.
@@ -341,7 +451,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getNotPredicate()
    * @generated
    */
-  int NOT_PREDICATE = 5;
+  int NOT_PREDICATE = 7;
 
   /**
    * The feature id for the '<em><b>Operand</b></em>' containment reference.
@@ -396,7 +506,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getNaturePredicate()
    * @generated
    */
-  int NATURE_PREDICATE = 6;
+  int NATURE_PREDICATE = 8;
 
   /**
    * The feature id for the '<em><b>Nature</b></em>' attribute.
@@ -451,7 +561,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getBuilderPredicate()
    * @generated
    */
-  int BUILDER_PREDICATE = 7;
+  int BUILDER_PREDICATE = 9;
 
   /**
    * The feature id for the '<em><b>Builder</b></em>' attribute.
@@ -506,7 +616,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getFilePredicate()
    * @generated
    */
-  int FILE_PREDICATE = 8;
+  int FILE_PREDICATE = 10;
 
   /**
    * The feature id for the '<em><b>File Pattern</b></em>' attribute.
@@ -570,7 +680,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getProject()
    * @generated
    */
-  int PROJECT = 9;
+  int PROJECT = 11;
 
   /**
    * The meta object id for the '<em>File</em>' data type.
@@ -580,7 +690,7 @@ public interface PredicatesPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getFile()
    * @generated
    */
-  int FILE = 10;
+  int FILE = 12;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.predicates.Predicate <em>Predicate</em>}'.
@@ -632,6 +742,48 @@ public interface PredicatesPackage extends EPackage
    * @generated
    */
   EAttribute getNamePredicate_Pattern();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.predicates.CommentPredicate <em>Comment Predicate</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Comment Predicate</em>'.
+   * @see org.eclipse.emf.cdo.releng.predicates.CommentPredicate
+   * @generated
+   */
+  EClass getCommentPredicate();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.predicates.CommentPredicate#getPattern <em>Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pattern</em>'.
+   * @see org.eclipse.emf.cdo.releng.predicates.CommentPredicate#getPattern()
+   * @see #getCommentPredicate()
+   * @generated
+   */
+  EAttribute getCommentPredicate_Pattern();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.predicates.LocationPredicate <em>Location Predicate</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Location Predicate</em>'.
+   * @see org.eclipse.emf.cdo.releng.predicates.LocationPredicate
+   * @generated
+   */
+  EClass getLocationPredicate();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.predicates.LocationPredicate#getPattern <em>Pattern</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Pattern</em>'.
+   * @see org.eclipse.emf.cdo.releng.predicates.LocationPredicate#getPattern()
+   * @see #getLocationPredicate()
+   * @generated
+   */
+  EAttribute getLocationPredicate_Pattern();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.predicates.RepositoryPredicate <em>Repository Predicate</em>}'.
@@ -880,6 +1032,42 @@ public interface PredicatesPackage extends EPackage
      * @generated
      */
     EAttribute NAME_PREDICATE__PATTERN = eINSTANCE.getNamePredicate_Pattern();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.CommentPredicateImpl <em>Comment Predicate</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.predicates.impl.CommentPredicateImpl
+     * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getCommentPredicate()
+     * @generated
+     */
+    EClass COMMENT_PREDICATE = eINSTANCE.getCommentPredicate();
+
+    /**
+     * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMMENT_PREDICATE__PATTERN = eINSTANCE.getCommentPredicate_Pattern();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.LocationPredicateImpl <em>Location Predicate</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.releng.predicates.impl.LocationPredicateImpl
+     * @see org.eclipse.emf.cdo.releng.predicates.impl.PredicatesPackageImpl#getLocationPredicate()
+     * @generated
+     */
+    EClass LOCATION_PREDICATE = eINSTANCE.getLocationPredicate();
+
+    /**
+     * The meta object literal for the '<em><b>Pattern</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LOCATION_PREDICATE__PATTERN = eINSTANCE.getLocationPredicate_Pattern();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.predicates.impl.RepositoryPredicateImpl <em>Repository Predicate</em>}' class.

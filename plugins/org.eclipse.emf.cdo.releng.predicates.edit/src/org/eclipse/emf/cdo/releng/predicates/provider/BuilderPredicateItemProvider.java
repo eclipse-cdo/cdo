@@ -151,7 +151,7 @@ public class BuilderPredicateItemProvider extends PredicateItemProvider implemen
   public String getText(Object object)
   {
     String label = ((BuilderPredicate)object).getBuilder();
-    return label == null ? "" : label;
+    return label == null || label.length() == 0 ? getString("_UI_BuilderPredicate_type") : "Has builder " + label;
   }
 
   /**

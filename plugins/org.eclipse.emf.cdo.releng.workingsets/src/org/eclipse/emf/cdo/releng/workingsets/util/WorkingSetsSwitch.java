@@ -104,20 +104,6 @@ public class WorkingSetsSwitch<T> extends Switch<T>
       }
       return result;
     }
-    case WorkingSetsPackage.EXCLUSION_PREDICATE:
-    {
-      ExclusionPredicate exclusionPredicate = (ExclusionPredicate)theEObject;
-      T result = caseExclusionPredicate(exclusionPredicate);
-      if (result == null)
-      {
-        result = casePredicate(exclusionPredicate);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
     case WorkingSetsPackage.INCLUSION_PREDICATE:
     {
       InclusionPredicate inclusionPredicate = (InclusionPredicate)theEObject;
@@ -125,6 +111,20 @@ public class WorkingSetsSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = casePredicate(inclusionPredicate);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case WorkingSetsPackage.EXCLUSION_PREDICATE:
+    {
+      ExclusionPredicate exclusionPredicate = (ExclusionPredicate)theEObject;
+      T result = caseExclusionPredicate(exclusionPredicate);
+      if (result == null)
+      {
+        result = casePredicate(exclusionPredicate);
       }
       if (result == null)
       {

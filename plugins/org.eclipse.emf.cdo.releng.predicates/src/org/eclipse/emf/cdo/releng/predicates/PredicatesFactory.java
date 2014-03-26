@@ -47,6 +47,24 @@ public interface PredicatesFactory extends EFactory
    */
   NamePredicate createNamePredicate();
 
+  /**
+   * Returns a new object of class '<em>Comment Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Comment Predicate</em>'.
+   * @generated
+   */
+  CommentPredicate createCommentPredicate();
+
+  /**
+   * Returns a new object of class '<em>Location Predicate</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Location Predicate</em>'.
+   * @generated
+   */
+  LocationPredicate createLocationPredicate();
+
   NamePredicate createNamePredicate(String pattern);
 
   /**

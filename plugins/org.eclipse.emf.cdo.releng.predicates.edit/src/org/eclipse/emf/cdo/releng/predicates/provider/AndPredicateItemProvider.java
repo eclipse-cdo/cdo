@@ -170,6 +170,12 @@ public class AndPredicateItemProvider extends PredicateItemProvider implements I
         PredicatesFactory.eINSTANCE.createNamePredicate()));
 
     newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,
+        PredicatesFactory.eINSTANCE.createCommentPredicate()));
+
+    newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,
+        PredicatesFactory.eINSTANCE.createLocationPredicate()));
+
+    newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,
         PredicatesFactory.eINSTANCE.createRepositoryPredicate()));
 
     newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.AND_PREDICATE__OPERANDS,

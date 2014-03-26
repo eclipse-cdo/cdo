@@ -170,6 +170,12 @@ public class NotPredicateItemProvider extends PredicateItemProvider implements I
         PredicatesFactory.eINSTANCE.createNamePredicate()));
 
     newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,
+        PredicatesFactory.eINSTANCE.createCommentPredicate()));
+
+    newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,
+        PredicatesFactory.eINSTANCE.createLocationPredicate()));
+
+    newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,
         PredicatesFactory.eINSTANCE.createRepositoryPredicate()));
 
     newChildDescriptors.add(createChildParameter(PredicatesPackage.Literals.NOT_PREDICATE__OPERAND,

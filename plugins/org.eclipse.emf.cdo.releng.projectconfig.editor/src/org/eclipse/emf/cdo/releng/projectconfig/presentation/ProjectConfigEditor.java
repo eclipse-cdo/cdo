@@ -844,7 +844,13 @@ public class ProjectConfigEditor extends MultiPageEditorPart implements IEditing
 
     adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ProjectConfigItemProviderAdapterFactory());
-    adapterFactory.addAdapterFactory(new PredicatesItemProviderAdapterFactory());
+    adapterFactory.addAdapterFactory(new PredicatesItemProviderAdapterFactory()
+    {
+      {
+        childCreationExtenderManager.getChildCreationExtenders().add(
+            new ProjectConfigItemProviderAdapterFactory.PredicatesChildCreationExtender());
+      }
+    });
     adapterFactory.addAdapterFactory(new PreferencesItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 

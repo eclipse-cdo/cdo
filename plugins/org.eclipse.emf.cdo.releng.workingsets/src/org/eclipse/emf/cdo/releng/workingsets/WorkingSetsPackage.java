@@ -187,52 +187,7 @@ public interface WorkingSetsPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetsPackageImpl#getExclusionPredicate()
    * @generated
    */
-  int EXCLUSION_PREDICATE = 2;
-
-  /**
-   * The feature id for the '<em><b>Excluded Working Sets</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS = PredicatesPackage.PREDICATE_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Exclusion Predicate</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXCLUSION_PREDICATE_FEATURE_COUNT = PredicatesPackage.PREDICATE_FEATURE_COUNT + 1;
-
-  /**
-   * The operation id for the '<em>Matches</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXCLUSION_PREDICATE___MATCHES__IPROJECT = PredicatesPackage.PREDICATE___MATCHES__IPROJECT;
-
-  /**
-   * The operation id for the '<em>Matches</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXCLUSION_PREDICATE___MATCHES__FILE = PredicatesPackage.PREDICATE___MATCHES__FILE;
-
-  /**
-   * The number of operations of the '<em>Exclusion Predicate</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXCLUSION_PREDICATE_OPERATION_COUNT = PredicatesPackage.PREDICATE_OPERATION_COUNT + 0;
+  int EXCLUSION_PREDICATE = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.workingsets.impl.InclusionPredicateImpl <em>Inclusion Predicate</em>}' class.
@@ -242,7 +197,7 @@ public interface WorkingSetsPackage extends EPackage
    * @see org.eclipse.emf.cdo.releng.workingsets.impl.WorkingSetsPackageImpl#getInclusionPredicate()
    * @generated
    */
-  int INCLUSION_PREDICATE = 3;
+  int INCLUSION_PREDICATE = 2;
 
   /**
    * The feature id for the '<em><b>Included Working Sets</b></em>' reference list.
@@ -288,6 +243,51 @@ public interface WorkingSetsPackage extends EPackage
    * @ordered
    */
   int INCLUSION_PREDICATE_OPERATION_COUNT = PredicatesPackage.PREDICATE_OPERATION_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Excluded Working Sets</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXCLUSION_PREDICATE__EXCLUDED_WORKING_SETS = PredicatesPackage.PREDICATE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Exclusion Predicate</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXCLUSION_PREDICATE_FEATURE_COUNT = PredicatesPackage.PREDICATE_FEATURE_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXCLUSION_PREDICATE___MATCHES__IPROJECT = PredicatesPackage.PREDICATE___MATCHES__IPROJECT;
+
+  /**
+   * The operation id for the '<em>Matches</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXCLUSION_PREDICATE___MATCHES__FILE = PredicatesPackage.PREDICATE___MATCHES__FILE;
+
+  /**
+   * The number of operations of the '<em>Exclusion Predicate</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXCLUSION_PREDICATE_OPERATION_COUNT = PredicatesPackage.PREDICATE_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '<em>Project</em>' data type.

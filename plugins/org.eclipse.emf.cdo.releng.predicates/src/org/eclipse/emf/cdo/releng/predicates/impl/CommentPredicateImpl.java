@@ -1,16 +1,9 @@
-/*
- * Copyright (c) 2013, 2014 Eike Stepper (Berlin, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.releng.predicates.impl;
 
-import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
+import org.eclipse.emf.cdo.releng.internal.predicates.PredicatesPlugin;
+import org.eclipse.emf.cdo.releng.predicates.CommentPredicate;
 import org.eclipse.emf.cdo.releng.predicates.PredicatesPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -18,21 +11,22 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Name Predicate</b></em>'.
+ * An implementation of the model object '<em><b>Comment Predicate</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.releng.predicates.impl.NamePredicateImpl#getPattern <em>Pattern</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.releng.predicates.impl.CommentPredicateImpl#getPattern <em>Pattern</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class NamePredicateImpl extends PredicateImpl implements NamePredicate
+public class CommentPredicateImpl extends PredicateImpl implements CommentPredicate
 {
   /**
    * The default value of the '{@link #getPattern() <em>Pattern</em>}' attribute.
@@ -59,7 +53,7 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
    * <!-- end-user-doc -->
    * @generated
    */
-  protected NamePredicateImpl()
+  protected CommentPredicateImpl()
   {
     super();
   }
@@ -72,7 +66,7 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
   @Override
   protected EClass eStaticClass()
   {
-    return PredicatesPackage.Literals.NAME_PREDICATE;
+    return PredicatesPackage.Literals.COMMENT_PREDICATE;
   }
 
   /**
@@ -96,7 +90,7 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
     pattern = newPattern;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.NAME_PREDICATE__PATTERN, oldPattern,
+      eNotify(new ENotificationImpl(this, Notification.SET, PredicatesPackage.COMMENT_PREDICATE__PATTERN, oldPattern,
           pattern));
     }
   }
@@ -111,7 +105,7 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
   {
     switch (featureID)
     {
-    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+    case PredicatesPackage.COMMENT_PREDICATE__PATTERN:
       return getPattern();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -127,7 +121,7 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
   {
     switch (featureID)
     {
-    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+    case PredicatesPackage.COMMENT_PREDICATE__PATTERN:
       setPattern((String)newValue);
       return;
     }
@@ -144,7 +138,7 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
   {
     switch (featureID)
     {
-    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+    case PredicatesPackage.COMMENT_PREDICATE__PATTERN:
       setPattern(PATTERN_EDEFAULT);
       return;
     }
@@ -161,7 +155,7 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
   {
     switch (featureID)
     {
-    case PredicatesPackage.NAME_PREDICATE__PATTERN:
+    case PredicatesPackage.COMMENT_PREDICATE__PATTERN:
       return PATTERN_EDEFAULT == null ? pattern != null : !PATTERN_EDEFAULT.equals(pattern);
     }
     return super.eIsSet(featureID);
@@ -191,7 +185,15 @@ public class NamePredicateImpl extends PredicateImpl implements NamePredicate
   public boolean matches(IProject project)
   {
     String pattern = getPattern();
-    return pattern != null && project != null && project.getName().matches(pattern);
-  }
 
-} // NamePredicateImpl
+    try
+    {
+      return pattern != null && project != null && project.getDescription().getComment().matches(pattern);
+    }
+    catch (CoreException ex)
+    {
+      PredicatesPlugin.INSTANCE.log(ex);
+      return false;
+    }
+  }
+} // CommentPredicateImpl

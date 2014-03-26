@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.predicates.util;
 
 import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
 import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
+import org.eclipse.emf.cdo.releng.predicates.CommentPredicate;
 import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
+import org.eclipse.emf.cdo.releng.predicates.LocationPredicate;
 import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
@@ -98,6 +100,18 @@ public class PredicatesAdapterFactory extends AdapterFactoryImpl
     public Adapter caseNamePredicate(NamePredicate object)
     {
       return createNamePredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseCommentPredicate(CommentPredicate object)
+    {
+      return createCommentPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseLocationPredicate(LocationPredicate object)
+    {
+      return createLocationPredicateAdapter();
     }
 
     @Override
@@ -189,6 +203,36 @@ public class PredicatesAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createNamePredicateAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.predicates.CommentPredicate <em>Comment Predicate</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.predicates.CommentPredicate
+   * @generated
+   */
+  public Adapter createCommentPredicateAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.predicates.LocationPredicate <em>Location Predicate</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.releng.predicates.LocationPredicate
+   * @generated
+   */
+  public Adapter createLocationPredicateAdapter()
   {
     return null;
   }

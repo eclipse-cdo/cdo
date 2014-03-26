@@ -97,15 +97,15 @@ public class WorkingSetsAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
-    public Adapter caseExclusionPredicate(ExclusionPredicate object)
-    {
-      return createExclusionPredicateAdapter();
-    }
-
-    @Override
     public Adapter caseInclusionPredicate(InclusionPredicate object)
     {
       return createInclusionPredicateAdapter();
+    }
+
+    @Override
+    public Adapter caseExclusionPredicate(ExclusionPredicate object)
+    {
+      return createExclusionPredicateAdapter();
     }
 
     @Override

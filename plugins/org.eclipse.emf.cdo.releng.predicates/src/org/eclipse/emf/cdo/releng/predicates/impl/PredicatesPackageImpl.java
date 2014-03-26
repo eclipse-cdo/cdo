@@ -12,7 +12,9 @@ package org.eclipse.emf.cdo.releng.predicates.impl;
 
 import org.eclipse.emf.cdo.releng.predicates.AndPredicate;
 import org.eclipse.emf.cdo.releng.predicates.BuilderPredicate;
+import org.eclipse.emf.cdo.releng.predicates.CommentPredicate;
 import org.eclipse.emf.cdo.releng.predicates.FilePredicate;
+import org.eclipse.emf.cdo.releng.predicates.LocationPredicate;
 import org.eclipse.emf.cdo.releng.predicates.NamePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NaturePredicate;
 import org.eclipse.emf.cdo.releng.predicates.NotPredicate;
@@ -55,6 +57,20 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
    * @generated
    */
   private EClass namePredicateEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass commentPredicateEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass locationPredicateEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -233,6 +249,46 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
   public EAttribute getNamePredicate_Pattern()
   {
     return (EAttribute)namePredicateEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCommentPredicate()
+  {
+    return commentPredicateEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCommentPredicate_Pattern()
+  {
+    return (EAttribute)commentPredicateEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLocationPredicate()
+  {
+    return locationPredicateEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLocationPredicate_Pattern()
+  {
+    return (EAttribute)locationPredicateEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -445,6 +501,12 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
     namePredicateEClass = createEClass(NAME_PREDICATE);
     createEAttribute(namePredicateEClass, NAME_PREDICATE__PATTERN);
 
+    commentPredicateEClass = createEClass(COMMENT_PREDICATE);
+    createEAttribute(commentPredicateEClass, COMMENT_PREDICATE__PATTERN);
+
+    locationPredicateEClass = createEClass(LOCATION_PREDICATE);
+    createEAttribute(locationPredicateEClass, LOCATION_PREDICATE__PATTERN);
+
     repositoryPredicateEClass = createEClass(REPOSITORY_PREDICATE);
     createEAttribute(repositoryPredicateEClass, REPOSITORY_PREDICATE__PROJECT);
 
@@ -505,6 +567,8 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
 
     // Add supertypes to classes
     namePredicateEClass.getESuperTypes().add(getPredicate());
+    commentPredicateEClass.getESuperTypes().add(getPredicate());
+    locationPredicateEClass.getESuperTypes().add(getPredicate());
     repositoryPredicateEClass.getESuperTypes().add(getPredicate());
     andPredicateEClass.getESuperTypes().add(getPredicate());
     orPredicateEClass.getESuperTypes().add(getPredicate());
@@ -528,6 +592,18 @@ public class PredicatesPackageImpl extends EPackageImpl implements PredicatesPac
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getNamePredicate_Pattern(), ecorePackage.getEString(), "pattern", null, 1, 1, NamePredicate.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(commentPredicateEClass, CommentPredicate.class, "CommentPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCommentPredicate_Pattern(), ecorePackage.getEString(), "pattern", null, 1, 1,
+        CommentPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+
+    initEClass(locationPredicateEClass, LocationPredicate.class, "LocationPredicate", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLocationPredicate_Pattern(), ecorePackage.getEString(), "pattern", null, 1, 1,
+        LocationPredicate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(repositoryPredicateEClass, RepositoryPredicate.class, "RepositoryPredicate", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

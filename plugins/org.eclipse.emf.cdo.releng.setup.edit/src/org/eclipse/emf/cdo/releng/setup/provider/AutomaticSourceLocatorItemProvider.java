@@ -212,13 +212,19 @@ public class AutomaticSourceLocatorItemProvider extends SourceLocatorItemProvide
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
-        WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
-
-    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
         WorkingSetsFactory.eINSTANCE.createInclusionPredicate()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        WorkingSetsFactory.eINSTANCE.createExclusionPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
         PredicatesFactory.eINSTANCE.createNamePredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createCommentPredicate()));
+
+    newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
+        PredicatesFactory.eINSTANCE.createLocationPredicate()));
 
     newChildDescriptors.add(createChildParameter(SetupPackage.Literals.AUTOMATIC_SOURCE_LOCATOR__PREDICATES,
         PredicatesFactory.eINSTANCE.createRepositoryPredicate()));

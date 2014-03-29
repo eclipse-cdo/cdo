@@ -69,7 +69,7 @@
         <p2Repositories url="http://download.eclipse.org/webtools/repository/luna"/>
       </repositoryLists>
     </setupTasks>
-    <setupTasks xsi:type="setup:ProjectsImportTask">
+    <setupTasks xsi:type="setup:ProjectsImportTask" disabled="true">
       <sourceLocators rootFolder="${git.clone/plugins/org.eclipse.emf.cdo.releng}"/>
     </setupTasks>
     <setupTasks xsi:type="setup:WorkingSetTask">

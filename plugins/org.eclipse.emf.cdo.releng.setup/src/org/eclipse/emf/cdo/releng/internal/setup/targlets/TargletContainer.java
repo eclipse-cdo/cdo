@@ -800,6 +800,8 @@ public class TargletContainer extends AbstractBundleContainer
           request.setInstallableUnitProfileProperty(iu, IProfile.PROP_PROFILE_ROOT_IU, TRUE);
           request.add(iu);
         }
+
+        // TODO What to do if no mathing IU is found? Fail?
       }
 
       manager.planAndInstall(request, context, progress.newChild());
@@ -1088,48 +1090,56 @@ public class TargletContainer extends AbstractBundleContainer
 
           for (File folder : projectLocations)
           {
-            final AtomicReference<String> projectName = new AtomicReference<String>();
-
-            Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
-            XMLUtil.handleChildElements(rootElement, new ElementHandler()
+            try
             {
-              public void handleElement(Element element) throws Exception
+              final AtomicReference<String> projectName = new AtomicReference<String>();
+
+              Element rootElement = XMLUtil.loadRootElement(documentBuilder, new File(folder, ".project"));
+              XMLUtil.handleChildElements(rootElement, new ElementHandler()
               {
-                if ("name".equals(element.getTagName()))
+                public void handleElement(Element element) throws Exception
                 {
-                  projectName.set(element.getTextContent().trim());
+                  if ("name".equals(element.getTagName()))
+                  {
+                    projectName.set(element.getTextContent().trim());
+                  }
+                }
+              });
+
+              String name = projectName.get();
+              if (name != null && name.length() != 0)
+              {
+                File location = folder.getCanonicalFile();
+
+                IProject project = root.getProject(name);
+                if (project.exists())
+                {
+                  File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
+                  if (!existingLocation.equals(location))
+                  {
+                    Activator.log("Project " + name + " exists in different location: " + existingLocation);
+                    continue;
+                  }
+                }
+                else
+                {
+                  monitor.setTaskName("Importing project " + projectName);
+
+                  IProjectDescription projectDescription = workspace.newProjectDescription(name);
+                  projectDescription.setLocation(new Path(location.getAbsolutePath()));
+                  project.create(projectDescription, monitor);
+                }
+
+                if (!project.isOpen())
+                {
+                  project.open(monitor);
                 }
               }
-            });
-
-            String name = projectName.get();
-            if (name != null && name.length() != 0)
+            }
+            catch (Exception ex)
             {
-              File location = folder.getCanonicalFile();
-
-              IProject project = root.getProject(name);
-              if (project.exists())
-              {
-                File existingLocation = new File(project.getLocation().toOSString()).getCanonicalFile();
-                if (!existingLocation.equals(location))
-                {
-                  Activator.log("Project " + name + " exists in different location: " + existingLocation);
-                  continue;
-                }
-              }
-              else
-              {
-                monitor.setTaskName("Importing project " + projectName);
-
-                IProjectDescription projectDescription = workspace.newProjectDescription(name);
-                projectDescription.setLocation(new Path(location.getAbsolutePath()));
-                project.create(projectDescription, monitor);
-              }
-
-              if (!project.isOpen())
-              {
-                project.open(monitor);
-              }
+              Activator.log(ex);
+              monitor.subTask("Failed to import project from " + folder + " (see error log for details)");
             }
           }
         }

@@ -687,10 +687,10 @@ public class GitCloneTaskImpl extends SetupTaskImpl implements GitCloneTask
       try
       {
         // Force start egit to make sure we get the association
-        Bundle egitCore = Platform.getBundle("org.eclipse.egit.core");
-        if (egitCore != null)
+        Bundle egitUI = Platform.getBundle("org.eclipse.egit.ui");
+        if (egitUI != null)
         {
-          egitCore.start();
+          egitUI.start();
         }
 
         String checkoutBranch = impl.getCheckoutBranch();

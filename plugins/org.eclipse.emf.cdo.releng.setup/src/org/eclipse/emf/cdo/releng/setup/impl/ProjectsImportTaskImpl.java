@@ -8,10 +8,8 @@ import org.eclipse.emf.cdo.releng.predicates.Predicate;
 import org.eclipse.emf.cdo.releng.setup.AutomaticSourceLocator;
 import org.eclipse.emf.cdo.releng.setup.ProjectsImportTask;
 import org.eclipse.emf.cdo.releng.setup.SetupPackage;
-import org.eclipse.emf.cdo.releng.setup.SetupTask;
 import org.eclipse.emf.cdo.releng.setup.SetupTaskContext;
 import org.eclipse.emf.cdo.releng.setup.log.ProgressLogMonitor;
-import org.eclipse.emf.cdo.releng.setup.util.ProjectProvider.Visitor;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -21,7 +19,6 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -174,40 +171,6 @@ public class ProjectsImportTaskImpl extends SetupTaskImpl implements ProjectsImp
     return super.eIsSet(featureID);
   }
 
-  @Override
-  public int getPriority()
-  {
-    return 0;
-  }
-
-  @Override
-  public Object getOverrideToken()
-  {
-    return null;
-  }
-
-  @Override
-  public void overrideFor(SetupTask overriddenTask)
-  {
-  }
-
-  @Override
-  public void consolidate()
-  {
-  }
-
-  @Override
-  public boolean needsBundlePool()
-  {
-    return false;
-  }
-
-  @Override
-  public boolean needsBundlePoolTP()
-  {
-    return false;
-  }
-
   public boolean isNeeded(SetupTaskContext context) throws Exception
   {
     EList<AutomaticSourceLocator> sourceLocators = getSourceLocators();
@@ -237,27 +200,6 @@ public class ProjectsImportTaskImpl extends SetupTaskImpl implements ProjectsImp
     }
 
     WorkspaceUtil.importProjects(projectFolders, monitor);
-  }
-
-  @Override
-  public void dispose()
-  {
-  }
-
-  @Override
-  public MirrorRunnable mirror(MirrorContext context, File mirrorsDir, boolean includingLocals) throws Exception
-  {
-    return null;
-  }
-
-  @Override
-  public void collectSniffers(List<Sniffer> sniffers)
-  {
-  }
-
-  public <T> Map<T, File> accept(Visitor<T> visitor, IProgressMonitor monitor)
-  {
-    return null;
   }
 
 } // ProjectsImportTaskImpl

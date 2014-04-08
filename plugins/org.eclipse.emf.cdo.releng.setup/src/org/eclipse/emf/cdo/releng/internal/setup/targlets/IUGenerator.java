@@ -11,8 +11,14 @@
 package org.eclipse.emf.cdo.releng.internal.setup.targlets;
 
 import org.eclipse.equinox.internal.p2.metadata.InstallableUnit;
+import org.eclipse.equinox.internal.p2.metadata.OSGiVersion;
+import org.eclipse.equinox.internal.p2.metadata.RequiredCapability;
 import org.eclipse.equinox.p2.metadata.IArtifactKey;
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
+import org.eclipse.equinox.p2.metadata.IRequirement;
+import org.eclipse.equinox.p2.metadata.MetadataFactory;
+import org.eclipse.equinox.p2.metadata.Version;
+import org.eclipse.equinox.p2.metadata.VersionRange;
 import org.eclipse.equinox.p2.publisher.PublisherInfo;
 import org.eclipse.equinox.p2.publisher.eclipse.BundlesAction;
 import org.eclipse.equinox.p2.publisher.eclipse.Feature;
@@ -106,7 +112,74 @@ public interface IUGenerator
       }
 
       List<IInstallableUnit> childIUs = Collections.emptyList();
-      return createGroupIU(feature, childIUs, info);
+      InstallableUnit iu = (InstallableUnit)createGroupIU(feature, childIUs, info);
+      List<IRequirement> requirements = iu.getRequirements();
+
+      String licenseFeature = feature.getLicenseFeature();
+      String licenseFeatureVersion = feature.getLicenseFeatureVersion();
+      boolean hasLicenseFeature = licenseFeature != null && licenseFeatureVersion != null;
+
+      int size = requirements.size();
+      IRequirement[] newRequirements = new IRequirement[size + (hasLicenseFeature ? 1 : 0)];
+
+      if (hasLicenseFeature)
+      {
+        Version osgiVersion = OSGiVersion.create(licenseFeatureVersion);
+        VersionRange osgiRange = new VersionRange(osgiVersion, true, osgiVersion, true);
+
+        VersionRange adjustedRange = adjustQualifier(osgiRange);
+        if (adjustedRange != null)
+        {
+          osgiRange = adjustedRange;
+        }
+
+        IRequirement requirement = MetadataFactory.createRequirement(IInstallableUnit.NAMESPACE_IU_ID, licenseFeature,
+            osgiRange, null, false, false);
+        newRequirements[size] = requirement;
+      }
+
+      // Adjust childIU requirements to support possible .qualifier specifications
+      for (int i = 0; i < size; i++)
+      {
+        IRequirement requirement = requirements.get(i);
+        if (requirement instanceof RequiredCapability)
+        {
+          RequiredCapability capability = (RequiredCapability)requirement;
+          VersionRange range = adjustQualifier(capability.getRange());
+          if (range != null)
+          {
+            requirement = MetadataFactory.createRequirement(capability.getNamespace(), capability.getName(), range,
+                capability.getFilter(), capability.getMin() == 0, capability.getMax() > 1);
+          }
+        }
+
+        newRequirements[i] = requirement;
+      }
+
+      iu.setRequiredCapabilities(newRequirements);
+      return iu;
+    }
+
+    private static VersionRange adjustQualifier(VersionRange range)
+    {
+      Version minimum = range.getMinimum();
+      if (minimum instanceof OSGiVersion)
+      {
+        OSGiVersion osgiVersion = (OSGiVersion)minimum;
+        if (osgiVersion.equals(range.getMaximum()))
+        {
+          if ("qualifier".equals(osgiVersion.getQualifier()))
+          {
+            minimum = OSGiVersion.createOSGi(osgiVersion.getMajor(), osgiVersion.getMinor(), osgiVersion.getMicro());
+            Version maximum = OSGiVersion.createOSGi(osgiVersion.getMajor(), osgiVersion.getMinor(),
+                osgiVersion.getMicro() + 1);
+
+            return new VersionRange(minimum, true, maximum, false);
+          }
+        }
+      }
+
+      return null;
     }
   }
 }

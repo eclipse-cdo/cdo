@@ -56,7 +56,7 @@
         </predicates>
       </sourceLocators>
       <repositoryLists name="Luna Dependencies">
-        <p2Repositories url="http://hudson.eclipse.org/hudson/job/emf-cdo-integration/lastSuccessfulBuild/artifact"/>
+        <p2Repositories url="https://hudson.eclipse.org/cdo/job/emf-cdo-integration/lastSuccessfulBuild/artifact"/>
         <p2Repositories url="http://download.eclipse.org/eclipse/updates/4.4milestones"/>
         <p2Repositories url="http://download.eclipse.org/modeling/emf/emf/updates/2.10milestones"/>
         <p2Repositories url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>

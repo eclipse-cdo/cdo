@@ -14,13 +14,6 @@
 <plugin>
 
   <extension
-        point="org.eclipse.ui.startup">
-     <startup
-           class="org.eclipse.emf.cdo.ui.internal.team.bundle.EarlyStartup">
-     </startup>
-  </extension>
-
-  <extension
         point="org.eclipse.core.runtime.adapters">
      <factory
            adaptableType="org.eclipse.emf.cdo.session.CDOSession"

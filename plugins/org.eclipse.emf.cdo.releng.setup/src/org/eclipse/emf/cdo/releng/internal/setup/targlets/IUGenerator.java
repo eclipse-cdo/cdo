@@ -124,17 +124,26 @@ public interface IUGenerator
 
       if (hasLicenseFeature)
       {
-        Version osgiVersion = OSGiVersion.create(licenseFeatureVersion);
-        VersionRange osgiRange = new VersionRange(osgiVersion, true, osgiVersion, true);
+        VersionRange osgiRange;
 
-        VersionRange adjustedRange = adjustQualifier(osgiRange);
-        if (adjustedRange != null)
+        Version osgiVersion = OSGiVersion.create(licenseFeatureVersion);
+        if (osgiVersion.equals(OSGiVersion.emptyVersion))
         {
-          osgiRange = adjustedRange;
+          osgiRange = VersionRange.emptyRange;
+        }
+        else
+        {
+          osgiRange = new VersionRange(osgiVersion, true, osgiVersion, true);
+
+          VersionRange adjustedRange = adjustQualifier(osgiRange);
+          if (adjustedRange != null)
+          {
+            osgiRange = adjustedRange;
+          }
         }
 
-        IRequirement requirement = MetadataFactory.createRequirement(IInstallableUnit.NAMESPACE_IU_ID, licenseFeature,
-            osgiRange, null, false, false);
+        IRequirement requirement = MetadataFactory.createRequirement(IInstallableUnit.NAMESPACE_IU_ID, licenseFeature
+            + ".feature.group", osgiRange, null, false, false);
         newRequirements[size] = requirement;
       }
 

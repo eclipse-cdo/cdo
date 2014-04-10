@@ -276,7 +276,7 @@
       <cleandir dir="${temp.dropins}" />
 
       <copy todir="${temp.dropins}" failonerror="true">
-        <fileset dir="${features}/org.eclipse.emf.cdo.license-feature/rootfiles">
+        <fileset dir="${features}/org.eclipse.emf.cdo.server.product-feature/rootfiles">
           <include name="epl-v10.html" />
           <include name="notice.html" />
         </fileset>
@@ -553,12 +553,14 @@
             </then>
           </if>
 
+        	<!--
           <copy todir="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}" failonerror="true">
-            <fileset dir="${features}/org.eclipse.emf.cdo.license-feature/rootfiles">
+            <fileset dir="${features}/org.eclipse.emf.cdo.server.product-feature/rootfiles">
               <include name="epl-v10.html" />
               <include name="notice.html" />
             </fileset>
           </copy>
+          -->
 
           <echo message="build = ${build.qualifier}" file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/version.txt" />
 

@@ -143,7 +143,7 @@ public interface IUGenerator
         }
 
         IRequirement requirement = MetadataFactory.createRequirement(IInstallableUnit.NAMESPACE_IU_ID, licenseFeature
-            + ".feature.group", osgiRange, null, false, false);
+            + ".feature.group", osgiRange, null, true, false);
         newRequirements[size] = requirement;
       }
 

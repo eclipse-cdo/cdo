@@ -1169,6 +1169,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     cleanObject(object, revision);
     CDOStateMachine.INSTANCE.dispatchLoadNotification(object);
+    
+    // Bug 435198:  Have object's resource added to the ResourceSet on call to CDOView.getObject(CDOID)
+    if (!CDOModelUtil.isResource(eClass))
+    {
+      getStore().getResource(object);
+    }
+    
     return object;
   }
 

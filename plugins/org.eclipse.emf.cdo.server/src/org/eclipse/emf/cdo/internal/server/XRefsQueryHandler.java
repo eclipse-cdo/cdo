@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -182,7 +183,7 @@ public class XRefsQueryHandler implements IQueryHandler
   {
     for (EClass concreteType : concreteTypes)
     {
-      if (declaredType.isSuperTypeOf(concreteType))
+      if (declaredType == EcorePackage.Literals.EOBJECT || declaredType.isSuperTypeOf(concreteType))
       {
         return true;
       }

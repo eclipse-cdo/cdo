@@ -50,7 +50,6 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -95,6 +94,8 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
+import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
+import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
@@ -128,6 +129,7 @@ import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -1851,13 +1853,6 @@ public class Repository extends Container<Object> implements InternalRepository
     try
     {
       List<InternalCDOPackageUnit> list = new ArrayList<InternalCDOPackageUnit>();
-      if (firstStart)
-      {
-        list.add(initPackage(EcorePackage.eINSTANCE));
-        list.add(initPackage(EresourcePackage.eINSTANCE));
-        list.add(initPackage(EtypesPackage.eINSTANCE));
-      }
-
       boolean nonSystemPackages = false;
       if (initialPackages != null)
       {
@@ -1946,6 +1941,7 @@ public class Repository extends Container<Object> implements InternalRepository
     };
 
     commitContext.setNewObjects(new InternalCDORevision[] { rootResource });
+    commitContext.setNewPackageUnits(getNewPackageUnitsForRootResource(commitContext.getPackageRegistry()));
     commitContext.preWrite();
 
     commitContext.write(new Monitor());
@@ -1961,6 +1957,23 @@ public class Repository extends Container<Object> implements InternalRepository
 
     commitContext.postCommit(true);
     session.close();
+  }
+
+  private InternalCDOPackageUnit[] getNewPackageUnitsForRootResource(
+      InternalCDOPackageRegistry commitContextPackageRegistry)
+  {
+    Collection<InternalCDOPackageUnit> newPackageUnitsForRootResource = new ArrayList<InternalCDOPackageUnit>();
+    IPackageClosure closure = new CompletePackageClosure();
+    Set<EPackage> ePackages = closure.calculate(Collections.<EPackage> singletonList(EresourcePackage.eINSTANCE));
+    for (EPackage ePackage : ePackages)
+    {
+      InternalCDOPackageUnit packageUnit = commitContextPackageRegistry.getPackageUnit(ePackage);
+      if (packageUnit != null)
+      {
+        newPackageUnitsForRootResource.add(packageUnit);
+      }
+    }
+    return newPackageUnitsForRootResource.toArray(new InternalCDOPackageUnit[0]);
   }
 
   protected CDOID createRootResourceID()

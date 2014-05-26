@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -46,6 +45,7 @@ import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -195,8 +195,12 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       {
         localRepository.setRootResourceID(remoteSession.getRepositoryInfo().getRootResourceID());
 
-        InternalCDOPackageUnit[] packageUnits = remoteSession.getPackageRegistry().getPackageUnits(false);
-        localRepository.getPackageRegistry(false).putPackageUnits(packageUnits, CDOPackageUnit.State.LOADED);
+        InternalCDOPackageUnit[] packageUnits = remoteSession.getPackageRegistry().getPackageUnits(true);
+        InternalCDOPackageRegistry packageRegistry = localRepository.getPackageRegistry(false);
+        for (InternalCDOPackageUnit packageUnit : packageUnits)
+        {
+          packageRegistry.putPackageUnit(packageUnit);
+        }
         accessor.rawStore(packageUnits, monitor);
 
         CDORevisionHandler handler = new CDORevisionHandler()
@@ -222,6 +226,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       }
       finally
       {
+        remoteSession.getPackageRegistry().clear();
         LifecycleUtil.deactivate(remoteSession);
       }
 

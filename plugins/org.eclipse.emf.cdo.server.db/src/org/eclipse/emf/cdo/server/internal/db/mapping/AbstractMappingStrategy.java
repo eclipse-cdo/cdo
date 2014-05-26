@@ -475,20 +475,6 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       boolean isInitialCommit = passedPackageUnits && contains(packageUnits, EresourcePackage.eINSTANCE.getNsURI());
       if (isInitialCommit)
       {
-        // Don't create tables for Ecore and Etypes upon repository initialization
-        List<InternalCDOPackageUnit> reducedPackageUnits = new ArrayList<InternalCDOPackageUnit>();
-        for (InternalCDOPackageUnit packageUnit : packageUnits)
-        {
-          String id = packageUnit.getID();
-          if (id.equals(EcorePackage.eINSTANCE.getNsURI()) || id.equals(EtypesPackage.eINSTANCE.getNsURI()))
-          {
-            continue;
-          }
-
-          reducedPackageUnits.add(packageUnit);
-        }
-
-        packageUnits = reducedPackageUnits.toArray(new InternalCDOPackageUnit[reducedPackageUnits.size()]);
         systemPackageMappingInfo = new SystemPackageMappingInfo();
       }
       else

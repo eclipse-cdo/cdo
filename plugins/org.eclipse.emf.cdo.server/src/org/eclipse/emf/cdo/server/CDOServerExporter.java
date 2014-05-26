@@ -125,7 +125,7 @@ public abstract class CDOServerExporter<OUT>
   protected void exportPackages(OUT out) throws Exception
   {
     InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(false);
+    InternalCDOPackageUnit[] packageUnits = packageRegistry.getPackageUnits(true);
     for (InternalCDOPackageUnit packageUnit : packageUnits)
     {
       String id = packageUnit.getID();

@@ -46,6 +46,7 @@ import org.eclipse.core.runtime.Assert;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -1139,7 +1140,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     public Object value;
 
-    public ManipulationElement(int srcIdx, int dstIdx, Object val, int t)
+    public ManipulationElement(int t, int srcIdx, int dstIdx, Object val)
     {
       sourceIndex = srcIdx;
       tempIndex = NO_INDEX;
@@ -1153,7 +1154,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
      */
     public static ManipulationElement createOriginalElement(int index)
     {
-      return new ManipulationElement(index, index, NIL, NONE);
+      return new ManipulationElement(NONE, index, index, NIL);
     }
 
     /**
@@ -1161,7 +1162,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
      */
     public static ManipulationElement createInsertedElement(int index, Object value)
     {
-      return new ManipulationElement(NO_INDEX, index, value, ManipulationConstants.INSERT);
+      return new ManipulationElement(ManipulationConstants.INSERT, NO_INDEX, index, value);
     }
 
     public boolean is(int t)
@@ -1172,6 +1173,57 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     public void addType(int t)
     {
       type |= t;
+    }
+
+    @Override
+    public String toString()
+    {
+      return MessageFormat.format(
+          "Manipulation[type={0}, sourceIndex={1}, tempIndex={2}, destinationIndex={3}, value={4}]", formatType(type),
+          formatIndex(sourceIndex), formatIndex(tempIndex), formatIndex(destinationIndex), formatValue(value));
+    }
+
+    private static String formatType(int type)
+    {
+      switch (type)
+      {
+      case NONE:
+        return "none";
+
+      case DELETE:
+        return "DELETE";
+
+      case INSERT:
+        return "INSERT";
+
+      case MOVE:
+        return "MOVE";
+
+      case SET_VALUE:
+        return "SET_VALUE";
+      }
+
+      return "<invalid>";
+    }
+
+    private static String formatIndex(int index)
+    {
+      if (index == NO_INDEX)
+      {
+        return "NONE";
+      }
+
+      return Integer.toString(index);
+    }
+
+    private static String formatValue(Object val)
+    {
+      if (val == NIL)
+      {
+        return "NIL";
+      }
+
+      return String.valueOf(val);
     }
   }
 

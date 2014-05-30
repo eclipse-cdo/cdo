@@ -183,7 +183,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new LoadChunkRequest(this, revision, feature, accessIndex, fetchIndex, fromIndex, toIndex));
   }
 
-  public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
       int referenceChunk, int prefetchDepth)
   {
     return send(new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth));
@@ -547,12 +547,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
-  private List<InternalCDORevision> send(LoadRevisionsRequest request)
+  private List<RevisionInfo> send(LoadRevisionsRequest request)
   {
     try
     {
       REVISION_LOADING.start(request);
-      return send((RequestWithConfirmation<List<InternalCDORevision>>)request);
+      return send((RequestWithConfirmation<List<RevisionInfo>>)request);
     }
     finally
     {

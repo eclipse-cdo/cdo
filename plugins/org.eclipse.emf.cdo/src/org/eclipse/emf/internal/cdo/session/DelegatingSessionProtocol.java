@@ -622,7 +622,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
       int referenceChunk, int prefetchDepth)
   {
     int attempt = 0;

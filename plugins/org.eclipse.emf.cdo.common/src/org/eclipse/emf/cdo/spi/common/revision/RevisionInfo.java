@@ -163,7 +163,7 @@ public abstract class RevisionInfo
   public void readResult(CDODataInput in) throws IOException
   {
     readRevision(in);
-    synthetic = (SyntheticCDORevision)readResult(in, getID(), requestedBranchPoint.getBranch());
+    synthetic = (SyntheticCDORevision)readResult(in, getID(), requestedBranchPoint.getBranch(), result);
   }
 
   public void processResult(InternalCDORevisionManager revisionManager, List<CDORevision> results,
@@ -280,10 +280,8 @@ public abstract class RevisionInfo
     }
   }
 
-  /**
-   * @since 4.0
-   */
-  public static InternalCDORevision readResult(CDODataInput in, CDOID id, CDOBranch branch) throws IOException
+  private static InternalCDORevision readResult(CDODataInput in, CDOID id, CDOBranch branch, InternalCDORevision result)
+      throws IOException
   {
     byte type = in.readByte();
     switch (type)
@@ -296,6 +294,12 @@ public abstract class RevisionInfo
       EClassifier classifier = in.readCDOClassifierRefAndResolve();
       long revised = in.readLong();
       InternalCDORevision target = readResult(in, id, branch);
+      // If target is null and where are in a Available RevisionInfo it mean that we can use
+      // availableBranchVersion/result as target
+      if (target == null && result != null)
+      {
+        target = result;
+      }
       return new PointerCDORevision((EClass)classifier, id, branch, revised, target);
     }
 
@@ -314,6 +318,14 @@ public abstract class RevisionInfo
     default:
       throw new IllegalStateException("Invalid synthetic type: " + type);
     }
+  }
+
+  /**
+   * @since 4.0
+   */
+  public static InternalCDORevision readResult(CDODataInput in, CDOID id, CDOBranch branch) throws IOException
+  {
+    return readResult(in, id, branch, null);
   }
 
   /**

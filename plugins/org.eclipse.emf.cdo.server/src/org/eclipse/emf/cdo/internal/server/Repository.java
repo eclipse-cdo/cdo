@@ -480,7 +480,7 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadCommitData(timeStamp);
   }
 
-  public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
       int referenceChunk, int prefetchDepth)
       {
     for (RevisionInfo info : infos)

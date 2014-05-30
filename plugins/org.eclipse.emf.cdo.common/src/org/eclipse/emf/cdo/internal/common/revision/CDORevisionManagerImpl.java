@@ -390,14 +390,17 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     try
     {
-      List<InternalCDORevision> additionalRevisions = //
-      revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+      List<InternalCDORevision> additionalRevisions = null;
+      List<RevisionInfo> additionalRevisionInfos = //
+          revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
 
-      if (additionalRevisions != null)
+      if (additionalRevisionInfos != null)
       {
-        for (InternalCDORevision revision : additionalRevisions)
+        additionalRevisions = new ArrayList<InternalCDORevision>(additionalRevisionInfos.size());
+        for (RevisionInfo info : additionalRevisionInfos)
         {
-          addRevision(revision);
+          info.processResult(this, new ArrayList<CDORevision>(), null, 0);
+          additionalRevisions.add(info.getResult());
         }
       }
 

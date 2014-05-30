@@ -219,7 +219,7 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
-  public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
       int referenceChunk, int prefetchDepth)
   {
     try

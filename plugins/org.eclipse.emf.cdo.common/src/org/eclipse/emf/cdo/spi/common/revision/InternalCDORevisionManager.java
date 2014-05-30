@@ -97,7 +97,7 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    */
   public interface RevisionLoader
   {
-    public List<InternalCDORevision> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
+    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
         int referenceChunk, int prefetchDepth);
 
     public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk);

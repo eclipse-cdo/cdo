@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
@@ -34,7 +33,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class LoadRevisionsRequest extends CDOClientRequest<List<InternalCDORevision>>
+public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, LoadRevisionsRequest.class);
 
@@ -130,7 +129,7 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<InternalCDORevis
   }
 
   @Override
-  protected List<InternalCDORevision> confirming(CDODataInput in) throws IOException
+  protected List<RevisionInfo> confirming(CDODataInput in) throws IOException
   {
     int size = infos.size();
     if (TRACER.isEnabled())
@@ -143,24 +142,25 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<InternalCDORevis
       info.readResult(in);
     }
 
-    List<InternalCDORevision> additionalRevisions = null;
+    List<RevisionInfo> additionalRevisionInfos = null;
     int additionalSize = in.readInt();
     if (additionalSize != 0)
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Reading {0} additional revisions", additionalSize); //$NON-NLS-1$
+        TRACER.format("Reading {0} additional revision infos", additionalSize); //$NON-NLS-1$
       }
 
-      additionalRevisions = new ArrayList<InternalCDORevision>(additionalSize);
+      additionalRevisionInfos = new ArrayList<RevisionInfo>(additionalSize);
       for (int i = 0; i < additionalSize; i++)
       {
-        InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();
-        additionalRevisions.add(revision);
+        RevisionInfo info = RevisionInfo.read(in, branchPoint);
+        info.readResult(in);
+        additionalRevisionInfos.add(info);
       }
     }
 
-    return additionalRevisions;
+    return additionalRevisionInfos;
   }
 
   @Override

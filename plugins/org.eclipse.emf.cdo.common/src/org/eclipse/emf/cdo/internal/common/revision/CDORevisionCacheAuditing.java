@@ -187,8 +187,10 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
         revisionLists.put(key, list);
       }
 
-      list.addRevision((InternalCDORevision)revision, createReference(revision));
-      typeRefIncrease(id, revision.getEClass());
+      if (list.addRevision((InternalCDORevision)revision, createReference(revision)))
+      {
+        typeRefIncrease(id, revision.getEClass());
+      }
     }
   }
 

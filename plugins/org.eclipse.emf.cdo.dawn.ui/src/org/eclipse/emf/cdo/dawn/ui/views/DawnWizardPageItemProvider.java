@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2010-2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2010-2014 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
+ *     Christian W. Damus (CEA) - bug 436036
  */
 package org.eclipse.emf.cdo.dawn.ui.views;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -34,20 +34,18 @@ public class DawnWizardPageItemProvider<CONTAINER extends IContainer<Object>> ex
   @Override
   public Object[] getChildren(Object element)
   {
-    if (element instanceof CDOResourceFolder)
+    Object[] result = super.getChildren(element);
+
+    if (result.length > 0 && result[0] instanceof CDOView)
     {
-      return ((CDOResourceFolder)element).getNodes().toArray();
+      // filter the views to show only the first view
+      if (result.length > 1)
+      {
+        result = new Object[] { result[0] };
+      }
     }
 
-    if (element instanceof CDOSession)
-    {
-      CDOSession session = (CDOSession)element;
-      Object[] child = new Object[1];
-      child[0] = session.getViews()[0];// .getView(dawnExplorer.getView().getViewID());
-      return child;
-    }
-
-    return super.getChildren(element);
+    return result;
   }
 
   @Override

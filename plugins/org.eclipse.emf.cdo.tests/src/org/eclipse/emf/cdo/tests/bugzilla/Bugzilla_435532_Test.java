@@ -69,7 +69,7 @@ public class Bugzilla_435532_Test extends AbstractCDOTest
    */
   public void testDragChildrenAtListEnd() throws ConcurrentAccessException, CommitException
   {
-    doTestDragChildren(CHILDREN_NUMBER - 1);
+    doTestDragChildren(20, CHILDREN_NUMBER - 1);
   }
 
   /**
@@ -77,14 +77,19 @@ public class Bugzilla_435532_Test extends AbstractCDOTest
    */
   public void testDragChildrenAtListBegin() throws ConcurrentAccessException, CommitException
   {
-    doTestDragChildren(0);
+    doTestDragChildren(20, 0);
   }
 
-  private void doTestDragChildren(int newPosition) throws ConcurrentAccessException, CommitException
+  public void testDragChildrenFromEndToBegin() throws ConcurrentAccessException, CommitException
+  {
+    doTestDragChildren(CHILDREN_NUMBER - CHILDREN_TO_MOVE_NUMBER - 1, 0);
+  }
+
+  private void doTestDragChildren(int oldPosition, int newPosition) throws ConcurrentAccessException, CommitException
   {
     // Step 1: get children to move
-    List<Category> childrenToMove = new ArrayList<Category>(root.getCategories().subList(20,
-        20 + CHILDREN_TO_MOVE_NUMBER));
+    List<Category> childrenToMove = new ArrayList<Category>(root.getCategories().subList(oldPosition,
+        oldPosition + CHILDREN_TO_MOVE_NUMBER));
     List<CDOID> childrenToMoveIds = new ArrayList<CDOID>();
     for (Category child : childrenToMove)
     {

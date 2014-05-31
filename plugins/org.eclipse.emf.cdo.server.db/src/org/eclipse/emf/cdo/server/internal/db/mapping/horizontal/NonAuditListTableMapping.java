@@ -304,6 +304,15 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     visitor.postProcess(accessor, id);
 
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Result to be written to DB:");
+      for (ManipulationElement e : visitor.manipulations)
+      {
+        TRACER.trace(e.toString());
+      }
+    }
+
     // finally, write results to the database
     visitor.writeResultToDatabase(accessor, id);
 
@@ -645,7 +654,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
         if (TRACER.isEnabled())
         {
-          TRACER.trace("New offset = " + -offsetAfter); //$NON-NLS-1$
+          TRACER.trace("New offset = " + offsetAfter); //$NON-NLS-1$
         }
 
         applyOffsetToDestinationIndexes(offsetAfter);
@@ -695,7 +704,9 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         }
       }
 
-      return bestOffset;
+      // the offset which has occurred the most has to be applied negatively to normalize the list
+      // therefore return the negative offset as the new offset to be applied
+      return -bestOffset;
     }
 
     private void applyOffsetToSourceIndexes(int offsetBefore)
@@ -715,8 +726,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (element.destinationIndex != ManipulationConstants.NO_INDEX)
         {
-          // substract the offset from all indices to make them relative to the new offset
-          element.destinationIndex -= offsetAfter;
+          // apply the offset to all indices to make them relative to the new offset
+          element.destinationIndex += offsetAfter;
         }
       }
     }

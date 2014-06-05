@@ -44,77 +44,12 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.gitbash"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.launches"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.manifests"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.preferences"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.projectconfig"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.projectcopy"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.releng.relativepaths"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.setup"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.setup.installer"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.releng.tasks"
          version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.version.headless"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.winexplorer"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.releng.workingsets"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.version"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.version.digest"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.eclipse.emf.cdo.releng.version.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="org.eclipse.emf.cdo.releng.ui"

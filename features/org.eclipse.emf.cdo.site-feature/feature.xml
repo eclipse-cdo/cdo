@@ -147,7 +147,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.all"
+         id="org.eclipse.emf.cdo.releng.apireports"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.buildstamp"
          version="0.0.0"/>
 
    <includes
@@ -155,7 +159,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.releng.version"
+         id="org.eclipse.emf.cdo.releng.relativepaths"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.emf.cdo.releng.tasks"
          version="0.0.0"/>
 
    <plugin

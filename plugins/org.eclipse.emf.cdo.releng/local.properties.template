@@ -18,7 +18,7 @@ build.type = N
 p2.mirrors = true
 loglevel = INFO
 
-# Set the following properties to true to speed up repeated builds 
+# Set the following properties to true to speed up repeated builds
 keep.tools = false
 keep.git = false
 keep.tp = false
@@ -38,7 +38,6 @@ skip.generate.apireports = false
 skip.generate.products = false
 skip.generate.products.server = false
 skip.generate.products.explorer = false
-skip.generate.products.setup = false
 skip.generate.products.windows = false
 skip.generate.products.linux = false
 skip.generate.products.macos = false

@@ -2,7 +2,6 @@ eclipse.preferences.version=1
 encoding/.project=UTF-8
 encoding//exampleBuilderTemplates/template.project=UTF-8
 encoding//hudson/target.xml=UTF-8
-encoding/buckminster.bom=UTF-8
 encoding/buckminster.cspex=UTF-8
 encoding/build.cquery=UTF-8
 encoding/build.mspec=UTF-8

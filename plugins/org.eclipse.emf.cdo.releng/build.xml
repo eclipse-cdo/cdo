@@ -366,15 +366,6 @@
           <generate.product id="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" priority="3" />
         </then>
       </if>
-
-      <if>
-        <not>
-          <equals arg1="${skip.generate.products.setup}" arg2="true" />
-        </not>
-        <then>
-          <generate.product id="org.eclipse.emf.cdo.releng.setup.installer.product" profile="Setup" priority="2" />
-        </then>
-      </if>
     </sequential>
   </macrodef>
 
@@ -536,13 +527,6 @@
           <if>
           	<equals arg1="${build.type}" arg2="N" />
             <then>
-              <if>
-            	  <available file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/setup-eclipse.ini" />
-                <then>
-                	<echo file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/setup-eclipse.ini" message="-Dreleng.url=${env.JOB_URL}lastSuccessfulBuild/artifact" append="true" />
-                	<replaceregexp file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/setup-eclipse.ini" match="-Dreleng.url=https://" replace="-Dreleng.url=http://" byline="true" />
-                </then>
-              </if>
               <if>
             	  <available file="${temp.products}/@{profile}-@{platform}/@{profile}@{extension}/Contents/MacOS/@{profile}-eclipse.ini" />
                 <then>
@@ -973,7 +957,6 @@
 
       	<replace.product.version feature="org.eclipse.emf.cdo.explorer.product" profile="CDOExplorer" version="${build.version}" />
       	<replace.product.version feature="org.eclipse.emf.cdo.server.product" profile="CDOServer" version="${build.version}" />
-      	<replace.product.version feature="org.eclipse.emf.cdo.releng.setup.installer" profile="Setup" version="${build.version}" />
       </then>
     </if>
   </target>

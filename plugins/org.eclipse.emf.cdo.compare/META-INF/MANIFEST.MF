@@ -14,4 +14,6 @@ Export-Package: org.eclipse.emf.cdo.compare;version="4.2.100",
  org.eclipse.emf.cdo.internal.compare.bundle;version="4.2.100";x-friends:="org.eclipse.emf.cdo.tests"
 Bundle-ActivationPolicy: lazy
 Import-Package: com.google.common.base;version="[11.0.0,16.0.0)",
- com.google.common.collect;version="[11.0.0,16.0.0)"
+ com.google.common.collect;version="[11.0.0,16.0.0)",
+ com.google.common.cache;version="[11.0.0,16.0.0)",
+ com.google.common.util.concurrent;version="[11.0.0,16.0.0)"

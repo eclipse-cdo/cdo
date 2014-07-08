@@ -1117,6 +1117,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           view.getSession().resolveAllElementProxies(newRevision);
           delta.applyTo(newRevision);
           newRevision.setBranchPoint(target);
+          newRevision.setVersion(target.getVersion());
           cache.addRevision(newRevision);
         }
 

@@ -15,6 +15,7 @@ package org.eclipse.emf.internal.cdo.view;
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -29,6 +30,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -43,8 +45,10 @@ import org.eclipse.emf.cdo.util.LockTimeoutException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.view.CDODefaultLockStateLoadingPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
+import org.eclipse.emf.cdo.view.CDOLockStateLoadingPolicy;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -1683,6 +1687,84 @@ public class CDOViewImpl extends AbstractCDOView
   }
 
   /**
+   * A {@link IListener} to prefetch {@link CDOLockState lockstates} when {@link CDORevision revisions} are loaded, according to {@link Options#setLockStatePrefetchEnabled(boolean)} option.
+   *
+   * @author Esteban Dugueperoux
+   */
+  private final class LockStatePrefetcher implements IListener
+  {
+    public LockStatePrefetcher()
+    {
+      getSession().getRevisionManager().addListener(this);
+    }
+
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDORevisionsLoadedEvent)
+      {
+        CDORevisionsLoadedEvent revisionsLoadedEvent = (CDORevisionsLoadedEvent)event;
+        List<CDORevision> loadedRevisions = new ArrayList<CDORevision>();
+        loadedRevisions.addAll(revisionsLoadedEvent.getPrimaryLoadedRevisions());
+        loadedRevisions.addAll(revisionsLoadedEvent.getAdditionalLoadedRevisions());
+
+        Map<CDOID, CDOObject> ids = updateCDOViewObjectsCache(loadedRevisions);
+        if (!ids.isEmpty())
+        {
+          updateCDOViewLockStatesCache(ids.keySet());
+        }
+      }
+    }
+
+    private Map<CDOID, CDOObject> updateCDOViewObjectsCache(List<CDORevision> loadedRevisions)
+    {
+      Map<CDOID, CDOObject> ids = new HashMap<CDOID, CDOObject>();
+      CDOLockStateLoadingPolicy lockStateLoadingPolicy = options().getLockStateLoadingPolicy();
+      for (CDORevision revision : loadedRevisions)
+      {
+        CDOID id = revision.getID();
+        if (id != null && lockStateLoadingPolicy.loadLockState(id))
+        {
+          // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource() 
+          // can have created it but not yet registered in CDOView.
+          // - Don't ask others CDOResourceNode either as it will create some load revisions request 
+          // in addition to mode without lock state prefetch
+          boolean isResourceNode = revision.isResourceNode();
+          InternalCDOObject object = getObject(id, !isResourceNode);
+          if (object != null)
+          {
+            ids.put(id, object);
+          }
+        }
+      }
+
+      return ids;
+    }
+
+    private void updateCDOViewLockStatesCache(Set<CDOID> ids)
+    {
+      CDOLockState[] alreadyLoadedLockStates = getLockStates(ids, false);
+      if (alreadyLoadedLockStates == null || alreadyLoadedLockStates.length < ids.size()
+          || !options().isLockNotificationEnabled())
+      {
+        CDOLockState[] lockStates = getLockStates(ids);
+        updateLockStates(lockStates);
+        for (CDOCommonView view : getSession().getViews())
+        {
+          if (view != CDOViewImpl.this && view.getBranch() == getBranch())
+          {
+            updateLockStates(lockStates);
+          }
+        }
+      }
+    }
+
+    public void dispose()
+    {
+      getSession().getRevisionManager().removeListener(this);
+    }
+  }
+
+  /**
    * @author Eike Stepper
    */
   private final class InvalidationRunnable implements Runnable
@@ -1816,6 +1898,12 @@ public class CDOViewImpl extends AbstractCDOView
     private CDOInvalidationPolicy invalidationPolicy = CDOInvalidationPolicy.DEFAULT;
 
     private boolean lockNotificationsEnabled;
+
+    private boolean lockStatePrefetchEnabled;
+
+    private CDOLockStateLoadingPolicy lockStateLoadingPolicy = new CDODefaultLockStateLoadingPolicy();
+
+    private LockStatePrefetcher lockStatePrefetcher;
 
     private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil
         .createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
@@ -1959,6 +2047,56 @@ public class CDOViewImpl extends AbstractCDOView
       }
 
       fireEvent(event);
+    }
+
+    public boolean isLockStatePrefetchEnabled()
+    {
+      return lockStatePrefetchEnabled;
+    }
+
+    public void setLockStatePrefetchEnabled(boolean enabled)
+    {
+      checkActive();
+
+      IEvent event = null;
+      synchronized (CDOViewImpl.this)
+      {
+        if (enabled != lockStatePrefetchEnabled)
+        {
+          lockStatePrefetchEnabled = enabled;
+          if (enabled)
+          {
+            lockStatePrefetcher = new LockStatePrefetcher();
+          }
+          else
+          {
+            lockStatePrefetcher.dispose();
+            lockStatePrefetcher = null;
+          }
+
+          event = new LockStatePrefetchEventImpl();
+        }
+      }
+
+      fireEvent(event);
+    }
+
+    public CDOLockStateLoadingPolicy getLockStateLoadingPolicy()
+    {
+      synchronized (CDOViewImpl.this)
+      {
+        return lockStateLoadingPolicy;
+      }
+    }
+
+    public void setLockStateLoadingPolicy(CDOLockStateLoadingPolicy lockStateLoadingPolicy)
+    {
+      checkActive();
+
+      synchronized (CDOViewImpl.this)
+      {
+        this.lockStateLoadingPolicy = lockStateLoadingPolicy;
+      }
     }
 
     public boolean hasChangeSubscriptionPolicies()
@@ -2291,6 +2429,19 @@ public class CDOViewImpl extends AbstractCDOView
       public boolean getEnabled()
       {
         return enabled;
+      }
+    }
+
+    /**
+     * @author Esteban Dugueperoux
+     */
+    private final class LockStatePrefetchEventImpl extends OptionsEvent implements LockStatePrefetchEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public LockStatePrefetchEventImpl()
+      {
+        super(OptionsImpl.this);
       }
     }
 

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
@@ -618,6 +619,34 @@ IContainer<CDOResourceNode>
     public void setInvalidationNotificationEnabled(boolean enabled);
 
     /**
+     * Indicates whether this view will fetch {@link CDOLockState lock states} in its cache when a {@link CDORevision revision} is fetched. A lock state is fetched only if the view's cache does not contains it already or {@link Options#isLockNotificationEnabled()} return false, as in this last case the view's lock state cache can be outdated.
+     *
+     * @see CDOLockState
+     * @since 4.4
+     */
+    public boolean isLockStatePrefetchEnabled();
+
+    /**
+     * Specifies whether this view will load {@link CDOLockState lock states} in its cache when a {@link CDORevision revision} is loaded. A lock state is loaded only if the view's cache does not contains it already or {@link Options#isLockNotificationEnabled() lock notification view option} is disabled, as in this last case the view's lock state cache can be outdated.
+     *
+     * Note that lock state will not be loaded automatically for CDOResource, {@link CDOResource#cdoLockState()} must be called explicitly to load it.
+     *
+     * @see CDOLockState
+     * @since 4.4
+     */
+    public void setLockStatePrefetchEnabled(boolean enabled);
+
+    /**
+     * @since 4.4
+     */
+    public CDOLockStateLoadingPolicy getLockStateLoadingPolicy();
+
+    /**
+     * @since 4.4
+     */
+    public void setLockStateLoadingPolicy(CDOLockStateLoadingPolicy lockStateLoadingPolicy);
+
+    /**
      * @since 3.0
      */
     public CDOInvalidationPolicy getInvalidationPolicy();
@@ -787,6 +816,19 @@ IContainer<CDOResourceNode>
      * @since 4.1
      */
     public interface DetachmentNotificationEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from common view {@link CDOCommonView#options() options} when the
+     * {@link Options#setLockStatePrefetchEnabled(boolean) lock state prefetch enabled} option has changed.
+     *
+     * @author Esteban Dugueperoux
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.4
+     */
+    public interface LockStatePrefetchEvent extends IOptionsEvent
     {
     }
 

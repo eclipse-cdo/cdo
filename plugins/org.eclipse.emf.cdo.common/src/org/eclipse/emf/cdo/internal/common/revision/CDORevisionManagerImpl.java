@@ -21,7 +21,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -33,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -290,7 +293,26 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     List<RevisionInfo> infosToLoad = createRevisionInfos(ids, branchPoint, prefetchDepth, loadOnDemand, infos);
     if (infosToLoad != null)
     {
-      loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+      List<? extends CDORevision> additionalLoadedRevisions //
+      = loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+      List<? extends CDORevision> primaryLoadedRevisions //
+      = getResultsAndSynthetics(infosToLoad.toArray(new RevisionInfo[0]), null);
+
+      if (primaryLoadedRevisions != null && !primaryLoadedRevisions.isEmpty() || additionalLoadedRevisions != null
+          && !additionalLoadedRevisions.isEmpty())
+      {
+        if (primaryLoadedRevisions == null)
+        {
+          primaryLoadedRevisions = Collections.emptyList();
+        }
+
+        if (additionalLoadedRevisions == null)
+        {
+          additionalLoadedRevisions = Collections.emptyList();
+        }
+
+        fireEvent(new RevisionsLoadedEvent(this, primaryLoadedRevisions, additionalLoadedRevisions));
+      }
     }
 
     return getResultsAndSynthetics(infos, synthetics);
@@ -557,4 +579,41 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     // Reached main branch
     return null;
   }
+
+  /**
+   * @author Esteban Dugueperoux
+   */
+  private static class RevisionsLoadedEvent extends Event implements CDORevisionsLoadedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private List<? extends CDORevision> primaryLoadedRevisions;
+
+    private List<? extends CDORevision> additionalLoadedRevisions;
+
+    public RevisionsLoadedEvent(CDORevisionManager revisionManager, List<? extends CDORevision> primaryLoadedRevisions,
+        List<? extends CDORevision> additionalLoadedRevisions)
+    {
+      super(revisionManager);
+      this.primaryLoadedRevisions = primaryLoadedRevisions;
+      this.additionalLoadedRevisions = additionalLoadedRevisions;
+    }
+
+    @Override
+    public CDORevisionManager getSource()
+    {
+      return (CDORevisionManager)super.getSource();
+    }
+
+    public List<? extends CDORevision> getPrimaryLoadedRevisions()
+    {
+      return primaryLoadedRevisions;
+    }
+
+    public List<? extends CDORevision> getAdditionalLoadedRevisions()
+    {
+      return additionalLoadedRevisions;
+    }
+  }
+
 }

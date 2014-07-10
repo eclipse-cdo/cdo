@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
+import org.eclipse.emf.cdo.view.CDOLockStateLoadingPolicy;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -371,7 +372,26 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return false;
   }
 
+  public boolean isLockStatePrefetchEnabled()
+  {
+    return false;
+  }
+
   public void setLockNotificationEnabled(boolean enabled)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOLockStateLoadingPolicy getLockStateLoadingPolicy()
+  {
+    return null;
+  }
+
+  public void setLockStateLoadingPolicy(CDOLockStateLoadingPolicy lockStateLoadingPolicy)
+  {
+  }
+
+  public void setLockStatePrefetchEnabled(boolean enabled)
   {
     throw new UnsupportedOperationException();
   }

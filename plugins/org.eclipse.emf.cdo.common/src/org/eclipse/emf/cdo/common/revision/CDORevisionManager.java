@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
+import org.eclipse.net4j.util.event.INotifier;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
@@ -51,7 +53,7 @@ import java.util.List;
  * @apiviz.has {@link CDORevisionCache}
  * @apiviz.uses {@link CDORevision} - - loads
  */
-public interface CDORevisionManager
+public interface CDORevisionManager extends INotifier
 {
   /**
    * Returns the {@link CDORevision#getEClass() type} of an object if a revision for that object is in the revision

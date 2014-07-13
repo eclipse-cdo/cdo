@@ -763,6 +763,15 @@ public class CDOViewImpl extends AbstractCDOView
       for (CDOLockState loadedLockState : loadedLockStates)
       {
         lockStates.add(loadedLockState);
+        CDOID cdoID = CDOIDUtil.getCDOID(loadedLockState.getLockedObject());
+        if (cdoID != null)
+        {
+          missing.remove(cdoID);
+        }
+      }
+      for (CDOID missingLockStateForCDOID : missing)
+      {
+        lockStates.add(CDOLockUtil.createLockState(missingLockStateForCDOID));
       }
     }
 

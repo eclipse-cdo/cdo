@@ -25,13 +25,15 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author Caspar De Groot
  */
 public class LockStateIndication extends CDOServerReadIndication
 {
-  private CDOLockState[] cdoLockStates;
+  private Collection<CDOLockState> existingLockStates;
 
   public LockStateIndication(CDOServerProtocol protocol)
   {
@@ -48,21 +50,17 @@ public class LockStateIndication extends CDOServerReadIndication
       throw new IllegalStateException("View not found");
     }
 
-    InternalLockManager lockMgr = getRepository().getLockingManager();
+    InternalLockManager lockManager = getRepository().getLockingManager();
 
+    existingLockStates = new ArrayList<CDOLockState>();
     int n = in.readInt();
-    cdoLockStates = new CDOLockState[n];
     for (int i = 0; i < n; i++)
     {
       Object key = indicatingCDOID(in, view.getBranch());
-      LockState<Object, IView> lockState = lockMgr.getLockState(key);
+      LockState<Object, IView> lockState = lockManager.getLockState(key);
       if (lockState != null)
       {
-        cdoLockStates[i] = CDOLockUtil.createLockState(lockState);
-      }
-      else
-      {
-        cdoLockStates[i] = CDOLockUtil.createLockState(key);
+        existingLockStates.add(CDOLockUtil.createLockState(lockState));
       }
     }
   }
@@ -81,8 +79,8 @@ public class LockStateIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeInt(cdoLockStates.length);
-    for (CDOLockState lockState : cdoLockStates)
+    out.writeInt(existingLockStates.size());
+    for (CDOLockState lockState : existingLockStates)
     {
       out.writeCDOLockState(lockState);
     }

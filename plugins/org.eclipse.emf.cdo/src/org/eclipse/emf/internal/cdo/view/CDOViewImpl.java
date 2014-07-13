@@ -756,7 +756,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
-    if (loadOnDemand && missing.size() > 0)
+    if (loadOnDemand && (missing.size() > 0 || ids.isEmpty()))
     {
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
       CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, missing);

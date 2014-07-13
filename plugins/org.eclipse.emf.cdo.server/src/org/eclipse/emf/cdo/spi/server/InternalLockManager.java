@@ -133,6 +133,11 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   public LockState<Object, IView> getLockState(Object key);
 
   /**
+   * @since 4.4
+   */
+  public List<LockState<Object, IView>> getLockStates();
+
+  /**
    * @since 4.1
    */
   public void setLockState(Object key, LockState<Object, IView> lockState);

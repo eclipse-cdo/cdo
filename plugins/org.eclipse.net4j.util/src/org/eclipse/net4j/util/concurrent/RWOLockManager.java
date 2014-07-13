@@ -338,6 +338,14 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return objectToLockStateMap.get(key);
   }
 
+  /**
+   * @since 3.5
+   */
+  public synchronized List<LockState<OBJECT, CONTEXT>> getLockStates()
+  {
+    return new ArrayList<RWOLockManager.LockState<OBJECT, CONTEXT>>(objectToLockStateMap.values());
+  }
+
   public synchronized void setLockState(OBJECT key, LockState<OBJECT, CONTEXT> lockState)
   {
     objectToLockStateMap.put(key, lockState);

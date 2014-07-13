@@ -165,6 +165,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo);
 
   /**
+   * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOID ids}.
+   *
+   * If the collection of {@link CDOID ids} is empty, {@link CDOLockState lock states} of all locked objects are returned.
+   *
    * @since 4.1
    */
   public CDOLockState[] getLockStates(Collection<CDOID> ids);

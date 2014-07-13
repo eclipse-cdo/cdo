@@ -54,13 +54,24 @@ public class LockStateIndication extends CDOServerReadIndication
 
     existingLockStates = new ArrayList<CDOLockState>();
     int n = in.readInt();
-    for (int i = 0; i < n; i++)
+    if (n == 0)
     {
-      Object key = indicatingCDOID(in, view.getBranch());
-      LockState<Object, IView> lockState = lockManager.getLockState(key);
-      if (lockState != null)
+      Collection<LockState<Object, IView>> lockStates = lockManager.getLockStates();
+      for (LockState<Object, IView> lockState : lockStates)
       {
         existingLockStates.add(CDOLockUtil.createLockState(lockState));
+      }
+    }
+    else
+    {
+      for (int i = 0; i < n; i++)
+      {
+        Object key = indicatingCDOID(in, view.getBranch());
+        LockState<Object, IView> lockState = lockManager.getLockState(key);
+        if (lockState != null)
+        {
+          existingLockStates.add(CDOLockUtil.createLockState(lockState));
+        }
       }
     }
   }

@@ -166,13 +166,13 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         if (oldValue != null)
         {
           InternalEObject oldChild = (InternalEObject)oldValue;
-          setContainer(store, oldChild, null, 0);
+          setContainer(store, oldChild, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
         }
 
         if (newValue != null)
         {
           InternalEObject newChild = (InternalEObject)newValue;
-          setContainer(store, newChild, this, reference.getFeatureID());
+          setContainer(store, newChild, this, newChild.eContainerFeatureID());
         }
       }
     }
@@ -192,7 +192,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         {
           if (child != null)
           {
-            setContainer(store, (InternalEObject)child, null, 0);
+            setContainer(store, (InternalEObject)child, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
           }
         }
       }
@@ -217,7 +217,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       if (reference.isContainment())
       {
         InternalEObject newChild = (InternalEObject)newValue;
-        setContainer(store, newChild, this, reference.getFeatureID());
+        setContainer(store, newChild, this, newChild.eContainerFeatureID());
       }
     }
   }
@@ -237,7 +237,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         if (reference.isContainment())
         {
           InternalEObject newChild = (InternalEObject)object;
-          setContainer(store, newChild, this, reference.getFeatureID());
+          setContainer(store, newChild, this, newChild.eContainerFeatureID());
         }
       }
     }
@@ -256,7 +256,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
         if (reference.isContainment())
         {
           InternalEObject oldChildEObject = (InternalEObject)oldChild;
-          setContainer(store, oldChildEObject, null, 0);
+          setContainer(store, oldChildEObject, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
         }
       }
     }
@@ -281,7 +281,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
             Object oldChild = oldChildren[i];
             if (oldChild instanceof InternalEObject)
             {
-              setContainer(store, (InternalEObject)oldChild, null, 0);
+              setContainer(store, (InternalEObject)oldChild, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
             }
           }
         }
@@ -301,7 +301,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
             if (reference.isContainment())
             {
               InternalEObject oldChildEObject = (InternalEObject)oldChild;
-              setContainer(store, oldChildEObject, null, 0);
+              setContainer(store, oldChildEObject, null, InternalEObject.EOPPOSITE_FEATURE_BASE);
             }
           }
         }
@@ -323,7 +323,7 @@ public class CDOLegacyAdapter extends CDOLegacyWrapper implements Adapter.Intern
       return;
     }
 
-    store.setContainer(object, null, container, InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID);
+    store.setContainer(object, null, container, containingFeatureID);
   }
 
   /**

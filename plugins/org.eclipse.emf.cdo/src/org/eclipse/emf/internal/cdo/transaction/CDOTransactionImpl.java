@@ -167,7 +167,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1265,11 +1264,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       token = getSession().startLocalCommit();
-
-      if (progressMonitor == null)
-      {
-        progressMonitor = new NullProgressMonitor();
-      }
 
       CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
       CDOCommitInfo info = transactionStrategy.commit(this, progressMonitor);

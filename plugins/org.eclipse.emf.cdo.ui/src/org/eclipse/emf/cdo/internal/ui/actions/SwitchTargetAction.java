@@ -84,6 +84,6 @@ public class SwitchTargetAction extends AbstractViewAction
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     CDOView view = getView();
-    view.setBranchPoint(target);
+    view.setBranchPoint(target, progressMonitor);
   }
 }

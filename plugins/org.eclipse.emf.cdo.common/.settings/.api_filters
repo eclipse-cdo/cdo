@@ -164,6 +164,13 @@
                 <message_argument value="13"/>
             </message_arguments>
         </filter>
+        <filter comment="It is only a protocol change" id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants"/>
+                <message_argument value="PROTOCOL_VERSION"/>
+                <message_argument value="19"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.java" type="org.eclipse.emf.cdo.spi.common.id.AbstractCDOID">
         <filter id="337682486">

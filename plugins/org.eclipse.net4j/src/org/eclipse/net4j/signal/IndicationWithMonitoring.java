@@ -16,6 +16,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.TimeoutMonitor;
 
@@ -32,7 +33,7 @@ import java.util.concurrent.ExecutorService;
  */
 public abstract class IndicationWithMonitoring extends IndicationWithResponse
 {
-  private ReportingMonitor monitor;
+  private Monitor monitor;
 
   /**
    * @since 2.0
@@ -78,19 +79,29 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
   @Override
   protected final void indicating(ExtendedDataInputStream in) throws Exception
   {
-    int monitorProgressSeconds = in.readInt();
-    int monitorTimeoutSeconds = in.readInt();
-
-    monitor = new ReportingMonitor(monitorProgressSeconds, monitorTimeoutSeconds);
+    OMMonitor subMonitor = null;
+    boolean useMonitor = in.readBoolean();
+    if (useMonitor)
+    {
+      int monitorProgressSeconds = in.readInt();
+      int monitorTimeoutSeconds = in.readInt();
+      monitor = new ReportingMonitor(monitorProgressSeconds, monitorTimeoutSeconds);
+    }
+    else
+    {
+      int monitorTimeoutSeconds = in.readInt();
+      monitor = new TimeoutMonitor(1000L * monitorTimeoutSeconds);
+    }
     monitor.begin(OMMonitor.HUNDRED);
-
-    indicating(in, monitor.fork(getIndicatingWorkPercent()));
+    subMonitor = monitor.fork(getIndicatingWorkPercent());
+    indicating(in, subMonitor);
   }
 
   @Override
   protected final void responding(ExtendedDataOutputStream out) throws Exception
   {
-    responding(out, monitor.fork(OMMonitor.HUNDRED - getIndicatingWorkPercent()));
+    OMMonitor subMonitor = monitor != null ? monitor.fork(OMMonitor.HUNDRED - getIndicatingWorkPercent()) : null;
+    responding(out, subMonitor);
   }
 
   protected abstract void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception;

@@ -51,6 +51,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +93,7 @@ import java.util.Set;
  * @apiviz.uses {@link CDOViewTargetChangedEvent} - - fires
  */
 public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.Provider<CDOObject, CDOObjectHistory>,
-    IContainer<CDOResourceNode>
+IContainer<CDOResourceNode>
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.
@@ -135,12 +137,26 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public boolean setBranchPoint(CDOBranch branch, long timeStamp);
 
   /**
+   * Same as {@link CDOView#setBranchPoint(CDOBranch, long)} with a {@link IProgressMonitor}.
+   *
+   * @since 4.4
+   */
+  public boolean setBranchPoint(CDOBranch branch, long timeStamp, IProgressMonitor monitor);
+
+  /**
    * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(branchPoint.getBranch(),
    * branchPoint.getTimeStamp())}.
    *
    * @since 3.0
    */
   public boolean setBranchPoint(CDOBranchPoint branchPoint);
+
+  /**
+   * Same as calling {@link #setBranchPoint(CDOBranchPoint)} with a {@link IProgressMonitor} .
+   *
+   * @since 4.4
+   */
+  public boolean setBranchPoint(CDOBranchPoint branchPoint, IProgressMonitor monitor);
 
   /**
    * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(branch, getTimeStamp())}.
@@ -150,11 +166,25 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public boolean setBranch(CDOBranch branch);
 
   /**
+   * Same as {@link CDOView#setBranch(CDOBranch)} with {@link IProgressMonitor}.
+   *
+   * @since 4.4
+   */
+  public boolean setBranch(CDOBranch branch, IProgressMonitor monitor);
+
+  /**
    * Same as calling {@link #setBranchPoint(CDOBranch, long) setBranchPoint(getBranch(), timeStamp)}.
    *
    * @since 3.0
    */
   public boolean setTimeStamp(long timeStamp);
+
+  /**
+   * Same as {@link CDOView#setTimeStamp(long)} with {@link IProgressMonitor}.
+   *
+   * @since 4.4
+   */
+  public boolean setTimeStamp(long timeStamp, IProgressMonitor monitor);
 
   /**
    * @since 4.0

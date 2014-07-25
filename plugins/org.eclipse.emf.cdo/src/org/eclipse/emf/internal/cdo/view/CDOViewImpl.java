@@ -94,7 +94,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -192,7 +192,7 @@ public class CDOViewImpl extends AbstractCDOView
     return session.getSessionID();
   }
 
-  public synchronized boolean setBranchPoint(CDOBranchPoint branchPoint)
+  public synchronized boolean setBranchPoint(CDOBranchPoint branchPoint, IProgressMonitor progressMonitor)
   {
     checkActive();
 
@@ -232,7 +232,7 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
-    OMMonitor monitor = new EclipseMonitor(new NullProgressMonitor());
+    OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
     sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects, monitor);
 
     basicSetBranchPoint(branchPoint);

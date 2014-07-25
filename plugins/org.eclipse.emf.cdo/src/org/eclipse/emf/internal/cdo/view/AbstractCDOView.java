@@ -111,6 +111,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
@@ -421,18 +422,38 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   public synchronized boolean setBranch(CDOBranch branch)
   {
-    return setBranchPoint(branch, getTimeStamp());
+    return setBranchPoint(branch, getTimeStamp(), null);
+  }
+
+  public synchronized boolean setBranch(CDOBranch branch, IProgressMonitor monitor)
+  {
+    return setBranchPoint(branch, getTimeStamp(), monitor);
   }
 
   public synchronized boolean setTimeStamp(long timeStamp)
   {
-    return setBranchPoint(getBranch(), timeStamp);
+    return setBranchPoint(getBranch(), timeStamp, null);
+  }
+
+  public synchronized boolean setTimeStamp(long timeStamp, IProgressMonitor monitor)
+  {
+    return setBranchPoint(getBranch(), timeStamp, monitor);
   }
 
   public synchronized boolean setBranchPoint(CDOBranch branch, long timeStamp)
   {
+    return setBranchPoint(branch, timeStamp, null);
+  }
+
+  public synchronized boolean setBranchPoint(CDOBranch branch, long timeStamp, IProgressMonitor monitor)
+  {
     CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
-    return setBranchPoint(branchPoint);
+    return setBranchPoint(branchPoint, monitor);
+  }
+
+  public synchronized boolean setBranchPoint(CDOBranchPoint branchPoint)
+  {
+    return setBranchPoint(branchPoint, null);
   }
 
   protected synchronized void basicSetBranchPoint(CDOBranchPoint branchPoint)
@@ -1169,13 +1190,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     cleanObject(object, revision);
     CDOStateMachine.INSTANCE.dispatchLoadNotification(object);
-    
-    // Bug 435198:  Have object's resource added to the ResourceSet on call to CDOView.getObject(CDOID)
+
+    // Bug 435198: Have object's resource added to the ResourceSet on call to CDOView.getObject(CDOID)
     if (!CDOModelUtil.isResource(eClass))
     {
       getStore().getResource(object);
     }
-    
+
     return object;
   }
 

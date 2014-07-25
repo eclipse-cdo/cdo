@@ -839,9 +839,25 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.setBranchPoint(branch, timeStamp);
   }
 
+  /**
+   * @since 4.4
+   */
+  public boolean setBranchPoint(CDOBranch branch, long timeStamp, IProgressMonitor monitor)
+  {
+    return delegate.setBranchPoint(branch, timeStamp, monitor);
+  }
+
   public boolean setBranchPoint(CDOBranchPoint branchPoint)
   {
     return delegate.setBranchPoint(branchPoint);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public boolean setBranchPoint(CDOBranchPoint branchPoint, IProgressMonitor monitor)
+  {
+    return delegate.setBranchPoint(branchPoint, monitor);
   }
 
   public boolean setBranch(CDOBranch branch)
@@ -849,9 +865,25 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.setBranch(branch);
   }
 
+  /**
+   * @since 4.4
+   */
+  public boolean setBranch(CDOBranch branch, IProgressMonitor monitor)
+  {
+    return delegate.setBranch(branch, monitor);
+  }
+
   public boolean setTimeStamp(long timeStamp)
   {
     return delegate.setTimeStamp(timeStamp);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public boolean setTimeStamp(long timeStamp, IProgressMonitor monitor)
+  {
+    return delegate.setTimeStamp(timeStamp, monitor);
   }
 
   public URIHandler getURIHandler()

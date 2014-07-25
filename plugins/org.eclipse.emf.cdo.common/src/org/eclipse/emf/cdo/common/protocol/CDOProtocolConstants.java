@@ -29,8 +29,10 @@ public interface CDOProtocolConstants
   /**
    * @since 4.2
    */
-  public static final int PROTOCOL_VERSION = 19; // Branch renaming
+  public static final int PROTOCOL_VERSION = 20; // Have OMMOnitor optional in
+                                                 // RequestWithMonitoring/IndicationWithMonitoring
 
+  // public static final int PROTOCOL_VERSION = 19; // Branch renaming
   // public static final int PROTOCOL_VERSION = 18; // Password change protocol
   // public static final int PROTOCOL_VERSION = 17; // Last update for make query fail in sequence
 

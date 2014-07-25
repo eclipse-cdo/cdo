@@ -157,7 +157,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return false;
   }
 
-  public boolean setBranchPoint(CDOBranchPoint branchPoint)
+  public boolean setBranchPoint(CDOBranchPoint branchPoint, IProgressMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

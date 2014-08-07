@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.mango.MangoValue;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
@@ -55,6 +56,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+@CleanRepositoriesBefore(reason = "To not have ModelXPackage in test already registred in CDOPackageRegistry")
 public class PackageRegistryTest extends AbstractCDOTest
 {
   public void testGeneratedPackage() throws Exception

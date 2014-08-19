@@ -59,6 +59,12 @@
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
+      id=""
+      option="-Doomph.redirection.cdosetup"
+      value="=http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/plugins/org.eclipse.emf.cdo.releng/CDO.setup"
+      vm="true"/>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
       option="-Xmx"
       value="4g"
       vm="true"/>
@@ -205,7 +211,7 @@
             pattern="org\.eclipse\.emf\.cdo.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.1 //@setupTasks.9/@workingSets.2 //@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7 //@setupTasks.9/@workingSets.8 //@setupTasks.9/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.3 //@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.8 //@setupTasks.10/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -218,7 +224,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -237,7 +243,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -250,7 +256,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -263,7 +269,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.5 //@setupTasks.9/@workingSets.6 //@setupTasks.9/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.5 //@setupTasks.10/@workingSets.6 //@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -276,7 +282,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -298,7 +304,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -324,7 +330,7 @@
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.9/@workingSets.7 //@setupTasks.9/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet

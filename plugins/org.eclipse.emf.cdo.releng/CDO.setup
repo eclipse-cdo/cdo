@@ -89,9 +89,9 @@
   <setupTask
       xsi:type="pde:APIBaselineTask"
       name="CDO"
-      version="4.3"
+      version="${cdo.baseline.version}"
       location="${installation.location/baseline}"
-      remoteURI="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.3-baseline.zip/download"/>
+      remoteURI="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-${cdo.baseline.version}-baseline.zip/download"/>
   <setupTask
       xsi:type="git:GitCloneTask"
       id="cdo.git.clone"

@@ -108,7 +108,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   /**
    * Equivalent to calling SignalProtocol.setTimeout(timeout, false).
-   * 
+   *
    * @since 2.0
    */
   public void setTimeout(long timeout)
@@ -118,13 +118,13 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
 
   /**
    * Update the timeout used for signal end of stream waiting time.
-   * 
+   *
    * @param timeout the new timeout
    * @param useOldTimeoutToSendNewOne true to use the old timeout, false to use the new specified one to sent to server side the new specified timeout
    * @return true if the new specified timeout has correctly been sent
-   * 
+   *
    * NOTE: this second parameter is useful mostly for test to be able to set a to small timeout
-   * @since 4.3
+   * @since 4.4
    */
   public boolean setTimeout(long timeout, boolean useOldTimeoutToSendNewOne)
   {
@@ -134,14 +134,17 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       handleSetTimeOut(timeout);
     }
+
     if (oldTimeout != timeout && isActive())
     {
       timeoutSent = sendSetTimeout();
     }
+
     if (timeoutSent && useOldTimeoutToSendNewOne)
     {
       handleSetTimeOut(timeout);
     }
+
     return timeoutSent;
   }
 

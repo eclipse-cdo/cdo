@@ -2,7 +2,7 @@
 <setup:ComponentExtension setup:toolVersion="8" xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:setup="http://www.eclipse.org/CDO/releng/setup/1.0">
   <dependencies id="org.eclipse.emf.cdo.site.feature.group"/>
   <dependencies id="org.eclipse.emf.cdo.releng.release"/>
-  <dependencies id="org.eclipse.emf.cdo.releng.version.tests"/>
+  <dependencies id="org.eclipse.oomph.version.tests"/>
   <dependencies id="org.eclipse.emf.cdo.examples.client"/>
   <dependencies id="org.eclipse.emf.cdo.examples.client.offline"/>
   <dependencies id="org.eclipse.emf.cdo.examples.master"/>

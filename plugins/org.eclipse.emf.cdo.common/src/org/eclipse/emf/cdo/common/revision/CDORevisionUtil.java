@@ -383,7 +383,15 @@ public final class CDORevisionUtil
   private static void getResourceNodePath(InternalCDORevision revision, CDORevisionProvider provider,
       StringBuilder result)
   {
-    InternalCDORevision container = getParentRevision(revision, provider);
+    InternalCDORevision container = null;
+    if (!revision.isResourceNode())
+    {
+      container = getResourceRevision(revision, provider);
+    }
+    else
+    {
+      container = getParentRevision(revision, provider);
+    }
     if (container != null)
     {
       getResourceNodePath(container, provider, result);
@@ -404,6 +412,36 @@ public final class CDORevisionUtil
         result.append(name);
       }
     }
+  }
+
+  private static InternalCDORevision getResourceRevision(InternalCDORevision revision, CDORevisionProvider provider)
+  {
+    CDOID resourceID = revision.getResourceID();
+    if (revision.isResourceNode())
+    {
+      return null;
+    }
+    if (CDOIDUtil.isNull(resourceID))
+    {
+      CDOID parentID = null;
+      Object containerID = revision.getContainerID();
+      if (containerID instanceof CDOWithID)
+      {
+        parentID = ((CDOWithID)containerID).cdoID();
+      }
+      else
+      {
+        parentID = (CDOID)containerID;
+      }
+
+      if (!CDOIDUtil.isNull(parentID))
+      {
+        InternalCDORevision parentRevision = (InternalCDORevision)provider.getRevision(parentID);
+        return getResourceRevision(parentRevision, provider);
+      }
+    }
+
+    return (InternalCDORevision)provider.getRevision(resourceID);
   }
 
   private static EAttribute getResourceNodeNameAttribute(CDORevision revision)

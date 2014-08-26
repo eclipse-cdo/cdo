@@ -132,7 +132,7 @@
 
 		<!-- XPAND -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/m2t/xpand/updates/releases"/>
 		</rm:provider>
 
 		<!-- SWTBOT -->

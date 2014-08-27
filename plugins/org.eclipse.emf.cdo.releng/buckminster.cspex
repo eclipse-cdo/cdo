@@ -4,7 +4,6 @@
 	<cs:dependencies>
 		<cs:dependency name="org.eclipse.emf.cdo.site" componentType="eclipse.feature"/>
 		<cs:dependency name="org.eclipse.emf.cdo.releng.release" componentType="osgi.bundle"/>
-		<cs:dependency name="org.eclipse.oomph.version.tests" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.client" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.client.offline" componentType="osgi.bundle"/>
 		<cs:dependency name="org.eclipse.emf.cdo.examples.master" componentType="osgi.bundle"/>

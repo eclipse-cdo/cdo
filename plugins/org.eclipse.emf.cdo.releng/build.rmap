@@ -5,8 +5,8 @@
 	<!-- Properties -->
 
 	<rm:property mutable="true" key="train" value="luna"/>
-	<rm:property mutable="true" key="platform.version" value="4.4milestones"/>
-	<rm:property mutable="true" key="emf.version" value="2.10milestones"/>
+	<rm:property mutable="true" key="platform.version" value="4.4"/>
+	<rm:property mutable="true" key="emf.version" value="2.10"/>
 
 	<!-- Locators -->
 
@@ -60,79 +60,79 @@
 
 		<!-- EMF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emf/emf/updates/{0}">
+			<rm:uri format="http://download.eclipse.org/modeling/emf/emf/updates/{0}/core/R201405190339/">
 				<bc:propertyRef key="emf.version"/>
 			</rm:uri>
 		</rm:provider>
 
 		<!-- EMF Transaction -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emf/transaction/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/emf/transaction/updates/releases/R201405281451"/>
 		</rm:provider>
 
 		<!-- EMF Validation -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emf/validation/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/emf/validation/updates/releases/R201405281429"/>
 		</rm:provider>
 
 		<!-- EMF Compare -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/milestones/3.0"/>
+			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/releases/3.0/R201406111328"/>
 		</rm:provider>
 
 		<!-- MWE -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/emft/mwe/updates/releases/R201406110919/mwe"/>
 		</rm:provider>
 
 		<!-- EcoreTools -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emft/ecoretools/updates/1.2/201306071421"/>
+			<rm:uri format="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
 		</rm:provider>
 
 		<!-- GEF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/gef/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/tools/gef/updates/releases"/>
 		</rm:provider>
 
 		<!-- Graphiti -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/graphiti/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/graphiti/updates/0.11.0"/>
 		</rm:provider>
 
 		<!-- GMF Notation -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R201405281433"/>
 		</rm:provider>
 
 		<!-- GMF Runtime -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R201406111639"/>
 		</rm:provider>
 
 		<!-- GMF Tooling -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/releases-3.2.0"/>
 		</rm:provider>
 
 		<!-- OCL -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/mdt/ocl/updates/releases/5.0.1"/>
 		</rm:provider>
 
 		<!-- QVTO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/releases/3.4.0/"/>
+			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/releases/3.4.0"/>
 		</rm:provider>
 
 		<!-- UML2 -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x/R201402022055"/>
 		</rm:provider>
 
 		<!-- XPAND -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/m2t/xpand/updates/releases"/>
+			<rm:uri format="http://download.eclipse.org/modeling/m2t/xpand/updates/releases/R201406030414"/>
 		</rm:provider>
 
 		<!-- SWTBOT -->
@@ -140,12 +140,12 @@
 			<!-- ################################################################ -->
 			<!-- ## Do not forget to adjust dawn tests feature.properties (1x) ## -->
 			<!-- ################################################################ -->
-			<rm:uri format="http://download.eclipse.org/technology/swtbot/releases/2.1.1"/>
+			<rm:uri format="http://download.eclipse.org/technology/swtbot/releases/2.2.1"/>
 		</rm:provider>
 
 		<!-- MYLYN -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mylyn/snapshots/nightly"/>
+			<rm:uri format="http://download.eclipse.org/mylyn/releases/3.12"/>
 		</rm:provider>
 
 		<!-- EGIT -->
@@ -155,7 +155,7 @@
 
 		<!-- BUCKMINSTER -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/buckminster/updates-4.3"/>
+			<rm:uri format="http://download.eclipse.org/tools/buckminster/headless-4.3"/>
 		</rm:provider>
 
 		<!-- M2E -->
@@ -170,12 +170,12 @@
 
 		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshot"/>
+			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshots/release/01"/>
 		</rm:provider>
 
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-      <rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
+      		<rm:uri format="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository/"/>
 		</rm:provider>
 
 		<!-- TENEO -->
@@ -195,6 +195,11 @@
 			<!-- ############################################################### -->
 			<rm:uri format="http://www.elver.org/eclipse/2.0.0/update"/>
 		</rm:provider>
+
+		<!-- OOMPH -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/oomph/updates"/>
+		</rm:provider>		
 
 	</rm:searchPath>
 

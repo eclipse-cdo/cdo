@@ -20,8 +20,6 @@
     <requirement
         name="org.eclipse.pde.api.tools.ee.feature.feature.group"/>
     <requirement
-        name="org.eclipse.net4j.util.ui.feature.group"/>
-    <requirement
         name="org.eclipse.mylyn.ide_feature.feature.group"/>
     <requirement
         name="org.eclipse.mylyn.java_feature.feature.group"/>
@@ -52,8 +50,6 @@
         url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
     <repository
         url="http://download.eclipse.org/egit/updates-nightly"/>
-    <repository
-        url="http://download.eclipse.org/modeling/emf/cdo/drops/R20140610-0212"/>
     <repository
         url="http://download.eclipse.org/oomph/updates"/>
   </setupTask>
@@ -117,7 +113,7 @@
       xsi:type="setup.targlets:TargletTask">
     <targlet
         name="CDO"
-        activeRepositoryList="Luna">
+        activeRepositoryList="${cdo.target.platform}">
       <requirement
           name="org.eclipse.emf.cdo.site.feature.group"/>
       <requirement
@@ -181,21 +177,21 @@
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.0.0/interim"/>
         <repository
-            url="http://www.elver.org/eclipse/2.0.0/update"/>
-        <repository
             url="http://download.eclipse.org/tools/buckminster/headless-4.3"/>
         <repository
             url="http://download.eclipse.org/mylyn/releases/3.12"/>
         <repository
             url="http://download.eclipse.org/technology/nebula/snapshots/release/01"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/kepler"/>
-        <repository
             url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x/R201402022055"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/validation/updates/releases/R201405281429"/>
         <repository
             url="http://download.eclipse.org/mmt/qvto/updates/releases/3.4.0"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.0.0/update"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/kepler"/>
       </repositoryList>
     </targlet>
   </setupTask>
@@ -457,12 +453,30 @@
           summary="TaskTable"
           url="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;query_format=advanced&amp;resolution=FIXED&amp;resolution=---"/>
     </setupTask>
+    <setupTask
+        xsi:type="mylyn:MylynQueriesTask"
+        connectorKind="org.eclipse.mylyn.gerrit"
+        repositoryURL="https://git.eclipse.org/r"
+        userID="${bugzilla.id}"
+        password="${eclipse.user.password}">
+      <query
+          summary="Reviews in ${cdo.git.clone.checkoutBranch}">
+        <attribute
+            key="gerrit query type"
+            value="custom"/>
+        <attribute
+            key="gerrit query project"
+            value="cdo/cdo"/>
+        <attribute
+            key="gerrit query string"
+            value="project:cdo/cdo status:open branch:${cdo.git.clone.checkoutBranch}"/>
+      </query>
+    </setupTask>
   </setupTask>
   <stream name="master"
       label="Master">
     <setupTask
-        xsi:type="setup.p2:P2Task"
-        mergeDisabled="true">
+        xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
@@ -474,6 +488,10 @@
       <repository
           url="http://download.eclipse.org/releases/luna"/>
     </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.target.platform"
+        value="Luna"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
@@ -486,8 +504,7 @@
   <stream name="streams/4.3-maintenance"
       label="4.3 Maintenance">
     <setupTask
-        xsi:type="setup.p2:P2Task"
-        mergeDisabled="true">
+        xsi:type="setup.p2:P2Task">
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <requirement
@@ -499,6 +516,10 @@
       <repository
           url="http://download.eclipse.org/releases/luna"/>
     </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.target.platform"
+        value="Luna"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"

@@ -711,23 +711,29 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     private void applyOffsetToSourceIndexes(int offsetBefore)
     {
-      for (ManipulationElement element : manipulations)
+      if (offsetBefore != 0)
       {
-        if (element.sourceIndex != ManipulationConstants.NO_INDEX)
+        for (ManipulationElement element : manipulations)
         {
-          element.sourceIndex += offsetBefore;
+          if (element.sourceIndex != ManipulationConstants.NO_INDEX)
+          {
+            element.sourceIndex += offsetBefore;
+          }
         }
       }
     }
 
     private void applyOffsetToDestinationIndexes(int offsetAfter)
     {
-      for (ManipulationElement element : manipulations)
+      if (offsetAfter != 0)
       {
-        if (element.destinationIndex != ManipulationConstants.NO_INDEX)
+        for (ManipulationElement element : manipulations)
         {
-          // apply the offset to all indices to make them relative to the new offset
-          element.destinationIndex += offsetAfter;
+          if (element.destinationIndex != ManipulationConstants.NO_INDEX)
+          {
+            // apply the offset to all indices to make them relative to the new offset
+            element.destinationIndex += offsetAfter;
+          }
         }
       }
     }

@@ -344,8 +344,27 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    */
   public void setURI(URI newURI)
   {
+    URI uri = getURI();
     String newPath = CDOURIUtil.extractResourcePath(newURI);
     setPath(newPath);
+    if (eNotificationRequired())
+    {
+      Notification notification = new NotificationImpl(Notification.SET, uri, newURI)
+      {
+        @Override
+        public Object getNotifier()
+        {
+          return CDOResourceImpl.this;
+        }
+
+        @Override
+        public int getFeatureID(Class<?> expectedClass)
+        {
+          return RESOURCE__URI;
+        }
+      };
+      eNotify(notification);
+    }
   }
 
   @Override
@@ -551,7 +570,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     if (errors == null)
     {
       errors = new NotifyingListImpl<Diagnostic>()
-      {
+          {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -571,7 +590,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
         {
           return EresourcePackage.CDO_RESOURCE__ERRORS;
         }
-      };
+          };
     }
 
     return errors;
@@ -587,7 +606,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     if (warnings == null)
     {
       warnings = new NotifyingListImpl<Diagnostic>()
-      {
+          {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -607,7 +626,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
         {
           return EresourcePackage.CDO_RESOURCE__WARNINGS;
         }
-      };
+          };
     }
 
     return warnings;
@@ -638,7 +657,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public TreeIterator<EObject> getAllContents()
   {
     return new AbstractTreeIterator<EObject>(this, false)
-    {
+        {
       private static final long serialVersionUID = 1L;
 
       @Override
@@ -647,7 +666,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
         return object == CDOResourceImpl.this ? CDOResourceImpl.this.getContents().iterator() : ((EObject)object)
             .eContents().iterator();
       }
-    };
+        };
   }
 
   /**
@@ -863,7 +882,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   protected TreeIterator<EObject> getAllProperContents(List<EObject> contents)
   {
     return new ContentTreeIterator<EObject>(contents, false)
-    {
+        {
       private static final long serialVersionUID = 1L;
 
       @SuppressWarnings("unchecked")
@@ -873,7 +892,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
         return object == this.object ? ((List<EObject>)object).iterator() : new ProperContentIterator<EObject>(
             (EObject)object);
       }
-    };
+        };
   }
 
   /**
@@ -1227,16 +1246,16 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     IProgressMonitor progressMonitor = options != null ? (IProgressMonitor)options
         .get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
 
-    try
-    {
-      transaction.commit(progressMonitor);
-    }
-    catch (CommitException ex)
-    {
-      throw new TransactionException(ex);
-    }
+        try
+        {
+          transaction.commit(progressMonitor);
+        }
+        catch (CommitException ex)
+        {
+          throw new TransactionException(ex);
+        }
 
-    setModified(false);
+        setModified(false);
   }
 
   /**
@@ -1247,20 +1266,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     CDOTransaction transaction = options != null ? (CDOTransaction)options
         .get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION) : null;
 
-    if (transaction == null)
-    {
-      CDOView view = cdoView();
-      if (view instanceof CDOTransaction)
-      {
-        transaction = (CDOTransaction)view;
-      }
-      else
-      {
-        throw new IllegalStateException("No transaction available");
-      }
-    }
+        if (transaction == null)
+        {
+          CDOView view = cdoView();
+          if (view instanceof CDOTransaction)
+          {
+            transaction = (CDOTransaction)view;
+          }
+          else
+          {
+            throw new IllegalStateException("No transaction available");
+          }
+        }
 
-    return transaction;
+        return transaction;
   }
 
   /**
@@ -1472,13 +1491,13 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     {
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(resourceSet);
       viewSet.executeWithoutNotificationHandling(new Callable<Boolean>()
-      {
+          {
         public Boolean call() throws Exception
         {
           resourceSet.getResources().remove(CDOResourceImpl.this);
           return true;
         }
-      });
+          });
     }
   }
 
@@ -1543,12 +1562,12 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(oldResourceSet);
       notifications = viewSet.executeWithoutNotificationHandling(new Callable<NotificationChain>()
-      {
+          {
         public NotificationChain call() throws Exception
         {
           return ((InternalEList<Resource>)oldResourceSet.getResources()).basicRemove(this, finalNotifications);
         }
-      });
+          });
     }
 
     setResourceSet(resourceSet);

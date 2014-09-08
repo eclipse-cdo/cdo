@@ -181,7 +181,7 @@
         <repository
             url="http://download.eclipse.org/mylyn/releases/3.12"/>
         <repository
-            url="http://download.eclipse.org/technology/nebula/snapshots/release/01"/>
+            url="http://download.eclipse.org/technology/nebula/snapshots/"/>
         <repository
             url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x/R201402022055"/>
         <repository

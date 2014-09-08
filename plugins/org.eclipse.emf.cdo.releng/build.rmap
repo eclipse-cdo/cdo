@@ -170,7 +170,7 @@
 
 		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshots/release/01"/>
+			<rm:uri format="http://download.eclipse.org/technology/nebula/snapshots/"/>
 		</rm:provider>
 
 		<!-- ORBIT -->

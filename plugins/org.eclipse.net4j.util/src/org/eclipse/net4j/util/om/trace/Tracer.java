@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.om.trace;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMBundle.DebugSupport;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.text.MessageFormat;
 
@@ -28,7 +29,8 @@ public class Tracer implements OMTracer
    */
   public static final String PROP_DISABLE_TRACING = "org.eclipse.net4j.util.om.trace.disable";
 
-  private static final boolean isGloballyDisabled = Boolean.valueOf(System.getProperty(PROP_DISABLE_TRACING, "false"));
+  private static final boolean isGloballyDisabled = Boolean.valueOf(OMPlatform.INSTANCE.getProperty(
+      PROP_DISABLE_TRACING, Boolean.FALSE.toString()));
 
   private OMBundle bundle;
 

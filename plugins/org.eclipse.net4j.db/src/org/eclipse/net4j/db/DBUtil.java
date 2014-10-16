@@ -62,6 +62,16 @@ public final class DBUtil
   public static final int MAX_BATCH_SIZE = Integer.parseInt(OMPlatform.INSTANCE.getProperty(
       "org.eclipse.net4j.db.MAX_BATCH_SIZE", "2000"));
 
+  /**
+   * A system property to enable noisy close, i.e. exception catch in close methods are thrown as {@link DBException} exception.
+   *
+   * @since 4.4
+   */
+  public static final String PROP_ENABLE_NOISY_CLOSE = "org.eclipse.net4j.db.close.noisy";
+
+  private static final boolean isNoisyCloseEnabled = Boolean.valueOf(OMPlatform.INSTANCE.getProperty(
+      PROP_ENABLE_NOISY_CLOSE, Boolean.FALSE.toString()));
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
   private DBUtil()
@@ -191,50 +201,6 @@ public final class DBUtil
   {
     return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns);
   }
-
-  // /**
-  // * @since 4.2
-  // */
-  // public static <T> T updateSchema(IDBConnectionProvider connectionProvider, RunnableWithConnection<T> runnable)
-  // {
-  // return execute(connectionProvider, new RunnableWithConnection<T>()
-  // {
-  // public T run(Connection connection) throws SQLException
-  // {
-  // return null;
-  // }
-  // });
-  // }
-  //
-  // /**
-  // * @since 4.2
-  // */
-  // public static <T> T updateSchema(Connection connection, RunnableWithConnection<T> runnable)
-  // {
-  // DBConnection dbConnection = null;
-  //
-  // try
-  // {
-  // if (connection instanceof DBConnection)
-  // {
-  // dbConnection = (DBConnection)connection;
-  // dbConnection.getDatabase().beginSchemaAccess(true);
-  // }
-  //
-  // return runnable.run(connection);
-  // }
-  // catch (SQLException ex)
-  // {
-  // throw new DBException(ex);
-  // }
-  // finally
-  // {
-  // if (dbConnection != null)
-  // {
-  //
-  // }
-  // }
-  // }
 
   public static IDBSchema createSchema(String name)
   {
@@ -417,6 +383,10 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
+        if (isNoisyCloseEnabled)
+        {
+          throw new DBException(ex);
+        }
         OM.LOG.error(ex);
         return ex;
       }
@@ -435,6 +405,10 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
+        if (isNoisyCloseEnabled)
+        {
+          throw new DBException(ex);
+        }
         OM.LOG.error(ex);
         return ex;
       }
@@ -460,6 +434,10 @@ public final class DBUtil
       }
       catch (Exception ex)
       {
+        if (isNoisyCloseEnabled)
+        {
+          throw new DBException(ex);
+        }
         OM.LOG.error(ex);
         return ex;
       }

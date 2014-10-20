@@ -182,13 +182,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
     if (branches == null && loadOnDemand)
     {
-      SubBranchInfo[] infos = branchManager.getBranchLoader().loadSubBranches(id);
-      branches = new InternalCDOBranch[infos.length];
-      for (int i = 0; i < infos.length; i++)
-      {
-        SubBranchInfo info = infos[i];
-        branches[i] = branchManager.getBranch(info.getID(), info.getName(), this, info.getBaseTimeStamp());
-      }
+      loadBranches();
     }
 
     return branches;
@@ -281,7 +275,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     {
       if (branches == null)
       {
-        branches = new InternalCDOBranch[] { branch };
+        loadBranches();
       }
       else
       {
@@ -331,6 +325,17 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
     name = branchInfo.getName();
     base = baseBranch.getPoint(branchInfo.getBaseTimeStamp());
+  }
+
+  private synchronized void loadBranches()
+  {
+    SubBranchInfo[] infos = branchManager.getBranchLoader().loadSubBranches(id);
+    branches = new InternalCDOBranch[infos.length];
+    for (int i = 0; i < infos.length; i++)
+    {
+      SubBranchInfo info = infos[i];
+      branches[i] = branchManager.getBranch(info.getID(), info.getName(), this, info.getBaseTimeStamp());
+    }
   }
 
   /**

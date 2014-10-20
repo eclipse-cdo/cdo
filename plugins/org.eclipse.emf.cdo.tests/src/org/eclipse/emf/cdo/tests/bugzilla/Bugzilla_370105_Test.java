@@ -29,6 +29,7 @@ import org.eclipse.emf.common.util.EList;
 public class Bugzilla_370105_Test extends AbstractCDOTest
 {
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  @CleanRepositoriesBefore(reason = "to not be disturb by branches created by other tests")
   public void testInsertInListOf5thSubBranch() throws Throwable
   {
     Company company = initModel();

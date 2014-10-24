@@ -47,9 +47,9 @@ import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -1257,8 +1257,6 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       rollbackMessage = message;
 
-      removePackageAdapters();
-
       if (accessor != null)
       {
         try
@@ -1276,22 +1274,6 @@ public class TransactionCommitContext implements InternalCommitContext
       }
 
       unlockObjects();
-    }
-  }
-
-  private void removePackageAdapters()
-  {
-    for (int i = 0; i < newPackageUnits.length; i++)
-    {
-      try
-      {
-        InternalCDOPackageUnit packageUnit = newPackageUnits[i];
-        packageUnit.dispose();
-      }
-      catch (Throwable t)
-      {
-        OM.LOG.error(t);
-      }
     }
   }
 

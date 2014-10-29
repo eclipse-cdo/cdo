@@ -193,15 +193,14 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     for (CDOIDAndVersion data : detachedObjects)
     {
       writeCDOID(data.getID());
-      if (data instanceof CDORevisionKey)
+      boolean isCDORevisionKey = data instanceof CDORevisionKey;
+      int version = data.getVersion();
+      writeInt(version);
+      writeBoolean(isCDORevisionKey);
+      if (isCDORevisionKey)
       {
         CDORevisionKey revisionKey = (CDORevisionKey)data;
-        writeInt(-data.getVersion());
         writeCDOBranch(revisionKey.getBranch());
-      }
-      else
-      {
-        writeInt(data.getVersion());
       }
     }
   }

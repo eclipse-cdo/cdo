@@ -228,12 +228,12 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     {
       CDOID id = readCDOID();
       int version = readInt();
-
+      boolean isCDORevisionKey = readBoolean();
       CDOIDAndVersion data;
-      if (version < 0)
+      if (isCDORevisionKey)
       {
         CDOBranch branch = readCDOBranch();
-        data = CDORevisionUtil.createRevisionKey(id, branch, -version);
+        data = CDORevisionUtil.createRevisionKey(id, branch, version);
       }
       else
       {

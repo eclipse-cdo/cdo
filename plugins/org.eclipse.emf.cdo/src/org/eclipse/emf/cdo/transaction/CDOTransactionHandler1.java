@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
- * A call-back interface that is called by a {@link CDOTransaction transcation} before {@link CDOObject objects} are
+ * A call-back interface that is called by a {@link CDOTransaction transaction} before {@link CDOObject objects} are
  * attached, modified or detached.
  *
  * @see CDOPostEventTransactionHandler

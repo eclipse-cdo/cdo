@@ -1438,12 +1438,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     // ResourceSet.getResource(uri, true) was called!!
     resource.cdoInternalSetView(this);
     resource.cdoInternalSetState(CDOState.PROXY);
+    registerProxyResource2(resource);
   }
 
-  /**
-   * @since 2.0
-   */
-  public synchronized void registerProxyResource(CDOResourceImpl resource)
+  private synchronized void registerProxyResource2(CDOResourceImpl resource)
   {
     URI uri = resource.getURI();
     String path = CDOURIUtil.extractResourcePath(uri);
@@ -1477,6 +1475,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     {
       throw new InvalidURIException(uri, ex);
     }
+  }
+
+  /**
+   * @deprecated No longer supported.
+   */
+  @Deprecated
+  public synchronized void registerProxyResource(CDOResourceImpl resource)
+  {
+    registerProxyResource2(resource);
   }
 
   /**

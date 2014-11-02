@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
-import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -1096,26 +1095,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (!isLoaded())
     {
-      InternalCDOView view = cdoView();
-      if (!FSMUtil.isTransient(this))
-      {
-        CDOID id = cdoID();
-        if (id == null)
-        {
-          registerProxy(view);
-        }
-        else
-        {
-          synchronized (view)
-          {
-            if (!view.isObjectRegistered(id))
-            {
-              registerProxy(view);
-            }
-          }
-        }
-      }
-
       if (initialURI != null)
       {
         String query = initialURI.query();
@@ -1189,21 +1168,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
       // // setTimeStamp(timeStamp);
       // // }
       // }
-    }
-  }
-
-  private void registerProxy(InternalCDOView view) throws IOWrappedException
-  {
-    try
-    {
-      view.registerProxyResource(this);
-    }
-    catch (Exception ex)
-    {
-      OM.LOG.error(ex);
-      setExisting(false);
-      cdoInternalSetState(CDOState.TRANSIENT);
-      throw new IOWrappedException(ex);
     }
   }
 
@@ -1589,11 +1553,15 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
           catch (RuntimeException ex)
           {
             resourceSet.getResources().remove(this);
+            setExisting(false);
+            cdoInternalSetState(CDOState.TRANSIENT);
             throw ex;
           }
           catch (Error ex)
           {
             resourceSet.getResources().remove(this);
+            setExisting(false);
+            cdoInternalSetState(CDOState.TRANSIENT);
             throw ex;
           }
 

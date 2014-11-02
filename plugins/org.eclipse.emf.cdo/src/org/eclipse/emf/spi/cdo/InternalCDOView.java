@@ -120,6 +120,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   public CDOID getResourceNodeID(String path);
 
+  /**
+   * @deprecated No longer supported.
+   */
+  @Deprecated
   public void registerProxyResource(CDOResourceImpl resource);
 
   public void registerObject(InternalCDOObject object);

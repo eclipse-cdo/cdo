@@ -73,28 +73,33 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
 
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)
   {
-    boolean addRootFeature = true;
-    fetchData();
-
-    if (lastTraverseFeature.isMany())
-    {
-      addRootFeature = false;
-    }
-
-    CDOClusterOfFetchRule search = new CDOClusterOfFetchRule(lastTraverseCDOObject.eClass(), lastTraverseFeature);
-    CDOClusterOfFetchRule fetchOfRule = featureRules.get(search);
-    if (fetchOfRule == null)
-    {
-      return null;
-    }
-
-    Collection<CDOFetchRule> fetchRules = fetchOfRule.getFeatureInfo().getRules(null, null);
     List<CDOFetchRule> list = new ArrayList<CDOFetchRule>();
-    for (CDOFetchRule fetchRule : fetchRules)
+
+    boolean addRootFeature = true;
+    if (lastTraverseFeature != null)
     {
-      if (addRootFeature == true || lastTraverseCDOObject.eClass() != fetchRule.getEClass())
+      fetchData();
+
+      if (lastTraverseFeature.isMany())
       {
-        list.add(fetchRule);
+        addRootFeature = false;
+      }
+
+      CDOClusterOfFetchRule search = new CDOClusterOfFetchRule(lastTraverseCDOObject.eClass(), lastTraverseFeature);
+      CDOClusterOfFetchRule fetchOfRule = featureRules.get(search);
+      if (fetchOfRule == null)
+      {
+        return null;
+      }
+
+      Collection<CDOFetchRule> fetchRules = fetchOfRule.getFeatureInfo().getRules(null, null);
+
+      for (CDOFetchRule fetchRule : fetchRules)
+      {
+        if (addRootFeature == true || lastTraverseCDOObject.eClass() != fetchRule.getEClass())
+        {
+          list.add(fetchRule);
+        }
       }
     }
 

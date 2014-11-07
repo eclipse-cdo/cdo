@@ -294,7 +294,7 @@ public abstract class RevisionInfo
       EClassifier classifier = in.readCDOClassifierRefAndResolve();
       long revised = in.readLong();
       InternalCDORevision target = readResult(in, id, branch);
-      // If target is null and where are in a Available RevisionInfo it mean that we can use
+      // If target is null and we are in a Available RevisionInfo it means that we can use
       // availableBranchVersion/result as target
       if (target == null && result != null)
       {

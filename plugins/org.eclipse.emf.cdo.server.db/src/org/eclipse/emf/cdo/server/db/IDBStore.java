@@ -128,5 +128,10 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
      * @since 4.2
      */
     public static final String WRITER_POOL_CAPACITY = "writerPoolCapacity"; //$NON-NLS-1$
+
+    /**
+     * @since 4.3
+     */
+    public static final String FIELD_CONSTRUCTION_TRACKING = "fieldConstructionTracking"; //$NON-NLS-1$
   }
 }

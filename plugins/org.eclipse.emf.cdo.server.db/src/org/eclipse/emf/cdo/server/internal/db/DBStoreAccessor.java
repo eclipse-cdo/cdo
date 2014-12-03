@@ -70,6 +70,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -806,6 +807,26 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
     return getStore().getMetaDataManager().readPackageUnits(getConnection());
+  }
+
+  @Override
+  protected void doWrite(InternalCommitContext context, OMMonitor monitor)
+  {
+    boolean oldValue = DBField.isTrackConstruction();
+    try
+    {
+      String prop = getStore().getProperties().get(IDBStore.Props.FIELD_CONSTRUCTION_TRACKING);
+      if (prop != null)
+      {
+        DBField.trackConstruction(Boolean.valueOf(prop));
+      }
+
+      super.doWrite(context, monitor);
+    }
+    finally
+    {
+      DBField.trackConstruction(oldValue);
+    }
   }
 
   public void writePackageUnits(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)

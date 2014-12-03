@@ -239,4 +239,14 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
         + ") VALUES (?, ?, ?)";
     sqlDelete = "DELETE FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
   }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    sqlDelete = null;
+    sqlInsert = null;
+    sqlSelect = null;
+    table = null;
+    super.doDeactivate();
+  }
 }

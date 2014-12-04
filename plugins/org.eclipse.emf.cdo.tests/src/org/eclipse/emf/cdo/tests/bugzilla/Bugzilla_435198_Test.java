@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.junit.Assert;
+
 import javax.annotation.Resource;
 
 /**
@@ -36,6 +38,8 @@ public class Bugzilla_435198_Test extends AbstractCDOTest
 
   private CDOID companyID;
 
+  private CDOID resourceCDOID;
+
   @Override
   public void setUp() throws Exception
   {
@@ -46,6 +50,7 @@ public class Bugzilla_435198_Test extends AbstractCDOTest
     CDOResource resource = transaction.getOrCreateResource(getResourcePath(RESOURCE_NAME));
     resource.getContents().add(getModel1Factory().createCompany());
     transaction.commit();
+    resourceCDOID = resource.cdoID();
     companyID = CDOUtil.getCDOObject(resource.getContents().get(0)).cdoID();
   }
 
@@ -58,6 +63,23 @@ public class Bugzilla_435198_Test extends AbstractCDOTest
     CDOView view = session.openView();
 
     CDOObject company = view.getObject(companyID);
+
+    assertEquals(1, view.getResourceSet().getResources().size());
+    assertEquals(view.getResourceSet().getResources().get(0), company.eResource());
+  }
+
+  /**
+   * Test the simple working case, a {@link CDOView#getObject(CDOID)} with a CDOResource's id call add the {@link Resource} to the {@link ResourceSet}.
+   */
+  public void testAbstractCDOView_GetObjectWithCDOResourceId_ResourceSetAddition() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+
+    CDOObject object = view.getObject(resourceCDOID);
+    Assert.assertTrue(object instanceof CDOResource);
+    CDOResource resource = (CDOResource)object;
+    EObject company = resource.getContents().get(0);
 
     assertEquals(1, view.getResourceSet().getResources().size());
     assertEquals(view.getResourceSet().getResources().get(0), company.eResource());

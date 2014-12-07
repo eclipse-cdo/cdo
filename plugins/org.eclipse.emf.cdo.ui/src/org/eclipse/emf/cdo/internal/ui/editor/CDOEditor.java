@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -107,6 +108,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
+import org.eclipse.jface.viewers.IInputProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -161,6 +163,7 @@ import org.eclipse.ui.views.properties.PropertySheetSorter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -210,6 +213,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
     return Collections.unmodifiableList(result);
   }
+
+  private static final Field VIEWER_FIELD = getViewerField();
 
   /**
    * @ADDED
@@ -1329,11 +1334,44 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
           for (PropertySheetPage propertySheetPage : propertySheetPages)
           {
-            if (propertySheetPage instanceof ExtendedPropertySheetPage)
+            List<?> objects = null;
+
+            try
             {
-              ExtendedPropertySheetPage page = (ExtendedPropertySheetPage)propertySheetPage;
-              List<?> input = page.getInput();
-              for (Object object : input)
+              // Bug 453211: ExtendedPropertySheetPage.getInput() is only available since EMF 2.9.
+              if (propertySheetPage instanceof ExtendedPropertySheetPage)
+              {
+                ExtendedPropertySheetPage page = (ExtendedPropertySheetPage)propertySheetPage;
+                objects = page.getInput();
+              }
+            }
+            catch (NoSuchMethodError ex)
+            {
+              if (VIEWER_FIELD == null)
+              {
+                throw ex;
+              }
+
+              //$FALL-THROUGH$
+            }
+
+            if (objects == null)
+            {
+              Object value = ReflectUtil.getValue(VIEWER_FIELD, propertySheetPage);
+              if (value instanceof IInputProvider)
+              {
+                IInputProvider inputProvider = (IInputProvider)value;
+                Object input = inputProvider.getInput();
+                if (input instanceof Object[])
+                {
+                  objects = Arrays.asList((Object[])input);
+                }
+              }
+            }
+
+            if (objects != null)
+            {
+              for (Object object : objects)
               {
                 if (object == cdoObject)
                 {
@@ -2635,6 +2673,18 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     catch (RuntimeException ignore)
     {
       // Do nothing
+    }
+  }
+
+  private static Field getViewerField()
+  {
+    try
+    {
+      return ReflectUtil.getField(PropertySheetPage.class, "viewer");
+    }
+    catch (Throwable ex)
+    {
+      return null;
     }
   }
 

@@ -815,10 +815,14 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     boolean oldValue = DBField.isTrackConstruction();
     try
     {
-      String prop = getStore().getProperties().get(IDBStore.Props.FIELD_CONSTRUCTION_TRACKING);
-      if (prop != null)
+      Map<String, String> properties = getStore().getProperties();
+      if (properties != null)
       {
-        DBField.trackConstruction(Boolean.valueOf(prop));
+        String prop = properties.get(IDBStore.Props.FIELD_CONSTRUCTION_TRACKING);
+        if (prop != null)
+        {
+          DBField.trackConstruction(Boolean.valueOf(prop));
+        }
       }
 
       super.doWrite(context, monitor);

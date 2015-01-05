@@ -503,7 +503,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   {
     synchronized (signals)
     {
-      Signal signal = signals.get(correlationID);
+      Signal signal = signals.get(-correlationID);
       if (signal instanceof IndicationWithMonitoring)
       {
         IndicationWithMonitoring indication = (IndicationWithMonitoring)signal;

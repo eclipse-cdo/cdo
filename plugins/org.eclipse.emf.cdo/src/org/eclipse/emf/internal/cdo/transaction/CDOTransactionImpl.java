@@ -132,10 +132,12 @@ import org.eclipse.net4j.util.collection.ByteArrayWrapper;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -167,6 +169,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1284,6 +1287,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
     catch (Throwable t)
     {
+      if(t.getCause() instanceof MonitorCanceledException && !(t.getCause().getCause() instanceof TimeoutRuntimeException)){
+        throw new OperationCanceledException("CDOTransactionImpl.7");//$NON-NLS-1$
+      }
       throw new CommitException(t);
     }
     finally

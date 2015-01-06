@@ -1585,16 +1585,31 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     public void unset(InternalEObject eObject, EStructuralFeature feature)
     {
-      CDOObjectImpl object = (CDOObjectImpl)eObject;
-      Object[] settings = object.eSettings;
-      if (settings == null)
-      {
-        // Is already unset
-        return;
-      }
+      CDOObjectImpl cdoObject = (CDOObjectImpl)eObject;
 
-      int transientIndex = getTransientFeatureIndex(eObject, feature);
-      settings[transientIndex] = null;
+      if (feature.isMany())
+      {
+        // Object object = get(eObject, feature, NO_INDEX);
+        Object object = cdoObject.eGet(feature);
+        if (object instanceof List<?>)
+        {
+          List<?> list = (List<?>)object;
+          list.clear();
+        }
+      }
+      else
+      {
+
+        Object[] settings = cdoObject.eSettings;
+        if (settings == null)
+        {
+          // Is already unset
+          return;
+        }
+
+        int transientIndex = getTransientFeatureIndex(eObject, feature);
+        settings[transientIndex] = null;
+      }
     }
   }
 

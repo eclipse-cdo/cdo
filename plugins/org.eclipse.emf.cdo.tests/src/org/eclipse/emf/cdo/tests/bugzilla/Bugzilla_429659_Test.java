@@ -6,160 +6,210 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Alex Lagarde - initial API and implementation
+ *    Laurent Fasani - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.IConfig;
-import org.eclipse.emf.cdo.tests.model6.ContainmentObject;
-import org.eclipse.emf.cdo.tests.model6.ReferenceObject;
-import org.eclipse.emf.cdo.tests.model6.Root;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.DanglingIntegrityException;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
- * Bug 429659 - BasicEStoreEList.unset() can cause DanglingIntegrityExceptions at commit time.
+ * Bug 429659 - check notifications when unsetting EStructuralFeature.
+ * test TransientStore/CDOStoreImpl.unset() with
+ * single-valued/multi-valued/settable/unsettable feature in CDO
+ * and XMI mode.
  *
- * @author Alex Lagarde
+ * @author <a href="mailto:laurent.fasani@obeo.fr">Laurent Fasani</a>
  */
 public class Bugzilla_429659_Test extends AbstractCDOTest
 {
-  private CDOSession session;
-
-  private CDOTransaction transaction;
-
-  private Root root;
-
-  private TransactionalEditingDomain editingDomain;
-
-  @Override
-  protected void doSetUp() throws Exception
+  public void testUnsetOnUnsettableMultiValuedFeatureXMIResource() throws Exception
   {
-    super.doSetUp();
+    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    objectsToAdd.add(getModel3SubpackageFactory().createClass2());
+    objectsToAdd.add(getModel3SubpackageFactory().createClass2());
+    performUnsetOnMultiValuedFeature(getXMIResource(), getModel3Factory().createClass1(), getModel3Package()
+        .getClass1_Class2(), true, objectsToAdd);
+  }
 
-    session = openSession();
-    editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain();
-    ResourceSet resourceSet = editingDomain.getResourceSet();
-    transaction = session.openTransaction(resourceSet);
+  public void testUnsetOnUnsettableMultiValuedFeatureCDOResource() throws Exception
+  {
+    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    objectsToAdd.add(getModel3SubpackageFactory().createClass2());
+    objectsToAdd.add(getModel3SubpackageFactory().createClass2());
+    performUnsetOnMultiValuedFeature(getCDOResource(), getModel3Factory().createClass1(), getModel3Package()
+        .getClass1_Class2(), true, objectsToAdd);
+  }
 
-    CDOResource resource = transaction.getOrCreateResource(getResourcePath("resource"));
-    root = getModel6Factory().createRoot();
+  public void testUnsetOnNonUnsettableMultiValuedFeatureXMIResource() throws Exception
+  {
+    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    objectsToAdd.add(getModel6Factory().createBaseObject());
+    objectsToAdd.add(getModel6Factory().createBaseObject());
+    performUnsetOnMultiValuedFeature(getXMIResource(), getModel6Factory().createReferenceObject(), getModel6Package()
+        .getReferenceObject_ReferenceList(), false, objectsToAdd);
+  }
+
+  public void testUnsetOnNonUnsettableMultiValuedFeatureCDOResource() throws Exception
+  {
+    List<EObject> objectsToAdd = new ArrayList<EObject>();
+    objectsToAdd.add(getModel6Factory().createBaseObject());
+    objectsToAdd.add(getModel6Factory().createBaseObject());
+    performUnsetOnMultiValuedFeature(getCDOResource(), getModel6Factory().createReferenceObject(), getModel6Package()
+        .getReferenceObject_ReferenceList(), false, objectsToAdd);
+  }
+
+  public void testUnsetOnUnsettableSingleValuedAttributeCDOResource() throws Exception
+  {
+    performUnsetOnSingleValuedFeature(getCDOResource(), getModel6Factory().createEmptyStringDefaultUnsettable(),
+        getModel6Package().getEmptyStringDefaultUnsettable_Attribute(), true, "test");
+  }
+
+  public void testUnsetOnUnsettableSingleValuedAttributeXMIResource() throws Exception
+  {
+    performUnsetOnSingleValuedFeature(getXMIResource(), getModel6Factory().createEmptyStringDefaultUnsettable(),
+        getModel6Package().getEmptyStringDefaultUnsettable_Attribute(), true, "test");
+  }
+
+  public void testUnsetOnNonUnsettableSingleValuedAttributeCDOResource() throws Exception
+  {
+    performUnsetOnSingleValuedFeature(getCDOResource(), getModel6Factory().createEmptyStringDefault(),
+        getModel6Package().getEmptyStringDefault_Attribute(), false, "test");
+  }
+
+  public void testUnsetOnNonUnsettableSingleValuedAttributeXMIResource() throws Exception
+  {
+    performUnsetOnSingleValuedFeature(getXMIResource(), getModel6Factory().createEmptyStringDefault(),
+        getModel6Package().getEmptyStringDefault_Attribute(), false, "test");
+  }
+
+  private Resource getCDOResource()
+  {
+    CDOSession openSession = openSession();
+    CDOTransaction transaction = openSession.openTransaction();
+    Resource resourceCDO = transaction.createResource(getResourcePath("resource"));
+
+    return resourceCDO;
+  }
+
+  private Resource getXMIResource() throws Exception
+  {
+    Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("*", new XMIResourceFactoryImpl());
+    ResourceSet resourceSet = new ResourceSetImpl();
+    URI localURI = URI.createFileURI(createTempFile().getCanonicalPath());
+    Resource localResource = resourceSet.createResource(localURI);
+
+    return localResource;
+  }
+
+  private void performUnsetOnSingleValuedFeature(Resource resource, EObject root, EStructuralFeature feature,
+      boolean unsettable, Object addedObject) throws Exception
+  {
+    // check that Feature is unsettable or not
+    assertEquals(unsettable, feature.isUnsettable());
+
     resource.getContents().add(root);
+    resource.save(Collections.emptyMap());
+
+    // allow notifications checking
+    NotificationAsserter notificationAsserter = new NotificationAsserter();
+    resource.eAdapters().add(notificationAsserter);
+    List<Notification> notifications = notificationAsserter.getNotifications();
+
+    root.eSet(feature, addedObject);
+
+    // unset
+    notifications.clear();
+    root.eUnset(feature);
+
+    // check
+    assertEquals("Incorrect number of expected notifications: ", 1, notifications.size());
+    assertEquals("Incorrect notification: ", unsettable ? Notification.UNSET : Notification.SET, notifications.get(0)
+        .getEventType());
   }
 
-  /**
-   * Ensures that when creating and then deleting an element from an empty containment list, the {@link CDOTransaction}'s new objects map is empty.
-   */
-  @Skips(IConfig.CAPABILITY_ALL)
-  public void testUndoElementCreationOnEmptyList() throws Exception
+  private void performUnsetOnMultiValuedFeature(Resource resource, EObject root, EStructuralFeature feature,
+      boolean unsettable, List<EObject> objectstoAdd) throws Exception
   {
-    // Testing on an empty containment list
-    doTestUndoElementCreation();
+    // check that feature is unsettable or not
+    assertEquals(unsettable, feature.isUnsettable());
+
+    resource.getContents().add(root);
+    resource.save(Collections.emptyMap());
+
+    // allow notifications checking
+    NotificationAsserter notificationAsserter = new NotificationAsserter();
+    root.eAdapters().add(notificationAsserter);
+    List<Notification> notifications = notificationAsserter.getNotifications();
+
+    // -----------------------------
+    // Step 1: unset many elements
+    ((Collection<EObject>)root.eGet(feature)).addAll(objectstoAdd);
+
+    // unset
+    notifications.clear();
+    root.eUnset(feature);
+
+    // check
+    assertEquals("Incorrect number of expected notifications: ", unsettable ? 2 : 1, notifications.size());
+    assertEquals("Incorrect notification: ", Notification.REMOVE_MANY, notifications.get(0).getEventType());
+    if (unsettable)
+    {
+      assertEquals("Incorrect notification: ", Notification.UNSET, notifications.get(1).getEventType());
+    }
+
+    // -------------------------------------
+    // Step 2: unset single element
+    ((Collection<EObject>)root.eGet(feature)).add(objectstoAdd.get(0));
+
+    // unset
+    notifications.clear();
+    root.eUnset(feature);
+
+    // check
+    assertEquals("Incorrect number of expected notifications: ", unsettable ? 2 : 1, notifications.size());
+    assertEquals("Incorrect notification: ", Notification.REMOVE, notifications.get(0).getEventType());
+    if (unsettable)
+    {
+      assertEquals("Incorrect notification: ", Notification.UNSET, notifications.get(1).getEventType());
+    }
+
+    notifications.clear();
+    root.eUnset(feature);
+    assertEquals("Incorrect number of expected notifications: ", unsettable ? 2 : 1, notifications.size());
   }
 
-  /**
-   * Ensures that when creating and then deleting an element from a non-empty containment list, the {@link CDOTransaction}'s new objects map is empty.
-   */
-  public void testUndoElementCreationOnNonEmptyList() throws Exception
+  private static class NotificationAsserter extends EContentAdapter
   {
-    // Add an element to the list before launching the test
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
+
+    private List<Notification> notifications = new ArrayList<Notification>();
+
+    @Override
+    public void notifyChanged(Notification notification)
     {
-      @Override
-      protected void doExecute()
-      {
-        root.getListA().add(getModel6Factory().createBaseObject());
-      }
-    });
+      super.notifyChanged(notification);
+      notifications.add(notification);
+    }
 
-    doTestUndoElementCreation();
-  }
-
-  /**
-   * Ensures that when creating and then deleting an element from a containment list, the {@link CDOTransaction}'s new objects map is empty.
-   */
-  private void doTestUndoElementCreation() throws Exception
-  {
-    transaction.commit();
-
-    // Step 1: add an new element to the containment list
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
+    public List<Notification> getNotifications()
     {
-      @Override
-      protected void doExecute()
-      {
-        root.getListA().add(getModel6Factory().createBaseObject());
-      }
-    });
-
-    assertEquals(1, transaction.getNewObjects().size());
-
-    // Step 2: undo element creation
-    editingDomain.getCommandStack().undo();
-    assertEquals("New elements for which creation was undone should not appear in the transaction's new objects", 0,
-        transaction.getNewObjects().size());
-
-    // Step 3: commit
-    transaction.commit();
-  }
-
-  /**
-   * Ensures that the following scenario does not lead to any {@link DanglingIntegrityException} at commit:
-   * <ul>
-   * <li>Create 2 objects c1 & c2</li>
-   * <li>Create an object referencing c2 inside c1</li>
-   * <li>Undo all these operations</li>
-   * <li>commit</li>
-   * </ul>
-   */
-  @Skips(IConfig.CAPABILITY_ALL)
-  public void testUndoSeveralElementsCreation() throws Exception
-  {
-    // Step 1: create first element (c1)
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
-    {
-      @Override
-      protected void doExecute()
-      {
-        root.getListA().add(getModel6Factory().createContainmentObject());
-      }
-    });
-
-    // Step 2: create second element (c2)
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
-    {
-      @Override
-      protected void doExecute()
-      {
-        root.getListA().add(getModel6Factory().createContainmentObject());
-      }
-    });
-
-    // Step 3: create an element inside c1 which references c2
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
-    {
-      @Override
-      protected void doExecute()
-      {
-        ReferenceObject referenceObject = getModel6Factory().createReferenceObject();
-        referenceObject.setReferenceOptional(root.getListA().get(1));
-        ((ContainmentObject)root.getListA().get(0)).getContainmentList().add(referenceObject);
-      }
-    });
-
-    // Step 4: undo the 3 previous operations (notice that commit will fail without undoing the first one)
-    editingDomain.getCommandStack().undo();
-    editingDomain.getCommandStack().undo();
-    editingDomain.getCommandStack().undo();
-
-    // Step 5: commit: this should not cause any exception
-    transaction.commit();
+      return notifications;
+    }
   }
 }

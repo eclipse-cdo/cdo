@@ -457,8 +457,20 @@ public final class CDOStoreImpl implements CDOStore
         TRACER.format("unset({0}, {1})", cdoObject, feature); //$NON-NLS-1$
       }
 
-      CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
-      writeRevision(cdoObject, delta);
+      if (feature.isMany())
+      {
+        Object object = cdoObject.eGet(feature);
+        if (object instanceof List<?>)
+        {
+          List<?> list = (List<?>)object;
+          list.clear();
+        }
+      }
+      else
+      {
+        CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
+        writeRevision(cdoObject, delta);
+      }
     }
   }
 

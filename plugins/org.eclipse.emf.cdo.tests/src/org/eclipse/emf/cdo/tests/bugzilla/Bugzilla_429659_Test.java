@@ -144,6 +144,7 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
         .getEventType());
   }
 
+  @SuppressWarnings("unchecked")
   private void performUnsetOnMultiValuedFeature(Resource resource, EObject root, EStructuralFeature feature,
       boolean unsettable, List<EObject> objectstoAdd) throws Exception
   {

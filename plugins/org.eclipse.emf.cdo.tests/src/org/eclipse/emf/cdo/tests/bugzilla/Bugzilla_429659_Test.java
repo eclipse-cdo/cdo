@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.URI;
@@ -121,6 +122,9 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
   private void performUnsetOnSingleValuedFeature(Resource resource, EObject root, EStructuralFeature feature,
       boolean unsettable, Object addedObject) throws Exception
   {
+    // To have CDOLegacyAdapter even in local
+    CDOUtil.getCDOObject(root);
+
     // check that Feature is unsettable or not
     assertEquals(unsettable, feature.isUnsettable());
 
@@ -148,6 +152,13 @@ public class Bugzilla_429659_Test extends AbstractCDOTest
   private void performUnsetOnMultiValuedFeature(Resource resource, EObject root, EStructuralFeature feature,
       boolean unsettable, List<EObject> objectstoAdd) throws Exception
   {
+    // To have CDOLegacyAdapter even in local
+    CDOUtil.getCDOObject(root);
+    for (EObject objectToAdd : objectstoAdd)
+    {
+      CDOUtil.getCDOObject(objectToAdd);
+    }
+
     // check that feature is unsettable or not
     assertEquals(unsettable, feature.isUnsettable());
 

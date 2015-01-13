@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
@@ -460,7 +461,7 @@ public final class CDOStoreImpl implements CDOStore
       if (feature.isMany())
       {
         Object object = cdoObject.eGet(feature);
-        if (object instanceof List<?>)
+        if (object instanceof List<?> && !CDOUtil.isLegacyObject(cdoObject))
         {
           List<?> list = (List<?>)object;
           list.clear();

@@ -31,7 +31,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -108,7 +108,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
         createDecorationComposite(parent, toolkit, layoutData(parent, SWT.FILL, false, 1)), ""); //$NON-NLS-1$
     getContext().bindValue(observeText(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
-    getContext().bindValue(SWTObservables.observeEnabled(result), getValue(), null,
+    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null,
         ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result, attribute);
@@ -269,9 +269,9 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
   {
     Button result = toolkit.createButton(
         createDecorationComposite(parent, toolkit, layoutData(parent, SWT.LEFT, false, 2)), label, SWT.CHECK);
-    getContext().bindValue(SWTObservables.observeSelection(result),
+    getContext().bindValue(WidgetProperties.enabled().observe(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
-    getContext().bindValue(SWTObservables.observeEnabled(result), getValue(), null,
+    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null,
         ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result, attribute);
@@ -283,7 +283,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     Button result = toolkit.createButton(parent, label, SWT.PUSH);
     result.setLayoutData(layoutData(parent, SWT.LEFT, false, 2));
 
-    getContext().bindValue(SWTObservables.observeEnabled(result), getValue(), null,
+    getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null,
         ObjectWritableConverter.createUpdateValueStrategy());
 
     result.addSelectionListener(selectionListener);
@@ -301,7 +301,7 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
 
     getContext().bindValue(ViewersObservables.observeSingleSelection(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
-    getContext().bindValue(SWTObservables.observeEnabled(result.getControl()), getValue(), null,
+    getContext().bindValue(WidgetProperties.enabled().observe(result.getControl()), getValue(), null,
         ObjectWritableConverter.createUpdateValueStrategy(attribute));
 
     addRevertDecoration(result.getControl(), attribute);

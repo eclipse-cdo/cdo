@@ -50,7 +50,7 @@ import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.databinding.swt.WidgetProperties;
 import org.eclipse.jface.databinding.viewers.ObservableListContentProvider;
 import org.eclipse.jface.databinding.viewers.ViewersObservables;
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -207,7 +207,7 @@ public class OneToManyBlock
       configureDropSupport(viewer);
     }
 
-    context.bindValue(SWTObservables.observeEnabled(viewer.getControl()), input, null,
+    context.bindValue(WidgetProperties.enabled().observe(viewer.getControl()), input, null,
         ObjectWritableConverter.createUpdateValueStrategy());
 
     Composite buttons = toolkit.createComposite(parent);
@@ -230,15 +230,15 @@ public class OneToManyBlock
 
     final IObservableValue selection = ViewersObservables.observeSingleSelection(viewer);
 
-    context.bindValue(SWTObservables.observeEnabled(newButton), input, null,
+    context.bindValue(WidgetProperties.enabled().observe(newButton), input, null,
         ObjectWritableConverter.createUpdateValueStrategy());
     if (addButton != null)
     {
-      context.bindValue(SWTObservables.observeEnabled(addButton), input, null,
+      context.bindValue(WidgetProperties.enabled().observe(addButton), input, null,
           ObjectWritableConverter.createUpdateValueStrategy());
     }
 
-    context.bindValue(SWTObservables.observeEnabled(removeButton), selection, null,
+    context.bindValue(WidgetProperties.enabled().observe(removeButton), selection, null,
         ObjectWritableConverter.createUpdateValueStrategy());
 
     newButton.addSelectionListener(new SelectionAdapter()
@@ -335,7 +335,7 @@ public class OneToManyBlock
 
     final SelectionListenerAction<EObject> removeAction = new SelectionListenerAction<EObject>(
         Messages.OneToManyBlock_2, SharedIcons.getDescriptor("etool16/delete.gif")) //$NON-NLS-1$
-    {
+        {
       @Override
       public void run()
       {
@@ -368,23 +368,23 @@ public class OneToManyBlock
       {
         return EObject.class;
       }
-    };
+        };
 
-    removeButton.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        if (removeAction.isEnabled())
+        removeButton.addSelectionListener(new SelectionAdapter()
         {
-          removeAction.run();
-        }
-      }
-    });
+          @Override
+          public void widgetSelected(SelectionEvent e)
+          {
+            if (removeAction.isEnabled())
+            {
+              removeAction.run();
+            }
+          }
+        });
 
-    viewer.addSelectionChangedListener(removeAction);
+        viewer.addSelectionChangedListener(removeAction);
 
-    new ActionBarsHelper(editorActionBars).addGlobalAction(ActionFactory.DELETE.getId(), removeAction).install(viewer);
+        new ActionBarsHelper(editorActionBars).addGlobalAction(ActionFactory.DELETE.getId(), removeAction).install(viewer);
   }
 
   public void setInput(IObservableValue input)
@@ -479,64 +479,64 @@ public class OneToManyBlock
   {
     viewer.addDropSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY,
         new Transfer[] { LocalSelectionTransfer.getTransfer() }, new DropTargetAdapter()
+    {
+      @Override
+      public void dragEnter(DropTargetEvent event)
+      {
+        if (!canDrop(event))
         {
-          @Override
-          public void dragEnter(DropTargetEvent event)
+          // Reject this drop
+          event.detail = DND.DROP_NONE;
+        }
+        else if ((event.operations | DND.DROP_COPY) != 0)
+        {
+          event.detail = DND.DROP_COPY;
+        }
+      }
+
+      private boolean canDrop(DropTargetEvent event)
+      {
+        boolean result = false;
+
+        if (LocalSelectionTransfer.getTransfer().isSupportedType(event.currentDataType))
+        {
+          result = canPresentAll(LocalSelectionTransfer.getTransfer().getSelection());
+        }
+
+        return result;
+      }
+
+      @Override
+      public void dropAccept(DropTargetEvent event)
+      {
+        if (!canDrop(event))
+        {
+          // Reject this drop
+          event.detail = DND.DROP_NONE;
+        }
+        else if ((event.operations | DND.DROP_COPY) != 0)
+        {
+          event.detail = DND.DROP_COPY;
+        }
+      }
+
+      @Override
+      public void drop(DropTargetEvent event)
+      {
+        if (canDrop(event))
+        {
+          IStructuredSelection selection = (IStructuredSelection)LocalSelectionTransfer.getTransfer()
+              .getSelection();
+          Command command = AddCommand.create(domain, input.getValue(), getConfiguration().getModelReference(),
+              selection.toList());
+          if (execute(command))
           {
-            if (!canDrop(event))
-            {
-              // Reject this drop
-              event.detail = DND.DROP_NONE;
-            }
-            else if ((event.operations | DND.DROP_COPY) != 0)
-            {
-              event.detail = DND.DROP_COPY;
-            }
+            viewer.setSelection(selection);
+            viewer.getControl().setFocus();
           }
-
-          private boolean canDrop(DropTargetEvent event)
-          {
-            boolean result = false;
-
-            if (LocalSelectionTransfer.getTransfer().isSupportedType(event.currentDataType))
-            {
-              result = canPresentAll(LocalSelectionTransfer.getTransfer().getSelection());
-            }
-
-            return result;
-          }
-
-          @Override
-          public void dropAccept(DropTargetEvent event)
-          {
-            if (!canDrop(event))
-            {
-              // Reject this drop
-              event.detail = DND.DROP_NONE;
-            }
-            else if ((event.operations | DND.DROP_COPY) != 0)
-            {
-              event.detail = DND.DROP_COPY;
-            }
-          }
-
-          @Override
-          public void drop(DropTargetEvent event)
-          {
-            if (canDrop(event))
-            {
-              IStructuredSelection selection = (IStructuredSelection)LocalSelectionTransfer.getTransfer()
-                  .getSelection();
-              Command command = AddCommand.create(domain, input.getValue(), getConfiguration().getModelReference(),
-                  selection.toList());
-              if (execute(command))
-              {
-                viewer.setSelection(selection);
-                viewer.getControl().setFocus();
-              }
-            }
-          }
-        });
+        }
+      }
+    });
   }
 
   protected void hookUnsupportedModelContentValidation(IObservableList observableList)
@@ -566,7 +566,7 @@ public class OneToManyBlock
       if (!supportedContentFilter.select(element))
       {
         configuration.getManagedForm().getMessageManager()
-            .addMessage(this, Messages.TableSection_3, null, IStatus.WARNING, viewer.getControl());
+        .addMessage(this, Messages.TableSection_3, null, IStatus.WARNING, viewer.getControl());
         return;
       }
     }

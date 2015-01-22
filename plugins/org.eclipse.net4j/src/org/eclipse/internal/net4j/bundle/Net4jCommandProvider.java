@@ -100,8 +100,9 @@ public class Net4jCommandProvider implements CommandProvider
     IPluginContainer container = getContainer();
     for (String factoryType : container.getFactoryTypes(productGroup))
     {
-      interpreter.println(prefix + factoryType);
-      printElements(interpreter, container.getElements(productGroup, factoryType), prefix + INDENT);
+      Object[] elements = container.getElements(productGroup, factoryType);
+      interpreter.println(prefix + factoryType + " (" + elements.length + ")");
+      printElements(interpreter, elements, prefix + INDENT);
     }
   }
 

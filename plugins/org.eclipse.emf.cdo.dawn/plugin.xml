@@ -87,6 +87,7 @@
     <extension
           point="org.eclipse.ui.preferencePages">
        <page
+             category="org.eclipse.emf.cdo.ui.CDOPreferencePage"
              class="org.eclipse.emf.cdo.dawn.preferences.DawnRemotePreferencePage"
              id="org.eclipse.emf.cdo.dawn.views.preferences.DawnRemotePreferencePage"
              name="Dawn Remote Preferences">

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -30,7 +30,7 @@ public class DawnRemotePreferencePage extends FieldEditorPreferencePage implemen
     super(GRID);
     AbstractUIPlugin pluginInstance = DawnRuntimePlugin.getDefault();
     setPreferenceStore(pluginInstance.getPreferenceStore()); // TODO generation
-    setDescription("Dawn Reference Pages");
+    setDescription("Connect to a CDO repository.");
   }
 
   /**
@@ -40,11 +40,11 @@ public class DawnRemotePreferencePage extends FieldEditorPreferencePage implemen
   @Override
   public void createFieldEditors()
   {
-    addField(new StringFieldEditor(PreferenceConstants.P_SERVER_NAME, "server name:", getFieldEditorParent()));
-    addField(new IntegerFieldEditor(PreferenceConstants.P_SERVER_PORT, "server port:", getFieldEditorParent()));
-    addField(new StringFieldEditor(PreferenceConstants.P_REPOSITORY_NAME, "repository:", getFieldEditorParent()));
+    addField(new StringFieldEditor(PreferenceConstants.P_SERVER_NAME, "Server Name:", getFieldEditorParent()));
+    addField(new IntegerFieldEditor(PreferenceConstants.P_SERVER_PORT, "Server Port:", getFieldEditorParent()));
+    addField(new StringFieldEditor(PreferenceConstants.P_REPOSITORY_NAME, "Repository:", getFieldEditorParent()));
     // TODO change this to a list of repositories to allow auto connection for the clients
-    addField(new StringFieldEditor(PreferenceConstants.P_PROTOCOL, "protocol:", getFieldEditorParent()));
+    addField(new StringFieldEditor(PreferenceConstants.P_PROTOCOL, "Protocol:", getFieldEditorParent()));
   }
 
   /*

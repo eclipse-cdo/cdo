@@ -308,7 +308,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   @Override
   public URI getURI()
   {
-    if (cdoID() == null && initialURI != null)
+    if ((cdoID() == null || cdoView() == null || cdoView().isClosed()) && initialURI != null)
     {
       return initialURI;
     }

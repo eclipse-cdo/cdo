@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui.internal.location;
 
-import org.eclipse.emf.cdo.internal.location.BranchCheckoutSource;
+import org.eclipse.emf.cdo.location.ICheckoutSource;
 import org.eclipse.emf.cdo.location.IRepositoryLocation;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
@@ -46,7 +46,7 @@ public class RepositoryLocationItemProvider extends ContainerItemProvider<IConta
       return SharedIcons.getImage(SharedIcons.OBJ_REPO);
     }
 
-    if (obj instanceof BranchCheckoutSource)
+    if (obj instanceof ICheckoutSource)
     {
       return SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
     }

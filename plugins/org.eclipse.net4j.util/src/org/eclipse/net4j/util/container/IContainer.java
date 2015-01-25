@@ -12,6 +12,7 @@
 package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.util.Collection;
 
@@ -49,5 +50,33 @@ public interface IContainer<E> extends INotifier
     public boolean removeElement(E element);
 
     public boolean removeAllElements(Collection<E> elements);
+  }
+
+  /**
+   * A {@link IContainer container} with additional methods to add or remove elements.
+   *
+   * @author Eike Stepper
+   * @since 3.5
+   */
+  public interface Persistable<E> extends IContainer<E>
+  {
+    public Persistence<E> getPersistence();
+
+    public void setPersistence(Persistence<E> persistence);
+
+    public void load() throws IORuntimeException;
+
+    public void save() throws IORuntimeException;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.5
+   */
+  public interface Persistence<E>
+  {
+    public Collection<E> loadElements() throws IORuntimeException;
+
+    public void saveElements(Collection<E> elements) throws IORuntimeException;
   }
 }

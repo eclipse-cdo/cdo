@@ -10,12 +10,15 @@
  */
 package org.eclipse.net4j.util.container;
 
-import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.delegate.IContainerSet;
 import org.eclipse.net4j.util.container.delegate.IContainerSortedSet;
+import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,11 +29,13 @@ import java.util.Set;
  * @see IContainerSet
  * @see IContainerSortedSet
  */
-public class SetContainer<E> extends Container<E>
+public class SetContainer<E> extends Container<E> implements IContainer.Modifiable<E>, IContainer.Persistable<E>
 {
   private final Class<E> componentType;
 
   private final Set<E> set;
+
+  private Persistence<E> persistence;
 
   public SetContainer(Class<E> componentType)
   {
@@ -48,6 +53,30 @@ public class SetContainer<E> extends Container<E>
     return componentType;
   }
 
+  /**
+   * @since 3.5
+   */
+  public final Persistence<E> getPersistence()
+  {
+    return persistence;
+  }
+
+  /**
+   * @since 3.5
+   */
+  public final void setPersistence(Persistence<E> persistence)
+  {
+    this.persistence = persistence;
+  }
+
+  /**
+   * @since 3.5
+   */
+  public boolean isSavedWhenModified()
+  {
+    return true;
+  }
+
   @Override
   public synchronized boolean isEmpty()
   {
@@ -55,73 +84,235 @@ public class SetContainer<E> extends Container<E>
     return set.isEmpty();
   }
 
-  public synchronized E[] getElements()
+  public E[] getElements()
   {
     checkActive();
 
-    @SuppressWarnings("unchecked")
-    E[] a = (E[])Array.newInstance(componentType, set.size());
-
-    E[] array = set.toArray(a);
-    array = sortElements(array);
-
-    return array;
-  }
-
-  public void clear()
-  {
-    ContainerEvent<E> event = new ContainerEvent<E>(this);
+    E[] array;
     synchronized (this)
     {
-      for (E element : set)
-      {
-        event.addDelta(element, Kind.REMOVED);
-      }
+      @SuppressWarnings("unchecked")
+      E[] a = (E[])Array.newInstance(componentType, set.size());
 
-      set.clear();
-      notifyAll();
+      array = set.toArray(a);
     }
 
-    fireEvent(event);
+    array = sortElements(array);
+    return array;
   }
 
   public boolean addElement(E element)
   {
-    boolean added;
+    if (!validateElement(element))
+    {
+      return false;
+    }
+
+    IContainerEvent<E> event = null;
     synchronized (this)
     {
-      if (!validateElement(element))
+      if (set.add(element))
       {
-        return false;
+        addedElement(element);
+        event = newContainerEvent(element, IContainerDelta.Kind.ADDED);
+        notifyAll();
+      }
+    }
+
+    if (event != null)
+    {
+      fireEvent(event);
+      modifiedContainer();
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * @since 3.5
+   */
+  public boolean addAllElements(Collection<E> elements)
+  {
+    List<E> validElements = new ArrayList<E>();
+    for (E element : elements)
+    {
+      if (validateElement(element))
+      {
+        validElements.add(element);
+      }
+    }
+
+    ContainerEvent<E> event = null;
+    synchronized (this)
+    {
+      for (E element : validElements)
+      {
+        if (set.add(element))
+        {
+          addedElement(element);
+
+          if (event == null)
+          {
+            event = newContainerEvent();
+          }
+
+          event.addDelta(element, IContainerDelta.Kind.ADDED);
+        }
       }
 
-      added = set.add(element);
-      notifyAll();
+      if (event != null)
+      {
+        notifyAll();
+      }
     }
 
-    if (added)
+    if (event != null)
     {
-      fireElementAddedEvent(element);
+      fireEvent(event);
+      modifiedContainer();
+      return true;
     }
 
-    return added;
+    return false;
   }
 
   public boolean removeElement(E element)
   {
-    boolean removed;
+    IContainerEvent<E> event = null;
     synchronized (this)
     {
-      removed = set.remove(element);
-      notifyAll();
+      if (set.remove(element))
+      {
+        removedElement(element);
+        event = newContainerEvent(element, IContainerDelta.Kind.REMOVED);
+        notifyAll();
+      }
     }
 
-    if (removed)
+    if (event != null)
     {
-      fireElementRemovedEvent(element);
+      fireEvent(event);
+      modifiedContainer();
+      return true;
     }
 
-    return removed;
+    return false;
+  }
+
+  /**
+   * @since 3.5
+   */
+  public boolean removeAllElements(Collection<E> elements)
+  {
+    ContainerEvent<E> event = null;
+    synchronized (this)
+    {
+      for (E element : elements)
+      {
+        if (set.remove(element))
+        {
+          removedElement(element);
+
+          if (event == null)
+          {
+            event = newContainerEvent();
+          }
+
+          event.addDelta(element, IContainerDelta.Kind.REMOVED);
+        }
+      }
+
+      if (event != null)
+      {
+        notifyAll();
+      }
+    }
+
+    if (event != null)
+    {
+      fireEvent(event);
+      modifiedContainer();
+      return true;
+    }
+
+    return false;
+  }
+
+  public void clear()
+  {
+    ContainerEvent<E> event = null;
+    synchronized (this)
+    {
+      for (E element : set)
+      {
+        if (set.contains(element))
+        {
+          removedElement(element);
+
+          if (event == null)
+          {
+            event = newContainerEvent();
+          }
+
+          event.addDelta(element, IContainerDelta.Kind.REMOVED);
+        }
+      }
+
+      if (event != null)
+      {
+        notifyAll();
+      }
+    }
+
+    if (event != null)
+    {
+      fireEvent(event);
+      modifiedContainer();
+    }
+  }
+
+  /**
+   * @since 3.5
+   */
+  public synchronized void load() throws IORuntimeException
+  {
+    if (persistence != null)
+    {
+      Collection<E> elements = persistence.loadElements();
+
+      set.clear();
+      set.addAll(elements);
+    }
+  }
+
+  /**
+   * @since 3.5
+   */
+  public synchronized void save() throws IORuntimeException
+  {
+    if (persistence != null)
+    {
+      persistence.saveElements(set);
+    }
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+    load();
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    if (!isSavedWhenModified())
+    {
+      save();
+    }
+
+    super.doDeactivate();
   }
 
   protected Set<E> getSet()
@@ -129,13 +320,50 @@ public class SetContainer<E> extends Container<E>
     return set;
   }
 
+  /**
+   * Called outside synchronized(this).
+   */
   protected E[] sortElements(E[] array)
   {
     return array;
   }
 
+  /**
+   * Called outside synchronized(this).
+   */
   protected boolean validateElement(E element)
   {
     return true;
+  }
+
+  /**
+   * Called outside synchronized(this).
+   *
+   * @since 3.5
+   */
+  protected void modifiedContainer()
+  {
+    if (isSavedWhenModified())
+    {
+      save();
+    }
+  }
+
+  /**
+   * Called inside synchronized(this).
+   *
+   * @since 3.5
+   */
+  protected void addedElement(E element)
+  {
+  }
+
+  /**
+   * Called inside synchronized(this).
+   *
+   * @since 3.5
+   */
+  protected void removedElement(E element)
+  {
   }
 }

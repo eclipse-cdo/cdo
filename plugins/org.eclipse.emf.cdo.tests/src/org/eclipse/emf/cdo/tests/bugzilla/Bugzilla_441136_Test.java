@@ -15,32 +15,21 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
-import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.util.RequestCallCounter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
-import org.eclipse.net4j.signal.Signal;
 import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.signal.SignalScheduledEvent;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -76,7 +65,7 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
         1000 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
     ((CDONet4jSessionImpl)session).setSignalTimeout(10000 * SignalProtocol.DEFAULT_TIMEOUT);
     CDOTransaction transaction = session.openTransaction();
-    NBRequestsCallsCounter nbRequestsCallsCounter = new NBRequestsCallsCounter(transaction);
+    RequestCallCounter nbRequestsCallsCounter = new RequestCallCounter(session);
     CDOResource resource = transaction.getOrCreateResource(getResourcePath(RESOURCE_NAME));
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
@@ -107,60 +96,6 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
       assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION));
       assertEquals(true, nbRequestsCalls.containsKey(SignalProtocol.SIGNAL_MONITOR_PROGRESS));
     }
-  }
-
-  class NBRequestsCallsCounter implements IListener
-  {
-    private Map<Short, Integer> nbRequestsCalls = new HashMap<Short, Integer>();
-
-    public NBRequestsCallsCounter(CDOView view)
-    {
-
-      InternalCDOSession internalCDOSession = (InternalCDOSession)view.getSession();
-      CDOSessionProtocol sessionProtocol = internalCDOSession.getSessionProtocol();
-      CDOClientProtocol cdoClientProtocol = null;
-      if (sessionProtocol instanceof CDOClientProtocol)
-      {
-        cdoClientProtocol = (CDOClientProtocol)sessionProtocol;
-      }
-      else if (sessionProtocol instanceof DelegatingSessionProtocol)
-      {
-        DelegatingSessionProtocol delegatingSessionProtocol = (DelegatingSessionProtocol)sessionProtocol;
-        CDOSessionProtocol delegate = delegatingSessionProtocol.getDelegate();
-        if (delegate instanceof CDOClientProtocol)
-        {
-          cdoClientProtocol = (CDOClientProtocol)delegate;
-        }
-      }
-      if (cdoClientProtocol != null)
-      {
-        cdoClientProtocol.addListener(this);
-      }
-    }
-
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof SignalScheduledEvent)
-      {
-        @SuppressWarnings("unchecked")
-        SignalScheduledEvent<Object> signalScheduledEvent = (SignalScheduledEvent<Object>)event;
-        Signal signal = signalScheduledEvent.getSignal();
-        short signalID = signal.getID();
-        Integer nbRequestCalls = nbRequestsCalls.get(signalID);
-        if (nbRequestCalls == null)
-        {
-          nbRequestCalls = 0;
-        }
-        nbRequestCalls++;
-        nbRequestsCalls.put(signalID, nbRequestCalls);
-      }
-    }
-
-    public Map<Short, Integer> getNBRequestsCalls()
-    {
-      return nbRequestsCalls;
-    }
-
   }
 
   class CommitTransactionIndicationWaiting implements CDOCommitInfoHandler

@@ -17,8 +17,6 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
-import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -27,16 +25,12 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.util.RequestCallCounter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.net4j.signal.Signal;
-import org.eclipse.net4j.signal.SignalScheduledEvent;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
@@ -47,6 +41,7 @@ import org.junit.Assert;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Test {@link CDOObject#cdoPrefetch(int)} with branch.
@@ -94,10 +89,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
 
     // Test
     CDOSession session = openSession();
-    InternalCDOSession internalCDOSession = (InternalCDOSession)session;
-    CDOClientProtocol cdoClientProtocol = (CDOClientProtocol)internalCDOSession.getSessionProtocol();
-    LoadRevisionsRequestCounter loadRevisionsRequestCounter = new LoadRevisionsRequestCounter();
-    cdoClientProtocol.addListener(loadRevisionsRequestCounter);
+    RequestCallCounter loadRevisionsRequestCounter = new RequestCallCounter(session);
 
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, loadRevisionsRequestCounter, companyCDOID,
@@ -126,9 +118,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     InternalCDOSession internalCDOSession = (InternalCDOSession)session;
     CDOFetchRuleManager fetchRuleManager = new CustomCDOFetchRuleManager(companyCDOID);
     internalCDOSession.setFetchRuleManager(fetchRuleManager);
-    CDOClientProtocol cdoClientProtocol = (CDOClientProtocol)internalCDOSession.getSessionProtocol();
-    LoadRevisionsRequestCounter loadRevisionsRequestCounter = new LoadRevisionsRequestCounter();
-    cdoClientProtocol.addListener(loadRevisionsRequestCounter);
+    RequestCallCounter loadRevisionsRequestCounter = new RequestCallCounter(session);
 
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, loadRevisionsRequestCounter, companyCDOID,
@@ -145,17 +135,18 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   }
 
   private void testCDORevisionFetchWithChangesOnAllBranches(CDOSession session, CDOBranch currentBranch,
-      LoadRevisionsRequestCounter loadRevisionsRequestCounter, CDOID companyCDOID, int expectedNbCategories,
-      boolean prefetch)
+      RequestCallCounter loadRevisionsRequestCounter, CDOID companyCDOID, int expectedNbCategories, boolean prefetch)
   {
-    CDOView view = session.openView(currentBranch);
+    Map<Short, Integer> nbRequestsCalls = loadRevisionsRequestCounter.getNBRequestsCalls();
+    nbRequestsCalls.put(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS, 0);
 
-    assertEquals(0, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    CDOView view = session.openView(currentBranch);
+    assertEquals(0, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     String resourcePath = getResourcePath(RESOURCE_NAME);
     List<String> pathSegments = CDOURIUtil.analyzePath(resourcePath);
     CDOResource resource = view.getResource(resourcePath);
-    assertEquals(pathSegments.size(), loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size(), (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     if (prefetch)
     {
@@ -165,19 +156,19 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     EObject eObject = resource.getContents().get(0);
     Assert.assertTrue(eObject instanceof Company);
     Company company = (Company)eObject;
-    assertEquals(pathSegments.size() + 1, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
     Assert.assertEquals(expectedNbCategories, company.getCategories().size());
 
     view.getRevision(companyCDOID);
 
-    assertEquals(pathSegments.size() + 1, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     view.getResourceSet().eAdapters().add(new EContentAdapter());
 
-    assertEquals(pathSegments.size() + 1, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     view.close();
-    loadRevisionsRequestCounter.reset();
+    nbRequestsCalls.clear();
   }
 
   private CDOID setUpChangesOnBranches() throws Exception
@@ -235,65 +226,31 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   private void testCDORevisionPrefetchOnBranch(CDOSession session, CDOBranch cdoBranch) throws Exception
   {
     CDOTransaction view = session.openTransaction(cdoBranch);
-    InternalCDOSession internalCDOSession = (InternalCDOSession)session;
-    CDOClientProtocol cdoClientProtocol = (CDOClientProtocol)internalCDOSession.getSessionProtocol();
-    LoadRevisionsRequestCounter loadRevisionsRequestCounter = new LoadRevisionsRequestCounter();
-    cdoClientProtocol.addListener(loadRevisionsRequestCounter);
-
-    assertEquals(0, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    RequestCallCounter requestCallCounter = new RequestCallCounter(session);
+    Map<Short, Integer> nbRequestsCalls = requestCallCounter.getNBRequestsCalls();
+    nbRequestsCalls.put(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS, 0);
+    assertEquals(0, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     String resourcePath = getResourcePath(RESOURCE_NAME);
     List<String> pathSegments = CDOURIUtil.analyzePath(resourcePath);
     CDOResource resource = view.getResource(resourcePath);
-    assertEquals(pathSegments.size(), loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size(), (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
     resource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
 
-    assertEquals(pathSegments.size() + 1, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     Company company = (Company)resource.getContents().get(0);
     CDOID companyCDOID = CDOUtil.getCDOObject(company).cdoID();
 
-    assertEquals(pathSegments.size() + 1, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     view.getRevision(companyCDOID);
 
-    assertEquals(pathSegments.size() + 1, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
+    assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
 
     view.getResourceSet().eAdapters().add(new EContentAdapter());
 
-    assertEquals(pathSegments.size() + 1, loadRevisionsRequestCounter.getNbLoadRevisionsRequestCalls());
-
-  }
-
-  private static class LoadRevisionsRequestCounter implements IListener
-  {
-
-    private int nbLoadRevisionsRequestCalls = 0;
-
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof SignalScheduledEvent)
-      {
-        @SuppressWarnings("unchecked")
-        SignalScheduledEvent<Object> signalScheduledEvent = (SignalScheduledEvent<Object>)event;
-        Signal signal = signalScheduledEvent.getSignal();
-        if (signal.getID() == CDOProtocolConstants.SIGNAL_LOAD_REVISIONS && signal instanceof LoadRevisionsRequest)
-        {
-          nbLoadRevisionsRequestCalls++;
-        }
-      }
-    }
-
-    public int getNbLoadRevisionsRequestCalls()
-    {
-      return nbLoadRevisionsRequestCalls;
-    }
-
-    public void reset()
-    {
-      nbLoadRevisionsRequestCalls = 0;
-    }
-
+    assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
   }
 
   private class CustomCDOFetchRuleManager implements CDOFetchRuleManager

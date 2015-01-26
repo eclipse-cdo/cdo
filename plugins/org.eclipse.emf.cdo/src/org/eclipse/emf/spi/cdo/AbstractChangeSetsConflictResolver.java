@@ -11,6 +11,7 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOConflictResolver.NonConflictAware;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -67,8 +69,19 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
 
   private RemoteInvalidationEventQueue remoteInvalidationEvents;
 
+  private boolean ensureRemoteNotifications = true;
+
   public AbstractChangeSetsConflictResolver()
   {
+  }
+
+  /**
+   * @param ensureRemoteNotifications boolean to disable the use of {@link CDOAdapterPolicy} to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when {@link PassiveUpdateMode} is enabled and in {@link PassiveUpdateMode#CHANGES} or {@link PassiveUpdateMode#ADDITIONS}
+   * @since 4.4
+   */
+  public AbstractChangeSetsConflictResolver(boolean ensureRemoteNotifications)
+  {
+    this.ensureRemoteNotifications = ensureRemoteNotifications;
   }
 
   public CDOChangeSetData getLocalChangeSetData()
@@ -109,22 +122,27 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   @Override
   protected void hookTransaction(CDOTransaction transaction)
   {
-    adapter = new CDOChangeSubscriptionAdapter(getTransaction());
-    remoteInvalidationEvents = new RemoteInvalidationEventQueue();
+    if (ensureRemoteNotifications)
+    {
+      adapter = new CDOChangeSubscriptionAdapter(getTransaction());
+      transaction.addTransactionHandler(handler);
+    }
 
-    transaction.addTransactionHandler(handler);
+    remoteInvalidationEvents = new RemoteInvalidationEventQueue();
   }
 
   @Override
   protected void unhookTransaction(CDOTransaction transaction)
   {
-    transaction.removeTransactionHandler(handler);
+    if (ensureRemoteNotifications)
+    {
+      transaction.removeTransactionHandler(handler);
+      adapter.dispose();
+      adapter = null;
+    }
 
     remoteInvalidationEvents.dispose();
     remoteInvalidationEvents = null;
-
-    adapter.dispose();
-    adapter = null;
   }
 
   private CDOChangeSet createChangeSet(CDOChangeSetData changeSetData)

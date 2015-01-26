@@ -12,6 +12,7 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
@@ -62,6 +64,16 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
   }
 
   /**
+   * @param ensureRemoteNotifications boolean to disable the use of {@link CDOAdapterPolicy} to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when {@link PassiveUpdateMode} is enabled and in {@link PassiveUpdateMode#CHANGES} or {@link PassiveUpdateMode#ADDITIONS}
+   * @since 4.4
+   */
+  public CDOMergingConflictResolver(CDOMerger merger, boolean ensureRemoteNotifications)
+  {
+    super(ensureRemoteNotifications);
+    this.merger = merger;
+  }
+
+  /**
    * @since 4.2
    */
   public CDOMergingConflictResolver(DefaultCDOMerger.ResolutionPreference resolutionPreference)
@@ -69,9 +81,31 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     this(new DefaultCDOMerger.PerFeature.ManyValued(resolutionPreference));
   }
 
+  /**
+   * @param ensureRemoteNotifications boolean to disable the use of {@link CDOAdapterPolicy} to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when {@link PassiveUpdateMode} is enabled and in {@link PassiveUpdateMode#CHANGES} or {@link PassiveUpdateMode#ADDITIONS}
+   * @since 4.4
+   */
+  public CDOMergingConflictResolver(DefaultCDOMerger.ResolutionPreference resolutionPreference,
+      boolean ensureRemoteNotifications)
+  {
+    this(new DefaultCDOMerger.PerFeature.ManyValued(resolutionPreference), ensureRemoteNotifications);
+  }
+
+  /**
+   * @since 4.4
+   */
   public CDOMergingConflictResolver()
   {
     this(new DefaultCDOMerger.PerFeature.ManyValued());
+  }
+
+  /**
+   * @param ensureRemoteNotifications boolean to disable the use of {@link CDOAdapterPolicy} to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when {@link PassiveUpdateMode} is enabled and in {@link PassiveUpdateMode#CHANGES} or {@link PassiveUpdateMode#ADDITIONS}
+   * @since 4.4
+   */
+  public CDOMergingConflictResolver(boolean ensureRemoteNotifications)
+  {
+    this(new DefaultCDOMerger.PerFeature.ManyValued(), ensureRemoteNotifications);
   }
 
   public CDOMerger getMerger()

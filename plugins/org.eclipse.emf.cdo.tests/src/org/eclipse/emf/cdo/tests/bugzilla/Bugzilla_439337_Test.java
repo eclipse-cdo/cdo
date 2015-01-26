@@ -15,30 +15,20 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.util.RequestCallCounter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol;
-
-import org.eclipse.net4j.signal.Signal;
-import org.eclipse.net4j.signal.SignalScheduledEvent;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -95,7 +85,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
   private void testCDOLockState(CDOView view, boolean cdoLockStatePrefetchEnabled)
   {
     view.getResourceSet().eAdapters().add(new EContentAdapterQueringCDOLockState());
-    NBRequestsCallsCounter nbRequestsCallsCounter = new NBRequestsCallsCounter(view);
+    RequestCallCounter nbRequestsCallsCounter = new RequestCallCounter(view.getSession());
     view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
 
     Map<Short, Integer> nbRequestsCalls = nbRequestsCallsCounter.getNBRequestsCalls();
@@ -117,63 +107,6 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
     assertEquals("As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled "
         + expectedNbLockStateRequestCalls + " LockStateRequests should have been sent to the server",
         expectedNbLockStateRequestCalls, nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOCK_STATE));
-  }
-
-  /**
-   * {@link IListener} to count sent request and their number.
-   */
-  private static class NBRequestsCallsCounter implements IListener
-  {
-    private Map<Short, Integer> nbRequestsCalls = new HashMap<Short, Integer>();
-
-    public NBRequestsCallsCounter(CDOView view)
-    {
-
-      InternalCDOSession internalCDOSession = (InternalCDOSession)view.getSession();
-      CDOSessionProtocol sessionProtocol = internalCDOSession.getSessionProtocol();
-      CDOClientProtocol cdoClientProtocol = null;
-      if (sessionProtocol instanceof CDOClientProtocol)
-      {
-        cdoClientProtocol = (CDOClientProtocol)sessionProtocol;
-      }
-      else if (sessionProtocol instanceof DelegatingSessionProtocol)
-      {
-        DelegatingSessionProtocol delegatingSessionProtocol = (DelegatingSessionProtocol)sessionProtocol;
-        CDOSessionProtocol delegate = delegatingSessionProtocol.getDelegate();
-        if (delegate instanceof CDOClientProtocol)
-        {
-          cdoClientProtocol = (CDOClientProtocol)delegate;
-        }
-      }
-      if (cdoClientProtocol != null)
-      {
-        cdoClientProtocol.addListener(this);
-      }
-    }
-
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof SignalScheduledEvent)
-      {
-        @SuppressWarnings("unchecked")
-        SignalScheduledEvent<Object> signalScheduledEvent = (SignalScheduledEvent<Object>)event;
-        Signal signal = signalScheduledEvent.getSignal();
-        short signalID = signal.getID();
-        Integer nbRequestCalls = nbRequestsCalls.get(signalID);
-        if (nbRequestCalls == null)
-        {
-          nbRequestCalls = 0;
-        }
-        nbRequestCalls++;
-        nbRequestsCalls.put(signalID, nbRequestCalls);
-      }
-    }
-
-    public Map<Short, Integer> getNBRequestsCalls()
-    {
-      return nbRequestsCalls;
-    }
-
   }
 
   /**

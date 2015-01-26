@@ -42,16 +42,16 @@ public final class LifecycleUtil
   }
 
   /**
-   * @since 3.2
+   * @since 3.5
    */
-  public static boolean isDeferredActivation(Object object)
+  public static int getRefCount(Object object)
   {
-    if (object instanceof ILifecycle.DeferrableActivation)
+    if (object instanceof ShareableLifecycle)
     {
-      return ((ILifecycle.DeferrableActivation)object).isDeferredActivation();
+      return ((ShareableLifecycle)object).refCount.get();
     }
 
-    return false;
+    return 0;
   }
 
   /**
@@ -65,6 +65,19 @@ public final class LifecycleUtil
     }
 
     return LifecycleState.ACTIVE;
+  }
+
+  /**
+   * @since 3.2
+   */
+  public static boolean isDeferredActivation(Object object)
+  {
+    if (object instanceof ILifecycle.DeferrableActivation)
+    {
+      return ((ILifecycle.DeferrableActivation)object).isDeferredActivation();
+    }
+
+    return false;
   }
 
   public static boolean isActive(Object object)

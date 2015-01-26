@@ -11,15 +11,17 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.bundle;
 
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
-import org.eclipse.net4j.util.ui.UIActivator;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
@@ -35,14 +37,18 @@ public abstract class OM
   /**
    * @author Eike Stepper
    */
-  public static final class Activator extends UIActivator
+  public static final class Activator extends OSGiActivator
   {
-    public static Activator INSTANCE;
-
     public Activator()
     {
       super(BUNDLE);
-      INSTANCE = this;
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      CDOExplorerUtil.disposeRepositoryManager();
+      super.doStop();
     }
   }
 }

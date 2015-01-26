@@ -10,6 +10,10 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author Eike Stepper
  */
@@ -41,5 +45,13 @@ public final class ConcurrencyUtil
     {
       return;
     }
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static ExecutorService getExecutorService(IManagedContainer container)
+  {
+    return ExecutorServiceFactory.get(container);
   }
 }

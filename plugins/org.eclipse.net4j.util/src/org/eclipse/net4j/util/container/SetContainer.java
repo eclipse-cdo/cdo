@@ -113,7 +113,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     {
       if (set.add(element))
       {
-        addedElement(element);
+        elementAdded(element);
         event = newContainerEvent(element, IContainerDelta.Kind.ADDED);
         notifyAll();
       }
@@ -122,7 +122,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     if (event != null)
     {
       fireEvent(event);
-      modifiedContainer();
+      containerModified();
       return true;
     }
 
@@ -150,7 +150,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
       {
         if (set.add(element))
         {
-          addedElement(element);
+          elementAdded(element);
 
           if (event == null)
           {
@@ -170,7 +170,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     if (event != null)
     {
       fireEvent(event);
-      modifiedContainer();
+      containerModified();
       return true;
     }
 
@@ -184,7 +184,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     {
       if (set.remove(element))
       {
-        removedElement(element);
+        elementRemoved(element);
         event = newContainerEvent(element, IContainerDelta.Kind.REMOVED);
         notifyAll();
       }
@@ -193,7 +193,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     if (event != null)
     {
       fireEvent(event);
-      modifiedContainer();
+      containerModified();
       return true;
     }
 
@@ -212,7 +212,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
       {
         if (set.remove(element))
         {
-          removedElement(element);
+          elementRemoved(element);
 
           if (event == null)
           {
@@ -232,7 +232,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     if (event != null)
     {
       fireEvent(event);
-      modifiedContainer();
+      containerModified();
       return true;
     }
 
@@ -248,7 +248,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
       {
         if (set.contains(element))
         {
-          removedElement(element);
+          elementRemoved(element);
 
           if (event == null)
           {
@@ -268,7 +268,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
     if (event != null)
     {
       fireEvent(event);
-      modifiedContainer();
+      containerModified();
     }
   }
 
@@ -341,7 +341,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
    *
    * @since 3.5
    */
-  protected void modifiedContainer()
+  protected void containerModified()
   {
     if (isSavedWhenModified())
     {
@@ -354,7 +354,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
    *
    * @since 3.5
    */
-  protected void addedElement(E element)
+  protected void elementAdded(E element)
   {
   }
 
@@ -363,7 +363,7 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
    *
    * @since 3.5
    */
-  protected void removedElement(E element)
+  protected void elementRemoved(E element)
   {
   }
 }

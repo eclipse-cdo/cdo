@@ -70,6 +70,20 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     return rootElementFilter;
   }
 
+  @Override
+  public boolean hasChildren(Object element)
+  {
+    try
+    {
+      Node node = getNode(element);
+      return node.hasChildren();
+    }
+    catch (RuntimeException ex)
+    {
+      return false;
+    }
+  }
+
   public Object[] getChildren(Object element)
   {
     try
@@ -185,6 +199,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
   }
 
+  /**
+   * @since 3.5
+   */
+  protected Object[] getContainerChildren(IContainer<?> container)
+  {
+    return container.getElements();
+  }
+
   protected Node getRoot()
   {
     return root;
@@ -260,6 +282,15 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     Thread thread = new Thread(runnable);
     thread.setDaemon(true);
     thread.start();
+  }
+
+  /**
+   * @since 3.5
+   */
+  @SuppressWarnings("unchecked")
+  protected ContainerItemProvider<CONTAINER>.LazyElement createLazyElement(IContainer<?> container)
+  {
+    return new LazyElement((IContainer<Object>)container);
   }
 
   /**
@@ -357,6 +388,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Node
   {
@@ -367,6 +400,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     public Object getElement();
 
     public Node getParent();
+
+    /**
+     * @since 3.5
+     */
+    public boolean hasChildren();
 
     public List<Node> getChildren();
 
@@ -418,6 +456,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       TreePath parentPath = parent == null ? TreePath.EMPTY : parent.getTreePath();
       return parentPath.createChildPath(getElement());
+    }
+
+    /**
+     * @since 3.5
+     */
+    public boolean hasChildren()
+    {
+      return false;
     }
 
     protected void checkNotDisposed()
@@ -512,6 +558,24 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       }
     }
 
+    /**
+     * @since 3.4
+     */
+    @Override
+    public boolean hasChildren()
+    {
+      checkNotDisposed();
+
+      final IContainer<Object> container = getContainer();
+      if (children == null && isSlow(container))
+      {
+        return true;
+      }
+
+      List<Node> children = getChildren();
+      return children != null && !children.isEmpty();
+    }
+
     public final List<Node> getChildren()
     {
       checkNotDisposed();
@@ -536,8 +600,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
       if (isSlow(container))
       {
-        final LazyElement lazyElement = new LazyElement(container);
-        addChild(children, lazyElement);
+        final Node[] lazyNode = { null };
+
+        LazyElement lazyElement = createLazyElement(container);
+        if (lazyElement != null)
+        {
+          lazyNode[0] = addChild(children, lazyElement);
+        }
 
         Runnable runnable = new Runnable()
         {
@@ -554,8 +623,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
             }
             finally
             {
-              Node node = removeNode(lazyElement);
-              children.remove(node);
+              if (lazyNode[0] != null)
+              {
+                children.remove(lazyNode[0]);
+              }
+
               refreshElement(container, false);
             }
           }
@@ -577,7 +649,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
      */
     protected void fillChildren(List<Node> children, IContainer<Object> container)
     {
-      Object[] elements = container.getElements();
+      Object[] elements = getContainerChildren(container);
       for (int i = 0; i < elements.length; i++)
       {
         Object element = elements[i];
@@ -696,11 +768,22 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
    */
   public class LazyElement
   {
-    private IContainer<Object> container;
+    private final IContainer<Object> container;
+
+    private final String text;
+
+    /**
+     * @since 3.5
+     */
+    public LazyElement(IContainer<Object> container, String text)
+    {
+      this.container = container;
+      this.text = text;
+    }
 
     public LazyElement(IContainer<Object> container)
     {
-      this.container = container;
+      this(container, getSlowText(container));
     }
 
     public IContainer<Object> getContainer()
@@ -711,7 +794,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     @Override
     public String toString()
     {
-      return getSlowText(container);
+      return text;
     }
   }
 

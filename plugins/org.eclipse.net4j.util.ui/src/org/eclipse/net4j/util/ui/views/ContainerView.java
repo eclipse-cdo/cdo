@@ -101,13 +101,14 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   public void resetInput()
   {
+    final IContainer<?> container = getContainer();
+
     Runnable runnable = new Runnable()
     {
       public void run()
       {
         try
         {
-          IContainer<?> container = getContainer();
           viewer.setInput(container);
         }
         catch (RuntimeException ignore)
@@ -267,7 +268,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
     return new ContainerItemProvider<IContainer<Object>>(getRootElementFilter())
-    {
+        {
       @Override
       public Image getImage(Object obj)
       {
@@ -327,7 +328,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
         return font;
       }
-    };
+        };
   }
 
   protected String getElementText(Object element)

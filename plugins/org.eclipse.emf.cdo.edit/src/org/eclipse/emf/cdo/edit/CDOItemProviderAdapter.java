@@ -577,8 +577,12 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
         {
           if (object != null)
           {
-            return ((IItemLabelProvider)ContainerDescriptor.adapterFactory.adapt(object, IItemLabelProvider.class))
-                .getImage(object);
+            IItemLabelProvider itemLabelProvider = (IItemLabelProvider)ContainerDescriptor.adapterFactory.adapt(object,
+                IItemLabelProvider.class);
+            if (itemLabelProvider != null)
+            {
+              return itemLabelProvider.getImage(object);
+            }
           }
 
           return null;
@@ -588,8 +592,12 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
         {
           if (object != null)
           {
-            return ((IItemLabelProvider)ContainerDescriptor.adapterFactory.adapt(object, IItemLabelProvider.class))
-                .getText(object);
+            IItemLabelProvider itemLabelProvider = (IItemLabelProvider)ContainerDescriptor.adapterFactory.adapt(object,
+                IItemLabelProvider.class);
+            if (itemLabelProvider != null)
+            {
+              return itemLabelProvider.getText(object);
+            }
           }
 
           return null;

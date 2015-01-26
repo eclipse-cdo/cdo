@@ -16,9 +16,6 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
@@ -84,34 +81,4 @@ public abstract class ContainerPersistence<E> implements Persistence<E>
   protected abstract InputStream openInputStream() throws IOException;
 
   protected abstract OutputStream openOutputStream() throws IOException;
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class FileContainerPersistence<E> extends ContainerPersistence<E>
-  {
-    private final File file;
-
-    public FileContainerPersistence(File file)
-    {
-      this.file = file;
-    }
-
-    public final File getFile()
-    {
-      return file;
-    }
-
-    @Override
-    protected InputStream openInputStream() throws IOException
-    {
-      return new FileInputStream(file);
-    }
-
-    @Override
-    protected OutputStream openOutputStream() throws IOException
-    {
-      return new FileOutputStream(file);
-    }
-  }
 }

@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ShareableLifecycle extends Lifecycle
 {
-  private AtomicInteger refCount;
+  AtomicInteger refCount;
 
   public ShareableLifecycle()
   {

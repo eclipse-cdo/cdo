@@ -31,6 +31,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui;version="4.3.100";
@@ -40,6 +41,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.actions;version="4.3.100";
@@ -49,6 +51,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.dialogs;version="4.3.100";
@@ -58,6 +61,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.dnd;version="4.3.100";
@@ -67,6 +71,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.editor;version="4.3.100";
@@ -76,6 +81,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.filters;version="4.3.100";
@@ -85,6 +91,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.history;version="4.3.100";
@@ -94,6 +101,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.perspectives;version="4.3.100";
@@ -103,6 +111,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.preferences;version="4.3.100";
@@ -112,6 +121,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.transfer;version="4.3.100";
@@ -121,6 +131,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.internal.ui.views;version="4.3.100";
@@ -130,6 +141,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui.bundle;version="4.3.100";x-inter
    org.eclipse.emf.cdo.tests.ui,
    org.eclipse.emf.cdo.dawn.ui,
    org.eclipse.emf.cdo.explorer,
+   org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
  org.eclipse.emf.cdo.ui;version="4.3.100",

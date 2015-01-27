@@ -30,20 +30,14 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   }
 
   @Override
-  protected CDOView openView()
+  protected CDOView openView(CDOSession session)
   {
-    CDORepository repository = getRepository();
-    CDOSession session = repository.getSession();
-
-    String branchPath = getBranchPath();
-
     CDOBranchManager branchManager = session.getBranchManager();
-    CDOBranch branch = branchManager.getBranch(branchPath);
+    CDOBranch branch = branchManager.getBranch(getBranchPath());
 
     if (isReadOnly())
     {
-      long timeStamp = getTimeStamp();
-      return session.openView(branch, timeStamp);
+      return session.openView(branch, getTimeStamp());
     }
 
     return session.openTransaction(branch);

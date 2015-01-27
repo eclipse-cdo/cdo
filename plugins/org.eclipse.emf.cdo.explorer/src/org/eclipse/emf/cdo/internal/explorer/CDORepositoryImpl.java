@@ -23,22 +23,28 @@ import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.ContainerEvent;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.lifecycle.ShareableLifecycle;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDORepositoryImpl extends ShareableLifecycle implements CDORepository
+public abstract class CDORepositoryImpl extends Notifier implements CDORepository
 {
   private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
+
+  private final Set<CDOCheckout> openCheckouts = new HashSet<CDOCheckout>();
 
   private final LifecycleEventAdapter sessionListener = new LifecycleEventAdapter()
   {
@@ -46,6 +52,20 @@ public abstract class CDORepositoryImpl extends ShareableLifecycle implements CD
     protected void onDeactivated(ILifecycle lifecycle)
     {
       disconnect();
+    }
+  };
+
+  private final IListener mainBranchListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof IContainerEvent)
+      {
+        @SuppressWarnings("unchecked")
+        IContainerEvent<CDOBranch> e = (IContainerEvent<CDOBranch>)event;
+
+        fireEvent(new ContainerEvent<CDOBranch>(CDORepositoryImpl.this, Arrays.asList(e.getDeltas())));
+      }
     }
   };
 
@@ -59,7 +79,6 @@ public abstract class CDORepositoryImpl extends ShareableLifecycle implements CD
 
   public CDORepositoryImpl(CDORepositoryManager repositoryManager, String label, String repositoryName)
   {
-    super(true);
     this.repositoryManager = repositoryManager;
     this.repositoryName = repositoryName;
   }
@@ -84,31 +103,64 @@ public abstract class CDORepositoryImpl extends ShareableLifecycle implements CD
     return repositoryName;
   }
 
-  public synchronized CDOSession getSession()
+  public CDOSession getSession()
   {
-    if (session == null)
-    {
-      session = openSession();
-      session.addListener(sessionListener);
-    }
-
     return session;
   }
 
   public boolean isConnected()
   {
-    return isActive();
+    return session != null;
+  }
+
+  public void connect()
+  {
+    boolean connected = false;
+    synchronized (sessionListener)
+    {
+      if (!isConnected())
+      {
+        session = openSession();
+        session.addListener(sessionListener);
+        session.getBranchManager().getMainBranch().addListener(mainBranchListener);
+
+        connected = true;
+      }
+    }
+
+    if (connected)
+    {
+      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, true);
+    }
   }
 
   public void disconnect()
   {
-    if (session != null)
+    boolean disconnected = false;
+    synchronized (sessionListener)
     {
-      session.removeListener(sessionListener);
-
-      while (isActive())
+      if (isConnected())
       {
-        deactivate();
+        session.close();
+        session = null;
+
+        disconnected = true;
+      }
+    }
+
+    if (disconnected)
+    {
+      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, false);
+    }
+  }
+
+  public void disconnectIfUnused()
+  {
+    synchronized (checkouts)
+    {
+      if (openCheckouts.isEmpty())
+      {
+        disconnect();
       }
     }
   }
@@ -129,9 +181,29 @@ public abstract class CDORepositoryImpl extends ShareableLifecycle implements CD
     }
   }
 
+  public CDOSession openCheckout(CDOCheckout checkout)
+  {
+    connect();
+
+    synchronized (checkouts)
+    {
+      openCheckouts.add(checkout);
+    }
+
+    return session;
+  }
+
+  public void closeCheckout(CDOCheckout checkout)
+  {
+    synchronized (checkouts)
+    {
+      openCheckouts.remove(checkout);
+    }
+  }
+
   public boolean isEmpty()
   {
-    if (session != null)
+    if (isConnected())
     {
       return session.getBranchManager().getMainBranch().isEmpty();
     }
@@ -141,7 +213,12 @@ public abstract class CDORepositoryImpl extends ShareableLifecycle implements CD
 
   public CDOBranch[] getElements()
   {
-    return getSession().getBranchManager().getMainBranch().getBranches();
+    if (isConnected())
+    {
+      return session.getBranchManager().getMainBranch().getBranches();
+    }
+
+    return new CDOBranch[0];
   }
 
   @Override
@@ -173,17 +250,7 @@ public abstract class CDORepositoryImpl extends ShareableLifecycle implements CD
   @Override
   public String toString()
   {
-    int refCount = LifecycleUtil.getRefCount(this);
-    return getConnectorType() + "://" + getConnectorDescription() + "/" + repositoryName + " [" + refCount + "]";
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    session.close();
-    session = null;
-
-    super.doDeactivate();
+    return getConnectorType() + "://" + getConnectorDescription() + "/" + repositoryName;
   }
 
   protected IManagedContainer getContainer()

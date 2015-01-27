@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * Manages a set of {@link CDORepository repositories}.
@@ -26,4 +27,16 @@ public interface CDORepositoryManager extends IContainer<CDORepository>
 
   public CDORepository addRemoteRepository(String label, String repositoryName, String connectorType,
       String connectorDescription);
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface RepositoryConnectionEvent extends IEvent
+  {
+    public CDORepositoryManager getSource();
+
+    public CDORepository getRepository();
+
+    public boolean isConnected();
+  }
 }

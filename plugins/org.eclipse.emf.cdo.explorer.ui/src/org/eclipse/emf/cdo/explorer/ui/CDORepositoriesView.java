@@ -10,13 +10,17 @@
  */
 package org.eclipse.emf.cdo.explorer.ui;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.CDORepositoryManagerImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -24,22 +28,27 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchActionConstants;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class CDORepositoriesView extends ContainerView
 {
-  private final Set<CDORepository> expandedRepositories = new HashSet<CDORepository>();
+  private static final int MINUTE = 60 * 1000;
+
+  private final ActivityDetector activityDetector = new ActivityDetector();
 
   private CDORepositoryItemProvider itemProvider;
 
@@ -58,28 +67,7 @@ public class CDORepositoriesView extends ContainerView
   @Override
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
-    itemProvider = new CDORepositoryItemProvider()
-    {
-      @Override
-      public boolean hasChildren(Object element)
-      {
-        if (element instanceof CDORepositoryManager)
-        {
-          CDORepositoryManager repositoryManager = (CDORepositoryManager)element;
-
-          TreeViewer viewer = CDORepositoriesView.this.getViewer();
-          for (CDORepository repository : repositoryManager.getRepositories())
-          {
-            if (expandedRepositories.remove(repository) && !viewer.getExpandedState(repository))
-            {
-
-            }
-          }
-        }
-
-        return super.hasChildren(element);
-      }
-    };
+    itemProvider = new CDORepositoryItemProvider();
     return itemProvider;
   }
 
@@ -94,29 +82,15 @@ public class CDORepositoriesView extends ContainerView
   protected void initViewer()
   {
     super.initViewer();
-    getViewer().addTreeListener(new ITreeViewerListener()
-    {
-      public void treeExpanded(TreeExpansionEvent event)
-      {
-        Object element = event.getElement();
-        if (element instanceof CDORepository)
-        {
-          CDORepository repository = (CDORepository)element;
-          LifecycleUtil.activate(repository);
-          itemProvider.superGetChildren(repository);
-        }
-      }
 
-      public void treeCollapsed(TreeExpansionEvent event)
-      {
-        Object element = event.getElement();
-        if (element instanceof CDORepository)
-        {
-          CDORepository repository = (CDORepository)element;
-          LifecycleUtil.deactivate(repository);
-        }
-      }
-    });
+    TreeViewer viewer = getViewer();
+    viewer.addTreeListener(activityDetector);
+
+    Tree tree = viewer.getTree();
+    tree.addMouseListener(activityDetector);
+    tree.addKeyListener(activityDetector);
+
+    tree.getDisplay().timerExec(MINUTE, activityDetector);
   }
 
   @Override
@@ -133,10 +107,115 @@ public class CDORepositoriesView extends ContainerView
     super.fillLocalToolBar(manager);
   }
 
+  @Override
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  {
+    super.fillContextMenu(manager, selection);
+
+    if (selection.size() == 1)
+    {
+      Object element = selection.getFirstElement();
+      manager.add(new ConnectAction(element));
+    }
+  }
+
+  @Override
+  protected void doubleClicked(Object object)
+  {
+    if (object instanceof CDORepository)
+    {
+      CDORepository repository = (CDORepository)object;
+      if (!repository.isConnected())
+      {
+        repository.connect();
+        return;
+      }
+    }
+
+    super.doubleClicked(object);
+  }
+
   /**
    * @author Eike Stepper
    */
-  private class NewRepositoryAction extends Action
+  private final class ActivityDetector implements ITreeViewerListener, MouseListener, KeyListener, Runnable
+  {
+    private long lastActivity;
+
+    public ActivityDetector()
+    {
+      detect();
+    }
+
+    public void treeCollapsed(TreeExpansionEvent event)
+    {
+      detect();
+    }
+
+    public void treeExpanded(TreeExpansionEvent event)
+    {
+      detect();
+    }
+
+    public void mouseDoubleClick(MouseEvent e)
+    {
+      detect();
+    }
+
+    public void mouseDown(MouseEvent e)
+    {
+      detect();
+    }
+
+    public void mouseUp(MouseEvent e)
+    {
+      detect();
+    }
+
+    public void keyPressed(KeyEvent e)
+    {
+      detect();
+    }
+
+    public void keyReleased(KeyEvent e)
+    {
+      detect();
+    }
+
+    private void detect()
+    {
+      lastActivity = System.currentTimeMillis();
+    }
+
+    public void run()
+    {
+      Tree tree = getViewer().getTree();
+      if (tree.isDisposed())
+      {
+        return;
+      }
+
+      long now = System.currentTimeMillis();
+      int wait = MINUTE;
+
+      if (lastActivity <= now - MINUTE)
+      {
+        CDORepositoryManagerImpl repositoryManager = (CDORepositoryManagerImpl)getContainer();
+        repositoryManager.disconnectUnusedRepositories();
+      }
+      else
+      {
+        wait = (int)(MINUTE - (now - lastActivity));
+      }
+
+      tree.getDisplay().timerExec(wait, this);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class NewRepositoryAction extends Action
   {
     public NewRepositoryAction()
     {
@@ -159,6 +238,45 @@ public class CDORepositoriesView extends ContainerView
 
           CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
           repositoryManager.addRemoteRepository(repositoryName, repositoryName, connectorType, connectorDescription);
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        OM.LOG.error(ex);
+        throw ex;
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConnectAction extends Action
+  {
+    private final Object element;
+
+    public ConnectAction(Object element)
+    {
+      this.element = element;
+
+      setText("Connect...");
+      setToolTipText("Create an online checkout");
+      setImageDescriptor(OM.getImageDescriptor("icons/add.gif"));
+    }
+
+    @Override
+    public void run()
+    {
+      try
+      {
+        if (element instanceof CDORepository)
+        {
+          CDORepository repository = (CDORepository)element;
+          CDOID rootID = repository.getSession().getRepositoryInfo().getRootResourceID();
+
+          CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
+          checkoutManager.connect(repository.getLabel(), repository, CDOBranch.MAIN_BRANCH_NAME,
+              CDOBranchPoint.UNSPECIFIED_DATE, false, rootID);
         }
       }
       catch (RuntimeException ex)

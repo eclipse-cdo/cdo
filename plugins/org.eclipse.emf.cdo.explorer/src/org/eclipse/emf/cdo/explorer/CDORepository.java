@@ -38,6 +38,8 @@ public interface CDORepository extends IContainer<CDOBranch>, CDOSessionProvider
 
   public boolean isConnected();
 
+  public void connect();
+
   public void disconnect();
 
   public CDOCheckout[] getCheckouts();

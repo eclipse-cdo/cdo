@@ -12,32 +12,57 @@ package org.eclipse.emf.cdo.explorer.ui;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
-import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-
-import java.util.Iterator;
 
 /**
  * @author Eike Stepper
  */
 public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<Object>>
 {
+  private static final Image IMAGE_REPO = SharedIcons.getImage(SharedIcons.OBJ_REPO);
+
+  private static final Image IMAGE_BRANCH = SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
+
+  private static final Color COLOR_DRAK_GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+
+  private final Image imageRepoDisconnected = new Image(UIUtil.getDisplay(), IMAGE_REPO, SWT.IMAGE_GRAY);
+
+  private final IListener repositoryManagerListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDORepositoryManager.RepositoryConnectionEvent)
+      {
+        CDORepositoryManager.RepositoryConnectionEvent e = (CDORepositoryManager.RepositoryConnectionEvent)event;
+        refreshElement(e.getRepository(), true);
+      }
+    }
+  };
+
   public CDORepositoryItemProvider()
   {
   }
 
-  public CDORepositoryItemProvider(IElementFilter rootElementFilter)
+  @Override
+  public void dispose()
   {
-    super(rootElementFilter);
+    imageRepoDisconnected.dispose();
+    super.dispose();
   }
 
   @Override
@@ -48,7 +73,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       CDORepository repository = (CDORepository)element;
       if (!repository.isConnected())
       {
-        return true;
+        return false;
       }
     }
 
@@ -63,16 +88,10 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       CDORepository repository = (CDORepository)element;
       if (!repository.isConnected())
       {
-        ContainerItemProvider<IContainer<Object>>.LazyElement lazyElement = createLazyElement(repository);
-        return new Object[] { lazyElement };
+        return new Object[0];
       }
     }
 
-    return superGetChildren(element);
-  }
-
-  public Object[] superGetChildren(Object element)
-  {
     return super.getChildren(element);
   }
 
@@ -93,15 +112,36 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
   {
     if (obj instanceof CDORepository)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_REPO);
+      CDORepository repository = (CDORepository)obj;
+      if (!repository.isConnected())
+      {
+        return imageRepoDisconnected;
+      }
+
+      return IMAGE_REPO;
     }
 
     if (obj instanceof CDOBranch)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
+      return IMAGE_BRANCH;
     }
 
     return super.getImage(obj);
+  }
+
+  @Override
+  public Color getForeground(Object obj)
+  {
+    if (obj instanceof CDORepository)
+    {
+      CDORepository repository = (CDORepository)obj;
+      if (!repository.isConnected())
+      {
+        return COLOR_DRAK_GRAY;
+      }
+    }
+
+    return super.getForeground(obj);
   }
 
   @Override
@@ -113,7 +153,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       Object obj = selection.getFirstElement();
       if (obj instanceof CDORepository)
       {
-        manager.add(new RemoveAction(obj));
+        manager.add(new DisconnectAction((CDORepository)obj));
       }
     }
   }
@@ -135,34 +175,44 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     return "Loading...";
   }
 
+  // @Override
+  // protected void handleInactiveElement(Iterator<org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node> it,
+  // org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node child)
+  // {
+  // // Do nothing.
+  // }
+
   @Override
-  protected void handleInactiveElement(Iterator<org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node> it,
-      org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node child)
+  protected void connectInput(IContainer<Object> input)
   {
-    // Do nothing.
+    super.connectInput(input);
+    input.addListener(repositoryManagerListener);
+  }
+
+  @Override
+  protected void disconnectInput(IContainer<Object> input)
+  {
+    input.removeListener(repositoryManagerListener);
+    super.disconnectInput(input);
   }
 
   /**
    * @author Eike Stepper
    */
-  public static class RemoveAction extends LongRunningAction
+  public static class DisconnectAction extends LongRunningAction
   {
-    private Object object;
+    private CDORepository repository;
 
-    public RemoveAction(Object object)
+    public DisconnectAction(CDORepository repository)
     {
-      super("Remove");
-      this.object = object;
+      super("Disconnect");
+      this.repository = repository;
     }
 
     @Override
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
-      // if (object instanceof CDORepository)
-      // {
-      // CDORepository repository = (CDORepository)object;
-      // repository.remove();
-      // }
+      repository.disconnect();
     }
   }
 }

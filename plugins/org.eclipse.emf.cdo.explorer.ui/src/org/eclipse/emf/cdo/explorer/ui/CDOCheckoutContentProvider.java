@@ -121,10 +121,10 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider
 
   private Object[] getRootContent(Object object)
   {
-    // if (object == input)
-    // {
-    // return MANAGER.getCheckouts();
-    // }
+    if (object == input)
+    {
+      return MANAGER.getCheckouts();
+    }
 
     if (object instanceof CDOCheckout)
     {

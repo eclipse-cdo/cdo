@@ -294,6 +294,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   }
 
   /**
+   * @since 3.5
+   */
+  protected boolean isComputeChildrenEagerly()
+  {
+    return true;
+  }
+
+  /**
    * @since 3.1
    */
   protected boolean isSlow(IContainer<Object> container)
@@ -569,6 +577,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       final IContainer<Object> container = getContainer();
       if (children == null && isSlow(container))
       {
+        if (isComputeChildrenEagerly())
+        {
+          getChildren();
+        }
+
         return true;
       }
 

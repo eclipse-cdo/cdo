@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
@@ -124,7 +125,9 @@ public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheck
   {
     if (!isOpen())
     {
-      view = openView();
+      CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
+      view = openView(session);
+      rootObject = loadRootObject();
     }
   }
 
@@ -139,19 +142,13 @@ public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheck
     }
   }
 
-  public final synchronized CDOView getView()
+  public final CDOView getView()
   {
-    open();
     return view;
   }
 
-  public final synchronized EObject getRootObject()
+  public final EObject getRootObject()
   {
-    if (rootObject == null)
-    {
-      rootObject = loadRootObject();
-    }
-
     return rootObject;
   }
 
@@ -160,7 +157,7 @@ public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheck
   {
     if (adapter == EObject.class)
     {
-      return getRootObject();
+      return rootObject;
     }
 
     return super.getAdapter(adapter);
@@ -168,9 +165,8 @@ public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheck
 
   protected EObject loadRootObject()
   {
-    CDOView view = getView();
     return view.getObject(rootID);
   }
 
-  protected abstract CDOView openView();
+  protected abstract CDOView openView(CDOSession session);
 }

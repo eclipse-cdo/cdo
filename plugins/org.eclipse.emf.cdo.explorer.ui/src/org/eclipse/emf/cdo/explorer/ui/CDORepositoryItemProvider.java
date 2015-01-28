@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.explorer.ui;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.explorer.CDORepository;
-import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
+import org.eclipse.emf.cdo.explorer.CDORepositoryManager.RepositoryConnectionEvent;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -46,10 +47,23 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDORepositoryManager.RepositoryConnectionEvent)
+      if (event instanceof RepositoryConnectionEvent)
       {
-        CDORepositoryManager.RepositoryConnectionEvent e = (CDORepositoryManager.RepositoryConnectionEvent)event;
-        refreshElement(e.getRepository(), true);
+        RepositoryConnectionEvent e = (RepositoryConnectionEvent)event;
+        CDORepository repository = e.getRepository();
+        TreeViewer viewer = getViewer();
+
+        if (!e.isConnected())
+        {
+          ViewerUtil.expand(viewer, repository, false);
+        }
+
+        ViewerUtil.refresh(viewer, repository);
+
+        // if (e.isConnected())
+        // {
+        // ViewerUtil.setExpandedState(viewer, repository, true);
+        // }
       }
     }
   };
@@ -63,6 +77,12 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
   {
     imageRepoDisconnected.dispose();
     super.dispose();
+  }
+
+  @Override
+  public TreeViewer getViewer()
+  {
+    return (TreeViewer)super.getViewer();
   }
 
   @Override
@@ -88,7 +108,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       CDORepository repository = (CDORepository)element;
       if (!repository.isConnected())
       {
-        return new Object[0];
+        return ViewerUtil.NO_CHILDREN;
       }
     }
 
@@ -98,6 +118,12 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
   @Override
   public String getText(Object element)
   {
+    if (element instanceof CDORepository)
+    {
+      CDORepository repository = (CDORepository)element;
+      return repository.getLabel();
+    }
+
     if (element instanceof CDOBranch)
     {
       CDOBranch branch = (CDOBranch)element;

@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * @author Eike Stepper
  */
-public class NewRepositoryLocationDialog extends TitleAreaDialog
+public class NewRepositoryDialog extends TitleAreaDialog
 {
   private ElementWizardComposite connectorWizard;
 
@@ -39,7 +39,7 @@ public class NewRepositoryLocationDialog extends TitleAreaDialog
 
   private String repositoryName;
 
-  public NewRepositoryLocationDialog(Shell parentShell)
+  public NewRepositoryDialog(Shell parentShell)
   {
     super(parentShell);
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);

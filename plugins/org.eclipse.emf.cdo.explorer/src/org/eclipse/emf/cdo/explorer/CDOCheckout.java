@@ -50,9 +50,13 @@ public interface CDOCheckout extends IAdaptable
 
   public void setRootID(CDOID rootID);
 
+  public boolean isOpen();
+
+  public void open();
+
+  public void close();
+
   public CDOView getView();
 
   public EObject getRootObject();
-
-  public void close();
 }

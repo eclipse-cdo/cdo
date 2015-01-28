@@ -80,6 +80,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
   public CDORepositoryImpl(CDORepositoryManager repositoryManager, String label, String repositoryName)
   {
     this.repositoryManager = repositoryManager;
+    this.label = label;
     this.repositoryName = repositoryName;
   }
 

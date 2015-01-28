@@ -111,7 +111,7 @@ public final class FSMUtil
   public static InternalCDOObject adaptLegacy(InternalEObject object)
   {
     EList<Adapter> adapters = object.eAdapters();
-    CDOLegacyAdapter adapter = getLegacyAdapter(adapters);
+    CDOLegacyAdapter adapter = (CDOLegacyAdapter)getLegacyAdapter(adapters);
     if (adapter == null)
     {
       adapter = new CDOLegacyAdapter(object);
@@ -132,9 +132,20 @@ public final class FSMUtil
     // return wrapper;
   }
 
-  private static CDOLegacyAdapter getLegacyAdapter(EList<Adapter> adapters)
+  /**
+   * @since 4.4
+   */
+  public static Adapter getLegacyAdapter(EObject object)
   {
-    return (CDOLegacyAdapter)EcoreUtil.getAdapter(adapters, CDOLegacyAdapter.class);
+    return getLegacyAdapter(object.eAdapters());
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static Adapter getLegacyAdapter(EList<Adapter> adapters)
+  {
+    return EcoreUtil.getAdapter(adapters, CDOLegacyAdapter.class);
   }
 
   public static Iterator<InternalCDOObject> iterator(final Iterator<?> delegate, final InternalCDOView view)

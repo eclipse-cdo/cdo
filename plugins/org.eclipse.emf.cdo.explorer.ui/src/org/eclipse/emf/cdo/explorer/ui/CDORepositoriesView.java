@@ -115,7 +115,7 @@ public class CDORepositoriesView extends ContainerView
     if (selection.size() == 1)
     {
       Object element = selection.getFirstElement();
-      manager.add(new ConnectAction(element));
+      manager.add(new CheckoutAction(element));
     }
   }
 
@@ -127,7 +127,11 @@ public class CDORepositoriesView extends ContainerView
       CDORepository repository = (CDORepository)object;
       if (!repository.isConnected())
       {
+        int xxx;
+        // TODO Make async!
         repository.connect();
+
+        ViewerUtil.expand(getViewer(), repository, true);
         return;
       }
     }
@@ -229,8 +233,8 @@ public class CDORepositoriesView extends ContainerView
     {
       try
       {
-        NewRepositoryLocationDialog dialog = new NewRepositoryLocationDialog(getSite().getShell());
-        if (dialog.open() == NewRepositoryLocationDialog.OK)
+        NewRepositoryDialog dialog = new NewRepositoryDialog(getSite().getShell());
+        if (dialog.open() == NewRepositoryDialog.OK)
         {
           String connectorType = dialog.getConnectorType();
           String connectorDescription = dialog.getConnectorDescription();
@@ -251,15 +255,15 @@ public class CDORepositoriesView extends ContainerView
   /**
    * @author Eike Stepper
    */
-  private final class ConnectAction extends Action
+  private final class CheckoutAction extends Action
   {
     private final Object element;
 
-    public ConnectAction(Object element)
+    public CheckoutAction(Object element)
     {
       this.element = element;
 
-      setText("Connect...");
+      setText("Checkout...");
       setToolTipText("Create an online checkout");
       setImageDescriptor(OM.getImageDescriptor("icons/add.gif"));
     }

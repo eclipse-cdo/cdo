@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * Manages a set of {@link CDOCheckout checkouts}.
@@ -27,4 +28,16 @@ public interface CDOCheckoutManager extends IContainer<CDOCheckout>
 
   public CDOCheckout connect(String label, CDORepository repository, String branchPath, long timeStamp,
       boolean readOnly, CDOID rootID);
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface CheckoutOpenEvent extends IEvent
+  {
+    public CDOCheckoutManager getSource();
+
+    public CDOCheckout getCheckout();
+
+    public boolean isOpen();
+  }
 }

@@ -17,15 +17,36 @@ import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
+
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 
-import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.runtime.Platform;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheckout
+public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
 {
+  private final IListener viewListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof ILifecycleEvent)
+      {
+        ILifecycleEvent e = (ILifecycleEvent)event;
+        if (e.getKind() == Kind.DEACTIVATED)
+        {
+          close();
+        }
+      }
+    }
+  };
+
   private final CDOCheckoutManager checkoutManager;
 
   private final CDORepository repository;
@@ -123,22 +144,49 @@ public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheck
 
   public final synchronized void open()
   {
-    if (!isOpen())
+    boolean opened = false;
+    synchronized (viewListener)
     {
-      CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
-      view = openView(session);
-      rootObject = loadRootObject();
+      if (!isOpen())
+      {
+        CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
+
+        view = openView(session);
+        view.addListener(viewListener);
+
+        rootObject = loadRootObject();
+        rootObject.eAdapters().add(this);
+
+        opened = true;
+      }
+    }
+
+    if (opened)
+    {
+      ((CDOCheckoutManagerImpl)checkoutManager).fireCheckoutOpenEvent(this, true);
     }
   }
 
   public final synchronized void close()
   {
-    if (isOpen())
+    boolean closed = false;
+    synchronized (viewListener)
     {
-      rootObject = null;
+      if (isOpen())
+      {
+        rootObject.eAdapters().remove(this);
+        rootObject = null;
 
-      view.close();
-      view = null;
+        view.close();
+        view = null;
+
+        closed = true;
+      }
+    }
+
+    if (closed)
+    {
+      ((CDOCheckoutManagerImpl)checkoutManager).fireCheckoutOpenEvent(this, false);
     }
   }
 
@@ -153,6 +201,16 @@ public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheck
   }
 
   @Override
+  public boolean isAdapterForType(Object type)
+  {
+    if (type == CDOCheckout.class)
+    {
+      return true;
+    }
+
+    return super.isAdapterForType(type);
+  }
+
   public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
   {
     if (adapter == EObject.class)
@@ -160,7 +218,13 @@ public abstract class CDOCheckoutImpl extends PlatformObject implements CDOCheck
       return rootObject;
     }
 
-    return super.getAdapter(adapter);
+    return Platform.getAdapterManager().getAdapter(this, adapter);
+  }
+
+  @Override
+  public String toString()
+  {
+    return getLabel();
   }
 
   protected EObject loadRootObject()

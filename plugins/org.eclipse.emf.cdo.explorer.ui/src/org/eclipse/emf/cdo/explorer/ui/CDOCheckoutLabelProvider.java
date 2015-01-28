@@ -14,24 +14,30 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
- * @since 4.3
  */
 public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider
 {
   private final ComposedAdapterFactory adapterFactory;
 
-  private Image checkoutImage;
+  private final Image checkoutImage;
+
+  private final Image checkoutClosedImage;
+
+  private final Image errorImage;
 
   public CDOCheckoutLabelProvider()
   {
@@ -43,13 +49,15 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
     setAdapterFactory(adapterFactory);
 
-    ImageDescriptor imageDescriptor = OM.getImageDescriptor("icons/checkout.gif");
-    checkoutImage = imageDescriptor.createImage();
+    checkoutImage = OM.getImageDescriptor("icons/checkout.gif").createImage();
+    checkoutClosedImage = OM.getImageDescriptor("icons/checkout_closed.gif").createImage();
+    errorImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
   }
 
   @Override
   public void dispose()
   {
+    checkoutClosedImage.dispose();
     checkoutImage.dispose();
     super.dispose();
 
@@ -69,7 +77,20 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider
     if (element instanceof CDOResourceNode)
     {
       CDOResourceNode resourceNode = (CDOResourceNode)element;
-      return resourceNode.getName();
+
+      try
+      {
+        return resourceNode.getName();
+      }
+      catch (Exception ex)
+      {
+        return ex.getMessage();
+      }
+    }
+
+    if (element instanceof ViewerUtil.Pending)
+    {
+      return "Loading...";
     }
 
     return super.getText(element);
@@ -80,9 +101,27 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider
   {
     if (element instanceof CDOCheckout)
     {
-      return checkoutImage;
+      CDOCheckout checkout = (CDOCheckout)element;
+      if (checkout.isOpen())
+      {
+        return checkoutImage;
+      }
+
+      return checkoutClosedImage;
     }
 
-    return super.getImage(element);
+    if (element instanceof ViewerUtil.Pending)
+    {
+      return ContainerItemProvider.IMAGE_PENDING;
+    }
+
+    try
+    {
+      return super.getImage(element);
+    }
+    catch (Exception ex)
+    {
+      return errorImage;
+    }
   }
 }

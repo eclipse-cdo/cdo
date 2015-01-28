@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.CDORepository;
 
 import org.eclipse.net4j.util.container.SetContainer;
+import org.eclipse.net4j.util.event.Event;
 
 /**
  * @author Eike Stepper
@@ -49,5 +50,45 @@ public class CDOCheckoutManagerImpl extends SetContainer<CDOCheckout> implements
     }
 
     return null;
+  }
+
+  public void fireCheckoutOpenEvent(CDOCheckout checkout, boolean open)
+  {
+    fireEvent(new CheckoutOpenEventImpl(this, checkout, open));
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CheckoutOpenEventImpl extends Event implements CheckoutOpenEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CDOCheckout checkout;
+
+    private final boolean open;
+
+    public CheckoutOpenEventImpl(CDOCheckoutManager repositoryManager, CDOCheckout checkout, boolean open)
+    {
+      super(repositoryManager);
+      this.checkout = checkout;
+      this.open = open;
+    }
+
+    @Override
+    public CDOCheckoutManager getSource()
+    {
+      return (CDOCheckoutManager)super.getSource();
+    }
+
+    public CDOCheckout getCheckout()
+    {
+      return checkout;
+    }
+
+    public boolean isOpen()
+    {
+      return open;
+    }
   }
 }

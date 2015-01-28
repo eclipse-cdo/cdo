@@ -50,6 +50,16 @@ import java.util.Map;
  */
 public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends ItemProvider<CONTAINER>
 {
+  /**
+   * @since 3.5
+   */
+  public static final Image IMAGE_PENDING = SharedIcons.getImage(SharedIcons.OBJ_PENDING);
+
+  /**
+   * @since 3.5
+   */
+  public static final Image IMAGE_ERROR = SharedIcons.getImage(SharedIcons.OBJ_ERROR);
+
   private Map<Object, Node> nodes = new HashMap<Object, Node>();
 
   private Node root;
@@ -383,12 +393,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     if (obj instanceof ContainerItemProvider.LazyElement)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_PENDING);
+      return IMAGE_PENDING;
     }
 
     if (obj instanceof ContainerItemProvider.ErrorElement)
     {
-      return SharedIcons.getImage(SharedIcons.OBJ_ERROR);
+      return IMAGE_ERROR;
     }
 
     return super.getImage(obj);

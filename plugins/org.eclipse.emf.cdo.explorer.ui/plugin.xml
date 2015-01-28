@@ -64,6 +64,9 @@
          <triggerPoints>
             <or>
                <instanceof
+                     value="org.eclipse.core.resources.IWorkspaceRoot">
+               </instanceof>
+               <instanceof
                      value="org.eclipse.emf.cdo.explorer.CDOCheckout">
                </instanceof>
                <instanceof
@@ -80,7 +83,6 @@
             viewerId="org.eclipse.ui.navigator.ProjectExplorer">
          <includes>
             <contentExtension
-                  isRoot="true"
                   pattern="org.eclipse.emf.cdo.explorer.ui.CDOCheckouts">
             </contentExtension>
          </includes>

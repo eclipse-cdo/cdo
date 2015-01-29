@@ -10,10 +10,6 @@
  */
 package org.eclipse.emf.cdo.explorer.ui;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
@@ -25,6 +21,7 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
@@ -103,7 +100,6 @@ public class CDORepositoriesView extends ContainerView
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(newAction);
-    manager.add(getRefreshAction());
     super.fillLocalToolBar(manager);
   }
 
@@ -112,11 +108,13 @@ public class CDORepositoriesView extends ContainerView
   {
     super.fillContextMenu(manager, selection);
 
-    if (selection.size() == 1)
-    {
-      Object element = selection.getFirstElement();
-      manager.add(new CheckoutAction(element));
-    }
+    manager.add(new Separator("group.new"));
+    manager.add(new Separator("group.open"));
+    manager.add(new GroupMarker("group.openWith"));
+    manager.add(new Separator("group.checkout"));
+    manager.add(new Separator("group.edit"));
+    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    manager.add(new Separator("group.properties"));
   }
 
   @Override
@@ -124,19 +122,20 @@ public class CDORepositoriesView extends ContainerView
   {
     if (object instanceof CDORepository)
     {
-      CDORepository repository = (CDORepository)object;
+      final CDORepository repository = (CDORepository)object;
       if (!repository.isConnected())
       {
-        int xxx;
-        // TODO Make async!
-        repository.connect();
-
-        ViewerUtil.expand(getViewer(), repository, true);
+        connectRepository(repository);
         return;
       }
     }
 
     super.doubleClicked(object);
+  }
+
+  public void connectRepository(CDORepository repository)
+  {
+    itemProvider.connectRepository(repository);
   }
 
   /**
@@ -242,45 +241,6 @@ public class CDORepositoriesView extends ContainerView
 
           CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
           repositoryManager.addRemoteRepository(repositoryName, repositoryName, connectorType, connectorDescription);
-        }
-      }
-      catch (RuntimeException ex)
-      {
-        OM.LOG.error(ex);
-        throw ex;
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private final class CheckoutAction extends Action
-  {
-    private final Object element;
-
-    public CheckoutAction(Object element)
-    {
-      this.element = element;
-
-      setText("Checkout...");
-      setToolTipText("Create an online checkout");
-      setImageDescriptor(OM.getImageDescriptor("icons/add.gif"));
-    }
-
-    @Override
-    public void run()
-    {
-      try
-      {
-        if (element instanceof CDORepository)
-        {
-          CDORepository repository = (CDORepository)element;
-          CDOID rootID = repository.getSession().getRepositoryInfo().getRootResourceID();
-
-          CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
-          checkoutManager.connect(repository.getLabel(), repository, CDOBranch.MAIN_BRANCH_NAME,
-              CDOBranchPoint.UNSPECIFIED_DATE, false, rootID);
         }
       }
       catch (RuntimeException ex)

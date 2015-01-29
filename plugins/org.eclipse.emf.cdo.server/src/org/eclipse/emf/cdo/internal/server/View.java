@@ -23,11 +23,10 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.options.IOptionsContainer;
-
-import org.eclipse.core.runtime.Platform;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -222,9 +221,10 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     changeSubscriptionIDs.clear();
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

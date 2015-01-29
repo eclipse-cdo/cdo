@@ -19,14 +19,12 @@ import org.eclipse.net4j.buddies.common.IMessage;
 import org.eclipse.net4j.buddies.internal.common.bundle.OM;
 import org.eclipse.net4j.buddies.internal.common.protocol.MessageNotification;
 import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.PlatformObject;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -184,13 +182,10 @@ public class Collaboration extends MembershipContainer implements ICollaboration
     }
   }
 
-  /**
-   * @see PlatformObject#getAdapter(Class)
-   */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

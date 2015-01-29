@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -24,8 +25,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.core.runtime.Platform;
 
 /**
  * @author Eike Stepper
@@ -211,14 +210,15 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
     return super.isAdapterForType(type);
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
     if (adapter == EObject.class)
     {
       return rootObject;
     }
 
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

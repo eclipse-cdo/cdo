@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+  Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
+
+  Contributors:
+    Eike Stepper - initial API and implementation
+-->
+
+<plugin>
+
+  <extension
+        point="org.eclipse.core.runtime.adapters">
+     <factory
+           adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
+           class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerAdapterFactory">
+        <adapter type="org.eclipse.emf.cdo.explorer.CDOCheckoutSource"/>
+     </factory>
+  </extension>
+
+   <extension point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+         id="org.eclipse.emf.cdo.explorer.repository.properties"
+         type="org.eclipse.emf.cdo.explorer.CDORepository"
+         namespace="org.eclipse.emf.cdo.explorer.repository"
+         properties="connected"
+         class="org.eclipse.emf.cdo.internal.explorer.properties.RepositoryProperties$Tester"/>
+   </extension>
+
+</plugin>

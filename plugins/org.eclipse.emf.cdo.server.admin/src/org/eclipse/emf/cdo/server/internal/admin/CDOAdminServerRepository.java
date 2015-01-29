@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -29,7 +30,6 @@ import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitorProgress;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
 import java.util.Set;
@@ -193,9 +193,10 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.getTimeStamp();
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

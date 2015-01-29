@@ -14,11 +14,9 @@ import org.eclipse.net4j.buddies.common.IBuddy;
 import org.eclipse.net4j.buddies.common.ICollaboration;
 import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.buddies.common.IMembershipKey;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.PlatformObject;
 
 /**
  * @author Eike Stepper
@@ -69,13 +67,10 @@ public class Membership extends Lifecycle implements IMembership
     return key;
   }
 
-  /**
-   * @see PlatformObject#getAdapter(Class)
-   */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

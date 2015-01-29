@@ -7,7 +7,6 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.explorer.ui;
 
@@ -48,14 +47,12 @@ public final class ViewerUtil
             }
             else
             {
-              System.out.println("refreshViewer(" + element + ")");
               viewer.refresh(element);
             }
           }
         };
 
         Display display = tree.getDisplay();
-
         if (async)
         {
           display.asyncExec(runnable);

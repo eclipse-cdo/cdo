@@ -14,10 +14,8 @@ import org.eclipse.net4j.buddies.common.ICollaboration;
 import org.eclipse.net4j.buddies.common.IFacility;
 import org.eclipse.net4j.buddies.common.IMessage;
 import org.eclipse.net4j.buddies.internal.common.Collaboration;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
-
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.PlatformObject;
 
 /**
  * @author Eike Stepper
@@ -48,13 +46,10 @@ public abstract class Facility extends Lifecycle implements IFacility
     this.collaboration = (Collaboration)collaboration;
   }
 
-  /**
-   * @see PlatformObject#getAdapter(Class)
-   */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   public void sendMessage(IMessage message)

@@ -23,12 +23,12 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -209,9 +209,10 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     return configuration.openNet4jSession();
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

@@ -15,13 +15,11 @@ import org.eclipse.net4j.buddies.common.IBuddyStateEvent;
 import org.eclipse.net4j.buddies.common.ICollaboration;
 import org.eclipse.net4j.buddies.common.IMembership;
 import org.eclipse.net4j.buddies.common.ISession;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.PlatformObject;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -139,13 +137,10 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
     return memberships.length == 0 ? null : memberships[0];
   }
 
-  /**
-   * @see PlatformObject#getAdapter(Class)
-   */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

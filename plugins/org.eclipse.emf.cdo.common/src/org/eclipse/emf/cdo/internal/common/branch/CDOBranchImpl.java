@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoad
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.SubBranchInfo;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.container.Container;
 
 import java.text.MessageFormat;
@@ -287,6 +288,12 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     }
 
     fireElementAddedEvent(branch);
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
+  {
+    return AdapterUtil.adapt(this, adapter);
   }
 
   public int compareTo(CDOBranch o)

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
@@ -26,7 +27,6 @@ import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 
 import java.util.Set;
 
@@ -264,9 +264,10 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
     });
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   public long getTimeStamp()

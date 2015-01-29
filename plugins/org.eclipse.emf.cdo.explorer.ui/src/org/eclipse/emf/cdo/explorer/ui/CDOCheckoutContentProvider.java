@@ -7,7 +7,6 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Victor Roldan Betancort - maintenance
  */
 package org.eclipse.emf.cdo.explorer.ui;
 
@@ -58,8 +57,6 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.events.TreeEvent;
-import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.widgets.TreeItem;
 
 import java.lang.reflect.Method;
@@ -72,7 +69,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider implements IOpenListener, TreeListener
+public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider implements IOpenListener
 {
   private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class,
       "getChildrenFeatures", Object.class);
@@ -155,14 +152,12 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       if (viewer != null)
       {
         viewer.removeOpenListener(this);
-        viewer.getTree().removeTreeListener(this);
       }
 
       viewer = newTreeViewer;
 
       if (viewer != null)
       {
-        viewer.getTree().addTreeListener(this);
         viewer.addOpenListener(this);
       }
     }
@@ -412,6 +407,19 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       return ((ViewerUtil.Pending)object).getParent();
     }
 
+    if (object instanceof EObject)
+    {
+      EObject eObject = (EObject)object;
+
+      {
+        Adapter adapter = EcoreUtil.getAdapter(eObject.eAdapters(), CDOCheckout.class);
+        if (adapter instanceof CDOCheckout)
+        {
+          return adapter;
+        }
+      }
+    }
+
     return super.getParent(object);
   }
 
@@ -443,24 +451,6 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     }
 
     super.notifyChanged(notification);
-  }
-
-  public void treeCollapsed(TreeEvent e)
-  {
-    // TODO Check if this optimization is still needed!
-    int xxx;
-
-    // if (e.data instanceof EObject)
-    // {
-    // // Make sure that invisible children can be garbage collected.
-    // // In getChildren() is a special check for collapsed parents that removes of the TreeItems from the Tree.
-    // viewer.refresh(e.data, false);
-    // }
-  }
-
-  public void treeExpanded(TreeEvent e)
-  {
-    // Do nothing.
   }
 
   public void open(OpenEvent event)

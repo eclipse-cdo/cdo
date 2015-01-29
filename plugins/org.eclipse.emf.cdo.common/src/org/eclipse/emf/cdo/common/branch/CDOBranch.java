@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * Represents a <i>stream of changes</i> that is isolated from other streams of changes.
  * <p>
@@ -36,7 +38,7 @@ import org.eclipse.net4j.util.container.IContainer;
  * @apiviz.has {@link CDOBranchPoint} oneway - - base
  * @apiviz.composedOf {@link CDOBranch} - - subBranches
  */
-public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>
+public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>, IAdaptable
 {
   /**
    * The fixed ID of the {@link CDOBranchManager#getMainBranch() main branch}.

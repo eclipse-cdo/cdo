@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -23,51 +23,66 @@ import org.eclipse.core.runtime.jobs.Job;
  */
 public abstract class LongRunningActionDelegate extends SafeActionDelegate
 {
-  private int totalWork;
+  private static final ThreadLocal<Boolean> CANCELED = new ThreadLocal<Boolean>();
 
   public LongRunningActionDelegate()
   {
   }
 
+  /**
+   * @deprecated Not supported anymore.
+   */
+  @Deprecated
   protected final int getTotalWork()
   {
-    return totalWork;
+    return IProgressMonitor.UNKNOWN;
   }
 
+  /**
+   * @deprecated Not supported anymore.
+   */
+  @Deprecated
   protected final void setTotalWork(int totalWork)
   {
-    this.totalWork = totalWork;
   }
 
   protected final void cancel()
   {
-    totalWork = 0;
+    CANCELED.set(Boolean.TRUE);
   }
 
   @Override
   protected final void safeRun() throws Exception
   {
-    totalWork = IProgressMonitor.UNKNOWN;
-    preRun();
-    if (totalWork != 0)
+    try
     {
-      new Job(getText())
+      CANCELED.set(Boolean.FALSE);
+      preRun();
+
+      if (CANCELED.get() != Boolean.TRUE)
       {
-        @Override
-        protected IStatus run(IProgressMonitor progressMonitor)
+        new Job(getText())
         {
-          try
+          @Override
+          protected IStatus run(IProgressMonitor progressMonitor)
           {
-            doRun(progressMonitor);
-            return Status.OK_STATUS;
+            try
+            {
+              doRun(progressMonitor);
+              return Status.OK_STATUS;
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+              return new Status(IStatus.ERROR, getBundleID(), ex.getMessage(), ex);
+            }
           }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-            return new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
-          }
-        }
-      }.schedule();
+        }.schedule();
+      }
+    }
+    finally
+    {
+      CANCELED.remove();
     }
   }
 

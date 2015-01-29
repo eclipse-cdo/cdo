@@ -12,7 +12,10 @@ package org.eclipse.emf.cdo.internal.explorer;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.CDOCheckoutSource;
 import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
@@ -22,6 +25,7 @@ import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -131,17 +135,21 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
 
     if (connected)
     {
-      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, true);
+      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, session, true);
     }
   }
 
   public void disconnect()
   {
     boolean disconnected = false;
+    CDOSession oldSession = null;
+
     synchronized (sessionListener)
     {
       if (isConnected())
       {
+        oldSession = session;
+
         session.close();
         session = null;
 
@@ -151,7 +159,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
 
     if (disconnected)
     {
-      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, false);
+      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, oldSession, false);
     }
   }
 
@@ -220,6 +228,38 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     }
 
     return new CDOBranch[0];
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
+  {
+    if (adapter == CDOCheckoutSource.class && isConnected())
+    {
+      return new CDOCheckoutSource()
+      {
+        public CDORepository getRepository()
+        {
+          return CDORepositoryImpl.this;
+        }
+
+        public String getBranchPath()
+        {
+          return CDOBranch.MAIN_BRANCH_NAME;
+        }
+
+        public long getTimeStamp()
+        {
+          return CDOBranchPoint.UNSPECIFIED_DATE;
+        }
+
+        public CDOID getRootID()
+        {
+          return session.getRepositoryInfo().getRootResourceID();
+        }
+      };
+    }
+
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

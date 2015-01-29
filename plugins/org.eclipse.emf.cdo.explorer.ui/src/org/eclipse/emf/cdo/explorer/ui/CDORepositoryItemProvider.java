@@ -19,16 +19,17 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
@@ -43,6 +44,8 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
 
   private final Image imageRepoDisconnected = new Image(UIUtil.getDisplay(), IMAGE_REPO, SWT.IMAGE_GRAY);
 
+  private final Map<CDORepository, CDORepository> connectingRepositories = new ConcurrentHashMap<CDORepository, CDORepository>();
+
   private final IListener repositoryManagerListener = new IListener()
   {
     public void notifyEvent(IEvent event)
@@ -55,15 +58,13 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
 
         if (!e.isConnected())
         {
+          Node node = getNode(repository);
+          node.disposeChildren();
+
           ViewerUtil.expand(viewer, repository, false);
         }
 
         ViewerUtil.refresh(viewer, repository);
-
-        // if (e.isConnected())
-        // {
-        // ViewerUtil.setExpandedState(viewer, repository, true);
-        // }
       }
     }
   };
@@ -85,6 +86,16 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     return (TreeViewer)super.getViewer();
   }
 
+  public void connectRepository(CDORepository repository)
+  {
+    // Mark this repository as connecting.
+    connectingRepositories.put(repository, repository);
+
+    TreeViewer viewer = getViewer();
+    ViewerUtil.refresh(viewer, repository); // Trigger hasChildren().
+    ViewerUtil.expand(viewer, repository, true); // Trigger getChildren().
+  }
+
   @Override
   public boolean hasChildren(Object element)
   {
@@ -93,6 +104,12 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       CDORepository repository = (CDORepository)element;
       if (!repository.isConnected())
       {
+        if (connectingRepositories.containsKey(repository))
+        {
+          // This must be the ContainerItemProvider.LazyElement.
+          return true;
+        }
+
         return false;
       }
     }
@@ -108,11 +125,29 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       CDORepository repository = (CDORepository)element;
       if (!repository.isConnected())
       {
-        return ViewerUtil.NO_CHILDREN;
+        if (!connectingRepositories.containsKey(repository))
+        {
+          return ViewerUtil.NO_CHILDREN;
+        }
       }
     }
 
     return super.getChildren(element);
+  }
+
+  @Override
+  protected Object[] getContainerChildren(IContainer<?> container)
+  {
+    if (container instanceof CDORepository)
+    {
+      CDORepository repository = (CDORepository)container;
+      if (connectingRepositories.remove(repository) != null)
+      {
+        repository.connect();
+      }
+    }
+
+    return super.getContainerChildren(container);
   }
 
   @Override
@@ -174,14 +209,6 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
   public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     super.fillContextMenu(manager, selection);
-    if (selection.size() == 1)
-    {
-      Object obj = selection.getFirstElement();
-      if (obj instanceof CDORepository)
-      {
-        manager.add(new DisconnectAction((CDORepository)obj));
-      }
-    }
   }
 
   @Override
@@ -201,13 +228,6 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     return "Loading...";
   }
 
-  // @Override
-  // protected void handleInactiveElement(Iterator<org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node> it,
-  // org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node child)
-  // {
-  // // Do nothing.
-  // }
-
   @Override
   protected void connectInput(IContainer<Object> input)
   {
@@ -220,25 +240,5 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
   {
     input.removeListener(repositoryManagerListener);
     super.disconnectInput(input);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static class DisconnectAction extends LongRunningAction
-  {
-    private CDORepository repository;
-
-    public DisconnectAction(CDORepository repository)
-    {
-      super("Disconnect");
-      this.repository = repository;
-    }
-
-    @Override
-    protected void doRun(IProgressMonitor progressMonitor) throws Exception
-    {
-      repository.disconnect();
-    }
   }
 }

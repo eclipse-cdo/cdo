@@ -12,15 +12,21 @@ package org.eclipse.emf.cdo.internal.explorer;
 
 import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
  */
 public class CDORepositoryManagerImpl extends SetContainer<CDORepository> implements CDORepositoryManager
 {
+  private final Map<CDOSession, CDORepository> sessionMap = new ConcurrentHashMap<CDOSession, CDORepository>();
+
   public CDORepositoryManagerImpl()
   {
     super(CDORepository.class);
@@ -48,8 +54,22 @@ public class CDORepositoryManagerImpl extends SetContainer<CDORepository> implem
     }
   }
 
-  public void fireRepositoryConnectionEvent(CDORepository repository, boolean connected)
+  public CDORepository getRepository(CDOSession session)
   {
+    return sessionMap.get(session);
+  }
+
+  public void fireRepositoryConnectionEvent(CDORepository repository, CDOSession session, boolean connected)
+  {
+    if (connected)
+    {
+      sessionMap.put(session, repository);
+    }
+    else
+    {
+      sessionMap.remove(session);
+    }
+
     fireEvent(new RepositoryConnectionEventImpl(this, repository, connected));
   }
 

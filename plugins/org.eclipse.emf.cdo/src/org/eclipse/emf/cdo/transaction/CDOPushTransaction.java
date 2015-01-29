@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
@@ -50,7 +51,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -942,9 +942,10 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   /**
    * @since 4.2
    */
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   public static File createTempFile(CDOTransaction transaction) throws IOException

@@ -22,6 +22,8 @@ import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
 import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
+import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
@@ -29,7 +31,7 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider
+public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider
 {
   private final ComposedAdapterFactory adapterFactory;
 
@@ -112,7 +114,7 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider
 
     if (element instanceof ViewerUtil.Pending)
     {
-      return ContainerItemProvider.IMAGE_PENDING;
+      return ContainerItemProvider.PENDING_IMAGE;
     }
 
     try
@@ -123,5 +125,16 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider
     {
       return errorImage;
     }
+  }
+
+  @Override
+  public Color getForeground(Object object)
+  {
+    if (object instanceof ViewerUtil.Pending)
+    {
+      return ContainerItemProvider.PENDING_COLOR;
+    }
+
+    return super.getForeground(object);
   }
 }

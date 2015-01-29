@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 399306 - adapted from LongRunningActionDelegate
@@ -23,60 +23,75 @@ import org.eclipse.core.runtime.jobs.Job;
 /**
  * @author Eike Stepper
  * @author Christian W. Damus (CEA LIST)
- * 
+ *
  * @since 3.4
  */
 public abstract class LongRunningHandler extends SafeHandler
 {
-  private int totalWork;
+  private static final ThreadLocal<Boolean> CANCELED = new ThreadLocal<Boolean>();
 
   public LongRunningHandler()
   {
   }
 
+  /**
+   * @deprecated Not supported anymore.
+   */
+  @Deprecated
   protected final int getTotalWork()
   {
-    return totalWork;
+    return IProgressMonitor.UNKNOWN;
   }
 
+  /**
+   * @deprecated Not supported anymore.
+   */
+  @Deprecated
   protected final void setTotalWork(int totalWork)
   {
-    this.totalWork = totalWork;
   }
 
   protected final void cancel()
   {
-    totalWork = 0;
+    CANCELED.set(Boolean.TRUE);
   }
 
   @Override
-  protected final Object safeExecute(ExecutionEvent event) throws Exception
+  protected final Object safeExecute(final ExecutionEvent event) throws Exception
   {
-    totalWork = IProgressMonitor.UNKNOWN;
-    preRun();
-    if (totalWork != 0)
+    try
     {
-      new Job(getText())
-      {
-        @Override
-        protected IStatus run(IProgressMonitor progressMonitor)
-        {
-          try
-          {
-            doExecute(progressMonitor);
-            return Status.OK_STATUS;
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-            return new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
-          }
-        }
-      }.schedule();
-    }
+      CANCELED.set(Boolean.FALSE);
+      preRun();
 
-    // Cannot return anything more useful
-    return null;
+      if (CANCELED.get() != Boolean.TRUE)
+      {
+        new Job(getText())
+        {
+          @Override
+          protected IStatus run(IProgressMonitor progressMonitor)
+          {
+            try
+            {
+              doExecute(event, progressMonitor);
+              return Status.OK_STATUS;
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+              return new Status(IStatus.ERROR, getBundleID(), ex.getMessage(), ex);
+            }
+          }
+        }.schedule();
+      }
+
+      // Cannot return anything more useful
+      return null;
+    }
+    finally
+    {
+      CANCELED.remove();
+    }
   }
 
   protected void preRun() throws Exception
@@ -94,8 +109,18 @@ public abstract class LongRunningHandler extends SafeHandler
    * execution of the handler call-back on the UI thread.  Any details required from
    * it must be {@linkplain SafeHandler#extractEventDetails(ExecutionEvent) extracted}
    * before the job is scheduled.
+   *
+   * @throws Exception
+   * @since 3.5
    */
-  protected abstract void doExecute(IProgressMonitor progressMonitor) throws Exception;
+  protected void doExecute(ExecutionEvent event, IProgressMonitor progressMonitor) throws Exception
+  {
+    doExecute(progressMonitor);
+  }
+
+  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+  {
+  }
 
   protected final void checkCancelation(IProgressMonitor monitor)
   {

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 399306 - adapted from SafeActionDelegate
@@ -28,12 +28,11 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eike Stepper
  * @author Christian W. Damus (CEA LIST)
- * 
+ *
  * @since 3.4
  */
 public abstract class SafeHandler extends AbstractHandler
 {
-
   private Command command;
 
   private ISelection selection;
@@ -79,9 +78,16 @@ public abstract class SafeHandler extends AbstractHandler
   @Override
   public void setEnabled(Object evaluationContext)
   {
-    Object variable = HandlerUtil.getVariable(evaluationContext, ISources.ACTIVE_CURRENT_SELECTION_NAME);
-    selection = variable instanceof ISelection ? (ISelection)variable : StructuredSelection.EMPTY;
-    setBaseEnabled(updateSelection(selection));
+    try
+    {
+      Object variable = HandlerUtil.getVariable(evaluationContext, ISources.ACTIVE_CURRENT_SELECTION_NAME);
+      selection = variable instanceof ISelection ? (ISelection)variable : StructuredSelection.EMPTY;
+      setBaseEnabled(updateSelection(selection));
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   /**

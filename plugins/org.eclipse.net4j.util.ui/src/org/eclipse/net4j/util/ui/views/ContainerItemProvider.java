@@ -53,12 +53,17 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @since 3.5
    */
-  public static final Image IMAGE_PENDING = SharedIcons.getImage(SharedIcons.OBJ_PENDING);
+  public static final Color PENDING_COLOR = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
 
   /**
    * @since 3.5
    */
-  public static final Image IMAGE_ERROR = SharedIcons.getImage(SharedIcons.OBJ_ERROR);
+  public static final Image PENDING_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_PENDING);
+
+  /**
+   * @since 3.5
+   */
+  public static final Image ERROR_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_ERROR);
 
   private Map<Object, Node> nodes = new HashMap<Object, Node>();
 
@@ -382,7 +387,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     if (obj instanceof ContainerItemProvider.LazyElement)
     {
-      return getDisplay().getSystemColor(SWT.COLOR_GRAY);
+      return PENDING_COLOR;
     }
 
     return super.getForeground(obj);
@@ -393,12 +398,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   {
     if (obj instanceof ContainerItemProvider.LazyElement)
     {
-      return IMAGE_PENDING;
+      return PENDING_IMAGE;
     }
 
     if (obj instanceof ContainerItemProvider.ErrorElement)
     {
-      return IMAGE_ERROR;
+      return ERROR_IMAGE;
     }
 
     return super.getImage(obj);
@@ -411,9 +416,14 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
    */
   public interface Node
   {
+    public boolean isDisposed();
+
     public void dispose();
 
-    public boolean isDisposed();
+    /**
+     * @since 3.5
+     */
+    public void disposeChildren();
 
     public Object getElement();
 
@@ -443,6 +453,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       this.parent = parent;
     }
 
+    public boolean isDisposed()
+    {
+      return disposed;
+    }
+
     public void dispose()
     {
       if (!disposed)
@@ -453,9 +468,11 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       }
     }
 
-    public boolean isDisposed()
+    /**
+     * @since 3.5
+     */
+    public void disposeChildren()
     {
-      return disposed;
     }
 
     @Override
@@ -560,19 +577,25 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       if (!isDisposed())
       {
-        if (children != null)
-        {
-          for (Node child : children)
-          {
-            child.dispose();
-          }
+        disposeChildren();
 
-          children.clear();
-          children = null;
-          containerListener = null;
+        containerListener = null;
+        super.dispose();
+      }
+    }
+
+    @Override
+    public void disposeChildren()
+    {
+      if (children != null)
+      {
+        for (Node child : children)
+        {
+          child.dispose();
         }
 
-        super.dispose();
+        children.clear();
+        children = null;
       }
     }
 
@@ -651,7 +674,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
                 children.remove(lazyNode[0]);
               }
 
-              refreshElement(container, false);
+              refreshElement(container, true);
             }
           }
         };

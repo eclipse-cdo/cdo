@@ -50,6 +50,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -264,6 +265,49 @@ public final class UIUtil
   }
 
   /**
+   * @since 3.5
+   */
+  public static List<Object> getElements(ISelection selection)
+  {
+    if (selection instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+
+      @SuppressWarnings("unchecked")
+      List<Object> result = ssel.toList();
+      return result;
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 2.0
+   */
+  public static <T> List<T> getElements(ISelection selection, Class<T> type)
+  {
+    List<Object> elements = getElements(selection);
+    if (elements != null)
+    {
+      List<T> result = new ArrayList<T>();
+
+      for (Object element : elements)
+      {
+        if (type.isInstance(element))
+        {
+          @SuppressWarnings("unchecked")
+          T match = (T)element;
+          result.add(match);
+        }
+      }
+
+      return result;
+    }
+
+    return null;
+  }
+
+  /**
    * Like {@link #getElement(ISelection, Class)} except that it attempts to adapt
    * {@link IAdaptable}s to the required {@code type}, if necessary.
    *
@@ -276,16 +320,27 @@ public final class UIUtil
   }
 
   /**
-   * @since 2.0
+   * Like {@link #getElements(ISelection, Class)} except that it attempts to adapt
+   * {@link IAdaptable}s to the required {@code type}, if necessary.
+   *
+   * @since 3.5
    */
-  public static <T> List<T> getElements(ISelection selection, Class<T> type)
+  public static <T> List<T> adaptElements(ISelection selection, Class<T> type)
   {
-    if (selection instanceof IStructuredSelection)
+    List<Object> elements = getElements(selection);
+    if (elements != null)
     {
-      IStructuredSelection ssel = (IStructuredSelection)selection;
+      List<T> result = new ArrayList<T>();
 
-      @SuppressWarnings("unchecked")
-      List<T> result = ssel.toList();
+      for (Object element : elements)
+      {
+        T match = AdapterUtil.adapt(element, type);
+        if (match != null)
+        {
+          result.add(match);
+        }
+      }
+
       return result;
     }
 

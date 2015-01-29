@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.container.Container;
@@ -58,8 +59,6 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-
-import org.eclipse.core.runtime.Platform;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -527,9 +526,10 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

@@ -97,6 +97,7 @@ import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -122,7 +123,6 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -480,9 +480,9 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadCommitData(timeStamp);
   }
 
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
-      int referenceChunk, int prefetchDepth)
-      {
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
+      int prefetchDepth)
+  {
     for (RevisionInfo info : infos)
     {
       CDOID id = info.getID();
@@ -580,7 +580,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return null;
-      }
+  }
 
   private InternalCDORevision loadRevisionTarget(CDOID id, CDOBranchPoint branchPoint, int referenceChunk,
       IStoreAccessor accessor)
@@ -1200,8 +1200,8 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       throw new IllegalArgumentException(
           MessageFormat
-          .format(
-              "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
+              .format(
+                  "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
     }
 
     long currentTimeStamp = getTimeStamp();
@@ -1209,8 +1209,8 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       throw new IllegalArgumentException(
           MessageFormat
-          .format(
-              "timeStamp ({0}) > current time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(currentTimeStamp))); //$NON-NLS-1$
+              .format(
+                  "timeStamp ({0}) > current time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(currentTimeStamp))); //$NON-NLS-1$
     }
   }
 
@@ -1425,7 +1425,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public Set<CDOID> getMergeData(CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo, OMMonitor monitor)
-      {
+  {
     CDOBranchPoint target = targetInfo.getBranchPoint();
     CDOBranchPoint source = sourceInfo.getBranchPoint();
 
@@ -1483,7 +1483,7 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       monitor.done();
     }
-      }
+  }
 
   private void loadMergeData(Set<CDOID> ids, CDORevisionAvailabilityInfo info, OMMonitor monitor)
   {
@@ -1589,7 +1589,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch,
       boolean isSupportingBranches)
-      {
+  {
     List<Object> lockables = new ArrayList<Object>();
     for (CDORevisionKey revKey : revisionKeys)
     {
@@ -1605,7 +1605,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return lockables;
-      }
+  }
 
   public LockObjectsResult lock(InternalView view, LockType lockType, List<CDORevisionKey> revKeys, boolean recursive,
       long timeout)
@@ -1760,9 +1760,10 @@ public class Repository extends Container<Object> implements InternalRepository
     return new UnlockObjectsResult(cdoLockStates, timestamp);
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

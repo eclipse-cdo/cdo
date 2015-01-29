@@ -20,13 +20,11 @@ import org.eclipse.net4j.buddies.internal.common.Collaboration;
 import org.eclipse.net4j.buddies.internal.common.protocol.BuddyStateNotification;
 import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
-
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.PlatformObject;
 
 import java.util.Set;
 
@@ -68,13 +66,10 @@ public class ClientSession extends BuddyContainer implements IBuddySession
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
-  /**
-   * @see PlatformObject#getAdapter(Class)
-   */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter);
   }
 
   @Override

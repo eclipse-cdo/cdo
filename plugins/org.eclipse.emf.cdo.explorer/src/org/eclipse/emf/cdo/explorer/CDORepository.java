@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.session.CDOSessionProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
 
+import org.eclipse.core.runtime.IAdaptable;
+
 /**
  * A CDO server independent representation of a repository.
  *
@@ -22,7 +24,7 @@ import org.eclipse.net4j.util.container.IContainer;
  * @since 4.4
  * @apiviz.landmark
  */
-public interface CDORepository extends IContainer<CDOBranch>, CDOSessionProvider
+public interface CDORepository extends IContainer<CDOBranch>, CDOSessionProvider, IAdaptable
 {
   public String getLabel();
 

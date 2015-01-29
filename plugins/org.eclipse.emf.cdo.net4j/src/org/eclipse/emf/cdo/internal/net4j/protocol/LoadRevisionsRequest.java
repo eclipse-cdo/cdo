@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
@@ -132,9 +131,6 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   @Override
   protected List<RevisionInfo> confirming(CDODataInput in) throws IOException
   {
-    int xxx;
-    ConcurrencyUtil.sleep(1000);
-
     int size = infos.size();
     if (TRACER.isEnabled())
     {

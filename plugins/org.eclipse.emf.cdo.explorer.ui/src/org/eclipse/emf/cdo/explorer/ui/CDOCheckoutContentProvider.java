@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.explorer.CDOCheckoutManager.CheckoutOpenEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -56,14 +55,15 @@ import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
+import org.eclipse.swt.widgets.TreeItem;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +74,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider implements IOpenListener, TreeListener
 {
-  private static final Method GET_CHILDREN_FEATURES_METHOD;
+  private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class,
+      "getChildrenFeatures", Object.class);
+
+  private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 
   private static final CDOCheckoutManager CHECKOUT_MANAGER = CDOExplorerUtil.getCheckoutManager();
 
@@ -172,13 +175,6 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
   @Override
   public boolean hasChildren(Object object)
   {
-    boolean children = doHasChildren(object);
-    System.out.println("hasChildren(" + object + ") = " + children);
-    return children;
-  }
-
-  private boolean doHasChildren(Object object)
-  {
     if (object == input)
     {
       return !CHECKOUT_MANAGER.isEmpty();
@@ -238,13 +234,6 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
 
   @Override
   public Object[] getChildren(Object object)
-  {
-    Object[] children = doGetChildren(object);
-    System.out.println("getChildren(" + object + ") = " + Arrays.asList(children));
-    return children;
-  }
-
-  private Object[] doGetChildren(Object object)
   {
     if (object == input)
     {
@@ -328,7 +317,37 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       }
     }.schedule();
 
-    return new Object[] { new ViewerUtil.Pending(finalObject) };
+    if (FIND_ITEM_METHOD != null)
+    {
+      try
+      {
+        Object widget = FIND_ITEM_METHOD.invoke(viewer, originalObject);
+        if (widget instanceof TreeItem)
+        {
+          TreeItem item = (TreeItem)widget;
+          TreeItem[] childItems = item.getItems();
+
+          int childCount = childItems.length;
+          if (childCount != 0)
+          {
+            Object[] result = new Object[childCount];
+            for (int i = 0; i < childCount; i++)
+            {
+              TreeItem childItem = childItems[i];
+              result[i] = childItem.getData();
+            }
+
+            return result;
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        //$FALL-THROUGH$
+      }
+    }
+
+    return new Object[] { new ViewerUtil.Pending(originalObject) };
   }
 
   private Object[] determineChildRevisions(Object object, List<CDORevision> loadedRevisions, List<CDOID> missingIDs)
@@ -388,6 +407,11 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       return input;
     }
 
+    if (object instanceof ViewerUtil.Pending)
+    {
+      return ((ViewerUtil.Pending)object).getParent();
+    }
+
     return super.getParent(object);
   }
 
@@ -426,12 +450,12 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     // TODO Check if this optimization is still needed!
     int xxx;
 
-    if (e.data instanceof EObject)
-    {
-      // Make sure that invisible children can be garbage collected.
-      // In getChildren() is a special check for collapsed parents that removes of the TreeItems from the Tree.
-      viewer.refresh(e.data, false);
-    }
+    // if (e.data instanceof EObject)
+    // {
+    // // Make sure that invisible children can be garbage collected.
+    // // In getChildren() is a special check for collapsed parents that removes of the TreeItems from the Tree.
+    // viewer.refresh(e.data, false);
+    // }
   }
 
   public void treeExpanded(TreeEvent e)
@@ -504,13 +528,11 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     return false;
   }
 
-  private static InternalCDORevisionManager determineChildRevisions(InternalCDOObject cdoObject,
-      InternalCDORevision revision, ItemProviderAdapter provider, List<CDORevision> loadedRevisions,
-      List<CDOID> missingIDs) throws Exception
+  private static void determineChildRevisions(InternalCDOObject cdoObject, InternalCDORevision revision,
+      ItemProviderAdapter provider, List<CDORevision> loadedRevisions, List<CDOID> missingIDs) throws Exception
   {
     InternalCDOView view = cdoObject.cdoView();
-    InternalCDORevisionManager revisionManager = view.getSession().getRevisionManager();
-    InternalCDORevisionCache cache = revisionManager.getCache();
+    InternalCDORevisionCache revisionCache = view.getSession().getRevisionManager().getCache();
 
     for (EStructuralFeature feature : getChildrenFeatures(cdoObject, provider))
     {
@@ -519,17 +541,15 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         CDOList list = revision.getList(feature);
         for (Object object : list)
         {
-          determineChildRevision(loadedRevisions, missingIDs, view, cache, object);
+          determineChildRevision(loadedRevisions, missingIDs, view, revisionCache, object);
         }
       }
       else
       {
         Object value = revision.getValue(feature);
-        determineChildRevision(loadedRevisions, missingIDs, view, cache, value);
+        determineChildRevision(loadedRevisions, missingIDs, view, revisionCache, value);
       }
     }
-
-    return revisionManager;
   }
 
   private static void determineChildRevision(List<CDORevision> loadedRevisions, List<CDOID> missingIDs,
@@ -557,20 +577,17 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     return (Collection<? extends EStructuralFeature>)GET_CHILDREN_FEATURES_METHOD.invoke(provider, cdoObject);
   }
 
-  static
+  private static Method getMethod(Class<?> c, String methodName, Class<?>... parameterTypes)
   {
-    Method method = null;
-
     try
     {
-      method = ItemProviderAdapter.class.getDeclaredMethod("getChildrenFeatures", Object.class);
+      Method method = c.getDeclaredMethod(methodName, parameterTypes);
       method.setAccessible(true);
+      return method;
     }
     catch (Throwable ex)
     {
-      //$FALL-THROUGH$
+      return null;
     }
-
-    GET_CHILDREN_FEATURES_METHOD = method;
   }
 }

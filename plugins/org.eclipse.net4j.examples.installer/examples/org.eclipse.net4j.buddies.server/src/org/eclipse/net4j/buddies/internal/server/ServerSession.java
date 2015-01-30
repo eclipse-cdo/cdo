@@ -62,7 +62,7 @@ public class ServerSession extends Lifecycle implements ISession, IListener
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   public void notifyEvent(IEvent event)

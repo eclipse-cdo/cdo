@@ -29,6 +29,12 @@
          namespace="org.eclipse.emf.cdo.explorer.repository"
          properties="connected"
          class="org.eclipse.emf.cdo.internal.explorer.properties.RepositoryProperties$Tester"/>
+      <propertyTester
+         id="org.eclipse.emf.cdo.explorer.checkout.properties"
+         type="org.eclipse.emf.cdo.explorer.CDOCheckout"
+         namespace="org.eclipse.emf.cdo.explorer.checkout"
+         properties="open"
+         class="org.eclipse.emf.cdo.internal.explorer.properties.CheckoutProperties$Tester"/>
    </extension>
 
 </plugin>

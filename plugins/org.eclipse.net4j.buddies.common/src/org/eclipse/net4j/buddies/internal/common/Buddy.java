@@ -140,7 +140,7 @@ public abstract class Buddy extends MembershipContainer implements IBuddy
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   @Override

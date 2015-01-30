@@ -945,7 +945,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   public static File createTempFile(CDOTransaction transaction) throws IOException

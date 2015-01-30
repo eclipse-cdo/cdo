@@ -51,6 +51,7 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
         if (commonRepository instanceof CDORepositoryInfo)
         {
           final CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)commonRepository;
+          final CDOID rootID = repositoryInfo.getRootResourceID();
           CDOSession session = repositoryInfo.getSession();
 
           CDORepositoryManagerImpl repositoryManager = (CDORepositoryManagerImpl)CDOExplorerUtil.getRepositoryManager();
@@ -77,7 +78,7 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
 
               public CDOID getRootID()
               {
-                return repositoryInfo.getRootResourceID();
+                return rootID;
               }
             };
           }

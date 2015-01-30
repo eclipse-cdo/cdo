@@ -196,7 +196,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   @Override

@@ -10,9 +10,10 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.properties;
 
+import org.eclipse.emf.cdo.explorer.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.properties.CheckoutProperties;
 import org.eclipse.emf.cdo.internal.explorer.properties.RepositoryProperties;
-import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.ui.AbstractPropertyAdapterFactory;
 import org.eclipse.net4j.util.ui.DefaultActionFilter;
@@ -29,6 +30,9 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
   private static final IActionFilter REPOSITORY_ACTION_FILTER = new DefaultActionFilter<CDORepository>(
       RepositoryProperties.INSTANCE);
 
+  private static final IActionFilter CHECKOUT_ACTION_FILTER = new DefaultActionFilter<CDOCheckout>(
+      CheckoutProperties.INSTANCE);
+
   public ExplorerPropertiesAdapterFactory()
   {
   }
@@ -41,15 +45,25 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
       return new DefaultPropertySource<CDORepository>((CDORepository)object, RepositoryProperties.INSTANCE);
     }
 
+    if (object instanceof CDOCheckout)
+    {
+      return new DefaultPropertySource<CDOCheckout>((CDOCheckout)object, CheckoutProperties.INSTANCE);
+    }
+
     return null;
   }
 
   @Override
   protected IActionFilter createActionFilter(Object object)
   {
-    if (object instanceof CDOSession)
+    if (object instanceof CDORepository)
     {
       return REPOSITORY_ACTION_FILTER;
+    }
+
+    if (object instanceof CDOCheckout)
+    {
+      return CHECKOUT_ACTION_FILTER;
     }
 
     return super.createActionFilter(object);

@@ -235,6 +235,8 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
   {
     if (adapter == CDOCheckoutSource.class && isConnected())
     {
+      final CDOID rootID = session.getRepositoryInfo().getRootResourceID();
+
       return new CDOCheckoutSource()
       {
         public CDORepository getRepository()
@@ -254,12 +256,12 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
 
         public CDOID getRootID()
         {
-          return session.getRepositoryInfo().getRootResourceID();
+          return rootID;
         }
       };
     }
 
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   @Override

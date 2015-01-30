@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.properties;
 
-import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.explorer.CDOCheckout;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
@@ -20,23 +20,22 @@ import org.eclipse.net4j.util.properties.Property;
 /**
  * @author Eike Stepper
  */
-public class RepositoryProperties extends Properties<CDORepository>
+public class CheckoutProperties extends Properties<CDOCheckout>
 {
-  public static final IProperties<CDORepository> INSTANCE = new RepositoryProperties();
+  public static final IProperties<CDOCheckout> INSTANCE = new CheckoutProperties();
 
-  private static final String CATEGORY_REPOSITORY = "Repository"; //$NON-NLS-1$
+  private static final String CATEGORY_CHECKOUT = "Checkout"; //$NON-NLS-1$
 
-  private RepositoryProperties()
+  private CheckoutProperties()
   {
-    super(CDORepository.class);
+    super(CDOCheckout.class);
 
-    add(new Property<CDORepository>("connected", "Connected", "Whether this repository is connected or not",
-        CATEGORY_REPOSITORY)
+    add(new Property<CDOCheckout>("open", "Open", "Whether this checkout is open or not", CATEGORY_CHECKOUT)
     {
       @Override
-      protected Object eval(CDORepository repository)
+      protected Object eval(CDOCheckout checkout)
       {
-        return repository.isConnected();
+        return checkout.isOpen();
       }
     });
   }
@@ -49,19 +48,13 @@ public class RepositoryProperties extends Properties<CDORepository>
   /**
    * @author Eike Stepper
    */
-  public static final class Tester extends DefaultPropertyTester<CDORepository>
+  public static final class Tester extends DefaultPropertyTester<CDOCheckout>
   {
-    public static final String NAMESPACE = "org.eclipse.emf.cdo.explorer.repository";
+    public static final String NAMESPACE = "org.eclipse.emf.cdo.explorer.checkout";
 
     public Tester()
     {
       super(NAMESPACE, INSTANCE);
-    }
-
-    @Override
-    public boolean test(Object receiver, String propertyName, Object[] args, Object expectedValue)
-    {
-      return super.test(receiver, propertyName, args, expectedValue);
     }
   }
 }

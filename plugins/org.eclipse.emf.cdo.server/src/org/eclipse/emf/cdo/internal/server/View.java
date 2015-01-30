@@ -224,7 +224,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   @Override

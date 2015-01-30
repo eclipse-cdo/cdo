@@ -293,7 +293,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   public int compareTo(CDOBranch o)

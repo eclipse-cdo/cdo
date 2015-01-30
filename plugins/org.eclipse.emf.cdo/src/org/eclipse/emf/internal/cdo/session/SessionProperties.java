@@ -267,7 +267,7 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   public long getTimeStamp()

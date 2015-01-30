@@ -218,7 +218,7 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
       return rootObject;
     }
 
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   @Override

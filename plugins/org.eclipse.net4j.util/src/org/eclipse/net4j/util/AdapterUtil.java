@@ -13,7 +13,7 @@ package org.eclipse.net4j.util;
 /**
  * Provides a single static {@link #adapt(Object, Class) adapt()} method that conveniently and safely wraps the
  * Platform's adaptation framework.
- * 
+ *
  * @author Eike Stepper
  */
 public final class AdapterUtil
@@ -23,6 +23,14 @@ public final class AdapterUtil
   }
 
   public static <TYPE> TYPE adapt(Object object, Class<TYPE> type)
+  {
+    return adapt(object, type, true);
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static <TYPE> TYPE adapt(Object object, Class<TYPE> type, boolean consultObject)
   {
     if (object == null)
     {
@@ -38,14 +46,33 @@ public final class AdapterUtil
     {
       try
       {
-        adapter = AdaptableHelper.adapt(object, type);
+        if (consultObject)
+        {
+          adapter = AdaptableHelper.adapt(object, type);
+        }
+
         if (adapter == null)
         {
           adapter = AdapterManagerHelper.adapt(object, type);
         }
       }
+      catch (StackOverflowError ex)
+      {
+        if (consultObject)
+        {
+          try
+          {
+            return adapt(object, type, false);
+          }
+          catch (Throwable ignore)
+          {
+            //$FALL-THROUGH$
+          }
+        }
+      }
       catch (Throwable ignore)
       {
+        //$FALL-THROUGH$
       }
     }
 
@@ -54,7 +81,7 @@ public final class AdapterUtil
 
   /**
    * Nested class to factor out dependencies on org.eclipse.core.runtime
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class AdaptableHelper
@@ -72,7 +99,7 @@ public final class AdapterUtil
 
   /**
    * Nested class to factor out dependencies on org.eclipse.core.runtime
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class AdapterManagerHelper

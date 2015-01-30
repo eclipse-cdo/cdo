@@ -49,7 +49,7 @@ public abstract class Facility extends Lifecycle implements IFacility
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    return AdapterUtil.adapt(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   public void sendMessage(IMessage message)

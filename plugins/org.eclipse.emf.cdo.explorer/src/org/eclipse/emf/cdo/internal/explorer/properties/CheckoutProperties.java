@@ -30,6 +30,15 @@ public class CheckoutProperties extends Properties<CDOCheckout>
   {
     super(CDOCheckout.class);
 
+    add(new Property<CDOCheckout>("state")
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getState();
+      }
+    });
+
     add(new Property<CDOCheckout>("open", "Open", "Whether this checkout is open or not", CATEGORY_CHECKOUT)
     {
       @Override

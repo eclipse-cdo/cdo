@@ -217,7 +217,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @since 3.5
    */
-  protected Object[] getContainerChildren(IContainer<?> container)
+  protected Object[] getContainerChildren(AbstractContainerNode containerNode, IContainer<?> container)
   {
     return container.getElements();
   }
@@ -695,7 +695,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
      */
     protected void fillChildren(List<Node> children, IContainer<Object> container)
     {
-      Object[] elements = getContainerChildren(container);
+      Object[] elements = getContainerChildren(this, container);
       for (int i = 0; i < elements.length; i++)
       {
         Object element = elements[i];

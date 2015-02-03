@@ -91,14 +91,22 @@ public final class ViewerUtil
   {
     private final Object parent;
 
-    public Pending(Object parent)
+    private final String text;
+
+    public Pending(Object parent, String text)
     {
       this.parent = parent;
+      this.text = text;
     }
 
-    public final Object getParent()
+    public Object getParent()
     {
       return parent;
+    }
+
+    public String getText()
+    {
+      return text;
     }
   }
 }

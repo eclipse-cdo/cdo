@@ -30,6 +30,15 @@ public class RepositoryProperties extends Properties<CDORepository>
   {
     super(CDORepository.class);
 
+    add(new Property<CDORepository>("state")
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return repository.getState();
+      }
+    });
+
     add(new Property<CDORepository>("connected", "Connected", "Whether this repository is connected or not",
         CATEGORY_REPOSITORY)
     {
@@ -56,12 +65,6 @@ public class RepositoryProperties extends Properties<CDORepository>
     public Tester()
     {
       super(NAMESPACE, INSTANCE);
-    }
-
-    @Override
-    public boolean test(Object receiver, String propertyName, Object[] args, Object expectedValue)
-    {
-      return super.test(receiver, propertyName, args, expectedValue);
     }
   }
 }

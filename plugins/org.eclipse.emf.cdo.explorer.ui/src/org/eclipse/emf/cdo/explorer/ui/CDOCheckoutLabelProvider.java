@@ -92,7 +92,8 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
 
     if (element instanceof ViewerUtil.Pending)
     {
-      return "Loading...";
+      ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
+      return pending.getText();
     }
 
     return super.getText(element);

@@ -50,6 +50,8 @@ public interface CDOCheckout extends IAdaptable
 
   public void setRootID(CDOID rootID);
 
+  public State getState();
+
   public boolean isOpen();
 
   public void open();
@@ -59,4 +61,12 @@ public interface CDOCheckout extends IAdaptable
   public CDOView getView();
 
   public EObject getRootObject();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum State
+  {
+    Opening, Open, Closing, Closed
+  }
 }

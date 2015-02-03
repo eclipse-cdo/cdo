@@ -38,6 +38,8 @@ public interface CDORepository extends IContainer<CDOBranch>, CDOSessionProvider
 
   public String getRepositoryName();
 
+  public State getState();
+
   public boolean isConnected();
 
   public void connect();
@@ -45,4 +47,12 @@ public interface CDORepository extends IContainer<CDOBranch>, CDOSessionProvider
   public void disconnect();
 
   public CDOCheckout[] getCheckouts();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum State
+  {
+    Connecting, Connected, Disconnecting, Disconnected
+  }
 }

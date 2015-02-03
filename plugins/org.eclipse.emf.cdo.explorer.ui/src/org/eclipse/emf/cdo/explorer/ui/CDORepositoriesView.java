@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.explorer.ui;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.explorer.CDORepository.State;
 import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.CDORepositoryManagerImpl;
@@ -123,7 +124,7 @@ public class CDORepositoriesView extends ContainerView
     if (object instanceof CDORepository)
     {
       final CDORepository repository = (CDORepository)object;
-      if (!repository.isConnected())
+      if (repository.getState() == State.Disconnected)
       {
         connectRepository(repository);
         return;

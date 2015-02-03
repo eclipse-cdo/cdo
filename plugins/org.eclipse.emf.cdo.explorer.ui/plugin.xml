@@ -98,7 +98,7 @@
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.cdo.explorer.CDORepository"/>
-                      <test property="org.eclipse.emf.cdo.explorer.repository.connected" value="false"/>
+                      <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Disconnected"/>
                     </and>
                   </iterate>
                </with>
@@ -121,7 +121,7 @@
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.cdo.explorer.CDORepository"/>
-                      <test property="org.eclipse.emf.cdo.explorer.repository.connected" value="true"/>
+                      <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected"/>
                     </and>
                   </iterate>
                </with>

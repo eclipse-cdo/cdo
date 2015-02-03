@@ -60,6 +60,8 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
 
   private String label;
 
+  private State state = State.Closed;
+
   private CDOView view;
 
   private EObject rootObject;
@@ -136,6 +138,11 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
     this.label = label;
   }
 
+  public final State getState()
+  {
+    return state;
+  }
+
   public final boolean isOpen()
   {
     return view != null;
@@ -144,17 +151,35 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
   public final synchronized void open()
   {
     boolean opened = false;
+
     synchronized (viewListener)
     {
       if (!isOpen())
       {
-        CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
+        try
+        {
+          state = State.Opening;
 
-        view = openView(session);
-        view.addListener(viewListener);
+          CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
 
-        rootObject = loadRootObject();
-        rootObject.eAdapters().add(this);
+          view = openView(session);
+          view.addListener(viewListener);
+
+          rootObject = loadRootObject();
+          rootObject.eAdapters().add(this);
+
+          state = State.Open;
+        }
+        catch (RuntimeException ex)
+        {
+          state = State.Closed;
+          throw ex;
+        }
+        catch (Error ex)
+        {
+          state = State.Closed;
+          throw ex;
+        }
 
         opened = true;
       }
@@ -169,15 +194,24 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
   public final synchronized void close()
   {
     boolean closed = false;
+
     synchronized (viewListener)
     {
       if (isOpen())
       {
-        rootObject.eAdapters().remove(this);
-        rootObject = null;
+        try
+        {
+          state = State.Closing;
 
-        view.close();
-        view = null;
+          rootObject.eAdapters().remove(this);
+          view.close();
+        }
+        finally
+        {
+          rootObject = null;
+          view = null;
+          state = State.Closed;
+        }
 
         closed = true;
       }

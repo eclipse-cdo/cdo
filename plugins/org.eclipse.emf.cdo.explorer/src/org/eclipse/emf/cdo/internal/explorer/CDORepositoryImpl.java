@@ -79,6 +79,8 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
 
   private String repositoryName;
 
+  private State state = State.Disconnected;
+
   private CDOSession session;
 
   public CDORepositoryImpl(CDORepositoryManager repositoryManager, String label, String repositoryName)
@@ -113,6 +115,11 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     return session;
   }
 
+  public State getState()
+  {
+    return state;
+  }
+
   public boolean isConnected()
   {
     return session != null;
@@ -121,13 +128,31 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
   public void connect()
   {
     boolean connected = false;
+
     synchronized (sessionListener)
     {
       if (!isConnected())
       {
-        session = openSession();
-        session.addListener(sessionListener);
-        session.getBranchManager().getMainBranch().addListener(mainBranchListener);
+        try
+        {
+          state = State.Connecting;
+
+          session = openSession();
+          session.addListener(sessionListener);
+          session.getBranchManager().getMainBranch().addListener(mainBranchListener);
+
+          state = State.Connected;
+        }
+        catch (RuntimeException ex)
+        {
+          state = State.Disconnected;
+          throw ex;
+        }
+        catch (Error ex)
+        {
+          state = State.Disconnected;
+          throw ex;
+        }
 
         connected = true;
       }
@@ -148,10 +173,18 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     {
       if (isConnected())
       {
+        state = State.Disconnecting;
         oldSession = session;
 
-        session.close();
-        session = null;
+        try
+        {
+          session.close();
+        }
+        finally
+        {
+          session = null;
+          state = State.Disconnected;
+        }
 
         disconnected = true;
       }

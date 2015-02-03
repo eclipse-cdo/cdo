@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.explorer.CDORepositoryManager.RepositoryConnectionEvent;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -22,6 +23,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -136,18 +138,42 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
   }
 
   @Override
-  protected Object[] getContainerChildren(IContainer<?> container)
+  protected Object[] getContainerChildren(AbstractContainerNode containerNode, IContainer<?> container)
   {
     if (container instanceof CDORepository)
     {
       CDORepository repository = (CDORepository)container;
       if (connectingRepositories.remove(repository) != null)
       {
-        repository.connect();
+        try
+        {
+          repository.connect();
+        }
+        catch (final Exception ex)
+        {
+          OM.LOG.error(ex);
+          containerNode.disposeChildren();
+          repository.disconnect();
+
+          UIUtil.getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                MessageDialog.openError(getViewer().getControl().getShell(), "Connection Error", ex.getMessage());
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
+            }
+          });
+        }
       }
     }
 
-    return super.getContainerChildren(container);
+    return super.getContainerChildren(containerNode, container);
   }
 
   @Override

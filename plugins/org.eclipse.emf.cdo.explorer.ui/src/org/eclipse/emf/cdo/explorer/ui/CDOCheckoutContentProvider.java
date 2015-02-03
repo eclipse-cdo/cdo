@@ -16,9 +16,11 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.explorer.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.CDOCheckout.State;
 import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.CDOCheckoutManager.CheckoutOpenEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -50,6 +53,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -57,6 +61,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
 
 import java.lang.reflect.Method;
@@ -287,24 +292,55 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       @Override
       protected IStatus run(IProgressMonitor monitor)
       {
-        if (finalOpeningCheckout != null)
+        try
         {
-          finalOpeningCheckout.open();
-          determineChildRevisions(finalObject, loadedRevisions, missingIDs);
-        }
+          if (finalOpeningCheckout != null)
+          {
+            finalOpeningCheckout.open();
+            determineChildRevisions(finalObject, loadedRevisions, missingIDs);
+          }
 
-        if (!missingIDs.isEmpty())
+          if (!missingIDs.isEmpty())
+          {
+            CDOObject cdoObject = CDOUtil.getCDOObject((EObject)finalObject);
+            CDOView view = cdoObject.cdoView();
+            CDORevisionManager revisionManager = view.getSession().getRevisionManager();
+            List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED,
+                CDORevision.DEPTH_NONE, true);
+            loadedRevisions.addAll(revisions);
+          }
+
+          Object[] children = CDOCheckoutContentProvider.super.getChildren(finalObject);
+          childrenCache.put(originalObject, children);
+        }
+        catch (final Exception ex)
         {
-          CDOObject cdoObject = CDOUtil.getCDOObject((EObject)finalObject);
-          CDOView view = cdoObject.cdoView();
-          CDORevisionManager revisionManager = view.getSession().getRevisionManager();
-          List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED,
-              CDORevision.DEPTH_NONE, true);
-          loadedRevisions.addAll(revisions);
-        }
+          OM.LOG.error(ex);
 
-        Object[] children = CDOCheckoutContentProvider.super.getChildren(finalObject);
-        childrenCache.put(originalObject, children);
+          childrenCache.remove(originalObject);
+
+          if (finalOpeningCheckout != null)
+          {
+            finalOpeningCheckout.close();
+          }
+
+          UIUtil.getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              try
+              {
+                Shell shell = viewer.getControl().getShell();
+                String title = (finalOpeningCheckout != null ? "Open" : "Load") + " Error";
+                MessageDialog.openError(shell, title, ex.getMessage());
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
+            }
+          });
+        }
 
         // The viewer must be refreshed synchronously so that the loaded children don't get garbage collected.
         ViewerUtil.refresh(viewer, originalObject, false);
@@ -325,14 +361,22 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
           int childCount = childItems.length;
           if (childCount != 0)
           {
-            Object[] result = new Object[childCount];
+            List<Object> result = new ArrayList<Object>();
             for (int i = 0; i < childCount; i++)
             {
               TreeItem childItem = childItems[i];
-              result[i] = childItem.getData();
+              Object child = childItem.getData();
+              if (child != null)
+              {
+                result.add(child);
+              }
             }
 
-            return result;
+            int size = result.size();
+            if (size != 0)
+            {
+              return result.toArray(new Object[size]);
+            }
           }
         }
       }
@@ -342,7 +386,13 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       }
     }
 
-    return new Object[] { new ViewerUtil.Pending(originalObject) };
+    String text = "Loading...";
+    if (finalOpeningCheckout != null)
+    {
+      text = "Opening...";
+    }
+
+    return new Object[] { new ViewerUtil.Pending(originalObject, text) };
   }
 
   private Object[] determineChildRevisions(Object object, List<CDORevision> loadedRevisions, List<CDOID> missingIDs)
@@ -465,7 +515,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         if (element instanceof CDOCheckout)
         {
           CDOCheckout checkout = (CDOCheckout)element;
-          if (!checkout.isOpen())
+          if (checkout.getState() == State.Closed)
           {
             // Mark this checkout as loading.
             openingCheckouts.put(checkout, checkout);

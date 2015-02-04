@@ -8,28 +8,35 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer;
+package org.eclipse.emf.cdo.internal.explorer.repositories;
 
-import org.eclipse.emf.cdo.explorer.CDORepository;
-import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
+import org.eclipse.emf.cdo.internal.explorer.AbstractManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
 
+import java.io.File;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
  */
-public class CDORepositoryManagerImpl extends SetContainer<CDORepository> implements CDORepositoryManager
+public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> implements CDORepositoryManager
 {
   private final Map<CDOSession, CDORepository> sessionMap = new ConcurrentHashMap<CDOSession, CDORepository>();
 
-  public CDORepositoryManagerImpl()
+  public CDORepositoryManagerImpl(File folder)
   {
-    super(CDORepository.class);
+    super(CDORepository.class, folder);
+  }
+
+  public CDORepository getRepository(String id)
+  {
+    return getElement(id);
   }
 
   public CDORepository[] getRepositories()
@@ -37,13 +44,9 @@ public class CDORepositoryManagerImpl extends SetContainer<CDORepository> implem
     return getElements();
   }
 
-  public CDORepository addRemoteRepository(String label, String repositoryName, String connectorType,
-      String connectorDescription)
+  public CDORepository addRepository(Properties properties)
   {
-    RemoteCDORepository repository = new RemoteCDORepository(this, label, repositoryName, connectorType,
-        connectorDescription);
-    addElement(repository);
-    return repository;
+    return newElement(properties);
   }
 
   public void disconnectUnusedRepositories()
@@ -71,6 +74,17 @@ public class CDORepositoryManagerImpl extends SetContainer<CDORepository> implem
     }
 
     fireEvent(new RepositoryConnectionEventImpl(this, repository, connected));
+  }
+
+  @Override
+  protected CDORepositoryImpl createElement(String type)
+  {
+    if ("remote".equals(type))
+    {
+      return new RemoteCDORepository();
+    }
+
+    throw new IllegalArgumentException("Unknown type: " + type);
   }
 
   /**

@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer;
+package org.eclipse.emf.cdo.internal.explorer.repositories;
 
-import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
+import java.io.File;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -21,12 +22,8 @@ public class RemoteCDORepository extends CDORepositoryImpl
 
   private String connectorDescription;
 
-  public RemoteCDORepository(CDORepositoryManager repositoryManager, String label, String repositoryName,
-      String connectorType, String connectorDescription)
+  public RemoteCDORepository()
   {
-    super(repositoryManager, label, repositoryName);
-    this.connectorType = connectorType;
-    this.connectorDescription = connectorDescription;
   }
 
   public final String getConnectorType()
@@ -37,5 +34,21 @@ public class RemoteCDORepository extends CDORepositoryImpl
   public final String getConnectorDescription()
   {
     return connectorDescription;
+  }
+
+  @Override
+  public void init(File folder, String type, Properties properties)
+  {
+    super.init(folder, type, properties);
+    connectorType = properties.getProperty("connectorType");
+    connectorDescription = properties.getProperty("connectorDescription");
+  }
+
+  @Override
+  protected void collectProperties(Properties properties)
+  {
+    super.collectProperties(properties);
+    properties.put("connectorType", connectorType);
+    properties.put("connectorDescription", connectorDescription);
   }
 }

@@ -10,11 +10,9 @@
  */
 package org.eclipse.emf.cdo.explorer;
 
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.internal.explorer.CDOCheckoutManagerImpl;
-import org.eclipse.emf.cdo.internal.explorer.CDORepositoryManagerImpl;
-
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
+import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 
 /**
  * @author Eike Stepper
@@ -22,55 +20,13 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  */
 public final class CDOExplorerUtil
 {
-  private static CDORepositoryManager repositoryManager;
-
-  private static CDOCheckoutManager checkoutManager;
-
-  public static synchronized CDOCheckoutManager getCheckoutManager()
+  public static CDOCheckoutManager getCheckoutManager()
   {
-    if (checkoutManager == null)
-    {
-      CDORepository repository = getRepositoryManager().getRepositories()[0];
-
-      checkoutManager = new CDOCheckoutManagerImpl();
-      checkoutManager.connect("Repo1 Root", repository, "MAIN", 0, false, CDOIDUtil.createLong(1));
-      LifecycleUtil.activate(checkoutManager);
-    }
-
-    return checkoutManager;
+    return OM.getCheckoutManager();
   }
 
-  public static synchronized void disposeCheckoutManager()
+  public static CDORepositoryManager getRepositoryManager()
   {
-    LifecycleUtil.deactivate(checkoutManager);
-    checkoutManager = null;
-  }
-
-  public static synchronized CDORepositoryManager getRepositoryManager()
-  {
-    if (repositoryManager == null)
-    {
-      // File file = new File(OM.BUNDLE.getStateLocation(), "repositories");
-      // FileContainerPersistence<CDORepository> persistence = new FileContainerPersistence<CDORepository>(file);
-      //
-      // CDORepositoryManagerImpl manager = new CDORepositoryManagerImpl();
-      // manager.setPersistence(persistence);
-      // manager.activate();
-      //
-      // repositoryManager = manager;
-
-      repositoryManager = new CDORepositoryManagerImpl();
-      repositoryManager.addRemoteRepository("Repo1", "repo1", "tcp", "localhost");
-
-      LifecycleUtil.activate(repositoryManager);
-    }
-
-    return repositoryManager;
-  }
-
-  public static synchronized void disposeRepositoryManager()
-  {
-    LifecycleUtil.deactivate(repositoryManager);
-    repositoryManager = null;
+    return OM.getRepositoryManager();
   }
 }

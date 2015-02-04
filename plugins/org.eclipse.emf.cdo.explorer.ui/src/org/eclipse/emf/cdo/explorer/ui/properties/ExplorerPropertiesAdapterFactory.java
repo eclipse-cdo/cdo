@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.properties;
 
-import org.eclipse.emf.cdo.explorer.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.properties.CheckoutProperties;
 import org.eclipse.emf.cdo.internal.explorer.properties.RepositoryProperties;
 

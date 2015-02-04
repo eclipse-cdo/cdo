@@ -11,13 +11,17 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.bundle;
 
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutManagerImpl;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
+
+import java.io.File;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -34,6 +38,20 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
+  private static CDORepositoryManagerImpl repositoryManager;
+
+  private static CDOCheckoutManagerImpl checkoutManager;
+
+  public static CDORepositoryManagerImpl getRepositoryManager()
+  {
+    return repositoryManager;
+  }
+
+  public static CDOCheckoutManagerImpl getCheckoutManager()
+  {
+    return checkoutManager;
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -45,9 +63,27 @@ public abstract class OM
     }
 
     @Override
+    protected void doStart() throws Exception
+    {
+      super.doStart();
+      String stateLocation = BUNDLE.getStateLocation();
+
+      repositoryManager = new CDORepositoryManagerImpl(new File(stateLocation, "repo"));
+      LifecycleUtil.activate(repositoryManager);
+
+      checkoutManager = new CDOCheckoutManagerImpl(new File(stateLocation, "co"));
+      LifecycleUtil.activate(checkoutManager);
+    }
+
+    @Override
     protected void doStop() throws Exception
     {
-      CDOExplorerUtil.disposeRepositoryManager();
+      LifecycleUtil.deactivate(checkoutManager);
+      checkoutManager = null;
+
+      LifecycleUtil.deactivate(repositoryManager);
+      repositoryManager = null;
+
       super.doStop();
     }
   }

@@ -8,18 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui;
+package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.explorer.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.CDOCheckout.State;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutManager.CheckoutOpenEvent;
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.State;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutOpenEvent;
+import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -81,7 +81,8 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
 
   private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 
-  private static final CDOCheckoutManager CHECKOUT_MANAGER = CDOExplorerUtil.getCheckoutManager();
+  private static final CDOCheckoutManager CHECKOUT_MANAGER = org.eclipse.emf.cdo.explorer.CDOExplorerUtil
+      .getCheckoutManager();
 
   private final IListener checkoutManagerListener = new IListener()
   {

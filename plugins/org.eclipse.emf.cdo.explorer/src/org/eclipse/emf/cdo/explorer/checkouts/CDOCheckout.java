@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer;
+package org.eclipse.emf.cdo.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.core.runtime.IAdaptable;
 
 /**
  * A CDO checkout.
@@ -24,14 +24,8 @@ import org.eclipse.core.runtime.IAdaptable;
  * @since 4.4
  * @apiviz.landmark
  */
-public interface CDOCheckout extends IAdaptable
+public interface CDOCheckout extends CDOExplorerElement
 {
-  public String getLabel();
-
-  public void setLabel(String label);
-
-  public CDOCheckoutManager getCheckoutManager();
-
   public CDORepository getRepository();
 
   public String getBranchPath();

@@ -10,22 +10,28 @@
  */
 package org.eclipse.emf.cdo.explorer;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.net4j.util.event.INotifier;
+
+import org.eclipse.emf.common.notify.Adapter;
+
+import org.eclipse.core.runtime.IAdaptable;
 
 /**
- * A source for CDO checkouts.
+ * A CDO server independent representation of a repository.
  *
  * @author Eike Stepper
  * @since 4.4
  * @apiviz.landmark
  */
-public interface CDOCheckoutSource
+public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter
 {
-  public CDORepository getRepository();
+  public String getID();
 
-  public String getBranchPath();
+  public String getType();
 
-  public long getTimeStamp();
+  public String getLabel();
 
-  public CDOID getRootID();
+  public void setLabel(String label);
+
+  public void delete();
 }

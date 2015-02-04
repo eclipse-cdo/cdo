@@ -8,24 +8,31 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer;
+package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
-import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
+import org.eclipse.emf.cdo.internal.explorer.AbstractManager;
 
-import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
+
+import java.io.File;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutManagerImpl extends SetContainer<CDOCheckout> implements CDOCheckoutManager
+public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> implements CDOCheckoutManager
 {
-  public CDOCheckoutManagerImpl()
+  public CDOCheckoutManagerImpl(File folder)
   {
-    super(CDOCheckout.class);
+    super(CDOCheckout.class, folder);
+  }
+
+  public CDOCheckout getCheckout(String id)
+  {
+    return getElement(id);
   }
 
   public CDOCheckout[] getCheckouts()
@@ -33,28 +40,31 @@ public class CDOCheckoutManagerImpl extends SetContainer<CDOCheckout> implements
     return getElements();
   }
 
-  public CDOCheckout connect(String label, CDORepository repository, String branchPath, long timeStamp,
-      boolean readOnly, CDOID rootID)
+  public CDOCheckout addCheckout(Properties properties)
   {
-    CDOCheckout checkout = new OnlineCDOCheckout(this, repository, branchPath, timeStamp, readOnly, rootID, label);
-    return addCheckout(checkout);
-  }
-
-  private CDOCheckout addCheckout(CDOCheckout checkout)
-  {
-    if (addElement(checkout))
-    {
-      CDORepositoryImpl repository = (CDORepositoryImpl)checkout.getRepository();
-      repository.addCheckout(checkout);
-      return checkout;
-    }
-
-    return null;
+    return newElement(properties);
   }
 
   public void fireCheckoutOpenEvent(CDOCheckout checkout, boolean open)
   {
     fireEvent(new CheckoutOpenEventImpl(this, checkout, open));
+  }
+
+  @Override
+  protected CDOCheckout createElement(String type)
+  {
+    if ("online".equals(type))
+    {
+      return new OnlineCDOCheckout();
+    }
+
+    throw new IllegalArgumentException("Unknown type: " + type);
+  }
+
+  static
+  {
+    // Make sure all object types are registered.
+    ObjectType.values();
   }
 
   /**

@@ -8,12 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer;
+package org.eclipse.emf.cdo.explorer.checkouts;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 
-import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
+
+import java.util.Properties;
 
 /**
  * Manages a set of {@link CDOCheckout checkouts}.
@@ -22,12 +23,13 @@ import org.eclipse.net4j.util.event.IEvent;
  * @since 4.4
  * @apiviz.composedOf {@link CDOCheckout}
  */
-public interface CDOCheckoutManager extends IContainer<CDOCheckout>
+public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
 {
+  public CDOCheckout getCheckout(String id);
+
   public CDOCheckout[] getCheckouts();
 
-  public CDOCheckout connect(String label, CDORepository repository, String branchPath, long timeStamp,
-      boolean readOnly, CDOID rootID);
+  public CDOCheckout addCheckout(Properties properties);
 
   /**
    * @author Eike Stepper

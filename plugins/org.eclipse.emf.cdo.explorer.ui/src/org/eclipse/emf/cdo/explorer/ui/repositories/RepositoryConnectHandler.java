@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.handlers;
+package org.eclipse.emf.cdo.explorer.ui.repositories;
 
-import org.eclipse.emf.cdo.explorer.CDORepository;
-import org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;

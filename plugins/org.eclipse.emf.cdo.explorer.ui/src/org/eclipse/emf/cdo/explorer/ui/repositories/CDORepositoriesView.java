@@ -8,14 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui;
+package org.eclipse.emf.cdo.explorer.ui.repositories;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
-import org.eclipse.emf.cdo.explorer.CDORepository;
-import org.eclipse.emf.cdo.explorer.CDORepository.State;
-import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.internal.explorer.CDORepositoryManagerImpl;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -39,6 +38,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchActionConstants;
 
+import java.util.Properties;
+
 /**
  * @author Eike Stepper
  */
@@ -59,7 +60,7 @@ public class CDORepositoriesView extends ContainerView
   @Override
   protected IContainer<?> getContainer()
   {
-    return CDOExplorerUtil.getRepositoryManager();
+    return org.eclipse.emf.cdo.explorer.CDOExplorerUtil.getRepositoryManager();
   }
 
   @Override
@@ -236,12 +237,15 @@ public class CDORepositoriesView extends ContainerView
         NewRepositoryDialog dialog = new NewRepositoryDialog(getSite().getShell());
         if (dialog.open() == NewRepositoryDialog.OK)
         {
-          String connectorType = dialog.getConnectorType();
-          String connectorDescription = dialog.getConnectorDescription();
-          String repositoryName = dialog.getRepositoryName();
+          Properties properties = new Properties();
+          properties.put("type", "remote");
+          properties.put("label", dialog.getRepositoryName());
+          properties.put("connectorType", dialog.getConnectorType());
+          properties.put("connectorDescription", dialog.getConnectorDescription());
+          properties.put("repositoryName", dialog.getRepositoryName());
 
-          CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
-          repositoryManager.addRemoteRepository(repositoryName, repositoryName, connectorType, connectorDescription);
+          CDORepository repository = CDOExplorerUtil.getRepositoryManager().addRepository(properties);
+          connectRepository(repository);
         }
       }
       catch (RuntimeException ex)

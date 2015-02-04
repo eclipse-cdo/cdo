@@ -8,14 +8,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer;
+package org.eclipse.emf.cdo.explorer.repositories;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.session.CDOSessionProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
-
-import org.eclipse.core.runtime.IAdaptable;
 
 /**
  * A CDO server independent representation of a repository.
@@ -24,14 +24,8 @@ import org.eclipse.core.runtime.IAdaptable;
  * @since 4.4
  * @apiviz.landmark
  */
-public interface CDORepository extends IContainer<CDOBranch>, CDOSessionProvider, IAdaptable
+public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDOSessionProvider
 {
-  public String getLabel();
-
-  public void setLabel(String label);
-
-  public CDORepositoryManager getRepositoryManager();
-
   public String getConnectorType();
 
   public String getConnectorDescription();

@@ -8,16 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer;
+package org.eclipse.emf.cdo.internal.explorer.repositories;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutSource;
-import org.eclipse.emf.cdo.explorer.CDORepository;
-import org.eclipse.emf.cdo.explorer.CDORepositoryManager;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutSource;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -25,7 +26,6 @@ import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -33,18 +33,20 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.event.Notifier;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDORepositoryImpl extends Notifier implements CDORepository
+public abstract class CDORepositoryImpl extends AbstractElement implements CDORepository
 {
   private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
 
@@ -73,36 +75,14 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     }
   };
 
-  private final CDORepositoryManager repositoryManager;
-
-  private String label;
-
   private String repositoryName;
 
   private State state = State.Disconnected;
 
   private CDOSession session;
 
-  public CDORepositoryImpl(CDORepositoryManager repositoryManager, String label, String repositoryName)
+  public CDORepositoryImpl()
   {
-    this.repositoryManager = repositoryManager;
-    this.label = label;
-    this.repositoryName = repositoryName;
-  }
-
-  public final CDORepositoryManager getRepositoryManager()
-  {
-    return repositoryManager;
-  }
-
-  public String getLabel()
-  {
-    return label;
-  }
-
-  public void setLabel(String label)
-  {
-    this.label = label;
   }
 
   public final String getRepositoryName()
@@ -110,22 +90,17 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     return repositoryName;
   }
 
-  public CDOSession getSession()
-  {
-    return session;
-  }
-
-  public State getState()
+  public final State getState()
   {
     return state;
   }
 
-  public boolean isConnected()
+  public final boolean isConnected()
   {
     return session != null;
   }
 
-  public void connect()
+  public final void connect()
   {
     boolean connected = false;
 
@@ -160,11 +135,15 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
 
     if (connected)
     {
-      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, session, true);
+      CDORepositoryManagerImpl manager = getManager();
+      if (manager != null)
+      {
+        manager.fireRepositoryConnectionEvent(this, session, true);
+      }
     }
   }
 
-  public void disconnect()
+  public final void disconnect()
   {
     boolean disconnected = false;
     CDOSession oldSession = null;
@@ -192,11 +171,15 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
 
     if (disconnected)
     {
-      ((CDORepositoryManagerImpl)repositoryManager).fireRepositoryConnectionEvent(this, oldSession, false);
+      CDORepositoryManagerImpl manager = getManager();
+      if (manager != null)
+      {
+        manager.fireRepositoryConnectionEvent(this, oldSession, false);
+      }
     }
   }
 
-  public void disconnectIfUnused()
+  public final void disconnectIfUnused()
   {
     synchronized (checkouts)
     {
@@ -207,7 +190,23 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     }
   }
 
-  public CDOCheckout[] getCheckouts()
+  public final CDOSession getSession()
+  {
+    return session;
+  }
+
+  public void delete()
+  {
+    CDORepositoryManagerImpl manager = getManager();
+    if (manager != null)
+    {
+      manager.removeElement(this);
+    }
+
+    IOUtil.delete(getFolder());
+  }
+
+  public final CDOCheckout[] getCheckouts()
   {
     synchronized (checkouts)
     {
@@ -215,7 +214,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     }
   }
 
-  public void addCheckout(CDOCheckout checkout)
+  public final void addCheckout(CDOCheckout checkout)
   {
     synchronized (checkouts)
     {
@@ -223,7 +222,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     }
   }
 
-  public CDOSession openCheckout(CDOCheckout checkout)
+  public final CDOSession openCheckout(CDOCheckout checkout)
   {
     connect();
 
@@ -235,7 +234,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     return session;
   }
 
-  public void closeCheckout(CDOCheckout checkout)
+  public final void closeCheckout(CDOCheckout checkout)
   {
     synchronized (checkouts)
     {
@@ -243,7 +242,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     }
   }
 
-  public boolean isEmpty()
+  public final boolean isEmpty()
   {
     if (isConnected())
     {
@@ -253,7 +252,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     return false;
   }
 
-  public CDOBranch[] getElements()
+  public final CDOBranch[] getElements()
   {
     if (isConnected())
     {
@@ -263,7 +262,8 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     return new CDOBranch[0];
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @Override
+  @SuppressWarnings({ "rawtypes" })
   public Object getAdapter(Class adapter)
   {
     if (adapter == CDOCheckoutSource.class && isConnected())
@@ -294,7 +294,7 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
       };
     }
 
-    return AdapterUtil.adapt(this, adapter, false);
+    return super.getAdapter(adapter);
   }
 
   @Override
@@ -329,6 +329,20 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     return getConnectorType() + "://" + getConnectorDescription() + "/" + repositoryName;
   }
 
+  @Override
+  protected void init(File folder, String type, Properties properties)
+  {
+    super.init(folder, type, properties);
+    repositoryName = properties.getProperty("repositoryName");
+  }
+
+  @Override
+  protected void collectProperties(Properties properties)
+  {
+    super.collectProperties(properties);
+    properties.put("repositoryName", repositoryName);
+  }
+
   protected IManagedContainer getContainer()
   {
     return IPluginContainer.INSTANCE;
@@ -359,5 +373,10 @@ public abstract class CDORepositoryImpl extends Notifier implements CDORepositor
     CDOSession session = sessionConfiguration.openSession();
     session.options().setGeneratedPackageEmulationEnabled(true);
     return session;
+  }
+
+  private static CDORepositoryManagerImpl getManager()
+  {
+    return OM.getRepositoryManager();
   }
 }

@@ -8,28 +8,33 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer;
+package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
-import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
+
+import java.io.File;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
+public abstract class CDOCheckoutImpl extends AbstractElement implements CDOCheckout
 {
   private final IListener viewListener = new IListener()
   {
@@ -46,9 +51,7 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
     }
   };
 
-  private final CDOCheckoutManager checkoutManager;
-
-  private final CDORepository repository;
+  private CDORepository repository;
 
   private String branchPath;
 
@@ -58,29 +61,14 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
 
   private CDOID rootID;
 
-  private String label;
-
   private State state = State.Closed;
 
   private CDOView view;
 
   private EObject rootObject;
 
-  public CDOCheckoutImpl(CDOCheckoutManager checkoutManager, CDORepository repository, String branchPath,
-      long timeStamp, boolean readOnly, CDOID rootID, String label)
+  public CDOCheckoutImpl()
   {
-    this.checkoutManager = checkoutManager;
-    this.label = label;
-    this.repository = repository;
-    this.branchPath = branchPath;
-    this.timeStamp = timeStamp;
-    this.readOnly = readOnly;
-    this.rootID = rootID;
-  }
-
-  public final CDOCheckoutManager getCheckoutManager()
-  {
-    return checkoutManager;
   }
 
   public final CDORepository getRepository()
@@ -126,16 +114,6 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
   public final void setRootID(CDOID rootID)
   {
     this.rootID = rootID;
-  }
-
-  public final String getLabel()
-  {
-    return label;
-  }
-
-  public final void setLabel(String label)
-  {
-    this.label = label;
   }
 
   public final State getState()
@@ -187,7 +165,11 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
 
     if (opened)
     {
-      ((CDOCheckoutManagerImpl)checkoutManager).fireCheckoutOpenEvent(this, true);
+      CDOCheckoutManagerImpl manager = getManager();
+      if (manager != null)
+      {
+        manager.fireCheckoutOpenEvent(this, true);
+      }
     }
   }
 
@@ -219,7 +201,11 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
 
     if (closed)
     {
-      ((CDOCheckoutManagerImpl)checkoutManager).fireCheckoutOpenEvent(this, false);
+      CDOCheckoutManagerImpl manager = getManager();
+      if (manager != null)
+      {
+        manager.fireCheckoutOpenEvent(this, false);
+      }
     }
   }
 
@@ -233,6 +219,17 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
     return rootObject;
   }
 
+  public void delete()
+  {
+    CDOCheckoutManagerImpl manager = getManager();
+    if (manager != null)
+    {
+      manager.removeElement(this);
+    }
+
+    IOUtil.delete(getFolder());
+  }
+
   @Override
   public boolean isAdapterForType(Object type)
   {
@@ -244,7 +241,8 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
     return super.isAdapterForType(type);
   }
 
-  @SuppressWarnings({ "unchecked", "rawtypes" })
+  @Override
+  @SuppressWarnings({ "rawtypes" })
   public Object getAdapter(Class adapter)
   {
     if (adapter == EObject.class)
@@ -252,7 +250,7 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
       return rootObject;
     }
 
-    return AdapterUtil.adapt(this, adapter, false);
+    return super.getAdapter(adapter);
   }
 
   @Override
@@ -261,10 +259,46 @@ public abstract class CDOCheckoutImpl extends AdapterImpl implements CDOCheckout
     return getLabel();
   }
 
+  @Override
+  protected void init(File folder, String type, Properties properties)
+  {
+    super.init(folder, type, properties);
+    repository = OM.getRepositoryManager().getElement(properties.getProperty("repository"));
+    branchPath = properties.getProperty("branchPath");
+    timeStamp = Long.parseLong(properties.getProperty("timeStamp"));
+    readOnly = Boolean.parseBoolean(properties.getProperty("readOnly"));
+    rootID = CDOIDUtil.read(properties.getProperty("rootID"));
+  }
+
+  @Override
+  protected void collectProperties(Properties properties)
+  {
+    super.collectProperties(properties);
+    properties.put("repository", repository.getID());
+    properties.put("branchPath", branchPath);
+    properties.put("timeStamp", Long.toString(timeStamp));
+    properties.put("readOnly", Boolean.toString(readOnly));
+
+    String string = getCDOIDString(rootID);
+    properties.put("rootID", string);
+  }
+
   protected EObject loadRootObject()
   {
     return view.getObject(rootID);
   }
 
   protected abstract CDOView openView(CDOSession session);
+
+  public static String getCDOIDString(CDOID id)
+  {
+    StringBuilder builder = new StringBuilder();
+    CDOIDUtil.write(builder, id);
+    return builder.toString();
+  }
+
+  private static CDOCheckoutManagerImpl getManager()
+  {
+    return OM.getCheckoutManager();
+  }
 }

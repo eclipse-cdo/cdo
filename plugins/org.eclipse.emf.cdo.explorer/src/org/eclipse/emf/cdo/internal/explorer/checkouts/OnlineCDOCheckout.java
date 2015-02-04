@@ -8,13 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer;
+package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutManager;
-import org.eclipse.emf.cdo.explorer.CDORepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -23,10 +20,8 @@ import org.eclipse.emf.cdo.view.CDOView;
  */
 public class OnlineCDOCheckout extends CDOCheckoutImpl
 {
-  public OnlineCDOCheckout(CDOCheckoutManager checkoutManager, CDORepository repository, String branchPath,
-      long timeStamp, boolean readOnly, CDOID rootID, String label)
+  public OnlineCDOCheckout()
   {
-    super(checkoutManager, repository, branchPath, timeStamp, readOnly, rootID, label);
   }
 
   @Override

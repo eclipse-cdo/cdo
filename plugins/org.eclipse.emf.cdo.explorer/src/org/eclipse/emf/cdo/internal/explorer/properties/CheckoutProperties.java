@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.properties;
 
-import org.eclipse.emf.cdo.explorer.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;

@@ -14,9 +14,10 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.CDOCheckoutSource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
-import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutSource;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 

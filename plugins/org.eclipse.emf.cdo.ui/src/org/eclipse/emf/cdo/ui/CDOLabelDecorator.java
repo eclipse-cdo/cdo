@@ -125,11 +125,11 @@ public class CDOLabelDecorator implements ILabelDecorator
 
   public void addListener(ILabelProviderListener listener)
   {
-    // Ignore listeners, DecoratorManager handles it
+    // Ignore listeners, DecoratorManager handles them.
   }
 
   public void removeListener(ILabelProviderListener listener)
   {
-    // Ignore listeners, DecoratorManager handles it
+    // Ignore listeners, DecoratorManager handles them.
   }
 }

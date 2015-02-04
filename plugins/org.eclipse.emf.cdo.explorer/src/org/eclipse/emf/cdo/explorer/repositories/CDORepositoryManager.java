@@ -8,10 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer;
+package org.eclipse.emf.cdo.explorer.repositories;
 
-import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
+
 import org.eclipse.net4j.util.event.IEvent;
+
+import java.util.Properties;
 
 /**
  * Manages a set of {@link CDORepository repositories}.
@@ -21,12 +24,13 @@ import org.eclipse.net4j.util.event.IEvent;
  * @apiviz.landmark
  * @apiviz.composedOf {@link CDORepository}
  */
-public interface CDORepositoryManager extends IContainer<CDORepository>
+public interface CDORepositoryManager extends CDOExplorerManager<CDORepository>
 {
+  public CDORepository getRepository(String id);
+
   public CDORepository[] getRepositories();
 
-  public CDORepository addRemoteRepository(String label, String repositoryName, String connectorType,
-      String connectorDescription);
+  public CDORepository addRepository(Properties properties);
 
   /**
    * @author Eike Stepper

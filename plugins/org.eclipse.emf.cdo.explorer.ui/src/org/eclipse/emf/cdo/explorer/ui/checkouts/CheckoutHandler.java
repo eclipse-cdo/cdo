@@ -8,23 +8,24 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.handlers;
+package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
-import org.eclipse.emf.cdo.explorer.CDORepository;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.ui.BaseHandler;
 
 import org.eclipse.jface.viewers.ISelection;
 
 /**
  * @author Eike Stepper
  */
-public abstract class RepositoryHandler extends BaseHandler<CDORepository>
+public abstract class CheckoutHandler extends BaseHandler<CDOCheckout>
 {
-  private final Boolean connected;
+  private final Boolean open;
 
-  public RepositoryHandler(Boolean multi, Boolean connected)
+  public CheckoutHandler(Boolean multi, Boolean open)
   {
-    super(CDORepository.class, multi);
-    this.connected = connected;
+    super(CDOCheckout.class, multi);
+    this.open = open;
   }
 
   @Override
@@ -32,11 +33,11 @@ public abstract class RepositoryHandler extends BaseHandler<CDORepository>
   {
     boolean result = super.updateSelection(selection);
 
-    if (result && connected != null)
+    if (result && open != null)
     {
-      for (CDORepository repository : elements)
+      for (CDOCheckout checkout : elements)
       {
-        if (connected != repository.isConnected())
+        if (open != checkout.isOpen())
         {
           return false;
         }

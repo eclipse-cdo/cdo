@@ -96,6 +96,8 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
       assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION));
       assertEquals(true, nbRequestsCalls.containsKey(SignalProtocol.SIGNAL_MONITOR_PROGRESS));
     }
+
+    nbRequestsCallsCounter.dispose();
   }
 
   class CommitTransactionIndicationWaiting implements CDOCommitInfoHandler

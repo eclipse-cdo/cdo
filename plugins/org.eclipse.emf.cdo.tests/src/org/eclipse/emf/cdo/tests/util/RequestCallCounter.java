@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import org.junit.Assert;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,12 +37,13 @@ public class RequestCallCounter implements IListener
 {
   private Map<Short, Integer> nbRequestsCalls = new HashMap<Short, Integer>();
 
+  private CDOClientProtocol cdoClientProtocol;
+
   public RequestCallCounter(CDOSession session)
   {
 
     InternalCDOSession internalCDOSession = (InternalCDOSession)session;
     CDOSessionProtocol sessionProtocol = internalCDOSession.getSessionProtocol();
-    CDOClientProtocol cdoClientProtocol = null;
     if (sessionProtocol instanceof CDOClientProtocol)
     {
       cdoClientProtocol = (CDOClientProtocol)sessionProtocol;
@@ -54,10 +57,9 @@ public class RequestCallCounter implements IListener
         cdoClientProtocol = (CDOClientProtocol)delegate;
       }
     }
-    if (cdoClientProtocol != null)
-    {
-      cdoClientProtocol.addListener(this);
-    }
+
+    Assert.assertNotNull(cdoClientProtocol);
+    cdoClientProtocol.addListener(this);
   }
 
   public void notifyEvent(IEvent event)
@@ -83,4 +85,9 @@ public class RequestCallCounter implements IListener
     return nbRequestsCalls;
   }
 
+  public void dispose()
+  {
+    cdoClientProtocol.removeListener(this);
+    cdoClientProtocol = null;
+  }
 }

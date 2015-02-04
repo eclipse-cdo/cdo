@@ -107,6 +107,8 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
     assertEquals("As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled "
         + expectedNbLockStateRequestCalls + " LockStateRequests should have been sent to the server",
         expectedNbLockStateRequestCalls, nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOCK_STATE));
+
+    nbRequestsCallsCounter.dispose();
   }
 
   /**

@@ -764,18 +764,29 @@ public class CDOViewImpl extends AbstractCDOView
     {
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
       CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, missing);
+      List<CDOLockState> newLockStateForCache = new ArrayList<CDOLockState>(loadedLockStates.length + missing.size());
+
       for (CDOLockState loadedLockState : loadedLockStates)
       {
         lockStates.add(loadedLockState);
+        newLockStateForCache.add(loadedLockState);
         CDOID cdoID = CDOIDUtil.getCDOID(loadedLockState.getLockedObject());
         if (cdoID != null)
         {
           missing.remove(cdoID);
         }
       }
+
       for (CDOID missingLockStateForCDOID : missing)
       {
-        lockStates.add(CDOLockUtil.createLockState(missingLockStateForCDOID));
+        CDOLockState defaultLockState = CDOLockUtil.createLockState(missingLockStateForCDOID);
+        lockStates.add(defaultLockState);
+        newLockStateForCache.add(defaultLockState);
+      }
+
+      if (options().isLockNotificationEnabled())
+      {
+        updateLockStates(newLockStateForCache.toArray(new CDOLockState[newLockStateForCache.size()]));
       }
     }
 
@@ -1724,9 +1735,9 @@ public class CDOViewImpl extends AbstractCDOView
         CDOID id = revision.getID();
         if (id != null && lockStateLoadingPolicy.loadLockState(id))
         {
-          // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource() 
+          // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource()
           // can have created it but not yet registered in CDOView.
-          // - Don't ask others CDOResourceNode either as it will create some load revisions request 
+          // - Don't ask others CDOResourceNode either as it will create some load revisions request
           // in addition to mode without lock state prefetch
           boolean isResourceNode = revision.isResourceNode();
           InternalCDOObject object = getObject(id, !isResourceNode);

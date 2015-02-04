@@ -85,5 +85,7 @@ public class Bugzilla_458279_Test extends AbstractCDOTest
     int nbCallToChangeSubscriptionRequest = requestCallCounter.getNBRequestsCalls().get(
         CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION);
     assertEquals("No ChangeSubscriptionRequest should be send to server", 0, nbCallToChangeSubscriptionRequest);
+
+    requestCallCounter.dispose();
   }
 }

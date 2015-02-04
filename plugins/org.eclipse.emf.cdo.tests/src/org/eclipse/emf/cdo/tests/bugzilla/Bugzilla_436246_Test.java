@@ -103,6 +103,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, loadRevisionsRequestCounter, companyCDOID,
         3 * NB_CATEGORY, true);
 
+    loadRevisionsRequestCounter.dispose();
   }
 
   /**
@@ -132,6 +133,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, loadRevisionsRequestCounter, companyCDOID,
         3 * NB_CATEGORY, false);
 
+    loadRevisionsRequestCounter.dispose();
   }
 
   private void testCDORevisionFetchWithChangesOnAllBranches(CDOSession session, CDOBranch currentBranch,
@@ -251,6 +253,8 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     view.getResourceSet().eAdapters().add(new EContentAdapter());
 
     assertEquals(pathSegments.size() + 1, (int)nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
+
+    requestCallCounter.dispose();
   }
 
   private class CustomCDOFetchRuleManager implements CDOFetchRuleManager

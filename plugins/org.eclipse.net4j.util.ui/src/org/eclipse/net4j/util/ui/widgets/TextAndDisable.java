@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -25,6 +25,9 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * @author Eike Stepper
+ */
 public class TextAndDisable extends Composite implements SelectionListener, ModifyListener
 {
   private Text text;
@@ -48,9 +51,17 @@ public class TextAndDisable extends Composite implements SelectionListener, Modi
     text.addModifyListener(this);
 
     disabled = createButton();
-    disabled.setText(Messages.getString("TextAndDisable.0")); //$NON-NLS-1$
+    disabled.setText(getDisabledButtonText());
     disabled.addSelectionListener(this);
     disabled.setLayoutData(UIUtil.createGridData(false, false));
+  }
+
+  /**
+   * @since 3.5
+   */
+  protected String getDisabledButtonText()
+  {
+    return Messages.getString("TextAndDisable.0"); //$NON-NLS-1$
   }
 
   public Text getText()
@@ -82,7 +93,11 @@ public class TextAndDisable extends Composite implements SelectionListener, Modi
   public void setValue(String value)
   {
     text.setText(value);
-    setDisabled(ObjectUtil.equals(value, disabledValue));
+
+    if (disabledValue != null)
+    {
+      setDisabled(ObjectUtil.equals(value, disabledValue));
+    }
   }
 
   public void widgetDefaultSelected(SelectionEvent e)
@@ -94,7 +109,11 @@ public class TextAndDisable extends Composite implements SelectionListener, Modi
   {
     if (isDisabled())
     {
-      text.setText(disabledValue);
+      if (disabledValue != null)
+      {
+        text.setText(disabledValue);
+      }
+
       text.setEnabled(false);
     }
     else

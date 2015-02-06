@@ -444,6 +444,11 @@ public final class LifecycleUtil
         return null;
       }
 
+      if (name.equals("toString")) //$NON-NLS-1$
+      {
+        return delegate.toString();
+      }
+
       try
       {
         return method.invoke(pojo, args);

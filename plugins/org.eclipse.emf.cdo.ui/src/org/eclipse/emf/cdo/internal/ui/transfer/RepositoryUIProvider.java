@@ -97,6 +97,12 @@ public class RepositoryUIProvider implements TransferUIProvider
     return result.toArray(new CDOResourceNode[result.size()]);
   }
 
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName();
+  }
+
   /**
    * @author Eike Stepper
    */

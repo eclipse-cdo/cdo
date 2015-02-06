@@ -103,6 +103,12 @@ public class FileSystemUIProvider implements TransferUIProvider
     return null;
   }
 
+  @Override
+  public String toString()
+  {
+    return getClass().getSimpleName();
+  }
+
   /**
    * @author Eike Stepper
    */

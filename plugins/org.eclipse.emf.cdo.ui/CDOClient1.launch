@@ -5,7 +5,7 @@
 <booleanAttribute key="automaticAdd" value="false"/>
 <booleanAttribute key="automaticValidate" value="false"/>
 <stringAttribute key="bootstrap" value=""/>
-<stringAttribute key="checked" value="[NONE]"/>
+<stringAttribute key="checked" value="org.eclipse.emf.cdo,org.eclipse.emf.cdo.common,org.eclipse.emf.cdo.server,org.eclipse.emf.cdo.server.db,org.eclipse.net4j,org.eclipse.net4j.db,org.eclipse.net4j.util"/>
 <booleanAttribute key="clearConfig" value="false"/>
 <booleanAttribute key="clearws" value="false"/>
 <booleanAttribute key="clearwslog" value="false"/>
@@ -32,7 +32,7 @@
 <stringAttribute key="selected_workspace_plugins" value="org.eclipse.emf.cdo.admin@default:default,org.eclipse.emf.cdo.common@default:default,org.eclipse.emf.cdo.compare@default:default,org.eclipse.emf.cdo.edit@default:default,org.eclipse.emf.cdo.examples.company.edit@default:default,org.eclipse.emf.cdo.examples.company@default:default,org.eclipse.emf.cdo.location@default:default,org.eclipse.emf.cdo.net4j@default:default,org.eclipse.emf.cdo.security.edit@default:default,org.eclipse.emf.cdo.security.editor@default:default,org.eclipse.emf.cdo.security@default:default,org.eclipse.emf.cdo.team@default:default,org.eclipse.emf.cdo.transfer.repository@default:default,org.eclipse.emf.cdo.transfer.ui@default:default,org.eclipse.emf.cdo.transfer.workspace.ui@default:default,org.eclipse.emf.cdo.transfer.workspace@default:default,org.eclipse.emf.cdo.transfer@default:default,org.eclipse.emf.cdo.ui.admin@default:default,org.eclipse.emf.cdo.ui.efs@default:default,org.eclipse.emf.cdo.ui.ide@default:default,org.eclipse.emf.cdo.ui.location@default:default,org.eclipse.emf.cdo.ui.shared@default:default,org.eclipse.emf.cdo.ui@default:default,org.eclipse.emf.cdo@default:default,org.eclipse.net4j.db.h2@default:default,org.eclipse.net4j.db@default:default,org.eclipse.net4j.jvm@default:default,org.eclipse.net4j.tcp@default:default,org.eclipse.net4j.ui.shared@default:default,org.eclipse.net4j.ui@default:default,org.eclipse.net4j.util.ui@default:default,org.eclipse.net4j.util@default:default,org.eclipse.net4j@default:default"/>
 <booleanAttribute key="show_selected_only" value="false"/>
 <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
-<booleanAttribute key="tracing" value="false"/>
+<booleanAttribute key="tracing" value="true"/>
 <mapAttribute key="tracingOptions">
 <mapEntry key="org.eclipse.core.contenttype/debug" value="false"/>
 <mapEntry key="org.eclipse.core.expressions/debug/TypeExtensionManager" value="false"/>

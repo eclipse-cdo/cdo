@@ -34,13 +34,14 @@ import org.eclipse.ui.PlatformUI;
  */
 public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider
 {
+  private static final Image CHECKOUT_IMAGE = OM.getImage("icons/checkout.gif");
+
+  private static final Image CHECKOUT_CLOSED_IMAGE = OM.getImage("icons/checkout_closed.gif");
+
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
+      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+
   private final ComposedAdapterFactory adapterFactory;
-
-  private final Image checkoutImage;
-
-  private final Image checkoutClosedImage;
-
-  private final Image errorImage;
 
   public CDOCheckoutLabelProvider()
   {
@@ -51,17 +52,11 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
     adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
     adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
     setAdapterFactory(adapterFactory);
-
-    checkoutImage = OM.getImageDescriptor("icons/checkout.gif").createImage();
-    checkoutClosedImage = OM.getImageDescriptor("icons/checkout_closed.gif").createImage();
-    errorImage = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
   }
 
   @Override
   public void dispose()
   {
-    checkoutClosedImage.dispose();
-    checkoutImage.dispose();
     super.dispose();
 
     // Must come after super.dispose().
@@ -108,10 +103,10 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
       CDOCheckout checkout = (CDOCheckout)element;
       if (checkout.isOpen())
       {
-        return checkoutImage;
+        return CHECKOUT_IMAGE;
       }
 
-      return checkoutClosedImage;
+      return CHECKOUT_CLOSED_IMAGE;
     }
 
     if (element instanceof ViewerUtil.Pending)
@@ -125,7 +120,7 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
     }
     catch (Exception ex)
     {
-      return errorImage;
+      return ERROR_IMAGE;
     }
   }
 

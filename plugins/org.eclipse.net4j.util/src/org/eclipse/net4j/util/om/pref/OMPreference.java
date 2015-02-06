@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -39,5 +39,16 @@ public interface OMPreference<T>
   public enum Type
   {
     BOOLEAN, INTEGER, LONG, FLOAT, DOUBLE, STRING, ARRAY, BYTES
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.5
+   */
+  public interface Participant
+  {
+    public void loadPreferences();
+
+    public void savePreferences();
   }
 }

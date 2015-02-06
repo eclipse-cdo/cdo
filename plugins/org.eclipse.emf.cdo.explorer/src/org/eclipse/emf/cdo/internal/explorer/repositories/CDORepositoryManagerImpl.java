@@ -84,6 +84,16 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
       return new RemoteCDORepository();
     }
 
+    if ("clone".equals(type))
+    {
+      return new CloneCDORepository();
+    }
+
+    if ("local".equals(type))
+    {
+      return new LocalCDORepository();
+    }
+
     throw new IllegalArgumentException("Unknown type: " + type);
   }
 

@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.explorer.ui;
 
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
 
@@ -25,34 +27,37 @@ public final class ViewerUtil
   {
   }
 
-  public static void refresh(TreeViewer viewer, Object element)
+  public static void refresh(StructuredViewer viewer, Object element)
   {
     refresh(viewer, element, true);
   }
 
-  public static void refresh(final TreeViewer viewer, final Object element, boolean async)
+  public static void refresh(final StructuredViewer viewer, final Object element, boolean async)
   {
     if (viewer != null)
     {
-      Tree tree = viewer.getTree();
-      if (!tree.isDisposed())
+      Control control = viewer.getControl();
+      if (!control.isDisposed())
       {
         Runnable runnable = new Runnable()
         {
           public void run()
           {
-            if (element == null)
+            if (!viewer.getControl().isDisposed())
             {
-              viewer.refresh();
-            }
-            else
-            {
-              viewer.refresh(element);
+              if (element == null)
+              {
+                viewer.refresh();
+              }
+              else
+              {
+                viewer.refresh(element);
+              }
             }
           }
         };
 
-        Display display = tree.getDisplay();
+        Display display = control.getDisplay();
         if (async)
         {
           display.asyncExec(runnable);
@@ -77,7 +82,10 @@ public final class ViewerUtil
         {
           public void run()
           {
-            viewer.setExpandedState(element, expanded);
+            if (!viewer.getControl().isDisposed())
+            {
+              viewer.setExpandedState(element, expanded);
+            }
           }
         });
       }

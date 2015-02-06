@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories;
 
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -29,24 +29,22 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchActionConstants;
-
-import java.util.Properties;
 
 /**
  * @author Eike Stepper
  */
 public class CDORepositoriesView extends ContainerView
 {
-  private static final int MINUTE = 60 * 1000;
-
   private final ActivityDetector activityDetector = new ActivityDetector();
 
   private CDORepositoryItemProvider itemProvider;
@@ -55,6 +53,11 @@ public class CDORepositoriesView extends ContainerView
 
   public CDORepositoriesView()
   {
+  }
+
+  private static int getRepositoryTimeoutMillis()
+  {
+    return OM.PREF_REPOSITORY_TIMEOUT_MINUTES.getValue() * 60 * 1000;
   }
 
   @Override
@@ -89,7 +92,7 @@ public class CDORepositoriesView extends ContainerView
     tree.addMouseListener(activityDetector);
     tree.addKeyListener(activityDetector);
 
-    tree.getDisplay().timerExec(MINUTE, activityDetector);
+    tree.getDisplay().timerExec(getRepositoryTimeoutMillis(), activityDetector);
   }
 
   @Override
@@ -201,16 +204,21 @@ public class CDORepositoriesView extends ContainerView
       }
 
       long now = System.currentTimeMillis();
-      int wait = MINUTE;
+      int timeout = CDORepositoriesView.getRepositoryTimeoutMillis();
+      int wait = timeout;
 
-      if (lastActivity <= now - MINUTE)
+      if (lastActivity <= now - timeout)
       {
-        CDORepositoryManagerImpl repositoryManager = (CDORepositoryManagerImpl)getContainer();
-        repositoryManager.disconnectUnusedRepositories();
+        if (!OM.PREF_REPOSITORY_TIMEOUT_DISABLED.getValue())
+        {
+          CDORepositoryManagerImpl repositoryManager = (CDORepositoryManagerImpl)getContainer();
+          repositoryManager.disconnectUnusedRepositories();
+        }
       }
       else
       {
-        wait = (int)(MINUTE - (now - lastActivity));
+        // TODO React to changed timeout preference.
+        wait = (int)(timeout - (now - lastActivity));
       }
 
       tree.getDisplay().timerExec(wait, this);
@@ -234,19 +242,9 @@ public class CDORepositoriesView extends ContainerView
     {
       try
       {
-        NewRepositoryDialog dialog = new NewRepositoryDialog(getSite().getShell());
-        if (dialog.open() == NewRepositoryDialog.OK)
-        {
-          Properties properties = new Properties();
-          properties.put("type", "remote");
-          properties.put("label", dialog.getRepositoryName());
-          properties.put("connectorType", dialog.getConnectorType());
-          properties.put("connectorDescription", dialog.getConnectorDescription());
-          properties.put("repositoryName", dialog.getRepositoryName());
-
-          CDORepository repository = CDOExplorerUtil.getRepositoryManager().addRepository(properties);
-          connectRepository(repository);
-        }
+        Shell shell = getSite().getShell();
+        WizardDialog dialog = new WizardDialog(shell, new NewRepositoryWizard());
+        dialog.open();
       }
       catch (RuntimeException ex)
       {

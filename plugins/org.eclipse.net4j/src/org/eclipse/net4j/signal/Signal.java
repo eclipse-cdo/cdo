@@ -150,19 +150,9 @@ public abstract class Signal implements Runnable
     }
     catch (Exception ex)
     {
-      if (LifecycleUtil.isActive(protocol))
-      {
-        Object infraStructure = protocol.getInfraStructure();
-        if (infraStructure == null || LifecycleUtil.isActive(infraStructure))
-        {
-          OM.LOG.error(ex);
-          return;
-        }
-      }
-
       if (TRACER.isEnabled())
       {
-        TRACER.trace("Exception while protocol is inactive", ex); //$NON-NLS-1$
+        TRACER.trace("Exception in signal", ex); //$NON-NLS-1$
       }
     }
     finally

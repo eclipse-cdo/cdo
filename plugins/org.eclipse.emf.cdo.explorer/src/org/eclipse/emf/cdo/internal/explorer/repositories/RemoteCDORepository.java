@@ -37,7 +37,7 @@ public class RemoteCDORepository extends CDORepositoryImpl
   }
 
   @Override
-  public void init(File folder, String type, Properties properties)
+  protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
     connectorType = properties.getProperty("connectorType");

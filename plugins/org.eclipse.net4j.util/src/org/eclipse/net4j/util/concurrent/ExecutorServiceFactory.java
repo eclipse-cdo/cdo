@@ -114,6 +114,12 @@ public class ExecutorServiceFactory extends Factory
           {
             return false;
           }
+
+          @Override
+          public String toString()
+          {
+            return "CachedThreadPool";
+          }
         });
   }
 

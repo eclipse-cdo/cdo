@@ -157,7 +157,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
         try
         {
-          session.close();
+          closeSession();
         }
         finally
         {
@@ -219,6 +219,14 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     synchronized (checkouts)
     {
       checkouts.add(checkout);
+    }
+  }
+
+  public final void removeCheckout(CDOCheckout checkout)
+  {
+    synchronized (checkouts)
+    {
+      checkouts.remove(checkout);
     }
   }
 
@@ -373,6 +381,11 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     CDOSession session = sessionConfiguration.openSession();
     session.options().setGeneratedPackageEmulationEnabled(true);
     return session;
+  }
+
+  protected void closeSession()
+  {
+    session.close();
   }
 
   private static CDORepositoryManagerImpl getManager()

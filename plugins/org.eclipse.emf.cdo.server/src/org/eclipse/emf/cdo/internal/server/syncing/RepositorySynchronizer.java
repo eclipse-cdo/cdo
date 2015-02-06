@@ -59,12 +59,6 @@ import java.util.TimerTask;
  */
 public class RepositorySynchronizer extends PriorityQueueRunner implements InternalRepositorySynchronizer
 {
-  public static final int DEFAULT_RETRY_INTERVAL = 3;
-
-  public static final int DEFAULT_MAX_RECOMMITS = 10;
-
-  public static final int DEFAULT_RECOMMIT_INTERVAL = 1;
-
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, RepositorySynchronizer.class);
 
   private static final Integer CONNECT_PRIORITY = 0;
@@ -509,7 +503,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Replication attempt failed. Retrying in {0} seconds...", retryInterval); //$NON-NLS-1$
+            TRACER.format("Replication attempt failed. Retrying in {0} seconds...", ex, retryInterval); //$NON-NLS-1$
           }
 
           fireThrowable(ex);

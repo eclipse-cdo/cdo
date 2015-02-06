@@ -27,6 +27,21 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface IRepositorySynchronizer extends IContainer<CDOSession>
 {
+  /**
+   * @since 4.4
+   */
+  public static final int DEFAULT_RETRY_INTERVAL = 3;
+
+  /**
+   * @since 4.4
+   */
+  public static final int DEFAULT_MAX_RECOMMITS = 10;
+
+  /**
+   * @since 4.4
+   */
+  public static final int DEFAULT_RECOMMIT_INTERVAL = 1;
+
   public int getRetryInterval();
 
   public void setRetryInterval(int retryInterval);

@@ -54,7 +54,17 @@
      </perspective>
   </extension>
 
-   <extension
+  <extension
+        point="org.eclipse.ui.preferencePages">
+     <page
+           category="org.eclipse.emf.cdo.ui.CDOPreferencePage"
+           class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerPreferencePage"
+           id="org.eclipse.emf.cdo.explorer.ui.CDOExplorerPreferencePage"
+           name="%preference.page.name">
+     </page>
+  </extension>
+
+  <extension
          point="org.eclipse.ui.views">
       <view
             class="org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView"

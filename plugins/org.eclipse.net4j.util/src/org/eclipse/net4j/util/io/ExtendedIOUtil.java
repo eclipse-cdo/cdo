@@ -178,7 +178,6 @@ public final class ExtendedIOUtil
     }
     catch (ClassNotFoundException ex)
     {
-      OM.LOG.error(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -476,7 +475,10 @@ public final class ExtendedIOUtil
       {
         if (!STACK_TRACE_ELEMENT.equals(className))
         {
-          OM.LOG.error(ex);
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Exception in resolver", ex); //$NON-NLS-1$
+          }
         }
 
         return null;

@@ -14,10 +14,16 @@ package org.eclipse.emf.cdo.explorer.ui.bundle;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
+import org.eclipse.net4j.util.om.pref.OMPreference;
+import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -34,9 +40,27 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  public static ImageDescriptor getImageDescriptor(String imageFilePath)
+  public static final OMPreferences PREFS = BUNDLE.preferences();
+
+  public static final OMPreference<Integer> PREF_REPOSITORY_TIMEOUT_MINUTES = //
+  PREFS.init("PREF_REPOSITORY_TIMEOUT_MINUTES", 5); //$NON-NLS-1$
+
+  public static final OMPreference<Boolean> PREF_REPOSITORY_TIMEOUT_DISABLED = //
+  PREFS.init("PREF_REPOSITORY_TIMEOUT_DISABLED", false); //$NON-NLS-1$
+
+  public static Image getImage(String imagePath)
   {
-    return Activator.imageDescriptorFromPlugin(BUNDLE_ID, imageFilePath);
+    return ExtendedImageRegistry.INSTANCE.getImage(getBundleURI(imagePath));
+  }
+
+  public static ImageDescriptor getImageDescriptor(String imagePath)
+  {
+    return ExtendedImageRegistry.INSTANCE.getImageDescriptor(getBundleURI(imagePath));
+  }
+
+  private static URI getBundleURI(String path)
+  {
+    return URI.createPlatformPluginURI(BUNDLE_ID + "/" + path, true);
   }
 
   /**

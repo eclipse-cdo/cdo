@@ -187,6 +187,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
           rootObject.eAdapters().remove(this);
           view.close();
+
+          ((CDORepositoryImpl)repository).closeCheckout(this);
         }
         finally
         {
@@ -228,6 +230,9 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
 
     IOUtil.delete(getFolder());
+
+    ((CDORepositoryImpl)repository).removeCheckout(this);
+    repository = null;
   }
 
   @Override
@@ -268,6 +273,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     timeStamp = Long.parseLong(properties.getProperty("timeStamp"));
     readOnly = Boolean.parseBoolean(properties.getProperty("readOnly"));
     rootID = CDOIDUtil.read(properties.getProperty("rootID"));
+
+    ((CDORepositoryImpl)repository).addCheckout(this);
   }
 
   @Override

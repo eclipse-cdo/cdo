@@ -351,6 +351,13 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   public void handleLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
   {
     CDOLockOwner owner = lockChangeInfo.getLockOwner();
+    
+    int xxx;
+    if (owner == null)
+    {
+      return;
+    }
+
     String durableLockingID = owner.getDurableLockingID();
     CDOBranch viewedBranch = lockChangeInfo.getBranch();
     InternalLockManager lockManager = getLockingManager();

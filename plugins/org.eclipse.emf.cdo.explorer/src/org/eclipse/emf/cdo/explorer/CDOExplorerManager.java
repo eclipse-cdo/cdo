@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.core.runtime.IAdaptable;
 
@@ -20,4 +21,13 @@ import org.eclipse.core.runtime.IAdaptable;
  */
 public interface CDOExplorerManager<T extends CDOExplorerElement> extends IContainer<T>, IAdaptable
 {
+  /**
+   * @author Eike Stepper
+   */
+  public interface ElementChangedEvent extends IEvent
+  {
+    public CDOExplorerManager<?> getSource();
+
+    public Object getChangedElement();
+  }
 }

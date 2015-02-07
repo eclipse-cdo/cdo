@@ -8,21 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.checkouts;
+package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.ui.BaseHandler;
 
 import org.eclipse.jface.viewers.ISelection;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CheckoutHandler extends BaseHandler<CDOCheckout>
+public abstract class AbstractCheckoutHandler extends AbstractBaseHandler<CDOCheckout>
 {
   private final Boolean open;
 
-  public CheckoutHandler(Boolean multi, Boolean open)
+  public AbstractCheckoutHandler(Boolean multi, Boolean open)
   {
     super(CDOCheckout.class, multi);
     this.open = open;

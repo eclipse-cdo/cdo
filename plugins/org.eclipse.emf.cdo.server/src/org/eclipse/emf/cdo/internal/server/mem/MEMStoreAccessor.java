@@ -31,7 +31,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IStoreAccessor.Raw;
 import org.eclipse.emf.cdo.server.ITransaction;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -63,7 +63,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking2, BranchLoader2
+public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking2, BranchLoader3
 {
   private final IQueryHandler testQueryHandler = new IQueryHandler()
   {
@@ -233,9 +233,15 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void renameBranch(int branchID, String newName)
   {
-    getStore().renameBranch(branchID, newName);
+    throw new UnsupportedOperationException();
+  }
+
+  public void renameBranch(int branchID, String oldName, String newName)
+  {
+    getStore().renameBranch(branchID, oldName, newName);
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)

@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.repositories;
+package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -20,7 +21,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eike Stepper
  */
-public class RepositoryConnectHandler extends RepositoryHandler
+public class RepositoryConnectHandler extends AbstractRepositoryHandler
 {
   public RepositoryConnectHandler()
   {

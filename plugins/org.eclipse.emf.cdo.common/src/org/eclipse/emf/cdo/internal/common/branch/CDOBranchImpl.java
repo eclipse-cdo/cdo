@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.common.branch;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -19,8 +20,10 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.SubBranchInfo;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.Container;
 
 import java.text.MessageFormat;
@@ -83,6 +86,44 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     }
 
     return name;
+  }
+
+  public void setName(String name)
+  {
+    checkActive();
+    if (isMainBranch())
+    {
+      throw new IllegalArgumentException("Renaming of the MAIN branch is not supported");
+    }
+
+    BranchLoader branchLoader = branchManager.getBranchLoader();
+    if (!(branchLoader instanceof BranchLoader3))
+    {
+      throw new UnsupportedOperationException("Renaming of branches is not supported by " + branchLoader);
+    }
+
+    String oldName = getName();
+    if (!ObjectUtil.equals(name, oldName))
+    {
+      ((BranchLoader3)branchLoader).renameBranch(id, oldName, name);
+      basicSetName(name);
+    }
+  }
+
+  public void basicSetName(String name)
+  {
+    this.name = name;
+    branchManager.handleBranchChanged(this, ChangeKind.RENAMED);
+  }
+
+  public CDOBranch getBranch()
+  {
+    return base.getBranch();
+  }
+
+  public long getTimeStamp()
+  {
+    return base.getTimeStamp();
   }
 
   public boolean isProxy()
@@ -229,14 +270,10 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return child.getBranch(rest);
   }
 
+  @Deprecated
   public void rename(String newName)
   {
-    if (!branchManager.getRepository().isSupportingBranches())
-    {
-      throw new IllegalStateException("Branching is not supported");
-    }
-
-    branchManager.renameBranch(this, newName);
+    setName(newName);
   }
 
   private InternalCDOBranch getChild(String name)
@@ -263,11 +300,6 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   {
     this.name = name;
     base = baseBranch.getPoint(baseTimeStamp);
-  }
-
-  public void setName(String name)
-  {
-    this.name = name;
   }
 
   public void addChild(InternalCDOBranch branch)

@@ -19,10 +19,12 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -40,7 +42,13 @@ public class LocalCDORepository extends CDORepositoryImpl
 
   private IDGeneration idGeneration;
 
+  private boolean tcpDisabled;
+
+  private int tcpPort;
+
   private IRepository repository;
+
+  private IAcceptor tcpAcceptor;
 
   public LocalCDORepository()
   {
@@ -56,6 +64,16 @@ public class LocalCDORepository extends CDORepositoryImpl
     return "local";
   }
 
+  public String getURI()
+  {
+    if (tcpDisabled)
+    {
+      return getConnectorType() + "://" + getConnectorDescription() + "/" + getName();
+    }
+
+    return "tcp://localhost:" + tcpPort + "/" + getName();
+  }
+
   public final VersioningMode getVersioningMode()
   {
     return versioningMode;
@@ -66,12 +84,24 @@ public class LocalCDORepository extends CDORepositoryImpl
     return idGeneration;
   }
 
+  public final boolean isTCPDisabled()
+  {
+    return tcpDisabled;
+  }
+
+  public final int getTCPPort()
+  {
+    return tcpPort;
+  }
+
   @Override
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
     versioningMode = VersioningMode.valueOf(properties.getProperty("versioningMode"));
     idGeneration = IDGeneration.valueOf(properties.getProperty("idGeneration"));
+    tcpDisabled = Boolean.parseBoolean(properties.getProperty("tcpDisabled"));
+    tcpPort = Integer.parseInt(properties.getProperty("tcpPort"));
   }
 
   @Override
@@ -80,12 +110,14 @@ public class LocalCDORepository extends CDORepositoryImpl
     super.collectProperties(properties);
     properties.put("versioningMode", versioningMode.toString());
     properties.put("idGeneration", idGeneration.toString());
+    properties.put("tcpDisabled", Boolean.toString(tcpDisabled));
+    properties.put("tcpPort", Integer.toString(tcpPort));
   }
 
   @Override
   protected CDOSession openSession()
   {
-    String repositoryName = "repo" + getID();
+    String repositoryName = getName();
     File folder = new File(getFolder(), "db");
 
     JdbcDataSource dataSource = new JdbcDataSource();
@@ -93,7 +125,7 @@ public class LocalCDORepository extends CDORepositoryImpl
 
     boolean auditing = versioningMode.isSupportingAudits();
     boolean branching = versioningMode.isSupportingBranches();
-    boolean withRanges = auditing;
+    boolean withRanges = false;
 
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(auditing, branching, withRanges);
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
@@ -112,6 +144,11 @@ public class LocalCDORepository extends CDORepositoryImpl
     CDOServerUtil.addRepository(container, repository);
     Net4jUtil.getAcceptor(container, getConnectorType(), getConnectorDescription());
 
+    if (!tcpDisabled)
+    {
+      tcpAcceptor = Net4jUtil.getAcceptor(container, "tcp", "0.0.0.0:" + tcpPort);
+    }
+
     return super.openSession();
   }
 
@@ -120,11 +157,11 @@ public class LocalCDORepository extends CDORepositoryImpl
   {
     super.closeSession();
 
-    if (repository != null)
-    {
-      repository.deactivate();
-      repository = null;
-    }
+    LifecycleUtil.deactivate(tcpAcceptor);
+    tcpAcceptor = null;
+
+    LifecycleUtil.deactivate(repository);
+    repository = null;
   }
 
   /**

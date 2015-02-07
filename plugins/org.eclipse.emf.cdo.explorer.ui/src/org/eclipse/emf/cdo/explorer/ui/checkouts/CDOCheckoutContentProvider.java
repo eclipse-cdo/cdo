@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.State;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
@@ -81,8 +82,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
 
   private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 
-  private static final CDOCheckoutManager CHECKOUT_MANAGER = org.eclipse.emf.cdo.explorer.CDOExplorerUtil
-      .getCheckoutManager();
+  private static final CDOCheckoutManager CHECKOUT_MANAGER = CDOExplorerUtil.getCheckoutManager();
 
   private final IListener checkoutManagerListener = new IListener()
   {

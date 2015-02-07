@@ -71,7 +71,9 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
 
   /**
    * @since 4.3
+   * @deprecated as of 4.4 use {@link CDOBranch#setName(String)}.
    */
+  @Deprecated
   public void renameBranch(CDOBranch branch, String newName);
 
   /**
@@ -159,6 +161,14 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
         return name;
       }
 
+      /**
+       * @since 4.4
+       */
+      public void setName(String name)
+      {
+        this.name = name;
+      }
+
       public int getBaseBranchID()
       {
         return baseBranchID;
@@ -241,6 +251,21 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     @Deprecated
     public void deleteBranch(int branchID);
 
+    /**
+     * @deprecated as of 4.4. use {@link BranchLoader3#renameBranch(int, String, String)}.
+     */
+    @Deprecated
     public void renameBranch(int branchID, String newName);
+  }
+
+  /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
+   * @author Eike Stepper
+   * @since 4.4
+   */
+  public interface BranchLoader3 extends BranchLoader2
+  {
+    public void renameBranch(int branchID, String oldName, String newName);
   }
 }

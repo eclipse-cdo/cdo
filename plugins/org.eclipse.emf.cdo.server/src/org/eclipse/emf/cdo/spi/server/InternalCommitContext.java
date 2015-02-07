@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -36,7 +37,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCommitContext extends IStoreAccessor.CommitContext
+public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDOTimeProvider
 {
   @SuppressWarnings("unchecked")
   public static final ProgressDistributable<InternalCommitContext>[] OPS = ProgressDistributor.array( //

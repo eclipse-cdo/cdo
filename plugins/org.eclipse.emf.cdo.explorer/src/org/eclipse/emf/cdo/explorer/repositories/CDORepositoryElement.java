@@ -8,19 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.checkouts;
+package org.eclipse.emf.cdo.explorer.repositories;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 /**
- * A source for CDO checkouts.
+ * An element of a CDO repository.
  *
  * @author Eike Stepper
  * @since 4.4
  * @apiviz.landmark
  */
-public interface CDOCheckoutSource
+public interface CDORepositoryElement extends CDOTimeProvider
 {
   public CDORepository getRepository();
 
@@ -28,5 +28,5 @@ public interface CDOCheckoutSource
 
   public long getTimeStamp();
 
-  public CDOID getRootID();
+  public CDOID getObjectID();
 }

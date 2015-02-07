@@ -21,6 +21,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * @author Eike Stepper
+ * @noextend This class is not intended to be subclassed by clients.
  */
 public class SharedIcons
 {
@@ -144,12 +145,12 @@ public class SharedIcons
 
   public static final String OBJ_REPO = OBJ + "repo.gif"; //$NON-NLS-1$
 
-  public static final String OBJ_BRANCH = OBJ + "branch.png"; //$NON-NLS-1$
+  public static final String OBJ_BRANCH = OBJ + "branch.gif"; //$NON-NLS-1$
 
   /**
    * @since 4.1
    */
-  public static final String OBJ_BRANCH_GRAY = OBJ + "branch-gray.png"; //$NON-NLS-1$
+  public static final String OBJ_BRANCH_GRAY = OBJ + "branch-gray.gif"; //$NON-NLS-1$
 
   /**
    * @since 4.1

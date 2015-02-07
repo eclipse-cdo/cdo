@@ -14,29 +14,18 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-
-import org.eclipse.jface.viewers.ILabelDecorator;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.emf.cdo.explorer.ui.BaseLabelDecorator;
 
 /**
  * @author Eike Stepper
  */
-public class CheckoutDecorator implements ILabelDecorator
+public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
 {
-  public CheckoutDecorator()
+  public CDOCheckoutLabelDecorator()
   {
   }
 
-  public void dispose()
-  {
-  }
-
-  public Image decorateImage(Image image, Object element)
-  {
-    return image;
-  }
-
+  @Override
   public String decorateText(String text, Object element)
   {
     if (element instanceof CDOCheckout)
@@ -56,31 +45,16 @@ public class CheckoutDecorator implements ILabelDecorator
 
       if (branchPath.length() != 0)
       {
-        text += " " + branchPath;
+        text += "  " + branchPath;
       }
 
       long timeStamp = checkout.getTimeStamp();
       if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        text += " " + CDOCommonUtil.formatTimeStamp(timeStamp);
+        text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
       }
     }
 
     return text;
-  }
-
-  public boolean isLabelProperty(Object element, String property)
-  {
-    return false;
-  }
-
-  public void addListener(ILabelProviderListener listener)
-  {
-    // Ignore listeners, DecoratorManager handles them.
-  }
-
-  public void removeListener(ILabelProviderListener listener)
-  {
-    // Ignore listeners, DecoratorManager handles them.
   }
 }

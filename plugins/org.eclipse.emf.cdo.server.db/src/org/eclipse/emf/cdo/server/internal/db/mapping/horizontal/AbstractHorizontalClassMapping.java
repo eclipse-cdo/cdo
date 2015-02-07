@@ -43,6 +43,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -117,7 +118,9 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     table = database.getSchema().getTable(tableName);
     if (table == null)
     {
-      IDBSchema workingCopy = database.getSchemaTransaction().getWorkingCopy();
+      IDBSchemaTransaction schemaTransaction = database.getSchemaTransaction();
+      IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
+
       table = workingCopy.addTable(tableName);
       table.addField(ATTRIBUTES_ID, idType, idLength, true);
       table.addField(ATTRIBUTES_VERSION, DBType.INTEGER, true);

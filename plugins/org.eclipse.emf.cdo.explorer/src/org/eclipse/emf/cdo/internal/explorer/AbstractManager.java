@@ -16,11 +16,12 @@ import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.container.SetContainer;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -96,7 +97,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   private void readElement(File folder)
   {
-    File file = new File(folder, ".properties");
+    File file = new File(folder, AbstractElement.PROPERTIES_FILE);
     if (file.isFile())
     {
       FileInputStream in = null;
@@ -110,7 +111,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
         addElement(folder, properties);
       }
-      catch (IOException ex)
+      catch (Exception ex)
       {
         OM.LOG.error(ex);
       }
@@ -127,6 +128,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
     T element = createElement(type);
     ((AbstractElement)element).init(folder, type, properties);
+    LifecycleUtil.activate(element);
 
     addElement(element);
     elementMap.put(element.getID(), element);
@@ -134,4 +136,36 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   }
 
   protected abstract T createElement(String type);
+
+  public void fireElementChangedEvent(Object changedElement)
+  {
+    fireEvent(new ElementChangedImpl(this, changedElement));
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ElementChangedImpl extends Event implements ElementChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final Object changedElement;
+
+    public ElementChangedImpl(CDOExplorerManager<?> manager, Object changedElement)
+    {
+      super(manager);
+      this.changedElement = changedElement;
+    }
+
+    @Override
+    public CDOExplorerManager<?> getSource()
+    {
+      return (CDOExplorerManager<?>)super.getSource();
+    }
+
+    public final Object getChangedElement()
+    {
+      return changedElement;
+    }
+  }
 }

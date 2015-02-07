@@ -8,29 +8,28 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.checkouts;
+package org.eclipse.emf.cdo.explorer.ui.handlers;
 
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
  * @author Eike Stepper
  */
-public class CheckoutCloseHandler extends CheckoutHandler
+public class RepositoryDisconnectHandler extends AbstractRepositoryHandler
 {
-  public CheckoutCloseHandler()
+  public RepositoryDisconnectHandler()
   {
     super(null, true);
   }
 
   @Override
-  protected void doExecute(ExecutionEvent event, IProgressMonitor progressMonitor) throws Exception
+  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
   {
-    for (CDOCheckout checkout : elements)
+    for (CDORepository repository : elements)
     {
-      checkout.close();
+      repository.disconnect();
     }
   }
 }

@@ -42,7 +42,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.mem.IMEMStore;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -96,7 +96,7 @@ import java.util.Set;
 /**
  * @author Simon McDuff
  */
-public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader2, DurableLocking2
+public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, DurableLocking2
 {
   public static final String TYPE = "mem"; //$NON-NLS-1$
 
@@ -268,16 +268,18 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader2, D
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void renameBranch(int branchID, String newName)
   {
-    BranchInfo oldBranchInfo = branchInfos.remove(branchID);
-    if (oldBranchInfo != null)
-    {
-      int baseBranchID = oldBranchInfo.getBaseBranchID();
-      long baseTimeStamp = oldBranchInfo.getBaseTimeStamp();
+    throw new UnsupportedOperationException();
+  }
 
-      BranchInfo newBranchInfo = new BranchInfo(newName, baseBranchID, baseTimeStamp);
-      branchInfos.put(branchID, newBranchInfo);
+  public void renameBranch(int branchID, String oldName, String newName)
+  {
+    BranchInfo branchInfo = branchInfos.get(branchID);
+    if (branchInfo != null)
+    {
+      branchInfo.setName(newName);
     }
   }
 

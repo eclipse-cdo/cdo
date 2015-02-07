@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import java.io.IOException;
 
 /**
@@ -26,6 +28,8 @@ import java.io.IOException;
 public class RenameBranchIndication extends CDOServerWriteIndication
 {
   private int branchID;
+
+  private String oldName;
 
   private String newName;
 
@@ -38,6 +42,7 @@ public class RenameBranchIndication extends CDOServerWriteIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     branchID = in.readInt();
+    oldName = in.readString();
     newName = in.readString();
   }
 
@@ -46,10 +51,16 @@ public class RenameBranchIndication extends CDOServerWriteIndication
   {
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     InternalCDOBranch branch = branchManager.getBranch(branchID);
+    if (!ObjectUtil.equals(branch.getName(), oldName))
+    {
+      throw new IllegalStateException("Branch name has been changed by someone else in the meantime");
+    }
 
-    branchManager.renameBranch(branch, newName);
+    branch.setName(newName);
+
     InternalSessionManager sessionManager = getRepository().getSessionManager();
     sessionManager.sendBranchNotification(getSession(), branch, ChangeKind.RENAMED);
+
     out.writeBoolean(true);
   }
 }

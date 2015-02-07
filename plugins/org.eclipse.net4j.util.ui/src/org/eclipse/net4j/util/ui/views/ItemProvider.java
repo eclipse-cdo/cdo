@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IFontProvider;
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -22,6 +23,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -33,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPUT> implements ITreeContentProvider,
-    ILabelProvider, IColorProvider, IFontProvider
+    ILabelProvider, IColorProvider, IFontProvider, IStyledLabelProvider
 {
   public static final Object[] NO_ELEMENTS = {};
 
@@ -51,6 +53,15 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
   public boolean hasChildren(Object parent)
   {
     return getChildren(parent).length != 0;
+  }
+
+  /**
+   * @since 3.5
+   */
+  public StyledString getStyledText(Object obj)
+  {
+    String text = getText(obj);
+    return new StyledString(text);
   }
 
   public String getText(Object obj)

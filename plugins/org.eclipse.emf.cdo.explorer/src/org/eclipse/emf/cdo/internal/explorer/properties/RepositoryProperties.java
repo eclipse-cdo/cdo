@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.explorer.properties;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
@@ -46,6 +47,24 @@ public class RepositoryProperties extends Properties<CDORepository>
       protected Object eval(CDORepository repository)
       {
         return repository.isConnected();
+      }
+    });
+
+    add(new Property<CDORepository>("id", "ID", "The ID of this repository", CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return repository.getID();
+      }
+    });
+
+    add(new Property<CDORepository>("folder", "Folder", "The folder of this repository", CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return ((AbstractElement)repository).getFolder();
       }
     });
   }

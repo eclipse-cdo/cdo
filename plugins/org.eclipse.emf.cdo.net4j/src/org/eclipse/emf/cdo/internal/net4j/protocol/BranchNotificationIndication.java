@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 
 import java.io.IOException;
 
@@ -36,7 +35,10 @@ public class BranchNotificationIndication extends CDOClientIndication
     CDOBranch branch = in.readCDOBranch();
     ChangeKind changeKind = in.readEnum(ChangeKind.class);
 
-    InternalCDOBranchManager branchManager = getSession().getBranchManager();
-    branchManager.handleBranchChanged((InternalCDOBranch)branch, changeKind);
+    if (changeKind == ChangeKind.RENAMED)
+    {
+      String name = in.readString();
+      ((InternalCDOBranch)branch).basicSetName(name);
+    }
   }
 }

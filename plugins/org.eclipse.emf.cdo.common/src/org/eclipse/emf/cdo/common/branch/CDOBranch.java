@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.branch;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -38,7 +39,8 @@ import org.eclipse.core.runtime.IAdaptable;
  * @apiviz.has {@link CDOBranchPoint} oneway - - base
  * @apiviz.composedOf {@link CDOBranch} - - subBranches
  */
-public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>, IAdaptable
+public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<CDOBranch>, Comparable<CDOBranch>,
+    IAdaptable
 {
   /**
    * The fixed ID of the {@link CDOBranchManager#getMainBranch() main branch}.
@@ -89,6 +91,11 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>,
    * branch}.
    */
   public String getName();
+
+  /**
+   * @since 4.4
+   */
+  public void setName(String name);
 
   /**
    * Returns the fully qualified path name of this branch, a concatenation of the names of all branches from the
@@ -189,6 +196,8 @@ public interface CDOBranch extends IContainer<CDOBranch>, Comparable<CDOBranch>,
    * Renames this branch with the given new name.
    *
    * @since 4.3
+   * @deprecated as of 4.4 use {@link #setName(String)}.
    */
+  @Deprecated
   public void rename(String newName);
 }

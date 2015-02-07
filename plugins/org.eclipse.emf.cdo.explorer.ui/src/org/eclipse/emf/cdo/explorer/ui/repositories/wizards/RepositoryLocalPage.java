@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.IDG
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.VersioningMode;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ui.widgets.TextAndDisable;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -43,6 +44,8 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
   private Button uuidButton;
 
+  private TextAndDisable portText;
+
   public RepositoryLocalPage()
   {
     super("local", "Local Repository 1");
@@ -55,13 +58,22 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
   {
     createLabel(container, "Repository name:");
     repositoryNameText = new Text(container, SWT.BORDER);
-    repositoryNameText.setText("localhost");
+    repositoryNameText.setText("repo2");
     repositoryNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     repositoryNameText.addModifyListener(this);
 
     new Label(container, SWT.NONE);
-    Group modeGroup = new Group(container, SWT.NONE);
+
+    GridLayout layout = new GridLayout(2, false);
+    layout.marginHeight = 0;
+    layout.marginWidth = 0;
+
+    Composite composite = new Composite(container, SWT.NONE);
+    composite.setLayout(layout);
+
+    Group modeGroup = new Group(composite, SWT.NONE);
     modeGroup.setLayout(new GridLayout(1, false));
+    modeGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_BEGINNING));
     modeGroup.setText("Versioning Mode");
 
     normalButton = new Button(modeGroup, SWT.RADIO);
@@ -77,9 +89,9 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     branchingButton.setText("Branching (history tree)");
     branchingButton.addSelectionListener(this);
 
-    new Label(container, SWT.NONE);
-    Group idGroup = new Group(container, SWT.NONE);
+    Group idGroup = new Group(composite, SWT.NONE);
     idGroup.setLayout(new GridLayout(1, false));
+    idGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_BEGINNING));
     idGroup.setText("ID Generation");
 
     counterButton = new Button(idGroup, SWT.RADIO);
@@ -90,6 +102,14 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     uuidButton = new Button(idGroup, SWT.RADIO);
     uuidButton.setText("UUID (replicable)");
     uuidButton.addSelectionListener(this);
+
+    createLabel(container, "TCP port:");
+    portText = new TextAndDisable(container, SWT.BORDER, null);
+    portText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    portText.setValue("2037");
+    portText.setDisabled(true);
+    portText.addModifyListener(this);
+    portText.addSelectionListener(this);
   }
 
   @Override
@@ -126,5 +146,24 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     {
       properties.put("idGeneration", IDGeneration.UUID.toString());
     }
+
+    String port = portText.getValue();
+
+    try
+    {
+      int value = Integer.parseInt(port);
+      if (value < 0)
+      {
+        throw new Exception();
+      }
+    }
+    catch (Exception ex)
+    {
+      throw new Exception("Invalid TCP port.");
+    }
+
+    properties.put("tcpDisabled", Boolean.toString(portText.isDisabled()));
+    properties.put("tcpPort", port);
+
   }
 }

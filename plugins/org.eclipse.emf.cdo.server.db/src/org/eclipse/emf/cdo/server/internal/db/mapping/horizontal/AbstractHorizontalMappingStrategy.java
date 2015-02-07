@@ -241,10 +241,36 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     try
     {
       IDBConnection connection = accessor.getDBConnection();
+
       for (int i = 0; i < size; i++)
       {
         EClass eClass = (EClass)in.readCDOClassifierRefAndResolve();
         IClassMapping classMapping = getClassMapping(eClass);
+
+        // IClassMapping classMapping;
+        // IDBSchemaTransaction schemaTransaction = null;
+        //
+        // try
+        // {
+        // schemaTransaction = accessor.getStore().getDatabase().openSchemaTransaction();
+        // classMapping = getClassMapping(eClass);
+        // schemaTransaction.commit();
+        // }
+        // catch (RuntimeException ex)
+        // {
+        // throw ex;
+        // }
+        // catch (Error ex)
+        // {
+        // throw ex;
+        // }
+        // finally
+        // {
+        // if (schemaTransaction != null)
+        // {
+        // schemaTransaction.close();
+        // }
+        // }
 
         IDBTable table = classMapping.getDBTables().get(0);
         DBUtil.deserializeTable(in, connection, table, monitor.fork());

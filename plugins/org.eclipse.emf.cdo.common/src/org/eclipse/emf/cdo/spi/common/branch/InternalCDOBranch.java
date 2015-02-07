@@ -44,10 +44,10 @@ public interface InternalCDOBranch extends CDOBranch
 
   public void setBranchInfo(String name, InternalCDOBranch baseBranch, long baseTimeStamp);
 
-  /**
-   * @since 4.3
-   */
-  public void setName(String name);
-
   public void addChild(InternalCDOBranch branch);
+
+  /**
+   * @since 4.4
+   */
+  public void basicSetName(String name);
 }

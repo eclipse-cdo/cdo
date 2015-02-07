@@ -27,6 +27,42 @@ public final class ViewerUtil
   {
   }
 
+  public static void update(StructuredViewer viewer, Object element)
+  {
+    update(viewer, element, true);
+  }
+
+  public static void update(final StructuredViewer viewer, final Object element, boolean async)
+  {
+    if (viewer != null)
+    {
+      Control control = viewer.getControl();
+      if (!control.isDisposed())
+      {
+        Runnable runnable = new Runnable()
+        {
+          public void run()
+          {
+            if (!viewer.getControl().isDisposed())
+            {
+              viewer.update(element, null);
+            }
+          }
+        };
+
+        Display display = control.getDisplay();
+        if (async)
+        {
+          display.asyncExec(runnable);
+        }
+        else
+        {
+          display.syncExec(runnable);
+        }
+      }
+    }
+  }
+
   public static void refresh(StructuredViewer viewer, Object element)
   {
     refresh(viewer, element, true);

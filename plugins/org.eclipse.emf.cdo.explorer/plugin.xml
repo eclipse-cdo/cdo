@@ -18,7 +18,7 @@
      <factory
            adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
            class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerAdapterFactory">
-        <adapter type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutSource"/>
+        <adapter type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
      </factory>
   </extension>
 
@@ -27,13 +27,13 @@
          id="org.eclipse.emf.cdo.explorer.repository.properties"
          type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"
          namespace="org.eclipse.emf.cdo.explorer.repository"
-         properties="state,connected"
+         properties="state,connected,id,folder"
          class="org.eclipse.emf.cdo.internal.explorer.properties.RepositoryProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.explorer.checkout.properties"
          type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"
          namespace="org.eclipse.emf.cdo.explorer.checkout"
-         properties="state,open"
+         properties="state,open,id,folder"
          class="org.eclipse.emf.cdo.internal.explorer.properties.CheckoutProperties$Tester"/>
    </extension>
 

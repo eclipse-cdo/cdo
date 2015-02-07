@@ -10,15 +10,17 @@
  */
 package org.eclipse.emf.cdo.common.branch;
 
+import org.eclipse.emf.cdo.common.util.CDONameProvider;
+
 /**
- * A named {@link CDOBranchPoint branch point}.
- * 
+ * A persistent, named {@link CDOBranchPoint branch point}.
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOBranchTag extends CDOBranchPoint
+public interface CDOBranchTag extends CDOBranchPoint, CDONameProvider
 {
   /**
    * Returns the name of this branch tag.

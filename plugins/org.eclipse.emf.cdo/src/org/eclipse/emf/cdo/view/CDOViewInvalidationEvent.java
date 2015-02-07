@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 
@@ -33,7 +34,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOViewInvalidationEvent extends CDOViewEvent
+public interface CDOViewInvalidationEvent extends CDOViewEvent, CDOTimeProvider
 {
   /**
    * Returns the time stamp of the server transaction if this event was sent as a result of a successfully committed

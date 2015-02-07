@@ -38,6 +38,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -57,6 +58,28 @@ public final class CDOCommonUtil
    * @since 4.2
    */
   public static final String SYSTEM_USER_ID = "CDO_SYSTEM"; //$NON-NLS-1$
+
+  /**
+   * @since 4.4
+   */
+  public static final Comparator<CDONameProvider> NAME_COMPARATOR = new Comparator<CDONameProvider>()
+  {
+    public int compare(CDONameProvider o1, CDONameProvider o2)
+    {
+      return o1.getName().compareTo(o2.getName());
+    }
+  };
+
+  /**
+   * @since 4.4
+   */
+  public static final Comparator<CDOTimeProvider> TIME_COMPARATOR = new Comparator<CDOTimeProvider>()
+  {
+    public int compare(CDOTimeProvider o1, CDOTimeProvider o2)
+    {
+      return compareTimeStamps(o1.getTimeStamp(), o2.getTimeStamp());
+    }
+  };
 
   private CDOCommonUtil()
   {

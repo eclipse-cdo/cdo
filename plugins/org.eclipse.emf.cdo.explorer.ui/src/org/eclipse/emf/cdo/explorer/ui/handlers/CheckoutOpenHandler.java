@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.checkouts;
+package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 
@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * @author Eike Stepper
  */
-public class CheckoutOpenHandler extends CheckoutHandler
+public class CheckoutOpenHandler extends AbstractCheckoutHandler
 {
   public CheckoutOpenHandler()
   {

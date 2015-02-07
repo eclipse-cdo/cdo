@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.explorer.properties;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
@@ -45,6 +46,24 @@ public class CheckoutProperties extends Properties<CDOCheckout>
       protected Object eval(CDOCheckout checkout)
       {
         return checkout.isOpen();
+      }
+    });
+
+    add(new Property<CDOCheckout>("id", "ID", "The ID of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getID();
+      }
+    });
+
+    add(new Property<CDOCheckout>("folder", "Folder", "The folder of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return ((AbstractElement)checkout).getFolder();
       }
     });
   }

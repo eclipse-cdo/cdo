@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.repositories;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.session.CDOSessionProvider;
@@ -24,13 +25,15 @@ import org.eclipse.net4j.util.container.IContainer;
  * @since 4.4
  * @apiviz.landmark
  */
-public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDOSessionProvider
+public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDONameProvider, CDOSessionProvider
 {
   public String getConnectorType();
 
   public String getConnectorDescription();
 
-  public String getRepositoryName();
+  public String getName();
+
+  public String getURI();
 
   public State getState();
 

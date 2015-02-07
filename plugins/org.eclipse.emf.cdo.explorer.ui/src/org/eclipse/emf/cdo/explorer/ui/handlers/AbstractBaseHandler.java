@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui;
+package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.handlers.LongRunningHandler;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class BaseHandler<T> extends LongRunningHandler
+public abstract class AbstractBaseHandler<T> extends LongRunningHandler
 {
   private final Class<T> type;
 
@@ -28,7 +28,7 @@ public abstract class BaseHandler<T> extends LongRunningHandler
 
   protected List<T> elements;
 
-  public BaseHandler(Class<T> type, Boolean multi)
+  public AbstractBaseHandler(Class<T> type, Boolean multi)
   {
     this.type = type;
     this.multi = multi;

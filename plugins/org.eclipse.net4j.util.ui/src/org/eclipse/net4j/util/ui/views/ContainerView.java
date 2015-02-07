@@ -27,7 +27,7 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.DecoratingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IBaseLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
@@ -254,7 +254,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   protected IBaseLabelProvider createLabelProvider()
   {
     ILabelDecorator labelDecorator = createLabelDecorator();
-    return new DecoratingLabelProvider(itemProvider, labelDecorator);
+    return new DecoratingStyledCellLabelProvider(itemProvider, labelDecorator, null);
   }
 
   /**
@@ -268,7 +268,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
     return new ContainerItemProvider<IContainer<Object>>(getRootElementFilter())
-        {
+    {
       @Override
       public Image getImage(Object obj)
       {
@@ -328,7 +328,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
         return font;
       }
-        };
+    };
   }
 
   protected String getElementText(Object element)

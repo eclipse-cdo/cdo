@@ -62,7 +62,7 @@ public abstract class LongRunningHandler extends SafeHandler
     try
     {
       CANCELED.set(Boolean.FALSE);
-      preRun();
+      preRun(event);
 
       if (CANCELED.get() != Boolean.TRUE)
       {
@@ -92,6 +92,14 @@ public abstract class LongRunningHandler extends SafeHandler
     {
       CANCELED.remove();
     }
+  }
+
+  /**
+   * @since 3.5
+   */
+  protected void preRun(ExecutionEvent event) throws Exception
+  {
+    preRun();
   }
 
   protected void preRun() throws Exception

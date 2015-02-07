@@ -1,0 +1,108 @@
+/*
+ * Copyright (c) 2009-2015 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.explorer.ui.handlers;
+
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.ui.DeleteDialog;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.handlers.HandlerUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+/**
+ * @author Eike Stepper
+ */
+public class RepositoryDeleteHandler extends AbstractRepositoryHandler
+{
+  private List<CDOCheckout> checkouts;
+
+  private boolean deleteCheckoutContents;
+
+  private boolean deleteContents;
+
+  public RepositoryDeleteHandler()
+  {
+    super(null, null);
+  }
+
+  @Override
+  protected void preRun(ExecutionEvent event) throws Exception
+  {
+    checkouts = new ArrayList<CDOCheckout>();
+    deleteCheckoutContents = false;
+    deleteContents = false;
+
+    Shell shell = HandlerUtil.getActiveShell(event);
+    AbstractElement[] repositories = AbstractElement.collect(elements);
+
+    for (CDORepository repository : elements)
+    {
+      checkouts.addAll(Arrays.asList(repository.getCheckouts()));
+    }
+
+    if (!checkouts.isEmpty())
+    {
+      if (MessageDialog.openQuestion(shell, "Existing Checkouts",
+          "Are you sure you want to delete the existing checkouts, too?"))
+      {
+        DeleteDialog dialog = new DeleteDialog(shell, checkouts.toArray(new AbstractElement[checkouts.size()]));
+        if (dialog.open() == DeleteDialog.OK)
+        {
+          deleteCheckoutContents = dialog.isDeleteContents();
+        }
+        else
+        {
+          cancel();
+          return;
+        }
+      }
+      else
+      {
+        cancel();
+        return;
+      }
+    }
+
+    DeleteDialog dialog = new DeleteDialog(shell, repositories);
+    if (dialog.open() == DeleteDialog.OK)
+    {
+      deleteContents = dialog.isDeleteContents();
+    }
+    else
+    {
+      cancel();
+    }
+  }
+
+  @Override
+  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+  {
+    for (CDOCheckout checkout : checkouts)
+    {
+      checkout.delete(deleteCheckoutContents);
+    }
+
+    checkouts = null;
+
+    for (CDORepository repository : elements)
+    {
+      repository.delete(deleteContents);
+    }
+  }
+}

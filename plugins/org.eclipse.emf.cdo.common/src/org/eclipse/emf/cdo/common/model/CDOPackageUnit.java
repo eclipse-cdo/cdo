@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.emf.ecore.EClass;
@@ -23,7 +24,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
  * A package unit is the granule of committing or lazy loading packages. It contains some overall information like
  * {@link Type type}, {@link State state}, {@link #getTimeStamp() commit time} and nested {@link CDOPackageInfo package
  * info} objects that describe all the nested packages.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecore.EPackage.Registry;
  * @apiviz.has {@link CDOPackageUnit.State}
  * @apiviz.composedOf {@link CDOPackageInfo}
  */
-public interface CDOPackageUnit extends Comparable<CDOPackageUnit>
+public interface CDOPackageUnit extends Comparable<CDOPackageUnit>, CDOTimeProvider
 {
   /**
    * Returns the package registry this package unit is managed by.
@@ -88,7 +89,7 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>
   /**
    * Returns all {@link EPackage packages} of the nested package tree structure described by this package unit in
    * depth-first traversal order.
-   * 
+   *
    * @param loadOnDemand
    *          If <code>true</code> and this package unit is not {@link State#LOADED LOADED} the package unit is
    *          implicitely loaded. If <code>false</code> and this package unit is not {@link State#LOADED LOADED} an
@@ -110,14 +111,14 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>
    * <p>
    * Note that the model <i>Eresource</i> is expected to bepresent as generated {@link Type#NATIVE NATIVE} models in all
    * deployments.
-   * 
+   *
    * @since 4.0
    */
   public boolean isResource();
 
   /**
    * Describes the possible states a {@link CDOPackageUnit package unit} may be in during its lifecycle.
-   * 
+   *
    * @author Eike Stepper
    */
   public enum State
@@ -153,7 +154,7 @@ public interface CDOPackageUnit extends Comparable<CDOPackageUnit>
 
   /**
    * Describes the instances of {@link EClass classes} of a {@link CDOPackageUnit package unit}.
-   * 
+   *
    * @author Eike Stepper
    */
   public enum Type

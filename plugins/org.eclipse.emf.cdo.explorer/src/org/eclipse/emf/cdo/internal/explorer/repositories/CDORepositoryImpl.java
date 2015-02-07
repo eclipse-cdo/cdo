@@ -12,11 +12,14 @@ package org.eclipse.emf.cdo.internal.explorer.repositories;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
+import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutSource;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
@@ -26,14 +29,12 @@ import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
@@ -61,6 +62,25 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     }
   };
 
+  private final IListener branchManagerListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOBranchChangedEvent)
+      {
+        CDOBranchChangedEvent e = (CDOBranchChangedEvent)event;
+        if (e.getChangeKind() == ChangeKind.RENAMED)
+        {
+          CDORepositoryManagerImpl manager = getManager();
+          if (manager != null)
+          {
+            manager.fireElementChangedEvent(e.getBranch());
+          }
+        }
+      }
+    }
+  };
+
   private final IListener mainBranchListener = new IListener()
   {
     public void notifyEvent(IEvent event)
@@ -85,7 +105,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
   }
 
-  public final String getRepositoryName()
+  public final String getName()
   {
     return repositoryName;
   }
@@ -114,7 +134,12 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
           session = openSession();
           session.addListener(sessionListener);
-          session.getBranchManager().getMainBranch().addListener(mainBranchListener);
+
+          CDOBranchManager branchManager = session.getBranchManager();
+          branchManager.addListener(branchManagerListener);
+
+          CDOBranch mainBranch = branchManager.getMainBranch();
+          mainBranch.addListener(mainBranchListener);
 
           state = State.Connected;
         }
@@ -195,15 +220,18 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     return session;
   }
 
-  public void delete()
+  @Override
+  public void delete(boolean deleteContents)
   {
+    disconnect();
+
     CDORepositoryManagerImpl manager = getManager();
     if (manager != null)
     {
       manager.removeElement(this);
     }
 
-    IOUtil.delete(getFolder());
+    super.delete(deleteContents);
   }
 
   public final CDOCheckout[] getCheckouts()
@@ -274,67 +302,49 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   @SuppressWarnings({ "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    if (adapter == CDOCheckoutSource.class && isConnected())
+    if (isConnected())
     {
-      final CDOID rootID = session.getRepositoryInfo().getRootResourceID();
-
-      return new CDOCheckoutSource()
+      if (adapter == CDOSession.class)
       {
-        public CDORepository getRepository()
-        {
-          return CDORepositoryImpl.this;
-        }
+        return session;
+      }
 
-        public String getBranchPath()
-        {
-          return CDOBranch.MAIN_BRANCH_NAME;
-        }
+      if (adapter == CDORepositoryElement.class)
+      {
+        final CDOID objectID = session.getRepositoryInfo().getRootResourceID();
 
-        public long getTimeStamp()
+        return new CDORepositoryElement()
         {
-          return CDOBranchPoint.UNSPECIFIED_DATE;
-        }
+          public CDORepository getRepository()
+          {
+            return CDORepositoryImpl.this;
+          }
 
-        public CDOID getRootID()
-        {
-          return rootID;
-        }
-      };
+          public String getBranchPath()
+          {
+            return CDOBranch.MAIN_BRANCH_NAME;
+          }
+
+          public long getTimeStamp()
+          {
+            return CDOBranchPoint.UNSPECIFIED_DATE;
+          }
+
+          public CDOID getObjectID()
+          {
+            return objectID;
+          }
+        };
+      }
     }
 
     return super.getAdapter(adapter);
   }
 
   @Override
-  public boolean equals(Object obj)
-  {
-    if (obj == this)
-    {
-      return true;
-    }
-
-    if (obj instanceof CDORepository)
-    {
-      CDORepository that = (CDORepository)obj;
-      return ObjectUtil.equals(getConnectorType(), that.getConnectorType())
-          && ObjectUtil.equals(getConnectorDescription(), that.getConnectorDescription())
-          && ObjectUtil.equals(repositoryName, that.getRepositoryName());
-    }
-
-    return false;
-  }
-
-  @Override
-  public int hashCode()
-  {
-    return ObjectUtil.hashCode(getConnectorType()) ^ ObjectUtil.hashCode(getConnectorDescription())
-        ^ ObjectUtil.hashCode(repositoryName);
-  }
-
-  @Override
   public String toString()
   {
-    return getConnectorType() + "://" + getConnectorDescription() + "/" + repositoryName;
+    return getLabel();
   }
 
   @Override

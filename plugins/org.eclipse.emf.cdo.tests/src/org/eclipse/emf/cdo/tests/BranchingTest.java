@@ -135,7 +135,7 @@ public class BranchingTest extends AbstractCDOTest
     CDOSession session = openSession1();
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOBranch branch = mainBranch.createBranch("testing");
-    branch.rename("renamed");
+    branch.setName("renamed");
     closeSession1();
 
     session = openSession2();
@@ -147,7 +147,7 @@ public class BranchingTest extends AbstractCDOTest
 
     try
     {
-      session.getBranchManager().getMainBranch().rename("test");
+      session.getBranchManager().getMainBranch().setName("test");
       fail("Main branch can't be renamed");
     }
     catch (Exception expected)

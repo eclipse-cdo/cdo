@@ -233,6 +233,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
 
     CDOBranchPoint base = baseBranch.getPoint(baseTimeStamp);
     InternalCDOBranch branch = new CDOBranchImpl(this, branchID, name, base);
+
     synchronized (branches)
     {
       putBranch(branch);
@@ -242,21 +243,10 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     return branch;
   }
 
+  @Deprecated
   public void renameBranch(CDOBranch branch, String newName)
   {
-    checkActive();
-    if (branch.isMainBranch())
-    {
-      throw new IllegalArgumentException("Renaming of the MAIN branch is not supported");
-    }
-
-    if (!(branchLoader instanceof BranchLoader2))
-    {
-      throw new UnsupportedOperationException("Branch renaming is not supported by " + this);
-    }
-
-    ((BranchLoader2)branchLoader).renameBranch(branch.getID(), newName);
-    ((InternalCDOBranch)branch).setName(newName);
+    branch.setName(newName);
   }
 
   @Override

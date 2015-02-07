@@ -8,21 +8,20 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.repositories;
+package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.explorer.ui.BaseHandler;
 
 import org.eclipse.jface.viewers.ISelection;
 
 /**
  * @author Eike Stepper
  */
-public abstract class RepositoryHandler extends BaseHandler<CDORepository>
+public abstract class AbstractRepositoryHandler extends AbstractBaseHandler<CDORepository>
 {
   private final Boolean connected;
 
-  public RepositoryHandler(Boolean multi, Boolean connected)
+  public AbstractRepositoryHandler(Boolean multi, Boolean connected)
   {
     super(CDORepository.class, multi);
     this.connected = connected;

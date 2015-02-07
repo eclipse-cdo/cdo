@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+
 import org.eclipse.emf.common.notify.Adapter;
 
 /**
@@ -22,7 +24,7 @@ import org.eclipse.emf.common.notify.Adapter;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOViewAdaptersNotifiedEvent extends CDOViewEvent
+public interface CDOViewAdaptersNotifiedEvent extends CDOViewEvent, CDOTimeProvider
 {
   /**
    * This is the time stamp of the commit operation that caused this client side event. It can be used to correlate this

@@ -40,5 +40,6 @@ public class BranchNotificationRequest extends CDOServerRequest
   {
     out.writeCDOBranch(branch);
     out.writeEnum(changeKind);
+    out.writeString(branch.getName());
   }
 }

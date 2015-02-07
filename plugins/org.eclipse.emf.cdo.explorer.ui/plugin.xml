@@ -42,7 +42,13 @@
         <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
         <adapter type="org.eclipse.ui.IActionFilter"/>
      </factory>
+     <factory
+           adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
+           class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
+        <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+     </factory>
   </extension>
+
 
   <extension
         point="org.eclipse.ui.perspectives">
@@ -118,7 +124,13 @@
    <extension
          point="org.eclipse.ui.decorators">
       <decorator
-            class="org.eclipse.emf.cdo.explorer.ui.checkouts.CheckoutDecorator"
+            class="org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryLabelDecorator"
+            id="org.eclipse.emf.cdo.explorer.ui.repositories.decorator"
+            label="CDO Repositories"
+            state="true">
+      </decorator>
+      <decorator
+            class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelDecorator"
             id="org.eclipse.emf.cdo.explorer.ui.checkouts.decorator"
             label="CDO Checkouts"
             state="true">
@@ -128,33 +140,66 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
+            id="org.eclipse.emf.cdo.explorer.ui.Rename"
+            name="Rename"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RenameHandler"/>
+      <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
             name="Connect Repository"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.repositories.RepositoryConnectHandler"/>
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryConnectHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
-            name="Connect Repository"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.repositories.RepositoryDisconnectHandler"/>
+            name="Disconnect Repository"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDisconnectHandler"/>
+      <command
+            id="org.eclipse.emf.cdo.explorer.ui.RepositoryDelete"
+            name="Delete Repository"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDeleteHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
             name="Checkout Repository"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.repositories.RepositoryCheckoutHandler"/>
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler"/>
+      <command
+            id="org.eclipse.emf.cdo.explorer.ui.CreateBranch"
+            name="Create Branch"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryBranchHandler"/>
+      <command
+            id="org.eclipse.emf.cdo.explorer.ui.CreateTag"
+            name="Create Tag"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryBranchHandler$TagHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutOpen"
             name="Open Checkout"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.checkouts.CheckoutOpenHandler"/>
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutOpenHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
-            name="Open Checkout"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.checkouts.CheckoutCloseHandler"/>
+            name="Close Checkout"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutCloseHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutDelete"
-            name="Open Checkout"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.checkouts.CheckoutDeleteHandler"/>
+            name="Delete Checkout"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDeleteHandler"/>
    </extension>
 
    <extension
          point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.Rename"
+               label="Rename..."
+               style="push"
+               tooltip="Rename the element">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate>
+                    <adapt type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?group=group.open">
@@ -198,6 +243,60 @@
                </with>
             </visibleWhen>
          </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryDelete"
+               icon="icons/delete.gif"
+               label="Delete..."
+               style="push"
+               tooltip="Delete the repository">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.new">
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.CreateBranch"
+               icon="icons/branch.gif"
+               label="New Branch..."
+               style="push"
+               tooltip="Add a new branch">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.CreateTag"
+               icon="icons/tag.gif"
+               label="New Tag..."
+               style="push"
+               tooltip="Add a new tag">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"
@@ -213,7 +312,7 @@
                <with
                      variable="activeMenuSelection">
                   <iterate>
-                    <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutSource"/>
+                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -221,9 +320,10 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.open">
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.build">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutOpen"
+               icon="icons/checkout.gif"
                label="Open Project"
                style="push"
                tooltip="Open the project">
@@ -243,9 +343,10 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.build">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
+               icon="icons/checkout_closed.gif"
                label="Close Project"
                style="push"
                tooltip="Close the project">
@@ -262,10 +363,14 @@
                </with>
             </visibleWhen>
          </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutDelete"
                icon="icons/delete.gif"
-               label="Delete"
+               label="Delete..."
                style="push"
                tooltip="Delete the project">
             <visibleWhen

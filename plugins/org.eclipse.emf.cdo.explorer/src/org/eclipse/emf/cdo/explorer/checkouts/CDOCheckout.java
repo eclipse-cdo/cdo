@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -24,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * @since 4.4
  * @apiviz.landmark
  */
-public interface CDOCheckout extends CDOExplorerElement
+public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 {
   public CDORepository getRepository();
 

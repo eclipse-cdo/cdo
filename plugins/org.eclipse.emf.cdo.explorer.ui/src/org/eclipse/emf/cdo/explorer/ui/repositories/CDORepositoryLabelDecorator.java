@@ -11,25 +11,26 @@
 package org.eclipse.emf.cdo.explorer.ui.repositories;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-
-import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.cdo.explorer.ui.BaseLabelDecorator;
 
 /**
  * @author Eike Stepper
  */
-public class RepositoryDisconnectHandler extends RepositoryHandler
+public class CDORepositoryLabelDecorator extends BaseLabelDecorator
 {
-  public RepositoryDisconnectHandler()
+  public CDORepositoryLabelDecorator()
   {
-    super(null, true);
   }
 
   @Override
-  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+  public String decorateText(String text, Object element)
   {
-    for (CDORepository repository : elements)
+    if (element instanceof CDORepository)
     {
-      repository.disconnect();
+      CDORepository repository = (CDORepository)element;
+      text += "  " + repository.getURI();
     }
+
+    return text;
   }
 }

@@ -51,7 +51,7 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -110,7 +110,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader2, DurableLocking2
+public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader3, DurableLocking2
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
@@ -1008,7 +1008,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void renameBranch(int branchID, String oldName, String newName)
   {
     checkBranchingSupport();
 
@@ -1252,31 +1258,41 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       IMetaDataManager metaDataManager = store.getMetaDataManager();
       Connection connection = getConnection();
 
-      packageUnits.addAll(metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork()));
+      Collection<InternalCDOPackageUnit> imported = //
+      metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+      packageUnits.addAll(imported);
 
-      InternalRepository repository = store.getRepository();
-      InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
-
-      for (InternalCDOPackageUnit packageUnit : packageUnits)
+      if (!packageUnits.isEmpty())
       {
-        packageRegistry.putPackageUnit(packageUnit);
+        InternalRepository repository = store.getRepository();
+        InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+
+        for (InternalCDOPackageUnit packageUnit : packageUnits)
+        {
+          packageRegistry.putPackageUnit(packageUnit);
+        }
+
+        IMappingStrategy mappingStrategy = store.getMappingStrategy();
+
+        // Use another connection because CREATE TABLE (which is called in createMapping)
+        // on H2 databases does a commit.
+        Connection connection2 = null;
+
+        try
+        {
+          connection2 = store.getConnection();
+
+          mappingStrategy.createMapping(connection2,
+              packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]), monitor.fork());
+        }
+        finally
+        {
+          DBUtil.close(connection2);
+        }
       }
-
-      IMappingStrategy mappingStrategy = store.getMappingStrategy();
-
-      // Using another connection because CREATE TABLE (which is called in createMapping) on H2 databases does a commit.
-      Connection connection2 = null;
-
-      try
+      else
       {
-        connection2 = store.getConnection();
-
-        mappingStrategy.createMapping(connection2,
-            packageUnits.toArray(new InternalCDOPackageUnit[packageUnits.size()]), monitor.fork());
-      }
-      finally
-      {
-        DBUtil.close(connection2);
+        monitor.worked();
       }
     }
     finally

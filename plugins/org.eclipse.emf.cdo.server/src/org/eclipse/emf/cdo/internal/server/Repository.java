@@ -66,7 +66,7 @@ import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader2;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -444,7 +444,13 @@ public class Repository extends Container<Object> implements InternalRepository
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void renameBranch(int branchID, String oldName, String newName)
   {
     if (!isSupportingBranches())
     {
@@ -457,14 +463,14 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-    if (!(accessor instanceof BranchLoader2))
+    if (!(accessor instanceof BranchLoader3))
     {
       throw new UnsupportedOperationException("Branch renaming is not supported by " + this);
     }
 
     synchronized (createBranchLock)
     {
-      ((BranchLoader2)accessor).renameBranch(branchID, newName);
+      ((BranchLoader3)accessor).renameBranch(branchID, oldName, newName);
     }
   }
 

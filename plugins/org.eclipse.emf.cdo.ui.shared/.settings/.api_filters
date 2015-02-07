@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.ui.shared" version="2">
+    <resource path="src/org/eclipse/emf/cdo/ui/shared/SharedIcons.java" type="org.eclipse.emf.cdo.ui.shared.SharedIcons">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.ui.shared.SharedIcons"/>
+                <message_argument value="OBJ_BRANCH"/>
+                <message_argument value="obj16/branch.png"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.ui.shared.SharedIcons"/>
+                <message_argument value="OBJ_BRANCH_GRAY"/>
+                <message_argument value="obj16/branch-gray.png"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

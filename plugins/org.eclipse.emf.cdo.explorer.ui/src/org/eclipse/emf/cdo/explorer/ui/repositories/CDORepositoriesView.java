@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories;
 
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -53,6 +55,8 @@ public class CDORepositoriesView extends ContainerView
 
   public CDORepositoriesView()
   {
+    int xxx;
+    IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7778");
   }
 
   private static int getRepositoryTimeoutMillis()
@@ -63,7 +67,7 @@ public class CDORepositoriesView extends ContainerView
   @Override
   protected IContainer<?> getContainer()
   {
-    return org.eclipse.emf.cdo.explorer.CDOExplorerUtil.getRepositoryManager();
+    return CDOExplorerUtil.getRepositoryManager();
   }
 
   @Override
@@ -87,6 +91,7 @@ public class CDORepositoriesView extends ContainerView
 
     TreeViewer viewer = getViewer();
     viewer.addTreeListener(activityDetector);
+    viewer.setSorter(null);
 
     Tree tree = viewer.getTree();
     tree.addMouseListener(activityDetector);
@@ -118,6 +123,8 @@ public class CDORepositoriesView extends ContainerView
     manager.add(new GroupMarker("group.openWith"));
     manager.add(new Separator("group.checkout"));
     manager.add(new Separator("group.edit"));
+    manager.add(new Separator("group.port"));
+    manager.add(new Separator("group.build"));
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     manager.add(new Separator("group.properties"));
   }

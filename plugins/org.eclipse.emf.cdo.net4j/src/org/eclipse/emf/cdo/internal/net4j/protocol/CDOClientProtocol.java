@@ -162,9 +162,15 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void renameBranch(int branchID, String newName)
   {
-    send(new RenameBranchRequest(this, branchID, newName));
+    throw new UnsupportedOperationException();
+  }
+
+  public void renameBranch(int branchID, String oldName, String newName)
+  {
+    send(new RenameBranchRequest(this, branchID, oldName, newName));
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)

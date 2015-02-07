@@ -23,12 +23,15 @@ public class RenameBranchRequest extends CDOClientRequest<Boolean>
 {
   private int branchID;
 
+  private String oldName;
+
   private String newName;
 
-  public RenameBranchRequest(CDOClientProtocol protocol, int branchID, String newName)
+  public RenameBranchRequest(CDOClientProtocol protocol, int branchID, String oldName, String newName)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_RENAME_BRANCH);
     this.branchID = branchID;
+    this.oldName = oldName;
     this.newName = newName;
   }
 
@@ -36,6 +39,7 @@ public class RenameBranchRequest extends CDOClientRequest<Boolean>
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeInt(branchID);
+    out.writeString(oldName);
     out.writeString(newName);
   }
 

@@ -11,7 +11,12 @@
 package org.eclipse.emf.cdo.explorer.ui.repositories;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.common.util.CDONameProvider;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager.RepositoryConnectionEvent;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
@@ -28,9 +33,11 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -43,8 +50,6 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
 
   private static final Image IMAGE_BRANCH = SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
 
-  private static final Color COLOR_DRAK_GRAY = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
-
   private final Image imageRepoDisconnected = new Image(UIUtil.getDisplay(), IMAGE_REPO, SWT.IMAGE_GRAY);
 
   private final Map<CDORepository, CDORepository> connectingRepositories = new ConcurrentHashMap<CDORepository, CDORepository>();
@@ -56,8 +61,9 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       if (event instanceof RepositoryConnectionEvent)
       {
         RepositoryConnectionEvent e = (RepositoryConnectionEvent)event;
-        CDORepository repository = e.getRepository();
+
         TreeViewer viewer = getViewer();
+        CDORepository repository = e.getRepository();
 
         if (!e.isConnected())
         {
@@ -68,6 +74,15 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         }
 
         ViewerUtil.refresh(viewer, repository);
+      }
+      else if (event instanceof CDOExplorerManager.ElementChangedEvent)
+      {
+        CDOExplorerManager.ElementChangedEvent e = (CDOExplorerManager.ElementChangedEvent)event;
+
+        TreeViewer viewer = getViewer();
+        Object changedElement = e.getChangedElement();
+
+        ViewerUtil.update(viewer, changedElement);
       }
     }
   };
@@ -134,8 +149,42 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         }
       }
     }
+    else if (element instanceof CDORepositoryManager)
+    {
+      List<CDONameProvider> nameProviders = new ArrayList<CDONameProvider>();
 
-    return super.getChildren(element);
+      Object[] children = super.getChildren(element);
+      for (Object child : children)
+      {
+        if (child instanceof CDONameProvider)
+        {
+          nameProviders.add((CDONameProvider)child);
+        }
+      }
+
+      Collections.sort(nameProviders, CDOCommonUtil.NAME_COMPARATOR);
+      return nameProviders.toArray();
+    }
+
+    List<CDOTimeProvider> timeProviders = new ArrayList<CDOTimeProvider>();
+    List<Object> otherObjects = new ArrayList<Object>();
+
+    Object[] children = super.getChildren(element);
+    for (Object child : children)
+    {
+      if (child instanceof CDOTimeProvider)
+      {
+        timeProviders.add((CDOTimeProvider)child);
+      }
+      else
+      {
+        otherObjects.add(child);
+      }
+    }
+
+    Collections.sort(timeProviders, CDOCommonUtil.TIME_COMPARATOR);
+    otherObjects.addAll(0, timeProviders);
+    return otherObjects.toArray();
   }
 
   @Override
@@ -215,21 +264,6 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     }
 
     return super.getImage(obj);
-  }
-
-  @Override
-  public Color getForeground(Object obj)
-  {
-    if (obj instanceof CDORepository)
-    {
-      CDORepository repository = (CDORepository)obj;
-      if (!repository.isConnected())
-      {
-        return COLOR_DRAK_GRAY;
-      }
-    }
-
-    return super.getForeground(obj);
   }
 
   @Override

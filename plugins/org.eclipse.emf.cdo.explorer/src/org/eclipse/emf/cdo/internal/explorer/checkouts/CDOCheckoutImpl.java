@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 
@@ -221,15 +220,18 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return rootObject;
   }
 
-  public void delete()
+  @Override
+  public void delete(boolean deleteContents)
   {
+    close();
+
     CDOCheckoutManagerImpl manager = getManager();
     if (manager != null)
     {
       manager.removeElement(this);
     }
 
-    IOUtil.delete(getFolder());
+    super.delete(deleteContents);
 
     ((CDORepositoryImpl)repository).removeCheckout(this);
     repository = null;
@@ -250,9 +252,17 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   @SuppressWarnings({ "rawtypes" })
   public Object getAdapter(Class adapter)
   {
-    if (adapter == EObject.class)
+    if (isOpen())
     {
-      return rootObject;
+      if (adapter == CDOView.class)
+      {
+        return view;
+      }
+
+      if (adapter == EObject.class)
+      {
+        return rootObject;
+      }
     }
 
     return super.getAdapter(adapter);

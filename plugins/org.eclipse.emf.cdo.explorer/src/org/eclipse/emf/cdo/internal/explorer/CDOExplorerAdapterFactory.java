@@ -15,8 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutSource;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.IAdapterFactory;
 @SuppressWarnings("rawtypes")
 public class CDOExplorerAdapterFactory implements IAdapterFactory
 {
-  private static final Class[] CLASSES = { CDOCheckoutSource.class };
+  private static final Class[] CLASSES = { CDORepositoryElement.class };
 
   public CDOExplorerAdapterFactory()
   {
@@ -52,7 +52,7 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
         if (commonRepository instanceof CDORepositoryInfo)
         {
           final CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)commonRepository;
-          final CDOID rootID = repositoryInfo.getRootResourceID();
+          final CDOID objectID = repositoryInfo.getRootResourceID();
           CDOSession session = repositoryInfo.getSession();
 
           CDORepositoryManagerImpl repositoryManager = (CDORepositoryManagerImpl)CDOExplorerUtil.getRepositoryManager();
@@ -60,7 +60,7 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
 
           if (repository != null)
           {
-            return new CDOCheckoutSource()
+            return new CDORepositoryElement()
             {
               public CDORepository getRepository()
               {
@@ -77,9 +77,9 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
                 return CDOBranchPoint.UNSPECIFIED_DATE;
               }
 
-              public CDOID getRootID()
+              public CDOID getObjectID()
               {
-                return rootID;
+                return objectID;
               }
             };
           }

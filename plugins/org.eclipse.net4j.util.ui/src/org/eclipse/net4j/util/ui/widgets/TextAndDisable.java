@@ -74,6 +74,38 @@ public class TextAndDisable extends Composite implements SelectionListener, Modi
     return disabled;
   }
 
+  /**
+   * @since 3.5
+   */
+  public void addModifyListener(ModifyListener listener)
+  {
+    text.addModifyListener(listener);
+  }
+
+  /**
+   * @since 3.5
+   */
+  public void removeModifyListener(ModifyListener listener)
+  {
+    text.removeModifyListener(listener);
+  }
+
+  /**
+   * @since 3.5
+   */
+  public void addSelectionListener(SelectionListener listener)
+  {
+    disabled.addSelectionListener(listener);
+  }
+
+  /**
+   * @since 3.5
+   */
+  public void removeSelectionListener(SelectionListener listener)
+  {
+    disabled.removeSelectionListener(listener);
+  }
+
   public boolean isDisabled()
   {
     return disabled.getSelection();

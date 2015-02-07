@@ -555,14 +555,20 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void renameBranch(int branchID, String newName)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void renameBranch(int branchID, String oldName, String newName)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        delegate.renameBranch(branchID, newName);
+        delegate.renameBranch(branchID, oldName, newName);
         return;
       }
       catch (Exception ex)
@@ -622,8 +628,8 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
-      int referenceChunk, int prefetchDepth)
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
+      int prefetchDepth)
   {
     int attempt = 0;
     for (;;)

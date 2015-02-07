@@ -24,6 +24,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -31,6 +34,8 @@ import java.util.Properties;
  */
 public abstract class AbstractElement extends Notifier implements CDOExplorerElement, Adapter.Internal
 {
+  public static final String PROPERTIES_FILE = "_properties";
+
   public static final String PROP_ID = "id";
 
   public static final String PROP_TYPE = "type";
@@ -110,6 +115,48 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     return false;
   }
 
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (obj == this)
+    {
+      return true;
+    }
+
+    if (obj == null)
+    {
+      return false;
+    }
+
+    if (obj.getClass() == getClass())
+    {
+      AbstractElement that = (AbstractElement)obj;
+      return id.equals(that.getID());
+    }
+
+    return false;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return getClass().hashCode() ^ id.hashCode();
+  }
+
+  public void delete(boolean deleteContents)
+  {
+    if (deleteContents)
+    {
+      IOUtil.delete(folder);
+    }
+    else
+    {
+      File from = new File(folder, PROPERTIES_FILE);
+      File dest = new File(from.getParentFile(), from.getName() + ".removed");
+      from.renameTo(dest);
+    }
+  }
+
   public void save()
   {
     folder.mkdirs();
@@ -121,7 +168,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
     try
     {
-      File file = new File(folder, ".properties");
+      File file = new File(folder, PROPERTIES_FILE);
       out = new FileOutputStream(file);
 
       properties.store(out, getClass().getSimpleName());
@@ -149,5 +196,20 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   {
     properties.put("type", type);
     properties.put("label", label);
+  }
+
+  public static AbstractElement[] collect(Collection<?> c)
+  {
+    List<AbstractElement> result = new ArrayList<AbstractElement>();
+    for (Object object : c)
+    {
+      if (object instanceof AbstractElement)
+      {
+        AbstractElement element = (AbstractElement)object;
+        result.add(element);
+      }
+    }
+
+    return result.toArray(new AbstractElement[result.size()]);
   }
 }

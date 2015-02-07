@@ -1,0 +1,110 @@
+/*
+ * Copyright (c) 2004-2014 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.explorer.ui;
+
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext;
+
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
+
+/**
+ * @author Eike Stepper
+ */
+public class RenameDialog extends TitleAreaDialog
+{
+  private final ExplorerRenameContext renameContext;
+
+  private String name;
+
+  private Text nameText;
+
+  public RenameDialog(Shell parentShell, ExplorerRenameContext renameContext)
+  {
+    super(parentShell);
+    this.renameContext = renameContext;
+    name = renameContext.getName();
+
+    setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+
+  @Override
+  protected Control createDialogArea(Composite parent)
+  {
+    String title = "Rename " + renameContext.getType();
+    getShell().setText(title);
+    setTitle(title);
+    setTitleImage(OM.getImage("icons/wiz/rename.gif"));
+    setMessage("Enter the new " + getAttributeName() + " of the " + renameContext.getType().toLowerCase() + ".");
+
+    Composite area = (Composite)super.createDialogArea(parent);
+    Composite container = new Composite(area, SWT.NONE);
+    container.setLayoutData(new GridData(GridData.FILL_BOTH));
+    GridLayout containerGridLayout = new GridLayout(2, false);
+    containerGridLayout.marginWidth = 10;
+    containerGridLayout.marginHeight = 10;
+    container.setLayout(containerGridLayout);
+
+    Label label = new Label(container, SWT.NONE);
+    label.setText("New " + getAttributeName() + ":");
+
+    nameText = new Text(container, SWT.BORDER);
+    nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    nameText.setText(renameContext.getName());
+    nameText.setFocus();
+    nameText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        name = nameText.getText();
+
+        String error = renameContext.validateName(name);
+        setErrorMessage(error);
+
+        Button button = getButton(IDialogConstants.OK_ID);
+        if (button != null)
+        {
+          button.setEnabled(error == null);
+        }
+      }
+    });
+
+    return area;
+  }
+
+  protected String getAttributeName()
+  {
+    return "name";
+  }
+
+  @Override
+  protected Point getInitialSize()
+  {
+    return new Point(450, 250);
+  }
+}

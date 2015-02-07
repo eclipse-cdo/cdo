@@ -71,6 +71,11 @@ public class CloneCDORepository extends CDORepositoryImpl
     return "local";
   }
 
+  public String getURI()
+  {
+    return connectorType + "://" + connectorDescription + "/" + getName();
+  }
+
   public final int getReconnectSeconds()
   {
     return reconnectSeconds;
@@ -95,7 +100,6 @@ public class CloneCDORepository extends CDORepositoryImpl
     reconnectSeconds = Integer.parseInt(properties.getProperty("reconnectSeconds"));
     recommitSeconds = Integer.parseInt(properties.getProperty("recommitSeconds"));
     recommitAttempts = Integer.parseInt(properties.getProperty("recommitAttempts"));
-
   }
 
   @Override
@@ -112,13 +116,13 @@ public class CloneCDORepository extends CDORepositoryImpl
   @Override
   protected CDOSession openSession()
   {
-    final String repositoryName = getRepositoryName();
+    final String repositoryName = getName();
     File folder = new File(getFolder(), "db");
 
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + folder);
 
-    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true, true);
+    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true, false);
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
@@ -148,7 +152,7 @@ public class CloneCDORepository extends CDORepositoryImpl
     IRepositorySynchronizer synchronizer = CDOServerUtil
         .createRepositorySynchronizer(remoteSessionConfigurationFactory);
 
-    repository = CDOServerUtil.createOfflineClone(repositoryName, store, props, synchronizer);
+    repository = CDOServerUtil.createOfflineClone(repositoryName + "-clone", store, props, synchronizer);
 
     CDOServerUtil.addRepository(container, repository);
     Net4jUtil.getAcceptor(container, getConnectorType(), getConnectorDescription());

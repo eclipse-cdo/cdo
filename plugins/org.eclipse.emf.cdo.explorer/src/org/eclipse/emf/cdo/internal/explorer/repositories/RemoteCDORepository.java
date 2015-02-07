@@ -36,6 +36,11 @@ public class RemoteCDORepository extends CDORepositoryImpl
     return connectorDescription;
   }
 
+  public String getURI()
+  {
+    return connectorType + "://" + connectorDescription + "/" + getName();
+  }
+
   @Override
   protected void init(File folder, String type, Properties properties)
   {

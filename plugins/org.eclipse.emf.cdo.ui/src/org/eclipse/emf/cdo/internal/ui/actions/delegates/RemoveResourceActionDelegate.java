@@ -9,12 +9,13 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.actions;
+package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -43,6 +44,7 @@ import java.util.Map;
 /**
  * @author Victor Roldan Betancort
  */
+@Deprecated
 public class RemoveResourceActionDelegate implements IObjectActionDelegate
 {
   // private Image deleteIcon;

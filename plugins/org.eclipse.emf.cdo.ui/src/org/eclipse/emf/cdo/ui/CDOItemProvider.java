@@ -40,8 +40,10 @@ import org.eclipse.emf.cdo.internal.ui.actions.ManagePackagesAction;
 import org.eclipse.emf.cdo.internal.ui.actions.MergeBranchPointAction;
 import org.eclipse.emf.cdo.internal.ui.actions.MergeConflictsAction;
 import org.eclipse.emf.cdo.internal.ui.actions.NewResourceNodeAction;
+import org.eclipse.emf.cdo.internal.ui.actions.NewTopLevelResourceNodeAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenAuditAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenDurableViewAction;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenResourceEditorAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenViewAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RegisterSinglePackageAction;
@@ -490,13 +492,9 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       {
         fillBranch(manager, (CDOBranch)object);
       }
-      else if (object instanceof CDOResourceFolder)
+      else if (object instanceof CDOResourceNode)
       {
-        fillResourceFolder(manager, (CDOResourceFolder)object);
-      }
-      else if (object instanceof CDOResourceLeaf)
-      {
-        fillResourceLeaf(manager, object);
+        fillResourceNode(manager, (CDOResourceNode)object);
       }
     }
 
@@ -589,10 +587,14 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       CDOResource rootResource = view.getRootResource();
       if (rootResource.cdoPermission() == CDOPermission.WRITE)
       {
-        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.FOLDER));
-        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.MODEL));
-        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.TEXT));
-        manager.add(new NewResourceNodeAction(this, page, view, rootResource, NewResourceNodeAction.Type.BINARY));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
+            NewTopLevelResourceNodeAction.Type.FOLDER));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
+            NewTopLevelResourceNodeAction.Type.MODEL));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
+            NewTopLevelResourceNodeAction.Type.TEXT));
+        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
+            NewTopLevelResourceNodeAction.Type.BINARY));
       }
     }
 
@@ -641,10 +643,32 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   }
 
   /**
+   * @since 4.4
+   */
+  public void fillResourceNode(IMenuManager manager, CDOResourceNode node)
+  {
+    if (node instanceof CDOResourceFolder)
+    {
+      fillResourceFolder(manager, (CDOResourceFolder)node);
+    }
+    else if (node instanceof CDOResourceLeaf)
+    {
+      fillResourceLeaf(manager, node);
+    }
+  }
+
+  /**
    * @since 4.2
    */
   public void fillResourceFolder(IMenuManager manager, CDOResourceFolder folder)
   {
+    if (!folder.cdoView().isReadOnly() && folder.cdoPermission() == CDOPermission.WRITE)
+    {
+      manager.add(new NewResourceNodeAction.Folder(page, folder));
+      manager.add(new NewResourceNodeAction.Model(page, folder));
+      manager.add(new NewResourceNodeAction.Binary(page, folder));
+      manager.add(new NewResourceNodeAction.Text(page, folder));
+    }
   }
 
   /**
@@ -673,7 +697,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public void fillResource(IMenuManager manager, CDOResource resource)
   {
-    // manager.add(new OpenResourceEditorAction(page, resource));
+    manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   /**
@@ -681,7 +705,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public void fillTextResource(IMenuManager manager, CDOTextResource resource)
   {
-    // manager.add(new OpenResourceEditorAction(page, resource));
+    manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   /**
@@ -689,7 +713,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public void fillBinaryResource(IMenuManager manager, CDOBinaryResource resource)
   {
-    // manager.add(new OpenResourceEditorAction(page, resource));
+    manager.add(new OpenResourceEditorAction(page, resource));
   }
 
   @Override

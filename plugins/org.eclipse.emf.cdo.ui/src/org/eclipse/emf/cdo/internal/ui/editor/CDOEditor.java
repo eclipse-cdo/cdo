@@ -2205,26 +2205,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * This looks up a string in the plugin's plugin.properties file.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  private static String getString(String key)
-  {
-    return PluginDelegator.INSTANCE.getString(key);
-  }
-
-  /**
-   * This looks up a string in plugin.properties, making a substitution.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  private static String getString(String key, Object s1)
-  {
-    return PluginDelegator.INSTANCE.getString(key, new Object[] { s1 });
-  }
-
-  /**
    * This implements {@link org.eclipse.jface.action.IMenuListener} to help fill the context menus with contributions from the Edit menu.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
@@ -2241,7 +2221,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     menuAboutToShowGen(menuManager);
     MenuManager submenuManager = new MenuManager(Messages.getString("CDOEditor.23")); //$NON-NLS-1$
-    if (populateNewRoot(submenuManager))
+
+    NewRootMenuPopulator populator = new NewRootMenuPopulator(view.getSession().getPackageRegistry())
+    {
+      @Override
+      protected IAction createAction(EObject object)
+      {
+        return new CreateRootAction(object);
+      }
+    };
+
+    if (populator.populateMenu(submenuManager))
     {
       menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
     }
@@ -2305,157 +2295,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
       }
     }
-  }
-
-  /**
-   * @ADDED
-   */
-  protected boolean populateNewRoot(MenuManager menuManager)
-  {
-    boolean populated = false;
-    CDOPackageRegistry packageRegistry = view.getSession().getPackageRegistry();
-    for (Map.Entry<String, Object> entry : EMFUtil.getSortedRegistryEntries(packageRegistry))
-    {
-      IContributionItem item = populateSubMenu(entry.getKey(), entry.getValue(), packageRegistry);
-      if (item != null)
-      {
-        menuManager.add(item);
-        populated = true;
-      }
-    }
-
-    return populated;
-  }
-
-  /**
-   * @ADDED
-   */
-  protected IContributionItem populateSubMenu(String nsURI, Object value, final CDOPackageRegistry packageRegistry)
-  {
-    if (value instanceof EPackage)
-    {
-      EPackage ePackage = (EPackage)value;
-      CDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
-      CDOPackageUnit packageUnit = packageInfo.getPackageUnit();
-      if (packageUnit.isResource())
-      {
-        return null;
-      }
-
-      ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE);
-      MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
-      populateSubMenu(ePackage, submenuManager);
-      return submenuManager;
-    }
-
-    ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE_UNKNOWN);
-    final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
-    submenuManager.setRemoveAllWhenShown(true);
-    submenuManager.add(new Action(Messages.getString("CDOEditor.27")) //$NON-NLS-1$
-        {
-        });
-
-    submenuManager.addMenuListener(new IMenuListener()
-    {
-      public void menuAboutToShow(IMenuManager manager)
-      {
-        String nsURI = submenuManager.getMenuText();
-        EPackage ePackage = packageRegistry.getEPackage(nsURI);
-
-        if (ePackage != null)
-        {
-          populateSubMenu(ePackage, submenuManager);
-        }
-        else
-        {
-          OM.LOG.warn(MessageFormat.format(Messages.getString("CDOEditor.28"), nsURI)); //$NON-NLS-1$
-        }
-      }
-    });
-
-    return submenuManager;
-  }
-
-  /**
-   * @ADDED
-   */
-  protected void populateSubMenu(EPackage ePackage, final MenuManager submenuManager)
-  {
-    List<EObject> objects = new ArrayList<EObject>();
-    for (EClassifier eClassifier : ePackage.getEClassifiers())
-    {
-      if (eClassifier instanceof EClass)
-      {
-        EClass eClass = (EClass)eClassifier;
-        if (!eClass.isAbstract() && !eClass.isInterface())
-        {
-          objects.add(EcoreUtil.create(eClass));
-        }
-      }
-    }
-
-    if (!objects.isEmpty())
-    {
-      Collections.sort(objects, new Comparator<EObject>()
-      {
-        public int compare(EObject o1, EObject o2)
-        {
-          return o1.eClass().getName().compareTo(o2.eClass().getName());
-        }
-      });
-
-      for (EObject object : objects)
-      {
-        CreateRootAction action = new CreateRootAction(object);
-        submenuManager.add(action);
-      }
-    }
-  }
-
-  /**
-   * @ADDED
-   */
-  protected String getLabelText(Object object)
-  {
-    try
-    {
-      IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
-      if (labelProvider != null)
-      {
-        String text = labelProvider.getText(object);
-        if (text != null)
-        {
-          return text;
-        }
-      }
-    }
-    catch (Exception ignore)
-    {
-      ignore.printStackTrace();
-    }
-
-    return ""; //$NON-NLS-1$
-  }
-
-  /**
-   * @ADDED
-   */
-  protected Object getLabelImage(Object object)
-  {
-    try
-    {
-      IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
-      if (labelProvider != null)
-      {
-        return labelProvider.getImage(object);
-      }
-    }
-    catch (Exception ignore)
-    {
-      ignore.printStackTrace();
-    }
-
-    return null;
   }
 
   /**
@@ -2676,6 +2515,83 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     }
   }
 
+  /**
+   * @ADDED
+   */
+  public static String getLabelText(AdapterFactory adapterFactory, Object object)
+  {
+    try
+    {
+      IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
+      if (labelProvider != null)
+      {
+        String text = labelProvider.getText(object);
+        if (text != null)
+        {
+          return text;
+        }
+      }
+    }
+    catch (Exception ignore)
+    {
+      //$FALL-THROUGH$
+    }
+
+    if (object != null)
+    {
+      String text = object.getClass().getSimpleName();
+      if (text.endsWith("Impl"))
+      {
+        text = text.substring(0, text.length() - "Impl".length());
+      }
+
+      return text;
+    }
+
+    return ""; //$NON-NLS-1$
+  }
+
+  /**
+   * @ADDED
+   */
+  public static Object getLabelImage(AdapterFactory adapterFactory, Object object)
+  {
+    try
+    {
+      IItemLabelProvider labelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProvider.class);
+      if (labelProvider != null)
+      {
+        return labelProvider.getImage(object);
+      }
+    }
+    catch (Exception ignore)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return null;
+  }
+
+  /**
+   * This looks up a string in the plugin's plugin.properties file.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  private static String getString(String key)
+  {
+    return PluginDelegator.INSTANCE.getString(key);
+  }
+
+  /**
+   * This looks up a string in plugin.properties, making a substitution.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  private static String getString(String key, Object s1)
+  {
+    return PluginDelegator.INSTANCE.getString(key, new Object[] { s1 });
+  }
+
   private static Field getViewerField()
   {
     try
@@ -2690,6 +2606,116 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   /**
    * @author Eike Stepper
+   */
+  public static abstract class NewRootMenuPopulator
+  {
+    private final CDOPackageRegistry packageRegistry;
+
+    public NewRootMenuPopulator(CDOPackageRegistry packageRegistry)
+    {
+      this.packageRegistry = packageRegistry;
+    }
+
+    public boolean populateMenu(IMenuManager menuManager)
+    {
+      boolean populated = false;
+      for (Map.Entry<String, Object> entry : EMFUtil.getSortedRegistryEntries(packageRegistry))
+      {
+        IContributionItem item = populateSubMenu(entry.getKey(), entry.getValue(), packageRegistry);
+        if (item != null)
+        {
+          menuManager.add(item);
+          populated = true;
+        }
+      }
+
+      return populated;
+    }
+
+    protected IContributionItem populateSubMenu(String nsURI, Object value, final CDOPackageRegistry packageRegistry)
+    {
+      if (value instanceof EPackage)
+      {
+        EPackage ePackage = (EPackage)value;
+        CDOPackageInfo packageInfo = packageRegistry.getPackageInfo(ePackage);
+        CDOPackageUnit packageUnit = packageInfo.getPackageUnit();
+        if (packageUnit.isResource())
+        {
+          return null;
+        }
+
+        ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE);
+        MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
+        populateSubMenu(ePackage, submenuManager);
+        return submenuManager;
+      }
+
+      ImageDescriptor imageDescriptor = SharedIcons.getDescriptor(SharedIcons.OBJ_EPACKAGE_UNKNOWN);
+      final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
+      submenuManager.setRemoveAllWhenShown(true);
+      submenuManager.add(new Action(Messages.getString("CDOEditor.27")) //$NON-NLS-1$
+          {
+          });
+
+      submenuManager.addMenuListener(new IMenuListener()
+      {
+        public void menuAboutToShow(IMenuManager manager)
+        {
+          String nsURI = submenuManager.getMenuText();
+          EPackage ePackage = packageRegistry.getEPackage(nsURI);
+
+          if (ePackage != null)
+          {
+            populateSubMenu(ePackage, submenuManager);
+          }
+          else
+          {
+            OM.LOG.warn(MessageFormat.format(Messages.getString("CDOEditor.28"), nsURI)); //$NON-NLS-1$
+          }
+        }
+      });
+
+      return submenuManager;
+    }
+
+    protected void populateSubMenu(EPackage ePackage, final IMenuManager submenuManager)
+    {
+      List<EObject> objects = new ArrayList<EObject>();
+      for (EClassifier eClassifier : ePackage.getEClassifiers())
+      {
+        if (eClassifier instanceof EClass)
+        {
+          EClass eClass = (EClass)eClassifier;
+          if (!eClass.isAbstract() && !eClass.isInterface())
+          {
+            objects.add(EcoreUtil.create(eClass));
+          }
+        }
+      }
+
+      if (!objects.isEmpty())
+      {
+        Collections.sort(objects, new Comparator<EObject>()
+        {
+          public int compare(EObject o1, EObject o2)
+          {
+            return o1.eClass().getName().compareTo(o2.eClass().getName());
+          }
+        });
+
+        for (EObject object : objects)
+        {
+          IAction action = createAction(object);
+          submenuManager.add(action);
+        }
+      }
+    }
+
+    protected abstract IAction createAction(EObject object);
+  }
+
+  /**
+   * @author Eike Stepper
    * @ADDED
    */
   protected class CreateRootAction extends LongRunningAction
@@ -2699,7 +2725,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     protected CreateRootAction(EObject object)
     {
       super(getEditorSite().getPage(), object.eClass().getName(), ExtendedImageRegistry.getInstance()
-          .getImageDescriptor(getLabelImage(object)));
+          .getImageDescriptor(getLabelImage(adapterFactory, object)));
       this.object = object;
     }
 
@@ -2735,6 +2761,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           object = ((InternalCDOObject)object).cdoInternalInstance();
         }
 
+        // TODO Use a command!
         resource.getContents().add(object);
       }
     }

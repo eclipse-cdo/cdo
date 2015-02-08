@@ -13,15 +13,15 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
@@ -110,15 +110,13 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
         {
           transaction.commit();
         }
-        catch (ConcurrentAccessException ex)
+        catch (Exception ex)
         {
-          int xxx;
-          ex.printStackTrace();
-        }
-        catch (CommitException ex)
-        {
-          int xxx;
-          ex.printStackTrace();
+          OM.LOG.error(ex);
+
+          IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
+          ErrorDialog.openError(getShell(), "Error",
+              "An error occured while creating the " + title.toLowerCase() + ".", status);
         }
 
         return Status.OK_STATUS;

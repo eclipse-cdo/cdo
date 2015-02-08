@@ -9,15 +9,15 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.actions;
+package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.internal.ui.dialogs.ImportResourceDialog;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
-import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -36,6 +36,7 @@ import java.util.List;
 /**
  * @author Victor Roldan Betancort
  */
+@Deprecated
 public class ImportResourceActionDelegate extends NewResourceActionDelegate
 {
   private URI sourceURI;

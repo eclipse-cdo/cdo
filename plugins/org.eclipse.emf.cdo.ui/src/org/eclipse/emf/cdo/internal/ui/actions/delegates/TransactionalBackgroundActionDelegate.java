@@ -9,9 +9,10 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.actions;
+package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -32,6 +33,7 @@ import java.text.MessageFormat;
 /**
  * @author Victor Roldan Betancort
  */
+@Deprecated
 public abstract class TransactionalBackgroundActionDelegate extends LongRunningActionDelegate implements
     IObjectActionDelegate
 {

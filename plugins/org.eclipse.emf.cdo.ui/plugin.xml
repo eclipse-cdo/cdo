@@ -197,7 +197,7 @@
       </provider>
    </extension>
 
-   <extension
+   <!--extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="true"
@@ -288,6 +288,6 @@
 	        		<test property="org.eclipse.emf.cdo.object.readable" value="true"/>
 	       </enablement>
       </objectContribution>
-   </extension>
+   </extension-->
 
 </plugin>

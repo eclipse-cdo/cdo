@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.actions;
+package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
@@ -18,16 +18,17 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 /**
  * @author Eike Stepper
  */
-public class NewResourceActionDelegate extends NewResourceNodeActionDelegate
+@Deprecated
+public class NewResourceFolderActionDelegate extends NewResourceNodeActionDelegate
 {
-  public NewResourceActionDelegate()
+  public NewResourceFolderActionDelegate()
   {
-    super(Messages.getString("NewResourceAction_0")); //$NON-NLS-1$
+    super(Messages.getString("NewResourceFolderAction_0")); //$NON-NLS-1$
   }
 
   @Override
   protected CDOResourceNode createNewResourceNode()
   {
-    return EresourceFactory.eINSTANCE.createCDOResource();
+    return EresourceFactory.eINSTANCE.createCDOResourceFolder();
   }
 }

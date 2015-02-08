@@ -1,65 +1,68 @@
 /*
- * Copyright (c) 2012, 2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2013 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Victor Roldan Betancort - maintenance
+ *    Victor Roldan Betancort - initial API and implementation
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
-import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
+import org.eclipse.emf.cdo.internal.ui.actions.NewTopLevelResourceNodeAction.Type;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
-import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
  * @author Eike Stepper
  */
-public class NewResourceNodeAction extends AbstractViewAction
+public abstract class NewResourceNodeAction extends TransactionalBackgroundAction
 {
-  private CDOItemProvider itemProvider;
+  private final Type type;
 
-  private CDOResourceNode selectedNode;
+  private String name;
 
-  private Type type;
-
-  private String resourceNodeName;
-
-  public NewResourceNodeAction(CDOItemProvider itemProvider, IWorkbenchPage page, CDOView view, CDOResourceNode node,
-      Type type)
+  public NewResourceNodeAction(IWorkbenchPage page, Type type, CDOObject object)
   {
-    super(page, type.getTitle() + INTERACTIVE, type.getTooltip(), type.getImageDescriptor(), view);
-    selectedNode = node;
-    this.itemProvider = itemProvider;
+    super(page, type.getTitle(), type.getTooltip(), type.getImageDescriptor(), object);
     this.type = type;
   }
 
-  @Override
-  protected void preRun() throws Exception
+  public final Type getType()
   {
-    InputDialog dialog = new InputDialog(getShell(), type.getTitle(), Messages.getString("NewResourceNodeAction.8"),
-        (type == Type.FOLDER ? "folder" : "resource") + (AbstractViewAction.lastResourceNumber + 1),
-        new ResourceNodeNameInputValidator(selectedNode));
+    return type;
+  }
 
-    if (dialog.open() == InputDialog.OK)
+  public final String getName()
+  {
+    return name;
+  }
+
+  @Override
+  protected void preRun()
+  {
+    CDOResourceNode object = (CDOResourceNode)getObject();
+
+    String initialValue = (type == Type.FOLDER ? "folder" : "resource") + (AbstractViewAction.lastResourceNumber + 1);
+    InputDialog dialog = new InputDialog(getShell(), getText(), Messages.getString("NewResourceNodeAction.8"),
+        initialValue, new ResourceNodeNameInputValidator(object));
+    if (dialog.open() == Dialog.OK)
     {
       ++AbstractViewAction.lastResourceNumber;
-      resourceNodeName = dialog.getValue();
+      name = dialog.getValue();
     }
     else
     {
@@ -68,119 +71,96 @@ public class NewResourceNodeAction extends AbstractViewAction
   }
 
   @Override
-  protected void doRun(IProgressMonitor progressMonitor) throws Exception
+  protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
+      throws Exception
   {
-    CDOTransaction transaction = getTransaction();
-    CDOResourceNode node = null;
+    CDOResourceNode newResourceNode = createNewResourceNode();
+    newResourceNode.setName(name);
 
-    switch (type)
+    if (object instanceof CDOResourceFolder)
     {
-    case FOLDER:
-      node = EresourceFactory.eINSTANCE.createCDOResourceFolder();
-      node.setName(resourceNodeName);
-      if (selectedNode instanceof CDOResourceFolder)
-      {
-        ((CDOResourceFolder)selectedNode).getNodes().add(node);
-      }
-      else
-      {
-        ((CDOResource)selectedNode).getContents().add(node); // selectedNode is root resource
-      }
+      ((CDOResourceFolder)object).getNodes().add(newResourceNode);
+    }
+    else
+    {
+      transaction.getRootResource().getContents().add(newResourceNode);
+    }
+  }
 
-      break;
+  protected abstract CDOResourceNode createNewResourceNode();
 
-    case MODEL:
-      if (selectedNode instanceof CDOResourceFolder)
-      {
-        node = transaction.createResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
-      }
-      else
-      {
-        node = transaction.createResource(resourceNodeName);
-      }
-
-      break;
-
-    case TEXT:
-      if (selectedNode instanceof CDOResourceFolder)
-      {
-        node = transaction.createTextResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
-      }
-      else
-      {
-        node = transaction.createTextResource(resourceNodeName);
-      }
-
-      break;
-
-    case BINARY:
-      if (selectedNode instanceof CDOResourceFolder)
-      {
-        node = transaction.createBinaryResource(selectedNode.getPath() + "/" + resourceNodeName); //$NON-NLS-1$
-      }
-      else
-      {
-        node = transaction.createBinaryResource(resourceNodeName);
-      }
-
-      break;
+  /**
+   * @author Eike Stepper
+   */
+  public static class Folder extends NewResourceNodeAction
+  {
+    public Folder(IWorkbenchPage page, CDOObject object)
+    {
+      super(page, Type.FOLDER, object);
     }
 
-    transaction.commit();
-
-    itemProvider.refreshViewer(true);
-    itemProvider.selectElement(node, true);
-
-    if (type == Type.MODEL)
+    @Override
+    protected CDOResourceNode createNewResourceNode()
     {
-      String resourcePath = node.getPath();
-      CDOEditorUtil.openEditor(getPage(), transaction, resourcePath);
+      return EresourceFactory.eINSTANCE.createCDOResourceFolder();
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  public static enum Type
+  public static class Model extends NewResourceNodeAction
   {
-    FOLDER(Messages.getString("Title.Folder"), Messages.getString("Tooltip.Folder"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE_FOLDER)),
-
-    MODEL(Messages.getString("Title.Model"), Messages.getString("Tooltip.Model"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE)),
-
-    TEXT(Messages.getString("Title.Text"), Messages.getString("Tooltip.Text"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_TEXT_RESOURCE)),
-
-    BINARY(Messages.getString("Title.Binary"), Messages.getString("Tooltip.Binary"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_BINARY_RESOURCE));
-
-    private String title;
-
-    private String tooltip;
-
-    private ImageDescriptor imageDescriptor;
-
-    private Type(String title, String tooltip, ImageDescriptor imageDescriptor)
+    public Model(IWorkbenchPage page, CDOObject object)
     {
-      this.title = title;
-      this.tooltip = tooltip;
-      this.imageDescriptor = imageDescriptor;
+      super(page, Type.MODEL, object);
     }
 
-    public String getTitle()
+    @Override
+    protected CDOResourceNode createNewResourceNode()
     {
-      return title;
+      return EresourceFactory.eINSTANCE.createCDOResource();
     }
 
-    public String getTooltip()
+    @Override
+    protected void postRun(CDOView view, CDOObject object)
     {
-      return tooltip;
+      String resourcePath = ((CDOResourceNode)object).getPath() + "/" + getName();
+      CDOEditorUtil.openEditor(getPage(), view, resourcePath);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Binary extends NewResourceNodeAction
+  {
+    public Binary(IWorkbenchPage page, CDOObject object)
+    {
+      super(page, Type.BINARY, object);
     }
 
-    public ImageDescriptor getImageDescriptor()
+    @Override
+    protected CDOResourceNode createNewResourceNode()
     {
-      return imageDescriptor;
+      return EresourceFactory.eINSTANCE.createCDOBinaryResource();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Text extends NewResourceNodeAction
+  {
+    public Text(IWorkbenchPage page, CDOObject object)
+    {
+      super(page, Type.TEXT, object);
+    }
+
+    @Override
+    protected CDOResourceNode createNewResourceNode()
+    {
+      return EresourceFactory.eINSTANCE.createCDOTextResource();
     }
   }
 }

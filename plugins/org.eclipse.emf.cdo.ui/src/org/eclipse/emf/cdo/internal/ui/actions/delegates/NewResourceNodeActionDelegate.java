@@ -9,10 +9,12 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.actions;
+package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.internal.ui.actions.ResourceNodeNameInputValidator;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -21,15 +23,16 @@ import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.InputDialog;
 
 /**
- * @author Victor Roldan Betancort
+ * @author Eike Stepper
  */
-public class RenameResourceActionDelegate extends TransactionalBackgroundActionDelegate
+@Deprecated
+public abstract class NewResourceNodeActionDelegate extends TransactionalBackgroundActionDelegate
 {
-  private String newResourceName;
+  private CDOResourceNode newResourceNode;
 
-  public RenameResourceActionDelegate()
+  public NewResourceNodeActionDelegate(String text)
   {
-    super(Messages.getString("RenameResourceActionDelegate.0")); //$NON-NLS-1$
+    super(text);
   }
 
   @Override
@@ -41,37 +44,37 @@ public class RenameResourceActionDelegate extends TransactionalBackgroundActionD
         Messages.getString("NewResourceNodeAction_0"), null, new ResourceNodeNameInputValidator((CDOResourceNode)object)); //$NON-NLS-1$
     if (dialog.open() == Dialog.OK)
     {
-      setNewResourceName(dialog.getValue());
+      setNewResourceNode(createNewResourceNode());
+      getNewResourceNode().setName(dialog.getValue());
       return super.preRun(object);
     }
 
-    cancel();
-
     return null;
-  }
-
-  private void setNewResourceName(String newName)
-  {
-    newResourceName = newName;
-  }
-
-  private String getNewResourceName()
-  {
-    return newResourceName;
   }
 
   @Override
   protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
       throws Exception
   {
-    if (object instanceof CDOResourceNode)
+    if (object instanceof CDOResourceFolder)
     {
-      ((CDOResourceNode)object).setName(getNewResourceName());
+      ((CDOResourceFolder)object).getNodes().add(getNewResourceNode());
     }
     else
     {
-      throw new IllegalArgumentException("object is not a CDOResourceNode"); //$NON-NLS-1$
+      transaction.getRootResource().getContents().add(getNewResourceNode());
     }
   }
 
+  protected void setNewResourceNode(CDOResourceNode newResourceNode)
+  {
+    this.newResourceNode = newResourceNode;
+  }
+
+  protected CDOResourceNode getNewResourceNode()
+  {
+    return newResourceNode;
+  }
+
+  protected abstract CDOResourceNode createNewResourceNode();
 }

@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.actions;
+package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 /**
  * @author Eike Stepper
  */
+@Deprecated
 public class NewBinaryResourceActionDelegate extends NewResourceNodeActionDelegate
 {
   public NewBinaryResourceActionDelegate()

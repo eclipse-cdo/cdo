@@ -49,10 +49,16 @@ public class ResourceNodeNameInputValidator implements IInputValidator
       return Messages.getString("NewResourceNodeAction.2"); //$NON-NLS-1$
     }
 
-    for (EObject nodeObject : node.eContents())
+    for (EObject childObject : node.eContents())
     {
-      CDOResourceNode node = (CDOResourceNode)nodeObject;
-      if (node.getName().equals(newText))
+      CDOResourceNode child = (CDOResourceNode)childObject;
+
+      if (node.isRoot() && child.getFolder() != null)
+      {
+        continue;
+      }
+
+      if (child.getName().equals(newText))
       {
         return isFolder ? Messages.getString("NewResourceNodeAction.5") + " " + newText : Messages.getString("NewResourceNodeAction.6") //$NON-NLS-1$ //$NON-NLS-2$
                 + " " + newText;

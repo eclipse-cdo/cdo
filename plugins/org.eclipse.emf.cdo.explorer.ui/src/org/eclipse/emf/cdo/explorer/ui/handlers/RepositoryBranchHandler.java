@@ -51,7 +51,7 @@ public class RepositoryBranchHandler extends AbstractBaseHandler<CDORepositoryEl
       CDOSession session = repository.getSession();
 
       CDOBranchManager branchManager = session.getBranchManager();
-      CDOBranch branch = branchManager.getBranch(repositoryElement.getBranchPath());
+      CDOBranch branch = branchManager.getBranch(repositoryElement.getBranchID());
 
       CDOBranchPoint defaultBranchPoint = branch.getHead();
       String defaultName = getValidChildName(branch);

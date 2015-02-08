@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.State;
@@ -108,6 +109,12 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         {
           ViewerUtil.expand(viewer, checkout, true);
         }
+      }
+      else if (event instanceof CDOExplorerManager.ElementChangedEvent)
+      {
+        CDOExplorerManager.ElementChangedEvent e = (CDOExplorerManager.ElementChangedEvent)event;
+        Object changedElement = e.getChangedElement();
+        ViewerUtil.update(viewer, changedElement);
       }
     }
   };

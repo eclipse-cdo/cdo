@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer.properties;
+package org.eclipse.emf.cdo.internal.explorer.repositories;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
@@ -21,13 +21,13 @@ import org.eclipse.net4j.util.properties.Property;
 /**
  * @author Eike Stepper
  */
-public class RepositoryProperties extends Properties<CDORepository>
+public class CDORepositoryProperties extends Properties<CDORepository>
 {
-  public static final IProperties<CDORepository> INSTANCE = new RepositoryProperties();
+  public static final IProperties<CDORepository> INSTANCE = new CDORepositoryProperties();
 
   private static final String CATEGORY_REPOSITORY = "Repository"; //$NON-NLS-1$
 
-  private RepositoryProperties()
+  private CDORepositoryProperties()
   {
     super(CDORepository.class);
 

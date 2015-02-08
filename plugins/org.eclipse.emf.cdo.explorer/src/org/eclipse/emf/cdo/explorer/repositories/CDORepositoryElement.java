@@ -24,7 +24,7 @@ public interface CDORepositoryElement extends CDOTimeProvider
 {
   public CDORepository getRepository();
 
-  public String getBranchPath();
+  public int getBranchID();
 
   public long getTimeStamp();
 

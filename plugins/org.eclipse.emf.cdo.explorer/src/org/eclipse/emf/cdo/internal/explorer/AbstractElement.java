@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -56,6 +58,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   {
   }
 
+  public abstract AbstractManager<?> getManager();
+
   public final File getFolder()
   {
     return folder;
@@ -78,8 +82,44 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public final void setLabel(String label)
   {
-    this.label = label;
-    save();
+    if (!ObjectUtil.equals(this.label, label))
+    {
+      this.label = label;
+      save();
+
+      AbstractManager<?> manager = getManager();
+      if (manager != null)
+      {
+        manager.fireElementChangedEvent(this);
+      }
+    }
+  }
+
+  public String validateLabel(String label)
+  {
+    if (StringUtil.isEmpty(label.trim()))
+    {
+      return "Label is empty.";
+    }
+
+    if (ObjectUtil.equals(label, getLabel()))
+    {
+      return null;
+    }
+
+    AbstractManager<?> manager = getManager();
+    if (manager != null)
+    {
+      for (CDOExplorerElement element : manager.getElements())
+      {
+        if (ObjectUtil.equals(element.getLabel(), label))
+        {
+          return "Label is not unique.";
+        }
+      }
+    }
+
+    return null;
   }
 
   @SuppressWarnings({ "unchecked", "rawtypes" })

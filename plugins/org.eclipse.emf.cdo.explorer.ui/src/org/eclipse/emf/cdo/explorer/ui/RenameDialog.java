@@ -70,12 +70,22 @@ public class RenameDialog extends TitleAreaDialog
     containerGridLayout.marginHeight = 10;
     container.setLayout(containerGridLayout);
 
-    Label label = new Label(container, SWT.NONE);
-    label.setText("New " + getAttributeName() + ":");
+    Label oldLabel = new Label(container, SWT.NONE);
+    oldLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+    oldLabel.setText("Current " + getAttributeName() + ":");
+
+    Text oldNameText = new Text(container, SWT.BORDER | SWT.READ_ONLY);
+    oldNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    oldNameText.setText(name);
+
+    Label newLabel = new Label(container, SWT.NONE);
+    newLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+    newLabel.setText("New " + getAttributeName() + ":");
 
     nameText = new Text(container, SWT.BORDER);
     nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-    nameText.setText(renameContext.getName());
+    nameText.setText(name);
+    nameText.selectAll();
     nameText.setFocus();
     nameText.addModifyListener(new ModifyListener()
     {

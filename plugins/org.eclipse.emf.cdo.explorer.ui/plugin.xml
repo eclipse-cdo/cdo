@@ -43,6 +43,11 @@
         <adapter type="org.eclipse.ui.IActionFilter"/>
      </factory>
      <factory
+           adaptableType="org.eclipse.emf.cdo.internal.explorer.AbstractElement"
+           class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
+        <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+     </factory>
+     <factory
            adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
         <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
@@ -80,9 +85,45 @@
             category="org.eclipse.emf.cdo"
             allowMultiple="false">
       </view>
-   </extension>
+  </extension>
+   
+  <extension
+        point="org.eclipse.ui.newWizards">
+     <wizard
+           category="org.eclipse.emf.cdo.category"
+           class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewFolderWizard"
+           hasPages="true"
+           icon="icons/CDOResourceFolder.gif"
+           id="org.eclipse.emf.cdo.explorer.ui.new.folder"
+           name="Folder">
+     </wizard>
+     <wizard
+           category="org.eclipse.emf.cdo.category"
+           class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewResourceWizard"
+           hasPages="true"
+           icon="icons/CDOResource.gif"
+           id="org.eclipse.emf.cdo.explorer.ui.new.resource"
+           name="Model Resource">
+     </wizard>
+     <wizard
+           category="org.eclipse.emf.cdo.category"
+           class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewBinaryResourceWizard"
+           hasPages="true"
+           icon="icons/CDOBinaryResource.gif"
+           id="org.eclipse.emf.cdo.explorer.ui.new.resource.binary"
+           name="Binary File">
+     </wizard>
+     <wizard
+           category="org.eclipse.emf.cdo.category"
+           class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewTextResourceWizard"
+           hasPages="true"
+           icon="icons/CDOTextResource.gif"
+           id="org.eclipse.emf.cdo.explorer.ui.new.resource.text"
+           name="Text File">
+     </wizard>
+  </extension>
 
-   <extension
+  <extension
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
             id="org.eclipse.emf.cdo.explorer.ui.CDOCheckouts"
@@ -95,21 +136,88 @@
             providesSaveables="false">
          <triggerPoints>
             <or>
-               <instanceof
-                     value="org.eclipse.core.resources.IWorkspaceRoot">
-               </instanceof>
-               <instanceof
-                     value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
-               </instanceof>
-               <instanceof
-                     value="org.eclipse.emf.ecore.EObject">
-               </instanceof>
+               <instanceof value="org.eclipse.core.resources.IWorkspaceRoot"/>
+               <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+               <instanceof value="org.eclipse.emf.ecore.EObject"/>
             </or>
          </triggerPoints>
+         <possibleChildren>
+            <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+            <instanceof value="org.eclipse.emf.cdo.eresource.CDOResource"/>
+            <instanceof value="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
+            <instanceof value="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
+            <instanceof value="org.eclipse.emf.ecore.EObject"/>
+         </possibleChildren>
+         <actionProvider
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutNewActionProvider"
+               id="org.eclipse.emf.cdo.explorer.ui.checkouts.NewActions">
+           <enablement>
+             <or>
+               <and>
+                 <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                 <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+               </and>
+               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+               <instanceof value="org.eclipse.emf.ecore.EObject"/>
+             </or>
+           </enablement>
+         </actionProvider>
+         <commonWizard
+              type="new"
+              wizardId="org.eclipse.emf.cdo.explorer.ui.new.folder">
+            <enablement>
+              <or>
+                <and>
+                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                  <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
+                </and>
+                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+              </or>
+            </enablement>
+         </commonWizard>   
+         <commonWizard
+              type="new"
+              wizardId="org.eclipse.emf.cdo.explorer.ui.new.resource">
+            <enablement>
+              <or>
+                <and>
+                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                  <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
+                </and>
+                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+              </or>
+           </enablement>
+         </commonWizard>              
+         <commonWizard
+              type="new"
+              wizardId="org.eclipse.emf.cdo.explorer.ui.new.resource.binary">
+            <enablement>
+              <or>
+                <and>
+                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                  <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
+                </and>
+                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+              </or>
+           </enablement>
+         </commonWizard>              
+         <commonWizard
+              type="new"
+              wizardId="org.eclipse.emf.cdo.explorer.ui.new.resource.text">
+            <enablement>
+              <or>
+                <and>
+                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                  <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
+                </and>
+                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+              </or>
+           </enablement>
+        </commonWizard>              
       </navigatorContent>
-   </extension>
+  </extension>
 
-   <extension
+  <extension
          point="org.eclipse.ui.navigator.viewer">
       <viewerContentBinding
             viewerId="org.eclipse.ui.navigator.ProjectExplorer">
@@ -119,9 +227,9 @@
             </contentExtension>
          </includes>
       </viewerContentBinding>
-   </extension>
+  </extension>
 
-   <extension
+  <extension
          point="org.eclipse.ui.decorators">
       <decorator
             class="org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryLabelDecorator"
@@ -135,14 +243,10 @@
             label="CDO Checkouts"
             state="true">
       </decorator>
-   </extension>
+  </extension>
 
-   <extension
+  <extension
          point="org.eclipse.ui.commands">
-      <command
-            id="org.eclipse.emf.cdo.explorer.ui.Rename"
-            name="Rename"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RenameHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
             name="Connect Repository"
@@ -151,10 +255,6 @@
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
             name="Disconnect Repository"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDisconnectHandler"/>
-      <command
-            id="org.eclipse.emf.cdo.explorer.ui.RepositoryDelete"
-            name="Delete Repository"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDeleteHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
             name="Checkout Repository"
@@ -175,93 +275,43 @@
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
             name="Close Checkout"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutCloseHandler"/>
-      <command
-            id="org.eclipse.emf.cdo.explorer.ui.CheckoutDelete"
-            name="Delete Checkout"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDeleteHandler"/>
-   </extension>
+  </extension>
+   
+  <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclipse.emf.cdo.explorer.ui.handlers.RenameHandler"
+            commandId="org.eclipse.ui.edit.rename"/>
+      <handler
+            class="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDeleteHandler"
+            commandId="org.eclipse.ui.edit.delete">
+         <activeWhen>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <instanceof
+                     value="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
+               </instanceof>
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDeleteHandler"
+            commandId="org.eclipse.ui.edit.delete">
+         <activeWhen>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
+               <instanceof
+                     value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+               </instanceof>
+            </iterate>
+         </activeWhen>
+      </handler>
+  </extension>
 
-   <extension
+  <extension
          point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.Rename"
-               label="Rename..."
-               style="push"
-               tooltip="Rename the element">
-            <visibleWhen checkEnabled="false">
-               <with variable="activeMenuSelection">
-                  <iterate>
-                    <adapt type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.open">
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
-               icon="icons/connect.gif"
-               label="Connect"
-               style="push"
-               tooltip="Connect to the repository">
-            <visibleWhen checkEnabled="false">
-               <with variable="activeMenuSelection">
-                  <iterate>
-                    <and>
-                      <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
-                      <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Disconnected"/>
-                    </and>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
-               icon="icons/disconnect.gif"
-               label="Disconnect"
-               style="push"
-               tooltip="Disconnect from the repository">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <iterate>
-                    <and>
-                      <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
-                      <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected"/>
-                    </and>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryDelete"
-               icon="icons/delete.gif"
-               label="Delete..."
-               style="push"
-               tooltip="Delete the repository">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <iterate>
-                     <adapt
-                           type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
-                     </adapt>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?group=group.new">
@@ -300,6 +350,34 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.open">
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
+               icon="icons/connect.gif"
+               label="Connect"
+               style="push"
+               tooltip="Connect to the repository">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <and>
+                        <adapt
+                              type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
+                        </adapt>
+                        <test
+                              property="org.eclipse.emf.cdo.explorer.repository.state"
+                              value="Disconnected">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?group=group.checkout">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
@@ -320,7 +398,89 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
+         <command
+               commandId="org.eclipse.ui.edit.rename"
+               icon="icons/rename.gif"
+               label="Rename..."
+               style="push"
+               tooltip="Rename the element">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               icon="icons/delete.gif"
+               label="Delete..."
+               style="push"
+               tooltip="Delete the repository">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               icon="icons/delete.gif"
+               label="Delete..."
+               style="push"
+               tooltip="Delete the project">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?group=group.build">
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
+               icon="icons/disconnect.gif"
+               label="Disconnect"
+               style="push"
+               tooltip="Disconnect from the repository">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <and>
+                        <adapt
+                              type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
+                        </adapt>
+                        <test
+                              property="org.eclipse.emf.cdo.explorer.repository.state"
+                              value="Connected">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutOpen"
                icon="icons/checkout.gif"
@@ -340,10 +500,6 @@
                </with>
             </visibleWhen>
          </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.build">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
                icon="icons/checkout_closed.gif"
@@ -364,26 +520,6 @@
             </visibleWhen>
          </command>
       </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutDelete"
-               icon="icons/delete.gif"
-               label="Delete..."
-               style="push"
-               tooltip="Delete the project">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
-                  <iterate>
-                    <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-   </extension>
+  </extension>
    
 </plugin>

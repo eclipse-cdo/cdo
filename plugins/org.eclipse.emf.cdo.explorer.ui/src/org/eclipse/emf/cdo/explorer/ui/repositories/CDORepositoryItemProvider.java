@@ -28,9 +28,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -264,12 +262,6 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     }
 
     return super.getImage(obj);
-  }
-
-  @Override
-  public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
-  {
-    super.fillContextMenu(manager, selection);
   }
 
   @Override

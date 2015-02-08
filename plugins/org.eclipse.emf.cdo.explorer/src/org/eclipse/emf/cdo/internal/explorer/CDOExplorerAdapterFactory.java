@@ -67,9 +67,9 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
                 return repository;
               }
 
-              public String getBranchPath()
+              public int getBranchID()
               {
-                return branch.getPathName();
+                return branch.getID();
               }
 
               public long getTimeStamp()

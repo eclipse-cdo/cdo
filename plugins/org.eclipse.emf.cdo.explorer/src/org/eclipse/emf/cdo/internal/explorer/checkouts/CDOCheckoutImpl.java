@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
@@ -52,7 +54,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private CDORepository repository;
 
-  private String branchPath;
+  private int branchID;
 
   private long timeStamp;
 
@@ -70,19 +72,25 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   {
   }
 
+  @Override
+  public final CDOCheckoutManagerImpl getManager()
+  {
+    return OM.getCheckoutManager();
+  }
+
   public final CDORepository getRepository()
   {
     return repository;
   }
 
-  public final String getBranchPath()
+  public final int getBranchID()
   {
-    return branchPath;
+    return branchID;
   }
 
-  public final void setBranchPath(String branchPath)
+  public final void setBranchID(int branchID)
   {
-    this.branchPath = branchPath;
+    this.branchID = branchID;
   }
 
   public final long getTimeStamp()
@@ -220,6 +228,31 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return rootObject;
   }
 
+  public final RootType getRootType()
+  {
+    if (rootObject instanceof CDOResourceFolder)
+    {
+      return RootType.Folder;
+    }
+
+    if (rootObject instanceof CDOResource)
+    {
+      if (((CDOResource)rootObject).isRoot())
+      {
+        return RootType.Root;
+      }
+
+      return RootType.Resource;
+    }
+
+    if (rootObject != null)
+    {
+      return RootType.Object;
+    }
+
+    return null;
+  }
+
   @Override
   public void delete(boolean deleteContents)
   {
@@ -279,7 +312,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   {
     super.init(folder, type, properties);
     repository = OM.getRepositoryManager().getElement(properties.getProperty("repository"));
-    branchPath = properties.getProperty("branchPath");
+    branchID = Integer.parseInt(properties.getProperty("branchID"));
     timeStamp = Long.parseLong(properties.getProperty("timeStamp"));
     readOnly = Boolean.parseBoolean(properties.getProperty("readOnly"));
     rootID = CDOIDUtil.read(properties.getProperty("rootID"));
@@ -292,7 +325,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   {
     super.collectProperties(properties);
     properties.put("repository", repository.getID());
-    properties.put("branchPath", branchPath);
+    properties.put("branchID", Integer.toString(branchID));
     properties.put("timeStamp", Long.toString(timeStamp));
     properties.put("readOnly", Boolean.toString(readOnly));
 
@@ -312,10 +345,5 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     StringBuilder builder = new StringBuilder();
     CDOIDUtil.write(builder, id);
     return builder.toString();
-  }
-
-  private static CDOCheckoutManagerImpl getManager()
-  {
-    return OM.getCheckoutManager();
   }
 }

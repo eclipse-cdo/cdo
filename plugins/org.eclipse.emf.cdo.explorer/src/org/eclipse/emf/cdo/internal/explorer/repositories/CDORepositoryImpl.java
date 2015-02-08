@@ -105,6 +105,12 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
   }
 
+  @Override
+  public CDORepositoryManagerImpl getManager()
+  {
+    return OM.getRepositoryManager();
+  }
+
   public final String getName()
   {
     return repositoryName;
@@ -320,9 +326,9 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
             return CDORepositoryImpl.this;
           }
 
-          public String getBranchPath()
+          public int getBranchID()
           {
-            return CDOBranch.MAIN_BRANCH_NAME;
+            return CDOBranch.MAIN_BRANCH_ID;
           }
 
           public long getTimeStamp()
@@ -396,10 +402,5 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   protected void closeSession()
   {
     session.close();
-  }
-
-  private static CDORepositoryManagerImpl getManager()
-  {
-    return OM.getRepositoryManager();
   }
 }

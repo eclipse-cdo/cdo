@@ -28,7 +28,7 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   protected CDOView openView(CDOSession session)
   {
     CDOBranchManager branchManager = session.getBranchManager();
-    CDOBranch branch = branchManager.getBranch(getBranchPath());
+    CDOBranch branch = branchManager.getBranch(getBranchID());
 
     if (isReadOnly())
     {

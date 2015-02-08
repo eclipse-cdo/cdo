@@ -32,26 +32,30 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
     {
       CDOCheckout checkout = (CDOCheckout)element;
 
-      String branchPath = checkout.getBranchPath();
-      if (branchPath.startsWith(CDOBranch.MAIN_BRANCH_NAME))
+      if (checkout.isOpen())
       {
-        branchPath = branchPath.substring(CDOBranch.MAIN_BRANCH_NAME.length());
-      }
+        CDOBranch branch = checkout.getView().getBranch();
+        String branchPath = branch.getPathName();
+        if (branchPath.startsWith(CDOBranch.MAIN_BRANCH_NAME))
+        {
+          branchPath = branchPath.substring(CDOBranch.MAIN_BRANCH_NAME.length());
+        }
 
-      if (branchPath.startsWith(CDOBranch.PATH_SEPARATOR))
-      {
-        branchPath = branchPath.substring(CDOBranch.PATH_SEPARATOR.length());
-      }
+        if (branchPath.startsWith(CDOBranch.PATH_SEPARATOR))
+        {
+          branchPath = branchPath.substring(CDOBranch.PATH_SEPARATOR.length());
+        }
 
-      if (branchPath.length() != 0)
-      {
-        text += "  " + branchPath;
-      }
+        if (branchPath.length() != 0)
+        {
+          text += "  " + branchPath;
+        }
 
-      long timeStamp = checkout.getTimeStamp();
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
+        long timeStamp = checkout.getTimeStamp();
+        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
+        }
       }
     }
 

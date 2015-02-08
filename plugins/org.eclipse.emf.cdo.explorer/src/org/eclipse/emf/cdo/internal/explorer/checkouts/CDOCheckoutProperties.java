@@ -8,9 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.explorer.properties;
+package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.RootType;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
@@ -21,13 +22,13 @@ import org.eclipse.net4j.util.properties.Property;
 /**
  * @author Eike Stepper
  */
-public class CheckoutProperties extends Properties<CDOCheckout>
+public class CDOCheckoutProperties extends Properties<CDOCheckout>
 {
-  public static final IProperties<CDOCheckout> INSTANCE = new CheckoutProperties();
+  public static final IProperties<CDOCheckout> INSTANCE = new CDOCheckoutProperties();
 
   private static final String CATEGORY_CHECKOUT = "Checkout"; //$NON-NLS-1$
 
-  private CheckoutProperties()
+  private CDOCheckoutProperties()
   {
     super(CDOCheckout.class);
 
@@ -64,6 +65,35 @@ public class CheckoutProperties extends Properties<CDOCheckout>
       protected Object eval(CDOCheckout checkout)
       {
         return ((AbstractElement)checkout).getFolder();
+      }
+    });
+
+    add(new Property<CDOCheckout>("rootType")
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getRootType();
+      }
+    });
+
+    add(new Property<CDOCheckout>("canContainResources")
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        RootType rootType = checkout.getRootType();
+        if (rootType != null)
+        {
+          switch (rootType)
+          {
+          case Root:
+          case Folder:
+            return true;
+          }
+        }
+
+        return false;
       }
     });
   }

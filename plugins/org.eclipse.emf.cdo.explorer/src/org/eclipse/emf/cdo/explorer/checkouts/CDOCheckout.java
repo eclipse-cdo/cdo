@@ -29,9 +29,9 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 {
   public CDORepository getRepository();
 
-  public String getBranchPath();
+  public int getBranchID();
 
-  public void setBranchPath(String branchPath);
+  public void setBranchID(int branchID);
 
   public long getTimeStamp();
 
@@ -57,11 +57,21 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 
   public EObject getRootObject();
 
+  public RootType getRootType();
+
   /**
    * @author Eike Stepper
    */
   public enum State
   {
     Opening, Open, Closing, Closed
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum RootType
+  {
+    Root, Folder, Resource, Object
   }
 }

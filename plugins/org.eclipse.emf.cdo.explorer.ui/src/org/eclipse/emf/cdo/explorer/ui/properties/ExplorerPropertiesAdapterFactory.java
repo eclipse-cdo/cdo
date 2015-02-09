@@ -14,6 +14,11 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutProperties;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryProperties;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.internal.cdo.session.SessionProperties;
+import org.eclipse.emf.internal.cdo.view.ViewProperties;
 
 import org.eclipse.net4j.util.ui.AbstractPropertyAdapterFactory;
 import org.eclipse.net4j.util.ui.DefaultActionFilter;
@@ -42,12 +47,34 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
   {
     if (object instanceof CDORepository)
     {
-      return new DefaultPropertySource<CDORepository>((CDORepository)object, CDORepositoryProperties.INSTANCE);
+      CDORepository repository = (CDORepository)object;
+      CDOSession session = repository.getSession();
+
+      return new DefaultPropertySource.Augmented<CDORepository, CDOSession>(repository,
+          CDORepositoryProperties.INSTANCE, session)
+      {
+        @Override
+        protected IPropertySource createAugmentingPropertySource(CDOSession session)
+        {
+          return new DefaultPropertySource<CDOSession>(session, SessionProperties.INSTANCE);
+        }
+      };
+
     }
 
     if (object instanceof CDOCheckout)
     {
-      return new DefaultPropertySource<CDOCheckout>((CDOCheckout)object, CDOCheckoutProperties.INSTANCE);
+      CDOCheckout checkout = (CDOCheckout)object;
+      CDOView view = checkout.getView();
+
+      return new DefaultPropertySource.Augmented<CDOCheckout, CDOView>(checkout, CDOCheckoutProperties.INSTANCE, view)
+      {
+        @Override
+        protected IPropertySource createAugmentingPropertySource(CDOView view)
+        {
+          return new DefaultPropertySource<CDOView>(view, ViewProperties.INSTANCE);
+        }
+      };
     }
 
     return null;

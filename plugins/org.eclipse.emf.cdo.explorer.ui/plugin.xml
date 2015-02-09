@@ -213,8 +213,8 @@
                 <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
            </enablement>
-        </commonWizard>              
-      </navigatorContent>
+        </commonWizard>
+     </navigatorContent>
   </extension>
 
   <extension
@@ -229,6 +229,28 @@
       </viewerContentBinding>
   </extension>
 
+  <!--extension
+        point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+     <propertyTabs contributorId="org.eclipse.ui.navigator.ProjectExplorer">
+        <propertyTab
+              label="Model"
+              category="model"
+              id="CDOExplorer.tab.Model"/>
+     </propertyTabs>
+  </extension>
+  
+  <extension
+        point="org.eclipse.ui.views.properties.tabbed.propertySections">
+     <propertySections contributorId="org.eclipse.ui.navigator.ProjectExplorer">
+        <propertySection
+              class="org.eclipse.emf.cdo.explorer.ui.properties.EMFPropertySection"
+              id="CDOExplorer.section.Model"
+              tab="CDOExplorer.tab.Model">
+           <input type="org.eclipse.emf.ecore.EObject"/>
+        </propertySection>
+     </propertySections>
+  </extension-->
+  
   <extension
          point="org.eclipse.ui.decorators">
       <decorator

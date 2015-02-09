@@ -13,28 +13,37 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.NewRootMenuPopulator;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.EMFEditPlugin;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
+import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -46,6 +55,8 @@ import org.eclipse.ui.navigator.ICommonMenuConstants;
 import org.eclipse.ui.navigator.ICommonViewerSite;
 import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 import org.eclipse.ui.navigator.WizardActionGroup;
+
+import java.util.Collection;
 
 /**
  * @author Eike Stepper
@@ -64,14 +75,11 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
 
   private StructuredViewer viewer;
 
-  private Object object;
+  private Object selectedObject;
 
   public CDOCheckoutNewActionProvider()
   {
-    ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
-    adapterFactory = new ComposedAdapterFactory(registry);
-    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+    adapterFactory = CDOEditor.createAdapterFactory(true);
   }
 
   @Override
@@ -90,6 +98,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
 
       viewer = extensionSite.getStructuredViewer();
       viewer.addSelectionChangedListener(this);
+      updateSelectedObject(viewer.getSelection());
     }
   }
 
@@ -114,17 +123,22 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
   public void selectionChanged(SelectionChangedEvent event)
   {
     ISelection selection = event.getSelection();
+    updateSelectedObject(selection);
+  }
+
+  private void updateSelectedObject(ISelection selection)
+  {
     if (selection instanceof IStructuredSelection)
     {
       IStructuredSelection ssel = (IStructuredSelection)selection;
       if (ssel.size() == 1)
       {
-        object = ssel.getFirstElement();
+        selectedObject = ssel.getFirstElement();
         return;
       }
     }
 
-    object = null;
+    selectedObject = null;
   }
 
   @Override
@@ -140,21 +154,31 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     newWizardActionGroup.setContext(getContext());
     newWizardActionGroup.fillContextMenu(submenu);
 
-    if (object instanceof CDOResource)
+    // Filter out the dubious "Ecore Diagram" action that appears everywhere.
+    for (IContributionItem item : submenu.getItems())
     {
-      final CDOResource resource = (CDOResource)object;
-
-      CDOPackageRegistry packageRegistry = resource.cdoView().getSession().getPackageRegistry();
-      NewRootMenuPopulator populator = new NewRootMenuPopulator(packageRegistry)
+      if (item instanceof ActionContributionItem)
       {
-        @Override
-        protected IAction createAction(EObject object)
+        ActionContributionItem actionItem = (ActionContributionItem)item;
+        IAction action = actionItem.getAction();
+        if (action != null)
         {
-          return new CreateRootAction(resource, object);
+          if ("Ecore Diagram".equals(action.getText()))
+          {
+            submenu.remove(item);
+            break;
+          }
         }
-      };
+      }
+    }
 
-      populator.populateMenu(submenu);
+    if (selectedObject instanceof CDOResource)
+    {
+      fillNewRootActions(submenu, (CDOResource)selectedObject);
+    }
+    else if (selectedObject instanceof EObject)
+    {
+      fillNewChildActions(submenu, (EObject)selectedObject);
     }
 
     submenu.add(new Separator(ICommonMenuConstants.GROUP_ADDITIONS));
@@ -167,14 +191,51 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     menu.insertAfter(ICommonMenuConstants.GROUP_NEW, submenu);
   }
 
+  private void fillNewRootActions(IMenuManager menu, final CDOResource resource)
+  {
+    CDOPackageRegistry packageRegistry = resource.cdoView().getSession().getPackageRegistry();
+    NewRootMenuPopulator populator = new NewRootMenuPopulator(packageRegistry)
+    {
+      @Override
+      protected IAction createAction(EObject object)
+      {
+        return new NewRootAction(resource, object);
+      }
+    };
+
+    populator.populateMenu(menu);
+  }
+
+  private void fillNewChildActions(IMenuManager menu, EObject object)
+  {
+    CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
+    ResourceSet resourceSet = checkout.getView().getResourceSet();
+
+    EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack(), resourceSet);
+    IStructuredSelection selection = new StructuredSelection(object);
+    CDOObject cdoObject = CDOUtil.getCDOObject(object);
+
+    Collection<?> childDescriptors = editingDomain.getNewChildDescriptors(object, null);
+    for (Object childDescriptor : childDescriptors)
+    {
+      CreateChildAction delegate = new CreateChildAction(editingDomain, selection, childDescriptor);
+      String text = delegate.getText();
+      String toolTipText = delegate.getToolTipText();
+      ImageDescriptor imageDescriptor = delegate.getImageDescriptor();
+
+      NewChildAction action = new NewChildAction(text, toolTipText, imageDescriptor, cdoObject, childDescriptor);
+      menu.add(action);
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
-  private class CreateRootAction extends TransactionalBackgroundAction
+  private class NewRootAction extends TransactionalBackgroundAction
   {
-    protected EObject object;
+    private final EObject object;
 
-    protected CreateRootAction(CDOResource resource, EObject object)
+    public NewRootAction(CDOResource resource, EObject object)
     {
       super(page, object.eClass().getName(), null, ExtendedImageRegistry.getInstance().getImageDescriptor(
           CDOEditor.getLabelImage(adapterFactory, object)), resource);
@@ -187,6 +248,35 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     {
       EList<EObject> contents = ((CDOResource)resource).getContents();
       contents.add(object);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class NewChildAction extends TransactionalBackgroundAction
+  {
+    private final Object childDescriptor;
+
+    public NewChildAction(String text, String toolTipText, ImageDescriptor image, CDOObject parent,
+        Object childDescriptor)
+    {
+      super(page, text, toolTipText, image, parent);
+      this.childDescriptor = childDescriptor;
+    }
+
+    @Override
+    protected void doRun(CDOTransaction transaction, CDOObject parent, IProgressMonitor progressMonitor)
+        throws Exception
+    {
+      BasicCommandStack commandStack = new BasicCommandStack();
+      ResourceSet resourceSet = transaction.getResourceSet();
+      EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
+
+      IStructuredSelection selection = new StructuredSelection(parent);
+
+      CreateChildAction delegate = new CreateChildAction(editingDomain, selection, childDescriptor);
+      delegate.run();
     }
   }
 }

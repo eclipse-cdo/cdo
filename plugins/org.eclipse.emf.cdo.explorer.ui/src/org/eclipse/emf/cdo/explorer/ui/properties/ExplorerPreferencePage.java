@@ -6,8 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Victor Roldan Betancort - maintenance
+ *    Eike Stepper - maintenance
  */
 package org.eclipse.emf.cdo.explorer.ui.properties;
 

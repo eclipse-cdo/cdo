@@ -53,7 +53,7 @@ public class Model extends Lifecycle implements IModel
 {
   public static final Model INSTANCE = new Model();
 
-  private AdapterFactory adapterFactory;
+  private final ComposedAdapterFactory adapterFactory;
 
   private CDONet4jSession session;
 
@@ -228,6 +228,7 @@ public class Model extends Lifecycle implements IModel
     view = null;
     restaurant = null;
     station = null;
+    adapterFactory.dispose();
     super.doDeactivate();
   }
 }

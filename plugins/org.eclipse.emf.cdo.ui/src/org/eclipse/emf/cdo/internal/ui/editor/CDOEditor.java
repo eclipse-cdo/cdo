@@ -762,10 +762,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected void initializeEditingDomain()
   {
-    ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
-    adapterFactory = new ComposedAdapterFactory(registry);
-    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+    adapterFactory = createAdapterFactory(true);
   }
 
   /**
@@ -2513,6 +2510,22 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       // Do nothing
     }
+  }
+
+  /**
+   * @ADDED
+   */
+  public static ComposedAdapterFactory createAdapterFactory(boolean reflective)
+  {
+    ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
+    ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(registry);
+    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
+    if (reflective)
+    {
+      adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+    }
+
+    return adapterFactory;
   }
 
   /**

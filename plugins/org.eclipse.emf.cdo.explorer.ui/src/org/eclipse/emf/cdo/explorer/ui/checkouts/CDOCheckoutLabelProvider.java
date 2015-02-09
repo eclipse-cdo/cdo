@@ -14,13 +14,11 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
-import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.ReflectiveItemProviderAdapterFactory;
-import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.jface.viewers.IColorProvider;
@@ -47,10 +45,7 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
   {
     super(null);
 
-    ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();
-    adapterFactory = new ComposedAdapterFactory(registry);
-    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-    adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
+    adapterFactory = CDOEditor.createAdapterFactory(true);
     setAdapterFactory(adapterFactory);
   }
 

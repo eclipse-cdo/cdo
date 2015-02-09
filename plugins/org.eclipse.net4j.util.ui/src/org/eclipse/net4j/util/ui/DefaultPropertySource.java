@@ -22,7 +22,9 @@ import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -50,13 +52,21 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     return receiver;
   }
 
+  /**
+   * @since 3.5
+   */
+  public void addDescriptor(IPropertyDescriptor descriptor)
+  {
+    descriptors.add(descriptor);
+  }
+
   public PropertyDescriptor addDescriptor(String category, Object id, String displayName, String description)
   {
     PropertyDescriptor descriptor = new PropertyDescriptor(id, displayName);
     descriptor.setCategory(category);
     descriptor.setDescription(description);
 
-    descriptors.add(descriptor);
+    addDescriptor(descriptor);
     return descriptor;
   }
 
@@ -78,10 +88,8 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
 
   public IPropertyDescriptor getPropertyDescriptor(Object id)
   {
-    IPropertyDescriptor[] propertyDescriptors = getPropertyDescriptors();
-    for (int i = 0; i < propertyDescriptors.length; i++)
+    for (IPropertyDescriptor propertyDescriptor : descriptors)
     {
-      IPropertyDescriptor propertyDescriptor = propertyDescriptors[i];
       if (propertyDescriptor.getId().equals(id))
       {
         return propertyDescriptor;
@@ -131,6 +139,60 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
   public Object getEditableValue()
   {
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.5
+   */
+  public static abstract class Augmented<RECEIVER, AUGMENTING_RECEIVER> extends DefaultPropertySource<RECEIVER>
+  {
+    private final Map<String, Object> propertyValues = new HashMap<String, Object>();
+
+    public Augmented(RECEIVER object, IPropertyProvider<RECEIVER> provider, AUGMENTING_RECEIVER augmentingObject)
+    {
+      super(object, provider);
+      if (augmentingObject != null)
+      {
+        IPropertySource augmentingPropertySource = createAugmentingPropertySource(augmentingObject);
+        for (IPropertyDescriptor propertyDescriptor : augmentingPropertySource.getPropertyDescriptors())
+        {
+          if (propertyDescriptor instanceof DelegatingPropertyDescriptor)
+          {
+            @SuppressWarnings("unchecked")
+            DelegatingPropertyDescriptor<AUGMENTING_RECEIVER> viewPropertyDescriptor = (DelegatingPropertyDescriptor<AUGMENTING_RECEIVER>)propertyDescriptor;
+
+            Property<AUGMENTING_RECEIVER> property = viewPropertyDescriptor.getProperty();
+            if (property != null)
+            {
+              String category = propertyDescriptor.getCategory();
+              String id = "___VIEW___" + propertyDescriptor.getId();
+              String displayName = propertyDescriptor.getDisplayName();
+              String description = propertyDescriptor.getDescription();
+
+              Object value = property.getValue(augmentingObject);
+              propertyValues.put(id, value);
+
+              addDescriptor(category, id, displayName, description);
+            }
+          }
+        }
+      }
+    }
+
+    @Override
+    public Object getPropertyValue(Object id)
+    {
+      Object value = propertyValues.get(id);
+      if (value != null)
+      {
+        return value;
+      }
+
+      return super.getPropertyValue(id);
+    }
+
+    protected abstract IPropertySource createAugmentingPropertySource(AUGMENTING_RECEIVER augmentingObject);
   }
 
   /**

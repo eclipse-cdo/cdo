@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter.CDOPropertyDescriptor;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -22,9 +24,19 @@ import org.eclipse.net4j.util.ui.DefaultActionFilter;
 import org.eclipse.net4j.util.ui.DefaultPropertySource;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.IActionFilter;
 import org.eclipse.ui.views.properties.IPropertySource;
+import org.eclipse.ui.views.properties.PropertyDescriptor;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -37,6 +49,8 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
   private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<CDOView>(ViewProperties.INSTANCE);
 
   private static final IActionFilter OBJECT_ACTION_FILTER = new DefaultActionFilter<EObject>(ObjectProperties.INSTANCE);
+
+  private static final String CATEGORY_EMF = "EMF"; //$NON-NLS-1$
 
   public CDOPropertyAdapterFactory()
   {
@@ -57,7 +71,83 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 
     if (object instanceof EObject)
     {
-      return new DefaultPropertySource<EObject>((EObject)object, ObjectProperties.INSTANCE);
+      EObject eObject = (EObject)object;
+
+      final Map<String, Object> propertyValues = new HashMap<String, Object>();
+      DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(eObject, ObjectProperties.INSTANCE)
+      {
+        @Override
+        public Object getPropertyValue(Object id)
+        {
+          Object value = propertyValues.get(id);
+          if (value != null)
+          {
+            return value;
+          }
+
+          return super.getPropertyValue(id);
+        }
+      };
+
+      ComposedAdapterFactory adapterFactory = null;
+      AdapterFactoryLabelProvider labelProvider = null;
+
+      try
+      {
+        adapterFactory = CDOEditor.createAdapterFactory(false);
+
+        IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(eObject,
+            IItemPropertySource.class);
+        if (propertySource != null)
+        {
+          List<IItemPropertyDescriptor> propertyDescriptors = propertySource.getPropertyDescriptors(eObject);
+          if (propertyDescriptors != null)
+          {
+            labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+
+            for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
+            {
+              if (propertyDescriptor instanceof CDOPropertyDescriptor)
+              {
+                continue;
+              }
+
+              String id = "___EMF___" + propertyDescriptor.getId(eObject);
+              String displayName = propertyDescriptor.getDisplayName(eObject);
+              String description = propertyDescriptor.getDescription(eObject);
+
+              PropertyDescriptor descriptor = result.addDescriptor(CATEGORY_EMF, id, displayName, description);
+
+              Object value = propertyDescriptor.getPropertyValue(eObject);
+              propertyValues.put(id, value);
+
+              final String text = labelProvider.getText(value);
+              descriptor.setLabelProvider(new LabelProvider()
+              {
+                @Override
+                public String getText(Object element)
+                {
+                  return text;
+                }
+              });
+            }
+          }
+        }
+      }
+      finally
+      {
+        if (labelProvider != null)
+        {
+          labelProvider.dispose();
+        }
+
+        if (adapterFactory != null)
+        {
+          adapterFactory.dispose();
+        }
+      }
+
+      return result;
     }
 
     return null;

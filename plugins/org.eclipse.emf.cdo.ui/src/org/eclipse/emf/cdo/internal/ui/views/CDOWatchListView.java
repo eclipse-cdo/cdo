@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveAllContainerItemAction;
 import org.eclipse.emf.cdo.internal.ui.actions.RemoveContainerItemAction;
 import org.eclipse.emf.cdo.internal.ui.dnd.CDOObjectDropAdapter;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
@@ -40,7 +41,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -101,13 +101,13 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
   public static final String ID = "org.eclipse.emf.cdo.ui.CDOWatchListView"; //$NON-NLS-1$
 
-  private WatchedObjectsDataRegistry dataRegistry = new WatchedObjectsDataRegistry();
+  private final ComposedAdapterFactory adapterFactory;
+
+  private final CDOObjectContainer container = new CDOObjectContainer();
+
+  private final WatchedObjectsDataRegistry dataRegistry = new WatchedObjectsDataRegistry();
 
   private TableViewer viewer;
-
-  private CDOObjectContainer container = new CDOObjectContainer();
-
-  private ComposedAdapterFactory adapterFactory;
 
   private IPropertySheetPage propertySheetPage;
 
@@ -121,8 +121,15 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
 
   public CDOWatchListView()
   {
-    adapterFactory = new ComposedAdapterFactory(EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
+    adapterFactory = CDOEditor.createAdapterFactory(true);
     container.addListener(getDataRegistry());
+  }
+
+  @Override
+  public void dispose()
+  {
+    adapterFactory.dispose();
+    super.dispose();
   }
 
   public WatchedObjectsDataRegistry getDataRegistry()

@@ -56,6 +56,8 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ISetSelectionTarget;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.views.properties.IPropertySheetPage;
+import org.eclipse.ui.views.properties.PropertySheetPage;
 
 public abstract class ContainerView extends ViewPart implements ISelectionProvider, ISetSelectionTarget
 {
@@ -78,6 +80,8 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   private Action refreshAction = new RefreshAction();
 
   private Action collapseAllAction = new CollapseAllAction();
+
+  private PropertySheetPage propertySheetPage;
 
   public ContainerView()
   {
@@ -557,6 +561,33 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     }
 
     return display;
+  }
+
+  @Override
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    if (adapter == IPropertySheetPage.class)
+    {
+      if (propertySheetPage == null)
+      {
+        propertySheetPage = new PropertySheetPage();
+      }
+  
+      return propertySheetPage;
+    }
+  
+    return super.getAdapter(adapter);
+  }
+
+  /**
+   * @since 3.5
+   */
+  public void refreshPropertySheetPage()
+  {
+    if (propertySheetPage != null)
+    {
+      propertySheetPage.refresh();
+    }
   }
 
   public void refreshViewer(boolean updateLabels)

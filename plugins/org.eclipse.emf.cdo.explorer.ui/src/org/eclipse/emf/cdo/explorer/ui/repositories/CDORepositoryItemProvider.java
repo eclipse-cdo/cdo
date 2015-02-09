@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -72,6 +73,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         }
 
         ViewerUtil.refresh(viewer, repository);
+        updatePropertySheetPage(repository);
       }
       else if (event instanceof CDOExplorerManager.ElementChangedEvent)
       {
@@ -81,12 +83,35 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         Object changedElement = e.getChangedElement();
 
         ViewerUtil.update(viewer, changedElement);
+        updatePropertySheetPage(changedElement);
       }
+    }
+
+    private void updatePropertySheetPage(final Object element)
+    {
+      getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          IStructuredSelection selection = (IStructuredSelection)repositoriesView.getSelection();
+          for (Object object : selection.toArray())
+          {
+            if (object == element)
+            {
+              repositoriesView.refreshPropertySheetPage();
+              return;
+            }
+          }
+        }
+      });
     }
   };
 
-  public CDORepositoryItemProvider()
+  private final CDORepositoriesView repositoriesView;
+
+  public CDORepositoryItemProvider(CDORepositoriesView repositoriesView)
   {
+    this.repositoriesView = repositoriesView;
   }
 
   @Override

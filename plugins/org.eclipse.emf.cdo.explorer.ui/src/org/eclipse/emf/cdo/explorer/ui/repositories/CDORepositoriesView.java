@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -55,8 +54,6 @@ public class CDORepositoriesView extends ContainerView
 
   public CDORepositoriesView()
   {
-    int xxx;
-    IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", "7778");
   }
 
   private static int getRepositoryTimeoutMillis()
@@ -73,7 +70,7 @@ public class CDORepositoriesView extends ContainerView
   @Override
   protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
   {
-    itemProvider = new CDORepositoryItemProvider();
+    itemProvider = new CDORepositoryItemProvider(this);
     return itemProvider;
   }
 

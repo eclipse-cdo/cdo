@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
@@ -63,6 +64,15 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IViewPart;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.navigator.CommonViewer;
+import org.eclipse.ui.part.IPage;
+import org.eclipse.ui.views.properties.PropertySheet;
+import org.eclipse.ui.views.properties.PropertySheetPage;
+import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -107,13 +117,74 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         {
           ViewerUtil.expand(viewer, checkout, true);
         }
+
+        updatePropertySheetPage(checkout);
       }
       else if (event instanceof CDOExplorerManager.ElementChangedEvent)
       {
         CDOExplorerManager.ElementChangedEvent e = (CDOExplorerManager.ElementChangedEvent)event;
         Object changedElement = e.getChangedElement();
         ViewerUtil.update(viewer, changedElement);
+        updatePropertySheetPage(changedElement);
       }
+    }
+
+    private void updatePropertySheetPage(final Object element)
+    {
+      IWorkbenchPage workbenchPage = getWorkbenchPage();
+
+      PropertySheet propertySheet = getPropertySheet(workbenchPage);
+      if (propertySheet != null)
+      {
+        final IPage currentPage = propertySheet.getCurrentPage();
+        if (currentPage instanceof PropertySheetPage || currentPage instanceof TabbedPropertySheetPage)
+        {
+          viewer.getControl().getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+              if (selection.size() == 1)
+              {
+                for (Object object : selection.toArray())
+                {
+                  if (object == element)
+                  {
+                    if (currentPage instanceof PropertySheetPage)
+                    {
+                      ((PropertySheetPage)currentPage).refresh();
+                    }
+                    else if (currentPage instanceof TabbedPropertySheetPage)
+                    {
+                      ((TabbedPropertySheetPage)currentPage).refresh();
+                    }
+
+                    return;
+                  }
+                }
+              }
+            }
+          });
+        }
+      }
+    }
+
+    private PropertySheet getPropertySheet(IWorkbenchPage workbenchPage)
+    {
+      for (IViewReference viewReference : workbenchPage.getViewReferences())
+      {
+        if ("org.eclipse.ui.views.PropertySheet".equals(viewReference.getId()))
+        {
+          IViewPart view = viewReference.getView(false);
+          if (view instanceof PropertySheet)
+          {
+            return (PropertySheet)view;
+
+          }
+        }
+      }
+
+      return null;
     }
   };
 
@@ -530,8 +601,28 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
             ViewerUtil.expand(viewer, checkout, true);
           }
         }
+        else if (element instanceof CDOResourceFolder)
+        {
+          // Do nothing special.
+        }
+        else if (element instanceof EObject)
+        {
+          EObject eObject = (EObject)element;
+          CDOCheckoutOpenActionProvider.openEditor(getWorkbenchPage(), eObject, null);
+        }
       }
     }
+  }
+
+  private IWorkbenchPage getWorkbenchPage()
+  {
+    if (viewer instanceof CommonViewer)
+    {
+      CommonViewer commonViewer = (CommonViewer)viewer;
+      return commonViewer.getCommonNavigator().getSite().getPage();
+    }
+
+    return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
   }
 
   private static InternalCDOObject getCDOObject(EObject eObject)

@@ -204,6 +204,9 @@ public class NewWizardPage extends WizardPage
 
         revealParent();
         validate();
+
+        nameText.setFocus();
+        nameText.selectAll();
       }
     });
   }

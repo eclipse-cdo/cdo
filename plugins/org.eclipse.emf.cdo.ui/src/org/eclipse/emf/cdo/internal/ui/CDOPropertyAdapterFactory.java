@@ -23,8 +23,12 @@ import org.eclipse.net4j.util.ui.AbstractPropertyAdapterFactory;
 import org.eclipse.net4j.util.ui.DefaultActionFilter;
 import org.eclipse.net4j.util.ui.DefaultPropertySource;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
@@ -34,6 +38,7 @@ import org.eclipse.ui.IActionFilter;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,8 +54,6 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
   private static final IActionFilter VIEW_ACTION_FILTER = new DefaultActionFilter<CDOView>(ViewProperties.INSTANCE);
 
   private static final IActionFilter OBJECT_ACTION_FILTER = new DefaultActionFilter<EObject>(ObjectProperties.INSTANCE);
-
-  private static final String CATEGORY_EMF = "EMF"; //$NON-NLS-1$
 
   public CDOPropertyAdapterFactory()
   {
@@ -112,11 +115,12 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
                 continue;
               }
 
+              String category = getTypeText(adapterFactory, eObject);
               String id = "___EMF___" + propertyDescriptor.getId(eObject);
               String displayName = propertyDescriptor.getDisplayName(eObject);
               String description = propertyDescriptor.getDescription(eObject);
 
-              PropertyDescriptor descriptor = result.addDescriptor(CATEGORY_EMF, id, displayName, description);
+              PropertyDescriptor descriptor = result.addDescriptor(category, id, displayName, description);
 
               Object value = propertyDescriptor.getPropertyValue(eObject);
               propertyValues.put(id, value);
@@ -172,5 +176,37 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
     }
 
     return super.createActionFilter(object);
+  }
+
+  public static String getTypeText(ComposedAdapterFactory adapterFactory, EObject eObject)
+  {
+    String typeKey = eObject.eClass().getName();
+    List<Adapter> originalAdapters = new ArrayList<Adapter>(eObject.eAdapters());
+
+    try
+    {
+      return getResourceLocator(adapterFactory, eObject).getString("_UI_" + typeKey + "_type");
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
+    }
+    finally
+    {
+      eObject.eAdapters().retainAll(originalAdapters);
+    }
+
+    return typeKey;
+  }
+
+  private static ResourceLocator getResourceLocator(ComposedAdapterFactory adapterFactory, EObject eObject)
+  {
+    Object adapter = adapterFactory.getRootAdapterFactory().adapt(eObject, IItemLabelProvider.class);
+    if (adapter instanceof ResourceLocator)
+    {
+      return (ResourceLocator)adapter;
+    }
+
+    return EMFEditPlugin.INSTANCE;
   }
 }

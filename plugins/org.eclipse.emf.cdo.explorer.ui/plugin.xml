@@ -158,6 +158,34 @@
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                </and>
                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+               <and>
+                  <instanceof
+                        value="org.eclipse.emf.ecore.EObject">
+                  </instanceof>
+                  <not>
+                     <instanceof
+                           value="org.eclipse.emf.cdo.eresource.CDOBinaryResource">
+                     </instanceof>
+                  </not>
+                  <not>
+                     <instanceof
+                           value="org.eclipse.emf.cdo.eresource.CDOTextResource">
+                     </instanceof>
+                  </not>
+               </and>
+             </or>
+           </enablement>
+         </actionProvider>
+         <actionProvider
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutOpenActionProvider"
+               id="org.eclipse.emf.cdo.explorer.ui.checkouts.OpenWithActions">
+           <enablement>
+             <or>
+               <and>
+                 <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                 <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+               </and>
+               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
                <instanceof value="org.eclipse.emf.ecore.EObject"/>
              </or>
            </enablement>

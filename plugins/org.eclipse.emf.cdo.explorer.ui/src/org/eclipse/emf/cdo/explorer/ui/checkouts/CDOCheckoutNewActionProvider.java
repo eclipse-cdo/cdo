@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
@@ -175,6 +176,10 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     if (selectedObject instanceof CDOResource)
     {
       fillNewRootActions(submenu, (CDOResource)selectedObject);
+    }
+    else if (selectedObject instanceof CDOResourceNode)
+    {
+      // CDOResourceFolder contributions have already been added by newWizardActionGroup.
     }
     else if (selectedObject instanceof EObject)
     {

@@ -199,19 +199,24 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public void save()
   {
-    folder.mkdirs();
-
     Properties properties = new Properties();
     collectProperties(properties);
 
+    saveProperties(PROPERTIES_FILE, properties);
+  }
+
+  protected final void saveProperties(String fileName, Properties properties)
+  {
     OutputStream out = null;
 
     try
     {
-      File file = new File(folder, PROPERTIES_FILE);
+      folder.mkdirs();
+
+      File file = new File(folder, fileName);
       out = new FileOutputStream(file);
 
-      properties.store(out, getClass().getSimpleName());
+      properties.store(out, getClass().getSimpleName() + fileName);
     }
     catch (IOException ex)
     {

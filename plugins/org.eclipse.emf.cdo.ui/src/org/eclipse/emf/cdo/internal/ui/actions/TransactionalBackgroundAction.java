@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -49,8 +48,7 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
     progressMonitor.beginTask(Messages.getString("TransactionalBackgroundAction_1"), 100); //$NON-NLS-1$
 
     CDOView view = object.cdoView();
-    CDOSession session = view.getSession();
-    CDOTransaction transaction = session.openTransaction(view.getBranch());
+    CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
     OpenTransactionAction.configureTransaction(transaction);
 
     CDOObject transactionalObject = transaction.getObject(object);

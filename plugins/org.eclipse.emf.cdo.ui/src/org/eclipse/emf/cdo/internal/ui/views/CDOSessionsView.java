@@ -113,10 +113,7 @@ public class CDOSessionsView extends ContainerView
     {
       CDOResourceLeaf resource = (CDOResourceLeaf)object;
 
-      String name = resource.getName();
-      String extension = new Path(name).getFileExtension();
-
-      ResourceOpener opener = resourceOpeners.get(extension);
+      ResourceOpener opener = getResourceOpener(resource);
       if (opener != null)
       {
         opener.openResource(page, resource);
@@ -130,6 +127,17 @@ public class CDOSessionsView extends ContainerView
     }
 
     super.doubleClicked(object);
+  }
+
+  public static ResourceOpener getResourceOpener(CDOResourceLeaf resource)
+  {
+    String extension = new Path(resource.getName()).getFileExtension();
+    return getResourceOpener(extension);
+  }
+
+  public static ResourceOpener getResourceOpener(String resourceExtension)
+  {
+    return resourceOpeners.get(resourceExtension);
   }
 
   public static ResourceOpener registerResourceOpener(String resourceExtension, ResourceOpener opener)

@@ -97,28 +97,10 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   private void readElement(File folder)
   {
-    File file = new File(folder, AbstractElement.PROPERTIES_FILE);
-    if (file.isFile())
+    Properties properties = loadProperties(folder, AbstractElement.PROPERTIES_FILE);
+    if (properties != null)
     {
-      FileInputStream in = null;
-
-      try
-      {
-        in = new FileInputStream(file);
-
-        Properties properties = new Properties();
-        properties.load(in);
-
-        addElement(folder, properties);
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
-      finally
-      {
-        IOUtil.close(in);
-      }
+      addElement(folder, properties);
     }
   }
 
@@ -140,6 +122,35 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   public void fireElementChangedEvent(Object changedElement)
   {
     fireEvent(new ElementChangedImpl(this, changedElement));
+  }
+
+  public static Properties loadProperties(File folder, String fileName)
+  {
+    File file = new File(folder, fileName);
+    if (file.isFile())
+    {
+      FileInputStream in = null;
+  
+      try
+      {
+        in = new FileInputStream(file);
+  
+        Properties properties = new Properties();
+        properties.load(in);
+  
+        return properties;
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+      finally
+      {
+        IOUtil.close(in);
+      }
+    }
+  
+    return null;
   }
 
   /**

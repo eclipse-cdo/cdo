@@ -59,6 +59,10 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 
   public RootType getRootType();
 
+  public String getEditorID(CDOID objectID);
+
+  public void setEditorID(CDOID objectID, String editorID);
+
   /**
    * @author Eike Stepper
    */

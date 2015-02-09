@@ -196,6 +196,29 @@ public final class StringUtil
     return builder.toString();
   }
 
+  public static String cap(String str)
+  {
+    if (str == null || str.length() == 0)
+    {
+      return str;
+    }
+
+    char first = str.charAt(0);
+    if (Character.isUpperCase(first))
+    {
+      return str;
+    }
+
+    if (str.length() == 1)
+    {
+      return str.toUpperCase();
+    }
+
+    StringBuilder builder = new StringBuilder(str);
+    builder.setCharAt(0, Character.toUpperCase(first));
+    return builder.toString();
+  }
+
   /**
    * @since 2.0
    */
@@ -220,29 +243,6 @@ public final class StringUtil
       inWhiteSpace = isWhiteSpace;
     }
 
-    return builder.toString();
-  }
-
-  public static String cap(String str)
-  {
-    if (str == null || str.length() == 0)
-    {
-      return str;
-    }
-
-    char first = str.charAt(0);
-    if (Character.isUpperCase(first))
-    {
-      return str;
-    }
-
-    if (str.length() == 1)
-    {
-      return str.toUpperCase();
-    }
-
-    StringBuilder builder = new StringBuilder(str);
-    builder.setCharAt(0, Character.toUpperCase(first));
     return builder.toString();
   }
 

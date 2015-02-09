@@ -82,6 +82,7 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.IWorkbenchPage;
@@ -386,10 +387,14 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (obj instanceof CDOResourceLeaf)
     {
       String name = ((CDOResourceLeaf)obj).getName();
-      Image image = getWorkbenchImage(name);
-      if (image != null)
+      IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
+      if (editorDescriptor != null && !CDOEditorUtil.TEXT_EDITOR_ID.equals(editorDescriptor.getId()))
       {
-        return image;
+        Image image = getWorkbenchImage(name);
+        if (image != null)
+        {
+          return image;
+        }
       }
 
       if (obj instanceof CDOResource)

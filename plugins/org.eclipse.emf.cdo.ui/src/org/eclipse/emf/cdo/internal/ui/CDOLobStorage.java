@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -95,7 +97,9 @@ public class CDOLobStorage extends AbstractDocumentProvider
   {
     if (element instanceof CDOLobEditorInput)
     {
-      CDOResourceLeaf resource = ((CDOLobEditorInput)element).getResource();
+      CDOLobEditorInput editorInput = (CDOLobEditorInput)element;
+
+      CDOResourceLeaf resource = editorInput.getResource();
       String contents = document.get();
 
       try
@@ -111,6 +115,16 @@ public class CDOLobStorage extends AbstractDocumentProvider
           byte[] bytes = contents.getBytes(getDefaultEncoding());
           CDOBlob blob = new CDOBlob(new ByteArrayInputStream(bytes));
           ((CDOBinaryResource)resource).setContents(blob);
+        }
+
+        if (editorInput.isCommitOnSave())
+        {
+          CDOView view = resource.cdoView();
+          if (view instanceof CDOTransaction)
+          {
+            CDOTransaction transaction = (CDOTransaction)view;
+            transaction.commit();
+          }
         }
       }
       catch (Exception ex)

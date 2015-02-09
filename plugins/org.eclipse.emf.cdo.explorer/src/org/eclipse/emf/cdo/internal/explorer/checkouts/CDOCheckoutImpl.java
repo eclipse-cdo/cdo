@@ -17,11 +17,13 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.internal.explorer.AbstractManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -30,13 +32,19 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 import org.eclipse.emf.ecore.EObject;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Properties;
+import java.util.WeakHashMap;
 
 /**
  * @author Eike Stepper
  */
 public abstract class CDOCheckoutImpl extends AbstractElement implements CDOCheckout
 {
+  public static final String EDITORS_FILE = "_editors";
+
+  private final Map<CDOID, String> editorIDs = new WeakHashMap<CDOID, String>();
+
   private final IListener viewListener = new IListener()
   {
     public void notifyEvent(IEvent event)
@@ -251,6 +259,51 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
 
     return null;
+  }
+
+  public String getEditorID(CDOID objectID)
+  {
+    synchronized (editorIDs)
+    {
+      String editorID = editorIDs.get(objectID);
+      if (editorID != null)
+      {
+        return editorID;
+      }
+
+      Properties properties = AbstractManager.loadProperties(getFolder(), EDITORS_FILE);
+      if (properties != null)
+      {
+        String idString = getCDOIDString(objectID);
+        return properties.getProperty(idString);
+      }
+
+      return null;
+    }
+  }
+
+  public void setEditorID(CDOID objectID, String editorID)
+  {
+    synchronized (editorIDs)
+    {
+      String exisingEditorID = editorIDs.get(objectID);
+      if (ObjectUtil.equals(exisingEditorID, editorID))
+      {
+        return;
+      }
+
+      Properties properties = AbstractManager.loadProperties(getFolder(), EDITORS_FILE);
+      if (properties == null)
+      {
+        properties = new Properties();
+      }
+
+      String idString = getCDOIDString(objectID);
+      properties.put(idString, editorID);
+
+      saveProperties(EDITORS_FILE, properties);
+      editorIDs.put(objectID, editorID);
+    }
   }
 
   @Override

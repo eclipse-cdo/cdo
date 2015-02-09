@@ -57,11 +57,14 @@ public final class CDOEditorUtil
    */
   public static final String EDITOR_ID = "org.eclipse.emf.cdo.ui.CDOEditor"; //$NON-NLS-1$
 
+  /**
+   * @since 4.4
+   */
+  public static final String TEXT_EDITOR_ID = "org.eclipse.ui.DefaultTextEditor";
+
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 
   private static final Map<CDOResourceLeaf, String> EDITOR_OVERRIDES = new WeakHashMap<CDOResourceLeaf, String>();
-
-  private static final String TEXT_EDITOR_ID = "org.eclipse.ui.DefaultTextEditor";
 
   private static String editorID = EDITOR_ID;
 
@@ -96,12 +99,12 @@ public final class CDOEditorUtil
   /**
    * Creates a {@link CDOEditorInput} based on the given {@code input} that adapts to
    * the {@link IEditingDomainProvider} interface to provide a particular {@code editingDomain}.
-   * 
+   *
    * @param input an editor input to copy
    * @param editingDomain the editing domain to associate with the editor input
-   * 
+   *
    * @return the editing-domain-providing editor input
-   * 
+   *
    * @since 4.3
    */
   public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOEditorInput input, EditingDomain editingDomain)
@@ -113,14 +116,14 @@ public final class CDOEditorUtil
   /**
    * Creates a {@link CDOEditorInput} that adapts to the {@link IEditingDomainProvider} interface
    * to provide a particular {@code editingDomain}.
-   * 
+   *
    * @param view the CDO view of the editor input
    * @param resourcePath the path to the resource to edit
    * @param viewOwned whether the opened editor should assume ownership of the {@code view}
    * @param editingDomain the editing domain to associate with the editor input
-   * 
+   *
    * @return the editing-domain-providing editor input
-   * 
+   *
    * @since 4.3
    */
   public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOView view, String resourcePath,
@@ -317,11 +320,10 @@ public final class CDOEditorUtil
   }
 
   /**
-   * Returns an implementation of the IEditorInput interface.
-   *
-   * @since 4.2
+   * @since 4.4
    */
-  public static IEditorInput createEditorInput(String editorID, CDOResourceLeaf resource, boolean viewOwned)
+  public static IEditorInput createEditorInput(String editorID, CDOResourceLeaf resource, boolean viewOwned,
+      boolean lobCommitOnSave)
   {
     if (resource instanceof CDOResource)
     {
@@ -329,11 +331,21 @@ public final class CDOEditorUtil
       {
         CDOView view = resource.cdoView();
         String path = resource.getPath();
-        return createCDOEditorInput(view, path, viewOwned);
+        return createCDOEditorInput(view, path, lobCommitOnSave);
       }
     }
 
-    return new CDOLobEditorInput(resource);
+    return new CDOLobEditorInput(resource, lobCommitOnSave);
+  }
+
+  /**
+   * Returns an implementation of the IEditorInput interface.
+   *
+   * @since 4.2
+   */
+  public static IEditorInput createEditorInput(String editorID, CDOResourceLeaf resource, boolean viewOwned)
+  {
+    return createEditorInput(editorID, resource, viewOwned, false);
   }
 
   /**

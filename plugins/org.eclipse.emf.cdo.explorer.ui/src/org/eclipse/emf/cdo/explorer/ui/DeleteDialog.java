@@ -92,7 +92,7 @@ public class DeleteDialog extends TitleAreaDialog
       setTitle(title);
       setTitleImage(OM.getImage("icons/wiz/delete.gif"));
       setMessage("Are you sure you want to delete " + (size == 1 ? "this" : "these") + " " + size + " "
-          + (size == 1 ? type : types) + "?");
+          + (size == 1 ? type : types).toLowerCase() + "?");
 
       Composite container = new Composite(area, SWT.NONE);
       container.setLayoutData(new GridData(GridData.FILL_BOTH));

@@ -41,6 +41,16 @@ import java.util.WeakHashMap;
  */
 public abstract class CDOCheckoutImpl extends AbstractElement implements CDOCheckout
 {
+  public static final String PROP_ROOT_ID = "rootID";
+
+  public static final String PROP_READ_ONLY = "readOnly";
+
+  public static final String PROP_TIME_STAMP = "timeStamp";
+
+  public static final String PROP_BRANCH_ID = "branchID";
+
+  public static final String PROP_REPOSITORY = "repository";
+
   public static final String EDITORS_FILE = "_editors";
 
   private final Map<CDOID, String> editorIDs = new WeakHashMap<CDOID, String>();
@@ -364,11 +374,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
-    repository = OM.getRepositoryManager().getElement(properties.getProperty("repository"));
-    branchID = Integer.parseInt(properties.getProperty("branchID"));
-    timeStamp = Long.parseLong(properties.getProperty("timeStamp"));
-    readOnly = Boolean.parseBoolean(properties.getProperty("readOnly"));
-    rootID = CDOIDUtil.read(properties.getProperty("rootID"));
+    repository = OM.getRepositoryManager().getElement(properties.getProperty(PROP_REPOSITORY));
+    branchID = Integer.parseInt(properties.getProperty(PROP_BRANCH_ID));
+    timeStamp = Long.parseLong(properties.getProperty(PROP_TIME_STAMP));
+    readOnly = Boolean.parseBoolean(properties.getProperty(PROP_READ_ONLY));
+    rootID = CDOIDUtil.read(properties.getProperty(PROP_ROOT_ID));
 
     ((CDORepositoryImpl)repository).addCheckout(this);
   }
@@ -377,13 +387,13 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put("repository", repository.getID());
-    properties.put("branchID", Integer.toString(branchID));
-    properties.put("timeStamp", Long.toString(timeStamp));
-    properties.put("readOnly", Boolean.toString(readOnly));
+    properties.put(PROP_REPOSITORY, repository.getID());
+    properties.put(PROP_BRANCH_ID, Integer.toString(branchID));
+    properties.put(PROP_TIME_STAMP, Long.toString(timeStamp));
+    properties.put(PROP_READ_ONLY, Boolean.toString(readOnly));
 
     String string = getCDOIDString(rootID);
-    properties.put("rootID", string);
+    properties.put(PROP_ROOT_ID, string);
   }
 
   protected EObject loadRootObject()

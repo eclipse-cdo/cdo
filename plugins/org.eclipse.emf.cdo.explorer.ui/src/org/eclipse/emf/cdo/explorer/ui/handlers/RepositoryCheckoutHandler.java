@@ -32,7 +32,7 @@ public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepository
   }
 
   @Override
-  protected void doExecute(ExecutionEvent event, IProgressMonitor progressMonitor) throws Exception
+  protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
     for (CDORepositoryElement repositoryElement : elements)
     {

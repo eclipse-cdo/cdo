@@ -38,6 +38,14 @@ import java.util.Properties;
  */
 public class LocalCDORepository extends CDORepositoryImpl
 {
+  public static final String PROP_VERSIONING_MODE = "versioningMode";
+
+  public static final String PROP_ID_GENERATION = "idGeneration";
+
+  public static final String PROP_TCP_DISABLED = "tcpDisabled";
+
+  public static final String PROP_TCP_PORT = "tcpPort";
+
   private VersioningMode versioningMode;
 
   private IDGeneration idGeneration;
@@ -98,20 +106,20 @@ public class LocalCDORepository extends CDORepositoryImpl
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
-    versioningMode = VersioningMode.valueOf(properties.getProperty("versioningMode"));
-    idGeneration = IDGeneration.valueOf(properties.getProperty("idGeneration"));
-    tcpDisabled = Boolean.parseBoolean(properties.getProperty("tcpDisabled"));
-    tcpPort = Integer.parseInt(properties.getProperty("tcpPort"));
+    versioningMode = VersioningMode.valueOf(properties.getProperty(PROP_VERSIONING_MODE));
+    idGeneration = IDGeneration.valueOf(properties.getProperty(PROP_ID_GENERATION));
+    tcpDisabled = Boolean.parseBoolean(properties.getProperty(PROP_TCP_DISABLED));
+    tcpPort = Integer.parseInt(properties.getProperty(PROP_TCP_PORT));
   }
 
   @Override
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put("versioningMode", versioningMode.toString());
-    properties.put("idGeneration", idGeneration.toString());
-    properties.put("tcpDisabled", Boolean.toString(tcpDisabled));
-    properties.put("tcpPort", Integer.toString(tcpPort));
+    properties.put(PROP_VERSIONING_MODE, versioningMode.toString());
+    properties.put(PROP_ID_GENERATION, idGeneration.toString());
+    properties.put(PROP_TCP_DISABLED, Boolean.toString(tcpDisabled));
+    properties.put(PROP_TCP_PORT, Integer.toString(tcpPort));
   }
 
   @Override

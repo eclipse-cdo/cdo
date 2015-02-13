@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.RootType;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryProperties;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
@@ -26,7 +29,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
 {
   public static final IProperties<CDOCheckout> INSTANCE = new CDOCheckoutProperties();
 
-  private static final String CATEGORY_CHECKOUT = "Checkout"; //$NON-NLS-1$
+  public static final String CATEGORY_CHECKOUT = "Checkout"; //$NON-NLS-1$
 
   private CDOCheckoutProperties()
   {
@@ -94,6 +97,87 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
         }
 
         return false;
+      }
+    });
+
+    add(new Property<CDOCheckout>("branchID", "Branch ID", "The ID of the branch of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getBranchID();
+      }
+    });
+
+    add(new Property<CDOCheckout>("branch", "Branch", "The branch of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        CDOView view = checkout.getView();
+        if (view != null)
+        {
+          return view.getBranch();
+        }
+
+        return null;
+      }
+    });
+
+    add(new Property<CDOCheckout>("timeStamp", "Time Stamp", "The time stamp of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return CDOCommonUtil.formatTimeStamp(checkout.getTimeStamp());
+      }
+    });
+
+    add(new Property<CDOCheckout>("readOnly", "Read-Only", "Whether this checkout is read-only", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.isReadOnly();
+      }
+    });
+
+    add(new Property<CDOCheckout>("rootID", "Root ID", "The ID of the root object of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getRootID();
+      }
+    });
+
+    add(new Property<CDOCheckout>("repositoryID", "ID", "The ID of the repository of this checkout",
+        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getRepository().getID();
+      }
+    });
+
+    add(new Property<CDOCheckout>("repositoryFolder", "Folder", "The folder of the repository of this checkout",
+        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return ((AbstractElement)checkout.getRepository()).getFolder();
+      }
+    });
+
+    add(new Property<CDOCheckout>("repositoryURI", "URI", "The URI of the repository of this checkout",
+        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getRepository().getURI();
       }
     });
   }

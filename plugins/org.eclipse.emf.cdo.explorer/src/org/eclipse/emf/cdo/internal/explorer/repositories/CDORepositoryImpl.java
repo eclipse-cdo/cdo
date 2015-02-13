@@ -49,6 +49,8 @@ import java.util.Set;
  */
 public abstract class CDORepositoryImpl extends AbstractElement implements CDORepository
 {
+  public static final String PROP_NAME = "repositoryName";
+
   private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
 
   private final Set<CDOCheckout> openCheckouts = new HashSet<CDOCheckout>();
@@ -95,7 +97,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     }
   };
 
-  private String repositoryName;
+  private String name;
 
   private State state = State.Disconnected;
 
@@ -113,7 +115,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public final String getName()
   {
-    return repositoryName;
+    return name;
   }
 
   public final State getState()
@@ -357,14 +359,14 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
-    repositoryName = properties.getProperty("repositoryName");
+    name = properties.getProperty(PROP_NAME);
   }
 
   @Override
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put("repositoryName", repositoryName);
+    properties.put(PROP_NAME, name);
   }
 
   protected IManagedContainer getContainer()
@@ -384,7 +386,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
     CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
     config.setConnector(connector);
-    config.setRepositoryName(repositoryName);
+    config.setRepositoryName(name);
     return config;
   }
 

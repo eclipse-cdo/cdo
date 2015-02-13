@@ -45,6 +45,16 @@ import java.util.Properties;
  */
 public class CloneCDORepository extends CDORepositoryImpl
 {
+  public static final String PROP_CONNECTOR_TYPE = "connectorType";
+
+  public static final String PROP_CONNECTOR_DESCRIPTION = "connectorDescription";
+
+  public static final String PROP_RECONNECT_SECONDS = "reconnectSeconds";
+
+  public static final String PROP_RECOMMIT_SECONDS = "recommitSeconds";
+
+  public static final String PROP_RECOMMIT_ATTEMPTS = "recommitAttempts";
+
   private String connectorType;
 
   private String connectorDescription;
@@ -95,22 +105,22 @@ public class CloneCDORepository extends CDORepositoryImpl
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
-    connectorType = properties.getProperty("connectorType");
-    connectorDescription = properties.getProperty("connectorDescription");
-    reconnectSeconds = Integer.parseInt(properties.getProperty("reconnectSeconds"));
-    recommitSeconds = Integer.parseInt(properties.getProperty("recommitSeconds"));
-    recommitAttempts = Integer.parseInt(properties.getProperty("recommitAttempts"));
+    connectorType = properties.getProperty(PROP_CONNECTOR_TYPE);
+    connectorDescription = properties.getProperty(PROP_CONNECTOR_DESCRIPTION);
+    reconnectSeconds = Integer.parseInt(properties.getProperty(PROP_RECONNECT_SECONDS));
+    recommitSeconds = Integer.parseInt(properties.getProperty(PROP_RECOMMIT_SECONDS));
+    recommitAttempts = Integer.parseInt(properties.getProperty(PROP_RECOMMIT_ATTEMPTS));
   }
 
   @Override
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put("connectorType", connectorType);
-    properties.put("connectorDescription", connectorDescription);
-    properties.put("reconnectSeconds", Integer.toString(reconnectSeconds));
-    properties.put("recommitSeconds", Integer.toString(recommitSeconds));
-    properties.put("recommitAttempts", Integer.toString(recommitAttempts));
+    properties.put(PROP_CONNECTOR_TYPE, connectorType);
+    properties.put(PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.put(PROP_RECONNECT_SECONDS, Integer.toString(reconnectSeconds));
+    properties.put(PROP_RECOMMIT_SECONDS, Integer.toString(recommitSeconds));
+    properties.put(PROP_RECOMMIT_ATTEMPTS, Integer.toString(recommitAttempts));
   }
 
   @Override

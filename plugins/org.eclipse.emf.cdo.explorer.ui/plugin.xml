@@ -339,9 +339,9 @@
             <iterate
                   ifEmpty="false"
                   operator="and">
-               <instanceof
-                     value="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
-               </instanceof>
+               <adapt
+                     type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
+               </adapt>
             </iterate>
          </activeWhen>
       </handler>
@@ -352,8 +352,21 @@
             <iterate
                   ifEmpty="false"
                   operator="and">
+               <adapt
+                     type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+               </adapt>
+            </iterate>
+         </activeWhen>
+      </handler>
+      <handler
+            class="org.eclipse.emf.cdo.explorer.ui.handlers.ObjectDeleteHandler"
+            commandId="org.eclipse.ui.edit.delete">
+         <activeWhen>
+            <iterate
+                  ifEmpty="false"
+                  operator="and">
                <instanceof
-                     value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+                     value="org.eclipse.emf.ecore.EObject">
                </instanceof>
             </iterate>
          </activeWhen>
@@ -490,7 +503,7 @@
                icon="icons/delete.gif"
                label="Delete..."
                style="push"
-               tooltip="Delete the project">
+               tooltip="Delete the checkout">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -499,6 +512,24 @@
                      <adapt
                            type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
                      </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.ui.edit.delete"
+               icon="icons/delete.gif"
+               label="Delete..."
+               style="push"
+               tooltip="Delete the object">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <instanceof
+                           value="org.eclipse.emf.ecore.EObject">
+                     </instanceof>
                   </iterate>
                </with>
             </visibleWhen>

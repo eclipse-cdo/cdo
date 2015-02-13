@@ -18,6 +18,10 @@ import java.util.Properties;
  */
 public class RemoteCDORepository extends CDORepositoryImpl
 {
+  public static final String PROP_CONNECTOR_TYPE = "connectorType";
+
+  public static final String PROP_CONNECTOR_DESCRIPTION = "connectorDescription";
+
   private String connectorType;
 
   private String connectorDescription;
@@ -45,15 +49,15 @@ public class RemoteCDORepository extends CDORepositoryImpl
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
-    connectorType = properties.getProperty("connectorType");
-    connectorDescription = properties.getProperty("connectorDescription");
+    connectorType = properties.getProperty(PROP_CONNECTOR_TYPE);
+    connectorDescription = properties.getProperty(PROP_CONNECTOR_DESCRIPTION);
   }
 
   @Override
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put("connectorType", connectorType);
-    properties.put("connectorDescription", connectorDescription);
+    properties.put(PROP_CONNECTOR_TYPE, connectorType);
+    properties.put(PROP_CONNECTOR_DESCRIPTION, connectorDescription);
   }
 }

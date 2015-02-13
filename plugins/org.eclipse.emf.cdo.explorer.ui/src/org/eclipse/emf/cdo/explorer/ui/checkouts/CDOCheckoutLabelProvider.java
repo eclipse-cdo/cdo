@@ -28,6 +28,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.swt.graphics.Color;
@@ -41,7 +42,8 @@ import org.eclipse.ui.PlatformUI;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider
+public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider,
+    IStyledLabelProvider
 {
   private static final Image CHECKOUT_IMAGE = OM.getImage("icons/checkout.gif");
 

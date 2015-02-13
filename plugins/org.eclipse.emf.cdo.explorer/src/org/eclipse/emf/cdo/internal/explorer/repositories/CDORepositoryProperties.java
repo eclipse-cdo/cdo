@@ -25,7 +25,7 @@ public class CDORepositoryProperties extends Properties<CDORepository>
 {
   public static final IProperties<CDORepository> INSTANCE = new CDORepositoryProperties();
 
-  private static final String CATEGORY_REPOSITORY = "Repository"; //$NON-NLS-1$
+  public static final String CATEGORY_REPOSITORY = "Repository"; //$NON-NLS-1$
 
   private CDORepositoryProperties()
   {
@@ -65,6 +65,15 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       protected Object eval(CDORepository repository)
       {
         return ((AbstractElement)repository).getFolder();
+      }
+    });
+
+    add(new Property<CDORepository>("uri", "URI", "The URI of this repository", CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return repository.getURI();
       }
     });
   }

@@ -21,12 +21,19 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import java.util.LinkedList;
+
 /**
  * @author Eike Stepper
  * @since 4.4
  */
 public final class CDOExplorerUtil
 {
+  public static CDORepositoryManager getRepositoryManager()
+  {
+    return OM.getRepositoryManager();
+  }
+
   public static CDOCheckoutManager getCheckoutManager()
   {
     return OM.getCheckoutManager();
@@ -34,8 +41,29 @@ public final class CDOExplorerUtil
 
   public static CDOCheckout getCheckout(EObject object)
   {
+    return walkUp(object, null);
+  }
+
+  public static LinkedList<EObject> getPath(EObject object)
+  {
+    LinkedList<EObject> path = new LinkedList<EObject>();
+    if (walkUp(object, path) != null)
+    {
+      return path;
+    }
+
+    return null;
+  }
+
+  private static CDOCheckout walkUp(EObject object, LinkedList<EObject> path)
+  {
     while (object != null)
     {
+      if (path != null)
+      {
+        path.addFirst(object);
+      }
+
       Adapter adapter = EcoreUtil.getAdapter(object.eAdapters(), CDOCheckout.class);
       if (adapter != null)
       {
@@ -62,10 +90,5 @@ public final class CDOExplorerUtil
     }
 
     return null;
-  }
-
-  public static CDORepositoryManager getRepositoryManager()
-  {
-    return OM.getRepositoryManager();
   }
 }

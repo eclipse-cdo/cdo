@@ -248,8 +248,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     }
 
     @Override
-    protected void doRun(CDOTransaction transaction, CDOObject resource, IProgressMonitor progressMonitor)
-        throws Exception
+    protected void doRun(CDOTransaction transaction, CDOObject resource, IProgressMonitor monitor) throws Exception
     {
       EList<EObject> contents = ((CDOResource)resource).getContents();
       contents.add(object);
@@ -271,8 +270,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     }
 
     @Override
-    protected void doRun(CDOTransaction transaction, CDOObject parent, IProgressMonitor progressMonitor)
-        throws Exception
+    protected void doRun(CDOTransaction transaction, CDOObject parent, IProgressMonitor monitor) throws Exception
     {
       BasicCommandStack commandStack = new BasicCommandStack();
       ResourceSet resourceSet = transaction.getResourceSet();

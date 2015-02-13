@@ -94,7 +94,7 @@ public class RepositoryDeleteHandler extends AbstractRepositoryHandler
   }
 
   @Override
-  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+  protected void doExecute(IProgressMonitor monitor) throws Exception
   {
     for (CDOCheckout checkout : checkouts)
     {

@@ -130,14 +130,14 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     if (file.isFile())
     {
       FileInputStream in = null;
-  
+
       try
       {
         in = new FileInputStream(file);
-  
+
         Properties properties = new Properties();
         properties.load(in);
-  
+
         return properties;
       }
       catch (Exception ex)
@@ -149,7 +149,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
         IOUtil.close(in);
       }
     }
-  
+
     return null;
   }
 

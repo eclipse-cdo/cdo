@@ -25,7 +25,7 @@ public class RepositoryDisconnectHandler extends AbstractRepositoryHandler
   }
 
   @Override
-  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+  protected void doExecute(IProgressMonitor monitor) throws Exception
   {
     for (CDORepository repository : elements)
     {

@@ -50,7 +50,7 @@ public class RenameHandler extends AbstractBaseHandler<ExplorerRenameContext>
   }
 
   @Override
-  protected void doExecute(IProgressMonitor progressMonitor) throws Exception
+  protected void doExecute(IProgressMonitor monitor) throws Exception
   {
     ExplorerRenameContext renameContext = elements.get(0);
     renameContext.setName(name);

@@ -10,48 +10,45 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.ui.DeleteDialog;
-import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.explorer.ui.DeleteObjectsDialog;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.handlers.HandlerUtil;
 
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
-public class CheckoutDeleteHandler extends AbstractCheckoutHandler
+public class ObjectDeleteHandler extends AbstractObjectHandler
 {
-  private boolean deleteContents;
-
-  public CheckoutDeleteHandler()
+  public ObjectDeleteHandler()
   {
-    super(null, null);
+    super(null);
   }
 
   @Override
   protected void preRun(ExecutionEvent event) throws Exception
   {
-    AbstractElement[] repositories = AbstractElement.collect(elements);
-    DeleteDialog dialog = new DeleteDialog(HandlerUtil.getActiveShell(event), repositories);
-
-    if (dialog.open() == DeleteDialog.OK)
-    {
-      deleteContents = dialog.isDeleteContents();
-    }
-    else
+    DeleteObjectsDialog dialog = new DeleteObjectsDialog(HandlerUtil.getActiveShell(event), getCheckout(), elements);
+    if (dialog.open() != DeleteObjectsDialog.OK)
     {
       cancel();
     }
   }
 
   @Override
-  protected void doExecute(IProgressMonitor monitor) throws Exception
+  protected boolean doExecute(ExecutionEvent event, List<EObject> transactionalElements, IProgressMonitor monitor)
   {
-    for (CDOCheckout checkout : elements)
+    for (EObject eObject : transactionalElements)
     {
-      checkout.delete(deleteContents);
+      EcoreUtil.remove(eObject);
     }
+
+    return true;
   }
 }

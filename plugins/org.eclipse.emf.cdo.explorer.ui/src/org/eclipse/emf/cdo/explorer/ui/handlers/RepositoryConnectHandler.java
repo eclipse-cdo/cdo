@@ -29,7 +29,7 @@ public class RepositoryConnectHandler extends AbstractRepositoryHandler
   }
 
   @Override
-  protected void doExecute(ExecutionEvent event, IProgressMonitor progressMonitor) throws Exception
+  protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
     CDORepositoriesView view = null;
 

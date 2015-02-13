@@ -26,7 +26,7 @@ public class CheckoutCloseHandler extends AbstractCheckoutHandler
   }
 
   @Override
-  protected void doExecute(ExecutionEvent event, IProgressMonitor progressMonitor) throws Exception
+  protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
     for (CDOCheckout checkout : elements)
     {

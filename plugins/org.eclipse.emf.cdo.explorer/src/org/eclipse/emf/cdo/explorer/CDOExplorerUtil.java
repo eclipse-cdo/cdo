@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.explorer;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
@@ -44,6 +46,32 @@ public final class CDOExplorerUtil
     return walkUp(object, null);
   }
 
+  public static EObject getParent(EObject object)
+  {
+    EObject container = object.eContainer();
+    if (container != null)
+    {
+      return container;
+    }
+
+    Resource resource = object.eResource();
+    if (resource instanceof CDOResource)
+    {
+      return (CDOResource)resource;
+    }
+
+    if (object instanceof CDOResourceNode)
+    {
+      CDOView view = ((CDOResourceNode)object).cdoView();
+      if (view != null)
+      {
+        return view.getRootResource();
+      }
+    }
+
+    return null;
+  }
+
   public static LinkedList<EObject> getPath(EObject object)
   {
     LinkedList<EObject> path = new LinkedList<EObject>();
@@ -70,23 +98,7 @@ public final class CDOExplorerUtil
         return (CDOCheckout)adapter;
       }
 
-      EObject container = object.eContainer();
-      if (container != null)
-      {
-        object = container;
-      }
-      else
-      {
-        Resource resource = object.eResource();
-        if (resource instanceof CDOResource)
-        {
-          object = (CDOResource)resource;
-        }
-        else
-        {
-          break;
-        }
-      }
+      object = getParent(object);
     }
 
     return null;

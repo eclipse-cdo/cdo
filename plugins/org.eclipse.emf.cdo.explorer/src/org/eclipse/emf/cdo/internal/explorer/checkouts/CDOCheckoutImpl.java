@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
@@ -246,29 +244,9 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return rootObject;
   }
 
-  public final RootType getRootType()
+  public final ObjectType getRootType()
   {
-    if (rootObject instanceof CDOResourceFolder)
-    {
-      return RootType.Folder;
-    }
-
-    if (rootObject instanceof CDOResource)
-    {
-      if (((CDOResource)rootObject).isRoot())
-      {
-        return RootType.Root;
-      }
-
-      return RootType.Resource;
-    }
-
-    if (rootObject != null)
-    {
-      return RootType.Object;
-    }
-
-    return null;
+    return ObjectType.valueFor(rootObject);
   }
 
   public String getEditorID(CDOID objectID)

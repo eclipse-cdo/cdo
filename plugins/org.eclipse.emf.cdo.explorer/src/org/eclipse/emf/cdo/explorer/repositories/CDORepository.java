@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.container.IContainer;
  *
  * @author Eike Stepper
  * @since 4.4
- * @apiviz.landmark
  */
 public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDONameProvider, CDOSessionProvider
 {

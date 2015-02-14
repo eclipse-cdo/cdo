@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -81,6 +83,23 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   public EList<CDOResourceNode> getNodes()
   {
     return (EList<CDOResourceNode>)eGet(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES, true);
+  }
+
+  /**
+   * @ADDED
+   * @since 4.4
+   */
+  public CDOResourceNode getNode(String name)
+  {
+    for (CDOResourceNode resourceNode : getNodes())
+    {
+      if (ObjectUtil.equals(resourceNode.getName(), name))
+      {
+        return resourceNode;
+      }
+    }
+
+    return null;
   }
 
   /**

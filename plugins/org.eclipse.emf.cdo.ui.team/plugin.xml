@@ -21,6 +21,11 @@
         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource"/>
      </factory>
      <factory
+           adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
+           class="org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory">
+        <adapter type="org.eclipse.team.ui.history.IHistoryPageSource"/>
+     </factory>
+     <factory
            adaptableType="org.eclipse.emf.cdo.view.CDOView"
            class="org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory">
         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource"/>

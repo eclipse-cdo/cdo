@@ -7,7 +7,6 @@ CDORepository (connected/disconnected)
   ----------------------
   Show In --> History 
               CDO Administration
-              CDO Sessions
   ----------------------
   Checkout
   Checkout As...
@@ -24,7 +23,6 @@ CDOBranch | CDOTag
           Tag...
   ----------------------
   Show In --> History
-              CDO Sessions
   ----------------------
   Checkout
   Checkout As...
@@ -44,7 +42,6 @@ CDOCheckout (open/closed)
   Open
   Open With --> [applicable editors...]
   Show In --> History
-              CDO Sessions
   ----------------------
   Compare With --> Each Other
                    ...
@@ -66,7 +63,6 @@ EObject (including CDOResourceNodes)
   Open
   Open With --> [applicable editors...]
   Show In --> History
-              CDO Sessions
   ----------------------
   Compare With --> Each Other
                    ...

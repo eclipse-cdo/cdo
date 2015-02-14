@@ -21,7 +21,6 @@ import java.util.Properties;
  *
  * @author Eike Stepper
  * @since 4.4
- * @apiviz.landmark
  * @apiviz.composedOf {@link CDORepository}
  */
 public interface CDORepositoryManager extends CDOExplorerManager<CDORepository>

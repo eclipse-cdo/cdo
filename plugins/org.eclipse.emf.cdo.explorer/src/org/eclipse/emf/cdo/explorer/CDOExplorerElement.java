@@ -21,7 +21,6 @@ import org.eclipse.core.runtime.IAdaptable;
  *
  * @author Eike Stepper
  * @since 4.4
- * @apiviz.landmark
  */
 public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter
 {

@@ -11,13 +11,25 @@
 package org.eclipse.emf.cdo.explorer.ui.properties;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.emf.ecore.EObject;
+
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 
 /**
  * @since 4.4
@@ -42,13 +54,18 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
     {
       if (adaptableObject instanceof AbstractElement)
       {
-        final AbstractElement element = (AbstractElement)adaptableObject;
+        AbstractElement element = (AbstractElement)adaptableObject;
         return createRenameContext(element);
       }
       else if (adaptableObject instanceof CDOBranch)
       {
-        final CDOBranch branch = (CDOBranch)adaptableObject;
+        CDOBranch branch = (CDOBranch)adaptableObject;
         return createRenameContext(branch);
+      }
+      else if (adaptableObject instanceof CDOResourceNode)
+      {
+        CDOResourceNode resourceNode = (CDOResourceNode)adaptableObject;
+        return createRenameContext(resourceNode);
       }
     }
 
@@ -126,6 +143,89 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
         if (baseBranch.getBranch(name) != null)
         {
           return "Branch name is not unique within the base branch.";
+        }
+
+        return null;
+      }
+    };
+  }
+
+  private Object createRenameContext(final CDOResourceNode resourceNode)
+  {
+    return new ExplorerRenameContext()
+    {
+      public String getType()
+      {
+        return resourceNode instanceof CDOResourceFolder ? "Folder" : "Resource";
+      }
+
+      public String getName()
+      {
+        return resourceNode.getName();
+      }
+
+      public void setName(final String name)
+      {
+        new Job("Rename " + getType().toLowerCase())
+        {
+          @Override
+          protected IStatus run(IProgressMonitor monitor)
+          {
+            CDOView view = resourceNode.cdoView();
+            CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
+
+            try
+            {
+              CDOResourceNode transactionalResourceNode = transaction.getObject(resourceNode);
+              transactionalResourceNode.setName(name);
+
+              transaction.commit();
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+            }
+            finally
+            {
+              transaction.close();
+            }
+
+            return Status.OK_STATUS;
+          }
+        }.schedule();
+      }
+
+      public String validateName(String name)
+      {
+        if (StringUtil.isEmpty(name))
+        {
+          return getType() + " name is empty.";
+        }
+
+        if (name.equals(getName()))
+        {
+          return null;
+        }
+
+        CDOResourceFolder parentFolder = resourceNode.getFolder();
+        if (parentFolder == null)
+        {
+          CDOView view = resourceNode.cdoView();
+          for (EObject eObject : view.getRootResource().getContents())
+          {
+            if (eObject instanceof CDOResourceNode)
+            {
+              CDOResourceNode child = (CDOResourceNode)eObject;
+              if (ObjectUtil.equals(child.getName(), name))
+              {
+                return getType() + " name is not unique within the root resource.";
+              }
+            }
+          }
+        }
+        else if (parentFolder.getNode(name) != null)
+        {
+          return getType() + " name is not unique within the parent folder.";
         }
 
         return null;

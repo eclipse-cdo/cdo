@@ -52,7 +52,23 @@
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
         <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
      </factory>
+     <factory
+           adaptableType="org.eclipse.emf.cdo.eresource.CDOResourceNode"
+           class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
+        <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+     </factory>
+     <factory
+           adaptableType="org.eclipse.emf.cdo.explorer.repositories.CDORepository"
+           class="org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory">
+        <adapter type="org.eclipse.team.ui.history.IHistoryPageSource"/>
+     </factory>
+     <factory
+           adaptableType="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"
+           class="org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory">
+        <adapter type="org.eclipse.team.ui.history.IHistoryPageSource"/>
+     </factory>
   </extension>
+
 
 
   <extension
@@ -142,11 +158,23 @@
             </or>
          </triggerPoints>
          <possibleChildren>
-            <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
-            <instanceof value="org.eclipse.emf.cdo.eresource.CDOResource"/>
-            <instanceof value="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
-            <instanceof value="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
-            <instanceof value="org.eclipse.emf.ecore.EObject"/>
+            <or>
+               <instanceof
+                     value="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.emf.cdo.eresource.CDOResource">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.emf.cdo.eresource.CDOBinaryResource">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.emf.cdo.eresource.CDOTextResource">
+               </instanceof>
+               <instanceof
+                     value="org.eclipse.emf.ecore.EObject">
+               </instanceof>
+            </or>
          </possibleChildren>
          <actionProvider
                class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutNewActionProvider"
@@ -177,7 +205,7 @@
            </enablement>
          </actionProvider>
          <actionProvider
-               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutOpenActionProvider"
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutOpenWithActionProvider"
                id="org.eclipse.emf.cdo.explorer.ui.checkouts.OpenWithActions">
            <enablement>
              <or>
@@ -189,6 +217,26 @@
                <instanceof value="org.eclipse.emf.ecore.EObject"/>
              </or>
            </enablement>
+         </actionProvider>
+         <actionProvider
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutShowInActionProvider"
+               id="org.eclipse.emf.cdo.explorer.ui.checkouts.ShowInActions">
+            <enablement>
+               <or>
+                  <and>
+                     <instanceof
+                           value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+                     </instanceof>
+                     <test
+                           property="org.eclipse.emf.cdo.explorer.checkout.state"
+                           value="Open">
+                     </test>
+                  </and>
+                  <instanceof
+                        value="org.eclipse.emf.ecore.EObject">
+                  </instanceof>
+               </or>
+            </enablement>
          </actionProvider>
          <commonWizard
               type="new"
@@ -242,6 +290,26 @@
               </or>
            </enablement>
         </commonWizard>
+        <dropAssistant
+              class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutDropAdapterAssistant"
+              id="org.eclipse.emf.cdo.explorer.ui.checkouts.DropAdapter">
+           <possibleDropTargets>
+              <or>
+                 <instanceof
+                       value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+                 </instanceof>
+                 <instanceof
+                       value="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
+                 </instanceof>
+                 <instanceof
+                       value="org.eclipse.emf.cdo.eresource.CDOResource">
+                 </instanceof>
+                 <instanceof
+                       value="org.eclipse.emf.ecore.EObject">
+                 </instanceof>
+              </or>
+           </possibleDropTargets>
+        </dropAssistant>        
      </navigatorContent>
   </extension>
 
@@ -257,28 +325,6 @@
       </viewerContentBinding>
   </extension>
 
-  <!--extension
-        point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-     <propertyTabs contributorId="org.eclipse.ui.navigator.ProjectExplorer">
-        <propertyTab
-              label="Model"
-              category="model"
-              id="CDOExplorer.tab.Model"/>
-     </propertyTabs>
-  </extension>
-  
-  <extension
-        point="org.eclipse.ui.views.properties.tabbed.propertySections">
-     <propertySections contributorId="org.eclipse.ui.navigator.ProjectExplorer">
-        <propertySection
-              class="org.eclipse.emf.cdo.explorer.ui.properties.EMFPropertySection"
-              id="CDOExplorer.section.Model"
-              tab="CDOExplorer.tab.Model">
-           <input type="org.eclipse.emf.ecore.EObject"/>
-        </propertySection>
-     </propertySections>
-  </extension-->
-  
   <extension
          point="org.eclipse.ui.decorators">
       <decorator

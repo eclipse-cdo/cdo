@@ -12,6 +12,9 @@ package org.eclipse.emf.cdo.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.eresource.CDOFileResource;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -23,7 +26,6 @@ import org.eclipse.emf.ecore.EObject;
  *
  * @author Eike Stepper
  * @since 4.4
- * @apiviz.landmark
  */
 public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 {
@@ -57,7 +59,7 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 
   public EObject getRootObject();
 
-  public RootType getRootType();
+  public ObjectType getRootType();
 
   public String getEditorID(CDOID objectID);
 
@@ -74,8 +76,38 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
   /**
    * @author Eike Stepper
    */
-  public enum RootType
+  public enum ObjectType
   {
-    Root, Folder, Resource, Object
+    Root, Folder, File, Resource, Object;
+
+    public static ObjectType valueFor(Object rootObject)
+    {
+      if (rootObject instanceof CDOResourceFolder)
+      {
+        return ObjectType.Folder;
+      }
+
+      if (rootObject instanceof CDOResource)
+      {
+        if (((CDOResource)rootObject).isRoot())
+        {
+          return ObjectType.Root;
+        }
+
+        return ObjectType.Resource;
+      }
+
+      if (rootObject instanceof CDOFileResource)
+      {
+        return ObjectType.File;
+      }
+
+      if (rootObject != null)
+      {
+        return ObjectType.Object;
+      }
+
+      return null;
+    }
   }
 }

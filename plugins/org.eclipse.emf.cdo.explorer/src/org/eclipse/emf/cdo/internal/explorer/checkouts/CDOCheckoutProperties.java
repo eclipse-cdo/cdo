@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.RootType;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.ObjectType;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryProperties;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -85,7 +85,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       @Override
       protected Object eval(CDOCheckout checkout)
       {
-        RootType rootType = checkout.getRootType();
+        ObjectType rootType = checkout.getRootType();
         if (rootType != null)
         {
           switch (rootType)

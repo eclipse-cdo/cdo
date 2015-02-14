@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
  *
  * @author Eike Stepper
  * @since 4.4
- * @apiviz.landmark
  */
 public interface CDORepositoryElement extends CDOTimeProvider
 {

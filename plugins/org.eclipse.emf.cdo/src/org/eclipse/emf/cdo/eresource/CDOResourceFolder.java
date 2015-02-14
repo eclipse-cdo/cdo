@@ -52,6 +52,12 @@ public interface CDOResourceFolder extends CDOResourceNode
   EList<CDOResourceNode> getNodes();
 
   /**
+   * @ADDED
+   * @since 4.4
+   */
+  CDOResourceNode getNode(String name);
+
+  /**
    * <!-- begin-user-doc -->
    *
    * @since 4.0 <!-- end-user-doc -->

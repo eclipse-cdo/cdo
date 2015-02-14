@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutShowInActionProvider;
 import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
@@ -40,6 +41,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchActionConstants;
+import org.eclipse.ui.IWorkbenchPage;
 
 /**
  * @author Eike Stepper
@@ -124,6 +126,10 @@ public class CDORepositoriesView extends ContainerView
     manager.add(new Separator("group.build"));
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
     manager.add(new Separator("group.properties"));
+
+    IWorkbenchPage page = getSite().getPage();
+    Object selectedElement = selection.getFirstElement();
+    CDOCheckoutShowInActionProvider.addShowInActions(page, manager, selectedElement);
   }
 
   @Override

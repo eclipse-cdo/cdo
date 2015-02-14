@@ -608,7 +608,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         else if (element instanceof EObject)
         {
           EObject eObject = (EObject)element;
-          CDOCheckoutOpenActionProvider.openEditor(getWorkbenchPage(), eObject, null);
+          CDOCheckoutOpenWithActionProvider.openEditor(getWorkbenchPage(), eObject, null);
         }
       }
     }

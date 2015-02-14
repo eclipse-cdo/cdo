@@ -62,7 +62,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutOpenActionProvider extends CommonActionProvider
+public class CDOCheckoutOpenWithActionProvider extends CommonActionProvider
 {
   private static final Map<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>> VIEWS = new HashMap<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>>();
 
@@ -437,7 +437,6 @@ public class CDOCheckoutOpenActionProvider extends CommonActionProvider
 
     public OpenFileAction(IWorkbenchPage page, EObject openableElement, String editorID)
     {
-      super();
       setId(ID);
 
       this.page = page;

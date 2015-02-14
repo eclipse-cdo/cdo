@@ -21,10 +21,12 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.ui.history.NetRenderer;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -44,6 +46,7 @@ import org.eclipse.net4j.util.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.ui.TableLabelProvider;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -303,18 +306,31 @@ public class CommitHistoryComposite extends Composite
 
     public Input(Object delegate)
     {
-      if (delegate instanceof CDOSession)
+      CDOSession sessionAdapter = AdapterUtil.adapt(delegate, CDOSession.class);
+      if (sessionAdapter != null)
       {
-        session = (CDOSession)delegate;
+        session = sessionAdapter;
         branch = null;
         object = null;
         session.addListener(lifecycleListener);
         return;
       }
 
-      if (delegate instanceof CDOView)
+      CDOBranch branchAdapter = AdapterUtil.adapt(delegate, CDOBranch.class);
+      if (branchAdapter != null)
       {
-        CDOView view = (CDOView)delegate;
+        branch = branchAdapter;
+        session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager())
+            .getBranchLoader()).getSession();
+        object = null;
+        session.addListener(lifecycleListener);
+        return;
+      }
+
+      CDOView viewAdapter = AdapterUtil.adapt(delegate, CDOView.class);
+      if (viewAdapter != null)
+      {
+        CDOView view = viewAdapter;
         session = view.getSession();
         branch = view.getBranch();
         object = null;

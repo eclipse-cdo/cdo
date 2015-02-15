@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -58,8 +59,9 @@ public class RenameBranchIndication extends CDOServerWriteIndication
 
     branch.setName(newName);
 
+    InternalSession session = getSession();
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    sessionManager.sendBranchNotification(getSession(), branch, ChangeKind.RENAMED);
+    sessionManager.sendBranchNotification(session, branch, ChangeKind.RENAMED);
 
     out.writeBoolean(true);
   }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 
 /**
  * Checks out new {@link CDOWorkspace workspace} or opens existing ones.
- * 
+ *
  * @author Eike Stepper
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
@@ -42,6 +42,16 @@ public interface CDOWorkspaceConfiguration
   public CDOSessionConfigurationFactory getRemote();
 
   public void setRemote(CDOSessionConfigurationFactory remote);
+
+  /**
+   * @since 4.2
+   */
+  public int getBranchID();
+
+  /**
+   * @since 4.2
+   */
+  public void setBranchID(int branchPath);
 
   public String getBranchPath();
 

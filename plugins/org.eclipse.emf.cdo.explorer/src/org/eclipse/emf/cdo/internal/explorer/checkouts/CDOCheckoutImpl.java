@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
@@ -208,10 +210,15 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         {
           state = State.Closing;
 
-          rootObject.eAdapters().remove(this);
-          view.close();
-
-          ((CDORepositoryImpl)repository).closeCheckout(this);
+          try
+          {
+            rootObject.eAdapters().remove(this);
+            closeView();
+          }
+          finally
+          {
+            ((CDORepositoryImpl)repository).closeCheckout(this);
+          }
         }
         finally
         {
@@ -374,12 +381,22 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     properties.put(PROP_ROOT_ID, string);
   }
 
+  protected IManagedContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
+  }
+
   protected EObject loadRootObject()
   {
     return view.getObject(rootID);
   }
 
   protected abstract CDOView openView(CDOSession session);
+
+  protected void closeView()
+  {
+    view.close();
+  }
 
   public static String getCDOIDString(CDOID id)
   {

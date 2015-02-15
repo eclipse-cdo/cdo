@@ -26,9 +26,12 @@ import java.util.Properties;
  */
 public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepositoryElement>
 {
-  public RepositoryCheckoutHandler()
+  private final String type;
+
+  protected RepositoryCheckoutHandler(String type)
   {
     super(CDORepositoryElement.class, null);
+    this.type = type;
   }
 
   @Override
@@ -39,7 +42,7 @@ public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepository
       CDORepository repository = repositoryElement.getRepository();
 
       Properties properties = new Properties();
-      properties.put("type", "online");
+      properties.put("type", type);
       properties.put("label", repository.getLabel());
       properties.put("repository", repository.getID());
       properties.put("branchID", Integer.toString(repositoryElement.getBranchID()));
@@ -49,6 +52,28 @@ public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepository
 
       CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
       checkout.open();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Online extends RepositoryCheckoutHandler
+  {
+    public Online()
+    {
+      super("online");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class Offline extends RepositoryCheckoutHandler
+  {
+    public Offline()
+    {
+      super("offline");
     }
   }
 }

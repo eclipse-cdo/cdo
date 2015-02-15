@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.ObjectType;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryProperties;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -50,6 +51,14 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       protected Object eval(CDOCheckout checkout)
       {
         return checkout.isOpen();
+      }
+    });
+    add(new Property<CDOCheckout>("type", "Type", "The type of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getType();
       }
     });
 
@@ -157,7 +166,13 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       @Override
       protected Object eval(CDOCheckout checkout)
       {
-        return checkout.getRepository().getID();
+        CDORepository repository = checkout.getRepository();
+        if (repository != null)
+        {
+          return repository.getID();
+        }
+
+        return null;
       }
     });
 
@@ -167,7 +182,13 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       @Override
       protected Object eval(CDOCheckout checkout)
       {
-        return ((AbstractElement)checkout.getRepository()).getFolder();
+        AbstractElement repository = (AbstractElement)checkout.getRepository();
+        if (repository != null)
+        {
+          return repository.getFolder();
+        }
+
+        return null;
       }
     });
 
@@ -177,7 +198,13 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       @Override
       protected Object eval(CDOCheckout checkout)
       {
-        return checkout.getRepository().getURI();
+        CDORepository repository = checkout.getRepository();
+        if (repository != null)
+        {
+          return repository.getURI();
+        }
+
+        return null;
       }
     });
   }

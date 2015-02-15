@@ -72,6 +72,7 @@ import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -107,6 +108,8 @@ import java.util.Set;
  */
 public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 {
+  private static final String PROP_BRANCH_ID = "org.eclipse.emf.cdo.workspace.branchID"; //$NON-NLS-1$
+
   private static final String PROP_BRANCH_PATH = "org.eclipse.emf.cdo.workspace.branchPath"; //$NON-NLS-1$
 
   private static final String PROP_TIME_STAMP = "org.eclipse.emf.cdo.workspace.timeStamp"; //$NON-NLS-1$
@@ -127,6 +130,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   private CDOBranchPoint head;
 
+  private int branchID = NO_BRANCH_ID;
+
   private String branchPath;
 
   private long timeStamp;
@@ -139,13 +144,17 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
+  /**
+   * Checkout.
+   */
   public CDOWorkspaceImpl(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
-      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote,
+      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote, int branchID,
       String branchPath, long timeStamp)
   {
     init(localRepositoryName, local, idGenerationLocation, idGenerator, base, remote);
 
-    this.branchPath = StringUtil.isEmpty(branchPath) ? CDOBranch.MAIN_BRANCH_NAME : branchPath;
+    this.branchID = branchID;
+    this.branchPath = branchPath;
     this.timeStamp = timeStamp;
     fixed = timeStamp != CDOBranchPoint.UNSPECIFIED_DATE;
 
@@ -153,32 +162,14 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     saveProperties();
   }
 
+  /**
+   * Open.
+   */
   public CDOWorkspaceImpl(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
       CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
     init(localRepositoryName, local, idGenerationLocation, idGenerator, base, remote);
     loadProperties();
-  }
-
-  protected void init(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
-      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
-  {
-    this.idGenerationLocation = idGenerationLocation;
-    this.idGenerator = idGenerator;
-
-    container = createContainer(local);
-    remoteSessionConfigurationFactory = remote;
-
-    localRepository = createLocalRepository(localRepositoryName, local);
-
-    this.base = base;
-    this.base.init(this);
-    setDirtyFromBase();
-  }
-
-  private void setDirtyFromBase()
-  {
-    setDirty(!base.isEmpty());
   }
 
   protected void checkout()
@@ -201,6 +192,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         {
           packageRegistry.putPackageUnit(packageUnit);
         }
+
         accessor.rawStore(packageUnits, monitor);
 
         CDORevisionHandler handler = new CDORevisionHandler()
@@ -221,7 +213,24 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
           }
         };
 
-        CDOBranch branch = remoteSession.getBranchManager().getBranch(branchPath);
+        InternalCDOBranchManager branchManager = remoteSession.getBranchManager();
+        CDOBranch branch;
+        if (branchID == NO_BRANCH_ID)
+        {
+          if (StringUtil.isEmpty(branchPath))
+          {
+            branchPath = CDOBranch.MAIN_BRANCH_NAME;
+          }
+
+          branch = branchManager.getBranch(branchPath);
+          branchID = branch.getID();
+        }
+        else
+        {
+          branch = branchManager.getBranch(branchID);
+          branchPath = branch.getPathName();
+        }
+
         remoteSession.getSessionProtocol().handleRevisions(null, branch, false, timeStamp, false, handler);
       }
       finally
@@ -237,6 +246,45 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       StoreThreadLocal.release();
       monitor.done();
     }
+  }
+
+  protected void init(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
+      CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
+  {
+    this.idGenerationLocation = idGenerationLocation;
+    this.idGenerator = idGenerator;
+
+    container = createContainer(local);
+    remoteSessionConfigurationFactory = remote;
+
+    try
+    {
+      localRepository = createLocalRepository(localRepositoryName, local);
+
+      this.base = base;
+      this.base.init(this);
+      setDirtyFromBase();
+    }
+    catch (RuntimeException ex)
+    {
+      close();
+      throw ex;
+    }
+    catch (Error ex)
+    {
+      close();
+      throw ex;
+    }
+  }
+
+  private void setDirtyFromBase()
+  {
+    setDirty(!base.isEmpty());
+  }
+
+  public int getBranchID()
+  {
+    return branchID;
   }
 
   public String getBranchPath()
@@ -940,6 +988,14 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       throw new IllegalStateException("Remote repository uses different ID generation location: " + remoteLocation);
     }
 
+    InternalCDOBranch branch = session.getBranchManager().getBranch(branchID);
+    String pathName = branch.getPathName();
+    if (!ObjectUtil.equals(pathName, branchPath))
+    {
+      branchPath = pathName;
+      saveProperties();
+    }
+
     return session;
   }
 
@@ -955,6 +1011,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   protected void saveProperties()
   {
     Map<String, String> props = new HashMap<String, String>();
+    props.put(PROP_BRANCH_ID, String.valueOf(branchID));
     props.put(PROP_BRANCH_PATH, branchPath);
     props.put(PROP_TIME_STAMP, String.valueOf(timeStamp));
     props.put(PROP_FIXED, String.valueOf(fixed));
@@ -963,8 +1020,11 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected void loadProperties()
   {
-    Set<String> names = new HashSet<String>(Arrays.asList(PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
+    Set<String> names = new HashSet<String>(
+        Arrays.asList(PROP_BRANCH_ID, PROP_BRANCH_PATH, PROP_TIME_STAMP, PROP_FIXED));
     Map<String, String> props = localRepository.getStore().getPersistentProperties(names);
+    String prop = props.get(PROP_BRANCH_ID);
+    branchID = prop == null ? InternalCDOWorkspace.NO_BRANCH_ID : Integer.parseInt(prop);
     branchPath = props.get(PROP_BRANCH_PATH);
     timeStamp = Long.parseLong(props.get(PROP_TIME_STAMP));
     fixed = Boolean.parseBoolean(props.get(PROP_FIXED));

@@ -23,18 +23,18 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Test that when another client creates a branch, and we call {@link CDOBranch#getBranches()} for the first time, it calls all existing branches.
  *
  * @author Esteban Dugueperoux
  */
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
-@CleanRepositoriesBefore(reason = "to have assert works")
+@CleanRepositoriesBefore(reason = "Branching")
 public class Bugzilla_447912_Test extends AbstractCDOTest
 {
-
-  private NewBranchNotificationListener newBranchNotificationListener;
-
   public void testCDOBranch_getBranches() throws Exception
   {
     CDOSession session1 = openSession();
@@ -48,12 +48,11 @@ public class Bugzilla_447912_Test extends AbstractCDOTest
     CDOView view2 = session2.openView();
     CDOBranch mainBranchFromView2 = view2.getBranch();
 
-    newBranchNotificationListener = new NewBranchNotificationListener(session2);
-    synchronized (newBranchNotificationListener)
-    {
-      mainBranchFromView1.createBranch(branchB2Name);
-      newBranchNotificationListener.wait();
-    }
+    NewBranchNotificationListener listener = new NewBranchNotificationListener(session2);
+    mainBranchFromView1.createBranch(branchB2Name);
+
+    assertEquals("Timeout - No CDOBranchChangedEvent received.", true,
+        listener.getLatch().await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
 
     assertEquals(mainBranchFromView1.getBranches().length, mainBranchFromView2.getBranches().length);
     assertEquals(session1.getBranchManager().getMainBranch().getBranches().length, session2.getBranchManager()
@@ -67,24 +66,33 @@ public class Bugzilla_447912_Test extends AbstractCDOTest
     assertEquals(branchB2Name, mainBranchFromView2.getBranches()[1].getName());
   }
 
-  class NewBranchNotificationListener implements IListener
+  /**
+   * @author Esteban Dugueperoux
+   */
+  private static final class NewBranchNotificationListener implements IListener
   {
+    private final CountDownLatch latch = new CountDownLatch(1);
+
     public NewBranchNotificationListener(CDOSession session)
     {
       session.getBranchManager().addListener(this);
     }
 
-    public synchronized void notifyEvent(IEvent event)
+    public final CountDownLatch getLatch()
+    {
+      return latch;
+    }
+
+    public void notifyEvent(IEvent event)
     {
       if (event instanceof CDOBranchChangedEvent)
       {
         CDOBranchChangedEvent branchChangedEvent = (CDOBranchChangedEvent)event;
         if (branchChangedEvent.getChangeKind() == ChangeKind.CREATED)
         {
-          notify();
+          latch.countDown();
         }
       }
     }
   }
-
 }

@@ -33,6 +33,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOWorkspace extends CDORevisionProvider, Closeable, INotifier
 {
+  /**
+   * @since 4.2
+   */
+  public int getBranchID();
+
   public String getBranchPath();
 
   public long getTimeStamp();

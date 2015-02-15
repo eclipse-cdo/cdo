@@ -97,6 +97,17 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
     throw new IllegalArgumentException("Unknown type: " + type);
   }
 
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    for (CDORepository repository : getRepositories())
+    {
+      repository.disconnect();
+    }
+
+    super.doDeactivate();
+  }
+
   /**
    * @author Eike Stepper
    */

@@ -50,6 +50,15 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       }
     });
 
+    add(new Property<CDORepository>("type", "Type", "The type of this repository", CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return repository.getType();
+      }
+    });
+
     add(new Property<CDORepository>("id", "ID", "The ID of this repository", CATEGORY_REPOSITORY)
     {
       @Override

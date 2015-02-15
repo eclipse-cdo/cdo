@@ -27,6 +27,11 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 public interface InternalCDOWorkspace extends CDOWorkspace
 {
   /**
+   * @since 4.2
+   */
+  public static final int NO_BRANCH_ID = -1;
+
+  /**
    * @since 4.1
    */
   public IDGenerationLocation getIDGenerationLocation();

@@ -15,9 +15,11 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -544,6 +546,52 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(getResourcePath("/level1/level2-A/level3"), resource1.getPath());
     assertEquals(getResourcePath("/level1/level2-B/level3"), resource2.getPath());
     session.close();
+  }
+
+  @CleanRepositoriesBefore(reason = "Root resource access")
+  @CleanRepositoriesAfter(reason = "Root resource access")
+  public void testMoveToRoot() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource rootResource = transaction.getRootResource();
+    CDOResourceFolder resourceFolder = transaction.createResourceFolder("folder1");
+    CDOResource resource = transaction.createResource("/folder1/resource");
+    transaction.commit();
+
+    CDORevisionData data = resource.cdoRevision().data();
+    assertEquals(resourceFolder.cdoID(), data.getContainerID());
+    assertEquals(true, CDOIDUtil.isNull(data.getResourceID()));
+
+    EList<EObject> contents = rootResource.getContents();
+    contents.add(resource);
+
+    data = resource.cdoRevision().data();
+    assertEquals(true, CDOIDUtil.isNull((CDOID)data.getContainerID()));
+    assertEquals(rootResource.cdoID(), data.getResourceID());
+  }
+
+  @CleanRepositoriesBefore(reason = "Root resource access")
+  @CleanRepositoriesAfter(reason = "Root resource access")
+  public void testMoveFromRoot() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource rootResource = transaction.getRootResource();
+    CDOResourceFolder resourceFolder = transaction.createResourceFolder("folder1");
+    CDOResource resource = transaction.createResource("resource");
+    transaction.commit();
+
+    CDORevisionData data = resource.cdoRevision().data();
+    assertEquals(true, CDOIDUtil.isNull((CDOID)data.getContainerID()));
+    assertEquals(rootResource.cdoID(), data.getResourceID());
+
+    EList<CDOResourceNode> nodes = resourceFolder.getNodes();
+    nodes.add(resource);
+
+    data = resource.cdoRevision().data();
+    assertEquals(resourceFolder.cdoID(), data.getContainerID());
+    assertEquals(true, CDOIDUtil.isNull(data.getResourceID()));
   }
 
   public void testDuplicatePath() throws Exception

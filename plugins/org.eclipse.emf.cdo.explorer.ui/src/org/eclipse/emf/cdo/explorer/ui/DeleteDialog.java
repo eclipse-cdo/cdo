@@ -65,25 +65,6 @@ public class DeleteDialog extends TitleAreaDialog
     int size = elements.length;
     if (size != 0)
     {
-      List<String> contents = new ArrayList<String>();
-      for (AbstractElement element : elements)
-      {
-        collectContents(contents, element.getFolder());
-      }
-
-      Collections.sort(contents);
-      StringBuilder builder = new StringBuilder();
-
-      for (String path : contents)
-      {
-        if (builder.length() != 0)
-        {
-          builder.append('\n');
-        }
-
-        builder.append(path);
-      }
-
       String type = elements[0] instanceof CDORepository ? "Repository" : "Checkout";
       String types = elements[0] instanceof CDORepository ? "Repositories" : "Checkouts";
 
@@ -118,7 +99,36 @@ public class DeleteDialog extends TitleAreaDialog
 
       text = new Text(container, SWT.BORDER | SWT.READ_ONLY | SWT.V_SCROLL | SWT.MULTI);
       text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-      text.setText(builder.toString());
+
+      List<String> contents = new ArrayList<String>();
+      for (AbstractElement element : elements)
+      {
+        collectContents(contents, element.getFolder());
+      }
+
+      if (contents.isEmpty())
+      {
+        deleteContentsButton.setSelection(false);
+        deleteContentsButton.setEnabled(false);
+        text.setEnabled(false);
+      }
+      else
+      {
+        Collections.sort(contents);
+
+        StringBuilder builder = new StringBuilder();
+        for (String path : contents)
+        {
+          if (builder.length() != 0)
+          {
+            builder.append('\n');
+          }
+
+          builder.append(path);
+        }
+
+        text.setText(builder.toString());
+      }
 
       deleteContentsButton.setFocus();
     }

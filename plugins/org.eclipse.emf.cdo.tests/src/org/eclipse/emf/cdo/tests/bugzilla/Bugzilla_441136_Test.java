@@ -70,12 +70,11 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
     transaction.commit(useMonitor ? new NullProgressMonitor() : null);
-    String assertMessage = " differents kinds of requests should be sent, QueryRequest, QueryCancel, LoadRevisionsRequest and CommitTransactionRequest";
+    String assertMessage = " differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and CommitTransactionRequest";
     int nbExpectedCalls;
     Map<Short, Integer> nbRequestsCalls = nbRequestsCallsCounter.getNBRequestsCalls();
     if (!useMonitor)
     {
-
       // QueryRequest, QueryCancel are used to get the resourcePath
       nbExpectedCalls = 4;
       assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, nbRequestsCalls.size());
@@ -87,7 +86,8 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
     else
     {
       nbExpectedCalls = 5;
-      assertMessage += " and MonitorProgressIndications should be received";
+      assertMessage += " and MonitorProgressIndications should have been received";
+
       // QueryRequest, QueryCancel are used to get the resourcePath
       assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, nbRequestsCalls.size());
       assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_QUERY));
@@ -100,9 +100,11 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
     nbRequestsCallsCounter.dispose();
   }
 
-  class CommitTransactionIndicationWaiting implements CDOCommitInfoHandler
+  /**
+  * @author Esteban Dugueperoux
+  */
+  private static final class CommitTransactionIndicationWaiting implements CDOCommitInfoHandler
   {
-
     public void handleCommitInfo(CDOCommitInfo commitInfo)
     {
       try
@@ -114,6 +116,5 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
         ex.printStackTrace();
       }
     }
-
   }
 }

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import java.io.IOException;
@@ -50,8 +51,9 @@ public class CreateBranchIndication extends CDOServerWriteIndication
     InternalCDOBranch branch = branchManager.createBranch(branchID, branchInfo.getName(), baseBranch,
         branchInfo.getBaseTimeStamp());
 
+    InternalSession session = getSession();
     InternalSessionManager sessionManager = getRepository().getSessionManager();
-    sessionManager.sendBranchNotification(getSession(), branch, ChangeKind.CREATED);
+    sessionManager.sendBranchNotification(session, branch, ChangeKind.CREATED);
 
     out.writeInt(branch.getID());
     out.writeLong(branch.getBase().getTimeStamp());

@@ -80,14 +80,11 @@ public class SetContainer<E> extends Container<E> implements IContainer.Modifiab
   @Override
   public synchronized boolean isEmpty()
   {
-    checkActive();
     return set.isEmpty();
   }
 
   public E[] getElements()
   {
-    checkActive();
-
     E[] array;
     synchronized (this)
     {

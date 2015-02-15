@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -21,6 +22,8 @@ import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -373,25 +376,40 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
 
     private static void setUniqueName(CDOResourceNode resourceNode, EList<? extends EObject> contents)
     {
+      boolean nameConflict = false;
+      String resourceName = resourceNode.getName();
       Set<String> names = new HashSet<String>();
+
       for (Object object : contents)
       {
-        names.add(((CDOResourceNode)object).getName());
+        if (object != resourceNode)
+        {
+          String name = ((CDOResourceNode)object).getName();
+          if (ObjectUtil.equals(name, resourceName))
+          {
+            nameConflict = true;
+          }
+
+          names.add(name);
+        }
       }
 
-      String copyName = resourceNode.getName() + "-copy";
-      for (int i = 0; i < Integer.MAX_VALUE; i++)
+      if (nameConflict)
       {
-        String name = copyName;
-        if (i != 0)
+        String copyName = resourceName + "-copy";
+        for (int i = 0; i < Integer.MAX_VALUE; i++)
         {
-          name += i;
-        }
+          String name = copyName;
+          if (i != 0)
+          {
+            name += i;
+          }
 
-        if (!names.contains(name))
-        {
-          resourceNode.setName(name);
-          return;
+          if (!names.contains(name))
+          {
+            resourceNode.setName(name);
+            return;
+          }
         }
       }
     }
@@ -544,19 +562,27 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
         super(objects, target);
       }
 
+      /**
+       * TODO Consolidate with {@link ResourceNodeToFolder#insert(List, CDOResourceFolder, IProgressMonitor)}.
+       */
       @Override
       protected void insert(List<? extends EObject> objects, CDOResource target, IProgressMonitor monitor)
       {
         EList<EObject> contents = target.getContents();
         for (EObject object : objects)
         {
-          contents.add(object);
+          CDOResourceNode resourceNode = (CDOResourceNode)object;
+          boolean copy = resourceNode.cdoState() == CDOState.TRANSIENT;
+          contents.add(resourceNode);
+          // resourceNode.setFolder(null);
 
-          // The object must be attached before getParent() is called!
-          if (CDOExplorerUtil.getParent(object) == target)
+          if (copy)
           {
-            CDOResourceNode resourceNode = (CDOResourceNode)object;
-            setUniqueName(resourceNode, contents);
+            // The object must be attached before getParent() is called!
+            if (CDOExplorerUtil.getParent(object) == target)
+            {
+              setUniqueName(resourceNode, contents);
+            }
           }
         }
       }
@@ -579,12 +605,17 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
         for (EObject object : objects)
         {
           CDOResourceNode resourceNode = (CDOResourceNode)object;
+          boolean copy = resourceNode.cdoState() == CDOState.TRANSIENT;
           nodes.add(resourceNode);
+          // ((InternalCDOObject)resourceNode).eSetResource(null, null);
 
-          // The resourceNode must be attached before getParent() is called!
-          if (CDOExplorerUtil.getParent(resourceNode) == target)
+          if (copy)
           {
-            setUniqueName(resourceNode, nodes);
+            // The resourceNode must be attached before getParent() is called!
+            if (CDOExplorerUtil.getParent(resourceNode) == target)
+            {
+              setUniqueName(resourceNode, nodes);
+            }
           }
         }
       }

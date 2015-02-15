@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
@@ -33,6 +34,8 @@ public class CDOWorkspaceConfigurationImpl implements CDOWorkspaceConfiguration
   private CDOWorkspaceBase base;
 
   private CDOSessionConfigurationFactory remote;
+
+  private int branchID = InternalCDOWorkspace.NO_BRANCH_ID;
 
   private String branchPath;
 
@@ -86,6 +89,16 @@ public class CDOWorkspaceConfigurationImpl implements CDOWorkspaceConfiguration
     this.remote = remote;
   }
 
+  public int getBranchID()
+  {
+    return branchID;
+  }
+
+  public void setBranchID(int branchID)
+  {
+    this.branchID = branchID;
+  }
+
   public String getBranchPath()
   {
     return branchPath;
@@ -135,6 +148,6 @@ public class CDOWorkspaceConfigurationImpl implements CDOWorkspaceConfiguration
   public CDOWorkspace checkout()
   {
     return new CDOWorkspaceImpl(localRepositoryName, store, idGenerationLocation, idGenerator,
-        (InternalCDOWorkspaceBase)base, remote, branchPath, timeStamp);
+        (InternalCDOWorkspaceBase)base, remote, branchID, branchPath, timeStamp);
   }
 }

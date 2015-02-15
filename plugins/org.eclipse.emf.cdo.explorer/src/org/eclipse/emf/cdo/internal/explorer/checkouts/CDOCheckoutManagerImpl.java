@@ -58,7 +58,23 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
       return new OnlineCDOCheckout();
     }
 
+    if ("offline".equals(type))
+    {
+      return new OfflineCDOCheckout();
+    }
+
     throw new IllegalArgumentException("Unknown type: " + type);
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    for (CDOCheckout checkout : getCheckouts())
+    {
+      checkout.close();
+    }
+
+    super.doDeactivate();
   }
 
   static

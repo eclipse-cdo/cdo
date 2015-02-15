@@ -352,9 +352,13 @@
             name="Disconnect Repository"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDisconnectHandler"/>
       <command
-            id="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
-            name="Checkout Repository"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler"/>
+            id="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutOnline"
+            name="Checkout Repository Online"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler$Online"/>
+      <command
+            id="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutOffline"
+            name="Checkout Repository Offline"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler$Offline"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.CreateBranch"
             name="Create Branch"
@@ -489,11 +493,27 @@
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?group=group.checkout">
          <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
+               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutOnline"
                icon="icons/checkout.gif"
                label="Checkout"
                style="push"
-               tooltip="Check the repository out">
+               tooltip="Check the repository out as an online connection">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutOffline"
+               icon="icons/checkout.gif"
+               label="Checkout Offline"
+               style="push"
+               tooltip="Check the repository out as an offline connection">
             <visibleWhen
                   checkEnabled="false">
                <with

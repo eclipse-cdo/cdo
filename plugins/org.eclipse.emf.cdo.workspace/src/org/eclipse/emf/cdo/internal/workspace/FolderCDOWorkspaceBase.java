@@ -104,10 +104,15 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
   protected Set<CDOID> doGetIDs()
   {
     Set<CDOID> ids = new HashSet<CDOID>();
-    for (String key : folder.list())
+
+    String[] keys = folder.list();
+    if (keys != null)
     {
-      CDOID id = getCDOID(key);
-      ids.add(id);
+      for (String key : keys)
+      {
+        CDOID id = getCDOID(key);
+        ids.add(id);
+      }
     }
 
     return ids;

@@ -101,6 +101,10 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private State state = State.Disconnected;
 
+  private boolean explicitelyConnected;
+
+  private int sessionRefCount;
+
   private CDOSession session;
 
   public CDORepositoryImpl()
@@ -129,6 +133,12 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   }
 
   public final void connect()
+  {
+    explicitelyConnected = true;
+    doConnect();
+  }
+
+  protected void doConnect()
   {
     boolean connected = false;
 
@@ -178,6 +188,20 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public final void disconnect()
   {
+    explicitelyConnected = false;
+    doDisconnect(false);
+  }
+
+  protected void doDisconnect(boolean force)
+  {
+    if (!force)
+    {
+      if (explicitelyConnected || sessionRefCount != 0)
+      {
+        return;
+      }
+    }
+
     boolean disconnected = false;
     CDOSession oldSession = null;
 
@@ -218,7 +242,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     {
       if (openCheckouts.isEmpty())
       {
-        disconnect();
+        doDisconnect(false);
       }
     }
   }
@@ -226,6 +250,20 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   public final CDOSession getSession()
   {
     return session;
+  }
+
+  public CDOSession acquireSession()
+  {
+    ++sessionRefCount;
+    doConnect();
+
+    return session;
+  }
+
+  public void releaseSession()
+  {
+    --sessionRefCount;
+    doDisconnect(false);
   }
 
   @Override
@@ -268,8 +306,6 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public final CDOSession openCheckout(CDOCheckout checkout)
   {
-    connect();
-
     synchronized (checkouts)
     {
       openCheckouts.add(checkout);

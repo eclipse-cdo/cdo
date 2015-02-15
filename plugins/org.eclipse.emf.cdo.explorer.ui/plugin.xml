@@ -375,6 +375,14 @@
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
             name="Close Checkout"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutCloseHandler"/>
+      <command
+            id="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
+            name="Update Workspace"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceUpdateHandler"/>
+      <command
+            id="org.eclipse.emf.cdo.explorer.ui.WorkspaceCheckin"
+            name="Checkin Workspace"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceCheckinHandler"/>
   </extension>
    
   <extension
@@ -551,7 +559,7 @@
                icon="icons/delete.gif"
                label="Delete..."
                style="push"
-               tooltip="Delete the repository">
+               tooltip="Delete the repositories">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -569,7 +577,7 @@
                icon="icons/delete.gif"
                label="Delete..."
                style="push"
-               tooltip="Delete the checkout">
+               tooltip="Delete the checkouts">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -587,7 +595,7 @@
                icon="icons/delete.gif"
                label="Delete..."
                style="push"
-               tooltip="Delete the object">
+               tooltip="Delete the objects">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -662,6 +670,44 @@
                       <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
+               label="Update"
+               style="push"
+               tooltip="Update the checkout from the remote repository">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceCheckin"
+               label="Checkin"
+               style="push"
+               tooltip="Checkin the local changes into the remote repository">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
+                     </adapt>
                   </iterate>
                </with>
             </visibleWhen>

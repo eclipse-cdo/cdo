@@ -11,10 +11,17 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
+import org.eclipse.emf.cdo.session.CDOSession;
+
+import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
+
+import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -76,22 +83,44 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
 
     if (selectedElement instanceof CDORepository)
     {
-      CDORepository repository = (CDORepository)selectedElement;
+      final CDORepository repository = (CDORepository)selectedElement;
       if (repository.isConnected())
       {
-        addShowInAction(page, actions, repository.getSession(), "org.eclipse.team.ui.GenericHistoryView");
+        addAction(actions, repository, new ShowInAction(page, CDOSessionsView.ID)
+        {
+          @Override
+          public void run()
+          {
+            super.run();
+
+            String description = repository.getURI();
+            int lastSlash = description.lastIndexOf('/');
+            description = description.substring(0, lastSlash) + "?repositoryName=" + repository.getName()
+                + "&automaticPackageRegistry=true&repositoryID=" + repository.getID();
+
+            CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP,
+                "cdo", repository.getConnectorType() + "://" + repository.getConnectorDescription()
+                    + "?repositoryName=" + repository.getName() + "&repositoryID=" + repository.getID());
+            if (session != null)
+            {
+              CDOPackageRegistryPopulator.populate(session.getPackageRegistry());
+            }
+          }
+        });
+
+        addAction(actions, repository.getSession(), new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
       }
     }
     else if (selectedElement instanceof CDOBranch)
     {
-      addShowInAction(page, actions, selectedElement, "org.eclipse.team.ui.GenericHistoryView");
+      addAction(actions, selectedElement, new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
     }
     else if (selectedElement instanceof CDOCheckout)
     {
       CDOCheckout checkout = (CDOCheckout)selectedElement;
       if (checkout.isOpen())
       {
-        addShowInAction(page, actions, checkout.getView(), "org.eclipse.team.ui.GenericHistoryView");
+        addAction(actions, checkout.getView(), new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
       }
     }
     else if (selectedElement instanceof EObject)
@@ -99,7 +128,7 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       EObject eObject = (EObject)selectedElement;
       if (CDOExplorerUtil.getCheckout(eObject) != null)
       {
-        addShowInAction(page, actions, selectedElement, "org.eclipse.team.ui.GenericHistoryView");
+        addAction(actions, selectedElement, new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
       }
     }
 
@@ -118,9 +147,8 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
     }
   }
 
-  private static void addShowInAction(IWorkbenchPage page, List<IAction> actions, Object selectedElement, String viewID)
+  private static void addAction(List<IAction> actions, Object selectedElement, ShowInAction action)
   {
-    ShowInAction action = new ShowInAction(page, viewID);
     action.selectionChanged(selectedElement);
     if (action.isEnabled())
     {

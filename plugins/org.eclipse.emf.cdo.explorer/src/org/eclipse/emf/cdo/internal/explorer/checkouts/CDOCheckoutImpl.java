@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
+import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -165,6 +167,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         {
           state = State.Opening;
 
+          prepareOpen();
           CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
 
           view = openView(session);
@@ -198,6 +201,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         manager.fireCheckoutOpenEvent(this, view, true);
       }
     }
+  }
+
+  protected void prepareOpen()
+  {
+    // Do nothing.
   }
 
   public final synchronized void close()
@@ -260,9 +268,24 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return ObjectType.valueFor(rootObject);
   }
 
+  public final CDOView openView()
+  {
+    return doOpenView(readOnly);
+  }
+
+  public final CDOView openView(boolean readOnly)
+  {
+    return doOpenView(readOnly);
+  }
+
   public final CDOTransaction openTransaction()
   {
-    CDOTransaction transaction = doOpenTransaction();
+    if (readOnly)
+    {
+      throw new ReadOnlyException("Checkout '" + getLabel() + "' is read-only");
+    }
+
+    CDOTransaction transaction = (CDOTransaction)doOpenView(false);
     if (transaction != null)
     {
       new CDOTransactionCommentator(transaction);
@@ -271,14 +294,22 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return transaction;
   }
 
-  protected CDOTransaction doOpenTransaction()
+  protected CDOView doOpenView(boolean readOnly)
   {
     if (view == null)
     {
       return null;
     }
 
-    return view.getSession().openTransaction(view.getBranch());
+    CDOSession session = view.getSession();
+    CDOBranch branch = view.getBranch();
+
+    if (readOnly)
+    {
+      return session.openView(branch);
+    }
+
+    return session.openTransaction(branch);
   }
 
   public String getEditorID(CDOID objectID)

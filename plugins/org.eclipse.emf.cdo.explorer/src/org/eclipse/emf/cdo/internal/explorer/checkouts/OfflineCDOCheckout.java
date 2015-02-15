@@ -10,30 +10,33 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
-import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
-import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace.DirtyStateChangedEvent;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
-import org.eclipse.net4j.Net4jUtil;
-import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.collection.Closeable;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -44,34 +47,46 @@ import java.io.File;
  */
 public class OfflineCDOCheckout extends CDOCheckoutImpl
 {
+  private final IListener workspaceListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof DirtyStateChangedEvent)
+      {
+        fireElementChangedEvent();
+      }
+    }
+  };
+
   private CDOWorkspace workspace;
 
   public OfflineCDOCheckout()
   {
   }
 
+  public final CDOWorkspace getWorkspace()
+  {
+    return workspace;
+  }
+
+  public final boolean isDirty()
+  {
+    if (workspace == null)
+    {
+      return false;
+    }
+
+    return workspace.isDirty();
+  }
+
   @Override
   protected CDOView openView(CDOSession session)
   {
-    final IManagedContainer container = getContainer();
-    final CDORepository repository = getRepository();
-
-    final String connectorType = repository.getConnectorType();
-    final String connectorDescription = repository.getConnectorDescription();
-    final String repositoryName = repository.getName();
-
     CDOSessionConfigurationFactory remote = new CDOSessionConfigurationFactory()
     {
       public CDOSessionConfiguration createSessionConfiguration()
       {
-        IConnector connector = Net4jUtil.getConnector(container, connectorType, connectorDescription);
-
-        CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
-        config.setConnector(connector);
-        config.setRepositoryName(repositoryName);
-        config.setRevisionManager(CDORevisionUtil.createRevisionManager(CDORevisionCache.NOOP));
-
-        return config;
+        return new RemoteSessionConfiguration();
       }
     };
 
@@ -90,7 +105,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     File baseFolder = new File(folder, "base");
     CDOWorkspaceBase base = CDOWorkspaceUtil.createFolderWorkspaceBase(baseFolder);
 
-    String localRepositoryName = repositoryName + "-workspace" + getID();
+    String localRepositoryName = getRepository().getName() + "-workspace" + getID();
     int branchID = getBranchID();
     long timeStamp = getTimeStamp();
 
@@ -112,12 +127,8 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
       workspace = configuration.checkout();
     }
 
-    if (isReadOnly())
-    {
-      return workspace.openView();
-    }
-
-    return workspace.openTransaction();
+    workspace.addListener(workspaceListener);
+    return workspace.openView();
   }
 
   @Override
@@ -133,13 +144,167 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   }
 
   @Override
-  protected CDOTransaction doOpenTransaction()
+  protected CDOView doOpenView(boolean readOnly)
   {
     if (workspace == null)
     {
       return null;
     }
 
+    if (readOnly)
+    {
+      return workspace.openView();
+    }
+
     return workspace.openTransaction();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class RemoteSessionConfiguration implements CDOSessionConfiguration, Closeable
+  {
+    private boolean closed;
+
+    public void addListener(IListener listener)
+    {
+    }
+
+    public void removeListener(IListener listener)
+    {
+    }
+
+    public boolean hasListeners()
+    {
+      return false;
+    }
+
+    public IListener[] getListeners()
+    {
+      return null;
+    }
+
+    public String getUserID()
+    {
+      return null;
+    }
+
+    public void setUserID(String userID)
+    {
+    }
+
+    public boolean isPassiveUpdateEnabled()
+    {
+      return false;
+    }
+
+    public void setPassiveUpdateEnabled(boolean passiveUpdateEnabled)
+    {
+    }
+
+    public PassiveUpdateMode getPassiveUpdateMode()
+    {
+      return null;
+    }
+
+    public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
+    {
+    }
+
+    public LockNotificationMode getLockNotificationMode()
+    {
+      return null;
+    }
+
+    public void setLockNotificationMode(LockNotificationMode mode)
+    {
+    }
+
+    public ExceptionHandler getExceptionHandler()
+    {
+      return null;
+    }
+
+    public void setExceptionHandler(ExceptionHandler exceptionHandler)
+    {
+    }
+
+    public CDOIDGenerator getIDGenerator()
+    {
+      return null;
+    }
+
+    public void setIDGenerator(CDOIDGenerator idGenerator)
+    {
+    }
+
+    public CDOFetchRuleManager getFetchRuleManager()
+    {
+      return null;
+    }
+
+    public void setFetchRuleManager(CDOFetchRuleManager fetchRuleManager)
+    {
+    }
+
+    public CDOBranchManager getBranchManager()
+    {
+      return null;
+    }
+
+    public void setBranchManager(CDOBranchManager branchManager)
+    {
+    }
+
+    @Deprecated
+    public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
+    {
+      return null;
+    }
+
+    public IPasswordCredentialsProvider getCredentialsProvider()
+    {
+      return null;
+    }
+
+    public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
+    {
+    }
+
+    public boolean isActivateOnOpen()
+    {
+      return false;
+    }
+
+    public void setActivateOnOpen(boolean activateOnOpen)
+    {
+    }
+
+    public boolean isSessionOpen()
+    {
+      return !closed;
+    }
+
+    public CDOSession openSession()
+    {
+      CDORepository repository = getRepository();
+      return repository.acquireSession();
+    }
+
+    public void close()
+    {
+      if (!closed)
+      {
+        CDORepository repository = getRepository();
+        repository.releaseSession();
+
+        closed = true;
+      }
+    }
+
+    public boolean isClosed()
+    {
+      return closed;
+    }
   }
 }

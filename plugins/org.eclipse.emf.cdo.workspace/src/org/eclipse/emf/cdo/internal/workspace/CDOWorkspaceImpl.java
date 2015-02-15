@@ -74,6 +74,7 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.Event;
@@ -102,6 +103,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
@@ -141,6 +143,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   private boolean dirty;
 
   private CDOSessionConfigurationFactory remoteSessionConfigurationFactory;
+
+  private Map<InternalCDOSession, Closeable> closeables = new ConcurrentHashMap<InternalCDOSession, Closeable>();
 
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
@@ -236,7 +240,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       finally
       {
         remoteSession.getPackageRegistry().clear();
-        LifecycleUtil.deactivate(remoteSession);
+        closeRemoteSession(remoteSession);
       }
 
       accessor.rawCommit(1, monitor);
@@ -487,7 +491,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         }
         finally
         {
-          LifecycleUtil.deactivate(remoteSession);
+          closeRemoteSession(remoteSession);
         }
       }
 
@@ -607,33 +611,40 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       InternalCDOBranch branch = remoteSession.getBranchManager().getBranch(branchPath);
       InternalCDOTransaction transaction = (InternalCDOTransaction)remoteSession.openTransaction(branch);
 
-      CDOChangeSetData changes = getLocalChanges();
-
       try
       {
-        ApplyChangeSetResult result = transaction.applyChangeSet(changes, base, this, head, true);
-        if (!result.getIDMappings().isEmpty())
+        CDOChangeSetData changes = getLocalChanges();
+
+        try
         {
-          throw new IllegalStateException("Attaching new objects is only supported for IDGenerationLocation.CLIENT");
+          ApplyChangeSetResult result = transaction.applyChangeSet(changes, base, this, head, true);
+          if (!result.getIDMappings().isEmpty())
+          {
+            throw new IllegalStateException("Attaching new objects is only supported for IDGenerationLocation.CLIENT");
+          }
         }
+        catch (ChangeSetOutdatedException ex)
+        {
+          throw new CommitException(ex);
+        }
+
+        transaction.setCommitComment(comment);
+        CDOCommitInfo info = transaction.commit();
+
+        adjustLocalRevisions(transaction, info);
+        clearBase();
+        setTimeStamp(info.getTimeStamp());
+
+        return info;
       }
-      catch (ChangeSetOutdatedException ex)
+      finally
       {
-        throw new CommitException(ex);
+        transaction.close();
       }
-
-      transaction.setCommitComment(comment);
-      CDOCommitInfo info = transaction.commit();
-
-      adjustLocalRevisions(transaction, info);
-      clearBase();
-      setTimeStamp(info.getTimeStamp());
-
-      return info;
     }
     finally
     {
-      LifecycleUtil.deactivate(remoteSession);
+      closeRemoteSession(remoteSession);
     }
   }
 
@@ -972,23 +983,29 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   protected InternalCDOSession openRemoteSession()
   {
     CDOSessionConfiguration configuration = remoteSessionConfigurationFactory.createSessionConfiguration();
-    InternalCDOSession session = (InternalCDOSession)configuration.openSession();
+    InternalCDOSession remoteSession = (InternalCDOSession)configuration.openSession();
 
-    CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
+    if (configuration instanceof Closeable)
+    {
+      Closeable closeable = (Closeable)configuration;
+      closeables.put(remoteSession, closeable);
+    }
+
+    CDORepositoryInfo repositoryInfo = remoteSession.getRepositoryInfo();
     if (!repositoryInfo.isSupportingAudits())
     {
-      session.close();
+      remoteSession.close();
       throw new IllegalStateException("Remote repository does not support auditing");
     }
 
     IDGenerationLocation remoteLocation = repositoryInfo.getIDGenerationLocation();
     if (!remoteLocation.equals(idGenerationLocation))
     {
-      session.close();
+      remoteSession.close();
       throw new IllegalStateException("Remote repository uses different ID generation location: " + remoteLocation);
     }
 
-    InternalCDOBranch branch = session.getBranchManager().getBranch(branchID);
+    InternalCDOBranch branch = remoteSession.getBranchManager().getBranch(branchID);
     String pathName = branch.getPathName();
     if (!ObjectUtil.equals(pathName, branchPath))
     {
@@ -996,7 +1013,20 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       saveProperties();
     }
 
-    return session;
+    return remoteSession;
+  }
+
+  protected void closeRemoteSession(InternalCDOSession remoteSession)
+  {
+    Closeable closeable = closeables.remove(remoteSession);
+    if (closeable != null)
+    {
+      closeable.close();
+    }
+    else
+    {
+      LifecycleUtil.deactivate(remoteSession);
+    }
   }
 
   protected void setTimeStamp(long timeStamp)

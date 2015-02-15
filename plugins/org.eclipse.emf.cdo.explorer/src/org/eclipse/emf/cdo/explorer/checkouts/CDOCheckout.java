@@ -62,6 +62,10 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 
   public ObjectType getRootType();
 
+  public CDOView openView();
+
+  public CDOView openView(boolean readOnly);
+
   public CDOTransaction openTransaction();
 
   public String getEditorID(CDOID objectID);

@@ -248,6 +248,18 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     }
 
     @Override
+    protected CDOTransaction openTransaction(CDOObject object)
+    {
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
+      if (checkout != null)
+      {
+        return checkout.openTransaction();
+      }
+    
+      return null;
+    }
+
+    @Override
     protected void doRun(CDOTransaction transaction, CDOObject resource, IProgressMonitor monitor) throws Exception
     {
       EList<EObject> contents = ((CDOResource)resource).getContents();
@@ -267,6 +279,18 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     {
       super(page, text, toolTipText, image, parent);
       this.childDescriptor = childDescriptor;
+    }
+
+    @Override
+    protected CDOTransaction openTransaction(CDOObject object)
+    {
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
+      if (checkout != null)
+      {
+        return checkout.openTransaction();
+      }
+
+      return null;
     }
 
     @Override

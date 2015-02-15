@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -321,10 +320,10 @@ public class CDOCheckoutOpenWithActionProvider extends CommonActionProvider
       protected IStatus run(IProgressMonitor monitor)
       {
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceLeaf);
-        final CDOTransaction transaction = checkout.openTransaction();
+        final CDOView view = checkout.openView();
 
-        CDOResourceLeaf transactionalLeaf = transaction.getObject(resourceLeaf);
-        final IEditorInput editorInput = CDOEditorUtil.createEditorInput(editorID, transactionalLeaf, false, true);
+        CDOResourceLeaf contextualLeaf = view.getObject(resourceLeaf);
+        final IEditorInput editorInput = CDOEditorUtil.createEditorInput(editorID, contextualLeaf, false, true);
 
         final IWorkbenchWindow workbenchWindow = page.getWorkbenchWindow();
         Display display = workbenchWindow.getShell().getDisplay();
@@ -345,7 +344,7 @@ public class CDOCheckoutOpenWithActionProvider extends CommonActionProvider
 
                 synchronized (VIEWS)
                 {
-                  VIEWS.put(editor, Pair.create((CDOView)transaction, key));
+                  VIEWS.put(editor, Pair.create(view, key));
                 }
               }
             }

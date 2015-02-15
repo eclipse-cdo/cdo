@@ -37,4 +37,11 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
 
     return session.openTransaction(branch);
   }
+
+  @Override
+  protected void prepareOpen()
+  {
+    getRepository().connect();
+    super.prepareOpen();
+  }
 }

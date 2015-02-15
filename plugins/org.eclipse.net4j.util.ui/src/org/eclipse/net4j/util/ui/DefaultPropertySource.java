@@ -21,9 +21,8 @@ import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -32,7 +31,7 @@ import java.util.Map;
  */
 public class DefaultPropertySource<RECEIVER> implements IPropertySource
 {
-  private List<IPropertyDescriptor> descriptors = new ArrayList<IPropertyDescriptor>();
+  private Map<Object, IPropertyDescriptor> descriptors = new LinkedHashMap<Object, IPropertyDescriptor>();
 
   private RECEIVER receiver;
 
@@ -55,9 +54,16 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
   /**
    * @since 3.5
    */
-  public void addDescriptor(IPropertyDescriptor descriptor)
+  public boolean addDescriptor(IPropertyDescriptor descriptor)
   {
-    descriptors.add(descriptor);
+    Object id = descriptor.getId();
+    if (descriptors.containsKey(id))
+    {
+      return false;
+    }
+
+    descriptors.put(id, descriptor);
+    return true;
   }
 
   public PropertyDescriptor addDescriptor(String category, Object id, String displayName, String description)
@@ -66,7 +72,11 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     descriptor.setCategory(category);
     descriptor.setDescription(description);
 
-    addDescriptor(descriptor);
+    if (!addDescriptor(descriptor))
+    {
+      return null;
+    }
+
     return descriptor;
   }
 
@@ -76,19 +86,20 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     {
       if (property.getLabel() != null)
       {
-        descriptors.add(new DelegatingPropertyDescriptor<RECEIVER>(property));
+        DelegatingPropertyDescriptor<RECEIVER> descriptor = new DelegatingPropertyDescriptor<RECEIVER>(property);
+        addDescriptor(descriptor);
       }
     }
   }
 
   public IPropertyDescriptor[] getPropertyDescriptors()
   {
-    return descriptors.toArray(new IPropertyDescriptor[descriptors.size()]);
+    return descriptors.values().toArray(new IPropertyDescriptor[descriptors.size()]);
   }
 
   public IPropertyDescriptor getPropertyDescriptor(Object id)
   {
-    for (IPropertyDescriptor propertyDescriptor : descriptors)
+    for (IPropertyDescriptor propertyDescriptor : descriptors.values())
     {
       if (propertyDescriptor.getId().equals(id))
       {

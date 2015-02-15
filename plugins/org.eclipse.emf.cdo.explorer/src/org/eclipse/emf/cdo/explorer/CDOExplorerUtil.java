@@ -54,6 +54,15 @@ public final class CDOExplorerUtil
       return container;
     }
 
+    if (object instanceof CDOResource)
+    {
+      CDOResource resource = (CDOResource)object;
+      if (resource.isRoot())
+      {
+        return null;
+      }
+    }
+
     Resource resource = object.eResource();
     if (resource instanceof CDOResource)
     {

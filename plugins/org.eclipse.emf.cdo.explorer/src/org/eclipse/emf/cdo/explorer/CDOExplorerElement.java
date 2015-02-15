@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * @author Eike Stepper
  * @since 4.4
  */
-public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter
+public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comparable<CDOExplorerElement>
 {
   public String getID();
 

@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.event.Event;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -83,6 +84,14 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
     }
 
     throw new IllegalArgumentException("Unknown type: " + type);
+  }
+
+  @Override
+  protected CDOCheckout[] sortElements(CDOCheckout[] array)
+  {
+    CDOCheckout[] sorted = super.sortElements(array);
+    Arrays.sort(sorted);
+    return sorted;
   }
 
   @Override

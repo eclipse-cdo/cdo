@@ -87,11 +87,16 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
       this.label = label;
       save();
 
-      AbstractManager<?> manager = getManager();
-      if (manager != null)
-      {
-        manager.fireElementChangedEvent(this);
-      }
+      fireElementChangedEvent();
+    }
+  }
+
+  protected final void fireElementChangedEvent()
+  {
+    AbstractManager<?> manager = getManager();
+    if (manager != null)
+    {
+      manager.fireElementChangedEvent(this);
     }
   }
 
@@ -181,6 +186,13 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   public int hashCode()
   {
     return getClass().hashCode() ^ id.hashCode();
+  }
+
+  public int compareTo(CDOExplorerElement o)
+  {
+    String label1 = StringUtil.safe(label);
+    String label2 = StringUtil.safe(o.getLabel());
+    return label1.compareTo(label2);
   }
 
   public void delete(boolean deleteContents)

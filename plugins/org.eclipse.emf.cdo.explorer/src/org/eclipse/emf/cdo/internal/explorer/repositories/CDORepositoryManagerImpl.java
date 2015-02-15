@@ -102,7 +102,7 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
   {
     for (CDORepository repository : getRepositories())
     {
-      repository.disconnect();
+      ((CDORepositoryImpl)repository).doDisconnect(true);
     }
 
     super.doDeactivate();

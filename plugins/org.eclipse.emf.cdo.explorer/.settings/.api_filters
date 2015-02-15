@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.explorer" version="2">
+    <resource path="src/org/eclipse/emf/cdo/internal/explorer/checkouts/CDOCheckoutImpl.java" type="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl">
+        <filter id="572522506">
+            <message_arguments>
+                <message_argument value="ReadOnlyException"/>
+                <message_argument value="CDOCheckoutImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/internal/explorer/checkouts/OfflineCDOCheckout.java" type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout$RemoteSessionConfiguration">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOSessionConfiguration"/>
+                <message_argument value="RemoteSessionConfiguration"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

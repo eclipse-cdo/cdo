@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
@@ -43,6 +44,12 @@ public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>
   public void disconnect();
 
   public CDOCheckout[] getCheckouts();
+
+  public CDOSession getSession();
+
+  public CDOSession acquireSession();
+
+  public void releaseSession();
 
   /**
    * @author Eike Stepper

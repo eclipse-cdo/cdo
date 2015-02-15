@@ -42,15 +42,20 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
     return object;
   }
 
+  protected CDOTransaction openTransaction(CDOObject object)
+  {
+    CDOView view = object.cdoView();
+    CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
+    OpenTransactionAction.configureTransaction(transaction);
+    return transaction;
+  }
+
   @Override
   protected final void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     progressMonitor.beginTask(Messages.getString("TransactionalBackgroundAction_1"), 100); //$NON-NLS-1$
 
-    CDOView view = object.cdoView();
-    CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
-    OpenTransactionAction.configureTransaction(transaction);
-
+    CDOTransaction transaction = openTransaction(object);
     CDOObject transactionalObject = transaction.getObject(object);
     progressMonitor.worked(5);
 
@@ -70,6 +75,7 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
 
     if (commitInfo != null)
     {
+      CDOView view = object.cdoView();
       view.waitForUpdate(commitInfo.getTimeStamp(), 5000);
       postRun(view, object);
     }

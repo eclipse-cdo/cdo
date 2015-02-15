@@ -502,8 +502,8 @@
             locationURI="popup:org.eclipse.ui.popup.any?group=group.checkout">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutOnline"
-               icon="icons/checkout.gif"
-               label="Checkout"
+               icon="icons/checkout_online.gif"
+               label="Checkout Online"
                style="push"
                tooltip="Check the repository out as an online connection">
             <visibleWhen
@@ -518,7 +518,7 @@
          </command>
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutOffline"
-               icon="icons/checkout.gif"
+               icon="icons/checkout_offlline.gif"
                label="Checkout Offline"
                style="push"
                tooltip="Check the repository out as an offline connection">
@@ -680,6 +680,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?group=additions">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
+               icon="icons/update.gif"
                label="Update"
                style="push"
                tooltip="Update the checkout from the remote repository">
@@ -697,6 +698,7 @@
          </command>
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceCheckin"
+               icon="icons/checkin.gif"
                label="Checkin"
                style="push"
                tooltip="Checkin the local changes into the remote repository">

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.checkouts;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IEvent;
 
@@ -26,6 +27,8 @@ import java.util.Properties;
 public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
 {
   public CDOCheckout getCheckout(String id);
+
+  public CDOCheckout getCheckout(CDOView view);
 
   public CDOCheckout[] getCheckouts();
 

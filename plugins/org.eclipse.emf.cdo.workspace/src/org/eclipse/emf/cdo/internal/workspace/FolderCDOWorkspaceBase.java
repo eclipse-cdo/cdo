@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
@@ -41,6 +42,13 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
   public FolderCDOWorkspaceBase(File folder)
   {
     this.folder = folder;
+  }
+
+  @Override
+  public void init(InternalCDOWorkspace workspace)
+  {
+    super.init(workspace);
+    createFolder();
   }
 
   public File getFolder()

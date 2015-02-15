@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
@@ -60,6 +61,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
   public EObject getRootObject();
 
   public ObjectType getRootType();
+
+  public CDOTransaction openTransaction();
 
   public String getEditorID(CDOID objectID);
 

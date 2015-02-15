@@ -39,6 +39,11 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
     return getElement(id);
   }
 
+  public CDORepository getRepository(CDOSession session)
+  {
+    return sessionMap.get(session);
+  }
+
   public CDORepository[] getRepositories()
   {
     return getElements();
@@ -55,11 +60,6 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
     {
       ((CDORepositoryImpl)repository).disconnectIfUnused();
     }
-  }
-
-  public CDORepository getRepository(CDOSession session)
-  {
-    return sessionMap.get(session);
   }
 
   public void fireRepositoryConnectionEvent(CDORepository repository, CDOSession session, boolean connected)

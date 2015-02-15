@@ -14,17 +14,22 @@ import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.internal.explorer.AbstractManager;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.Event;
 
 import java.io.File;
+import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Eike Stepper
  */
 public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> implements CDOCheckoutManager
 {
+  private final Map<CDOView, CDOCheckout> viewMap = new ConcurrentHashMap<CDOView, CDOCheckout>();
+
   public CDOCheckoutManagerImpl(File folder)
   {
     super(CDOCheckout.class, folder);
@@ -33,6 +38,11 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
   public CDOCheckout getCheckout(String id)
   {
     return getElement(id);
+  }
+
+  public CDOCheckout getCheckout(CDOView view)
+  {
+    return viewMap.get(view);
   }
 
   public CDOCheckout[] getCheckouts()
@@ -45,8 +55,17 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
     return newElement(properties);
   }
 
-  public void fireCheckoutOpenEvent(CDOCheckout checkout, boolean open)
+  public void fireCheckoutOpenEvent(CDOCheckout checkout, CDOView view, boolean open)
   {
+    if (open)
+    {
+      viewMap.put(view, checkout);
+    }
+    else
+    {
+      viewMap.remove(view);
+    }
+
     fireEvent(new CheckoutOpenEventImpl(this, checkout, open));
   }
 

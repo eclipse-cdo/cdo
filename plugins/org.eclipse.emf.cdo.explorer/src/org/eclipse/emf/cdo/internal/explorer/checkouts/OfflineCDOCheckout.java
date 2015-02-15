@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
@@ -129,5 +130,16 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
       workspace.close();
       workspace = null;
     }
+  }
+
+  @Override
+  protected CDOTransaction doOpenTransaction()
+  {
+    if (workspace == null)
+    {
+      return null;
+    }
+
+    return workspace.openTransaction();
   }
 }

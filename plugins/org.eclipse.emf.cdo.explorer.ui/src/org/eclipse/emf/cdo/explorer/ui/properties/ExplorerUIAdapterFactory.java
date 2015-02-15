@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.properties;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
@@ -171,8 +172,8 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
           @Override
           protected IStatus run(IProgressMonitor monitor)
           {
-            CDOView view = resourceNode.cdoView();
-            CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
+            CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
+            CDOTransaction transaction = checkout.openTransaction();
 
             try
             {

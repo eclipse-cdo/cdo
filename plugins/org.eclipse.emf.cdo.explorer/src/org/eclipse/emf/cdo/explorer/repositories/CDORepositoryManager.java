@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.repositories;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.event.IEvent;
 
@@ -26,6 +27,8 @@ import java.util.Properties;
 public interface CDORepositoryManager extends CDOExplorerManager<CDORepository>
 {
   public CDORepository getRepository(String id);
+
+  public CDORepository getRepository(CDOSession session);
 
   public CDORepository[] getRepositories();
 

@@ -12,10 +12,10 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -82,19 +82,21 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
         CDOResourceNode newResourceNode = createNewResourceNode();
         newResourceNode.setName(name);
 
+        CDOCheckout checkout;
         CDOResourceNode parentResourceNode;
+
         if (parent instanceof CDOCheckout)
         {
-          CDOCheckout checkout = (CDOCheckout)parent;
+          checkout = (CDOCheckout)parent;
           parentResourceNode = (CDOResourceNode)checkout.getRootObject();
         }
         else
         {
           parentResourceNode = (CDOResourceNode)parent;
+          checkout = CDOExplorerUtil.getCheckout(parentResourceNode);
         }
 
-        CDOView view = parentResourceNode.cdoView();
-        CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
+        CDOTransaction transaction = checkout.openTransaction();
 
         CDOResourceNode txParent = transaction.getObject(parentResourceNode);
         if (txParent instanceof CDOResourceFolder)

@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.explorer.ui.handlers;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -77,8 +76,7 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    CDOView view = checkout.getView();
-    CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
+    CDOTransaction transaction = checkout.openTransaction();
 
     try
     {

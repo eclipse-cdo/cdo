@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -321,9 +320,8 @@ public class CDOCheckoutOpenWithActionProvider extends CommonActionProvider
       @Override
       protected IStatus run(IProgressMonitor monitor)
       {
-        CDOView view = object.cdoView();
-        final CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
-        OpenTransactionAction.configureTransaction(transaction);
+        CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceLeaf);
+        final CDOTransaction transaction = checkout.openTransaction();
 
         CDOResourceLeaf transactionalLeaf = transaction.getObject(resourceLeaf);
         final IEditorInput editorInput = CDOEditorUtil.createEditorInput(editorID, transactionalLeaf, false, true);

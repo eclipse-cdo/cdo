@@ -18,10 +18,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.ObjectType;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -245,9 +242,8 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
         {
           monitor.beginTask(title, 110 + (copy ? objects.length + 1 : 0));
 
-          CDOView view = CDOUtil.getCDOObject(objects[0]).cdoView();
-          CDOTransaction transaction = view.getSession().openTransaction(view.getBranch());
-          OpenTransactionAction.configureTransaction(transaction);
+          CDOCheckout checkout = CDOExplorerUtil.getCheckout(objects[0]);
+          CDOTransaction transaction = checkout.openTransaction();
           monitor.worked(1);
 
           try

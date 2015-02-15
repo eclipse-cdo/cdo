@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.internal.explorer.AbstractManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -193,7 +195,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       CDOCheckoutManagerImpl manager = getManager();
       if (manager != null)
       {
-        manager.fireCheckoutOpenEvent(this, true);
+        manager.fireCheckoutOpenEvent(this, view, true);
       }
     }
   }
@@ -201,6 +203,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   public final synchronized void close()
   {
     boolean closed = false;
+    CDOView oldView = null;
 
     synchronized (viewListener)
     {
@@ -209,6 +212,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         try
         {
           state = State.Closing;
+          oldView = view;
 
           try
           {
@@ -236,7 +240,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       CDOCheckoutManagerImpl manager = getManager();
       if (manager != null)
       {
-        manager.fireCheckoutOpenEvent(this, false);
+        manager.fireCheckoutOpenEvent(this, oldView, false);
       }
     }
   }
@@ -254,6 +258,27 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   public final ObjectType getRootType()
   {
     return ObjectType.valueFor(rootObject);
+  }
+
+  public final CDOTransaction openTransaction()
+  {
+    CDOTransaction transaction = doOpenTransaction();
+    if (transaction != null)
+    {
+      new CDOTransactionCommentator(transaction);
+    }
+
+    return transaction;
+  }
+
+  protected CDOTransaction doOpenTransaction()
+  {
+    if (view == null)
+    {
+      return null;
+    }
+
+    return view.getSession().openTransaction(view.getBranch());
   }
 
   public String getEditorID(CDOID objectID)

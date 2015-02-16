@@ -160,6 +160,15 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
+    add(new Property<CDOCheckout>("dirty", "Dirty", "Whether this checkout is dirty", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.isDirty();
+      }
+    });
+
     add(new Property<CDOCheckout>("repositoryID", "ID", "The ID of the repository of this checkout",
         CDORepositoryProperties.CATEGORY_REPOSITORY)
     {

@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
@@ -30,6 +32,11 @@ public interface InternalCDOWorkspace extends CDOWorkspace
    * @since 4.2
    */
   public static final int NO_BRANCH_ID = -1;
+
+  /**
+   * @since 4.2
+   */
+  public IManagedContainer getContainer();
 
   /**
    * @since 4.1

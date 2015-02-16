@@ -24,6 +24,11 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   {
   }
 
+  public final boolean isDirty()
+  {
+    return false;
+  }
+
   @Override
   protected CDOView openView(CDOSession session)
   {

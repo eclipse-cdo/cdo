@@ -58,10 +58,9 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
           text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
         }
 
-        if (element instanceof OfflineCDOCheckout)
+        if (checkout instanceof OfflineCDOCheckout)
         {
-          OfflineCDOCheckout offlineCheckout = (OfflineCDOCheckout)element;
-          if (offlineCheckout.isDirty())
+          if (checkout.isDirty())
           {
             text += "  [dirty]";
           }

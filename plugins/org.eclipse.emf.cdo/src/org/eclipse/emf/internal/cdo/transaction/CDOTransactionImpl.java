@@ -1287,7 +1287,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
     catch (Throwable t)
     {
-      if(t.getCause() instanceof MonitorCanceledException && !(t.getCause().getCause() instanceof TimeoutRuntimeException)){
+      if (t.getCause() instanceof MonitorCanceledException
+          && !(t.getCause().getCause() instanceof TimeoutRuntimeException))
+      {
         throw new OperationCanceledException("CDOTransactionImpl.7");//$NON-NLS-1$
       }
       throw new CommitException(t);

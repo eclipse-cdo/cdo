@@ -380,9 +380,14 @@
             name="Update Workspace"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceUpdateHandler"/>
       <command
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceCheckinHandler"
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceCheckin"
-            name="Checkin Workspace"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceCheckinHandler"/>
+            name="Checkin Workspace">
+      </command>
+      <command
+            id="org.eclipse.emf.cdo.explorer.ui.WorkspaceRevert"
+            name="Revert Workspace"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceRevertHandler"/>
   </extension>
    
   <extension
@@ -689,9 +694,10 @@
                <with
                      variable="activeMenuSelection">
                   <iterate>
-                     <adapt
-                           type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
-                     </adapt>
+                    <and>
+                      <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
+                      <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                    </and>
                   </iterate>
                </with>
             </visibleWhen>
@@ -707,9 +713,29 @@
                <with
                      variable="activeMenuSelection">
                   <iterate>
-                     <adapt
-                           type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
-                     </adapt>
+                    <and>
+                      <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
+                      <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                    </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceRevert"
+               icon="icons/revert.gif"
+               label="Revert"
+               style="push"
+               tooltip="Revert the local changes">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeMenuSelection">
+                  <iterate>
+                    <and>
+                      <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
+                      <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                    </and>
                   </iterate>
                </with>
             </visibleWhen>

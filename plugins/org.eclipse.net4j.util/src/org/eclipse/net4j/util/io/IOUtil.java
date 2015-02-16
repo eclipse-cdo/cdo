@@ -12,6 +12,7 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 
@@ -38,6 +39,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.lang.reflect.Method;
+import java.net.ServerSocket;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
@@ -152,6 +156,51 @@ public final class IOUtil
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static int getFreePort() throws IOException
+  {
+    ServerSocket socket = null;
+
+    try
+    {
+      socket = new ServerSocket(0);
+      socket.setReuseAddress(true);
+      return socket.getLocalPort();
+    }
+    finally
+    {
+      IOUtil.closeSilent(socket);
+    }
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static boolean openSystemBrowser(String url)
+  {
+    try
+    {
+      ClassLoader classLoader = OM.BUNDLE.getClass().getClassLoader();
+
+      // java.awt.Desktop was introduced with Java 1.6!
+      Class<?> desktopClass = classLoader.loadClass("java.awt.Desktop");
+      Method getDesktopMethod = ReflectUtil.getMethod(desktopClass, "getDesktop");
+      Method browseMethod = ReflectUtil.getMethod(desktopClass, "browse", URI.class);
+
+      Object desktop = getDesktopMethod.invoke(null);
+      browseMethod.invoke(desktop, new URI(url));
+      return true;
+    }
+    catch (Throwable ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return false;
   }
 
   public static FileInputStream openInputStream(String fileName) throws IORuntimeException

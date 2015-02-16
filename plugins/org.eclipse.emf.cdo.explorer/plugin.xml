@@ -33,7 +33,7 @@
          id="org.eclipse.emf.cdo.explorer.checkout.properties"
          type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"
          namespace="org.eclipse.emf.cdo.explorer.checkout"
-         properties="state,open,type,id,folder,rootType,canContainResources,branchID,branch,timeStamp,readOnly,rootID,repositoryID,repositoryFolder,repositoryURI"
+         properties="state,open,type,id,folder,rootType,canContainResources,branchID,branch,timeStamp,readOnly,rootID,dirty,repositoryID,repositoryFolder,repositoryURI"
          class="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutProperties$Tester"/>
    </extension>
 

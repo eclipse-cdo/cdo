@@ -68,6 +68,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 
   public CDOTransaction openTransaction();
 
+  public boolean isDirty();
+
   public String getEditorID(CDOID objectID);
 
   public void setEditorID(CDOID objectID, String editorID);

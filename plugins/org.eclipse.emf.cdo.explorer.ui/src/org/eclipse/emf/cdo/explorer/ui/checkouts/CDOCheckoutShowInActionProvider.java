@@ -16,12 +16,18 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
+import org.eclipse.emf.cdo.server.CDOServerBrowser;
+import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -120,6 +126,35 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       CDOCheckout checkout = (CDOCheckout)selectedElement;
       if (checkout.isOpen())
       {
+        if (checkout instanceof OfflineCDOCheckout)
+        {
+          OfflineCDOCheckout offlineCheckout = (OfflineCDOCheckout)checkout;
+
+          final InternalCDOWorkspace workspace = (InternalCDOWorkspace)offlineCheckout.getWorkspace();
+          if (workspace != null)
+          {
+            actions.add(new Action("CDO Server Browser", OM.getImageDescriptor("icons/web.gif"))
+            {
+              @Override
+              public void run()
+              {
+                IManagedContainer container = workspace.getContainer();
+                container.registerFactory(new CDOServerBrowser.ContainerBased.Factory(container));
+                container.registerFactory(new DBBrowserPage.Factory());
+
+                CDOServerBrowser browser = (CDOServerBrowser)container.getElement(
+                    CDOServerBrowser.ContainerBased.Factory.PRODUCT_GROUP,
+                    CDOServerBrowser.ContainerBased.Factory.TYPE, "free-port");
+
+                if (browser != null && browser.isActive())
+                {
+                  IOUtil.openSystemBrowser("http://localhost:" + browser.getPort());
+                }
+              }
+            });
+          }
+        }
+
         addAction(actions, checkout.getView(), new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
       }
     }

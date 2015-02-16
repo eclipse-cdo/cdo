@@ -50,6 +50,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -535,10 +536,17 @@ public class CDOServerBrowser extends Worker
 
         try
         {
-          if (!StringUtil.isEmpty(description))
+          int port;
+          if (StringUtil.isEmpty(description) || !Character.isDigit(description.charAt(0)))
           {
-            browser.setPort(Integer.valueOf(description));
+            port = IOUtil.getFreePort();
           }
+          else
+          {
+            port = Integer.parseInt(description);
+          }
+
+          browser.setPort(port);
         }
         catch (Exception ex)
         {

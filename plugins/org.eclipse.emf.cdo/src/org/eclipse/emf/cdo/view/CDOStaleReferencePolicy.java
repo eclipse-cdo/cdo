@@ -104,6 +104,16 @@ public interface CDOStaleReferencePolicy
             return source.eAdapters();
           }
 
+          if (name.equals("eContainer")) //$NON-NLS-1$
+          {
+            return null;
+          }
+
+          if (name.equals("eResource")) //$NON-NLS-1$
+          {
+            return null;
+          }
+
           if (name.equals("equals")) //$NON-NLS-1$
           {
             return target.equals(args[0]);

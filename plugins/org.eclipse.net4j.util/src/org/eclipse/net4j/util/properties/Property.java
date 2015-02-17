@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 418452
@@ -12,10 +12,11 @@
 package org.eclipse.net4j.util.properties;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * Describes a property of a receiver object and extracts its value.
- * 
+ *
  * @author Eike Stepper
  * @since 3.2
  */
@@ -83,59 +84,78 @@ public abstract class Property<RECEIVER>
 
   public final Object getValue(RECEIVER receiver)
   {
-    Object value = eval(receiver);
-    if (value == null)
+    try
     {
-      return value;
+      Object value = eval(receiver);
+      if (value == null)
+      {
+        return value;
+      }
+
+      Class<? extends Object> c = value.getClass();
+      if (c == Boolean.class)
+      {
+        return value;
+      }
+
+      if (c == Boolean.class)
+      {
+        return value;
+      }
+
+      if (c == Character.class)
+      {
+        return value;
+      }
+
+      if (c == Byte.class)
+      {
+        return value;
+      }
+
+      if (c == Short.class)
+      {
+        return value;
+      }
+
+      if (c == Integer.class)
+      {
+        return value;
+      }
+
+      if (c == Long.class)
+      {
+        return value;
+      }
+
+      if (c == Float.class)
+      {
+        return value;
+      }
+
+      if (c == Double.class)
+      {
+        return value;
+      }
+
+      return value.toString();
+    }
+    catch (RuntimeException ex)
+    {
+      if (LifecycleUtil.isActive(receiver))
+      {
+        throw ex;
+      }
+    }
+    catch (Error ex)
+    {
+      if (LifecycleUtil.isActive(receiver))
+      {
+        throw ex;
+      }
     }
 
-    Class<? extends Object> c = value.getClass();
-    if (c == Boolean.class)
-    {
-      return value;
-    }
-
-    if (c == Boolean.class)
-    {
-      return value;
-    }
-
-    if (c == Character.class)
-    {
-      return value;
-    }
-
-    if (c == Byte.class)
-    {
-      return value;
-    }
-
-    if (c == Short.class)
-    {
-      return value;
-    }
-
-    if (c == Integer.class)
-    {
-      return value;
-    }
-
-    if (c == Long.class)
-    {
-      return value;
-    }
-
-    if (c == Float.class)
-    {
-      return value;
-    }
-
-    if (c == Double.class)
-    {
-      return value;
-    }
-
-    return value.toString();
+    return null;
   }
 
   /**

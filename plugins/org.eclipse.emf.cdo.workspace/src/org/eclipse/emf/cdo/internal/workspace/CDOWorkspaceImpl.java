@@ -51,7 +51,9 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
+import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
@@ -635,7 +637,38 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
 
     final List<CDORevisionKey> detachedRevisions = new ArrayList<CDORevisionKey>();
-    revertAddedObjects(revertData, localBranch, accessor, detachedRevisions);
+    for (CDOIDAndVersion key : revertData.getDetachedObjects())
+    {
+      CDOID id = key.getID();
+      int version = getRevision(id).getVersion();
+
+      for (int v = 1; v <= version; v++)
+      {
+        accessor.rawDelete(id, v, localBranch, null, new Monitor());
+      }
+
+      detachedRevisions.add(CDORevisionUtil.createRevisionKey(id, localBranch, version));
+    }
+
+    for (CDOIDAndVersion key : revertData.getNewObjects())
+    {
+      CDOID id = key.getID();
+
+      SyntheticCDORevision[] synthetics = { null };
+      InternalCDORevisionManager revisionManager = localSession.getRevisionManager();
+      revisionManager.getRevision(id, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+
+      int version = synthetics[0].getVersion() - 1;
+      EClass eClass = synthetics[0].getEClass();
+
+      InternalCDORevision baseRevision = (InternalCDORevision)base.getRevision(id);
+      for (int v = baseRevision.getVersion(); v <= version; v++)
+      {
+        accessor.rawDelete(id, v, localBranch, eClass, new Monitor());
+      }
+
+      accessor.rawStore(baseRevision, new Monitor());
+    }
 
     base.deleteAddedAndDetachedObjects(accessor, localBranch);
     finishRawAccess(accessor);
@@ -672,23 +705,6 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     });
 
     setDirty(false);
-  }
-
-  private void revertAddedObjects(CDOChangeSetData revertData, final CDOBranch localBranch,
-      IStoreAccessor.Raw accessor, final List<CDORevisionKey> detachedRevisions)
-  {
-    for (CDOIDAndVersion key : revertData.getDetachedObjects())
-    {
-      CDOID id = key.getID();
-      int version = getRevision(id).getVersion();
-
-      for (int v = 1; v <= version; v++)
-      {
-        accessor.rawDelete(id, v, localBranch, null, new Monitor());
-      }
-
-      detachedRevisions.add(CDORevisionUtil.createRevisionKey(id, localBranch, version));
-    }
   }
 
   public void replace(String branchPath, long timeStamp)

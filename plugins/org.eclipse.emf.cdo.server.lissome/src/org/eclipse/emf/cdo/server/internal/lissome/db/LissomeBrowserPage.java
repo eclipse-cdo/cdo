@@ -30,9 +30,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DBBrowserPage extends AbstractPage
+public class LissomeBrowserPage extends AbstractPage
 {
-  public DBBrowserPage()
+  public LissomeBrowserPage()
   {
     super("tables", "Database Tables");
   }
@@ -192,16 +192,16 @@ public class DBBrowserPage extends AbstractPage
    */
   public static class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String TYPE = "default";
+    public static final String TYPE = "lissome";
 
     public Factory()
     {
       super(PRODUCT_GROUP, TYPE);
     }
 
-    public DBBrowserPage create(String description) throws ProductCreationException
+    public LissomeBrowserPage create(String description) throws ProductCreationException
     {
-      return new DBBrowserPage();
+      return new LissomeBrowserPage();
     }
   }
 }

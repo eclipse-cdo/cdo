@@ -62,6 +62,8 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  public abstract String getPropertiesFileName();
+
   public final File getFolder()
   {
     return folder;
@@ -97,7 +99,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   private void readElement(File folder)
   {
-    Properties properties = loadProperties(folder, AbstractElement.PROPERTIES_FILE);
+    Properties properties = loadProperties(folder, getPropertiesFileName());
     if (properties != null)
     {
       addElement(folder, properties);

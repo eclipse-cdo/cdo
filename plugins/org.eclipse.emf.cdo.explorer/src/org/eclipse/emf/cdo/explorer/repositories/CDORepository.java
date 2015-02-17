@@ -27,6 +27,12 @@ import org.eclipse.net4j.util.container.IContainer;
  */
 public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDONameProvider, CDOSessionProvider
 {
+  public static final String TYPE_REMOTE = "remote";
+
+  public static final String TYPE_CLONE = "clone";
+
+  public static final String TYPE_LOCAL = "local";
+
   public String getConnectorType();
 
   public String getConnectorDescription();

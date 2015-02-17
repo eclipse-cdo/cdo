@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.internal.explorer.repositories.CloneCDORepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -80,10 +81,10 @@ public class RepositoryClonePage extends AbstractRepositoryPage
       throw new Exception("Host is empty.");
     }
 
-    String repositoryName = controller.getRepositoryName();
-    if (StringUtil.isEmpty(repositoryName))
+    String name = controller.getName();
+    if (StringUtil.isEmpty(name))
     {
-      throw new Exception("Repository name is empty.");
+      throw new Exception("Name is empty.");
     }
 
     String reconnectSeconds = reconnectSecondsText.getText();
@@ -131,11 +132,11 @@ public class RepositoryClonePage extends AbstractRepositoryPage
       throw new Exception("Invalid recommit attempts.");
     }
 
-    properties.put("connectorType", "tcp");
-    properties.put("connectorDescription", connectorDescription);
-    properties.put("repositoryName", repositoryName);
-    properties.put("reconnectSeconds", reconnectSeconds);
-    properties.put("recommitSeconds", recommitSeconds);
-    properties.put("recommitAttempts", recommitAttempts);
+    properties.put(CloneCDORepository.PROP_CONNECTOR_TYPE, "tcp");
+    properties.put(CloneCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.put(CloneCDORepository.PROP_NAME, name);
+    properties.put(CloneCDORepository.PROP_RECONNECT_SECONDS, reconnectSeconds);
+    properties.put(CloneCDORepository.PROP_RECOMMIT_SECONDS, recommitSeconds);
+    properties.put(CloneCDORepository.PROP_RECOMMIT_ATTEMPTS, recommitAttempts);
   }
 }

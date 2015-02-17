@@ -609,23 +609,18 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       return CDOBranchPoint.UNSPECIFIED_DATE;
     }
-
+  
     return refresh(false);
   }
 
-  protected final long refresh(boolean enablePassiveUpdates)
+  public long refresh(RefreshSessionResult.Provider provider)
   {
     Map<CDOBranch, List<InternalCDOView>> views = new HashMap<CDOBranch, List<InternalCDOView>>();
     Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions = new HashMap<CDOBranch, Map<CDOID, InternalCDORevision>>();
     collectViewedRevisions(views, viewedRevisions);
     cleanupRevisionCache(viewedRevisions);
 
-    CDOSessionProtocol sessionProtocol = getSessionProtocol();
-    long lastUpdateTime = getLastUpdateTime();
-    int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
-
-    RefreshSessionResult result = sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize,
-        enablePassiveUpdates);
+    RefreshSessionResult result = provider.getRefreshSessionResult(views, viewedRevisions);
 
     setLastUpdateTime(result.getLastUpdateTime());
     registerPackageUnits(result.getPackageUnits());
@@ -638,6 +633,22 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     return result.getLastUpdateTime();
+  }
+
+  protected final long refresh(final boolean enablePassiveUpdates)
+  {
+    return refresh(new RefreshSessionResult.Provider()
+    {
+      public RefreshSessionResult getRefreshSessionResult(Map<CDOBranch, List<InternalCDOView>> views,
+          Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
+      {
+        CDOSessionProtocol sessionProtocol = getSessionProtocol();
+        long lastUpdateTime = getLastUpdateTime();
+        int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
+
+        return sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates);
+      }
+    });
   }
 
   public void processRefreshSessionResult(RefreshSessionResult result, CDOBranch branch,

@@ -73,6 +73,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult.Provider;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -783,6 +784,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public long getLastUpdateTime()
     {
       return getBranchPoint().getTimeStamp();
+    }
+
+    public long refresh(Provider provider)
+    {
+      throw new UnsupportedOperationException();
     }
 
     public long refresh()

@@ -10,7 +10,9 @@
  */
 package org.eclipse.emf.cdo.spi.workspace;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase2;
@@ -36,6 +38,11 @@ public interface InternalCDOWorkspaceBase extends CDOWorkspaceBase2
   public void registerChangedOrDetachedObject(InternalCDORevision revision);
 
   /**
+   * @since 4.2
+   */
+  public void registerAddedAndDetachedObject(InternalCDORevision revision);
+
+  /**
    * @since 4.1
    */
   public void registerAddedObject(CDOID id);
@@ -47,6 +54,11 @@ public interface InternalCDOWorkspaceBase extends CDOWorkspaceBase2
 
   @Deprecated
   public void updateAfterCommit(CDOTransaction transaction);
+
+  /**
+   * @since 4.2
+   */
+  public void deleteAddedAndDetachedObjects(IStoreAccessor.Raw accessor, CDOBranch branch);
 
   public void clear();
 }

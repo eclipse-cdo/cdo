@@ -193,7 +193,7 @@ public class DBBrowserPage extends AbstractPage
    */
   public static class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String TYPE = "default";
+    public static final String TYPE = "db";
 
     public Factory()
     {

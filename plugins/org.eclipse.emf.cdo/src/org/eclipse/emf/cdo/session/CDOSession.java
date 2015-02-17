@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 /**
  * Represents and controls the connection to a model repository in addition to the inherited {@link CDOView view}
@@ -164,6 +165,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * @since 3.0
    */
   public long refresh();
+
+  /**
+   * @since 4.4
+   */
+  public long refresh(RefreshSessionResult.Provider provider);
 
   /**
    * Equivalent to calling {@link CDOView#waitForUpdate(long)} on each of this session's views. That is, this blocks the

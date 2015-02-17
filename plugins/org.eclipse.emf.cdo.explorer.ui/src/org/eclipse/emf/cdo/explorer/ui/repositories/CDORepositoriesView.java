@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
@@ -17,10 +18,21 @@ import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutShowInActionProvider;
 import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
+import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
+import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.IDGeneration;
+import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.VersioningMode;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
@@ -42,6 +54,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
+
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -108,6 +122,53 @@ public class CDORepositoriesView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
+    int xxx;
+    manager.add(new Action("Local")
+    {
+      @Override
+      public void run()
+      {
+        Properties properties = new Properties();
+        properties.put(LocalCDORepository.PROP_TYPE, CDORepository.TYPE_LOCAL);
+        properties.put(LocalCDORepository.PROP_LABEL, "offline");
+        properties.put(LocalCDORepository.PROP_NAME, "repo2");
+        properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
+        properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
+        properties.put(LocalCDORepository.PROP_TCP_DISABLED, "false");
+        properties.put(LocalCDORepository.PROP_TCP_PORT, "2037");
+
+        CDORepository repository = CDOExplorerUtil.getRepositoryManager().addRepository(properties);
+        repository.connect();
+
+        CDOSession session = repository.getSession();
+        CDOTransaction transaction = session.openTransaction();
+
+        try
+        {
+          EPackage ePackage = EPackage.Registry.INSTANCE
+              .getEPackage("http://www.eclipse.org/emf/CDO/examples/company/1.0.0");
+          EClass eClass = (EClass)ePackage.getEClassifier("Company");
+
+          CDOResource resource = transaction.createResource("model1");
+          resource.getContents().add(EcoreUtil.create(eClass));
+
+          transaction.commit();
+        }
+        catch (ConcurrentAccessException ex)
+        {
+          ex.printStackTrace();
+        }
+        catch (CommitException ex)
+        {
+          ex.printStackTrace();
+        }
+        finally
+        {
+          transaction.close();
+        }
+      }
+    });
+
     manager.add(newAction);
     super.fillLocalToolBar(manager);
   }

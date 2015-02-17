@@ -29,11 +29,19 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> implements CDOCheckoutManager
 {
+  private static final String PROPERTIES_FILE = "checkout.properties";
+
   private final Map<CDOView, CDOCheckout> viewMap = new ConcurrentHashMap<CDOView, CDOCheckout>();
 
   public CDOCheckoutManagerImpl(File folder)
   {
     super(CDOCheckout.class, folder);
+  }
+
+  @Override
+  public String getPropertiesFileName()
+  {
+    return PROPERTIES_FILE;
   }
 
   public CDOCheckout getCheckout(String id)
@@ -73,12 +81,12 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
   @Override
   protected CDOCheckout createElement(String type)
   {
-    if ("online".equals(type))
+    if (CDOCheckout.TYPE_ONLINE.equals(type))
     {
       return new OnlineCDOCheckout();
     }
 
-    if ("offline".equals(type))
+    if (CDOCheckout.TYPE_OFFLINE.equals(type))
     {
       return new OfflineCDOCheckout();
     }

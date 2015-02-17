@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.IDGeneration;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.VersioningMode;
 
@@ -32,7 +33,7 @@ import java.util.Properties;
  */
 public class RepositoryLocalPage extends AbstractRepositoryPage
 {
-  private Text repositoryNameText;
+  private Text nameText;
 
   private Button normalButton;
 
@@ -57,10 +58,10 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
   protected void fillPage(Composite container)
   {
     createLabel(container, "Repository name:");
-    repositoryNameText = new Text(container, SWT.BORDER);
-    repositoryNameText.setText("repo2");
-    repositoryNameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-    repositoryNameText.addModifyListener(this);
+    nameText = new Text(container, SWT.BORDER);
+    nameText.setText("repo2");
+    nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    nameText.addModifyListener(this);
 
     new Label(container, SWT.NONE);
 
@@ -117,34 +118,34 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
   {
     super.doValidate(properties);
 
-    String repositoryName = repositoryNameText.getText();
-    if (StringUtil.isEmpty(repositoryName))
+    String name = nameText.getText();
+    if (StringUtil.isEmpty(name))
     {
-      throw new Exception("Repository name is empty.");
+      throw new Exception("Name is empty.");
     }
 
-    properties.put("repositoryName", repositoryName);
+    properties.put(LocalCDORepository.PROP_NAME, name);
 
     if (normalButton.getSelection())
     {
-      properties.put("versioningMode", VersioningMode.Normal.toString());
+      properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Normal.toString());
     }
     else if (auditingButton.getSelection())
     {
-      properties.put("versioningMode", VersioningMode.Auditing.toString());
+      properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Auditing.toString());
     }
     else if (branchingButton.getSelection())
     {
-      properties.put("versioningMode", VersioningMode.Branching.toString());
+      properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
     }
 
     if (counterButton.getSelection())
     {
-      properties.put("idGeneration", IDGeneration.Counter.toString());
+      properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.Counter.toString());
     }
     else if (uuidButton.getSelection())
     {
-      properties.put("idGeneration", IDGeneration.UUID.toString());
+      properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
     }
 
     String port = portText.getValue();
@@ -162,8 +163,8 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
       throw new Exception("Invalid TCP port.");
     }
 
-    properties.put("tcpDisabled", Boolean.toString(portText.isDisabled()));
-    properties.put("tcpPort", port);
+    properties.put(LocalCDORepository.PROP_TCP_DISABLED, Boolean.toString(portText.isDisabled()));
+    properties.put(LocalCDORepository.PROP_TCP_PORT, port);
 
   }
 }

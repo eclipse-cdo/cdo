@@ -36,10 +36,6 @@ import java.util.Properties;
  */
 public abstract class AbstractElement extends Notifier implements CDOExplorerElement, Adapter.Internal
 {
-  public static final String PROPERTIES_FILE = "_properties";
-
-  public static final String PROP_ID = "id";
-
   public static final String PROP_TYPE = "type";
 
   public static final String PROP_LABEL = "label";
@@ -203,7 +199,9 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
     else
     {
-      File from = new File(folder, PROPERTIES_FILE);
+      String propertiesFileName = getManager().getPropertiesFileName();
+
+      File from = new File(folder, propertiesFileName);
       File dest = new File(from.getParentFile(), from.getName() + ".removed");
       from.renameTo(dest);
     }
@@ -214,7 +212,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     Properties properties = new Properties();
     collectProperties(properties);
 
-    saveProperties(PROPERTIES_FILE, properties);
+    String propertiesFileName = getManager().getPropertiesFileName();
+    saveProperties(propertiesFileName, properties);
   }
 
   protected final void saveProperties(String fileName, Properties properties)
@@ -251,8 +250,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   protected void collectProperties(Properties properties)
   {
-    properties.put("type", type);
-    properties.put("label", label);
+    properties.put(PROP_TYPE, type);
+    properties.put(PROP_LABEL, label);
   }
 
   public static AbstractElement[] collect(Collection<?> c)

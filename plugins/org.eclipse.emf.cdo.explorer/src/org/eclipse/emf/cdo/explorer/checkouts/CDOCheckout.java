@@ -30,6 +30,10 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
 {
+  public static final String TYPE_ONLINE = "online";
+
+  public static final String TYPE_OFFLINE = "offline";
+
   public CDORepository getRepository();
 
   public int getBranchID();

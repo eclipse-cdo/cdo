@@ -49,7 +49,7 @@ import java.util.Set;
  */
 public abstract class CDORepositoryImpl extends AbstractElement implements CDORepository
 {
-  public static final String PROP_NAME = "repositoryName";
+  public static final String PROP_NAME = "name";
 
   private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
 
@@ -109,6 +109,11 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public CDORepositoryImpl()
   {
+  }
+
+  public IManagedContainer getContainer()
+  {
+    return IPluginContainer.INSTANCE;
   }
 
   @Override
@@ -403,11 +408,6 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     super.collectProperties(properties);
     properties.put(PROP_NAME, name);
-  }
-
-  protected IManagedContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
   }
 
   protected IConnector getConnector()

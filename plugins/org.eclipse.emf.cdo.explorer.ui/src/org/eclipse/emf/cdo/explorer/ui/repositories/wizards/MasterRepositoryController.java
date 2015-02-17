@@ -85,7 +85,7 @@ public class MasterRepositoryController
 
   private ValidatingText portText;
 
-  private ValidatingText repositoryText;
+  private ValidatingText nameText;
 
   private TableViewer repositoryTableViewer;
 
@@ -119,7 +119,7 @@ public class MasterRepositoryController
 
   private String connectorDescription;
 
-  private String repositoryName;
+  private String name;
 
   public MasterRepositoryController(Composite parent)
   {
@@ -143,7 +143,7 @@ public class MasterRepositoryController
     hostText.addModifyListener(portText);
 
     AbstractRepositoryPage.createLabel(parent, "Repository name:");
-    repositoryText = new RepositoryValidatingText(parent);
+    nameText = new RepositoryValidatingText(parent);
 
     new Label(parent, SWT.NONE);
     repositoryTableViewer = new TableViewer(parent, SWT.BORDER | SWT.SINGLE);
@@ -159,14 +159,14 @@ public class MasterRepositoryController
         CDOAdminClientRepository adminRepository = (CDOAdminClientRepository)selection.getFirstElement();
         if (adminRepository != null)
         {
-          repositoryText.setText(adminRepository.getName());
-          repositoryText.modifyText(false);
+          nameText.setText(adminRepository.getName());
+          nameText.modifyText(false);
         }
       }
     });
 
     portText.modifyText(false);
-    repositoryText.modifyText(false);
+    nameText.modifyText(false);
 
     parent.addDisposeListener(disposeListener);
   }
@@ -176,9 +176,9 @@ public class MasterRepositoryController
     return connectorDescription;
   }
 
-  public final String getRepositoryName()
+  public final String getName()
   {
-    return repositoryName;
+    return name;
   }
 
   public void dispose()
@@ -187,7 +187,7 @@ public class MasterRepositoryController
 
     if (container != null)
     {
-      repositoryText.cancelValidation();
+      nameText.cancelValidation();
       portText.cancelValidation();
 
       container.deactivate();
@@ -197,9 +197,9 @@ public class MasterRepositoryController
 
   protected void validateController()
   {
-    if (repositoryText != null)
+    if (nameText != null)
     {
-      repositoryName = repositoryText.getText();
+      name = nameText.getText();
     }
   }
 
@@ -449,7 +449,7 @@ public class MasterRepositoryController
     @Override
     protected void finished(boolean valid)
     {
-      repositoryText.modifyText(false);
+      nameText.modifyText(false);
 
       if (valid)
       {

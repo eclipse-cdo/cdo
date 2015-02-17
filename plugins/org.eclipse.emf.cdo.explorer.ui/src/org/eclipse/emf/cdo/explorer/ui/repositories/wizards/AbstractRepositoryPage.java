@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
@@ -99,7 +100,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
   protected final void validate()
   {
     properties = new Properties();
-    properties.put("type", getName());
+    properties.put(CDORepositoryImpl.PROP_NAME, getName());
 
     try
     {
@@ -123,7 +124,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
       throw new Exception("Label is empty.");
     }
 
-    properties.put("label", label);
+    properties.put(CDORepositoryImpl.PROP_LABEL, label);
   }
 
   protected abstract void fillPage(Composite container);

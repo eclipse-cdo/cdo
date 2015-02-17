@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -63,7 +64,6 @@ import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
@@ -90,6 +90,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -97,6 +98,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction.ApplyChangeSetResult;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.ChangeSetOutdatedException;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -205,7 +207,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
           public boolean handleRevision(CDORevision revision)
           {
             InternalCDORevision rev = (InternalCDORevision)revision;
-            adjustRevisionBranch(rev);
+            adjustRevisionBranch(rev, localRepository.getBranchManager());
             accessor.rawStore(rev, monitor);
 
             long commitTime = revision.getTimeStamp();
@@ -420,10 +422,9 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
           if (isDetached && base.isAddedObject(id))
           {
-            base.deregisterObject(id);
+            base.registerAddedAndDetachedObject(revision);
           }
-
-          if (dirtyObjects.contains(id) || isDetached)
+          else if (isDetached || dirtyObjects.contains(id))
           {
             base.registerChangedOrDetachedObject(revision);
           }
@@ -608,68 +609,86 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   public void revert()
   {
     CDOChangeSetData revertData = getLocalChanges(false);
+    final CDOBranch localBranch = head.getBranch();
 
     IStoreAccessor.Raw accessor = getLocalWriter(null);
     StoreThreadLocal.setAccessor(accessor);
 
+    final List<InternalCDORevision> changedRevisions = new ArrayList<InternalCDORevision>();
     for (CDORevisionKey key : revertData.getChangedObjects())
     {
       CDOID id = key.getID();
+
+      InternalCDORevision localRevision = (InternalCDORevision)getRevision(id);
       InternalCDORevision baseRevision = (InternalCDORevision)base.getRevision(id);
+      changedRevisions.add(baseRevision);
+
+      EClass eClass = baseRevision.getEClass();
+      int version = Math.abs(localRevision.getVersion());
+
+      for (int v = baseRevision.getVersion(); v <= version; v++)
+      {
+        accessor.rawDelete(id, v, localBranch, eClass, new Monitor());
+      }
+
       accessor.rawStore(baseRevision, new Monitor());
     }
 
-    accessor.rawCommit(1, new Monitor());
-    StoreThreadLocal.release();
-    localRepository.getRevisionManager().getCache().clear();
-    localSession.getRevisionManager().getCache().clear();
+    final List<CDORevisionKey> detachedRevisions = new ArrayList<CDORevisionKey>();
+    revertAddedObjects(revertData, localBranch, accessor, detachedRevisions);
 
-    // InternalCDOTransaction transaction = (InternalCDOTransaction)getLocalSession().openTransaction();
-    //
-    // try
-    // {
-    // revert(transaction);
-    // }
-    // catch (ConcurrentAccessException ex)
-    // {
-    // ex.printStackTrace();
-    // }
-    // catch (CommitException ex)
-    // {
-    // ex.printStackTrace();
-    // }
-    // finally
-    // {
-    // transaction.close();
-    // }
+    base.deleteAddedAndDetachedObjects(accessor, localBranch);
+    finishRawAccess(accessor);
+    base.clear();
+
+    localSession.refresh(new RefreshSessionResult.Provider()
+    {
+      public RefreshSessionResult getRefreshSessionResult(Map<CDOBranch, List<InternalCDOView>> views,
+          Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
+      {
+        RefreshSessionResult result = new RefreshSessionResult(timeStamp);
+        Map<CDOID, InternalCDORevision> revisions = viewedRevisions.get(localBranch);
+
+        for (InternalCDORevision baseRevision : changedRevisions)
+        {
+          CDOID id = baseRevision.getID();
+          if (revisions.containsKey(id))
+          {
+            InternalCDORevision newRevision = baseRevision.copy();
+            adjustRevisionBranch(newRevision, localSession.getBranchManager());
+
+            result.addChangedObject(newRevision);
+          }
+        }
+
+        for (CDORevisionKey key : detachedRevisions)
+        {
+          result.addDetachedObject(key);
+        }
+
+        localSession.getRevisionManager().getCache().clear();
+        return result;
+      }
+    });
+
+    setDirty(false);
   }
 
-  private void revert(InternalCDOTransaction transaction) throws ConcurrentAccessException, CommitException
+  private void revertAddedObjects(CDOChangeSetData revertData, final CDOBranch localBranch,
+      IStoreAccessor.Raw accessor, final List<CDORevisionKey> detachedRevisions)
   {
-    CDOChangeSetData revertData = getLocalChanges(false);
-
-    // for (CDORevisionKey key : revertData.getChangedObjects())
-    // {
-    // if (key instanceof InternalCDORevisionDelta)
-    // {
-    // InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)key;
-    // CDORevision baseRevision = base.getRevision(revisionDelta.getID());
-    // if (baseRevision != null)
-    // {
-    // revisionDelta.setTarget(baseRevision);
-    // }
-    // }
-    // }
-
-    if (!revertData.isEmpty())
+    for (CDOIDAndVersion key : revertData.getDetachedObjects())
     {
-      CDORevisionProvider targetProvider = new BaseRevisionProvider();
-      ApplyChangeSetResult result = transaction.applyChangeSet(revertData, this, targetProvider, null, false);
-      transaction.commit();
-    }
+      CDOID id = key.getID();
+      int version = getRevision(id).getVersion();
 
-    base.clear();
-    setDirty(false);
+      for (int v = 1; v <= version; v++)
+      {
+        accessor.rawDelete(id, v, localBranch, null, new Monitor());
+      }
+
+      detachedRevisions.add(CDORevisionUtil.createRevisionKey(id, localBranch, version));
+    }
   }
 
   public void replace(String branchPath, long timeStamp)
@@ -712,7 +731,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         transaction.setCommitComment(comment);
         CDOCommitInfo info = transaction.commit();
 
-        adjustLocalRevisions(transaction, info);
+        adjustLocalRevisions(transaction, info.getChangedObjects());
         clearBase();
         setTimeStamp(info.getTimeStamp());
 
@@ -729,10 +748,10 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
   }
 
-  protected void adjustLocalRevisions(InternalCDOTransaction transaction, CDOCommitInfo info)
+  protected void adjustLocalRevisions(InternalCDOTransaction transaction, List<CDORevisionKey> changedObjects)
   {
     IStoreAccessor.Raw accessor = null;
-    for (CDORevisionKey key : info.getChangedObjects())
+    for (CDORevisionKey key : changedObjects)
     {
       CDOID id = key.getID();
       InternalCDORevision localRevision = (InternalCDORevision)getRevision(id);
@@ -763,29 +782,33 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
         accessor.rawDelete(id, localRevision.getVersion(), localBranch, eClass, new Monitor());
         localRevision.setVersion(remoteRevision.getVersion());
-        adjustRevisionBranch(localRevision);
+        adjustRevisionBranch(localRevision, localRepository.getBranchManager());
         accessor.rawStore(localRevision, new Monitor());
       }
     }
 
     if (accessor != null)
     {
-      accessor.rawCommit(1, new Monitor());
-      StoreThreadLocal.release();
-      localRepository.getRevisionManager().getCache().clear();
+      finishRawAccess(accessor);
       localSession.getRevisionManager().getCache().clear();
     }
   }
 
-  private void adjustRevisionBranch(InternalCDORevision revision)
+  private void adjustRevisionBranch(InternalCDORevision revision, InternalCDOBranchManager forBranchManager)
   {
-    InternalCDOBranchManager branchManager = localRepository.getBranchManager();
     InternalCDOBranch branch = revision.getBranch();
-    if (branch.getBranchManager() != branchManager)
+    if (branch.getBranchManager() != forBranchManager)
     {
-      branch = branchManager.getBranch(branch.getID());
+      branch = forBranchManager.getBranch(branch.getID());
       revision.setBranchPoint(branch.getPoint(revision.getTimeStamp()));
     }
+  }
+
+  private void finishRawAccess(IStoreAccessor.Raw accessor)
+  {
+    accessor.rawCommit(1, new Monitor());
+    StoreThreadLocal.release();
+    localRepository.getRevisionManager().getCache().clear();
   }
 
   /**
@@ -953,7 +976,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       return CDORevisionUtil.createChangeSetData(ids, base, this, true);
     }
 
-    return CDORevisionUtil.createChangeSetData(ids, this, base, false);
+    return CDORevisionUtil.createChangeSetData(ids, this, base, true);
   }
 
   public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory()

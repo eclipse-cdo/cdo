@@ -62,6 +62,7 @@ import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IViewPart;
@@ -139,32 +140,39 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         final IPage currentPage = propertySheet.getCurrentPage();
         if (currentPage instanceof PropertySheetPage || currentPage instanceof TabbedPropertySheetPage)
         {
-          viewer.getControl().getDisplay().asyncExec(new Runnable()
+          final Control control = viewer.getControl();
+          if (!control.isDisposed())
           {
-            public void run()
+            control.getDisplay().asyncExec(new Runnable()
             {
-              IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
-              if (selection.size() == 1)
+              public void run()
               {
-                for (Object object : selection.toArray())
+                if (!control.isDisposed())
                 {
-                  if (object == element)
+                  IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+                  if (selection.size() == 1)
                   {
-                    if (currentPage instanceof PropertySheetPage)
+                    for (Object object : selection.toArray())
                     {
-                      ((PropertySheetPage)currentPage).refresh();
-                    }
-                    else if (currentPage instanceof TabbedPropertySheetPage)
-                    {
-                      ((TabbedPropertySheetPage)currentPage).refresh();
-                    }
+                      if (object == element)
+                      {
+                        if (currentPage instanceof PropertySheetPage)
+                        {
+                          ((PropertySheetPage)currentPage).refresh();
+                        }
+                        else if (currentPage instanceof TabbedPropertySheetPage)
+                        {
+                          ((TabbedPropertySheetPage)currentPage).refresh();
+                        }
 
-                    return;
+                        return;
+                      }
+                    }
                   }
                 }
               }
-            }
-          });
+            });
+          }
         }
       }
     }
@@ -379,6 +387,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
             CDOObject cdoObject = CDOUtil.getCDOObject((EObject)finalObject);
             CDOView view = cdoObject.cdoView();
             CDORevisionManager revisionManager = view.getSession().getRevisionManager();
+
             List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED,
                 CDORevision.DEPTH_NONE, true);
             loadedRevisions.addAll(revisions);
@@ -389,8 +398,6 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         }
         catch (final Exception ex)
         {
-          OM.LOG.error(ex);
-
           childrenCache.remove(originalObject);
 
           if (finalOpeningCheckout != null)
@@ -398,22 +405,31 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
             finalOpeningCheckout.close();
           }
 
-          UIUtil.getDisplay().asyncExec(new Runnable()
+          OM.LOG.error(ex);
+
+          final Control control = viewer.getControl();
+          if (!control.isDisposed())
           {
-            public void run()
+            UIUtil.getDisplay().asyncExec(new Runnable()
             {
-              try
+              public void run()
               {
-                Shell shell = viewer.getControl().getShell();
-                String title = (finalOpeningCheckout != null ? "Open" : "Load") + " Error";
-                MessageDialog.openError(shell, title, ex.getMessage());
+                try
+                {
+                  if (!control.isDisposed())
+                  {
+                    Shell shell = control.getShell();
+                    String title = (finalOpeningCheckout != null ? "Open" : "Load") + " Error";
+                    MessageDialog.openError(shell, title, ex.getMessage());
+                  }
+                }
+                catch (Exception ex)
+                {
+                  OM.LOG.error(ex);
+                }
               }
-              catch (Exception ex)
-              {
-                OM.LOG.error(ex);
-              }
-            }
-          });
+            });
+          }
         }
 
         // The viewer must be refreshed synchronously so that the loaded children don't get garbage collected.

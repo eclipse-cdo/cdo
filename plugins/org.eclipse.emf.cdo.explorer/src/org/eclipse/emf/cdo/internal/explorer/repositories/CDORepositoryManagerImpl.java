@@ -27,11 +27,19 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> implements CDORepositoryManager
 {
+  private static final String PROPERTIES_FILE = "repository.properties";
+
   private final Map<CDOSession, CDORepository> sessionMap = new ConcurrentHashMap<CDOSession, CDORepository>();
 
   public CDORepositoryManagerImpl(File folder)
   {
     super(CDORepository.class, folder);
+  }
+
+  @Override
+  public String getPropertiesFileName()
+  {
+    return PROPERTIES_FILE;
   }
 
   public CDORepository getRepository(String id)
@@ -79,17 +87,17 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
   @Override
   protected CDORepositoryImpl createElement(String type)
   {
-    if ("remote".equals(type))
+    if (CDORepository.TYPE_REMOTE.equals(type))
     {
       return new RemoteCDORepository();
     }
 
-    if ("clone".equals(type))
+    if (CDORepository.TYPE_CLONE.equals(type))
     {
       return new CloneCDORepository();
     }
 
-    if ("local".equals(type))
+    if (CDORepository.TYPE_LOCAL.equals(type))
     {
       return new LocalCDORepository();
     }

@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.internal.explorer.repositories.RemoteCDORepository;
+
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.swt.widgets.Composite;
@@ -56,14 +58,14 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
       throw new Exception("Host is empty.");
     }
 
-    String repositoryName = controller.getRepositoryName();
-    if (StringUtil.isEmpty(repositoryName))
+    String name = controller.getName();
+    if (StringUtil.isEmpty(name))
     {
-      throw new Exception("Repository name is empty.");
+      throw new Exception("Name is empty.");
     }
 
-    properties.put("connectorType", "tcp");
-    properties.put("connectorDescription", connectorDescription);
-    properties.put("repositoryName", repositoryName);
+    properties.put(RemoteCDORepository.PROP_CONNECTOR_TYPE, "tcp");
+    properties.put(RemoteCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.put(RemoteCDORepository.PROP_NAME, name);
   }
 }

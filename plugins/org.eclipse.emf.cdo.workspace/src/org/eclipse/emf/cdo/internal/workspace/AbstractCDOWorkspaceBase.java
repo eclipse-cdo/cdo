@@ -77,6 +77,12 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
     doRegisterChangedOrDetachedObject(revision);
   }
 
+  public final synchronized void registerAddedAndDetachedObject(InternalCDORevision revision)
+  {
+    doRegisterAddedAndDetachedObject(revision);
+    deregisterObject(revision.getID());
+  }
+
   public final synchronized void registerAddedObject(CDOID id)
   {
     getIDs().add(id);
@@ -134,6 +140,8 @@ public abstract class AbstractCDOWorkspaceBase implements InternalCDOWorkspaceBa
   protected abstract Set<CDOID> doGetIDs();
 
   protected abstract void doRegisterChangedOrDetachedObject(InternalCDORevision revision);
+
+  protected abstract void doRegisterAddedAndDetachedObject(InternalCDORevision revision);
 
   protected abstract void doRegisterAddedObject(CDOID id);
 

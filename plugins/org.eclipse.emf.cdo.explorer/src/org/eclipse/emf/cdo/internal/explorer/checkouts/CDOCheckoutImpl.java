@@ -55,7 +55,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public static final String PROP_REPOSITORY = "repository";
 
-  public static final String EDITORS_FILE = "_editors";
+  public static final String EDITOR_PROPERTIES = "editor.properties";
 
   private final Map<CDOID, String> editorIDs = new WeakHashMap<CDOID, String>();
 
@@ -322,7 +322,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         return editorID;
       }
 
-      Properties properties = AbstractManager.loadProperties(getFolder(), EDITORS_FILE);
+      Properties properties = AbstractManager.loadProperties(getFolder(), EDITOR_PROPERTIES);
       if (properties != null)
       {
         String idString = getCDOIDString(objectID);
@@ -343,7 +343,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         return;
       }
 
-      Properties properties = AbstractManager.loadProperties(getFolder(), EDITORS_FILE);
+      Properties properties = AbstractManager.loadProperties(getFolder(), EDITOR_PROPERTIES);
       if (properties == null)
       {
         properties = new Properties();
@@ -352,7 +352,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       String idString = getCDOIDString(objectID);
       properties.put(idString, editorID);
 
-      saveProperties(EDITORS_FILE, properties);
+      saveProperties(EDITOR_PROPERTIES, properties);
       editorIDs.put(objectID, editorID);
     }
   }

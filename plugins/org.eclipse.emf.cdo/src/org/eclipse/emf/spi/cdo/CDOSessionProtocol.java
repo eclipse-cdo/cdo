@@ -606,6 +606,18 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
       list.add(revision);
     }
+
+    /**
+     * If the meaning of this type isn't clear, there really should be more of a description here...
+     *
+     * @author Eike Stepper
+     * @since 4.4
+     */
+    public interface Provider
+    {
+      public RefreshSessionResult getRefreshSessionResult(Map<CDOBranch, List<InternalCDOView>> views,
+          Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions);
+    }
   }
 
   /**

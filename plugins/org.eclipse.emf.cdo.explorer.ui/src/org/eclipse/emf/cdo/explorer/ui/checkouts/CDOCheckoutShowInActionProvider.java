@@ -12,11 +12,13 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
+import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
+import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
@@ -92,7 +94,15 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       final CDORepository repository = (CDORepository)selectedElement;
       if (repository.isConnected())
       {
-        addAction(actions, repository, new ShowInAction(page, CDOSessionsView.ID)
+        if (repository instanceof LocalCDORepository)
+        {
+          LocalCDORepository localRepository = (LocalCDORepository)repository;
+
+          IManagedContainer container = localRepository.getContainer();
+          actions.add(new ShowInServerBrowserAction(localRepository, container));
+        }
+
+        addAction(actions, repository, new ShowInViewAction(page, CDOSessionsView.ID)
         {
           @Override
           public void run()
@@ -114,12 +124,13 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
           }
         });
 
-        addAction(actions, repository.getSession(), new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
+        addAction(actions, repository.getSession(),
+            new ShowInViewAction(page, "org.eclipse.team.ui.GenericHistoryView"));
       }
     }
     else if (selectedElement instanceof CDOBranch)
     {
-      addAction(actions, selectedElement, new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
+      addAction(actions, selectedElement, new ShowInViewAction(page, "org.eclipse.team.ui.GenericHistoryView"));
     }
     else if (selectedElement instanceof CDOCheckout)
     {
@@ -130,32 +141,15 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
         {
           OfflineCDOCheckout offlineCheckout = (OfflineCDOCheckout)checkout;
 
-          final InternalCDOWorkspace workspace = (InternalCDOWorkspace)offlineCheckout.getWorkspace();
+          InternalCDOWorkspace workspace = (InternalCDOWorkspace)offlineCheckout.getWorkspace();
           if (workspace != null)
           {
-            actions.add(new Action("CDO Server Browser", OM.getImageDescriptor("icons/web.gif"))
-            {
-              @Override
-              public void run()
-              {
-                IManagedContainer container = workspace.getContainer();
-                container.registerFactory(new CDOServerBrowser.ContainerBased.Factory(container));
-                container.registerFactory(new DBBrowserPage.Factory());
-
-                CDOServerBrowser browser = (CDOServerBrowser)container.getElement(
-                    CDOServerBrowser.ContainerBased.Factory.PRODUCT_GROUP,
-                    CDOServerBrowser.ContainerBased.Factory.TYPE, "free-port");
-
-                if (browser != null && browser.isActive())
-                {
-                  IOUtil.openSystemBrowser("http://localhost:" + browser.getPort());
-                }
-              }
-            });
+            IManagedContainer container = workspace.getContainer();
+            actions.add(new ShowInServerBrowserAction(offlineCheckout, container));
           }
         }
 
-        addAction(actions, checkout.getView(), new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
+        addAction(actions, checkout.getView(), new ShowInViewAction(page, "org.eclipse.team.ui.GenericHistoryView"));
       }
     }
     else if (selectedElement instanceof EObject)
@@ -163,7 +157,7 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       EObject eObject = (EObject)selectedElement;
       if (CDOExplorerUtil.getCheckout(eObject) != null)
       {
-        addAction(actions, selectedElement, new ShowInAction(page, "org.eclipse.team.ui.GenericHistoryView"));
+        addAction(actions, selectedElement, new ShowInViewAction(page, "org.eclipse.team.ui.GenericHistoryView"));
       }
     }
 
@@ -182,7 +176,7 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
     }
   }
 
-  private static void addAction(List<IAction> actions, Object selectedElement, ShowInAction action)
+  private static void addAction(List<IAction> actions, Object selectedElement, ShowInViewAction action)
   {
     action.selectionChanged(selectedElement);
     if (action.isEnabled())
@@ -194,9 +188,9 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
   /**
    * @author Eike Stepper
    */
-  private static class ShowInAction extends Action
+  private static class ShowInViewAction extends Action
   {
-    public static final String ID = OM.BUNDLE_ID + ".ShowInAction"; //$NON-NLS-1$
+    private static final String ID_PREFIX = OM.BUNDLE_ID + ".ShowInViewAction"; //$NON-NLS-1$
 
     private final IWorkbenchPage page;
 
@@ -204,9 +198,9 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
 
     private Object element;
 
-    public ShowInAction(IWorkbenchPage page, String viewID)
+    public ShowInViewAction(IWorkbenchPage page, String viewID)
     {
-      setId(ID);
+      setId(ID_PREFIX + "." + viewID);
       this.page = page;
 
       viewDescriptor = PlatformUI.getWorkbench().getViewRegistry().find(viewID);
@@ -234,6 +228,48 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       catch (PartInitException ex)
       {
         OM.LOG.error(ex);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ShowInServerBrowserAction extends Action
+  {
+    private static final String ID = OM.BUNDLE_ID + ".ShowInServerBrowserAction"; //$NON-NLS-1$
+
+    private static final String PRODUCT_GROUP = CDOServerBrowser.ContainerBased.Factory.PRODUCT_GROUP;
+
+    private static final String TYPE = CDOServerBrowser.ContainerBased.Factory.TYPE;
+
+    private final CDOExplorerElement element;
+
+    private final IManagedContainer container;
+
+    private ShowInServerBrowserAction(CDOExplorerElement element, IManagedContainer container)
+    {
+      this.element = element;
+      this.container = container;
+
+      setId(ID);
+      setText("CDO Server Browser");
+      setImageDescriptor(OM.getImageDescriptor("icons/web.gif"));
+      setToolTipText("Show this element in a CDO server browser");
+    }
+
+    @Override
+    public void run()
+    {
+      container.registerFactory(new CDOServerBrowser.ContainerBased.Factory(container));
+      container.registerFactory(new DBBrowserPage.Factory());
+
+      String description = element.getType() + "-checkout-" + element.getID();
+      CDOServerBrowser browser = (CDOServerBrowser)container.getElement(PRODUCT_GROUP, TYPE, description);
+
+      if (browser != null && browser.isActive())
+      {
+        IOUtil.openSystemBrowser("http://localhost:" + browser.getPort());
       }
     }
   }

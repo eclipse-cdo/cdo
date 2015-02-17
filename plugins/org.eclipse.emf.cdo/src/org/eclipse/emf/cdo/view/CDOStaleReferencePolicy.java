@@ -15,7 +15,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClassifier;
@@ -26,6 +29,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Arrays;
 
 /**
  * Specifies a policy on how to deal with stale references.
@@ -69,6 +73,8 @@ public interface CDOStaleReferencePolicy
    */
   public static final CDOStaleReferencePolicy PROXY = new CDOStaleReferencePolicy()
   {
+    private final ContextTracer tracer = new ContextTracer(OM.DEBUG, CDOStaleReferencePolicy.class);
+
     public Object processStaleReference(final EObject source, final EStructuralFeature feature, int index,
         final CDOID target)
     {
@@ -96,6 +102,26 @@ public interface CDOStaleReferencePolicy
           if (name.equals("eAdapters")) //$NON-NLS-1$
           {
             return source.eAdapters();
+          }
+
+          if (name.equals("equals")) //$NON-NLS-1$
+          {
+            return target.equals(args[0]);
+          }
+
+          if (name.equals("hashCode")) //$NON-NLS-1$
+          {
+            return target.hashCode();
+          }
+
+          if (name.equals("toString")) //$NON-NLS-1$
+          {
+            return "StaleReferenceProxy[" + target + "]";
+          }
+
+          if (tracer.isEnabled())
+          {
+            tracer.trace("Illegal proxy invocation: " + target + "." + method.getName() + Arrays.asList(args));
           }
 
           throw new ObjectNotFoundException(target);

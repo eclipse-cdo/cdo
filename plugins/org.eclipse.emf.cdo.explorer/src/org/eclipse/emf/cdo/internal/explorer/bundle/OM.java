@@ -68,7 +68,7 @@ public abstract class OM
       super.doStart();
       String stateLocation = BUNDLE.getStateLocation();
 
-      repositoryManager = new CDORepositoryManagerImpl(new File(stateLocation, "repo"));
+      repositoryManager = new CDORepositoryManagerImpl(new File(stateLocation, "rp"));
       LifecycleUtil.activate(repositoryManager);
 
       checkoutManager = new CDOCheckoutManagerImpl(new File(stateLocation, "co"));

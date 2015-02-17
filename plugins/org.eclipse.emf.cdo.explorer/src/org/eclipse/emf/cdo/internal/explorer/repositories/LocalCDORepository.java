@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.internal.explorer.repositories;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.session.CDOSession;
 
@@ -131,22 +131,15 @@ public class LocalCDORepository extends CDORepositoryImpl
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + folder);
 
-    boolean auditing = versioningMode.isSupportingAudits();
-    boolean branching = versioningMode.isSupportingBranches();
-    boolean withRanges = false;
+    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(versioningMode.isSupportingAudits(),
+        versioningMode.isSupportingBranches(), false);
+    mappingStrategy.setProperties(getMappingStrategyProperties());
 
-    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(auditing, branching, withRanges);
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
-    IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
+    IDBStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
 
-    Map<String, String> props = new HashMap<String, String>();
-    props.put(IRepository.Props.OVERRIDE_UUID, "");
-    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(auditing));
-    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(branching));
-    props.put(IRepository.Props.ID_GENERATION_LOCATION, idGeneration.getLocation().toString());
-
-    repository = CDOServerUtil.createRepository(repositoryName, store, props);
+    repository = CDOServerUtil.createRepository(repositoryName, store, getRepositoryProperties());
 
     IManagedContainer container = getContainer();
     CDOServerUtil.addRepository(container, repository);
@@ -158,6 +151,24 @@ public class LocalCDORepository extends CDORepositoryImpl
     }
 
     return super.openSession();
+  }
+
+  protected Map<String, String> getRepositoryProperties()
+  {
+    Map<String, String> props = new HashMap<String, String>();
+    props.put(IRepository.Props.OVERRIDE_UUID, "");
+    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(versioningMode.isSupportingAudits()));
+    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(versioningMode.isSupportingBranches()));
+    props.put(IRepository.Props.ID_GENERATION_LOCATION, idGeneration.getLocation().toString());
+    return props;
+  }
+
+  protected Map<String, String> getMappingStrategyProperties()
+  {
+    Map<String, String> props = new HashMap<String, String>();
+    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    props.put(CDODBUtil.PROP_COPY_ON_BRANCH, "true");
+    return props;
   }
 
   @Override

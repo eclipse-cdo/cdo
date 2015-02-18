@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.explorer.ui.DeleteDialog;
+import org.eclipse.emf.cdo.explorer.ui.DeleteElementsDialog;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -64,8 +64,8 @@ public class RepositoryDeleteHandler extends AbstractRepositoryHandler
       if (MessageDialog.openQuestion(shell, "Existing Checkouts", "There " + message + " existing checkout" + plural
           + ".\n\n" + "Are you sure you want to delete the existing checkout" + plural + ", too?"))
       {
-        DeleteDialog dialog = new DeleteDialog(shell, checkouts.toArray(new AbstractElement[size]));
-        if (dialog.open() == DeleteDialog.OK)
+        DeleteElementsDialog dialog = new DeleteElementsDialog(shell, checkouts.toArray(new AbstractElement[size]));
+        if (dialog.open() == DeleteElementsDialog.OK)
         {
           deleteCheckoutContents = dialog.isDeleteContents();
         }
@@ -82,8 +82,8 @@ public class RepositoryDeleteHandler extends AbstractRepositoryHandler
       }
     }
 
-    DeleteDialog dialog = new DeleteDialog(shell, repositories);
-    if (dialog.open() == DeleteDialog.OK)
+    DeleteElementsDialog dialog = new DeleteElementsDialog(shell, repositories);
+    if (dialog.open() == DeleteElementsDialog.OK)
     {
       deleteContents = dialog.isDeleteContents();
     }

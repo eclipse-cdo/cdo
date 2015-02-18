@@ -10,13 +10,27 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
-import org.eclipse.emf.cdo.explorer.ui.DeleteObjectsDialog;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.ui.ObjectController;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
+import org.eclipse.jface.viewers.CheckboxTreeViewer;
+import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import java.util.List;
@@ -34,7 +48,8 @@ public class ObjectDeleteHandler extends AbstractObjectHandler
   @Override
   protected void preRun(ExecutionEvent event) throws Exception
   {
-    DeleteObjectsDialog dialog = new DeleteObjectsDialog(HandlerUtil.getActiveShell(event), getCheckout(), elements);
+    Shell shell = HandlerUtil.getActiveShell(event);
+    DeleteObjectsDialog dialog = new DeleteObjectsDialog(shell, getCheckout(), elements);
     if (dialog.open() != DeleteObjectsDialog.OK)
     {
       cancel();
@@ -50,5 +65,103 @@ public class ObjectDeleteHandler extends AbstractObjectHandler
     }
 
     return true;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static class DeleteObjectsDialog extends TitleAreaDialog
+  {
+    private final CDOCheckout checkout;
+
+    private final List<EObject> objects;
+
+    public DeleteObjectsDialog(Shell parentShell, CDOCheckout checkout, List<EObject> objects)
+    {
+      super(parentShell);
+      this.checkout = checkout;
+      this.objects = objects;
+
+      setShellStyle(SWT.CLOSE | SWT.RESIZE | SWT.TITLE | SWT.APPLICATION_MODAL);
+    }
+
+    @Override
+    protected Control createDialogArea(Composite parent)
+    {
+      Composite area = (Composite)super.createDialogArea(parent);
+
+      int size = objects.size();
+      if (size != 0)
+      {
+        String title = "Delete " + (size == 1 ? "Object" : "Objects");
+        getShell().setText(title);
+        setTitle(title);
+        setTitleImage(OM.getImage("icons/wiz/delete.gif"));
+        updateMessage(size);
+
+        Composite container = new Composite(area, SWT.NONE);
+        container.setLayoutData(new GridData(GridData.FILL_BOTH));
+        GridLayout containerGridLayout = new GridLayout();
+        containerGridLayout.marginWidth = 10;
+        containerGridLayout.marginHeight = 10;
+        container.setLayout(containerGridLayout);
+
+        final ObjectController objectController = new ObjectController(checkout);
+        for (EObject object : objects)
+        {
+          objectController.addObject(object, false);
+        }
+
+        final CheckboxTreeViewer treeViewer = new CheckboxTreeViewer(container);
+        treeViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        objectController.configure(treeViewer);
+
+        treeViewer.addCheckStateListener(new ICheckStateListener()
+        {
+          public void checkStateChanged(CheckStateChangedEvent event)
+          {
+            EObject object = objectController.getObject(event.getElement());
+            if (event.getChecked())
+            {
+              objects.add(object);
+            }
+            else
+            {
+              objects.remove(object);
+            }
+
+            int size = objects.size();
+            updateMessage(size);
+
+            if (size <= 1)
+            {
+              Button button = getButton(OK);
+              button.setEnabled(size != 0);
+            }
+          }
+        });
+      }
+
+      return area;
+    }
+
+    @Override
+    protected Point getInitialSize()
+    {
+      return new Point(500, 400);
+    }
+
+    private void updateMessage(int size)
+    {
+      if (size == 0)
+      {
+        setMessage("No objects to delete.");
+      }
+      else
+      {
+        setMessage("Are you sure you want to delete " + (size == 1 ? "this" : "these") + " " + size + " "
+            + (size == 1 ? "object" : "objects") + "?");
+      }
+    }
   }
 }

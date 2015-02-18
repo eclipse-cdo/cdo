@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
@@ -265,11 +266,24 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       container.registerFactory(new DBBrowserPage.Factory());
 
       String description = element.getType() + "-checkout-" + element.getID();
+
+      int serverBrowserPort = ((AbstractElement)element).getServerBrowserPort();
+      if (serverBrowserPort != 0)
+      {
+        description = Integer.toString(serverBrowserPort) + ":" + description;
+      }
+
       CDOServerBrowser browser = (CDOServerBrowser)container.getElement(PRODUCT_GROUP, TYPE, description);
 
       if (browser != null && browser.isActive())
       {
-        IOUtil.openSystemBrowser("http://localhost:" + browser.getPort());
+        int port = browser.getPort();
+        if (serverBrowserPort == 0)
+        {
+          ((AbstractElement)element).setServerBrowserPort(port);
+        }
+
+        IOUtil.openSystemBrowser("http://localhost:" + port);
       }
     }
   }

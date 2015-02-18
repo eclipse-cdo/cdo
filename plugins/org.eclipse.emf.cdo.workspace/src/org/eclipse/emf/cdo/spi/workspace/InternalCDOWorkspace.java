@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.spi.workspace;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -39,6 +41,11 @@ public interface InternalCDOWorkspace extends CDOWorkspace
   public IManagedContainer getContainer();
 
   /**
+   * @since 4.2
+   */
+  public InternalCDOView[] getViews();
+
+  /**
    * @since 4.1
    */
   public IDGenerationLocation getIDGenerationLocation();
@@ -50,7 +57,17 @@ public interface InternalCDOWorkspace extends CDOWorkspace
   public InternalCDOSession getLocalSession();
 
   /**
+   * @since 4.2
+   */
+  public CDOChangeSetData getLocalChanges(boolean forward);
+
+  /**
    * @since 4.1
    */
   public CDOSessionConfigurationFactory getRemoteSessionConfigurationFactory();
+
+  /**
+   * @since 4.2
+   */
+  public void revert(CDOChangeSetData revertData);
 }

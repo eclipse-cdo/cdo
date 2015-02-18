@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -416,21 +417,45 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected void fillLocalPullDown(IMenuManager manager)
   {
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-    manager.add(refreshAction);
+    addSeparator(manager);
+    addRefreshAction(manager);
     manager.add(new IntrospectAction(getViewer()));
   }
 
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-    manager.add(collapseAllAction);
+    addSeparator(manager);
+    addCollapseAllAction(manager);
   }
 
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     itemProvider.fillContextMenu(manager, selection);
+    addSeparator(manager);
+  }
+
+  /**
+   * @since 3.5
+   */
+  protected void addSeparator(IContributionManager manager)
+  {
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+  }
+
+  /**
+   * @since 3.5
+   */
+  protected void addRefreshAction(IContributionManager manager)
+  {
+    manager.add(refreshAction);
+  }
+
+  /**
+   * @since 3.5
+   */
+  protected void addCollapseAllAction(IContributionManager manager)
+  {
+    manager.add(collapseAllAction);
   }
 
   protected void selectionChanged(IActionBars bars, ITreeSelection selection)
@@ -572,10 +597,10 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
       {
         propertySheetPage = new PropertySheetPage();
       }
-  
+
       return propertySheetPage;
     }
-  
+
     return super.getAdapter(adapter);
   }
 

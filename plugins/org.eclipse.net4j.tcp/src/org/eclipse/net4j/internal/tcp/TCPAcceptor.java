@@ -134,6 +134,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
       }
 
       ServerSocket socket = serverSocketChannel.socket();
+      socket.setReuseAddress(true);
       socket.bind(addr);
 
       if (addr == null)

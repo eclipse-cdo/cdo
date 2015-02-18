@@ -724,7 +724,7 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceRevert"
                icon="icons/revert.gif"
-               label="Revert"
+               label="Revert..."
                style="push"
                tooltip="Revert the local changes">
             <visibleWhen

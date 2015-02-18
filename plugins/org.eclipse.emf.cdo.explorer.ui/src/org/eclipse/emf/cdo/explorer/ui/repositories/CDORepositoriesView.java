@@ -116,12 +116,14 @@ public class CDORepositoriesView extends ContainerView
   @Override
   protected void fillLocalPullDown(IMenuManager manager)
   {
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    // Do nothing.
   }
 
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
+    addCollapseAllAction(manager);
+
     int xxx;
     manager.add(new Action("Local")
     {
@@ -170,7 +172,6 @@ public class CDORepositoriesView extends ContainerView
     });
 
     manager.add(newAction);
-    super.fillLocalToolBar(manager);
   }
 
   @Override

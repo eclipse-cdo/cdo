@@ -295,6 +295,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     {
       List<? extends CDORevision> additionalLoadedRevisions //
       = loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+
       List<? extends CDORevision> primaryLoadedRevisions //
       = getResultsAndSynthetics(infosToLoad.toArray(new RevisionInfo[0]), null);
 
@@ -413,8 +414,9 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     try
     {
       List<InternalCDORevision> additionalRevisions = null;
+
       List<RevisionInfo> additionalRevisionInfos = //
-          revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+      revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
 
       if (additionalRevisionInfos != null)
       {

@@ -161,6 +161,28 @@ public final class IOUtil
   /**
    * @since 3.5
    */
+  public static boolean isFreePort(int port)
+  {
+    ServerSocket socket = null;
+
+    try
+    {
+      socket = new ServerSocket(port);
+      return true;
+    }
+    catch (Throwable ex)
+    {
+      return false;
+    }
+    finally
+    {
+      IOUtil.closeSilent(socket);
+    }
+  }
+
+  /**
+   * @since 3.5
+   */
   public static int getFreePort() throws IOException
   {
     ServerSocket socket = null;

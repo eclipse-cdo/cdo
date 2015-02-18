@@ -40,6 +40,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public static final String PROP_LABEL = "label";
 
+  public static final String PROP_SERVER_BROWSER_PORT = "serverBrowserPort";
+
   private org.eclipse.emf.common.notify.Notifier target;
 
   private File folder;
@@ -49,6 +51,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   private String type;
 
   private String label;
+
+  private int serverBrowserPort;
 
   public AbstractElement()
   {
@@ -84,6 +88,20 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
       save();
 
       fireElementChangedEvent();
+    }
+  }
+
+  public final int getServerBrowserPort()
+  {
+    return serverBrowserPort;
+  }
+
+  public final void setServerBrowserPort(int serverBrowserPort)
+  {
+    if (this.serverBrowserPort != serverBrowserPort)
+    {
+      this.serverBrowserPort = serverBrowserPort;
+      save();
     }
   }
 
@@ -246,12 +264,23 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
     this.type = type;
     label = properties.getProperty(PROP_LABEL);
+
+    String property = properties.getProperty(PROP_SERVER_BROWSER_PORT);
+    if (property != null)
+    {
+      serverBrowserPort = Integer.parseInt(property);
+    }
   }
 
   protected void collectProperties(Properties properties)
   {
     properties.put(PROP_TYPE, type);
     properties.put(PROP_LABEL, label);
+
+    if (serverBrowserPort != 0)
+    {
+      properties.put(PROP_SERVER_BROWSER_PORT, Integer.toString(serverBrowserPort));
+    }
   }
 
   public static AbstractElement[] collect(Collection<?> c)

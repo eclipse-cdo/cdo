@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DeleteDialog extends TitleAreaDialog
+public class DeleteElementsDialog extends TitleAreaDialog
 {
   private final AbstractElement[] elements;
 
@@ -44,7 +44,7 @@ public class DeleteDialog extends TitleAreaDialog
 
   private boolean deleteContents = true;
 
-  public DeleteDialog(Shell parentShell, AbstractElement... elements)
+  public DeleteElementsDialog(Shell parentShell, AbstractElement... elements)
   {
     super(parentShell);
     this.elements = elements;
@@ -65,13 +65,14 @@ public class DeleteDialog extends TitleAreaDialog
     int size = elements.length;
     if (size != 0)
     {
-      String type = elements[0] instanceof CDORepository ? "Repository" : "Checkout";
-      String types = elements[0] instanceof CDORepository ? "Repositories" : "Checkouts";
+      boolean repository = elements[0] instanceof CDORepository;
+      String type = repository ? "Repository" : "Checkout";
+      String types = repository ? "Repositories" : "Checkouts";
 
       String title = "Delete " + (size == 1 ? type : types);
       getShell().setText(title);
       setTitle(title);
-      setTitleImage(OM.getImage("icons/wiz/delete.gif"));
+      setTitleImage(OM.getImage("icons/wiz/delete_" + type.toLowerCase() + ".gif"));
       setMessage("Are you sure you want to delete " + (size == 1 ? "this" : "these") + " " + size + " "
           + (size == 1 ? type : types).toLowerCase() + "?");
 

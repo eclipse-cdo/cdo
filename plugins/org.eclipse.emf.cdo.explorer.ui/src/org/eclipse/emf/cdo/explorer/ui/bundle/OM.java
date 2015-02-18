@@ -20,10 +20,14 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -47,6 +51,12 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_REPOSITORY_TIMEOUT_DISABLED = //
   PREFS.init("PREF_REPOSITORY_TIMEOUT_DISABLED", false); //$NON-NLS-1$
+
+  public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
+  {
+    ComposedImage composedImage = new OverlayImage(image, overlayImage, x, y);
+    return ExtendedImageRegistry.INSTANCE.getImage(composedImage);
+  }
 
   public static Image getImage(String imagePath)
   {
@@ -74,6 +84,33 @@ public abstract class OM
     {
       super(BUNDLE);
       INSTANCE = this;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class OverlayImage extends ComposedImage
+  {
+    private final int x;
+
+    private final int y;
+
+    public OverlayImage(Object image, Object overlayImage, int x, int y)
+    {
+      super(Arrays.asList(image, overlayImage));
+      this.x = x;
+      this.y = y;
+    }
+
+    @Override
+    public List<ComposedImage.Point> getDrawPoints(Size size)
+    {
+      List<ComposedImage.Point> result = super.getDrawPoints(size);
+      Point overLayPoint = result.get(1);
+      overLayPoint.x = x;
+      overLayPoint.y = y;
+      return result;
     }
   }
 }

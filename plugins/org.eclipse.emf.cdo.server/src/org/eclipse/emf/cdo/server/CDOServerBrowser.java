@@ -536,14 +536,32 @@ public class CDOServerBrowser extends Worker
 
         try
         {
-          int port;
-          if (StringUtil.isEmpty(description) || !Character.isDigit(description.charAt(0)))
+          int port = 0;
+
+          if (!StringUtil.isEmpty(description))
+          {
+            int digits = 0;
+            for (int i = 0; i < description.length(); i++)
+            {
+              if (Character.isDigit(description.charAt(i)))
+              {
+                ++digits;
+              }
+              else
+              {
+                break;
+              }
+            }
+
+            if (digits != 0)
+            {
+              port = Integer.parseInt(description.substring(0, digits));
+            }
+          }
+
+          if (port == 0)
           {
             port = IOUtil.getFreePort();
-          }
-          else
-          {
-            port = Integer.parseInt(description);
           }
 
           browser.setPort(port);

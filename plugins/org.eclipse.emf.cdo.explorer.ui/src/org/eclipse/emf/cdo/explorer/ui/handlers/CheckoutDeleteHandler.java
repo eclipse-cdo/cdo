@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.ui.DeleteDialog;
+import org.eclipse.emf.cdo.explorer.ui.DeleteElementsDialog;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -34,9 +34,9 @@ public class CheckoutDeleteHandler extends AbstractCheckoutHandler
   protected void preRun(ExecutionEvent event) throws Exception
   {
     AbstractElement[] repositories = AbstractElement.collect(elements);
-    DeleteDialog dialog = new DeleteDialog(HandlerUtil.getActiveShell(event), repositories);
+    DeleteElementsDialog dialog = new DeleteElementsDialog(HandlerUtil.getActiveShell(event), repositories);
 
-    if (dialog.open() == DeleteDialog.OK)
+    if (dialog.open() == DeleteElementsDialog.OK)
     {
       deleteContents = dialog.isDeleteContents();
     }

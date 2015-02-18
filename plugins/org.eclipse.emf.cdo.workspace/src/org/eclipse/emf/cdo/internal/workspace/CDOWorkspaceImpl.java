@@ -611,6 +611,11 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   public void revert()
   {
     CDOChangeSetData revertData = getLocalChanges(false);
+    revert(revertData);
+  }
+
+  public void revert(CDOChangeSetData revertData)
+  {
     final CDOBranch localBranch = head.getBranch();
 
     IStoreAccessor.Raw accessor = getLocalWriter(null);
@@ -658,13 +663,14 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       InternalCDORevisionManager revisionManager = localSession.getRevisionManager();
       revisionManager.getRevision(id, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
 
-      int version = synthetics[0].getVersion() - 1;
+      int max = synthetics[0].getVersion();
       EClass eClass = synthetics[0].getEClass();
 
       InternalCDORevision baseRevision = (InternalCDORevision)base.getRevision(id);
-      for (int v = baseRevision.getVersion(); v <= version; v++)
+      for (int v = baseRevision.getVersion(); v <= max; v++)
       {
-        accessor.rawDelete(id, v, localBranch, eClass, new Monitor());
+        int version = v == max ? -max : v;
+        accessor.rawDelete(id, version, localBranch, eClass, new Monitor());
       }
 
       accessor.rawStore(baseRevision, new Monitor());
@@ -983,7 +989,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return getLocalChanges(true);
   }
 
-  private CDOChangeSetData getLocalChanges(boolean forward)
+  public CDOChangeSetData getLocalChanges(boolean forward)
   {
     Set<CDOID> ids = base.getIDs();
 
@@ -1103,7 +1109,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return session;
   }
 
-  protected InternalCDOView[] getViews()
+  public InternalCDOView[] getViews()
   {
     synchronized (views)
     {

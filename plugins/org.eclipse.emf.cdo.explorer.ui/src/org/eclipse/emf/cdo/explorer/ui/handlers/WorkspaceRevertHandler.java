@@ -25,6 +25,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -86,6 +87,22 @@ public class WorkspaceRevertHandler extends AbstractBaseHandler<OfflineCDOChecko
       }
 
       Shell shell = HandlerUtil.getActiveShell(event);
+
+      int size = dirtyTransactions.size();
+      if (size != 0)
+      {
+        String plural = size == 1 ? "" : "s";
+        String message = size == 1 ? "is 1" : "are " + size;
+
+        if (!MessageDialog.openQuestion(shell, "Uncommitted Transaction" + plural, "There " + message
+            + " uncommitted transaction" + plural + ".\n\n" + "Are you sure you want to rollback the transaction"
+            + plural + ", too?"))
+        {
+          cancel();
+          return;
+        }
+      }
+
       OfflineCDOCheckout checkout = elements.get(0);
       CDOChangeSetData revertData = workspace.getLocalChanges(false);
 

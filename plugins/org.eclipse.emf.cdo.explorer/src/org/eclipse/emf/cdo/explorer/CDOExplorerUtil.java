@@ -92,7 +92,7 @@ public final class CDOExplorerUtil
     return null;
   }
 
-  private static CDOCheckout walkUp(EObject object, LinkedList<EObject> path)
+  public static CDOCheckout walkUp(EObject object, LinkedList<EObject> path)
   {
     while (object != null)
     {

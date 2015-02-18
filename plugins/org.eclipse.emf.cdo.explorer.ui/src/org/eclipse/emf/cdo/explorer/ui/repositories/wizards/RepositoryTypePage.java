@@ -54,23 +54,26 @@ public class RepositoryTypePage extends WizardPage
     NewRepositoryWizard wizard = getWizard();
 
     RepositoryRemotePage remotePage = wizard.getRemotePage();
-    addChoice(composite, "Connect to an existing remote repository.", "icons/wiz/repo_remote.gif", remotePage);
+    addChoice(composite, "Connect to an existing remote repository.", "icons/wiz/repo_remote.gif", remotePage, true);
 
     RepositoryClonePage clonePage = wizard.getClonePage();
-    addChoice(composite, "Clone an existing remote repository.", "icons/wiz/repo_clone.gif", clonePage);
+    addChoice(composite, "Clone an existing remote repository.", "icons/wiz/repo_clone.gif", clonePage, false);
 
     RepositoryLocalPage localPage = wizard.getLocalPage();
-    addChoice(composite, "Create a new local repository.", "icons/wiz/repo_local.gif", localPage);
+    addChoice(composite, "Create a new local repository.", "icons/wiz/repo_local.gif", localPage, true);
 
     nextPage = remotePage;
     setPageComplete(true);
   }
 
-  private Button addChoice(Composite composite, String text, String imagePath, final AbstractRepositoryPage nextPage)
+  private Button addChoice(Composite composite, String text, String imagePath, final AbstractRepositoryPage nextPage,
+      boolean enabled)
   {
     this.nextPage = nextPage;
+
     Button button = new Button(composite, SWT.RADIO);
     button.setText(text);
+    button.setEnabled(enabled);
     button.addSelectionListener(new SelectionListener()
     {
       public void widgetSelected(SelectionEvent e)
@@ -97,6 +100,7 @@ public class RepositoryTypePage extends WizardPage
 
     Label imageLabel = new Label(composite, SWT.NONE);
     imageLabel.setImage(OM.getImage(imagePath));
+    imageLabel.setEnabled(enabled);
 
     new Label(composite, SWT.NONE);
     return button;

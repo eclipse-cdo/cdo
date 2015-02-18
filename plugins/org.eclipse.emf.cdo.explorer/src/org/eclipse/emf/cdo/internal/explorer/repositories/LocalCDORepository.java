@@ -109,7 +109,10 @@ public class LocalCDORepository extends CDORepositoryImpl
     versioningMode = VersioningMode.valueOf(properties.getProperty(PROP_VERSIONING_MODE));
     idGeneration = IDGeneration.valueOf(properties.getProperty(PROP_ID_GENERATION));
     tcpDisabled = Boolean.parseBoolean(properties.getProperty(PROP_TCP_DISABLED));
-    tcpPort = Integer.parseInt(properties.getProperty(PROP_TCP_PORT));
+    if (!tcpDisabled)
+    {
+      tcpPort = Integer.parseInt(properties.getProperty(PROP_TCP_PORT));
+    }
   }
 
   @Override

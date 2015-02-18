@@ -78,8 +78,10 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -87,6 +89,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider implements IOpenListener
 {
+  private static final Set<Object> LOADING_OBJECTS = new HashSet<Object>();
+
   private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class,
       "getChildrenFeatures", Object.class);
 
@@ -369,6 +373,11 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     final Object finalObject = object;
     final CDOCheckout finalOpeningCheckout = openingCheckout;
 
+    synchronized (LOADING_OBJECTS)
+    {
+      LOADING_OBJECTS.add(originalObject);
+    }
+
     new Job("Load " + finalObject)
     {
       @Override
@@ -434,6 +443,12 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
 
         // The viewer must be refreshed synchronously so that the loaded children don't get garbage collected.
         ViewerUtil.refresh(viewer, originalObject, false);
+
+        synchronized (LOADING_OBJECTS)
+        {
+          LOADING_OBJECTS.remove(originalObject);
+        }
+
         return Status.OK_STATUS;
       }
     }.schedule();
@@ -738,6 +753,14 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     catch (Throwable ex)
     {
       return null;
+    }
+  }
+
+  public static boolean isObjectLoading(Object object)
+  {
+    synchronized (LOADING_OBJECTS)
+    {
+      return LOADING_OBJECTS.contains(object);
     }
   }
 }

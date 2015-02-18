@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -169,7 +170,7 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
       writer.write(key);
       writer.write("\t");
       writer.write(Integer.toString(detachedVersion));
-      writer.write("\t");
+      writer.write("\n");
     }
     catch (IOException ex)
     {
@@ -315,7 +316,7 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
       {
         for (File file : files)
         {
-          if (file.isFile())
+          if (!ObjectUtil.equals(file, addedAndDetachedFile))
           {
             CDOID id = getCDOID(file.getName());
             ids.add(id);

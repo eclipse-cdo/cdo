@@ -10,11 +10,15 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.IDGeneration;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.VersioningMode;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.ui.widgets.TextAndDisable;
 
 import org.eclipse.swt.SWT;
@@ -26,13 +30,19 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class RepositoryLocalPage extends AbstractRepositoryPage
 {
+  private final Set<Integer> configuredPorts = new HashSet<Integer>();
+
   private Text nameText;
 
   private Button normalButton;
@@ -52,6 +62,28 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     super("local", "Local Repository 1");
     setTitle("New Local Repository");
     setMessage("Enter the label and the connection parameters of the new remote location.");
+
+    CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
+    for (CDORepository repository : repositoryManager.getRepositories())
+    {
+      try
+      {
+        URI uri = new URI(repository.getURI());
+        if ("tcp".equals(uri.getScheme()))
+        {
+          String host = uri.getHost();
+          if ("localhost".equals(host) || "127.0.0.1".equals(host))
+          {
+            configuredPorts.add(uri.getPort());
+          }
+        }
+      }
+      catch (URISyntaxException ex)
+      {
+        //$FALL-THROUGH$
+      }
+    }
+
   }
 
   @Override
@@ -79,7 +111,6 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
     normalButton = new Button(modeGroup, SWT.RADIO);
     normalButton.setText("Normal (no history)");
-    normalButton.setSelection(true);
     normalButton.addSelectionListener(this);
 
     auditingButton = new Button(modeGroup, SWT.RADIO);
@@ -88,6 +119,7 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
     branchingButton = new Button(modeGroup, SWT.RADIO);
     branchingButton.setText("Branching (history tree)");
+    branchingButton.setSelection(true);
     branchingButton.addSelectionListener(this);
 
     Group idGroup = new Group(composite, SWT.NONE);
@@ -97,17 +129,17 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
     counterButton = new Button(idGroup, SWT.RADIO);
     counterButton.setText("Counter (efficient)");
-    counterButton.setSelection(true);
     counterButton.addSelectionListener(this);
 
     uuidButton = new Button(idGroup, SWT.RADIO);
     uuidButton.setText("UUID (replicable)");
+    uuidButton.setSelection(true);
     uuidButton.addSelectionListener(this);
 
     createLabel(container, "TCP port:");
     portText = new TextAndDisable(container, SWT.BORDER, null);
     portText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-    portText.setValue("2037");
+    portText.setValue(Integer.toString(getDefaultPort()));
     portText.setDisabled(true);
     portText.addModifyListener(this);
     portText.addSelectionListener(this);
@@ -148,23 +180,55 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
       properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
     }
 
-    String port = portText.getValue();
+    boolean tcpPortDisabled = portText.isDisabled();
+    properties.put(LocalCDORepository.PROP_TCP_DISABLED, Boolean.toString(tcpPortDisabled));
 
-    try
+    if (!tcpPortDisabled)
     {
-      int value = Integer.parseInt(port);
-      if (value < 0)
+      int port;
+
+      try
       {
-        throw new Exception();
+        port = Integer.parseInt(portText.getValue());
+        if (port < 0 || port > 0xffff)
+        {
+          throw new Exception();
+        }
+      }
+      catch (Exception ex)
+      {
+        throw new Exception("Invalid TCP port.");
+      }
+
+      if (!isFreePort(port))
+      {
+        throw new Exception("TCP port " + port + " is not available.");
+      }
+
+      properties.put(LocalCDORepository.PROP_TCP_PORT, port);
+    }
+  }
+
+  private int getDefaultPort()
+  {
+    for (int port = 2036; port < 0xffff; port++)
+    {
+      if (isFreePort(port))
+      {
+        return port;
       }
     }
-    catch (Exception ex)
+
+    return 2036;
+  }
+
+  private boolean isFreePort(int port)
+  {
+    if (configuredPorts.contains(port))
     {
-      throw new Exception("Invalid TCP port.");
+      return false;
     }
 
-    properties.put(LocalCDORepository.PROP_TCP_DISABLED, Boolean.toString(portText.isDisabled()));
-    properties.put(LocalCDORepository.PROP_TCP_PORT, port);
-
+    return IOUtil.isFreePort(port);
   }
 }

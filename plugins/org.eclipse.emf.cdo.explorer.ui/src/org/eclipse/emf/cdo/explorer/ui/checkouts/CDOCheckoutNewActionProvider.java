@@ -21,11 +21,13 @@ import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.NewRootMenuPopulator;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -45,7 +47,9 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -58,6 +62,7 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 import org.eclipse.ui.navigator.WizardActionGroup;
 
 import java.util.Collection;
+import java.util.LinkedList;
 
 /**
  * @author Eike Stepper
@@ -74,7 +79,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
 
   private IWorkbenchPage page;
 
-  private StructuredViewer viewer;
+  private TreeViewer viewer;
 
   private Object selectedObject;
 
@@ -97,7 +102,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
       newWizardActionGroup = new WizardActionGroup(window, PlatformUI.getWorkbench().getNewWizardRegistry(),
           WizardActionGroup.TYPE_NEW, extensionSite.getContentService());
 
-      viewer = extensionSite.getStructuredViewer();
+      viewer = (TreeViewer)extensionSite.getStructuredViewer();
       viewer.addSelectionChangedListener(this);
       updateSelectedObject(viewer.getSelection());
     }
@@ -233,77 +238,158 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     }
   }
 
+  private void selectObject(final EObject object)
+  {
+    viewer.getControl().getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        LinkedList<EObject> path = new LinkedList<EObject>();
+        CDOCheckout checkout = CDOExplorerUtil.walkUp(object, path);
+        if (checkout != null)
+        {
+          viewer.setExpandedState(checkout, true);
+
+          path.removeFirst();
+          path.removeLast();
+
+          for (EObject object : path)
+          {
+            viewer.setExpandedState(object, true);
+          }
+
+          final Control control = viewer.getControl();
+          final Display display = control.getDisplay();
+          final long end = System.currentTimeMillis() + 1000L;
+
+          display.asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              if (control.isDisposed())
+              {
+                return;
+              }
+
+              viewer.setSelection(new StructuredSelection(object), true);
+              if (viewer.getSelection().isEmpty())
+              {
+                if (CDOCheckoutContentProvider.isObjectLoading(object) || System.currentTimeMillis() < end)
+                {
+                  display.timerExec(50, this);
+                }
+              }
+            }
+          });
+        }
+      }
+    });
+  }
+
   /**
    * @author Eike Stepper
    */
-  private class NewRootAction extends TransactionalBackgroundAction
+  private abstract class AbstractNewAction extends TransactionalBackgroundAction
   {
-    private final EObject object;
+    private EObject newObject;
 
-    public NewRootAction(CDOResource resource, EObject object)
+    public AbstractNewAction(String text, String toolTipText, ImageDescriptor image, CDOObject parent)
     {
-      super(page, object.eClass().getName(), null, ExtendedImageRegistry.getInstance().getImageDescriptor(
-          CDOEditor.getLabelImage(adapterFactory, object)), resource);
-      this.object = object;
+      super(page, text, toolTipText, image, parent);
     }
 
     @Override
-    protected CDOTransaction openTransaction(CDOObject object)
+    protected CDOTransaction openTransaction(CDOObject AbstractNewAction)
     {
-      CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(AbstractNewAction);
       if (checkout != null)
       {
         return checkout.openTransaction();
       }
-    
+
       return null;
     }
 
     @Override
-    protected void doRun(CDOTransaction transaction, CDOObject resource, IProgressMonitor monitor) throws Exception
+    protected final void doRun(CDOTransaction transaction, CDOObject parent, IProgressMonitor monitor) throws Exception
     {
-      EList<EObject> contents = ((CDOResource)resource).getContents();
-      contents.add(object);
+      newObject = doRun(transaction, parent, new StructuredSelection(parent));
+    }
+
+    protected abstract EObject doRun(CDOTransaction transaction, CDOObject parent, ISelection selection);
+
+    @Override
+    protected void postRun(CDOView view, CDOObject parent)
+    {
+      if (newObject != null)
+      {
+        EObject object = view.getObject(newObject);
+        if (object != null)
+        {
+          selectObject(object);
+        }
+      }
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  private class NewChildAction extends TransactionalBackgroundAction
+  private class NewRootAction extends AbstractNewAction
+  {
+    private final EObject object;
+
+    public NewRootAction(CDOResource resource, EObject object)
+    {
+      super(object.eClass().getName(), null, ExtendedImageRegistry.getInstance().getImageDescriptor(
+          CDOEditor.getLabelImage(adapterFactory, object)), resource);
+      this.object = object;
+    }
+
+    @Override
+    protected EObject doRun(CDOTransaction transaction, CDOObject resource, ISelection selection)
+    {
+      EList<EObject> contents = ((CDOResource)resource).getContents();
+      contents.add(object);
+      return object;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class NewChildAction extends AbstractNewAction
   {
     private final Object childDescriptor;
 
     public NewChildAction(String text, String toolTipText, ImageDescriptor image, CDOObject parent,
         Object childDescriptor)
     {
-      super(page, text, toolTipText, image, parent);
+      super(text, toolTipText, image, parent);
       this.childDescriptor = childDescriptor;
     }
 
     @Override
-    protected CDOTransaction openTransaction(CDOObject object)
-    {
-      CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
-      if (checkout != null)
-      {
-        return checkout.openTransaction();
-      }
-
-      return null;
-    }
-
-    @Override
-    protected void doRun(CDOTransaction transaction, CDOObject parent, IProgressMonitor monitor) throws Exception
+    protected EObject doRun(CDOTransaction transaction, CDOObject parent, ISelection selection)
     {
       BasicCommandStack commandStack = new BasicCommandStack();
       ResourceSet resourceSet = transaction.getResourceSet();
       EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
 
-      IStructuredSelection selection = new StructuredSelection(parent);
-
       CreateChildAction delegate = new CreateChildAction(editingDomain, selection, childDescriptor);
       delegate.run();
+
+      if (childDescriptor instanceof CommandParameter)
+      {
+        CommandParameter parameter = (CommandParameter)childDescriptor;
+        Object value = parameter.getValue();
+        if (value instanceof EObject)
+        {
+          return (EObject)value;
+        }
+      }
+
+      return null;
     }
   }
 }

@@ -100,7 +100,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
   protected final void validate()
   {
     properties = new Properties();
-    properties.put(CDORepositoryImpl.PROP_NAME, getName());
+    properties.put(CDORepositoryImpl.PROP_TYPE, getName());
 
     try
     {

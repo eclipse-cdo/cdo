@@ -10,12 +10,17 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -108,9 +113,13 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
           transaction.getRootResource().getContents().add(newResourceNode);
         }
 
+        CDOCommitInfo commitInfo = null;
+        CDOID newID = null;
+
         try
         {
-          transaction.commit();
+          commitInfo = transaction.commit();
+          newID = newResourceNode.cdoID();
         }
         catch (Exception ex)
         {
@@ -119,6 +128,19 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
           IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
           ErrorDialog.openError(getShell(), "Error",
               "An error occured while creating the " + title.toLowerCase() + ".", status);
+        }
+
+        if (commitInfo != null)
+        {
+          CDOCheckoutContentProvider contentProvider = CDOCheckoutContentProvider.getInstance();
+          if (contentProvider != null)
+          {
+            CDOView view = checkout.getView();
+            view.waitForUpdate(commitInfo.getTimeStamp());
+
+            CDOObject newObject = view.getObject(newID);
+            contentProvider.selectObject(newObject);
+          }
         }
 
         return Status.OK_STATUS;

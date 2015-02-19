@@ -61,7 +61,14 @@ public class ObjectDeleteHandler extends AbstractObjectHandler
   {
     for (EObject eObject : transactionalElements)
     {
-      EcoreUtil.remove(eObject);
+      try
+      {
+        EcoreUtil.remove(eObject);
+      }
+      catch (Exception ex)
+      {
+        ex.printStackTrace();
+      }
     }
 
     return true;

@@ -60,10 +60,12 @@ import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.OpenEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.IViewPart;
@@ -80,6 +82,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -98,6 +101,8 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
   private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 
   private static final CDOCheckoutManager CHECKOUT_MANAGER = CDOExplorerUtil.getCheckoutManager();
+
+  private static CDOCheckoutContentProvider instance;
 
   private final IListener checkoutManagerListener = new IListener()
   {
@@ -251,11 +256,13 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     setAdapterFactory(adapterFactory);
 
     CHECKOUT_MANAGER.addListener(checkoutManagerListener);
+    instance = this;
   }
 
   @Override
   public void dispose()
   {
+    instance = null;
     super.dispose();
 
     CHECKOUT_MANAGER.removeListener(checkoutManagerListener);
@@ -660,6 +667,50 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     super.notifyChanged(notification);
   }
 
+  public void selectObject(final Object object)
+  {
+    final Control control = viewer.getControl();
+    if (!control.isDisposed())
+    {
+      final long end = System.currentTimeMillis() + 5000L;
+      final Display display = control.getDisplay();
+      display.asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          if (control.isDisposed())
+          {
+            return;
+          }
+
+          LinkedList<Object> path = new LinkedList<Object>();
+          CDOCheckout checkout = CDOExplorerUtil.walkUp(object, path);
+          if (checkout != null)
+          {
+            viewer.setExpandedState(checkout, true);
+
+            path.removeFirst();
+            path.removeLast();
+
+            for (Object object : path)
+            {
+              viewer.setExpandedState(object, true);
+            }
+
+            viewer.setSelection(new StructuredSelection(object), true);
+            if (viewer.getSelection().isEmpty())
+            {
+              if (isObjectLoading(object) || System.currentTimeMillis() < end)
+              {
+                display.timerExec(50, this);
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
   public void open(OpenEvent event)
   {
     ISelection selection = event.getSelection();
@@ -808,11 +859,16 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     }
   }
 
-  public static boolean isObjectLoading(Object object)
+  private static boolean isObjectLoading(Object object)
   {
     synchronized (LOADING_OBJECTS)
     {
       return LOADING_OBJECTS.contains(object);
     }
+  }
+
+  public static final CDOCheckoutContentProvider getInstance()
+  {
+    return instance;
   }
 }

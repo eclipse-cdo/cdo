@@ -234,6 +234,38 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   }
 
   /**
+   * @since 4.4
+   */
+  public String getExtension()
+  {
+    String name = getName();
+
+    int lastDot = name.lastIndexOf('.');
+    if (lastDot != -1)
+    {
+      return name.substring(lastDot + 1);
+    }
+
+    return "";
+  }
+
+  /**
+   * @since 4.4
+   */
+  public String trimExtension()
+  {
+    String name = getName();
+
+    int lastDot = name.lastIndexOf('.');
+    if (lastDot != -1)
+    {
+      return name.substring(0, lastDot);
+    }
+
+    return name;
+  }
+
+  /**
    * @ADDED
    */
   public URI getURI()

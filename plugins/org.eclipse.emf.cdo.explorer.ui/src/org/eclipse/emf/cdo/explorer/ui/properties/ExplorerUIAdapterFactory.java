@@ -198,6 +198,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
             if (commitInfo != null)
             {
               checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
+
               CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
               checkoutManager.fireElementChangedEvent(resourceNode, true);
             }
@@ -209,9 +210,10 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
       public String validateName(String name)
       {
+        String type = getType();
         if (StringUtil.isEmpty(name))
         {
-          return getType() + " name is empty.";
+          return type + " name is empty.";
         }
 
         if (name.equals(getName()))
@@ -219,29 +221,34 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
           return null;
         }
 
-        CDOResourceFolder parentFolder = resourceNode.getFolder();
-        if (parentFolder == null)
-        {
-          CDOView view = resourceNode.cdoView();
-          for (EObject eObject : view.getRootResource().getContents())
-          {
-            if (eObject instanceof CDOResourceNode)
-            {
-              CDOResourceNode child = (CDOResourceNode)eObject;
-              if (ObjectUtil.equals(child.getName(), name))
-              {
-                return getType() + " name is not unique within the root resource.";
-              }
-            }
-          }
-        }
-        else if (parentFolder.getNode(name) != null)
-        {
-          return getType() + " name is not unique within the parent folder.";
-        }
-
-        return null;
+        return checkUniqueName(resourceNode, name, type);
       }
     };
+  }
+
+  public static String checkUniqueName(final CDOResourceNode resourceNode, String name, String type)
+  {
+    CDOResourceFolder parentFolder = resourceNode.getFolder();
+    if (parentFolder == null)
+    {
+      CDOView view = resourceNode.cdoView();
+      for (EObject eObject : view.getRootResource().getContents())
+      {
+        if (eObject instanceof CDOResourceNode)
+        {
+          CDOResourceNode child = (CDOResourceNode)eObject;
+          if (ObjectUtil.equals(child.getName(), name))
+          {
+            return type + " name is not unique within the root resource.";
+          }
+        }
+      }
+    }
+    else if (parentFolder.getNode(name) != null)
+    {
+      return type + " name is not unique within the parent folder.";
+    }
+
+    return null;
   }
 }

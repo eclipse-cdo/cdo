@@ -48,8 +48,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -62,7 +60,6 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 import org.eclipse.ui.navigator.WizardActionGroup;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 /**
  * @author Eike Stepper
@@ -238,54 +235,6 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     }
   }
 
-  private void selectObject(final Object object)
-  {
-    viewer.getControl().getDisplay().asyncExec(new Runnable()
-    {
-      public void run()
-      {
-        LinkedList<Object> path = new LinkedList<Object>();
-        CDOCheckout checkout = CDOExplorerUtil.walkUp(object, path);
-        if (checkout != null)
-        {
-          viewer.setExpandedState(checkout, true);
-
-          path.removeFirst();
-          path.removeLast();
-
-          for (Object object : path)
-          {
-            viewer.setExpandedState(object, true);
-          }
-
-          final Control control = viewer.getControl();
-          final Display display = control.getDisplay();
-          final long end = System.currentTimeMillis() + 1000L;
-
-          display.asyncExec(new Runnable()
-          {
-            public void run()
-            {
-              if (control.isDisposed())
-              {
-                return;
-              }
-
-              viewer.setSelection(new StructuredSelection(object), true);
-              if (viewer.getSelection().isEmpty())
-              {
-                if (CDOCheckoutContentProvider.isObjectLoading(object) || System.currentTimeMillis() < end)
-                {
-                  display.timerExec(50, this);
-                }
-              }
-            }
-          });
-        }
-      }
-    });
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -326,7 +275,11 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
         EObject object = view.getObject(newObject);
         if (object != null)
         {
-          selectObject(object);
+          CDOCheckoutContentProvider contentProvider = CDOCheckoutContentProvider.getInstance();
+          if (contentProvider != null)
+          {
+            contentProvider.selectObject(object);
+          }
         }
       }
     }

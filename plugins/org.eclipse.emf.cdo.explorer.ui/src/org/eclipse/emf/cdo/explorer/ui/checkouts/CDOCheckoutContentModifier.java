@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -100,6 +101,10 @@ public interface CDOCheckoutContentModifier
           try
           {
             children = modifier.modifyChildren(parent, children);
+          }
+          catch (ObjectNotFoundException ex)
+          {
+            // Do nothing
           }
           catch (Exception ex)
           {

@@ -33,8 +33,10 @@ import org.eclipse.swt.widgets.Control;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -45,6 +47,8 @@ public class ObjectListController
   private final LabelProvider labelProvider = new LabelProvider();
 
   private final AtomicBoolean refreshing = new AtomicBoolean();
+
+  private final Set<EObject> objects = new HashSet<EObject>();
 
   private final List<Wrapper> wrappers = new ArrayList<Wrapper>();
 
@@ -72,8 +76,11 @@ public class ObjectListController
 
   public final void addObject(EObject object, boolean delete)
   {
-    String name = labelProvider.getSuperText(object);
-    wrappers.add(new Wrapper(object, delete, name));
+    if (objects.add(object))
+    {
+      String name = labelProvider.getSuperText(object);
+      wrappers.add(new Wrapper(object, delete, name));
+    }
   }
 
   public void configure(final TreeViewer treeViewer)

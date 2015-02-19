@@ -10,13 +10,28 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext;
+import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutManagerImpl;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.StringUtil;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 
 /**
  * @author Eike Stepper
  */
-public class ResourceGroup extends CDOCheckoutElement
+public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameContext
 {
   private String name;
 
@@ -36,21 +51,111 @@ public class ResourceGroup extends CDOCheckoutElement
   public void reset()
   {
     super.reset();
-
-    String fullName = getDelegate().getName();
-    name = fullName.substring(0, fullName.lastIndexOf('.'));
+    name = getDelegate().trimExtension();
   }
 
   @Override
   public String toString(Object child)
   {
-    String fullName = ((CDOResourceNode)child).getName();
-    return fullName.substring(fullName.lastIndexOf('.') + 1);
+    return ((CDOResourceNode)child).getExtension();
   }
 
   @Override
   public String toString()
   {
     return name;
+  }
+
+  public String getType()
+  {
+    return "Resource Group";
+  }
+
+  public String getName()
+  {
+    return name;
+  }
+
+  public void setName(final String name)
+  {
+    final String type = getType();
+    new Job("Rename " + type.toLowerCase())
+    {
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        CDOResourceNode resourceNode = getDelegate();
+        CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
+        CDOTransaction transaction = checkout.openTransaction();
+
+        CDOCommitInfo commitInfo = null;
+
+        try
+        {
+          for (Object child : getChildren())
+          {
+            if (child instanceof CDOResourceNode)
+            {
+              CDOResourceNode childNode = (CDOResourceNode)child;
+              CDOResourceNode transactionalChildNode = transaction.getObject(childNode);
+              String extension = transactionalChildNode.getExtension();
+
+              transactionalChildNode.setName(name + "." + extension);
+            }
+          }
+
+          commitInfo = transaction.commit();
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+        finally
+        {
+          transaction.close();
+        }
+
+        if (commitInfo != null)
+        {
+          checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
+
+          CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
+          checkoutManager.fireElementChangedEvent(ResourceGroup.this, true);
+        }
+
+        return Status.OK_STATUS;
+      }
+    }.schedule();
+  }
+
+  public String validateName(String name)
+  {
+    String type = getType();
+    if (StringUtil.isEmpty(name))
+    {
+      return type + " name is empty.";
+    }
+
+    if (name.equals(getName()))
+    {
+      return null;
+    }
+
+    for (Object child : getChildren())
+    {
+      if (child instanceof CDOResourceNode)
+      {
+        CDOResourceNode childNode = (CDOResourceNode)child;
+        String extension = childNode.getExtension();
+
+        String error = ExplorerUIAdapterFactory.checkUniqueName(childNode, name + "." + extension, type);
+        if (error != null)
+        {
+          return error;
+        }
+      }
+    }
+
+    return null;
   }
 }

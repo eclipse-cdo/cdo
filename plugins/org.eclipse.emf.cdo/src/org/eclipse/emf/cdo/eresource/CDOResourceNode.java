@@ -138,6 +138,18 @@ public interface CDOResourceNode extends CDOObject
 
   /**
    * @ADDED
+   * @since 4.4
+   */
+  public String getExtension();
+
+  /**
+   * @ADDED
+   * @since 4.4
+   */
+  public String trimExtension();
+
+  /**
+   * @ADDED
    */
   public URI getURI();
 

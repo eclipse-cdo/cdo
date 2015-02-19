@@ -29,5 +29,7 @@ public interface CDOExplorerManager<T extends CDOExplorerElement> extends IConta
     public CDOExplorerManager<?> getSource();
 
     public Object getChangedElement();
+
+    public boolean impactsParent();
   }
 }

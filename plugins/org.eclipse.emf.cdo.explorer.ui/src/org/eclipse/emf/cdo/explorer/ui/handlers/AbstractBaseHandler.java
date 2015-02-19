@@ -37,7 +37,7 @@ public abstract class AbstractBaseHandler<T> extends LongRunningHandler
   @Override
   protected boolean updateSelection(ISelection selection)
   {
-    elements = UIUtil.adaptElements(getSelection(), type);
+    elements = collectElements(selection);
     if (elements == null)
     {
       return false;
@@ -58,5 +58,10 @@ public abstract class AbstractBaseHandler<T> extends LongRunningHandler
     }
 
     return true;
+  }
+
+  protected List<T> collectElements(ISelection selection)
+  {
+    return UIUtil.adaptElements(selection, type);
   }
 }

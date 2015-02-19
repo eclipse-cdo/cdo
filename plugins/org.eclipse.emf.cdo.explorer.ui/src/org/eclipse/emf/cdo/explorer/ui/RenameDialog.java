@@ -85,7 +85,6 @@ public class RenameDialog extends TitleAreaDialog
     nameText = new Text(container, SWT.BORDER);
     nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     nameText.setText(name);
-    nameText.selectAll();
     nameText.setFocus();
     nameText.addModifyListener(new ModifyListener()
     {
@@ -103,6 +102,16 @@ public class RenameDialog extends TitleAreaDialog
         }
       }
     });
+
+    int lastDot = name.lastIndexOf('.');
+    if (lastDot != -1)
+    {
+      nameText.setSelection(0, lastDot);
+    }
+    else
+    {
+      nameText.selectAll();
+    }
 
     return area;
   }

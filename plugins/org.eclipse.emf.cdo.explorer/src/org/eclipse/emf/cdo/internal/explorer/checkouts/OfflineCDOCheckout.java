@@ -53,7 +53,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     {
       if (event instanceof DirtyStateChangedEvent)
       {
-        fireElementChangedEvent();
+        fireElementChangedEvent(false);
       }
     }
   };

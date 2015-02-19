@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.ui.properties;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutManagerImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -175,12 +177,14 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
             CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
             CDOTransaction transaction = checkout.openTransaction();
 
+            CDOCommitInfo commitInfo = null;
+
             try
             {
               CDOResourceNode transactionalResourceNode = transaction.getObject(resourceNode);
               transactionalResourceNode.setName(name);
 
-              transaction.commit();
+              commitInfo = transaction.commit();
             }
             catch (Exception ex)
             {
@@ -189,6 +193,13 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
             finally
             {
               transaction.close();
+            }
+
+            if (commitInfo != null)
+            {
+              checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
+              CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
+              checkoutManager.fireElementChangedEvent(resourceNode, true);
             }
 
             return Status.OK_STATUS;

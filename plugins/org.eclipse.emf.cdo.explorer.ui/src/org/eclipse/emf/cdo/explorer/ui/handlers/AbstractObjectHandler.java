@@ -12,7 +12,10 @@ package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -20,6 +23,7 @@ import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.StructuredSelection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +75,36 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
     }
 
     return false;
+  }
+
+  @Override
+  protected List<EObject> collectElements(ISelection selection)
+  {
+    List<Object> elements = UIUtil.getElements(selection);
+    if (elements != null)
+    {
+      List<Object> result = new ArrayList<Object>();
+
+      for (Object element : elements)
+      {
+        if (element instanceof CDOCheckoutElement)
+        {
+          CDOCheckoutElement checkoutElement = (CDOCheckoutElement)element;
+          for (Object child : checkoutElement.getChildren())
+          {
+            result.add(child);
+          }
+        }
+        else
+        {
+          result.add(element);
+        }
+      }
+
+      selection = new StructuredSelection(result);
+    }
+
+    return super.collectElements(selection);
   }
 
   @Override

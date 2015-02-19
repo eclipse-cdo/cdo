@@ -121,9 +121,9 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   protected abstract T createElement(String type);
 
-  public void fireElementChangedEvent(Object changedElement)
+  public void fireElementChangedEvent(Object changedElement, boolean impactsParent)
   {
-    fireEvent(new ElementChangedImpl(this, changedElement));
+    fireEvent(new ElementChangedImpl(this, changedElement, impactsParent));
   }
 
   public static Properties loadProperties(File folder, String fileName)
@@ -164,10 +164,13 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
     private final Object changedElement;
 
-    public ElementChangedImpl(CDOExplorerManager<?> manager, Object changedElement)
+    private final boolean impactsParent;
+
+    public ElementChangedImpl(CDOExplorerManager<?> manager, Object changedElement, boolean impactsParent)
     {
       super(manager);
       this.changedElement = changedElement;
+      this.impactsParent = impactsParent;
     }
 
     @Override
@@ -179,6 +182,11 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     public final Object getChangedElement()
     {
       return changedElement;
+    }
+
+    public boolean impactsParent()
+    {
+      return impactsParent;
     }
   }
 }

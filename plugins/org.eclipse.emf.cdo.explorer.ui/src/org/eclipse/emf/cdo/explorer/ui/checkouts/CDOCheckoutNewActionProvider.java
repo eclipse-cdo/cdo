@@ -184,7 +184,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     }
     else if (selectedObject instanceof CDOResourceNode)
     {
-      // CDOResourceFolder contributions have already been added by newWizardActionGroup.
+      // Do nothing. CDOResourceFolder contributions have already been added by newWizardActionGroup.
     }
     else if (selectedObject instanceof EObject)
     {

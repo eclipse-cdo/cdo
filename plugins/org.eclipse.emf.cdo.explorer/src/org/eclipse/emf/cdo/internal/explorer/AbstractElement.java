@@ -87,7 +87,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
       this.label = label;
       save();
 
-      fireElementChangedEvent();
+      fireElementChangedEvent(true);
     }
   }
 
@@ -105,12 +105,12 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
   }
 
-  protected final void fireElementChangedEvent()
+  protected final void fireElementChangedEvent(boolean impactsParent)
   {
     AbstractManager<?> manager = getManager();
     if (manager != null)
     {
-      manager.fireElementChangedEvent(this);
+      manager.fireElementChangedEvent(this, impactsParent);
     }
   }
 

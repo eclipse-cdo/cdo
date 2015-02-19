@@ -8,13 +8,17 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer;
+package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 /**
  * @author Eike Stepper
- * @since 4.4
  */
-public interface CDOContentProvider
+public final class PapyrusDIFactory extends ResourceGroupModifier.Factory
 {
-  public Object getParent(Object object);
+  public static final String EXTENSION = "di";
+
+  public PapyrusDIFactory()
+  {
+    super(EXTENSION);
+  }
 }

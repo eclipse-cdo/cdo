@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
@@ -50,44 +51,56 @@ public final class CDOExplorerUtil
 
   public static Object getParent(Object object)
   {
-    CDOContentProvider contentProvider = AdapterUtil.adapt(object, CDOContentProvider.class);
+    CDOCheckoutElement contentProvider = AdapterUtil.adapt(object, CDOCheckoutElement.class);
     if (contentProvider != null)
     {
-      return contentProvider.getParent(object);
+      return contentProvider.getParent();
     }
 
     if (object instanceof EObject)
     {
       EObject eObject = (EObject)object;
-
-      EObject container = eObject.eContainer();
-      if (container != null)
+      CDOCheckoutElement element = (CDOCheckoutElement)EcoreUtil.getExistingAdapter(eObject, CDOCheckoutElement.class);
+      if (element != null)
       {
-        return container;
+        return element;
       }
 
-      if (eObject instanceof CDOResource)
-      {
-        CDOResource resource = (CDOResource)eObject;
-        if (resource.isRoot())
-        {
-          return null;
-        }
-      }
+      return getParentOfEObject(eObject);
+    }
 
-      Resource resource = eObject.eResource();
-      if (resource instanceof CDOResource)
-      {
-        return resource;
-      }
+    return null;
+  }
 
-      if (eObject instanceof CDOResourceNode)
+  public static EObject getParentOfEObject(EObject eObject)
+  {
+    EObject container = eObject.eContainer();
+    if (container != null)
+    {
+      return container;
+    }
+
+    if (eObject instanceof CDOResource)
+    {
+      CDOResource resource = (CDOResource)eObject;
+      if (resource.isRoot())
       {
-        CDOView view = ((CDOResourceNode)eObject).cdoView();
-        if (view != null)
-        {
-          return view.getRootResource();
-        }
+        return null;
+      }
+    }
+
+    Resource resource = eObject.eResource();
+    if (resource instanceof CDOResource)
+    {
+      return (CDOResource)resource;
+    }
+
+    if (eObject instanceof CDOResourceNode)
+    {
+      CDOView view = ((CDOResourceNode)eObject).cdoView();
+      if (view != null)
+      {
+        return view.getRootResource();
       }
     }
 

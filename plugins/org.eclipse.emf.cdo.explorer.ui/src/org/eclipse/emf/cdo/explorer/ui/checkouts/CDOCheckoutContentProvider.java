@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.State;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutOpenEvent;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
@@ -129,7 +130,39 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       {
         CDOExplorerManager.ElementChangedEvent e = (CDOExplorerManager.ElementChangedEvent)event;
         Object changedElement = e.getChangedElement();
-        ViewerUtil.update(viewer, changedElement);
+
+        if (e.impactsParent())
+        {
+          if (changedElement instanceof CDOCheckout)
+          {
+            ViewerUtil.refresh(viewer, null);
+          }
+          else
+          {
+            Object parent = CDOExplorerUtil.getParent(changedElement);
+            if (parent != null)
+            {
+              if (parent instanceof CDOCheckoutElement)
+              {
+                CDOCheckoutElement checkoutElement = (CDOCheckoutElement)parent;
+                ViewerUtil.refresh(viewer, checkoutElement.getParent());
+              }
+              else
+              {
+                ViewerUtil.refresh(viewer, parent);
+              }
+            }
+            else
+            {
+              ViewerUtil.update(viewer, changedElement);
+            }
+          }
+        }
+        else
+        {
+          ViewerUtil.update(viewer, changedElement);
+        }
+
         updatePropertySheetPage(changedElement);
       }
     }
@@ -288,6 +321,12 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       object = checkout.getRootObject();
     }
 
+    if (object instanceof CDOCheckoutElement)
+    {
+      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)object;
+      return checkoutElement.hasChildren();
+    }
+
     if (GET_CHILDREN_FEATURES_METHOD != null && object instanceof EObject)
     {
       EObject eObject = (EObject)object;
@@ -329,6 +368,12 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     if (object instanceof ViewerUtil.Pending)
     {
       return ViewerUtil.NO_CHILDREN;
+    }
+
+    if (object instanceof CDOCheckoutElement)
+    {
+      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)object;
+      return checkoutElement.getChildren();
     }
 
     final Object originalObject = object;
@@ -403,6 +448,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
           }
 
           Object[] children = CDOCheckoutContentProvider.super.getChildren(finalObject);
+          children = CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(finalObject, children);
           childrenCache.put(originalObject, children);
         }
         catch (final Exception ex)
@@ -560,6 +606,12 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     if (object instanceof ViewerUtil.Pending)
     {
       return ((ViewerUtil.Pending)object).getParent();
+    }
+
+    if (object instanceof CDOCheckoutElement)
+    {
+      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)object;
+      return checkoutElement.getParent();
     }
 
     if (object instanceof EObject)

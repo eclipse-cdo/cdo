@@ -316,7 +316,13 @@ public class ObjectListController
       if (element instanceof Wrapper)
       {
         Wrapper wrapper = (Wrapper)element;
-        return wrapper.getName();
+        String name = wrapper.getName();
+        if (name.length() == 0)
+        {
+          return "/";
+        }
+
+        return name;
       }
 
       return getSuperText(element);
@@ -353,7 +359,7 @@ public class ObjectListController
     @Override
     public String decorateText(String text, Object element)
     {
-      if (element instanceof Wrapper)
+      if (element instanceof Wrapper && !text.equals("/"))
       {
         Wrapper wrapper = (Wrapper)element;
         String path = wrapper.getPath();

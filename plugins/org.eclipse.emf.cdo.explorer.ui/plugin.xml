@@ -28,6 +28,13 @@
     	</product>
  	</extension>
 
+   <extension point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.emf.cdo.explorer.ui.checkouts.PapyrusDIFactory"
+            productGroup="org.eclipse.emf.cdo.explorer.ui.checkouts.contentModifiers"
+            type="resource.group.di"/>
+   </extension>
+
   <extension point="org.eclipse.core.runtime.adapters">
      <factory
            adaptableType="org.eclipse.emf.cdo.explorer.repositories.CDORepository"
@@ -146,6 +153,7 @@
             <or>
                <instanceof value="org.eclipse.core.resources.IWorkspaceRoot"/>
                <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
                <adapt type="org.eclipse.emf.ecore.EObject"/>
             </or>
          </triggerPoints>
@@ -155,6 +163,7 @@
                <adapt type="org.eclipse.emf.cdo.eresource.CDOResource"/>
                <adapt type="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
                <adapt type="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
+               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
                <adapt type="org.eclipse.emf.ecore.EObject"/>
             </or>
          </possibleChildren>
@@ -190,6 +199,7 @@
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                </and>
                <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
                <adapt type="org.eclipse.emf.ecore.EObject"/>
              </or>
            </enablement>
@@ -203,6 +213,7 @@
                      <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                      <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                   </and>
+                  <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
                   <adapt type="org.eclipse.emf.ecore.EObject"/>
                </or>
             </enablement>
@@ -267,6 +278,7 @@
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
                  <adapt type="org.eclipse.emf.cdo.eresource.CDOResource"/>
+                 <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
                  <adapt type="org.eclipse.emf.ecore.EObject"/>
               </or>
            </possibleDropTargets>
@@ -374,7 +386,10 @@
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
             <iterate ifEmpty="false" operator="and">
-               <adapt type="org.eclipse.emf.ecore.EObject"/>
+              <or>
+                <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+                <adapt type="org.eclipse.emf.ecore.EObject"/>
+              </or>
             </iterate>
          </activeWhen>
       </handler>
@@ -520,7 +535,10 @@
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate>
-                     <adapt type="org.eclipse.emf.ecore.EObject"/>
+                    <or>
+                      <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+                      <adapt type="org.eclipse.emf.ecore.EObject"/>
+                    </or>
                   </iterate>
                </with>
             </visibleWhen>

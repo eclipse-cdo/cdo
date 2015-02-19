@@ -12,24 +12,27 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
+import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateRequest;
+import org.eclipse.emf.cdo.internal.net4j.protocol.QueryCancelRequest;
+import org.eclipse.emf.cdo.internal.net4j.protocol.QueryRequest;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.util.RequestCallCounter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.SignalCounter;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-
-import java.util.Map;
 
 /**
  * Bug 439337 about {@link CDOLockState lock state} prefetch following a {@link CDORevision revision} prefetch.
@@ -85,30 +88,32 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
   private void testCDOLockState(CDOView view, boolean cdoLockStatePrefetchEnabled)
   {
     view.getResourceSet().eAdapters().add(new EContentAdapterQueringCDOLockState());
-    RequestCallCounter nbRequestsCallsCounter = new RequestCallCounter(view.getSession());
+    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)view.getSession()).options()
+        .getNet4jProtocol();
+    SignalCounter signalCounter = new SignalCounter(protocol);
     view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
 
-    Map<Short, Integer> nbRequestsCalls = nbRequestsCallsCounter.getNBRequestsCalls();
+    int numberDifferentRequestCall = signalCounter.getCountForSignalTypes();
     String assertMessage = "4 differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and LockStateRequest";
     // QueryRequest, QueryCancel are used to get the resourcePath
-    assertEquals(assertMessage, 4, nbRequestsCalls.size());
-    assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_QUERY));
-    assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_QUERY_CANCEL));
-    assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
-    assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_LOCK_STATE));
-    assertEquals("1 single query request should have been sent to get the resourcePath", Integer.valueOf(1),
-        nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_QUERY));
-    assertEquals("1 single query request should have been sent to cancel the single QueryRequest", Integer.valueOf(1),
-        nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_QUERY_CANCEL));
+    assertEquals(assertMessage, 4, numberDifferentRequestCall);
+    assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
+    assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
+    assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
+    assertNotSame(0, signalCounter.getCountFor(LockStateRequest.class));
+    assertEquals("1 single query request should have been sent to get the resourcePath", 1,
+        signalCounter.getCountFor(QueryRequest.class));
+    assertEquals("1 single query request should have been sent to cancel the single QueryRequest", 1,
+        signalCounter.getCountFor(QueryCancelRequest.class));
     assertEquals(
         "3 load revisions request should have been sent, 2 first for CDORevisions of CDOResourceFolders to get resource path and another in prefetch to load all CDORevisions of CDOResource",
-        Integer.valueOf(3), nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
-    Integer expectedNbLockStateRequestCalls = Integer.valueOf((cdoLockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2);
+        3, signalCounter.getCountFor(LoadRevisionsRequest.class));
+    int expectedNbLockStateRequestCalls = (cdoLockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2;
     assertEquals("As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled "
         + expectedNbLockStateRequestCalls + " LockStateRequests should have been sent to the server",
-        expectedNbLockStateRequestCalls, nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOCK_STATE));
+        expectedNbLockStateRequestCalls, signalCounter.getCountFor(LockStateRequest.class));
 
-    nbRequestsCallsCounter.dispose();
+    protocol.removeListener(signalCounter);
   }
 
   /**

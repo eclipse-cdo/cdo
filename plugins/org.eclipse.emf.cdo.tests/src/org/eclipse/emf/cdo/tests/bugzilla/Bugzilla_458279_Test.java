@@ -11,14 +11,15 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.ChangeSubscriptionRequest;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.util.RequestCallCounter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.SignalCounter;
 
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
@@ -61,8 +62,8 @@ public class Bugzilla_458279_Test extends AbstractCDOTest
   private void testCDOMergingConflictResolverWithoutChangeSubscriptionRequest(PassiveUpdateMode mode) throws Exception
   {
     CDOSession session1 = openSession();
-    RequestCallCounter requestCallCounter = new RequestCallCounter(session1);
-    requestCallCounter.getNBRequestsCalls().put(CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION, 0);
+    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session1).options().getNet4jProtocol();
+    SignalCounter signalCounter = new SignalCounter(protocol);
 
     session1.options().setPassiveUpdateMode(mode);
     CDOTransaction transaction1 = session1.openTransaction();
@@ -82,10 +83,9 @@ public class Bugzilla_458279_Test extends AbstractCDOTest
     commitAndSync(transaction2, transaction1);
 
     assertEquals(mode == PassiveUpdateMode.INVALIDATIONS ? 1 : 2, company.getCategories().size());
-    int nbCallToChangeSubscriptionRequest = requestCallCounter.getNBRequestsCalls().get(
-        CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION);
-    assertEquals("No ChangeSubscriptionRequest should be send to server", 0, nbCallToChangeSubscriptionRequest);
+    int numberCallToChangeSubscriptionRequest = signalCounter.getCountFor(ChangeSubscriptionRequest.class);
+    assertEquals("No ChangeSubscriptionRequest should be send to server", 0, numberCallToChangeSubscriptionRequest);
 
-    requestCallCounter.dispose();
+    protocol.removeListener(signalCounter);
   }
 }

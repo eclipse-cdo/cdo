@@ -45,6 +45,19 @@ public final class SignalCounter implements IListener
     }
   }
 
+  /**
+   * Get the number of different signal counted.
+   *
+   * @since 4.4
+   */
+  public int getCountForSignalTypes()
+  {
+    synchronized (signals)
+    {
+      return signals.size();
+    }
+  }
+
   public void clearCounts()
   {
     synchronized (signals)

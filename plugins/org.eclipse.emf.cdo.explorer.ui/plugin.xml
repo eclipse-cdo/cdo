@@ -28,8 +28,7 @@
     	</product>
  	</extension>
 
-  <extension
-        point="org.eclipse.core.runtime.adapters">
+  <extension point="org.eclipse.core.runtime.adapters">
      <factory
            adaptableType="org.eclipse.emf.cdo.explorer.repositories.CDORepository"
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerPropertiesAdapterFactory">
@@ -69,10 +68,7 @@
      </factory>
   </extension>
 
-
-
-  <extension
-        point="org.eclipse.ui.perspectives">
+  <extension point="org.eclipse.ui.perspectives">
      <perspective
            class="org.eclipse.emf.cdo.explorer.ui.application.CDOExplorerPerspective"
            icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_sessions.gif"
@@ -81,8 +77,7 @@
      </perspective>
   </extension>
 
-  <extension
-        point="org.eclipse.ui.preferencePages">
+  <extension point="org.eclipse.ui.preferencePages">
      <page
            category="org.eclipse.emf.cdo.ui.CDOPreferencePage"
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerPreferencePage"
@@ -91,8 +86,7 @@
      </page>
   </extension>
 
-  <extension
-         point="org.eclipse.ui.views">
+  <extension point="org.eclipse.ui.views">
       <view
             class="org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView"
             id="org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView"
@@ -103,8 +97,7 @@
       </view>
   </extension>
    
-  <extension
-        point="org.eclipse.ui.newWizards">
+  <extension point="org.eclipse.ui.newWizards">
      <wizard
            category="org.eclipse.emf.cdo.category"
            class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewFolderWizard"
@@ -139,8 +132,7 @@
      </wizard>
   </extension>
 
-  <extension
-         point="org.eclipse.ui.navigator.navigatorContent">
+  <extension point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
             id="org.eclipse.emf.cdo.explorer.ui.CDOCheckouts"
             icon="icons/checkout.gif"
@@ -159,21 +151,11 @@
          </triggerPoints>
          <possibleChildren>
             <or>
-               <instanceof
-                     value="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
-               </instanceof>
-               <instanceof
-                     value="org.eclipse.emf.cdo.eresource.CDOResource">
-               </instanceof>
-               <instanceof
-                     value="org.eclipse.emf.cdo.eresource.CDOBinaryResource">
-               </instanceof>
-               <instanceof
-                     value="org.eclipse.emf.cdo.eresource.CDOTextResource">
-               </instanceof>
-               <instanceof
-                     value="org.eclipse.emf.ecore.EObject">
-               </instanceof>
+               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResource"/>
+               <instanceof value="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
+               <instanceof value="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
+               <instanceof value="org.eclipse.emf.ecore.EObject"/>
             </or>
          </possibleChildren>
          <actionProvider
@@ -187,18 +169,12 @@
                </and>
                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
                <and>
-                  <instanceof
-                        value="org.eclipse.emf.ecore.EObject">
-                  </instanceof>
+                  <instanceof value="org.eclipse.emf.ecore.EObject"/>
                   <not>
-                     <instanceof
-                           value="org.eclipse.emf.cdo.eresource.CDOBinaryResource">
-                     </instanceof>
+                     <instanceof value="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
                   </not>
                   <not>
-                     <instanceof
-                           value="org.eclipse.emf.cdo.eresource.CDOTextResource">
-                     </instanceof>
+                     <instanceof value="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
                   </not>
                </and>
              </or>
@@ -224,17 +200,10 @@
             <enablement>
                <or>
                   <and>
-                     <instanceof
-                           value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
-                     </instanceof>
-                     <test
-                           property="org.eclipse.emf.cdo.explorer.checkout.state"
-                           value="Open">
-                     </test>
+                     <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                     <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                   </and>
-                  <instanceof
-                        value="org.eclipse.emf.ecore.EObject">
-                  </instanceof>
+                  <instanceof value="org.eclipse.emf.ecore.EObject"/>
                </or>
             </enablement>
          </actionProvider>
@@ -295,26 +264,17 @@
               id="org.eclipse.emf.cdo.explorer.ui.checkouts.DropAdapter">
            <possibleDropTargets>
               <or>
-                 <instanceof
-                       value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
-                 </instanceof>
-                 <instanceof
-                       value="org.eclipse.emf.cdo.eresource.CDOResourceFolder">
-                 </instanceof>
-                 <instanceof
-                       value="org.eclipse.emf.cdo.eresource.CDOResource">
-                 </instanceof>
-                 <instanceof
-                       value="org.eclipse.emf.ecore.EObject">
-                 </instanceof>
+                 <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                 <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+                 <instanceof value="org.eclipse.emf.cdo.eresource.CDOResource"/>
+                 <instanceof value="org.eclipse.emf.ecore.EObject"/>
               </or>
            </possibleDropTargets>
         </dropAssistant>        
      </navigatorContent>
   </extension>
 
-  <extension
-         point="org.eclipse.ui.navigator.viewer">
+  <extension point="org.eclipse.ui.navigator.viewer">
       <viewerContentBinding
             viewerId="org.eclipse.ui.navigator.ProjectExplorer">
          <includes>
@@ -325,8 +285,7 @@
       </viewerContentBinding>
   </extension>
 
-  <extension
-         point="org.eclipse.ui.decorators">
+  <extension point="org.eclipse.ui.decorators">
       <decorator
             class="org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryLabelDecorator"
             id="org.eclipse.emf.cdo.explorer.ui.repositories.decorator"
@@ -341,8 +300,7 @@
       </decorator>
   </extension>
 
-  <extension
-         point="org.eclipse.ui.commands">
+  <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
             name="Connect Repository"
@@ -380,18 +338,16 @@
             name="Update Workspace"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceUpdateHandler"/>
       <command
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceCheckinHandler"
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceCheckin"
-            name="Checkin Workspace">
-      </command>
+            name="Checkin Workspace"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceCheckinHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceRevert"
             name="Revert Workspace"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceRevertHandler"/>
   </extension>
    
-  <extension
-         point="org.eclipse.ui.handlers">
+  <extension point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.emf.cdo.explorer.ui.handlers.RenameHandler"
             commandId="org.eclipse.ui.edit.rename"/>
@@ -399,12 +355,8 @@
             class="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate
-                  ifEmpty="false"
-                  operator="and">
-               <adapt
-                     type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
-               </adapt>
+            <iterate ifEmpty="false" operator="and">
+               <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
             </iterate>
          </activeWhen>
       </handler>
@@ -412,12 +364,8 @@
             class="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate
-                  ifEmpty="false"
-                  operator="and">
-               <adapt
-                     type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
-               </adapt>
+            <iterate ifEmpty="false" operator="and">
+               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
             </iterate>
          </activeWhen>
       </handler>
@@ -425,19 +373,14 @@
             class="org.eclipse.emf.cdo.explorer.ui.handlers.ObjectDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate
-                  ifEmpty="false"
-                  operator="and">
-               <instanceof
-                     value="org.eclipse.emf.ecore.EObject">
-               </instanceof>
+            <iterate ifEmpty="false" operator="and">
+               <instanceof value="org.eclipse.emf.ecore.EObject"/>
             </iterate>
          </activeWhen>
       </handler>
   </extension>
 
-  <extension
-         point="org.eclipse.ui.menus">
+  <extension point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?group=group.new">
@@ -447,10 +390,8 @@
                label="New Branch..."
                style="push"
                tooltip="Add a new branch">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
                   </iterate>
@@ -463,10 +404,8 @@
                label="New Tag..."
                style="push"
                tooltip="Add a new tag">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
                   </iterate>
@@ -483,19 +422,12 @@
                label="Connect"
                style="push"
                tooltip="Connect to the repository">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                      <and>
-                        <adapt
-                              type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
-                        </adapt>
-                        <test
-                              property="org.eclipse.emf.cdo.explorer.repository.state"
-                              value="Disconnected">
-                        </test>
+                        <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+                        <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Disconnected"/>
                      </and>
                   </iterate>
                </with>
@@ -511,10 +443,8 @@
                label="Checkout Online"
                style="push"
                tooltip="Check the repository out as an online connection">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
                   </iterate>
@@ -527,10 +457,8 @@
                label="Checkout Offline"
                style="push"
                tooltip="Check the repository out as an offline connection">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
                   </iterate>
@@ -547,14 +475,10 @@
                label="Rename..."
                style="push"
                tooltip="Rename the element">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
-                     <adapt
-                           type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext">
-                     </adapt>
+                     <adapt type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -565,14 +489,10 @@
                label="Delete..."
                style="push"
                tooltip="Delete the repositories">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
-                     <adapt
-                           type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
-                     </adapt>
+                     <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -583,14 +503,10 @@
                label="Delete..."
                style="push"
                tooltip="Delete the checkouts">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
-                     <adapt
-                           type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
-                     </adapt>
+                     <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -601,14 +517,10 @@
                label="Delete..."
                style="push"
                tooltip="Delete the objects">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
-                     <instanceof
-                           value="org.eclipse.emf.ecore.EObject">
-                     </instanceof>
+                     <instanceof value="org.eclipse.emf.ecore.EObject"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -623,18 +535,12 @@
                label="Disconnect"
                style="push"
                tooltip="Disconnect from the repository">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                      <and>
-                        <adapt
-                              type="org.eclipse.emf.cdo.explorer.repositories.CDORepository">
-                        </adapt>
-                        <test
-                              property="org.eclipse.emf.cdo.explorer.repository.state"
-                              value="Connected">
+                        <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+                        <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected">
                         </test>
                      </and>
                   </iterate>
@@ -647,10 +553,8 @@
                label="Open Project"
                style="push"
                tooltip="Open the project">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
@@ -666,10 +570,8 @@
                label="Close Project"
                style="push"
                tooltip="Close the project">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
@@ -689,10 +591,8 @@
                label="Update"
                style="push"
                tooltip="Update the checkout from the remote repository">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
@@ -708,10 +608,8 @@
                label="Checkin"
                style="push"
                tooltip="Checkin the local changes into the remote repository">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
@@ -727,10 +625,8 @@
                label="Revert..."
                style="push"
                tooltip="Revert the local changes">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeMenuSelection">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>

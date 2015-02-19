@@ -395,11 +395,6 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       {
         return view;
       }
-
-      if (adapter == EObject.class)
-      {
-        return rootObject;
-      }
     }
 
     return super.getAdapter(adapter);

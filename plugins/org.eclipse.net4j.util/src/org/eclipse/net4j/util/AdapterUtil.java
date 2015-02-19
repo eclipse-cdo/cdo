@@ -22,6 +22,14 @@ public final class AdapterUtil
   {
   }
 
+  /**
+   * @since 3.5
+   */
+  public static <TYPE> boolean adapts(Object object, Class<TYPE> type)
+  {
+    return adapt(object, type, true) != null;
+  }
+
   public static <TYPE> TYPE adapt(Object object, Class<TYPE> type)
   {
     return adapt(object, type, true);

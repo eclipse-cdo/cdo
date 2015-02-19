@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public final class HashBag<T> implements Set<T>
 {
-  private Map<T, HashBag.Counter> map;
+  private Map<T, Counter> map;
 
   public HashBag()
   {
@@ -38,7 +38,7 @@ public final class HashBag<T> implements Set<T>
     map = new HashMap<T, Counter>(initialCapacity);
   }
 
-  public HashBag(Map<? extends T, ? extends HashBag.Counter> m)
+  public HashBag(Map<? extends T, ? extends Counter> m)
   {
     map = new HashMap<T, Counter>(m);
   }
@@ -67,7 +67,7 @@ public final class HashBag<T> implements Set<T>
    */
   public boolean add(T o, int count)
   {
-    HashBag.Counter counter = map.get(o);
+    Counter counter = map.get(o);
     if (counter == null)
     {
       counter = new Counter(count);
@@ -124,7 +124,7 @@ public final class HashBag<T> implements Set<T>
    */
   public boolean remove(Object o, int count)
   {
-    HashBag.Counter counter = map.get(o);
+    Counter counter = map.get(o);
     if (counter == null)
     {
       return false;

@@ -64,6 +64,16 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   {
   }
 
+  public boolean isOffline()
+  {
+    return true;
+  }
+
+  public boolean isOnline()
+  {
+    return false;
+  }
+
   public final CDOWorkspace getWorkspace()
   {
     return workspace;

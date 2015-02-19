@@ -24,6 +24,16 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   {
   }
 
+  public boolean isOffline()
+  {
+    return false;
+  }
+
+  public boolean isOnline()
+  {
+    return true;
+  }
+
   public final boolean isDirty()
   {
     return false;

@@ -238,13 +238,13 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
     }
   }
 
-  private void selectObject(final EObject object)
+  private void selectObject(final Object object)
   {
     viewer.getControl().getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {
-        LinkedList<EObject> path = new LinkedList<EObject>();
+        LinkedList<Object> path = new LinkedList<Object>();
         CDOCheckout checkout = CDOExplorerUtil.walkUp(object, path);
         if (checkout != null)
         {
@@ -253,7 +253,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
           path.removeFirst();
           path.removeLast();
 
-          for (EObject object : path)
+          for (Object object : path)
           {
             viewer.setExpandedState(object, true);
           }

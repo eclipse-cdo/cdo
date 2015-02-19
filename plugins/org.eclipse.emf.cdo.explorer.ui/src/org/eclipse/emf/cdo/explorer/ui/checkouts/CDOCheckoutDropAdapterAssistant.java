@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.ObjectType;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -125,9 +126,10 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
     for (Iterator<?> it = selection.iterator(); it.hasNext();)
     {
       Object object = it.next();
-      if (object instanceof EObject)
+
+      EObject eObject = AdapterUtil.adapt(object, EObject.class);
+      if (eObject != null)
       {
-        EObject eObject = (EObject)object;
         ObjectType objectType = ObjectType.valueFor(eObject);
         if (objectType == null || objectType == ObjectType.Root)
         {
@@ -211,13 +213,13 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
         }
       }
 
-      LinkedList<EObject> path = CDOExplorerUtil.getPath(target);
+      LinkedList<Object> path = CDOExplorerUtil.getPath(target);
       if (path == null)
       {
         return false;
       }
 
-      Set<EObject> targetPath = new HashSet<EObject>(path);
+      Set<Object> targetPath = new HashSet<Object>(path);
 
       for (EObject object : objects)
       {

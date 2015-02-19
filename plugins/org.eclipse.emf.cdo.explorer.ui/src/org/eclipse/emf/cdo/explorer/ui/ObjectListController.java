@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelProvider;
 
+import org.eclipse.net4j.util.ui.views.ItemProvider;
+
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -27,21 +29,28 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Control;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
  */
-public class ObjectController
+public class ObjectListController
 {
+  private final LabelProvider labelProvider = new LabelProvider();
+
+  private final AtomicBoolean refreshing = new AtomicBoolean();
+
   private final List<Wrapper> wrappers = new ArrayList<Wrapper>();
 
   private final CDOCheckout checkout;
 
-  public ObjectController(CDOCheckout checkout)
+  public ObjectListController(CDOCheckout checkout)
   {
     this.checkout = checkout;
   }
@@ -63,13 +72,12 @@ public class ObjectController
 
   public final void addObject(EObject object, boolean delete)
   {
-    wrappers.add(new Wrapper(object, delete));
+    String name = labelProvider.getSuperText(object);
+    wrappers.add(new Wrapper(object, delete, name));
   }
 
   public void configure(final TreeViewer treeViewer)
   {
-    final LabelProvider labelProvider = new LabelProvider();
-
     treeViewer.setContentProvider(new ContentProvider());
     treeViewer.setLabelProvider(new DecoratingStyledCellLabelProvider(labelProvider, new LabelDecorator(), null));
     treeViewer.setInput(wrappers);
@@ -109,9 +117,15 @@ public class ObjectController
     {
       try
       {
-        if (wrapper.computePath(checkout, labelProvider))
+        boolean hasPath;
+        synchronized (wrappers)
         {
-          ViewerUtil.update(treeViewer, wrapper);
+          hasPath = wrapper.computePath(checkout, labelProvider);
+        }
+
+        if (hasPath)
+        {
+          refresh(treeViewer);
         }
       }
       catch (Exception ex)
@@ -121,21 +135,43 @@ public class ObjectController
     }
   }
 
+  private void refresh(final TreeViewer treeViewer)
+  {
+    if (!refreshing.getAndSet(true))
+    {
+      Control control = treeViewer.getControl();
+      if (!control.isDisposed())
+      {
+        control.getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            refreshing.set(false);
+            treeViewer.refresh(wrappers);
+          }
+        });
+      }
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
-  private static final class Wrapper
+  private static final class Wrapper implements Comparable<Wrapper>
   {
     private final EObject object;
 
     private final boolean delete;
 
+    private final String name;
+
     private String path;
 
-    public Wrapper(EObject object, boolean delete)
+    public Wrapper(EObject object, boolean delete, String name)
     {
       this.object = object;
       this.delete = delete;
+      this.name = name;
     }
 
     public final EObject getObject()
@@ -153,9 +189,14 @@ public class ObjectController
       return path;
     }
 
+    public final String getName()
+    {
+      return name;
+    }
+
     public boolean computePath(CDOCheckout checkout, LabelProvider labelProvider)
     {
-      LinkedList<EObject> nodes = CDOExplorerUtil.getPath(object);
+      LinkedList<Object> nodes = CDOExplorerUtil.getPath(object);
       if (nodes != null)
       {
         nodes.removeLast();
@@ -163,7 +204,7 @@ public class ObjectController
         StringBuilder builder = new StringBuilder();
         boolean first = true;
 
-        for (EObject node : nodes)
+        for (Object node : nodes)
         {
           builder.append('/');
 
@@ -184,6 +225,22 @@ public class ObjectController
 
       return false;
     }
+
+    public int compareTo(Wrapper o)
+    {
+      return toString().compareTo(o.toString());
+    }
+
+    @Override
+    public String toString()
+    {
+      if (path != null)
+      {
+        return path + name;
+      }
+
+      return name;
+    }
   }
 
   /**
@@ -201,7 +258,19 @@ public class ObjectController
 
     public Object[] getElements(Object element)
     {
-      return wrappers.toArray();
+      if (element == wrappers)
+      {
+        Object[] result = wrappers.toArray();
+
+        synchronized (wrappers)
+        {
+          Arrays.sort(result);
+        }
+
+        return result;
+      }
+
+      return ItemProvider.NO_ELEMENTS;
     }
 
     public Object getParent(Object element)
@@ -247,9 +316,14 @@ public class ObjectController
       if (element instanceof Wrapper)
       {
         Wrapper wrapper = (Wrapper)element;
-        return super.getText(wrapper.getObject());
+        return wrapper.getName();
       }
 
+      return getSuperText(element);
+    }
+
+    public String getSuperText(Object element)
+    {
       return super.getText(element);
     }
   }

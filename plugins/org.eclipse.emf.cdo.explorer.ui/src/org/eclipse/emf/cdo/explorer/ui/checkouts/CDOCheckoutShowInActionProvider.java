@@ -95,7 +95,7 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       final CDORepository repository = (CDORepository)selectedElement;
       if (repository.isConnected())
       {
-        if (repository instanceof LocalCDORepository)
+        if (repository.isLocal())
         {
           LocalCDORepository localRepository = (LocalCDORepository)repository;
 
@@ -138,7 +138,7 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
       CDOCheckout checkout = (CDOCheckout)selectedElement;
       if (checkout.isOpen())
       {
-        if (checkout instanceof OfflineCDOCheckout)
+        if (checkout.isOffline())
         {
           OfflineCDOCheckout offlineCheckout = (OfflineCDOCheckout)checkout;
 

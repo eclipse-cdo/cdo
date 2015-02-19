@@ -33,6 +33,12 @@ public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>
 
   public static final String TYPE_LOCAL = "local";
 
+  public boolean isRemote();
+
+  public boolean isClone();
+
+  public boolean isLocal();
+
   public String getConnectorType();
 
   public String getConnectorDescription();

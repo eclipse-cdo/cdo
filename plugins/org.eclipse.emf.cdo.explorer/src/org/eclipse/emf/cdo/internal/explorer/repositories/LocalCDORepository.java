@@ -62,6 +62,21 @@ public class LocalCDORepository extends CDORepositoryImpl
   {
   }
 
+  public boolean isRemote()
+  {
+    return false;
+  }
+
+  public boolean isClone()
+  {
+    return false;
+  }
+
+  public boolean isLocal()
+  {
+    return true;
+  }
+
   public final String getConnectorType()
   {
     return "jvm";

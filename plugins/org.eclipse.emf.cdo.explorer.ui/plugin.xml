@@ -146,16 +146,16 @@
             <or>
                <instanceof value="org.eclipse.core.resources.IWorkspaceRoot"/>
                <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
-               <instanceof value="org.eclipse.emf.ecore.EObject"/>
+               <adapt type="org.eclipse.emf.ecore.EObject"/>
             </or>
          </triggerPoints>
          <possibleChildren>
             <or>
-               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
-               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResource"/>
-               <instanceof value="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
-               <instanceof value="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
-               <instanceof value="org.eclipse.emf.ecore.EObject"/>
+               <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+               <adapt type="org.eclipse.emf.cdo.eresource.CDOResource"/>
+               <adapt type="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
+               <adapt type="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
+               <adapt type="org.eclipse.emf.ecore.EObject"/>
             </or>
          </possibleChildren>
          <actionProvider
@@ -167,14 +167,14 @@
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                </and>
-               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+               <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
                <and>
-                  <instanceof value="org.eclipse.emf.ecore.EObject"/>
+                  <adapt type="org.eclipse.emf.ecore.EObject"/>
                   <not>
-                     <instanceof value="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
+                     <adapt type="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
                   </not>
                   <not>
-                     <instanceof value="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
+                     <adapt type="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
                   </not>
                </and>
              </or>
@@ -189,8 +189,8 @@
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                </and>
-               <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
-               <instanceof value="org.eclipse.emf.ecore.EObject"/>
+               <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+               <adapt type="org.eclipse.emf.ecore.EObject"/>
              </or>
            </enablement>
          </actionProvider>
@@ -203,7 +203,7 @@
                      <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                      <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                   </and>
-                  <instanceof value="org.eclipse.emf.ecore.EObject"/>
+                  <adapt type="org.eclipse.emf.ecore.EObject"/>
                </or>
             </enablement>
          </actionProvider>
@@ -216,7 +216,7 @@
                   <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
                 </and>
-                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+                <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
             </enablement>
          </commonWizard>   
@@ -229,7 +229,7 @@
                   <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
                 </and>
-                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+                <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
            </enablement>
          </commonWizard>              
@@ -242,7 +242,7 @@
                   <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
                 </and>
-                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+                <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
            </enablement>
          </commonWizard>              
@@ -255,7 +255,7 @@
                   <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   <test property="org.eclipse.emf.cdo.explorer.checkout.canContainResources" value="true"/>
                 </and>
-                <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+                <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
            </enablement>
         </commonWizard>
@@ -265,9 +265,9 @@
            <possibleDropTargets>
               <or>
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
-                 <instanceof value="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
-                 <instanceof value="org.eclipse.emf.cdo.eresource.CDOResource"/>
-                 <instanceof value="org.eclipse.emf.ecore.EObject"/>
+                 <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+                 <adapt type="org.eclipse.emf.cdo.eresource.CDOResource"/>
+                 <adapt type="org.eclipse.emf.ecore.EObject"/>
               </or>
            </possibleDropTargets>
         </dropAssistant>        
@@ -356,7 +356,7 @@
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
             <iterate ifEmpty="false" operator="and">
-               <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+               <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
             </iterate>
          </activeWhen>
       </handler>
@@ -365,7 +365,7 @@
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
             <iterate ifEmpty="false" operator="and">
-               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+               <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
             </iterate>
          </activeWhen>
       </handler>
@@ -374,7 +374,7 @@
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
             <iterate ifEmpty="false" operator="and">
-               <instanceof value="org.eclipse.emf.ecore.EObject"/>
+               <adapt type="org.eclipse.emf.ecore.EObject"/>
             </iterate>
          </activeWhen>
       </handler>
@@ -426,7 +426,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                      <and>
-                        <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+                        <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                         <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Disconnected"/>
                      </and>
                   </iterate>
@@ -492,7 +492,7 @@
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate>
-                     <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+                     <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -506,7 +506,7 @@
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate>
-                     <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                     <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -520,7 +520,7 @@
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate>
-                     <instanceof value="org.eclipse.emf.ecore.EObject"/>
+                     <adapt type="org.eclipse.emf.ecore.EObject"/>
                   </iterate>
                </with>
             </visibleWhen>
@@ -539,7 +539,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                      <and>
-                        <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+                        <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                         <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected">
                         </test>
                      </and>
@@ -557,7 +557,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <and>
-                      <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                      <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Closed"/>
                     </and>
                   </iterate>
@@ -574,7 +574,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <and>
-                      <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                      <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
                   </iterate>
@@ -595,7 +595,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <and>
-                      <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
+                      <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
                   </iterate>
@@ -612,7 +612,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <and>
-                      <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
+                      <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
                   </iterate>
@@ -629,7 +629,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <and>
-                      <adapt type="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
+                      <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
                   </iterate>

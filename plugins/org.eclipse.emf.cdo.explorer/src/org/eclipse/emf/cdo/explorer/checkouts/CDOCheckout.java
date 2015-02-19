@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.AdapterUtil;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -33,6 +35,10 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
   public static final String TYPE_ONLINE = "online";
 
   public static final String TYPE_OFFLINE = "offline";
+
+  public boolean isOffline();
+
+  public boolean isOnline();
 
   public CDORepository getRepository();
 
@@ -93,16 +99,17 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
   {
     Root, Folder, File, Resource, Object;
 
-    public static ObjectType valueFor(Object rootObject)
+    public static ObjectType valueFor(Object object)
     {
-      if (rootObject instanceof CDOResourceFolder)
+      if (AdapterUtil.adapts(object, CDOResourceFolder.class))
       {
         return ObjectType.Folder;
       }
 
-      if (rootObject instanceof CDOResource)
+      CDOResource resource = AdapterUtil.adapt(object, CDOResource.class);
+      if (resource != null)
       {
-        if (((CDOResource)rootObject).isRoot())
+        if (resource.isRoot())
         {
           return ObjectType.Root;
         }
@@ -110,12 +117,12 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
         return ObjectType.Resource;
       }
 
-      if (rootObject instanceof CDOFileResource)
+      if (AdapterUtil.adapts(object, CDOFileResource.class))
       {
         return ObjectType.File;
       }
 
-      if (rootObject != null)
+      if (AdapterUtil.adapts(object, EObject.class))
       {
         return ObjectType.Object;
       }

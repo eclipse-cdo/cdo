@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.ui.ObjectController;
+import org.eclipse.emf.cdo.explorer.ui.ObjectListController;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 
 import org.eclipse.emf.ecore.EObject;
@@ -106,21 +106,21 @@ public class ObjectDeleteHandler extends AbstractObjectHandler
         containerGridLayout.marginHeight = 10;
         container.setLayout(containerGridLayout);
 
-        final ObjectController objectController = new ObjectController(checkout);
+        final ObjectListController objectListController = new ObjectListController(checkout);
         for (EObject object : objects)
         {
-          objectController.addObject(object, false);
+          objectListController.addObject(object, true);
         }
 
         final CheckboxTreeViewer treeViewer = new CheckboxTreeViewer(container);
         treeViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-        objectController.configure(treeViewer);
+        objectListController.configure(treeViewer);
 
         treeViewer.addCheckStateListener(new ICheckStateListener()
         {
           public void checkStateChanged(CheckStateChangedEvent event)
           {
-            EObject object = objectController.getObject(event.getElement());
+            EObject object = objectListController.getObject(event.getElement());
             if (event.getChecked())
             {
               objects.add(object);

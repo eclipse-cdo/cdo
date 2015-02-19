@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.AdapterUtil;
+
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -41,49 +43,60 @@ public final class CDOExplorerUtil
     return OM.getCheckoutManager();
   }
 
-  public static CDOCheckout getCheckout(EObject object)
+  public static CDOCheckout getCheckout(Object object)
   {
     return walkUp(object, null);
   }
 
-  public static EObject getParent(EObject object)
+  public static Object getParent(Object object)
   {
-    EObject container = object.eContainer();
-    if (container != null)
+    CDOContentProvider contentProvider = AdapterUtil.adapt(object, CDOContentProvider.class);
+    if (contentProvider != null)
     {
-      return container;
+      return contentProvider.getParent(object);
     }
 
-    if (object instanceof CDOResource)
+    if (object instanceof EObject)
     {
-      CDOResource resource = (CDOResource)object;
-      if (resource.isRoot())
+      EObject eObject = (EObject)object;
+
+      EObject container = eObject.eContainer();
+      if (container != null)
       {
-        return null;
+        return container;
       }
-    }
 
-    Resource resource = object.eResource();
-    if (resource instanceof CDOResource)
-    {
-      return (CDOResource)resource;
-    }
-
-    if (object instanceof CDOResourceNode)
-    {
-      CDOView view = ((CDOResourceNode)object).cdoView();
-      if (view != null)
+      if (eObject instanceof CDOResource)
       {
-        return view.getRootResource();
+        CDOResource resource = (CDOResource)eObject;
+        if (resource.isRoot())
+        {
+          return null;
+        }
+      }
+
+      Resource resource = eObject.eResource();
+      if (resource instanceof CDOResource)
+      {
+        return resource;
+      }
+
+      if (eObject instanceof CDOResourceNode)
+      {
+        CDOView view = ((CDOResourceNode)eObject).cdoView();
+        if (view != null)
+        {
+          return view.getRootResource();
+        }
       }
     }
 
     return null;
   }
 
-  public static LinkedList<EObject> getPath(EObject object)
+  public static LinkedList<Object> getPath(Object object)
   {
-    LinkedList<EObject> path = new LinkedList<EObject>();
+    LinkedList<Object> path = new LinkedList<Object>();
     if (walkUp(object, path) != null)
     {
       return path;
@@ -92,7 +105,7 @@ public final class CDOExplorerUtil
     return null;
   }
 
-  public static CDOCheckout walkUp(EObject object, LinkedList<EObject> path)
+  public static CDOCheckout walkUp(Object object, LinkedList<Object> path)
   {
     while (object != null)
     {
@@ -101,10 +114,15 @@ public final class CDOExplorerUtil
         path.addFirst(object);
       }
 
-      Adapter adapter = EcoreUtil.getAdapter(object.eAdapters(), CDOCheckout.class);
-      if (adapter != null)
+      if (object instanceof EObject)
       {
-        return (CDOCheckout)adapter;
+        EObject eObject = (EObject)object;
+
+        Adapter adapter = EcoreUtil.getAdapter(eObject.eAdapters(), CDOCheckout.class);
+        if (adapter != null)
+        {
+          return (CDOCheckout)adapter;
+        }
       }
 
       object = getParent(object);

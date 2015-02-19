@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.BaseLabelDecorator;
-import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 
 /**
  * @author Eike Stepper
@@ -58,7 +57,7 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
           text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
         }
 
-        if (checkout instanceof OfflineCDOCheckout)
+        if (checkout.isOffline())
         {
           if (checkout.isDirty())
           {

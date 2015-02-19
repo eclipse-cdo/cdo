@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.explorer.ui.ObjectController;
+import org.eclipse.emf.cdo.explorer.ui.ObjectListController;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
@@ -182,24 +182,24 @@ public class WorkspaceRevertHandler extends AbstractBaseHandler<OfflineCDOChecko
       containerGridLayout.marginHeight = 10;
       container.setLayout(containerGridLayout);
 
-      ObjectController objectController = new ObjectController(checkout);
+      ObjectListController objectListController = new ObjectListController(checkout);
       CDOView view = checkout.getView();
 
       for (CDORevisionKey key : revertData.getChangedObjects())
       {
         CDOObject object = view.getObject(key.getID());
-        objectController.addObject(object, false);
+        objectListController.addObject(object, false);
       }
 
       for (CDOIDAndVersion key : revertData.getDetachedObjects())
       {
         CDOObject object = view.getObject(key.getID());
-        objectController.addObject(object, true);
+        objectListController.addObject(object, true);
       }
 
       TreeViewer treeViewer = new TreeViewer(container);
       treeViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-      objectController.configure(treeViewer);
+      objectListController.configure(treeViewer);
 
       return area;
     }

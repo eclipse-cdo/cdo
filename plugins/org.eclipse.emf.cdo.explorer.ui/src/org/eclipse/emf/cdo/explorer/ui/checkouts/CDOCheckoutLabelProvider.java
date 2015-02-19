@@ -49,6 +49,8 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
 
   private static final Image CHECKOUT_CLOSED_IMAGE = OM.getImage("icons/checkout_closed.gif");
 
+  private static final Image FOLDER_IMAGE = OM.getImage("icons/CDOResourceFolder.gif");
+
   private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
       .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
@@ -115,7 +117,14 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
 
       try
       {
-        return resourceNode.getName();
+        String name = resourceNode.getName();
+        if (name == null)
+        {
+          // This must be the root resource.
+          return "";
+        }
+
+        return name;
       }
       catch (Exception ex)
       {
@@ -156,6 +165,11 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
       if (element instanceof CDOResourceLeaf)
       {
         String name = ((CDOResourceLeaf)element).getName();
+        if (name == null)
+        {
+          // This must be the root resource.
+          return FOLDER_IMAGE;
+        }
 
         IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
         if (editorDescriptor != null && !CDOEditorUtil.TEXT_EDITOR_ID.equals(editorDescriptor.getId()))

@@ -30,6 +30,21 @@ public class RemoteCDORepository extends CDORepositoryImpl
   {
   }
 
+  public boolean isRemote()
+  {
+    return true;
+  }
+
+  public boolean isClone()
+  {
+    return false;
+  }
+
+  public boolean isLocal()
+  {
+    return false;
+  }
+
   public final String getConnectorType()
   {
     return connectorType;

@@ -90,6 +90,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -408,6 +410,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected void initView(CDOView view)
   {
+    setWorkspaceProperty(view);
+
     synchronized (views)
     {
       views.add((InternalCDOView)view);
@@ -486,6 +490,12 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         fireEvent(new ObjectStatesChangedEventImpl(CDOWorkspaceImpl.this, changedIDs));
       }
     });
+  }
+
+  private void setWorkspaceProperty(IPropertiesContainer container)
+  {
+    IRegistry<String, Object> properties = container.properties();
+    properties.put("org.eclipse.emf.cdo.workspace.CDOWorkspace", this);
   }
 
   public InternalCDOTransaction update(CDOMerger merger)
@@ -1179,8 +1189,11 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
 
     InternalCDOSession session = (InternalCDOSession)configuration.openNet4jSession();
-    ((ISignalProtocol<?>)session.getSessionProtocol()).setTimeout(ISignalProtocol.NO_TIMEOUT);
     session.setPackageRegistry(localRepository.getPackageRegistry(false)); // Use repo's registry
+    setWorkspaceProperty(session);
+
+    ISignalProtocol<?> protocol = (ISignalProtocol<?>)session.getSessionProtocol();
+    protocol.setTimeout(ISignalProtocol.NO_TIMEOUT);
 
     localSessionHead = session.getBranchManager().getMainBranch().getHead();
     return session;

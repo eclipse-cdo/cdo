@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
 import org.eclipse.core.runtime.IAdaptable;
 
@@ -34,7 +35,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * @apiviz.has {@link CDOCommonView.Options}
  */
 public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevisionProvider, IOptionsContainer,
-    IAdaptable, Closeable
+    IPropertiesContainer, IAdaptable, Closeable
 {
   public int getViewID();
 

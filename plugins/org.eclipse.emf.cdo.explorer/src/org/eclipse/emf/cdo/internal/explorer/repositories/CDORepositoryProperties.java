@@ -40,7 +40,7 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       }
     });
 
-    add(new Property<CDORepository>("connected", "Connected", "Whether this repository is connected or not",
+    add(new Property<CDORepository>("connected", "Connected", "Whether this repository is connected",
         CATEGORY_REPOSITORY)
     {
       @Override
@@ -65,6 +65,15 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       protected Object eval(CDORepository repository)
       {
         return repository.getID();
+      }
+    });
+
+    add(new Property<CDORepository>("label", "Label", "The label of this repository", CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return repository.getLabel();
       }
     });
 

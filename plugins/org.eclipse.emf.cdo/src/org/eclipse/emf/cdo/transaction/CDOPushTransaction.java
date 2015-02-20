@@ -43,6 +43,8 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -111,6 +113,15 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     }
   };
 
+  private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
+  {
+    @Override
+    public void setAutoCommit(boolean autoCommit)
+    {
+      throw new UnsupportedOperationException();
+    }
+  };
+
   public CDOPushTransaction(CDOTransaction delegate) throws IOException
   {
     this(delegate, createTempFile(delegate));
@@ -165,6 +176,11 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public File getFile()
   {
     return file;
+  }
+
+  public final IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   public boolean isDirty()

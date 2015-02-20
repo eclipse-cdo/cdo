@@ -44,7 +44,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
-    add(new Property<CDOCheckout>("open", "Open", "Whether this checkout is open or not", CATEGORY_CHECKOUT)
+    add(new Property<CDOCheckout>("open", "Open", "Whether this checkout is open", CATEGORY_CHECKOUT)
     {
       @Override
       protected Object eval(CDOCheckout checkout)
@@ -67,6 +67,15 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       protected Object eval(CDOCheckout checkout)
       {
         return checkout.getID();
+      }
+    });
+
+    add(new Property<CDOCheckout>("label", "Label", "The label of this checkout", CATEGORY_CHECKOUT)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        return checkout.getLabel();
       }
     });
 
@@ -162,6 +171,38 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       }
     });
 
+    add(new Property<CDOCheckout>("repositoryConnected", "Connected",
+        "Whether the repository of this checkout is connected", CDORepositoryProperties.CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        CDORepository repository = checkout.getRepository();
+        if (repository != null)
+        {
+          return repository.isConnected();
+        }
+
+        return null;
+      }
+    });
+
+    add(new Property<CDOCheckout>("repositoryType", "Type", "The type of the repository of this checkout",
+        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        CDORepository repository = checkout.getRepository();
+        if (repository != null)
+        {
+          return repository.getType();
+        }
+
+        return null;
+      }
+    });
+
     add(new Property<CDOCheckout>("repositoryID", "ID", "The ID of the repository of this checkout",
         CDORepositoryProperties.CATEGORY_REPOSITORY)
     {
@@ -172,6 +213,22 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
         if (repository != null)
         {
           return repository.getID();
+        }
+
+        return null;
+      }
+    });
+
+    add(new Property<CDOCheckout>("repositoryLabel", "Label", "The label of the repository of this checkout",
+        CDORepositoryProperties.CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOCheckout checkout)
+      {
+        CDORepository repository = checkout.getRepository();
+        if (repository != null)
+        {
+          return repository.getLabel();
         }
 
         return null;

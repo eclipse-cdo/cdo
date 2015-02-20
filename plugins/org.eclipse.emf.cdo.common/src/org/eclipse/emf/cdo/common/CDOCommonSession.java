@@ -14,6 +14,7 @@ import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 import org.eclipse.net4j.util.security.IUserAware;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -30,7 +31,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * @apiviz.has {@link CDOCommonSession.Options}
  * @apiviz.uses {@link CDOCommonRepository} - - connectsTo
  */
-public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContainer, Closeable
+public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContainer, IPropertiesContainer, Closeable
 {
   public int getSessionID();
 

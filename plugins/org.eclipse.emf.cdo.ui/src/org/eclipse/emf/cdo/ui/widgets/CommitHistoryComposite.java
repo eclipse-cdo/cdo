@@ -42,6 +42,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.StructuredContentProvider;
 import org.eclipse.net4j.util.ui.TableLabelProvider;
 
@@ -310,6 +311,8 @@ public class CommitHistoryComposite extends Composite
       if (sessionAdapter != null)
       {
         session = sessionAdapter;
+        assertNotWorkspace();
+
         branch = null;
         object = null;
         session.addListener(lifecycleListener);
@@ -322,6 +325,8 @@ public class CommitHistoryComposite extends Composite
         branch = branchAdapter;
         session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager())
             .getBranchLoader()).getSession();
+        assertNotWorkspace();
+
         object = null;
         session.addListener(lifecycleListener);
         return;
@@ -332,6 +337,8 @@ public class CommitHistoryComposite extends Composite
       {
         CDOView view = viewAdapter;
         session = view.getSession();
+        assertNotWorkspace();
+
         branch = view.getBranch();
         object = null;
         view.addListener(lifecycleListener);
@@ -357,6 +364,15 @@ public class CommitHistoryComposite extends Composite
       }
 
       throw new IllegalStateException("Illegal input: " + delegate);
+    }
+
+    private void assertNotWorkspace()
+    {
+      IRegistry<String, Object> properties = session.properties();
+      if (properties.containsKey("org.eclipse.emf.cdo.workspace.CDOWorkspace"))
+      {
+        throw new IllegalStateException("Offline input: " + session);
+      }
     }
 
     public Input(CDOSession session, CDOBranch branch, CDOObject object)

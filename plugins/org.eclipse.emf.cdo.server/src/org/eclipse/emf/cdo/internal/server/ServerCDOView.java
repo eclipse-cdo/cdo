@@ -63,6 +63,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.ref.KeyedReference;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap2;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -464,6 +466,15 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
    */
   private final class ServerCDOSession extends PlatformObject implements InternalCDOSession, CDORepositoryInfo
   {
+    private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
+    {
+      @Override
+      public void setAutoCommit(boolean autoCommit)
+      {
+        throw new UnsupportedOperationException();
+      }
+    };
+
     private InternalSession internalSession;
 
     private InternalRepository repository;
@@ -472,6 +483,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     {
       this.internalSession = internalSession;
       repository = internalSession.getManager().getRepository();
+    }
+
+    public IRegistry<String, Object> properties()
+    {
+      return properties;
     }
 
     public CDOSession getSession()

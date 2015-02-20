@@ -92,6 +92,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ref.KeyedReference;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap2;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -156,6 +158,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   };
 
+  private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
+  {
+    @Override
+    public void setAutoCommit(boolean autoCommit)
+    {
+      throw new UnsupportedOperationException();
+    }
+  };
+
   @ExcludeFromDump
   private transient Map<String, CDOID> resourcePathCache = new HashMap<String, CDOID>();
 
@@ -174,6 +185,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public AbstractCDOView()
   {
     initObjectsMap(ReferenceType.SOFT);
+  }
+
+  public final IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   public boolean isReadOnly()

@@ -113,6 +113,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.OptionsEvent;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.common.util.ECollections;
@@ -189,6 +191,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private LastUpdateTimeLock lastUpdateTimeLock = new LastUpdateTimeLock();
 
   private CDOSession.Options options = createOptions();
+
+  private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
+  {
+    @Override
+    public void setAutoCommit(boolean autoCommit)
+    {
+      throw new UnsupportedOperationException();
+    }
+  };
 
   private Invalidator invalidator = new Invalidator();
 
@@ -542,6 +553,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return options;
   }
 
+  public IRegistry<String, Object> properties()
+  {
+    return properties;
+  }
+
   /**
    * @since 2.0
    */
@@ -609,7 +625,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       return CDOBranchPoint.UNSPECIFIED_DATE;
     }
-  
+
     return refresh(false);
   }
 

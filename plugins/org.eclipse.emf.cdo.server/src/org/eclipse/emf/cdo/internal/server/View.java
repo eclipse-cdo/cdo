@@ -27,6 +27,8 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.options.IOptionsContainer;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import java.text.MessageFormat;
 import java.util.HashSet;
@@ -57,6 +59,15 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   private boolean lockNotificationsEnabled;
 
   private boolean closed;
+
+  private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
+  {
+    @Override
+    public void setAutoCommit(boolean autoCommit)
+    {
+      throw new UnsupportedOperationException();
+    }
+  };
 
   /**
    * @since 2.0
@@ -297,6 +308,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public Options options()
   {
     return this;
+  }
+
+  public final IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   public boolean isLockNotificationEnabled()

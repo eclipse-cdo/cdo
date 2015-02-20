@@ -49,6 +49,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.options.IOptionsContainer;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -573,6 +575,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
     private String durableLockingID;
 
+    private IRegistry<String, Object> properties;
+
     public DurableView(String durableLockingID)
     {
       this.durableLockingID = durableLockingID;
@@ -693,6 +697,23 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     public Options options()
     {
       return this;
+    }
+
+    public synchronized IRegistry<String, Object> properties()
+    {
+      if (properties == null)
+      {
+        properties = new HashMapRegistry<String, Object>()
+        {
+          @Override
+          public void setAutoCommit(boolean autoCommit)
+          {
+            throw new UnsupportedOperationException();
+          }
+        };
+      }
+
+      return properties;
     }
 
     public boolean isLockNotificationEnabled()

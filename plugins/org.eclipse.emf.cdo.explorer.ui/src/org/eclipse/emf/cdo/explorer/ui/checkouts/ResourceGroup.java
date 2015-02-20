@@ -10,11 +10,11 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext;
 import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory;
@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.jobs.Job;
 /**
  * @author Eike Stepper
  */
-public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameContext
+public class ResourceGroup extends CDOElement implements ExplorerRenameContext
 {
   private String name;
 
@@ -45,25 +45,6 @@ public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameC
   public CDOResourceNode getDelegate()
   {
     return (CDOResourceNode)super.getDelegate();
-  }
-
-  @Override
-  public void reset()
-  {
-    super.reset();
-    name = getDelegate().trimExtension();
-  }
-
-  @Override
-  public String toString(Object child)
-  {
-    return ((CDOResourceNode)child).getExtension();
-  }
-
-  @Override
-  public String toString()
-  {
-    return name;
   }
 
   public String getType()
@@ -87,9 +68,9 @@ public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameC
         CDOResourceNode resourceNode = getDelegate();
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
         CDOTransaction transaction = checkout.openTransaction();
-
+  
         CDOCommitInfo commitInfo = null;
-
+  
         try
         {
           for (Object child : getChildren())
@@ -99,11 +80,11 @@ public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameC
               CDOResourceNode childNode = (CDOResourceNode)child;
               CDOResourceNode transactionalChildNode = transaction.getObject(childNode);
               String extension = transactionalChildNode.getExtension();
-
+  
               transactionalChildNode.setName(name + "." + extension);
             }
           }
-
+  
           commitInfo = transaction.commit();
         }
         catch (Exception ex)
@@ -114,15 +95,15 @@ public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameC
         {
           transaction.close();
         }
-
+  
         if (commitInfo != null)
         {
           checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
-
+  
           CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
-          checkoutManager.fireElementChangedEvent(ResourceGroup.this, true);
+          checkoutManager.fireElementChangedEvent(true, ResourceGroup.this);
         }
-
+  
         return Status.OK_STATUS;
       }
     }.schedule();
@@ -135,19 +116,19 @@ public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameC
     {
       return type + " name is empty.";
     }
-
+  
     if (name.equals(getName()))
     {
       return null;
     }
-
+  
     for (Object child : getChildren())
     {
       if (child instanceof CDOResourceNode)
       {
         CDOResourceNode childNode = (CDOResourceNode)child;
         String extension = childNode.getExtension();
-
+  
         String error = ExplorerUIAdapterFactory.checkUniqueName(childNode, name + "." + extension, type);
         if (error != null)
         {
@@ -155,7 +136,26 @@ public class ResourceGroup extends CDOCheckoutElement implements ExplorerRenameC
         }
       }
     }
-
+  
     return null;
+  }
+
+  @Override
+  public void reset()
+  {
+    super.reset();
+    name = getDelegate().trimExtension();
+  }
+
+  @Override
+  public String toString(Object child)
+  {
+    return ((CDOResourceNode)child).getExtension();
+  }
+
+  @Override
+  public String toString()
+  {
+    return name;
   }
 }

@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
@@ -118,7 +118,7 @@ public class ResourceGroupModifier implements CDOCheckoutContentModifier
         if (lastDot != -1)
         {
           String groupName = name.substring(0, lastDot);
-          CDOCheckoutElement element = elements.get(groupName);
+          CDOElement element = elements.get(groupName);
           if (element != null)
           {
             element.addChild(resourceNode);

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
@@ -93,7 +93,7 @@ public interface CDOCheckoutContentModifier
         for (int i = 0; i < children.length; i++)
         {
           Object child = children[i];
-          CDOCheckoutElement.removeFrom(child);
+          CDOElement.removeFrom(child);
         }
 
         for (CDOCheckoutContentModifier modifier : modifiers)

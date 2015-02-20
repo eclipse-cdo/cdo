@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.core.runtime.IAdaptable;
 
+import java.util.Collection;
+
 /**
  * @author Eike Stepper
  * @since 4.4
@@ -24,12 +26,12 @@ public interface CDOExplorerManager<T extends CDOExplorerElement> extends IConta
   /**
    * @author Eike Stepper
    */
-  public interface ElementChangedEvent extends IEvent
+  public interface ElementsChangedEvent extends IEvent
   {
     public CDOExplorerManager<?> getSource();
 
-    public Object getChangedElement();
-
     public boolean impactsParent();
+
+    public Collection<Object> getChangedElements();
   }
 }

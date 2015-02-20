@@ -142,7 +142,7 @@ public class CDOCheckoutShowInActionProvider extends CommonActionProvider
         {
           OfflineCDOCheckout offlineCheckout = (OfflineCDOCheckout)checkout;
 
-          InternalCDOWorkspace workspace = (InternalCDOWorkspace)offlineCheckout.getWorkspace();
+          InternalCDOWorkspace workspace = offlineCheckout.getWorkspace();
           if (workspace != null)
           {
             IManagedContainer container = workspace.getContainer();

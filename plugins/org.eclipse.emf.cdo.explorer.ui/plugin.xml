@@ -64,6 +64,11 @@
         <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
      </factory>
      <factory
+           adaptableType="org.eclipse.emf.cdo.CDOObject"
+           class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
+        <adapter type="org.eclipse.emf.cdo.CDOElement$StateProvider"/>
+     </factory>
+     <factory
            adaptableType="org.eclipse.emf.cdo.explorer.repositories.CDORepository"
            class="org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory">
         <adapter type="org.eclipse.team.ui.history.IHistoryPageSource"/>
@@ -153,7 +158,7 @@
             <or>
                <instanceof value="org.eclipse.core.resources.IWorkspaceRoot"/>
                <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
-               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+               <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                <adapt type="org.eclipse.emf.ecore.EObject"/>
             </or>
          </triggerPoints>
@@ -163,7 +168,7 @@
                <adapt type="org.eclipse.emf.cdo.eresource.CDOResource"/>
                <adapt type="org.eclipse.emf.cdo.eresource.CDOBinaryResource"/>
                <adapt type="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
-               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+               <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                <adapt type="org.eclipse.emf.ecore.EObject"/>
             </or>
          </possibleChildren>
@@ -199,7 +204,7 @@
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                </and>
                <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
-               <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+               <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                <adapt type="org.eclipse.emf.ecore.EObject"/>
              </or>
            </enablement>
@@ -213,7 +218,7 @@
                      <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                      <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                   </and>
-                  <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+                  <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                   <adapt type="org.eclipse.emf.ecore.EObject"/>
                </or>
             </enablement>
@@ -278,7 +283,7 @@
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
                  <adapt type="org.eclipse.emf.cdo.eresource.CDOResource"/>
-                 <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+                 <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                  <adapt type="org.eclipse.emf.ecore.EObject"/>
               </or>
            </possibleDropTargets>
@@ -387,7 +392,7 @@
          <activeWhen>
             <iterate ifEmpty="false" operator="and">
               <or>
-                <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+                <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                 <adapt type="org.eclipse.emf.ecore.EObject"/>
               </or>
             </iterate>
@@ -536,7 +541,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <or>
-                      <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement"/>
+                      <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                       <adapt type="org.eclipse.emf.ecore.EObject"/>
                     </or>
                   </iterate>
@@ -558,8 +563,7 @@
                   <iterate>
                      <and>
                         <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
-                        <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected">
-                        </test>
+                        <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected"/>
                      </and>
                   </iterate>
                </with>

@@ -110,7 +110,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     AbstractManager<?> manager = getManager();
     if (manager != null)
     {
-      manager.fireElementChangedEvent(this, impactsParent);
+      manager.fireElementChangedEvent(impactsParent, this);
     }
   }
 

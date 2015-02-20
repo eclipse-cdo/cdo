@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.server.IStore;
@@ -22,10 +25,11 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace.DirtyStateChangedEvent;
+import org.eclipse.emf.cdo.workspace.CDOWorkspace.ObjectStatesChangedEvent;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
@@ -41,6 +45,8 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.h2.jdbcx.JdbcDataSource;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -55,10 +61,28 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
       {
         fireElementChangedEvent(false);
       }
+      else if (event instanceof ObjectStatesChangedEvent)
+      {
+        ObjectStatesChangedEvent e = (ObjectStatesChangedEvent)event;
+
+        Set<Object> objects = new HashSet<Object>();
+        CDOView view = getView();
+
+        for (CDOID id : e.getChangedIDs())
+        {
+          CDOObject object = view.getObject(id, false);
+          if (object != null)
+          {
+            objects.add(object);
+          }
+        }
+
+        getManager().fireElementsChangedEvent(objects);
+      }
     }
   };
 
-  private CDOWorkspace workspace;
+  private InternalCDOWorkspace workspace;
 
   public OfflineCDOCheckout()
   {
@@ -74,7 +98,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     return false;
   }
 
-  public final CDOWorkspace getWorkspace()
+  public final InternalCDOWorkspace getWorkspace()
   {
     return workspace;
   }
@@ -87,6 +111,16 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     }
 
     return workspace.isDirty();
+  }
+
+  public CDOState getState(Object object)
+  {
+    if (workspace == null)
+    {
+      return null;
+    }
+
+    return workspace.getState(object);
   }
 
   @Override
@@ -127,14 +161,14 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
 
     if (storeFolder.isDirectory())
     {
-      workspace = configuration.open();
+      workspace = (InternalCDOWorkspace)configuration.open();
     }
     else
     {
       configuration.setBranchID(branchID);
       configuration.setTimeStamp(timeStamp);
 
-      workspace = configuration.checkout();
+      workspace = (InternalCDOWorkspace)configuration.checkout();
     }
 
     workspace.addListener(workspaceListener);

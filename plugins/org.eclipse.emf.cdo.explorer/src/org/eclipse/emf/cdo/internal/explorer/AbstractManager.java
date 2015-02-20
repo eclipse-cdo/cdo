@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -121,9 +123,14 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   protected abstract T createElement(String type);
 
-  public void fireElementChangedEvent(Object changedElement, boolean impactsParent)
+  public void fireElementChangedEvent(boolean impactsParent, Object changedElement)
   {
-    fireEvent(new ElementChangedImpl(this, changedElement, impactsParent));
+    fireEvent(new ElementsChangedImpl(this, impactsParent, Collections.singleton(changedElement)));
+  }
+
+  public void fireElementsChangedEvent(Collection<Object> changedElements)
+  {
+    fireEvent(new ElementsChangedImpl(this, false, changedElements));
   }
 
   public static Properties loadProperties(File folder, String fileName)
@@ -158,18 +165,18 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   /**
    * @author Eike Stepper
    */
-  private static final class ElementChangedImpl extends Event implements ElementChangedEvent
+  private static final class ElementsChangedImpl extends Event implements ElementsChangedEvent
   {
     private static final long serialVersionUID = 1L;
 
-    private final Object changedElement;
-
     private final boolean impactsParent;
 
-    public ElementChangedImpl(CDOExplorerManager<?> manager, Object changedElement, boolean impactsParent)
+    private final Collection<Object> changedElements;
+
+    public ElementsChangedImpl(CDOExplorerManager<?> manager, boolean impactsParent, Collection<Object> changedElements)
     {
       super(manager);
-      this.changedElement = changedElement;
+      this.changedElements = changedElements;
       this.impactsParent = impactsParent;
     }
 
@@ -179,14 +186,14 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
       return (CDOExplorerManager<?>)super.getSource();
     }
 
-    public final Object getChangedElement()
-    {
-      return changedElement;
-    }
-
     public boolean impactsParent()
     {
       return impactsParent;
+    }
+
+    public final Collection<Object> getChangedElements()
+    {
+      return changedElements;
     }
   }
 }

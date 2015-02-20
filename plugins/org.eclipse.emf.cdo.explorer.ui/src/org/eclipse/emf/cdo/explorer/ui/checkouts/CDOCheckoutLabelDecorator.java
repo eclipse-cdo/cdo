@@ -10,11 +10,14 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.BaseLabelDecorator;
+
+import org.eclipse.net4j.util.AdapterUtil;
 
 /**
  * @author Eike Stepper
@@ -28,6 +31,12 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
   @Override
   public String decorateText(String text, Object element)
   {
+    CDOElement cdoElement = AdapterUtil.adapt(element, CDOElement.class);
+    if (cdoElement != null)
+    {
+      element = cdoElement.getDelegate();
+    }
+
     if (element instanceof CDOCheckout)
     {
       CDOCheckout checkout = (CDOCheckout)element;
@@ -61,7 +70,11 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
         {
           if (checkout.isDirty())
           {
-            text += "  [dirty]";
+            text += "  dirty";
+          }
+          else
+          {
+            text += "  clean";
           }
         }
       }

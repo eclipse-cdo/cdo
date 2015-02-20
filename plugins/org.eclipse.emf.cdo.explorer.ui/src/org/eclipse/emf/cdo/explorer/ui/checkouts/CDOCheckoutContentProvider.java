@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -20,7 +21,6 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.State;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutOpenEvent;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
@@ -131,44 +131,48 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
 
         updatePropertySheetPage(checkout);
       }
-      else if (event instanceof CDOExplorerManager.ElementChangedEvent)
+      else if (event instanceof CDOExplorerManager.ElementsChangedEvent)
       {
-        CDOExplorerManager.ElementChangedEvent e = (CDOExplorerManager.ElementChangedEvent)event;
-        Object changedElement = e.getChangedElement();
+        CDOExplorerManager.ElementsChangedEvent e = (CDOExplorerManager.ElementsChangedEvent)event;
+        Collection<Object> changedElements = e.getChangedElements();
 
         if (e.impactsParent())
         {
-          if (changedElement instanceof CDOCheckout)
+          if (changedElements.size() == 1)
           {
-            ViewerUtil.refresh(viewer, null);
-          }
-          else
-          {
-            Object parent = CDOExplorerUtil.getParent(changedElement);
-            if (parent != null)
+            Object changedElement = changedElements.iterator().next();
+            if (changedElement instanceof CDOCheckout)
             {
-              if (parent instanceof CDOCheckoutElement)
-              {
-                CDOCheckoutElement checkoutElement = (CDOCheckoutElement)parent;
-                ViewerUtil.refresh(viewer, checkoutElement.getParent());
-              }
-              else
-              {
-                ViewerUtil.refresh(viewer, parent);
-              }
+              ViewerUtil.refresh(viewer, null);
             }
             else
             {
-              ViewerUtil.update(viewer, changedElement);
+              Object parent = CDOExplorerUtil.getParent(changedElement);
+              if (parent != null)
+              {
+                if (parent instanceof CDOElement)
+                {
+                  CDOElement checkoutElement = (CDOElement)parent;
+                  ViewerUtil.refresh(viewer, checkoutElement.getParent());
+                }
+                else
+                {
+                  ViewerUtil.refresh(viewer, parent);
+                }
+              }
+              else
+              {
+                ViewerUtil.update(viewer, changedElement);
+              }
             }
           }
         }
         else
         {
-          ViewerUtil.update(viewer, changedElement);
+          ViewerUtil.update(viewer, changedElements);
         }
 
-        updatePropertySheetPage(changedElement);
+        updatePropertySheetPage(changedElements);
       }
     }
 
@@ -328,9 +332,9 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       object = checkout.getRootObject();
     }
 
-    if (object instanceof CDOCheckoutElement)
+    if (object instanceof CDOElement)
     {
-      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)object;
+      CDOElement checkoutElement = (CDOElement)object;
       return checkoutElement.hasChildren();
     }
 
@@ -377,9 +381,9 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       return ViewerUtil.NO_CHILDREN;
     }
 
-    if (object instanceof CDOCheckoutElement)
+    if (object instanceof CDOElement)
     {
-      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)object;
+      CDOElement checkoutElement = (CDOElement)object;
       return checkoutElement.getChildren();
     }
 
@@ -615,9 +619,9 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       return ((ViewerUtil.Pending)object).getParent();
     }
 
-    if (object instanceof CDOCheckoutElement)
+    if (object instanceof CDOElement)
     {
-      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)object;
+      CDOElement checkoutElement = (CDOElement)object;
       return checkoutElement.getParent();
     }
 

@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -87,9 +87,9 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
 
       for (Object element : elements)
       {
-        if (element instanceof CDOCheckoutElement)
+        if (element instanceof CDOElement)
         {
-          CDOCheckoutElement checkoutElement = (CDOCheckoutElement)element;
+          CDOElement checkoutElement = (CDOElement)element;
           for (Object child : checkoutElement.getChildren())
           {
             result.add(child);

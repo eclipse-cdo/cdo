@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Tree;
 
+import java.util.Collection;
+
 /**
  * @author Eike Stepper
  */
@@ -36,16 +38,24 @@ public final class ViewerUtil
   {
     if (viewer != null)
     {
-      Control control = viewer.getControl();
+      final Control control = viewer.getControl();
       if (!control.isDisposed())
       {
         Runnable runnable = new Runnable()
         {
           public void run()
           {
-            if (!viewer.getControl().isDisposed())
+            if (!control.isDisposed())
             {
-              viewer.update(element, null);
+              if (element instanceof Collection)
+              {
+                Collection<?> collection = (Collection<?>)element;
+                viewer.update(collection.toArray(), null);
+              }
+              else
+              {
+                viewer.update(element, null);
+              }
             }
           }
         };
@@ -84,6 +94,14 @@ public final class ViewerUtil
               if (element == null)
               {
                 viewer.refresh();
+              }
+              else if (element instanceof Collection)
+              {
+                Collection<?> collection = (Collection<?>)element;
+                for (Object object : collection)
+                {
+                  viewer.refresh(object);
+                }
               }
               else
               {

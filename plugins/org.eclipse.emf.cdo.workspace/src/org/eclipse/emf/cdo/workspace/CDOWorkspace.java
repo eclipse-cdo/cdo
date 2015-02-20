@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.workspace;
 
+import org.eclipse.emf.cdo.CDOElement.StateProvider;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -24,6 +26,8 @@ import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import java.util.Set;
+
 /**
  * Represents a local {@link CDOWorkspaceConfiguration#checkout() checkout} from a remote repository.
  *
@@ -31,7 +35,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOWorkspace extends CDORevisionProvider, Closeable, INotifier
+public interface CDOWorkspace extends CDORevisionProvider, StateProvider, Closeable, INotifier
 {
   /**
    * @since 4.2
@@ -81,14 +85,35 @@ public interface CDOWorkspace extends CDORevisionProvider, Closeable, INotifier
 
   /**
    * An {@link IEvent event} fired when the overall state of the {@link CDOWorkspace workspace} changes between <i>dirty</i> and <i>clean</i>.
-   * fired.
    *
    * @see CDOWorkspace#isDirty()
    * @author Eike Stepper
    * @since 4.1
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface DirtyStateChangedEvent extends IEvent
   {
+    /**
+     * @since 4.2
+     */
+    public CDOWorkspace getSource();
+
     public boolean isDirty();
+  }
+
+  /**
+   * An {@link IEvent event} fired when the state of objects in the {@link CDOWorkspace workspace} change between <i>new</i>, <i>dirty</i> and <i>clean</i>.
+   *
+   * @author Eike Stepper
+   * @since 4.2
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface ObjectStatesChangedEvent extends IEvent
+  {
+    public CDOWorkspace getSource();
+
+    public Set<CDOID> getChangedIDs();
   }
 }

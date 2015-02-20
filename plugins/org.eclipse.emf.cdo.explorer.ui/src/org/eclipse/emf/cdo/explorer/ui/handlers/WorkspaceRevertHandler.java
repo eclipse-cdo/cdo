@@ -142,7 +142,7 @@ public class WorkspaceRevertHandler extends AbstractBaseHandler<OfflineCDOChecko
   private InternalCDOWorkspace getWorkspace()
   {
     OfflineCDOCheckout checkout = elements.get(0);
-    return (InternalCDOWorkspace)checkout.getWorkspace();
+    return checkout.getWorkspace();
   }
 
   /**

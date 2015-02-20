@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.workspace;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -331,6 +332,29 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     setDirty(false);
   }
 
+  public CDOState getState(Object object)
+  {
+    if (object instanceof CDOObject)
+    {
+      CDOObject cdoObject = (CDOObject)object;
+      CDOID id = cdoObject.cdoID();
+
+      if (base.containsID(id))
+      {
+        if (base.isAddedObject(id))
+        {
+          return CDOState.NEW;
+        }
+
+        return CDOState.DIRTY;
+      }
+
+      return CDOState.CLEAN;
+    }
+
+    return null;
+  }
+
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
@@ -414,19 +438,30 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       @Override
       public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
       {
+        Set<CDOID> changedIDs = new HashSet<CDOID>();
+
         InternalCDOTransaction tx = (InternalCDOTransaction)transaction;
         Set<CDOID> dirtyObjects = tx.getDirtyObjects().keySet();
         Set<CDOID> detachedObjects = tx.getDetachedObjects().keySet();
+
         for (InternalCDORevision revision : tx.getCleanRevisions().values())
         {
           CDOID id = revision.getID();
-          boolean isDetached = detachedObjects.contains(id);
+          changedIDs.add(id);
 
-          if (isDetached && base.isAddedObject(id))
+          boolean isDetached = detachedObjects.contains(id);
+          if (isDetached)
           {
-            base.registerAddedAndDetachedObject(revision);
+            if (base.isAddedObject(id))
+            {
+              base.registerAddedAndDetachedObject(revision);
+            }
+            else
+            {
+              base.registerChangedOrDetachedObject(revision);
+            }
           }
-          else if (isDetached || dirtyObjects.contains(id))
+          else if (dirtyObjects.contains(id))
           {
             base.registerChangedOrDetachedObject(revision);
           }
@@ -437,9 +472,12 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         {
           CDOID id = object.cdoID();
           base.registerAddedObject(id);
+          changedIDs.add(id);
         }
 
         setDirtyFromBase();
+
+        fireEvent(new ObjectStatesChangedEventImpl(CDOWorkspaceImpl.this, changedIDs));
       }
     });
   }
@@ -502,6 +540,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
             updateBase(affectedIDs, local, remote);
             setTimeStamp(newTimeStamp);
+
+            fireEvent(new ObjectStatesChangedEventImpl(CDOWorkspaceImpl.this, affectedIDs));
           }
           finally
           {
@@ -726,6 +766,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   public CDOCommitInfo checkin(String comment) throws CommitException
   {
+    Set<CDOID> ids = null;
     InternalCDOSession remoteSession = openRemoteSession();
 
     try
@@ -753,9 +794,15 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         transaction.setCommitComment(comment);
         CDOCommitInfo info = transaction.commit();
 
-        adjustLocalRevisions(transaction, info.getChangedObjects());
+        ids = adjustLocalRevisions(transaction, info.getChangedObjects());
+
         clearBase();
         setTimeStamp(info.getTimeStamp());
+
+        for (CDOIDAndVersion key : changes.getNewObjects())
+        {
+          ids.add(key.getID());
+        }
 
         return info;
       }
@@ -767,15 +814,24 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     finally
     {
       closeRemoteSession(remoteSession);
+
+      if (ids != null)
+      {
+        fireEvent(new ObjectStatesChangedEventImpl(this, ids));
+      }
     }
   }
 
-  protected void adjustLocalRevisions(InternalCDOTransaction transaction, List<CDORevisionKey> changedObjects)
+  protected Set<CDOID> adjustLocalRevisions(InternalCDOTransaction transaction, List<CDORevisionKey> changedObjects)
   {
+    Set<CDOID> ids = new HashSet<CDOID>();
     IStoreAccessor.Raw accessor = null;
+
     for (CDORevisionKey key : changedObjects)
     {
       CDOID id = key.getID();
+      ids.add(id);
+
       InternalCDORevision localRevision = (InternalCDORevision)getRevision(id);
       CDORevision baseRevision = base.getRevision(id);
       CDORevision remoteRevision = transaction.getObject(id).cdoRevision();
@@ -811,9 +867,12 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
     if (accessor != null)
     {
+      // TODO Should the accessor be released in finally{}?
       finishRawAccess(accessor);
       localSession.getRevisionManager().getCache().clear();
     }
+
+    return ids;
   }
 
   private void adjustRevisionBranch(InternalCDORevision revision, InternalCDOBranchManager forBranchManager)
@@ -1245,7 +1304,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   {
     private static final long serialVersionUID = 1L;
 
-    private boolean dirty;
+    private final boolean dirty;
 
     public DirtyStateChangedEventImpl(CDOWorkspace workspace, boolean dirty)
     {
@@ -1253,9 +1312,42 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       this.dirty = dirty;
     }
 
+    @Override
+    public CDOWorkspace getSource()
+    {
+      return (CDOWorkspace)super.getSource();
+    }
+
     public boolean isDirty()
     {
       return dirty;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ObjectStatesChangedEventImpl extends Event implements ObjectStatesChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final Set<CDOID> changedIDs;
+
+    public ObjectStatesChangedEventImpl(CDOWorkspace workspace, Set<CDOID> changedIDs)
+    {
+      super(workspace);
+      this.changedIDs = changedIDs;
+    }
+
+    @Override
+    public CDOWorkspace getSource()
+    {
+      return (CDOWorkspace)super.getSource();
+    }
+
+    public Set<CDOID> getChangedIDs()
+    {
+      return changedIDs;
     }
   }
 }

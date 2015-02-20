@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -37,6 +38,12 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   public final boolean isDirty()
   {
     return false;
+  }
+
+  public CDOState getState(Object object)
+  {
+    // Online checkout objects are always clean. Don't show that.
+    return null;
   }
 
   @Override

@@ -114,15 +114,22 @@
   <extension
         point="org.eclipse.ui.decorators">
      <decorator
+           adaptable="true"
            class="org.eclipse.emf.cdo.ui.CDOLabelDecorator"
+           icon="icons/full/obj16/CDOModelFile.gif"
            id="org.eclipse.emf.cdo.ui.CDOLabelDecorator"
            label="%_UI_CDOLabelDecorator_label"
            lightweight="false"
            state="true">
         <enablement>
-           <objectClass
-                 name="org.eclipse.emf.cdo.CDOObject">
-           </objectClass>
+           <or>
+              <objectClass
+                    name="org.eclipse.emf.cdo.CDOObject">
+              </objectClass>
+              <objectClass
+                    name="org.eclipse.emf.cdo.CDOElement">
+              </objectClass>
+           </or>
         </enablement>
         <description>
            %_UI_CDOLabelDecorator_description

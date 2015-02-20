@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.properties;
 
+import org.eclipse.emf.cdo.CDOElement.StateProvider;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -40,7 +41,11 @@ import org.eclipse.core.runtime.jobs.Job;
 @SuppressWarnings("rawtypes")
 public class ExplorerUIAdapterFactory implements IAdapterFactory
 {
-  private static final Class[] CLASSES = { ExplorerRenameContext.class };
+  private static final Class<ExplorerRenameContext> CLASS_EXPLORER_RENAME_CONTEXT = ExplorerRenameContext.class;
+
+  private static final Class<StateProvider> CLASS_STATE_PROVIDER = StateProvider.class;
+
+  private static final Class[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_STATE_PROVIDER };
 
   public ExplorerUIAdapterFactory()
   {
@@ -53,7 +58,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   public Object getAdapter(Object adaptableObject, Class adapterType)
   {
-    if (adapterType == CLASSES[0])
+    if (adapterType == CLASS_EXPLORER_RENAME_CONTEXT)
     {
       if (adaptableObject instanceof AbstractElement)
       {
@@ -69,6 +74,18 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
       {
         CDOResourceNode resourceNode = (CDOResourceNode)adaptableObject;
         return createRenameContext(resourceNode);
+      }
+    }
+    else if (adapterType == CLASS_STATE_PROVIDER)
+    {
+      if (adaptableObject instanceof EObject)
+      {
+        EObject eObject = (EObject)adaptableObject;
+        CDOCheckout checkout = CDOExplorerUtil.getCheckout(eObject);
+        if (checkout instanceof StateProvider)
+        {
+          return checkout;
+        }
       }
     }
 
@@ -200,7 +217,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
               checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
 
               CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
-              checkoutManager.fireElementChangedEvent(resourceNode, true);
+              checkoutManager.fireElementChangedEvent(true, resourceNode);
             }
 
             return Status.OK_STATUS;

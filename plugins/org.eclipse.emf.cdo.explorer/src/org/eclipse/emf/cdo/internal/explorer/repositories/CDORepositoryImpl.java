@@ -76,7 +76,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           CDORepositoryManagerImpl manager = getManager();
           if (manager != null)
           {
-            manager.fireElementChangedEvent(e.getBranch(), false);
+            manager.fireElementChangedEvent(false, e.getBranch());
           }
         }
       }

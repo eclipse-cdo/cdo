@@ -11,10 +11,15 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.CDOElement;
+import org.eclipse.emf.cdo.CDOElement.StateProvider;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -41,7 +46,7 @@ public class CDOLabelDecorator implements ILabelDecorator
 {
   public static final String[] DECORATION_PROPOSALS = { "${element}", "${id}", "${state}", "${created}", "${revised}" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
-  public static final String DEFAULT_DECORATION = DECORATION_PROPOSALS[0] + " [" + DECORATION_PROPOSALS[2] + "]"; //$NON-NLS-1$ //$NON-NLS-2$
+  public static final String DEFAULT_DECORATION = DECORATION_PROPOSALS[0] + "  " + DECORATION_PROPOSALS[2]; //$NON-NLS-1$
 
   public static final String NO_DECORATION = DECORATION_PROPOSALS[0];
 
@@ -101,14 +106,27 @@ public class CDOLabelDecorator implements ILabelDecorator
   {
     try
     {
-      if (pattern != null && element instanceof InternalCDOObject)
+      if (pattern != null)
       {
-        InternalCDOView view = ((InternalCDOObject)element).cdoView();
-        InternalCDOObject obj = FSMUtil.adapt(element, view);
-        CDORevision rev = obj.cdoRevision();
-        long created = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getTimeStamp();
-        long revised = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getRevised();
-        text = MessageFormat.format(pattern, text, obj.cdoID(), obj.cdoState(), created, revised);
+        CDOElement cdoElement = AdapterUtil.adapt(element, CDOElement.class);
+        if (cdoElement != null)
+        {
+          element = cdoElement.getDelegate();
+        }
+
+        if (element instanceof InternalCDOObject)
+        {
+          InternalCDOView view = ((InternalCDOObject)element).cdoView();
+          InternalCDOObject object = FSMUtil.adapt(element, view);
+
+          CDOID id = object.cdoID();
+          String state = getObjectState(object);
+
+          CDORevision rev = object.cdoRevision();
+          long created = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getTimeStamp();
+          long revised = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getRevised();
+          text = MessageFormat.format(pattern, text, id, state, created, revised).trim();
+        }
       }
     }
     catch (RuntimeException ignore)
@@ -131,5 +149,30 @@ public class CDOLabelDecorator implements ILabelDecorator
   public void removeListener(ILabelProviderListener listener)
   {
     // Ignore listeners, DecoratorManager handles them.
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected String getObjectState(InternalCDOObject object)
+  {
+    CDOState state = null;
+
+    StateProvider stateProvider = AdapterUtil.adapt(object, StateProvider.class);
+    if (stateProvider != null)
+    {
+      state = stateProvider.getState(object);
+    }
+    else
+    {
+      state = object.cdoState();
+    }
+
+    if (state == null)
+    {
+      return "";
+    }
+
+    return state.toString().toLowerCase();
   }
 }

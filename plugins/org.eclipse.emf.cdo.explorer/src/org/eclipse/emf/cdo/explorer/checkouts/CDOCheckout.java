@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.checkouts;
 
+import org.eclipse.emf.cdo.CDOElement.StateProvider;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
@@ -30,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * @author Eike Stepper
  * @since 4.4
  */
-public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider
+public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateProvider
 {
   public static final String TYPE_ONLINE = "online";
 

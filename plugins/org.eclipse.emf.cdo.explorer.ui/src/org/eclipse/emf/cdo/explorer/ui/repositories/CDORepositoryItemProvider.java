@@ -35,6 +35,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -75,15 +76,15 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         ViewerUtil.refresh(viewer, repository);
         updatePropertySheetPage(repository);
       }
-      else if (event instanceof CDOExplorerManager.ElementChangedEvent)
+      else if (event instanceof CDOExplorerManager.ElementsChangedEvent)
       {
-        CDOExplorerManager.ElementChangedEvent e = (CDOExplorerManager.ElementChangedEvent)event;
+        CDOExplorerManager.ElementsChangedEvent e = (CDOExplorerManager.ElementsChangedEvent)event;
 
         TreeViewer viewer = getViewer();
-        Object changedElement = e.getChangedElement();
+        Collection<Object> changedElements = e.getChangedElements();
 
-        ViewerUtil.update(viewer, changedElement);
-        updatePropertySheetPage(changedElement);
+        ViewerUtil.update(viewer, changedElements);
+        updatePropertySheetPage(changedElements);
       }
     }
 

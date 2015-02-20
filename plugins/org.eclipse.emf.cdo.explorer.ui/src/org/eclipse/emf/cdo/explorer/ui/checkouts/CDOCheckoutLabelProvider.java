@@ -10,10 +10,10 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutElement;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
@@ -109,33 +109,32 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
   @Override
   public String getText(Object element)
   {
-    if (element instanceof CDOCheckout)
+    try
     {
-      CDOCheckout checkout = (CDOCheckout)element;
-      return checkout.getLabel();
-    }
-
-    if (element instanceof CDOCheckoutElement)
-    {
-      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)element;
-      return checkoutElement.toString();
-    }
-
-    if (element instanceof EObject)
-    {
-      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)EcoreUtil.getExistingAdapter((Notifier)element,
-          CDOCheckoutElement.class);
-      if (checkoutElement != null)
+      if (element instanceof CDOCheckout)
       {
-        return checkoutElement.toString(element);
+        CDOCheckout checkout = (CDOCheckout)element;
+        return checkout.getLabel();
       }
 
-      if (element instanceof CDOResourceNode)
+      if (element instanceof CDOElement)
       {
-        CDOResourceNode resourceNode = (CDOResourceNode)element;
+        CDOElement checkoutElement = (CDOElement)element;
+        return checkoutElement.toString();
+      }
 
-        try
+      if (element instanceof EObject)
+      {
+        CDOElement checkoutElement = (CDOElement)EcoreUtil.getExistingAdapter((Notifier)element, CDOElement.class);
+        if (checkoutElement != null)
         {
+          return checkoutElement.toString(element);
+        }
+
+        if (element instanceof CDOResourceNode)
+        {
+          CDOResourceNode resourceNode = (CDOResourceNode)element;
+
           String name = resourceNode.getName();
           if (name == null)
           {
@@ -145,49 +144,49 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
 
           return name;
         }
-        catch (Exception ex)
-        {
-          return ex.getMessage();
-        }
       }
-    }
 
-    if (element instanceof ViewerUtil.Pending)
+      if (element instanceof ViewerUtil.Pending)
+      {
+        ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
+        return pending.getText();
+      }
+
+      return super.getText(element);
+    }
+    catch (Exception ex)
     {
-      ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
-      return pending.getText();
+      return ex.getMessage();
     }
-
-    return super.getText(element);
   }
 
   @Override
   public Image getImage(Object element)
   {
-    if (element instanceof CDOCheckout)
-    {
-      CDOCheckout checkout = (CDOCheckout)element;
-      if (checkout.isOpen())
-      {
-        return CHECKOUT_IMAGE;
-      }
-
-      return CHECKOUT_CLOSED_IMAGE;
-    }
-
-    if (element instanceof ViewerUtil.Pending)
-    {
-      return ContainerItemProvider.PENDING_IMAGE;
-    }
-
-    if (element instanceof CDOCheckoutElement)
-    {
-      CDOCheckoutElement checkoutElement = (CDOCheckoutElement)element;
-      return getImage(checkoutElement.getDelegate());
-    }
-
     try
     {
+      if (element instanceof CDOCheckout)
+      {
+        CDOCheckout checkout = (CDOCheckout)element;
+        if (checkout.isOpen())
+        {
+          return CHECKOUT_IMAGE;
+        }
+
+        return CHECKOUT_CLOSED_IMAGE;
+      }
+
+      if (element instanceof ViewerUtil.Pending)
+      {
+        return ContainerItemProvider.PENDING_IMAGE;
+      }
+
+      if (element instanceof CDOElement)
+      {
+        CDOElement checkoutElement = (CDOElement)element;
+        return getImage(checkoutElement.getDelegate());
+      }
+
       if (element instanceof CDOResourceLeaf)
       {
         String name = ((CDOResourceLeaf)element).getName();
@@ -212,7 +211,6 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
     }
     catch (Exception ex)
     {
-      ex.printStackTrace();
       return ERROR_IMAGE;
     }
   }

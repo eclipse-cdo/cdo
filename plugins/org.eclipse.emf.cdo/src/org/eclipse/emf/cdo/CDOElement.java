@@ -8,9 +8,11 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.checkouts;
+package org.eclipse.emf.cdo;
 
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
@@ -19,6 +21,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -32,15 +35,15 @@ import java.util.List;
  * @author Eike Stepper
  * @since 4.4
  */
-public class CDOCheckoutElement extends AdapterImpl implements IAdaptable
+public class CDOElement extends AdapterImpl implements IAdaptable
 {
-  private static final Class<CDOCheckoutElement> TYPE = CDOCheckoutElement.class;
+  private static final Class<CDOElement> TYPE = CDOElement.class;
 
   private final EObject delegate;
 
   private final List<Object> children = new ArrayList<Object>();
 
-  public CDOCheckoutElement(EObject delegate)
+  public CDOElement(EObject delegate)
   {
     this.delegate = delegate;
   }
@@ -52,7 +55,7 @@ public class CDOCheckoutElement extends AdapterImpl implements IAdaptable
 
   public Object getParent()
   {
-    return CDOExplorerUtil.getParentOfEObject(delegate);
+    return CDOElement.getParentOf(delegate);
   }
 
   public Object[] getChildren()
@@ -112,12 +115,47 @@ public class CDOCheckoutElement extends AdapterImpl implements IAdaptable
     return delegate.toString();
   }
 
-  public static CDOCheckoutElement getFor(Object object)
+  public static EObject getParentOf(EObject eObject)
+  {
+    EObject container = eObject.eContainer();
+    if (container != null)
+    {
+      return container;
+    }
+
+    if (eObject instanceof CDOResource)
+    {
+      CDOResource resource = (CDOResource)eObject;
+      if (resource.isRoot())
+      {
+        return null;
+      }
+    }
+
+    Resource resource = eObject.eResource();
+    if (resource instanceof CDOResource)
+    {
+      return (CDOResource)resource;
+    }
+
+    if (eObject instanceof CDOResourceNode)
+    {
+      CDOView view = ((CDOResourceNode)eObject).cdoView();
+      if (view != null)
+      {
+        return view.getRootResource();
+      }
+    }
+
+    return null;
+  }
+
+  public static CDOElement getFor(Object object)
   {
     if (object instanceof Notifier)
     {
       Notifier notifier = (Notifier)object;
-      return (CDOCheckoutElement)EcoreUtil.getExistingAdapter(notifier, TYPE);
+      return (CDOElement)EcoreUtil.getExistingAdapter(notifier, TYPE);
     }
 
     return null;
@@ -158,5 +196,14 @@ public class CDOCheckoutElement extends AdapterImpl implements IAdaptable
     {
       removeSafe(adapters);
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.4
+   */
+  public interface StateProvider
+  {
+    public CDOState getState(Object object);
   }
 }

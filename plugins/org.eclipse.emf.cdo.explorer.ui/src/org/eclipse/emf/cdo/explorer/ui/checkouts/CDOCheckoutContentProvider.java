@@ -422,7 +422,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       children = determineChildRevisions(object, loadedRevisions, missingIDs);
       if (children != null)
       {
-        return children;
+        return CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(object, children);
       }
     }
 

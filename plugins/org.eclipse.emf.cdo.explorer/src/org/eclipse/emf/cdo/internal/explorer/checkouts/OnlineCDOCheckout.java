@@ -47,10 +47,27 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   }
 
   @Override
+  public String getBranchPath()
+  {
+    CDOView view = getView();
+    if (view != null)
+    {
+      CDOBranch branch = view.getBranch();
+      if (branch != null)
+      {
+        return branch.getPathName();
+      }
+    }
+
+    return super.getBranchPath();
+  }
+
+  @Override
   protected CDOView openView(CDOSession session)
   {
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch branch = branchManager.getBranch(getBranchID());
+    setBranchPath(branch.getPathName());
 
     if (isReadOnly())
     {

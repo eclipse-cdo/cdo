@@ -46,6 +46,7 @@ import org.h2.jdbcx.JdbcDataSource;
 
 import java.io.File;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 /**
@@ -53,12 +54,16 @@ import java.util.Set;
  */
 public class OfflineCDOCheckout extends CDOCheckoutImpl
 {
+  public static final String PROP_DIRTY = "dirty";
+
   private final IListener workspaceListener = new IListener()
   {
     public void notifyEvent(IEvent event)
     {
       if (event instanceof DirtyStateChangedEvent)
       {
+        DirtyStateChangedEvent e = (DirtyStateChangedEvent)event;
+        setDirty(e.isDirty());
         fireElementChangedEvent(false);
       }
       else if (event instanceof ObjectStatesChangedEvent)
@@ -84,6 +89,8 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
 
   private InternalCDOWorkspace workspace;
 
+  private boolean dirty;
+
   public OfflineCDOCheckout()
   {
   }
@@ -105,23 +112,21 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
 
   public final boolean isDirty()
   {
-    if (workspace == null)
+    if (workspace != null)
     {
-      return false;
+      return workspace.isDirty();
     }
 
-    return workspace.isDirty();
+    return dirty;
   }
 
-  @Override
-  public String getBranchPath()
+  public final void setDirty(boolean dirty)
   {
-    if (workspace == null)
+    if (this.dirty != dirty)
     {
-      return null;
+      this.dirty = dirty;
+      save();
     }
-
-    return workspace.getBranchPath();
   }
 
   public CDOState getState(Object object)
@@ -131,12 +136,37 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
       return isDirty() ? CDOState.DIRTY : CDOState.CLEAN;
     }
 
-    if (workspace == null)
+    if (workspace != null)
     {
-      return null;
+      return workspace.getState(object);
     }
 
-    return workspace.getState(object);
+    return null;
+  }
+
+  @Override
+  public String getBranchPath()
+  {
+    if (workspace != null)
+    {
+      return workspace.getBranchPath();
+    }
+
+    return super.getBranchPath();
+  }
+
+  @Override
+  protected void init(File folder, String type, Properties properties)
+  {
+    super.init(folder, type, properties);
+    dirty = Boolean.parseBoolean(properties.getProperty(PROP_DIRTY, "false"));
+  }
+
+  @Override
+  protected void collectProperties(Properties properties)
+  {
+    super.collectProperties(properties);
+    properties.put(PROP_DIRTY, Boolean.toString(dirty));
   }
 
   @Override
@@ -186,6 +216,9 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
 
       workspace = (InternalCDOWorkspace)configuration.checkout();
     }
+
+    setBranchPath(workspace.getBranchPath());
+    setDirty(workspace.isDirty());
 
     workspace.addListener(workspaceListener);
     return workspace.openView();

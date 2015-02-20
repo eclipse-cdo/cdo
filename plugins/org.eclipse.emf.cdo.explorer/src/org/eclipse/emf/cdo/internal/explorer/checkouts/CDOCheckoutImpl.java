@@ -53,6 +53,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public static final String PROP_BRANCH_ID = "branchID";
 
+  public static final String PROP_BRANCH_PATH = "branchPath";
+
   public static final String PROP_REPOSITORY = "repository";
 
   public static final String EDITOR_PROPERTIES = "editor.properties";
@@ -77,6 +79,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private CDORepository repository;
 
   private int branchID;
+
+  private String branchPath;
 
   private long timeStamp;
 
@@ -117,21 +121,16 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public String getBranchPath()
   {
-    if (view == null)
-    {
-      return null;
-    }
+    return branchPath;
+  }
 
-    if (view != null)
+  public final void setBranchPath(String branchPath)
+  {
+    if (!ObjectUtil.equals(this.branchPath, branchPath))
     {
-      CDOBranch branch = view.getBranch();
-      if (branch != null)
-      {
-        return branch.getPathName();
-      }
+      this.branchPath = branchPath;
+      save();
     }
-
-    return null;
   }
 
   public final long getTimeStamp()
@@ -431,6 +430,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     super.init(folder, type, properties);
     repository = OM.getRepositoryManager().getElement(properties.getProperty(PROP_REPOSITORY));
     branchID = Integer.parseInt(properties.getProperty(PROP_BRANCH_ID));
+    branchPath = properties.getProperty(PROP_BRANCH_PATH);
     timeStamp = Long.parseLong(properties.getProperty(PROP_TIME_STAMP));
     readOnly = Boolean.parseBoolean(properties.getProperty(PROP_READ_ONLY));
     rootID = CDOIDUtil.read(properties.getProperty(PROP_ROOT_ID));
@@ -446,6 +446,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     properties.put(PROP_BRANCH_ID, Integer.toString(branchID));
     properties.put(PROP_TIME_STAMP, Long.toString(timeStamp));
     properties.put(PROP_READ_ONLY, Boolean.toString(readOnly));
+
+    if (branchPath != null)
+    {
+      properties.put(PROP_BRANCH_PATH, branchPath);
+    }
 
     String string = getCDOIDString(rootID);
     properties.put(PROP_ROOT_ID, string);

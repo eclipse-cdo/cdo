@@ -45,43 +45,55 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
       if (element instanceof CDOCheckout)
       {
         CDOCheckout checkout = (CDOCheckout)element;
-        if (checkout.isOpen())
+
+        String branchPath = checkout.getBranchPath();
+        if (branchPath != null)
         {
-          String branchPath = checkout.getBranchPath();
-          if (branchPath != null)
+          if (branchPath.startsWith(CDOBranch.MAIN_BRANCH_NAME))
           {
-            if (branchPath.startsWith(CDOBranch.MAIN_BRANCH_NAME))
-            {
-              branchPath = branchPath.substring(CDOBranch.MAIN_BRANCH_NAME.length());
-            }
+            branchPath = branchPath.substring(CDOBranch.MAIN_BRANCH_NAME.length());
+          }
 
-            if (branchPath.startsWith(CDOBranch.PATH_SEPARATOR))
-            {
-              branchPath = branchPath.substring(CDOBranch.PATH_SEPARATOR.length());
-            }
+          if (branchPath.startsWith(CDOBranch.PATH_SEPARATOR))
+          {
+            branchPath = branchPath.substring(CDOBranch.PATH_SEPARATOR.length());
+          }
 
-            if (branchPath.length() != 0)
+          if (branchPath.length() != 0)
+          {
+            if (checkout.isOffline())
+            {
+              text += "  [offline: " + branchPath + "]";
+            }
+            else
             {
               text += "  [" + branchPath + "]";
             }
           }
-
-          long timeStamp = checkout.getTimeStamp();
-          if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+          else
           {
-            text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
+            if (checkout.isOffline())
+            {
+              text += "  [offline]";
+            }
           }
+        }
 
-          if (checkout.isOffline())
+        long timeStamp = checkout.getTimeStamp();
+        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
+        }
+
+        if (checkout.isOffline())
+        {
+          if (checkout.isDirty())
           {
-            if (checkout.isDirty())
-            {
-              text += "  dirty";
-            }
-            else
-            {
-              text += "  clean";
-            }
+            text += "  dirty";
+          }
+          else
+          {
+            text += "  clean";
           }
         }
       }

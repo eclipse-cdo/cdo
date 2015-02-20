@@ -82,7 +82,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
       {
         EObject eObject = (EObject)adaptableObject;
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(eObject);
-        if (checkout instanceof StateProvider)
+        if (checkout != null)
         {
           return checkout;
         }

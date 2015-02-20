@@ -11,7 +11,9 @@
  */
 package org.eclipse.net4j.util.properties;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
@@ -140,18 +142,15 @@ public abstract class Property<RECEIVER>
 
       return value.toString();
     }
-    catch (RuntimeException ex)
+    catch (LifecycleException ex)
     {
-      if (LifecycleUtil.isActive(receiver))
-      {
-        throw ex;
-      }
+      //$FALL-THROUGH$
     }
-    catch (Error ex)
+    catch (Throwable ex)
     {
       if (LifecycleUtil.isActive(receiver))
       {
-        throw ex;
+        OM.LOG.error(ex);
       }
     }
 

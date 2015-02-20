@@ -99,6 +99,15 @@ public class CDOPackageInfoImpl implements InternalCDOPackageInfo
     }
   }
 
+  public InternalCDOPackageInfo copy()
+  {
+    InternalCDOPackageInfo packageInfo = (InternalCDOPackageInfo)CDOModelUtil.createPackageInfo();
+    packageInfo.setPackageURI(getPackageURI());
+    packageInfo.setParentURI(getParentURI());
+    packageInfo.setEPackage(getEPackage());
+    return packageInfo;
+  }
+
   public EFactory getEFactory()
   {
     return getEPackage().getEFactoryInstance();

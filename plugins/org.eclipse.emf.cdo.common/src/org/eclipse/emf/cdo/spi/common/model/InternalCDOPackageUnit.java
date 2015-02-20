@@ -68,6 +68,11 @@ public interface InternalCDOPackageUnit extends CDOPackageUnit
    */
   public void read(CDODataInput in, ResourceSet resourceSet) throws IOException;
 
+  /**
+   * @since 4.4
+   */
+  public InternalCDOPackageUnit copy();
+
   public void init(EPackage ePackage);
 
   public void dispose();

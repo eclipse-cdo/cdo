@@ -113,8 +113,24 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     return workspace.isDirty();
   }
 
+  @Override
+  public String getBranchPath()
+  {
+    if (workspace == null)
+    {
+      return null;
+    }
+
+    return workspace.getBranchPath();
+  }
+
   public CDOState getState(Object object)
   {
+    if (object == this)
+    {
+      return isDirty() ? CDOState.DIRTY : CDOState.CLEAN;
+    }
+
     if (workspace == null)
     {
       return null;

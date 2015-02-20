@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.explorer;
 
+import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 
@@ -144,6 +145,17 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
+    if (adapter == CDONameProvider.class)
+    {
+      return new CDONameProvider()
+      {
+        public String getName()
+        {
+          return label;
+        }
+      };
+    }
+
     return AdapterUtil.adapt(this, adapter, false);
   }
 
@@ -204,8 +216,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public int compareTo(CDOExplorerElement o)
   {
-    String label1 = StringUtil.safe(label);
-    String label2 = StringUtil.safe(o.getLabel());
+    String label1 = StringUtil.safe(label).toLowerCase();
+    String label2 = StringUtil.safe(o.getLabel()).toLowerCase();
     return label1.compareTo(label2);
   }
 

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
@@ -66,7 +67,9 @@ public final class CDOCommonUtil
   {
     public int compare(CDONameProvider o1, CDONameProvider o2)
     {
-      return o1.getName().compareTo(o2.getName());
+      String n1 = StringUtil.safe(o1.getName()).toLowerCase();
+      String n2 = StringUtil.safe(o2.getName()).toLowerCase();
+      return n1.compareTo(n2);
     }
   };
 

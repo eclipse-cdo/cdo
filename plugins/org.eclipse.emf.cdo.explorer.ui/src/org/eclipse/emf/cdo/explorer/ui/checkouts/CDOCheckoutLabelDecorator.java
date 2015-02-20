@@ -16,8 +16,11 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.BaseLabelDecorator;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
@@ -31,52 +34,67 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
   @Override
   public String decorateText(String text, Object element)
   {
-    CDOElement cdoElement = AdapterUtil.adapt(element, CDOElement.class);
-    if (cdoElement != null)
+    try
     {
-      element = cdoElement.getDelegate();
-    }
-
-    if (element instanceof CDOCheckout)
-    {
-      CDOCheckout checkout = (CDOCheckout)element;
-
-      if (checkout.isOpen())
+      CDOElement cdoElement = AdapterUtil.adapt(element, CDOElement.class);
+      if (cdoElement != null)
       {
-        CDOBranch branch = checkout.getView().getBranch();
-        String branchPath = branch.getPathName();
-        if (branchPath.startsWith(CDOBranch.MAIN_BRANCH_NAME))
-        {
-          branchPath = branchPath.substring(CDOBranch.MAIN_BRANCH_NAME.length());
-        }
+        element = cdoElement.getDelegate();
+      }
 
-        if (branchPath.startsWith(CDOBranch.PATH_SEPARATOR))
+      if (element instanceof CDOCheckout)
+      {
+        CDOCheckout checkout = (CDOCheckout)element;
+        if (checkout.isOpen())
         {
-          branchPath = branchPath.substring(CDOBranch.PATH_SEPARATOR.length());
-        }
-
-        if (branchPath.length() != 0)
-        {
-          text += "  " + branchPath;
-        }
-
-        long timeStamp = checkout.getTimeStamp();
-        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-        {
-          text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
-        }
-
-        if (checkout.isOffline())
-        {
-          if (checkout.isDirty())
+          String branchPath = checkout.getBranchPath();
+          if (branchPath != null)
           {
-            text += "  dirty";
+            if (branchPath.startsWith(CDOBranch.MAIN_BRANCH_NAME))
+            {
+              branchPath = branchPath.substring(CDOBranch.MAIN_BRANCH_NAME.length());
+            }
+
+            if (branchPath.startsWith(CDOBranch.PATH_SEPARATOR))
+            {
+              branchPath = branchPath.substring(CDOBranch.PATH_SEPARATOR.length());
+            }
+
+            if (branchPath.length() != 0)
+            {
+              text += "  [" + branchPath + "]";
+            }
           }
-          else
+
+          long timeStamp = checkout.getTimeStamp();
+          if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
           {
-            text += "  clean";
+            text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
+          }
+
+          if (checkout.isOffline())
+          {
+            if (checkout.isDirty())
+            {
+              text += "  dirty";
+            }
+            else
+            {
+              text += "  clean";
+            }
           }
         }
+      }
+    }
+    catch (LifecycleException ex)
+    {
+      //$FALL-THROUGH$
+    }
+    catch (Throwable ex)
+    {
+      if (LifecycleUtil.isActive(element))
+      {
+        OM.LOG.error(ex);
       }
     }
 

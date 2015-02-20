@@ -51,4 +51,9 @@ public interface InternalCDOPackageInfo extends CDOPackageInfo, Adapter.Internal
    * @since 3.0
    */
   public void read(CDODataInput in) throws IOException;
+
+  /**
+   * @since 4.4
+   */
+  public InternalCDOPackageInfo copy();
 }

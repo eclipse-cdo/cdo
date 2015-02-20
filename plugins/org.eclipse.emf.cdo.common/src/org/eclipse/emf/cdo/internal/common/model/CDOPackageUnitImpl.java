@@ -329,6 +329,25 @@ public class CDOPackageUnitImpl implements InternalCDOPackageUnit
     }
   }
 
+  public InternalCDOPackageUnit copy()
+  {
+    InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit();
+  
+    InternalCDOPackageInfo[] thesePackageInfos = getPackageInfos();
+    InternalCDOPackageInfo[] packageInfos = new InternalCDOPackageInfo[thesePackageInfos.length];
+    for (int i = 0; i < thesePackageInfos.length; i++)
+    {
+      packageInfos[i] = thesePackageInfos[i].copy();
+      packageInfos[i].setPackageUnit(packageUnit);
+    }
+  
+    packageUnit.setPackageInfos(packageInfos);
+    packageUnit.setOriginalType(getOriginalType());
+    packageUnit.setState(getState());
+    packageUnit.setTimeStamp(getTimeStamp());
+    return packageUnit;
+  }
+
   public int compareTo(CDOPackageUnit o)
   {
     return getID().compareTo(o.getID());

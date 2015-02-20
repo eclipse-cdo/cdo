@@ -185,7 +185,13 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
   public CDOBranch readCDOBranch() throws IOException
   {
     int branchID = readInt();
-    return getBranchManager().getBranch(branchID);
+    CDOBranch branch = getBranchManager().getBranch(branchID);
+    if (branch == null)
+    {
+      throw new IOException("Branch not found: " + branchID);
+    }
+
+    return branch;
   }
 
   public CDOBranchPoint readCDOBranchPoint() throws IOException

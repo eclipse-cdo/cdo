@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.ObjectType;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryProperties;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
@@ -123,13 +122,7 @@ public class CDOCheckoutProperties extends Properties<CDOCheckout>
       @Override
       protected Object eval(CDOCheckout checkout)
       {
-        CDOView view = checkout.getView();
-        if (view != null)
-        {
-          return view.getBranch();
-        }
-
-        return null;
+        return checkout.getBranchPath();
       }
     });
 

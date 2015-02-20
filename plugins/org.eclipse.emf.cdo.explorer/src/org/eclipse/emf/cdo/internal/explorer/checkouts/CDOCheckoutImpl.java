@@ -115,6 +115,25 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     this.branchID = branchID;
   }
 
+  public String getBranchPath()
+  {
+    if (view == null)
+    {
+      return null;
+    }
+
+    if (view != null)
+    {
+      CDOBranch branch = view.getBranch();
+      if (branch != null)
+      {
+        return branch.getPathName();
+      }
+    }
+
+    return null;
+  }
+
   public final long getTimeStamp()
   {
     return timeStamp;

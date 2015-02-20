@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.explorer.ui.repositories;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
@@ -175,19 +174,19 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     }
     else if (element instanceof CDORepositoryManager)
     {
-      List<CDONameProvider> nameProviders = new ArrayList<CDONameProvider>();
+      List<CDORepository> repositories = new ArrayList<CDORepository>();
 
       Object[] children = super.getChildren(element);
       for (Object child : children)
       {
-        if (child instanceof CDONameProvider)
+        if (child instanceof CDORepository)
         {
-          nameProviders.add((CDONameProvider)child);
+          repositories.add((CDORepository)child);
         }
       }
 
-      Collections.sort(nameProviders, CDOCommonUtil.NAME_COMPARATOR);
-      return nameProviders.toArray();
+      Collections.sort(repositories);
+      return repositories.toArray();
     }
 
     List<CDOTimeProvider> timeProviders = new ArrayList<CDOTimeProvider>();

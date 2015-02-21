@@ -199,6 +199,12 @@ public final class CDOUtil
       return cdoObject.cdoView().getSession();
     }
 
+    CDOBranchPoint branchPoint = AdapterUtil.adapt(object, CDOBranchPoint.class);
+    if (branchPoint != null)
+    {
+      object = branchPoint.getBranch();
+    }
+
     CDOBranch branch = AdapterUtil.adapt(object, CDOBranch.class);
     if (branch != null)
     {

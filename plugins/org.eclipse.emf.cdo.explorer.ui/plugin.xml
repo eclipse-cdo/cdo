@@ -170,6 +170,9 @@
                <adapt type="org.eclipse.emf.cdo.eresource.CDOTextResource"/>
                <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                <adapt type="org.eclipse.emf.ecore.EObject"/>
+               <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
+               <instanceof value="org.eclipse.emf.cdo.common.branch.CDOBranchPoint"/>
+               <instanceof value="org.eclipse.emf.cdo.common.branch.CDOBranch"/>
             </or>
          </possibleChildren>
          <actionProvider
@@ -221,6 +224,16 @@
                   <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                   <adapt type="org.eclipse.emf.ecore.EObject"/>
                </or>
+            </enablement>
+         </actionProvider>
+         <actionProvider
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutSwitchToActionProvider"
+               id="org.eclipse.emf.cdo.explorer.ui.checkouts.SwitchToActions">
+            <enablement>
+              <and>
+                 <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                 <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+              </and>
             </enablement>
          </actionProvider>
          <commonWizard

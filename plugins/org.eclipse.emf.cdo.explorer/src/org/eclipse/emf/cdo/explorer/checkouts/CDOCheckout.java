@@ -43,6 +43,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public CDORepository getRepository();
 
+  public void setBranchPoint(int branchID, long timeStamp);
+
   public int getBranchID();
 
   public void setBranchID(int branchID);

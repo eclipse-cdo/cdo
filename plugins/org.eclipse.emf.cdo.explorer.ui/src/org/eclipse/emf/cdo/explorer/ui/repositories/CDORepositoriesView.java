@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
@@ -105,6 +106,7 @@ public class CDORepositoriesView extends ContainerView
     TreeViewer viewer = getViewer();
     viewer.addTreeListener(activityDetector);
     viewer.setSorter(null);
+    UIUtil.addDragSupport(viewer);
 
     Tree tree = viewer.getTree();
     tree.addMouseListener(activityDetector);

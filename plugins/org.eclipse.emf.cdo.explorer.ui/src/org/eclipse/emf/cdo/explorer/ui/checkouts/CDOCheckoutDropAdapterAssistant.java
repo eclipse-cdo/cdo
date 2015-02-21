@@ -11,14 +11,19 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.ObjectType;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -73,6 +78,12 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
   @Override
   public IStatus validateDrop(Object target, int dropOperation, TransferData transferType)
   {
+    CDOBranchPoint branchPoint = getSelectedBranchPoint(target, transferType);
+    if (branchPoint != null)
+    {
+      return Status.OK_STATUS;
+    }
+
     Operation<?> operation = Operation.getFor(target, transferType);
     if (operation != null && operation.canDrop())
     {
@@ -96,15 +107,72 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
     }
 
     TransferData transferType = dropAdapter.getCurrentTransfer();
+    boolean copy = dropAdapter.getCurrentOperation() == DND.DROP_COPY;
+
+    CDOBranchPoint branchPoint = getSelectedBranchPoint(target, transferType);
+    if (branchPoint != null)
+    {
+      CDOCheckout checkout = (CDOCheckout)target;
+      checkout.setBranchPoint(branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
+      return Status.OK_STATUS;
+    }
+
     Operation<?> operation = Operation.getFor(target, transferType);
     if (operation != null)
     {
-      boolean copy = dropAdapter.getCurrentOperation() == DND.DROP_COPY;
       operation.drop(copy);
       return Status.OK_STATUS;
     }
 
     return Status.CANCEL_STATUS;
+  }
+
+  private static CDOBranchPoint getSelectedBranchPoint(Object target, TransferData transferType)
+  {
+    // Drag within Eclipse?
+    if (LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
+    {
+      ISelection selection = LocalSelectionTransfer.getTransfer().getSelection();
+      if (target instanceof CDOCheckout && selection instanceof IStructuredSelection)
+      {
+        CDOCheckout checkout = (CDOCheckout)target;
+        if (checkout.isOpen())
+        {
+          IStructuredSelection ssel = (IStructuredSelection)selection;
+
+          if (ssel.size() == 1)
+          {
+            Object element = ssel.getFirstElement();
+            if (element instanceof CDORepository)
+            {
+              CDORepository repository = (CDORepository)element;
+              if (repository.isConnected())
+              {
+                element = repository.getSession().getBranchManager().getMainBranch();
+              }
+            }
+
+            if (element instanceof CDOBranch)
+            {
+              CDOBranch branch = (CDOBranch)element;
+              element = branch.getHead();
+            }
+
+            if (element instanceof CDOBranchPoint)
+            {
+              CDOBranchPoint branchPoint = (CDOBranchPoint)element;
+              CDOSession session = CDOUtil.getSession(branchPoint);
+              if (session == checkout.getView().getSession())
+              {
+                return branchPoint;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return null;
   }
 
   private static EObject[] getSelectedObjects()

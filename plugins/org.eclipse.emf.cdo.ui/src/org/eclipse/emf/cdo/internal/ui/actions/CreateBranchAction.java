@@ -44,6 +44,16 @@ public class CreateBranchAction extends LongRunningAction
     setId(ID);
   }
 
+  public final CDOBranchPoint getBase()
+  {
+    return base;
+  }
+
+  public final String getName()
+  {
+    return name;
+  }
+
   @Override
   protected void preRun() throws Exception
   {
@@ -65,15 +75,7 @@ public class CreateBranchAction extends LongRunningAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
-    try
-    {
-      CDOBranch branch = base.getBranch();
-      branch.createBranch(name, base.getTimeStamp());
-    }
-    finally
-    {
-      base = null;
-      name = null;
-    }
+    CDOBranch branch = base.getBranch();
+    branch.createBranch(name, base.getTimeStamp());
   }
 }

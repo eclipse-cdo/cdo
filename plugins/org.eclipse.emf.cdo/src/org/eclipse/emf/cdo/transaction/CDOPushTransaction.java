@@ -178,6 +178,9 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return file;
   }
 
+  /**
+   * @since 4.4
+   */
   public final IRegistry<String, Object> properties()
   {
     return properties;

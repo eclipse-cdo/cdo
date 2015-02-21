@@ -24,12 +24,16 @@ import org.eclipse.jface.fieldassist.FieldDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.operation.ModalContext;
+import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceAdapter;
+import org.eclipse.swt.dnd.DragSourceEvent;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.graphics.Color;
@@ -631,5 +635,34 @@ public final class UIUtil
         }
       }
     });
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static void addDragSupport(final StructuredViewer viewer)
+  {
+    viewer.addDragSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY,
+        new Transfer[] { LocalSelectionTransfer.getTransfer() }, new DragSourceAdapter()
+        {
+          private long lastDragTime;
+
+          @Override
+          public void dragStart(DragSourceEvent event)
+          {
+            lastDragTime = System.currentTimeMillis();
+            LocalSelectionTransfer.getTransfer().setSelection(viewer.getSelection());
+            LocalSelectionTransfer.getTransfer().setSelectionSetTime(lastDragTime);
+          }
+
+          @Override
+          public void dragFinished(DragSourceEvent event)
+          {
+            if (LocalSelectionTransfer.getTransfer().getSelectionSetTime() == lastDragTime)
+            {
+              LocalSelectionTransfer.getTransfer().setSelection(null);
+            }
+          }
+        });
   }
 }

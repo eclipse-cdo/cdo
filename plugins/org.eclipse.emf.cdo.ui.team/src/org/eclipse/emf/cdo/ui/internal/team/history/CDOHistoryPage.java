@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.StackComposite;
 
 import org.eclipse.jface.action.Action;
@@ -168,6 +169,7 @@ public class CDOHistoryPage extends HistoryPage
 
     IPageSite site = getSite();
     TableViewer tableViewer = commitHistoryComposite.getTableViewer();
+    UIUtil.addDragSupport(tableViewer);
 
     MenuManager menuManager = new MenuManager(POPUP_ID);
     Menu menu = menuManager.createContextMenu(tableViewer.getControl());

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
@@ -114,9 +115,33 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return branchID;
   }
 
+  public final void setBranchPoint(int branchID, long timeStamp)
+  {
+    if (this.branchID != branchID || this.timeStamp != timeStamp)
+    {
+      this.branchID = branchID;
+      this.timeStamp = timeStamp;
+
+      if (isOpen())
+      {
+        CDOBranch branch = view.getSession().getBranchManager().getBranch(branchID);
+        CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
+        view.setBranchPoint(branchPoint);
+
+        branchPath = branch.getPathName();
+      }
+      else
+      {
+        branchPath = null;
+      }
+
+      save();
+    }
+  }
+
   public final void setBranchID(int branchID)
   {
-    this.branchID = branchID;
+    setBranchPoint(branchID, timeStamp);
   }
 
   public String getBranchPath()
@@ -140,7 +165,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public final void setTimeStamp(long timeStamp)
   {
-    this.timeStamp = timeStamp;
+    setBranchPoint(branchID, timeStamp);
   }
 
   public final boolean isReadOnly()

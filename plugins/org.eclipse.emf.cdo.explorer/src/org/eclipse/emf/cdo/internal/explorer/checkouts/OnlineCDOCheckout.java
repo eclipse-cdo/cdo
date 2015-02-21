@@ -15,6 +15,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
+
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 /**
  * @author Eike Stepper
@@ -69,12 +73,31 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
     CDOBranch branch = branchManager.getBranch(getBranchID());
     setBranchPath(branch.getPathName());
 
-    if (isReadOnly())
+    CDOView view = openView(session, branch);
+    view.addListener(new IListener()
     {
-      return session.openView(branch, getTimeStamp());
-    }
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof CDOViewTargetChangedEvent)
+        {
+          getManager().fireElementChangedEvent(true, OnlineCDOCheckout.this);
+        }
+      }
+    });
 
-    return session.openTransaction(branch);
+    return view;
+  }
+
+  private CDOView openView(CDOSession session, CDOBranch branch)
+  {
+    return session.openView(branch, getTimeStamp());
+
+    // if (isReadOnly())
+    // {
+    // return session.openView(branch, getTimeStamp());
+    // }
+    //
+    // return session.openTransaction(branch);
   }
 
   @Override

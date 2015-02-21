@@ -135,33 +135,23 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       else if (event instanceof CDOExplorerManager.ElementsChangedEvent)
       {
         CDOExplorerManager.ElementsChangedEvent e = (CDOExplorerManager.ElementsChangedEvent)event;
+        ElementsChangedEvent.StructuralImpact structuralImpact = e.getStructuralImpact();
         Collection<Object> changedElements = e.getChangedElements();
 
-        ElementsChangedEvent.StructuralImpact structuralImpact = e.getStructuralImpact();
-        if (structuralImpact != ElementsChangedEvent.StructuralImpact.NONE)
+        if (structuralImpact != ElementsChangedEvent.StructuralImpact.NONE && changedElements.size() == 1)
         {
-          if (changedElements.size() == 1)
+          Object changedElement = changedElements.iterator().next();
+          if (changedElement instanceof CDOElement)
           {
-            Object changedElement = changedElements.iterator().next();
-            if (changedElement instanceof CDOElement)
-            {
-              changedElement = ((CDOElement)changedElement).getParent();
-            }
-
-            if (changedElement instanceof CDOCheckout)
-            {
-              ViewerUtil.refresh(viewer, null);
-            }
-            else
-            {
-              if (structuralImpact == ElementsChangedEvent.StructuralImpact.PARENT)
-              {
-                changedElement = CDOExplorerUtil.getParent(changedElement);
-              }
-
-              ViewerUtil.refresh(viewer, changedElement);
-            }
+            changedElement = ((CDOElement)changedElement).getParent();
           }
+
+          if (structuralImpact == ElementsChangedEvent.StructuralImpact.PARENT)
+          {
+            changedElement = CDOExplorerUtil.getParent(changedElement);
+          }
+
+          ViewerUtil.refresh(viewer, changedElement);
         }
         else
         {

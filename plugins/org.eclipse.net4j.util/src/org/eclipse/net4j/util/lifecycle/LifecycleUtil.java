@@ -64,7 +64,7 @@ public final class LifecycleUtil
       return ((ILifecycle)object).getLifecycleState();
     }
 
-    return LifecycleState.ACTIVE;
+    return object != null ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
   }
 
   /**

@@ -81,6 +81,8 @@ public class CommitHistoryComposite extends Composite
     }
   };
 
+  private int viewerStyle;
+
   private TableViewer tableViewer;
 
   private LabelProvider labelProvider;
@@ -89,9 +91,11 @@ public class CommitHistoryComposite extends Composite
 
   private Input input;
 
-  public CommitHistoryComposite(Composite parent, int style)
+  public CommitHistoryComposite(Composite parent, int viewerStyle)
   {
-    super(parent, style);
+    super(parent, SWT.NONE);
+    this.viewerStyle = viewerStyle;
+
     setLayout(new FillLayout(SWT.HORIZONTAL));
 
     tableViewer = createTableViewer();
@@ -114,6 +118,14 @@ public class CommitHistoryComposite extends Composite
     labelProvider.support(tableViewer);
 
     netRenderer = new NetRenderer(tableViewer);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public final int getViewerStyle()
+  {
+    return viewerStyle;
   }
 
   public final TableViewer getTableViewer()
@@ -203,7 +215,7 @@ public class CommitHistoryComposite extends Composite
 
   protected TableViewer createTableViewer()
   {
-    return new TableViewer(this, SWT.BORDER | SWT.FULL_SELECTION | SWT.MULTI);
+    return new TableViewer(this, getViewerStyle() | SWT.FULL_SELECTION | SWT.MULTI);
   }
 
   protected ContentProvider createContentProvider()
@@ -305,17 +317,17 @@ public class CommitHistoryComposite extends Composite
 
     private final CDOObject object;
 
-    public Input(Object delegate)
+    private final boolean offline;
+
+    public Input(Object delegate) throws IllegalInputException
     {
       CDOSession sessionAdapter = AdapterUtil.adapt(delegate, CDOSession.class);
       if (sessionAdapter != null)
       {
         session = sessionAdapter;
-        assertNotWorkspace();
-
+        offline = determineOffline();
         branch = null;
         object = null;
-        session.addListener(lifecycleListener);
         return;
       }
 
@@ -325,10 +337,8 @@ public class CommitHistoryComposite extends Composite
         branch = branchAdapter;
         session = (CDOSession)((CDOSessionProtocol)((InternalCDOBranchManager)branch.getBranchManager())
             .getBranchLoader()).getSession();
-        assertNotWorkspace();
-
+        offline = determineOffline();
         object = null;
-        session.addListener(lifecycleListener);
         return;
       }
 
@@ -337,11 +347,9 @@ public class CommitHistoryComposite extends Composite
       {
         CDOView view = viewAdapter;
         session = view.getSession();
-        assertNotWorkspace();
-
-        branch = view.getBranch();
+        offline = determineOffline();
+        branch = offline ? null : view.getBranch();
         object = null;
-        view.addListener(lifecycleListener);
         return;
       }
 
@@ -355,32 +363,23 @@ public class CommitHistoryComposite extends Composite
           if (view != null && cdoObject.cdoState() != CDOState.NEW)
           {
             session = view.getSession();
-            branch = view.getBranch();
-            object = cdoObject;
-            view.addListener(lifecycleListener);
+            offline = determineOffline();
+            branch = offline ? null : view.getBranch();
+            object = offline ? null : cdoObject;
             return;
           }
         }
       }
 
-      throw new IllegalStateException("Illegal input: " + delegate);
-    }
-
-    private void assertNotWorkspace()
-    {
-      IRegistry<String, Object> properties = session.properties();
-      if (properties.containsKey("org.eclipse.emf.cdo.workspace.CDOWorkspace"))
-      {
-        throw new IllegalStateException("Offline input: " + session);
-      }
+      throw new IllegalInputException("Illegal input: " + delegate);
     }
 
     public Input(CDOSession session, CDOBranch branch, CDOObject object)
     {
       this.session = session;
-      this.branch = branch;
-      this.object = object;
-      EventUtil.addListener(getLifecycle(), lifecycleListener);
+      offline = determineOffline();
+      this.branch = offline ? null : branch;
+      this.object = offline ? null : object;
     }
 
     public final CDOSession getSession()
@@ -396,6 +395,14 @@ public class CommitHistoryComposite extends Composite
     public final CDOObject getObject()
     {
       return object;
+    }
+
+    /**
+     * @since 4.4
+     */
+    public final boolean isOffline()
+    {
+      return offline;
     }
 
     @Override
@@ -458,22 +465,25 @@ public class CommitHistoryComposite extends Composite
     @Override
     public String toString()
     {
-      String str = "Repostory: " + session.getRepositoryInfo().getName();
-      if (branch != null)
+      if (offline)
       {
-        str += ", Branch: " + branch.getPathName();
+        return "Offline: " + session;
       }
+
+      String string = "Repository: " + session.getRepositoryInfo().getName() + ", Branch: "
+          + (branch != null ? branch.getPathName() : CDOBranch.MAIN_BRANCH_NAME);
 
       if (object != null)
       {
-        str += ", Object: " + object;
+        string += ", Object: " + object;
       }
 
-      return str;
+      return string;
     }
 
     public void activate() throws LifecycleException
     {
+      EventUtil.addListener(getLifecycle(), lifecycleListener);
     }
 
     public Exception deactivate()
@@ -496,12 +506,37 @@ public class CommitHistoryComposite extends Composite
 
     protected final Object getLifecycle()
     {
+      if (offline)
+      {
+        return null;
+      }
+
       if (object != null)
       {
         return object.cdoView();
       }
 
       return session;
+    }
+
+    private boolean determineOffline()
+    {
+      IRegistry<String, Object> properties = session.properties();
+      return properties.containsKey("org.eclipse.emf.cdo.workspace.CDOWorkspace");
+    }
+
+    /**
+     * @author Eike Stepper
+     * @since 4.4
+     */
+    public static class IllegalInputException extends Exception
+    {
+      private static final long serialVersionUID = 1L;
+
+      public IllegalInputException(String message)
+      {
+        super(message);
+      }
     }
   }
 

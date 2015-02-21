@@ -499,7 +499,8 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         }
 
         // The viewer must be refreshed synchronously so that the loaded children don't get garbage collected.
-        ViewerUtil.refresh(viewer, originalObject, false);
+        // Set the selection again to trigger, e.g., a History page update.
+        ViewerUtil.refresh(viewer, originalObject, false, true);
 
         synchronized (LOADING_OBJECTS)
         {

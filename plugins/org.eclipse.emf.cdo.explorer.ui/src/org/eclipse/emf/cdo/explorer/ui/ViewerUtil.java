@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Control;
@@ -80,6 +81,12 @@ public final class ViewerUtil
 
   public static void refresh(final StructuredViewer viewer, final Object element, boolean async)
   {
+    refresh(viewer, element, true, false);
+  }
+
+  public static void refresh(final StructuredViewer viewer, final Object element, boolean async,
+      final boolean setSelectionBack)
+  {
     if (viewer != null)
     {
       Control control = viewer.getControl();
@@ -91,6 +98,12 @@ public final class ViewerUtil
           {
             if (!viewer.getControl().isDisposed())
             {
+              ISelection selection = null;
+              if (setSelectionBack)
+              {
+                selection = viewer.getSelection();
+              }
+
               if (element == null)
               {
                 viewer.refresh();
@@ -106,6 +119,11 @@ public final class ViewerUtil
               else
               {
                 viewer.refresh(element);
+              }
+
+              if (selection != null)
+              {
+                viewer.setSelection(selection);
               }
             }
           }

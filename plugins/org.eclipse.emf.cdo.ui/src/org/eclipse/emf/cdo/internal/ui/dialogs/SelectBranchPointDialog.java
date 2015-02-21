@@ -186,7 +186,7 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
 
   protected void createCommitsTab(Composite parent)
   {
-    CommitHistoryComposite control = new CommitHistoryComposite(parent, SWT.NONE)
+    CommitHistoryComposite control = new CommitHistoryComposite(parent, SWT.BORDER)
     {
       @Override
       protected void commitInfoChanged(CDOCommitInfo newCommitInfo)

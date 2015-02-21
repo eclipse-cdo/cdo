@@ -20,14 +20,16 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input;
+import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.Input.IllegalInputException;
 import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite.LabelProvider;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.ui.widgets.StackComposite;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
@@ -35,6 +37,8 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.ui.IActionBars;
@@ -46,6 +50,10 @@ import org.eclipse.ui.part.IPageSite;
 public class CDOHistoryPage extends HistoryPage
 {
   private static final String POPUP_ID = "org.eclipse.emf.cdo.ui.team.historyPageContributions";
+
+  private StackComposite stackComposite;
+
+  private Control offlineControl;
 
   private CommitHistoryComposite commitHistoryComposite;
 
@@ -86,15 +94,22 @@ public class CDOHistoryPage extends HistoryPage
   }
 
   @Override
-  public CommitHistoryComposite getControl()
+  public Control getControl()
   {
-    return commitHistoryComposite;
+    return stackComposite;
   }
 
   @Override
   public void createControl(Composite parent)
   {
-    commitHistoryComposite = new CommitHistoryComposite(parent, SWT.NONE)
+    stackComposite = new StackComposite(parent, SWT.NONE);
+
+    Label label = new Label(stackComposite, SWT.NONE);
+    label.setText("The selected session belongs to an offline workspace.\nThe remote history cannot be provided.");
+    label.setForeground(label.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE));
+    offlineControl = label;
+
+    commitHistoryComposite = new CommitHistoryComposite(stackComposite, SWT.NONE)
     {
       @Override
       protected void doubleClicked(CDOCommitInfo commitInfo)
@@ -149,6 +164,8 @@ public class CDOHistoryPage extends HistoryPage
       }
     };
 
+    stackComposite.setTopControl(commitHistoryComposite);
+
     IPageSite site = getSite();
     TableViewer tableViewer = commitHistoryComposite.getTableViewer();
 
@@ -174,9 +191,10 @@ public class CDOHistoryPage extends HistoryPage
     commitHistoryComposite.refreshLayout();
   }
 
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings({ "rawtypes", "unchecked" })
+  public Object getAdapter(Class adapter)
   {
-    return Platform.getAdapterManager().getAdapter(this, adapter);
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   public boolean isValidInput(Object object)
@@ -200,6 +218,17 @@ public class CDOHistoryPage extends HistoryPage
     {
       input = new CommitHistoryComposite.Input(object);
       input.addListener(inputListener);
+      input.activate();
+
+      if (input.isOffline())
+      {
+        stackComposite.setTopControl(offlineControl);
+      }
+      else
+      {
+        stackComposite.setTopControl(commitHistoryComposite);
+      }
+
       return true;
     }
     catch (Exception ex)
@@ -270,7 +299,7 @@ public class CDOHistoryPage extends HistoryPage
       new CommitHistoryComposite.Input(object);
       return true;
     }
-    catch (IllegalStateException ex)
+    catch (IllegalInputException ex)
     {
       return false;
     }

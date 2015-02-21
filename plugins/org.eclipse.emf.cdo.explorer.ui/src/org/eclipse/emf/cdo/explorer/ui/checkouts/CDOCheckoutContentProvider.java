@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.State;
@@ -136,34 +137,29 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         CDOExplorerManager.ElementsChangedEvent e = (CDOExplorerManager.ElementsChangedEvent)event;
         Collection<Object> changedElements = e.getChangedElements();
 
-        if (e.impactsParent())
+        ElementsChangedEvent.StructuralImpact structuralImpact = e.getStructuralImpact();
+        if (structuralImpact != ElementsChangedEvent.StructuralImpact.NONE)
         {
           if (changedElements.size() == 1)
           {
             Object changedElement = changedElements.iterator().next();
+            if (changedElement instanceof CDOElement)
+            {
+              changedElement = ((CDOElement)changedElement).getParent();
+            }
+
             if (changedElement instanceof CDOCheckout)
             {
               ViewerUtil.refresh(viewer, null);
             }
             else
             {
-              Object parent = CDOExplorerUtil.getParent(changedElement);
-              if (parent != null)
+              if (structuralImpact == ElementsChangedEvent.StructuralImpact.PARENT)
               {
-                if (parent instanceof CDOElement)
-                {
-                  CDOElement checkoutElement = (CDOElement)parent;
-                  ViewerUtil.refresh(viewer, checkoutElement.getParent());
-                }
-                else
-                {
-                  ViewerUtil.refresh(viewer, parent);
-                }
+                changedElement = CDOExplorerUtil.getParent(changedElement);
               }
-              else
-              {
-                ViewerUtil.update(viewer, changedElement);
-              }
+
+              ViewerUtil.refresh(viewer, changedElement);
             }
           }
         }

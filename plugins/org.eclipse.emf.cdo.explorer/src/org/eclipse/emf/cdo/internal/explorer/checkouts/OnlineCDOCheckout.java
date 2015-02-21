@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
@@ -80,7 +81,7 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
       {
         if (event instanceof CDOViewTargetChangedEvent)
         {
-          getManager().fireElementChangedEvent(true, OnlineCDOCheckout.this);
+          getManager().fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.ELEMENT, OnlineCDOCheckout.this);
         }
       }
     });

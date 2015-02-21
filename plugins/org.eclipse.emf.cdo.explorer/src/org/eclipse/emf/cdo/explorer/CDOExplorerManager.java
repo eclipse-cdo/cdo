@@ -30,8 +30,16 @@ public interface CDOExplorerManager<T extends CDOExplorerElement> extends IConta
   {
     public CDOExplorerManager<?> getSource();
 
-    public boolean impactsParent();
+    public ElementsChangedEvent.StructuralImpact getStructuralImpact();
 
     public Collection<Object> getChangedElements();
+
+    /**
+     * @author Eike Stepper
+     */
+    public static enum StructuralImpact
+    {
+      NONE, ELEMENT, PARENT
+    }
   }
 }

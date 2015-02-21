@@ -123,14 +123,17 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   protected abstract T createElement(String type);
 
-  public void fireElementChangedEvent(boolean impactsParent, Object changedElement)
+  public void fireElementChangedEvent(
+      org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact structuralImpact,
+      Object changedElement)
   {
-    fireEvent(new ElementsChangedImpl(this, impactsParent, Collections.singleton(changedElement)));
+    fireEvent(new ElementsChangedImpl(this, structuralImpact, Collections.singleton(changedElement)));
   }
 
   public void fireElementsChangedEvent(Collection<Object> changedElements)
   {
-    fireEvent(new ElementsChangedImpl(this, false, changedElements));
+    fireEvent(new ElementsChangedImpl(this,
+        org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact.NONE, changedElements));
   }
 
   public static Properties loadProperties(File folder, String fileName)
@@ -169,15 +172,17 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   {
     private static final long serialVersionUID = 1L;
 
-    private final boolean impactsParent;
+    private final org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact structuralImpact;
 
     private final Collection<Object> changedElements;
 
-    public ElementsChangedImpl(CDOExplorerManager<?> manager, boolean impactsParent, Collection<Object> changedElements)
+    public ElementsChangedImpl(CDOExplorerManager<?> manager,
+        org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact structuralImpact,
+        Collection<Object> changedElements)
     {
       super(manager);
       this.changedElements = changedElements;
-      this.impactsParent = impactsParent;
+      this.structuralImpact = structuralImpact;
     }
 
     @Override
@@ -186,9 +191,9 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
       return (CDOExplorerManager<?>)super.getSource();
     }
 
-    public boolean impactsParent()
+    public org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact getStructuralImpact()
     {
-      return impactsParent;
+      return structuralImpact;
     }
 
     public final Collection<Object> getChangedElements()

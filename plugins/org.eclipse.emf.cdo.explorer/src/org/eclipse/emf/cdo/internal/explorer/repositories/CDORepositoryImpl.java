@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
@@ -77,7 +78,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           CDORepositoryManagerImpl manager = getManager();
           if (manager != null)
           {
-            manager.fireElementChangedEvent(false, e.getBranch());
+            manager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.NONE, e.getBranch());
           }
         }
       }

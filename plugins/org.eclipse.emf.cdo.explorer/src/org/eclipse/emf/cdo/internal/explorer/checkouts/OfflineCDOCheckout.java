@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -64,7 +65,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
       {
         DirtyStateChangedEvent e = (DirtyStateChangedEvent)event;
         setDirty(e.isDirty());
-        fireElementChangedEvent(false);
+        fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.NONE);
       }
       else if (event instanceof ObjectStatesChangedEvent)
       {

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
@@ -68,9 +69,9 @@ public class ResourceGroup extends CDOElement implements CDORenameContext
         CDOResourceNode resourceNode = getDelegate();
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
         CDOTransaction transaction = checkout.openTransaction();
-  
+
         CDOCommitInfo commitInfo = null;
-  
+
         try
         {
           for (Object child : getChildren())
@@ -80,11 +81,11 @@ public class ResourceGroup extends CDOElement implements CDORenameContext
               CDOResourceNode childNode = (CDOResourceNode)child;
               CDOResourceNode transactionalChildNode = transaction.getObject(childNode);
               String extension = transactionalChildNode.getExtension();
-  
+
               transactionalChildNode.setName(name + "." + extension);
             }
           }
-  
+
           commitInfo = transaction.commit();
         }
         catch (Exception ex)
@@ -95,15 +96,15 @@ public class ResourceGroup extends CDOElement implements CDORenameContext
         {
           transaction.close();
         }
-  
+
         if (commitInfo != null)
         {
           checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
-  
+
           CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
-          checkoutManager.fireElementChangedEvent(true, ResourceGroup.this);
+          checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT, ResourceGroup.this);
         }
-  
+
         return Status.OK_STATUS;
       }
     }.schedule();
@@ -116,19 +117,19 @@ public class ResourceGroup extends CDOElement implements CDORenameContext
     {
       return type + " name is empty.";
     }
-  
+
     if (name.equals(getName()))
     {
       return null;
     }
-  
+
     for (Object child : getChildren())
     {
       if (child instanceof CDOResourceNode)
       {
         CDOResourceNode childNode = (CDOResourceNode)child;
         String extension = childNode.getExtension();
-  
+
         String error = ExplorerUIAdapterFactory.checkUniqueName(childNode, name + "." + extension, type);
         if (error != null)
         {
@@ -136,7 +137,7 @@ public class ResourceGroup extends CDOElement implements CDORenameContext
         }
       }
     }
-  
+
     return null;
   }
 

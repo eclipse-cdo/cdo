@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
@@ -218,7 +219,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
               checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
 
               CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
-              checkoutManager.fireElementChangedEvent(true, resourceNode);
+              checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT, resourceNode);
             }
 
             return Status.OK_STATUS;

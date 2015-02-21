@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.explorer;
 
 import org.eclipse.emf.cdo.common.util.CDONameProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -88,7 +89,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
       this.label = label;
       save();
 
-      fireElementChangedEvent(true);
+      fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT);
     }
   }
 
@@ -106,12 +107,12 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
   }
 
-  protected final void fireElementChangedEvent(boolean impactsParent)
+  protected final void fireElementChangedEvent(ElementsChangedEvent.StructuralImpact structuralImpact)
   {
     AbstractManager<?> manager = getManager();
     if (manager != null)
     {
-      manager.fireElementChangedEvent(impactsParent, this);
+      manager.fireElementChangedEvent(structuralImpact, this);
     }
   }
 

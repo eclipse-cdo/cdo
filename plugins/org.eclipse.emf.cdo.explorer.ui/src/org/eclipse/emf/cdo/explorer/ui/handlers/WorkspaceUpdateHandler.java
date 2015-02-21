@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
+import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
+
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import org.eclipse.core.commands.ExecutionEvent;

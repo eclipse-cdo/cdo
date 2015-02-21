@@ -675,7 +675,30 @@ public class CommitHistoryComposite extends Composite
             return StringUtil.EMPTY;
           }
 
-          return commitInfo.getBranch().getPathName();
+          CDOBranch commitBranch = commitInfo.getBranch();
+          long timeStamp = commitInfo.getTimeStamp();
+
+          StringBuilder builder = null;
+          for (CDOBranch childBranch : commitBranch.getBranches())
+          {
+            if (childBranch.getBase().getTimeStamp() == timeStamp)
+            {
+              if (builder == null)
+              {
+                builder = new StringBuilder(commitBranch.getPathName());
+              }
+
+              builder.append(", ");
+              builder.append(childBranch.getPathName());
+            }
+          }
+
+          if (builder != null)
+          {
+            return builder.toString();
+          }
+
+          return commitBranch.getPathName();
         }
 
         @Override

@@ -643,8 +643,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
    */
   public void fillBranch(IMenuManager manager, CDOBranch branch)
   {
-    CDOSession session = CDOUtil.getSession(branch);
-    manager.add(new CreateBranchAction(page, session));
+    manager.add(new CreateBranchAction(page, branch.getHead()));
   }
 
   /**

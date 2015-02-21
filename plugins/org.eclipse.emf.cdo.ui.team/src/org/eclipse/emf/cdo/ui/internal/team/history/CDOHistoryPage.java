@@ -49,7 +49,7 @@ import org.eclipse.ui.part.IPageSite;
  */
 public class CDOHistoryPage extends HistoryPage
 {
-  private static final String POPUP_ID = "org.eclipse.emf.cdo.ui.team.historyPageContributions";
+  private static final String POPUP_ID = "#PopupMenu";
 
   private StackComposite stackComposite;
 
@@ -169,7 +169,7 @@ public class CDOHistoryPage extends HistoryPage
     IPageSite site = getSite();
     TableViewer tableViewer = commitHistoryComposite.getTableViewer();
 
-    MenuManager menuManager = new MenuManager();
+    MenuManager menuManager = new MenuManager(POPUP_ID);
     Menu menu = menuManager.createContextMenu(tableViewer.getControl());
     tableViewer.getControl().setMenu(menu);
     site.registerContextMenu(POPUP_ID, menuManager, tableViewer);

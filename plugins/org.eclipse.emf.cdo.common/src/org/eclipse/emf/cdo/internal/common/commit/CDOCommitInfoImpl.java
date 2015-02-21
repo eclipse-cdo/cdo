@@ -10,7 +10,10 @@
  */
 package org.eclipse.emf.cdo.internal.common.commit;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeKind;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -23,7 +26,10 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.CheckUtil;
+
+import org.eclipse.core.runtime.IAdaptable;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -32,7 +38,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitInfo
+public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitInfo, IAdaptable
 {
   // private static final CDOCommitInfo[] NO_PARENTS = {};
 
@@ -154,6 +160,27 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   {
     loadCommitDataIfNeeded();
     return commitData.getChangeKind(id);
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  public Object getAdapter(Class adapter)
+  {
+    if (adapter == CDOBranchCreationContext.class)
+    {
+      CDOCommonRepository repository = getBranch().getBranchManager().getRepository();
+      if (repository.isSupportingBranches())
+      {
+        return new CDOBranchCreationContext()
+        {
+          public CDOBranchPoint getBase()
+          {
+            return CDOCommitInfoImpl.this;
+          }
+        };
+      }
+    }
+
+    return AdapterUtil.adapt(this, adapter, false);
   }
 
   @Override

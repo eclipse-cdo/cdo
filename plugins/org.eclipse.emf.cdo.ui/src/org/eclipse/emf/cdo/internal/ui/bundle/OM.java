@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
+import org.eclipse.emf.cdo.ui.OverlayImage;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -20,6 +21,13 @@ import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.provider.ComposedImage;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -60,6 +68,27 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
   PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$
+
+  public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
+  {
+    ComposedImage composedImage = new OverlayImage(image, overlayImage, x, y);
+    return ExtendedImageRegistry.INSTANCE.getImage(composedImage);
+  }
+
+  public static Image getImage(String imagePath)
+  {
+    return ExtendedImageRegistry.INSTANCE.getImage(getBundleURI(imagePath));
+  }
+
+  public static ImageDescriptor getImageDescriptor(String imagePath)
+  {
+    return ExtendedImageRegistry.INSTANCE.getImageDescriptor(getBundleURI(imagePath));
+  }
+
+  private static URI getBundleURI(String path)
+  {
+    return URI.createPlatformPluginURI(BUNDLE_ID + "/" + path, true);
+  }
 
   /**
    * @author Eike Stepper

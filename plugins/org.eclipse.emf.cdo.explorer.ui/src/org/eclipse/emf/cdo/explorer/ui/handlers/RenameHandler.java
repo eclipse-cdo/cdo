@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
+import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.explorer.ui.RenameDialog;
-import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext;
+
+import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -21,13 +23,13 @@ import org.eclipse.ui.handlers.HandlerUtil;
 /**
  * @author Eike Stepper
  */
-public class RenameHandler extends AbstractBaseHandler<ExplorerRenameContext>
+public class RenameHandler extends AbstractBaseHandler<CDORenameContext>
 {
   private String name;
 
   public RenameHandler()
   {
-    super(ExplorerRenameContext.class, false);
+    super(CDORenameContext.class, false);
   }
 
   @Override
@@ -35,7 +37,7 @@ public class RenameHandler extends AbstractBaseHandler<ExplorerRenameContext>
   {
     if (elements.size() == 1)
     {
-      ExplorerRenameContext renameContext = elements.get(0);
+      CDORenameContext renameContext = elements.get(0);
 
       Shell shell = HandlerUtil.getActiveShell(event);
       RenameDialog dialog = new RenameDialog(shell, renameContext);
@@ -52,7 +54,7 @@ public class RenameHandler extends AbstractBaseHandler<ExplorerRenameContext>
   @Override
   protected void doExecute(IProgressMonitor monitor) throws Exception
   {
-    ExplorerRenameContext renameContext = elements.get(0);
+    CDORenameContext renameContext = elements.get(0);
     renameContext.setName(name);
     name = null;
   }

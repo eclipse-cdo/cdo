@@ -9,52 +9,54 @@
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
  */
-package org.eclipse.emf.cdo.internal.ui.actions;
+package org.eclipse.emf.cdo.internal.ui.actions.delegates;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.ui.dialogs.CreateBranchDialog;
 import org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler;
-import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 
-import org.eclipse.net4j.util.ui.actions.LongRunningAction;
+import org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
  */
-public class CreateBranchAction extends LongRunningAction
+public class CreateBranchActionDelegate extends LongRunningActionDelegate
 {
-  public static final String ID = "create-branch"; //$NON-NLS-1$
-
-  private static final String TITLE = Messages.getString("CreateBranchAction.0"); //$NON-NLS-1$
-
-  private static final String TOOL_TIP = Messages.getString("CreateBranchAction.1"); //$NON-NLS-1$
-
   private CDOBranchPoint base;
 
   private String name;
 
-  public CreateBranchAction(IWorkbenchPage page, CDOBranchPoint base)
+  public CreateBranchActionDelegate()
   {
-    super(page, TITLE + INTERACTIVE, TOOL_TIP, null);
-    this.base = base;
-    setId(ID);
   }
 
   @Override
   protected void preRun() throws Exception
   {
-    name = CreateBranchHandler.getValidChildName(base.getBranch());
-
-    CreateBranchDialog dialog = new CreateBranchDialog(getShell(), base, name);
-    if (dialog.open() == CreateBranchDialog.OK)
+    ISelection selection = getSelection();
+    if (selection instanceof IStructuredSelection)
     {
-      base = dialog.getBase();
-      name = dialog.getName();
-      return;
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+      Object element = ssel.getFirstElement();
+      if (element instanceof CDOBranchPoint)
+      {
+        base = (CDOBranchPoint)element;
+        name = CreateBranchHandler.getValidChildName(base.getBranch());
+
+        CreateBranchDialog dialog = new CreateBranchDialog(new Shell(), base, name);
+        if (dialog.open() == CreateBranchDialog.OK)
+        {
+          base = dialog.getBase();
+          name = dialog.getName();
+          return;
+        }
+      }
     }
 
     base = null;

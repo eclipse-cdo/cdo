@@ -8,12 +8,13 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.properties;
+package org.eclipse.emf.cdo.common.util;
 
 /**
  * @author Eike Stepper
+ * @since 4.4
  */
-public interface ExplorerRenameContext
+public interface CDORenameContext
 {
   public String getType();
 

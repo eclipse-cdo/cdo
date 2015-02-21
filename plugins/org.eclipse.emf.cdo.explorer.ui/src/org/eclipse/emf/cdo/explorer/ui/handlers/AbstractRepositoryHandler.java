@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 
+import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
+
 import org.eclipse.jface.viewers.ISelection;
 
 /**

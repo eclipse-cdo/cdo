@@ -8,10 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.handlers;
+package org.eclipse.net4j.util.ui.handlers;
 
 import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.handlers.LongRunningHandler;
 
 import org.eclipse.jface.viewers.ISelection;
 
@@ -19,6 +18,7 @@ import java.util.List;
 
 /**
  * @author Eike Stepper
+ * @since 3.5
  */
 public abstract class AbstractBaseHandler<T> extends LongRunningHandler
 {

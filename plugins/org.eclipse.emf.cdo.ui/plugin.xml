@@ -297,4 +297,49 @@
       </objectContribution>
    </extension-->
    
+    <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            id="org.eclipse.emf.cdo.ui.contribution1"
+            objectClass="org.eclipse.emf.cdo.common.commit.CDOCommitInfo">
+         <action
+               class="org.eclipse.emf.cdo.internal.ui.actions.delegates.CreateBranchActionDelegate"
+               enablesFor="1"
+               icon="icons/full/obj16/branch.gif"
+               id="org.eclipse.emf.cdo.ui.CreateBranchAction"
+               label="Create Branch..."
+               menubarPath="additions"
+               style="push">
+         </action>
+      </objectContribution>
+   </extension>
+   
+  <extension point="org.eclipse.ui.commands">
+      <command
+            id="org.eclipse.emf.cdo.ui.CreateBranch"
+            name="Create Branch"
+            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler"/>
+  </extension>
+
+  <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=group.new.branch">
+         <command
+               commandId="org.eclipse.emf.cdo.ui.CreateBranch"
+               icon="icons/full/obj16/branch.gif"
+               label="New Branch..."
+               style="push"
+               tooltip="Add a new branch">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate>
+                    <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext"/>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+  </extension>
+
 </plugin>

@@ -11,8 +11,10 @@
  */
 package org.eclipse.emf.cdo.internal.common.branch;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -325,6 +327,21 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public Object getAdapter(Class adapter)
   {
+    if (adapter == CDOBranchCreationContext.class)
+    {
+      CDOCommonRepository repository = branchManager.getRepository();
+      if (repository.isSupportingBranches())
+      {
+        return new CDOBranchCreationContext()
+        {
+          public CDOBranchPoint getBase()
+          {
+            return getHead();
+          }
+        };
+      }
+    }
+
     return AdapterUtil.adapt(this, adapter, false);
   }
 

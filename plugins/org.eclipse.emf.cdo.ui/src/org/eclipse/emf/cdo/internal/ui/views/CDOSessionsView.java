@@ -27,10 +27,15 @@ import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.action.GroupMarker;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.Collections;
@@ -92,6 +97,22 @@ public class CDOSessionsView extends ContainerView
   {
     manager.add(openSessionAction);
     super.fillLocalToolBar(manager);
+  }
+
+  @Override
+  protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+  {
+    super.fillContextMenu(manager, selection);
+
+    manager.add(new Separator("group.new"));
+    manager.add(new Separator("group.open"));
+    manager.add(new GroupMarker("group.openWith"));
+    manager.add(new Separator("group.edit"));
+    manager.add(new GroupMarker("group.new.branch"));
+    manager.add(new Separator("group.port"));
+    manager.add(new Separator("group.build"));
+    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+    manager.add(new Separator("group.properties"));
   }
 
   @Override

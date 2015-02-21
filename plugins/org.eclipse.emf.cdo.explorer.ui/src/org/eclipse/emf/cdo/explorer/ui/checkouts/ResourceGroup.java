@@ -12,11 +12,11 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext;
 import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutManagerImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.jobs.Job;
 /**
  * @author Eike Stepper
  */
-public class ResourceGroup extends CDOElement implements ExplorerRenameContext
+public class ResourceGroup extends CDOElement implements CDORenameContext
 {
   private String name;
 

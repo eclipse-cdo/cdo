@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.bundle;
 
+import org.eclipse.emf.cdo.ui.OverlayImage;
+
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -25,9 +27,6 @@ import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -84,33 +83,6 @@ public abstract class OM
     {
       super(BUNDLE);
       INSTANCE = this;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class OverlayImage extends ComposedImage
-  {
-    private final int x;
-
-    private final int y;
-
-    public OverlayImage(Object image, Object overlayImage, int x, int y)
-    {
-      super(Arrays.asList(image, overlayImage));
-      this.x = x;
-      this.y = y;
-    }
-
-    @Override
-    public List<ComposedImage.Point> getDrawPoints(Size size)
-    {
-      List<ComposedImage.Point> result = super.getDrawPoints(size);
-      Point overLayPoint = result.get(1);
-      overLayPoint.x = x;
-      overLayPoint.y = y;
-      return result;
     }
   }
 }

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.emf.ecore.EObject;
 

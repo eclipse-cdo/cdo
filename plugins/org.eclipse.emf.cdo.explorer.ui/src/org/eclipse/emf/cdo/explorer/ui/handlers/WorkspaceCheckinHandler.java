@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.explorer.ui.handlers;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
+import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
+
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;

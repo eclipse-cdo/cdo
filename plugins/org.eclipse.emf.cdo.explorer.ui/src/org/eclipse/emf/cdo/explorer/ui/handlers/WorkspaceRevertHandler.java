@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
+
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.core.commands.ExecutionEvent;

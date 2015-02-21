@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -356,6 +357,20 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
       if (adapter == CDOSession.class)
       {
         return session;
+      }
+
+      if (adapter == CDOBranchCreationContext.class)
+      {
+        if (session.getRepositoryInfo().isSupportingBranches())
+        {
+          return new CDOBranchCreationContext()
+          {
+            public CDOBranchPoint getBase()
+            {
+              return session.getBranchManager().getMainBranch().getHead();
+            }
+          };
+        }
       }
 
       if (adapter == CDORepositoryElement.class)

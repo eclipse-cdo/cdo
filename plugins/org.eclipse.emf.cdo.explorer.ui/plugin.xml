@@ -51,17 +51,17 @@
      <factory
            adaptableType="org.eclipse.emf.cdo.internal.explorer.AbstractElement"
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
-        <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+        <adapter type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
      </factory>
      <factory
            adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranch"
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
-        <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+        <adapter type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
      </factory>
      <factory
            adaptableType="org.eclipse.emf.cdo.eresource.CDOResourceNode"
            class="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerUIAdapterFactory">
-        <adapter type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+        <adapter type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
      </factory>
      <factory
            adaptableType="org.eclipse.emf.cdo.CDOObject"
@@ -335,14 +335,6 @@
             name="Checkout Repository Offline"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler$Offline"/>
       <command
-            id="org.eclipse.emf.cdo.explorer.ui.CreateBranch"
-            name="Create Branch"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryBranchHandler"/>
-      <command
-            id="org.eclipse.emf.cdo.explorer.ui.CreateTag"
-            name="Create Tag"
-            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryBranchHandler$TagHandler"/>
-      <command
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutOpen"
             name="Open Checkout"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutOpenHandler"/>
@@ -401,38 +393,6 @@
   </extension>
 
   <extension point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.new">
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.CreateBranch"
-               icon="icons/branch.gif"
-               label="New Branch..."
-               style="push"
-               tooltip="Add a new branch">
-            <visibleWhen checkEnabled="false">
-               <with variable="activeMenuSelection">
-                  <iterate>
-                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-         <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.CreateTag"
-               icon="icons/tag.gif"
-               label="New Tag..."
-               style="push"
-               tooltip="Add a new tag">
-            <visibleWhen checkEnabled="false">
-               <with variable="activeMenuSelection">
-                  <iterate>
-                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?group=group.open">
@@ -498,7 +458,7 @@
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate>
-                     <adapt type="org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext"/>
+                     <adapt type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
                   </iterate>
                </with>
             </visibleWhen>

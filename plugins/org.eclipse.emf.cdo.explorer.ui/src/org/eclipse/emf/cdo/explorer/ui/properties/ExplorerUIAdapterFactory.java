@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.properties;
 import org.eclipse.emf.cdo.CDOElement.StateProvider;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
@@ -41,7 +42,7 @@ import org.eclipse.core.runtime.jobs.Job;
 @SuppressWarnings("rawtypes")
 public class ExplorerUIAdapterFactory implements IAdapterFactory
 {
-  private static final Class<ExplorerRenameContext> CLASS_EXPLORER_RENAME_CONTEXT = ExplorerRenameContext.class;
+  private static final Class<CDORenameContext> CLASS_EXPLORER_RENAME_CONTEXT = CDORenameContext.class;
 
   private static final Class<StateProvider> CLASS_STATE_PROVIDER = StateProvider.class;
 
@@ -94,7 +95,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   private Object createRenameContext(final AbstractElement element)
   {
-    return new ExplorerRenameContext()
+    return new CDORenameContext()
     {
       public String getType()
       {
@@ -130,7 +131,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   private Object createRenameContext(final CDOBranch branch)
   {
-    return new ExplorerRenameContext()
+    return new CDORenameContext()
     {
       public String getType()
       {
@@ -172,7 +173,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
   private Object createRenameContext(final CDOResourceNode resourceNode)
   {
-    return new ExplorerRenameContext()
+    return new CDORenameContext()
     {
       public String getType()
       {

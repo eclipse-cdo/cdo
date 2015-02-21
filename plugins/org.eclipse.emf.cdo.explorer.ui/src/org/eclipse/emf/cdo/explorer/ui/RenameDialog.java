@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.explorer.ui;
 
+import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.explorer.ui.properties.ExplorerRenameContext;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -33,13 +33,13 @@ import org.eclipse.swt.widgets.Text;
  */
 public class RenameDialog extends TitleAreaDialog
 {
-  private final ExplorerRenameContext renameContext;
+  private final CDORenameContext renameContext;
 
   private String name;
 
   private Text nameText;
 
-  public RenameDialog(Shell parentShell, ExplorerRenameContext renameContext)
+  public RenameDialog(Shell parentShell, CDORenameContext renameContext)
   {
     super(parentShell);
     this.renameContext = renameContext;

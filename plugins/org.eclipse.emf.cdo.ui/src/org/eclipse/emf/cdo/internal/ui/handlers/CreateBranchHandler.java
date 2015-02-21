@@ -8,19 +8,18 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.handlers;
+package org.eclipse.emf.cdo.internal.ui.handlers;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
 import org.eclipse.emf.cdo.internal.ui.dialogs.CreateBranchDialog;
-import org.eclipse.emf.cdo.session.CDOSession;
+
+import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import java.util.HashSet;
@@ -29,15 +28,15 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class RepositoryBranchHandler extends AbstractBaseHandler<CDORepositoryElement>
+public class CreateBranchHandler extends AbstractBaseHandler<CDOBranchCreationContext>
 {
+  private CDOBranchPoint base;
+
   private String name;
 
-  private CDOBranchPoint branchPoint;
-
-  public RepositoryBranchHandler()
+  public CreateBranchHandler()
   {
-    super(CDORepositoryElement.class, false);
+    super(CDOBranchCreationContext.class, false);
   }
 
   @Override
@@ -45,38 +44,41 @@ public class RepositoryBranchHandler extends AbstractBaseHandler<CDORepositoryEl
   {
     if (elements.size() == 1)
     {
-      CDORepositoryElement repositoryElement = elements.get(0);
+      CDOBranchCreationContext context = elements.get(0);
+      base = context.getBase();
+      name = getValidChildName(base.getBranch());
 
-      CDORepository repository = repositoryElement.getRepository();
-      CDOSession session = repository.getSession();
-
-      CDOBranchManager branchManager = session.getBranchManager();
-      CDOBranch branch = branchManager.getBranch(repositoryElement.getBranchID());
-
-      CDOBranchPoint defaultBranchPoint = branch.getHead();
-      String defaultName = getValidChildName(branch);
-
-      IWorkbenchPage page = HandlerUtil.getActivePart(event).getSite().getPage();
-      CreateBranchDialog dialog = new CreateBranchDialog(page, session, defaultBranchPoint, true, defaultName);
+      Shell shell = HandlerUtil.getActiveShell(event);
+      CreateBranchDialog dialog = new CreateBranchDialog(shell, base, name);
       if (dialog.open() == CreateBranchDialog.OK)
       {
-        branchPoint = dialog.getBranchPoint();
+        base = dialog.getBase();
         name = dialog.getName();
         return;
       }
     }
 
+    base = null;
+    name = null;
     cancel();
   }
 
   @Override
   protected void doExecute(IProgressMonitor monitor) throws Exception
   {
-    CDOBranch branch = branchPoint.getBranch();
-    branch.createBranch(name, branchPoint.getTimeStamp());
+    try
+    {
+      CDOBranch branch = base.getBranch();
+      branch.createBranch(name, base.getTimeStamp());
+    }
+    finally
+    {
+      base = null;
+      name = null;
+    }
   }
 
-  private static String getValidChildName(CDOBranch branch)
+  public static String getValidChildName(CDOBranch branch)
   {
     Set<String> names = new HashSet<String>();
     for (CDOBranch child : branch.getBranches())
@@ -99,7 +101,7 @@ public class RepositoryBranchHandler extends AbstractBaseHandler<CDORepositoryEl
   /**
    * @author Eike Stepper
    */
-  public static class TagHandler extends RepositoryBranchHandler
+  public static class TagHandler extends CreateBranchHandler
   {
   }
 }

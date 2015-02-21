@@ -180,6 +180,7 @@ public class CDORepositoriesView extends ContainerView
     super.fillContextMenu(manager, selection);
 
     manager.add(new Separator("group.new"));
+    manager.add(new GroupMarker("group.new.branch"));
     manager.add(new Separator("group.open"));
     manager.add(new GroupMarker("group.openWith"));
     manager.add(new Separator("group.checkout"));

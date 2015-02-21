@@ -42,7 +42,7 @@ import java.text.ParseException;
 /**
  * UI widget allowing users to indicate {@link org.eclipse.emf.cdo.common.branch.CDOBranchPoint timestamp} of a
  * particular historical state of a {@link org.eclipse.emf.cdo.common.branch.CDOBranch branch}
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -73,8 +73,12 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
     super(parent, style);
     setLayout(new FillLayout());
 
+    GridLayout layout = new GridLayout(3, false);
+    layout.marginWidth = 0;
+    layout.marginHeight = 0;
+
     pointGroup = new Composite(this, SWT.NONE);
-    pointGroup.setLayout(new GridLayout(3, false));
+    pointGroup.setLayout(layout);
 
     headRadio = new Button(pointGroup, SWT.RADIO);
     headRadio.setText(Messages.getString("BranchSelectionDialog.1")); //$NON-NLS-1$

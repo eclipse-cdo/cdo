@@ -41,6 +41,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Various static methods that may help with I/O and time stamps.
@@ -54,6 +56,12 @@ public final class CDOCommonUtil
    * @since 4.0
    */
   public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'.'SSS");
+
+  /**
+   * @since 4.4
+   */
+  public static final Pattern DATE_PATTERN = Pattern
+      .compile("(\\d+)[ -/](\\d+)[ -/](\\d+)( +(\\d+):?(\\d*):?(\\d*)\\.?(\\d*))?");
 
   /**
    * @since 4.2
@@ -221,7 +229,10 @@ public final class CDOCommonUtil
       return "*";
     }
 
-    return DATE_FORMAT.format(new Date(timeStamp));
+    synchronized (DATE_FORMAT)
+    {
+      return DATE_FORMAT.format(new Date(timeStamp));
+    }
   }
 
   /**
@@ -229,12 +240,29 @@ public final class CDOCommonUtil
    */
   public static long parseTimeStamp(String timeStamp) throws ParseException
   {
-    if ("*".equals(timeStamp))
+    String trimmed = timeStamp.trim();
+
+    if ("*".equals(trimmed))
     {
       return CDORevision.UNSPECIFIED_DATE;
     }
 
-    return DATE_FORMAT.parse(timeStamp).getTime();
+    Matcher matcher = DATE_PATTERN.matcher(trimmed);
+    if (!matcher.matches())
+    {
+      throw new ParseException("Not a valid date: " + trimmed + " --> pattern = " + DATE_PATTERN, 0);
+    }
+
+    timeStamp = matcher.group(1) + "-" + matcher.group(2) + "-" + matcher.group(3) + " " + safe(matcher.group(5)) + ":"
+        + safe(matcher.group(6)) + ":" + safe(matcher.group(7)) + "." + safe(matcher.group(8));
+
+    Date date = DATE_FORMAT.parse(timeStamp);
+    return date.getTime();
+  }
+
+  private static String safe(String value)
+  {
+    return StringUtil.isEmpty(value) ? "0" : value;
   }
 
   /**

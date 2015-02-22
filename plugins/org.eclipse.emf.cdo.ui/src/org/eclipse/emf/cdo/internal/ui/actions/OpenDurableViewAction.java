@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -54,15 +56,23 @@ public final class OpenDurableViewAction extends AbstractOpenViewAction
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
+    CDOSession session = getSession();
+    CDOView view = null;
+
     try
     {
-      CDOSession session = getSession();
       CDOTransaction transaction = session.openTransaction(areaID);
-      OpenTransactionAction.configureTransaction(transaction);
+      CDOUtil.configureView(transaction);
+      view = transaction;
     }
     catch (IllegalStateException ex)
     {
-      getSession().openView(areaID);
+      view = getSession().openView(areaID);
+    }
+
+    if (view != null)
+    {
+      CDOUtil.configureView(view);
     }
   }
 }

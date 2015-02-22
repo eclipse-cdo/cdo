@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
@@ -224,6 +225,20 @@ public final class CDOUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static void configureView(CDOView view)
+  {
+    view.options().setLockNotificationEnabled(true);
+
+    if (view instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)view;
+      new CDOTransactionCommentator(transaction);
+    }
   }
 
   /**

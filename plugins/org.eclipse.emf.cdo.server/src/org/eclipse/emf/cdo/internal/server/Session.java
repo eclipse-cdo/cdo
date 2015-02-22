@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -157,6 +158,11 @@ public class Session extends Container<IView> implements InternalSession
   public InternalSessionManager getManager()
   {
     return manager;
+  }
+
+  public CDOBranchManager getBranchManager()
+  {
+    return manager.getRepository().getBranchManager();
   }
 
   public ISessionProtocol getProtocol()

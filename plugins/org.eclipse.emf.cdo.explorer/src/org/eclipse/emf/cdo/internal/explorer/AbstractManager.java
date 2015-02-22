@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.explorer;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -123,17 +124,14 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   protected abstract T createElement(String type);
 
-  public void fireElementChangedEvent(
-      org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact structuralImpact,
-      Object changedElement)
+  public void fireElementChangedEvent(StructuralImpact structuralImpact, Object changedElement)
   {
     fireEvent(new ElementsChangedImpl(this, structuralImpact, Collections.singleton(changedElement)));
   }
 
   public void fireElementsChangedEvent(Collection<Object> changedElements)
   {
-    fireEvent(new ElementsChangedImpl(this,
-        org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact.NONE, changedElements));
+    fireEvent(new ElementsChangedImpl(this, StructuralImpact.NONE, changedElements));
   }
 
   public static Properties loadProperties(File folder, String fileName)
@@ -172,12 +170,11 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   {
     private static final long serialVersionUID = 1L;
 
-    private final org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact structuralImpact;
+    private final StructuralImpact structuralImpact;
 
     private final Collection<Object> changedElements;
 
-    public ElementsChangedImpl(CDOExplorerManager<?> manager,
-        org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact structuralImpact,
+    public ElementsChangedImpl(CDOExplorerManager<?> manager, StructuralImpact structuralImpact,
         Collection<Object> changedElements)
     {
       super(manager);
@@ -191,7 +188,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
       return (CDOExplorerManager<?>)super.getSource();
     }
 
-    public org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact getStructuralImpact()
+    public StructuralImpact getStructuralImpact()
     {
       return structuralImpact;
     }

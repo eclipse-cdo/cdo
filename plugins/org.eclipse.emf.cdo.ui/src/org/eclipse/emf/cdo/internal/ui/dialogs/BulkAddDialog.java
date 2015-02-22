@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -84,15 +84,10 @@ public class BulkAddDialog extends TitleAreaDialog
   }
 
   @Override
-  protected void configureShell(Shell newShell)
-  {
-    super.configureShell(newShell);
-    newShell.setText(TITLE);
-  }
-
-  @Override
   protected Control createDialogArea(Composite parent)
   {
+    getShell().setText(TITLE);
+
     Composite composite = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
     composite.setLayoutData(UIUtil.createGridData());
     composite.setLayout(new GridLayout(2, false));

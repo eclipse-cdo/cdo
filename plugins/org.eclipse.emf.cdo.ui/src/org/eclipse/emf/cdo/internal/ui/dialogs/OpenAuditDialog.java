@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -62,21 +62,15 @@ public class OpenAuditDialog extends TitleAreaDialog
   }
 
   @Override
-  protected void configureShell(Shell newShell)
-  {
-    super.configureShell(newShell);
-    newShell.setText(TITLE);
-  }
-
-  @Override
   protected Control createDialogArea(Composite parent)
   {
+    getShell().setText(TITLE);
+    setTitle(TITLE);
+    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TIME_SELECTION));
+
     Composite composite = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
     composite.setLayoutData(UIUtil.createGridData());
     composite.setLayout(new GridLayout(3, false));
-
-    setTitle(TITLE);
-    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TIME_SELECTION));
 
     new Label(composite, SWT.NONE).setText(Messages.getString("OpenAuditDialog.1")); //$NON-NLS-1$
     dateControl = new DateTime(composite, SWT.DATE | SWT.BORDER);

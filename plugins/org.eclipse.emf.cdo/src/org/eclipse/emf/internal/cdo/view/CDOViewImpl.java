@@ -201,7 +201,7 @@ public class CDOViewImpl extends AbstractCDOView
     checkActive();
 
     long timeStamp = branchPoint.getTimeStamp();
-    long creationTimeStamp = getSession().getRepositoryInfo().getCreationTime();
+    long creationTimeStamp = session.getRepositoryInfo().getCreationTime();
     if (timeStamp != UNSPECIFIED_DATE && timeStamp < creationTimeStamp)
     {
       throw new IllegalArgumentException(
@@ -235,7 +235,7 @@ public class CDOViewImpl extends AbstractCDOView
       }
     }
 
-    CDOSessionProtocol sessionProtocol = getSession().getSessionProtocol();
+    CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
     sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects, monitor);
 
@@ -349,7 +349,7 @@ public class CDOViewImpl extends AbstractCDOView
 
       if (result.isWaitForUpdate())
       {
-        if (!getSession().options().isPassiveUpdateEnabled())
+        if (!session.options().isPassiveUpdateEnabled())
         {
           throw new AssertionError(
               "Lock result requires client to wait, but client does not have passiveUpdates enabled.");
@@ -428,7 +428,8 @@ public class CDOViewImpl extends AbstractCDOView
     if (lockStates.length > 0)
     {
       CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(op, type, timestamp, lockStates);
-      getSession().handleLockNotification(lockChangeInfo, this);
+      session.handleLockNotification(lockChangeInfo, this);
+      fireLocksChangedEvent(this, lockChangeInfo);
     }
   }
 
@@ -458,7 +459,9 @@ public class CDOViewImpl extends AbstractCDOView
         }
 
         // If lockChangeInfo pertains to a different view, do nothing.
-        if (lockChangeInfo.getBranch() != getBranch())
+        CDOBranch lockChangeBranch = lockChangeInfo.getBranch();
+        CDOBranch viewBranch = getBranch();
+        if (lockChangeBranch != viewBranch)
         {
           return;
         }
@@ -814,7 +817,6 @@ public class CDOViewImpl extends AbstractCDOView
       return branchPoint;
     }
 
-    InternalCDOSession session = getSession();
     if (session.isSticky())
     {
       branchPoint = session.getCommittedSinceLastRefresh(id);
@@ -1186,6 +1188,8 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doActivate() throws Exception
   {
+    super.doActivate();
+
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
     if (durableLockingID != null)
     {
@@ -1706,7 +1710,7 @@ public class CDOViewImpl extends AbstractCDOView
   {
     public LockStatePrefetcher()
     {
-      getSession().getRevisionManager().addListener(this);
+      session.getRevisionManager().addListener(this);
     }
 
     public void notifyEvent(IEvent event)
@@ -1759,7 +1763,7 @@ public class CDOViewImpl extends AbstractCDOView
       {
         CDOLockState[] lockStates = getLockStates(ids);
         updateLockStates(lockStates);
-        for (CDOCommonView view : getSession().getViews())
+        for (CDOCommonView view : session.getViews())
         {
           if (view != CDOViewImpl.this && view.getBranch() == getBranch())
           {
@@ -1771,7 +1775,7 @@ public class CDOViewImpl extends AbstractCDOView
 
     public void dispose()
     {
-      getSession().getRevisionManager().removeListener(this);
+      session.getRevisionManager().removeListener(this);
     }
   }
 
@@ -1891,6 +1895,43 @@ public class CDOViewImpl extends AbstractCDOView
     public InternalCDOView getSource()
     {
       return (InternalCDOView)super.getSource();
+    }
+
+    public List<CDOObject> getAffectedObjects(CDOView view)
+    {
+      List<CDOObject> objects = new ArrayList<CDOObject>();
+
+      CDOLockState[] lockStates = getLockStates();
+      for (int i = 0; i < lockStates.length; i++)
+      {
+        CDOLockState lockState = lockStates[i];
+        Object lockedObject = lockState.getLockedObject();
+
+        CDOID id = null;
+        if (lockedObject instanceof CDOIDAndBranch)
+        {
+          CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockedObject;
+          if (idAndBranch.getBranch().getID() == view.getBranch().getID())
+          {
+            id = idAndBranch.getID();
+          }
+        }
+        else if (lockedObject instanceof CDOID)
+        {
+          id = (CDOID)lockedObject;
+        }
+
+        if (id != null)
+        {
+          CDOObject object = view.getObject(id);
+          if (object != null)
+          {
+            objects.add(object);
+          }
+        }
+      }
+
+      return objects;
     }
   }
 
@@ -2050,7 +2091,7 @@ public class CDOViewImpl extends AbstractCDOView
       {
         if (enabled != lockNotificationsEnabled)
         {
-          CDOSessionProtocol protocol = getSession().getSessionProtocol();
+          CDOSessionProtocol protocol = session.getSessionProtocol();
           protocol.enableLockNotifications(viewID, enabled);
           lockNotificationsEnabled = enabled;
           event = new LockNotificationEventImpl(enabled);

@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -173,10 +175,10 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public void setBranchPoint(CDOBranchPoint branchPoint)
   {
     checkOpen();
-    long timeStamp = branchPoint.getTimeStamp();
-    branchPoint = branchPoint.getBranch().getPoint(timeStamp);
-    validateTimeStamp(timeStamp);
-    this.branchPoint = branchPoint;
+    validateTimeStamp(branchPoint.getTimeStamp());
+
+    InternalCDOBranchManager branchManager = getSession().getManager().getRepository().getBranchManager();
+    this.branchPoint = CDOBranchUtil.adjustBranchPoint(branchPoint, branchManager);
   }
 
   protected void validateTimeStamp(long timeStamp) throws IllegalArgumentException

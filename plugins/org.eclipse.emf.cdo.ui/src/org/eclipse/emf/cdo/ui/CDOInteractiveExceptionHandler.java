@@ -37,7 +37,7 @@ import java.text.MessageFormat;
 /**
  * A <code>CDOSession</code> {@link org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler ExceptionHandler}
  * implementation that shows exception information on a UI {@link ExceptionDialog dialog}
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @see org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler
@@ -124,7 +124,7 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
 
   /**
    * A dialog that shows CDO related exceptions in a convenient manner.
-   * 
+   *
    * @author Eike Stepper
    * @see org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler
    */
@@ -148,15 +148,15 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
     }
 
     @Override
-    protected void configureShell(Shell newShell)
-    {
-      super.configureShell(newShell);
-      newShell.setText(TITLE);
-    }
-
-    @Override
     protected Control createDialogArea(Composite parent)
     {
+      getShell().setText(TITLE);
+
+      String attemptsStr = attempt == 1 ? Messages.getString("CDOInteractiveExceptionHandler.1") : Messages.getString("CDOInteractiveExceptionHandler.2"); //$NON-NLS-1$ //$NON-NLS-2$
+      setTitle(MessageFormat.format(
+          Messages.getString("CDOInteractiveExceptionHandler.3"), session, attempt, attemptsStr));//$NON-NLS-1$
+      setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PROTOCOL_PROBLEM));
+
       GridLayout layout = UIUtil.createGridLayout(1);
       layout.marginWidth = 10;
       layout.marginHeight = 10;
@@ -164,11 +164,6 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
       Composite composite = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
       composite.setLayoutData(UIUtil.createGridData());
       composite.setLayout(layout);
-
-      String attemptsStr = attempt == 1 ? Messages.getString("CDOInteractiveExceptionHandler.1") : Messages.getString("CDOInteractiveExceptionHandler.2"); //$NON-NLS-1$ //$NON-NLS-2$
-      setTitle(MessageFormat.format(
-          Messages.getString("CDOInteractiveExceptionHandler.3"), session, attempt, attemptsStr));//$NON-NLS-1$
-      setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PROTOCOL_PROBLEM));
 
       String str = IOUtil.toString(exception);
       str = str.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$

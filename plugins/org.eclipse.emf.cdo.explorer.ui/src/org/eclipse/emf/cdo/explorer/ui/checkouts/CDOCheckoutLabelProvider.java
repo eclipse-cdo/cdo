@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
+import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
@@ -170,7 +171,7 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
         CDOCheckout checkout = (CDOCheckout)element;
         if (checkout.isOpen())
         {
-          return CHECKOUT_IMAGE;
+          return CDOLabelDecorator.decorate(CHECKOUT_IMAGE, checkout.getRootObject());
         }
 
         return CHECKOUT_CLOSED_IMAGE;
@@ -183,36 +184,42 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
 
       if (element instanceof CDOElement)
       {
-        CDOElement checkoutElement = (CDOElement)element;
-        return getImage(checkoutElement.getDelegate());
+        element = ((CDOElement)element).getDelegate();
+        Image image = doGetImage(element);
+        return CDOLabelDecorator.decorate(image, element);
       }
 
-      if (element instanceof CDOResourceLeaf)
-      {
-        String name = ((CDOResourceLeaf)element).getName();
-        if (name == null)
-        {
-          // This must be the root resource.
-          return FOLDER_IMAGE;
-        }
-
-        IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
-        if (editorDescriptor != null && !CDOEditorUtil.TEXT_EDITOR_ID.equals(editorDescriptor.getId()))
-        {
-          Image image = getWorkbenchImage(name);
-          if (image != null)
-          {
-            return image;
-          }
-        }
-      }
-
-      return super.getImage(element);
+      return doGetImage(element);
     }
     catch (Exception ex)
     {
       return ERROR_IMAGE;
     }
+  }
+
+  private Image doGetImage(Object element)
+  {
+    if (element instanceof CDOResourceLeaf)
+    {
+      String name = ((CDOResourceLeaf)element).getName();
+      if (name == null)
+      {
+        // This must be the root resource.
+        return FOLDER_IMAGE;
+      }
+
+      IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
+      if (editorDescriptor != null && !CDOEditorUtil.TEXT_EDITOR_ID.equals(editorDescriptor.getId()))
+      {
+        Image image = getWorkbenchImage(name);
+        if (image != null)
+        {
+          return image;
+        }
+      }
+    }
+
+    return super.getImage(element);
   }
 
   protected Image getWorkbenchImage(String name)

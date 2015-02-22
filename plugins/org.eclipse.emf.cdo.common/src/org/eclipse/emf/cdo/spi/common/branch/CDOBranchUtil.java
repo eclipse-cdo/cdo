@@ -11,12 +11,12 @@
 package org.eclipse.emf.cdo.spi.common.branch;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
-import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointRangeImpl;
 
 import java.util.ArrayList;
@@ -46,11 +46,6 @@ public final class CDOBranchUtil
 
   public static CDOBranchPoint copyBranchPoint(CDOBranchPoint source)
   {
-    if (source instanceof CDOBranchPointImpl)
-    {
-      return source;
-    }
-
     return source.getBranch().getPoint(source.getTimeStamp());
   }
 
@@ -81,6 +76,21 @@ public final class CDOBranchUtil
         return branch.getPoint(timeStamp);
       }
     }
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static CDOBranchPoint adjustBranchPoint(CDOBranchPoint branchPoint, CDOBranchManager branchManager)
+  {
+    CDOBranch branch = branchPoint.getBranch();
+    if (branch.getBranchManager() != branchManager)
+    {
+      branch = branchManager.getBranch(branch.getID());
+      branchPoint = branch.getPoint(branchPoint.getTimeStamp());
+    }
+  
+    return branchPoint;
   }
 
   public static boolean isContainedBy(CDOBranchPoint contained, CDOBranchPoint container)

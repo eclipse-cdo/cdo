@@ -20,12 +20,14 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -66,10 +68,9 @@ public class SelectCommitDialog extends TitleAreaDialog
   }
 
   @Override
-  protected void configureShell(Shell newShell)
+  protected Point getInitialSize()
   {
-    super.configureShell(newShell);
-    newShell.setSize(750, 600);
+    return new Point(750, 600);
   }
 
   @Override
@@ -107,6 +108,35 @@ public class SelectCommitDialog extends TitleAreaDialog
 
     commitHistoryComposite.setLayoutData(UIUtil.createGridData());
     commitHistoryComposite.setInput(new CommitHistoryComposite.Input(session, null, null));
+
+    final Display display = parent.getDisplay();
+    display.asyncExec(new Runnable()
+    {
+      private long end = System.currentTimeMillis() + 5000L;
+
+      public void run()
+      {
+        if (!commitHistoryComposite.isDisposed())
+        {
+          Table table = commitHistoryComposite.getTableViewer().getTable();
+          if (table.getItemCount() != 0)
+          {
+            Object data = table.getItem(0).getData();
+            if (data instanceof CDOCommitInfo)
+            {
+              setCommitInfo((CDOCommitInfo)data);
+              table.select(0);
+              return;
+            }
+          }
+
+          if (System.currentTimeMillis() < end)
+          {
+            display.asyncExec(this);
+          }
+        }
+      }
+    });
 
     return area;
   }

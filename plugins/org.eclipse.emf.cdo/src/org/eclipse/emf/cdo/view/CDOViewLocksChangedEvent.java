@@ -10,8 +10,11 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
+
+import java.util.List;
 
 /**
  * A {@link CDOViewEvent view event} fired when {@link CDOLockChangeInfo lock changes} are being received from a remote
@@ -21,6 +24,8 @@ import org.eclipse.emf.cdo.session.CDOSession.Options;
  *
  * @author Caspar De Groot
  * @since 4.1
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOViewLocksChangedEvent extends CDOViewEvent, CDOLockChangeInfo
 {
@@ -28,4 +33,9 @@ public interface CDOViewLocksChangedEvent extends CDOViewEvent, CDOLockChangeInf
    * Returns the view that caused the lock changes if this view is local, or <code>null</code> if the view was remote.
    */
   public CDOView getSender();
+
+  /**
+   * @since 4.4
+   */
+  public List<CDOObject> getAffectedObjects(CDOView view);
 }

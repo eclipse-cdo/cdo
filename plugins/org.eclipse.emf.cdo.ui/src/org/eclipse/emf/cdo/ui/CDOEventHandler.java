@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
+import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -37,6 +38,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 
 import java.util.List;
@@ -89,6 +91,15 @@ public class CDOEventHandler
         // Remove detached object from selection, could incur into unwanted exceptions
         checkDetachedSelection(e.getDetachedObjects());
         viewInvalidated(e.getDirtyObjects());
+      }
+      else if (event instanceof CDOViewLocksChangedEvent)
+      {
+        CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
+        List<CDOObject> objects = e.getAffectedObjects(view);
+        if (!objects.isEmpty())
+        {
+          updateElement(objects.toArray());
+        }
       }
       else if (event instanceof CDOTransactionFinishedEvent)
       {
@@ -259,19 +270,23 @@ public class CDOEventHandler
   {
     try
     {
-      treeViewer.getControl().getDisplay().asyncExec(new Runnable()
+      Control control = treeViewer.getControl();
+      if (!control.isDisposed())
       {
-        public void run()
+        control.getDisplay().asyncExec(new Runnable()
         {
-          try
+          public void run()
           {
-            treeViewer.refresh(true);
+            try
+            {
+              treeViewer.refresh(true);
+            }
+            catch (Exception ignore)
+            {
+            }
           }
-          catch (Exception ignore)
-          {
-          }
-        }
-      });
+        });
+      }
     }
     catch (Exception ignore)
     {
@@ -285,19 +300,31 @@ public class CDOEventHandler
   {
     try
     {
-      treeViewer.getControl().getDisplay().asyncExec(new Runnable()
+      Control control = treeViewer.getControl();
+      if (!control.isDisposed())
       {
-        public void run()
+        control.getDisplay().asyncExec(new Runnable()
         {
-          try
+          public void run()
           {
-            treeViewer.update(element, null);
+            try
+            {
+              if (element instanceof Object[])
+              {
+                Object[] elements = (Object[])element;
+                treeViewer.update(elements, null);
+              }
+              else
+              {
+                treeViewer.update(element, null);
+              }
+            }
+            catch (Exception ignore)
+            {
+            }
           }
-          catch (Exception ignore)
-          {
-          }
-        }
-      });
+        });
+      }
     }
     catch (Exception ignore)
     {

@@ -16,8 +16,12 @@ import org.eclipse.emf.cdo.CDOElement.StateProvider;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -26,6 +30,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -55,6 +60,10 @@ public class CDOLabelDecorator implements ILabelDecorator
 
   public static final String DECORATOR_ID = "org.eclipse.emf.cdo.ui.CDOLabelDecorator"; //$NON-NLS-1$
 
+  private static final Image LOCK_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_LOCK);
+
+  private static final Image LOCK_SELF_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_LOCK_SELF);
+
   private String pattern;
 
   private IListener preferenceListener = new IListener()
@@ -76,6 +85,11 @@ public class CDOLabelDecorator implements ILabelDecorator
     OM.PREFS.addListener(preferenceListener);
   }
 
+  public CDOLabelDecorator(String pattern)
+  {
+    this.pattern = pattern;
+  }
+
   public void dispose()
   {
     OM.PREFS.removeListener(preferenceListener);
@@ -91,15 +105,9 @@ public class CDOLabelDecorator implements ILabelDecorator
     return StringUtil.replace(unparsedPattern, DECORATION_PROPOSALS, DECORATION_ARGS);
   }
 
-  public CDOLabelDecorator(String pattern)
-  {
-    this.pattern = pattern;
-  }
-
   public Image decorateImage(Image image, Object element)
   {
-    // Use default
-    return null;
+    return decorate(image, element);
   }
 
   public String decorateText(String text, Object element)
@@ -174,5 +182,39 @@ public class CDOLabelDecorator implements ILabelDecorator
     }
 
     return state.toString().toLowerCase();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static Image decorate(Image image, Object element)
+  {
+    if (element instanceof EObject)
+    {
+      EObject eObject = (EObject)element;
+      CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+      if (cdoObject != null)
+      {
+        CDOLockState lockState = cdoObject.cdoLockState();
+        if (lockState != null)
+        {
+          CDOLockOwner owner = lockState.getWriteLockOwner();
+          if (owner != null)
+          {
+            if (owner.equals(cdoObject.cdoView()))
+            {
+              image = OM.getOverlayImage(image, LOCK_SELF_OVERLAY, 10, 0);
+            }
+            else
+            {
+              image = OM.getOverlayImage(image, LOCK_OVERLAY, 10, 0);
+            }
+          }
+        }
+      }
+    }
+  
+    // Use default
+    return image;
   }
 }

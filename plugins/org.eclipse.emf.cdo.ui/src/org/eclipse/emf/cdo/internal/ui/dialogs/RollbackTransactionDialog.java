@@ -55,21 +55,15 @@ public class RollbackTransactionDialog extends TitleAreaDialog
   }
 
   @Override
-  protected void configureShell(Shell newShell)
-  {
-    super.configureShell(newShell);
-    newShell.setText(title);
-  }
-
-  @Override
   protected Control createDialogArea(Composite parent)
   {
+    getShell().setText(title);
+    setTitle(description);
+    setTitleImage(getShell().getDisplay().getSystemImage(SWT.ICON_QUESTION));
+
     Composite composite = new Composite((Composite)super.createDialogArea(parent), SWT.NONE);
     composite.setLayoutData(UIUtil.createGridData());
     composite.setLayout(new GridLayout(1, false));
-
-    setTitle(description);
-    setTitleImage(getShell().getDisplay().getSystemImage(SWT.ICON_QUESTION));
 
     Label label = new Label(composite, SWT.NONE);
     label.setText(formatMessage());

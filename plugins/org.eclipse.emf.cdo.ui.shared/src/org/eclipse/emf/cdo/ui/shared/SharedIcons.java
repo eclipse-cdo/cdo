@@ -172,6 +172,28 @@ public class SharedIcons
    */
   public static final String OBJ_PERSON_ME = OBJ + "person-me.gif"; //$NON-NLS-1$
 
+  private static final String OVR = "ovr16/"; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String OVR_ERROR = OVR + "error" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String OVR_WARNING = OVR + "warning" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String OVR_LOCK = OVR + "lock" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String OVR_LOCK_SELF = OVR + "lock_self" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
   private static final String VIEW = "view16/"; //$NON-NLS-1$
 
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions" + IMAGE_FORMAT_GIF; //$NON-NLS-1$

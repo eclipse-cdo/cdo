@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -36,6 +38,7 @@ public final class OpenViewAction extends AbstractOpenViewAction
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     CDOSession session = getSession();
-    session.openView();
+    CDOView view = session.openView();
+    CDOUtil.configureView(view);
   }
 }

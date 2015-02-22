@@ -17,10 +17,13 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.BaseLabelDecorator;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Eike Stepper
@@ -29,6 +32,37 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
 {
   public CDOCheckoutLabelDecorator()
   {
+  }
+
+  @Override
+  public Image decorateImage(Image image, Object element)
+  {
+    try
+    {
+      CDOElement cdoElement = AdapterUtil.adapt(element, CDOElement.class);
+      if (cdoElement != null)
+      {
+        element = cdoElement.getDelegate();
+      }
+
+      if (element instanceof CDOCheckout)
+      {
+        image = CDOLabelDecorator.decorate(image, element);
+      }
+    }
+    catch (LifecycleException ex)
+    {
+      //$FALL-THROUGH$
+    }
+    catch (Throwable ex)
+    {
+      if (LifecycleUtil.isActive(element))
+      {
+        OM.LOG.error(ex);
+      }
+    }
+
+    return image;
   }
 
   @Override

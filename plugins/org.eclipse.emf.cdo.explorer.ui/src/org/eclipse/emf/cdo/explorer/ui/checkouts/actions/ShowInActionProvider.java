@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
@@ -315,21 +316,23 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
         if (checkout != null)
         {
           CDOView checkoutView = checkout.getView();
-          CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(checkoutView);
-
-          if (checkoutView instanceof CDOTransaction)
+          if (!checkout.isReadOnly())
           {
+            CDOBranch branch = checkoutView.getBranch();
             for (CDOTransaction transaction : session.getTransactions())
             {
-              if (branchPoint.equals(transaction))
+              if (branch.equals(transaction.getBranch()))
               {
                 return transaction;
               }
             }
 
-            return session.openTransaction(checkoutView);
+            CDOTransaction transaction = session.openTransaction(branch);
+            CDOUtil.configureView(transaction);
+            return transaction;
           }
 
+          CDOBranchPoint branchPoint = CDOBranchUtil.copyBranchPoint(checkoutView);
           for (CDOView view : session.getViews())
           {
             if (!(view instanceof CDOTransaction) && branchPoint.equals(view))
@@ -338,7 +341,9 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
             }
           }
 
-          return session.openView(checkoutView);
+          CDOView view = session.openView(checkoutView);
+          CDOUtil.configureView(view);
+          return view;
         }
       }
 

@@ -14,8 +14,8 @@ package org.eclipse.emf.cdo.internal.ui.actions;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
@@ -44,12 +44,7 @@ public final class OpenTransactionAction extends AbstractOpenViewAction
   public static CDOTransaction openTransaction(CDOSession session)
   {
     CDOTransaction transaction = session.openTransaction();
-    configureTransaction(transaction);
+    CDOUtil.configureView(transaction);
     return transaction;
-  }
-
-  public static void configureTransaction(CDOTransaction transaction)
-  {
-    new CDOTransactionCommentator(transaction);
   }
 }

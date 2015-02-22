@@ -21,9 +21,9 @@ import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerIm
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.IDGeneration;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.VersioningMode;
-import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
@@ -149,7 +149,7 @@ public class CDORepositoriesView extends ContainerView
 
         CDOSession session = repository.getSession();
         CDOTransaction transaction = session.openTransaction();
-        OpenTransactionAction.configureTransaction(transaction);
+        CDOUtil.configureView(transaction);
 
         try
         {

@@ -41,6 +41,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -93,19 +94,19 @@ public class PackageRegistryDialog extends TitleAreaDialog
   }
 
   @Override
-  protected void configureShell(Shell newShell)
+  protected Point getInitialSize()
   {
-    super.configureShell(newShell);
-    newShell.setText(TITLE);
-    newShell.setSize(660, 500);
+    return new Point(660, 500);
   }
 
   @Override
   protected Control createDialogArea(Composite parent)
   {
-    Composite composite = (Composite)super.createDialogArea(parent);
+    getShell().setText(TITLE);
     setTitle(session.toString());
     setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PACKAGE_MANAGER));
+
+    Composite composite = (Composite)super.createDialogArea(parent);
 
     viewer = new TableViewer(composite, SWT.NONE);
     Table table = viewer.getTable();

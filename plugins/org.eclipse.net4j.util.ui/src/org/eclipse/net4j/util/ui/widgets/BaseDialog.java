@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -73,23 +73,17 @@ public abstract class BaseDialog<VIEWER extends Viewer> extends TitleAreaDialog
   }
 
   @Override
-  protected void configureShell(Shell newShell)
-  {
-    super.configureShell(newShell);
-    newShell.setText(title);
-  }
-
-  @Override
   protected Control createDialogArea(Composite parent)
   {
-    Composite composite = (Composite)super.createDialogArea(parent);
-
+    getShell().setText(title);
     setTitle(title);
     setMessage(message);
     if (image != null)
     {
       setTitleImage(image);
     }
+
+    Composite composite = (Composite)super.createDialogArea(parent);
 
     contextMenu = new MenuManager("#PopupMenu"); //$NON-NLS-1$
     contextMenu.setRemoveAllWhenShown(true);

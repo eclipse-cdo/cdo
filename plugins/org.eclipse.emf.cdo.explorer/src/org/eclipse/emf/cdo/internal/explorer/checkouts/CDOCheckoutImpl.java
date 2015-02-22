@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -23,9 +24,10 @@ import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -345,6 +347,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
           view = openView(session);
           view.addListener(viewListener);
+          configureView(view);
 
           rootObject = loadRootObject();
           rootObject.eAdapters().add(this);
@@ -458,13 +461,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       throw new ReadOnlyException("Checkout '" + getLabel() + "' is read-only");
     }
 
-    CDOTransaction transaction = (CDOTransaction)doOpenView(false);
-    if (transaction != null)
-    {
-      new CDOTransactionCommentator(transaction);
-    }
-
-    return transaction;
+    return (CDOTransaction)doOpenView(false);
   }
 
   protected CDOView doOpenView(boolean readOnly)
@@ -479,10 +476,38 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     if (readOnly)
     {
-      return session.openView(branch);
+      return configureView(session.openView(branch));
     }
 
-    return session.openTransaction(branch);
+    return configureView(session.openTransaction(branch));
+  }
+
+  protected CDOView configureView(final CDOView view)
+  {
+    CDOUtil.configureView(view);
+    view.addListener(new IListener()
+    {
+      public void notifyEvent(IEvent event)
+      {
+        if (event instanceof CDOViewLocksChangedEvent)
+        {
+          CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
+          List<CDOObject> objects = e.getAffectedObjects(view);
+          if (!objects.isEmpty())
+          {
+            List<Object> elements = new ArrayList<Object>();
+            for (CDOObject object : objects)
+            {
+              elements.add(object);
+            }
+
+            getManager().fireElementsChangedEvent(elements);
+          }
+        }
+      }
+    });
+
+    return view;
   }
 
   public String getEditorID(CDOID objectID)

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.CDOObjectHistory;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
@@ -474,6 +475,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected synchronized void basicSetBranchPoint(CDOBranchPoint branchPoint)
   {
+    CDOSession session = getSession();
+    if (session != null)
+    {
+      CDOBranchManager branchManager = session.getBranchManager();
+      branchPoint = CDOBranchUtil.adjustBranchPoint(branchPoint, branchManager);
+    }
+
     this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
   }
 
@@ -1880,12 +1888,21 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   }
 
   @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+
+    basicSetBranchPoint(branchPoint);
+  }
+
+  @Override
   protected void doDeactivate() throws Exception
   {
     if (viewSet != null && viewSet.getResourceSet() != null)
     {
       viewSet.getResourceSet().getURIConverter().getURIHandlers().remove(getURIHandler());
     }
+
     viewSet = null;
     objects = null;
     store = null;

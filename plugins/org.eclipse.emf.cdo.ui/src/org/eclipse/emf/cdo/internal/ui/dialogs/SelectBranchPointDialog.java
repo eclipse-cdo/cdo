@@ -24,12 +24,12 @@ import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.custom.CTabItem;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -111,10 +111,9 @@ public class SelectBranchPointDialog extends TitleAreaDialog implements Validati
   }
 
   @Override
-  protected void configureShell(Shell newShell)
+  protected Point getInitialSize()
   {
-    super.configureShell(newShell);
-    newShell.setSize(700, 500);
+    return new Point(700, 500);
   }
 
   @Override

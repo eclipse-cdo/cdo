@@ -218,17 +218,16 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         {
           public boolean handleRevision(CDORevision remoteRevision)
           {
-            // Local session revisions are not cached and can directly be modified and stored in the local repository.
             InternalCDORevision repositoryRevision = (InternalCDORevision)remoteRevision;
-            repositoryRevision.setBranchPoint(localRepositoryHead);
 
-            accessor.rawStore(repositoryRevision, monitor);
-
-            long commitTime = remoteRevision.getTimeStamp();
+            long commitTime = repositoryRevision.getTimeStamp();
             if (commitTime > timeStamp)
             {
               timeStamp = commitTime;
             }
+
+            repositoryRevision.setBranchPoint(localRepositoryHead);
+            accessor.rawStore(repositoryRevision, monitor);
 
             return true;
           }
@@ -768,17 +767,20 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
           Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions)
       {
         RefreshSessionResult result = new RefreshSessionResult(timeStamp);
+
         Map<CDOID, InternalCDORevision> revisions = viewedRevisions.get(localBranch);
-
-        for (InternalCDORevision baseRevision : changedRevisions)
+        if (revisions != null)
         {
-          CDOID id = baseRevision.getID();
-          if (revisions.containsKey(id))
+          for (InternalCDORevision baseRevision : changedRevisions)
           {
-            InternalCDORevision newRevision = baseRevision.copy();
-            newRevision.setBranchPoint(localSessionHead);
+            CDOID id = baseRevision.getID();
+            if (revisions.containsKey(id))
+            {
+              InternalCDORevision newRevision = baseRevision.copy();
+              newRevision.setBranchPoint(localSessionHead);
 
-            result.addChangedObject(newRevision);
+              result.addChangedObject(newRevision);
+            }
           }
         }
 
@@ -1272,11 +1274,30 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       throw new IllegalStateException("Remote repository uses different ID generation location: " + remoteLocation);
     }
 
-    InternalCDOBranch branch = remoteSession.getBranchManager().getBranch(branchID);
+    InternalCDOBranchManager branchManager = remoteSession.getBranchManager();
+    InternalCDOBranch branch;
+    boolean changed = false;
+
+    if (branchID == NO_BRANCH_ID)
+    {
+      branch = branchManager.getBranch(branchPath);
+      branchID = branch.getID();
+      changed = true;
+    }
+    else
+    {
+      branch = branchManager.getBranch(branchID);
+    }
+
     String pathName = branch.getPathName();
     if (!ObjectUtil.equals(pathName, branchPath))
     {
       branchPath = pathName;
+      changed = true;
+    }
+
+    if (changed)
+    {
       saveProperties();
     }
 

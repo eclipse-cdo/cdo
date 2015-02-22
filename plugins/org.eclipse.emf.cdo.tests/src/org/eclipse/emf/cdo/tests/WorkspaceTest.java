@@ -47,9 +47,13 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger.Conflict;
 
@@ -1306,6 +1310,89 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1, countModifiedProduct(view));
   }
 
+  public void testRevertNoTransaction() throws Exception
+  {
+    // Checkout local
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    // Modify local
+    CDOTransaction local = workspace.openTransaction();
+    assertEquals(1, modifyProduct(local, 2, "MODIFIED_"));
+
+    local.commit();
+    assertEquals(true, workspace.isDirty());
+
+    local.close();
+    assertEquals(true, workspace.isDirty());
+
+    workspace.revert();
+    assertEquals(false, workspace.isDirty());
+
+    local = workspace.openTransaction();
+    assertLocalEqualsMaster(local);
+  }
+
+  public void testRevertModify() throws Exception
+  {
+    // Checkout local
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    // Modify local
+    CDOTransaction local = workspace.openTransaction();
+    for (int i = 0; i < PRODUCTS; i++)
+    {
+      assertEquals(1, modifyProduct(local, i, "MODIFIED_"));
+
+      local.commit();
+      assertEquals(true, workspace.isDirty());
+    }
+
+    workspace.revert();
+    assertEquals(false, workspace.isDirty());
+
+    assertLocalEqualsMaster(local);
+  }
+
+  public void testRevertAdd() throws Exception
+  {
+    // Checkout local
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    // Add local
+    CDOTransaction local = workspace.openTransaction();
+    CDOResource resource = local.getResource(getResourcePath(RESOURCE));
+    resource.getContents().add(createProduct(PRODUCTS));
+    local.commit();
+    assertEquals(true, workspace.isDirty());
+
+    workspace.revert();
+    assertEquals(false, workspace.isDirty());
+
+    assertLocalEqualsMaster(local);
+  }
+
+  public void testRevertDetach() throws Exception
+  {
+    // Checkout local
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    // Detach local
+    CDOTransaction local = workspace.openTransaction();
+    CDOResource resource = local.getResource(getResourcePath(RESOURCE));
+    resource.getContents().clear();
+    local.commit();
+    assertEquals(true, workspace.isDirty());
+
+    workspace.revert();
+    assertEquals(false, workspace.isDirty());
+
+    assertLocalEqualsMaster(local);
+  }
+
   protected IStore createLocalStore()
   {
     return getRepositoryConfig().createStore(CDOWorkspaceConfiguration.DEFAULT_LOCAL_REPOSITORY_NAME);
@@ -1328,8 +1415,16 @@ public class WorkspaceTest extends AbstractCDOTest
     config.setTimeStamp(timeStamp);
     config.setIDGenerationLocation(getRepository().getIDGenerationLocation());
 
-    InternalCDOWorkspace workspace = (InternalCDOWorkspace)config.checkout();
+    final InternalCDOWorkspace workspace = (InternalCDOWorkspace)config.checkout();
     workspaces.add(workspace);
+    workspace.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        workspaces.remove(workspace);
+      }
+    });
 
     InternalRepository localRepository = workspace.getLocalRepository();
     registerRepository(localRepository);
@@ -1499,6 +1594,26 @@ public class WorkspaceTest extends AbstractCDOTest
     }
 
     return count;
+  }
+
+  private void assertLocalEqualsMaster(CDOTransaction local)
+  {
+    EList<EObject> masterContents = transaction.getResource(getResourcePath(RESOURCE)).getContents();
+    EList<EObject> localContents = local.getResource(getResourcePath(RESOURCE)).getContents();
+    assertEquals(masterContents.size(), localContents.size());
+
+    for (int i = 0; i < masterContents.size(); i++)
+    {
+      EObject masterObject = masterContents.get(i);
+      EObject localObject = localContents.get(i);
+      assertEquals(true, EcoreUtil.equals(masterObject, localObject));
+
+      CDORevision masterRevision = CDOUtil.getCDOObject(masterObject).cdoRevision();
+      CDORevision localRevision = CDOUtil.getCDOObject(localObject).cdoRevision();
+      assertEquals(masterRevision.getID(), localRevision.getID());
+      assertEquals(masterRevision.getVersion(), localRevision.getVersion());
+      assertEquals(masterRevision.getBranch().getID(), localRevision.getBranch().getID());
+    }
   }
 
   /**

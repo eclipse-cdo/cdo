@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerIm
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.IDGeneration;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.VersioningMode;
+import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -136,7 +137,7 @@ public class CDORepositoriesView extends ContainerView
       {
         Properties properties = new Properties();
         properties.put(LocalCDORepository.PROP_TYPE, CDORepository.TYPE_LOCAL);
-        properties.put(LocalCDORepository.PROP_LABEL, "offline");
+        properties.put(LocalCDORepository.PROP_LABEL, "repo2");
         properties.put(LocalCDORepository.PROP_NAME, "repo2");
         properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
         properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
@@ -148,6 +149,7 @@ public class CDORepositoriesView extends ContainerView
 
         CDOSession session = repository.getSession();
         CDOTransaction transaction = session.openTransaction();
+        OpenTransactionAction.configureTransaction(transaction);
 
         try
         {

@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter.CDOPropertyDescriptor;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -19,6 +20,8 @@ import org.eclipse.emf.internal.cdo.object.ObjectProperties;
 import org.eclipse.emf.internal.cdo.session.SessionProperties;
 import org.eclipse.emf.internal.cdo.view.ViewProperties;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.AbstractPropertyAdapterFactory;
 import org.eclipse.net4j.util.ui.DefaultActionFilter;
 import org.eclipse.net4j.util.ui.DefaultPropertySource;
@@ -62,96 +65,110 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
   @Override
   protected IPropertySource createPropertySource(Object object)
   {
-    if (object instanceof CDOSession)
+    try
     {
-      return new DefaultPropertySource<CDOSession>((CDOSession)object, SessionProperties.INSTANCE);
-    }
-
-    if (object instanceof CDOView)
-    {
-      return new DefaultPropertySource<CDOView>((CDOView)object, ViewProperties.INSTANCE);
-    }
-
-    if (object instanceof EObject)
-    {
-      EObject eObject = (EObject)object;
-
-      final Map<String, Object> propertyValues = new HashMap<String, Object>();
-      DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(eObject, ObjectProperties.INSTANCE)
+      if (object instanceof CDOSession)
       {
-        @Override
-        public Object getPropertyValue(Object id)
-        {
-          Object value = propertyValues.get(id);
-          if (value != null)
-          {
-            return value;
-          }
+        return new DefaultPropertySource<CDOSession>((CDOSession)object, SessionProperties.INSTANCE);
+      }
 
-          return super.getPropertyValue(id);
-        }
-      };
-
-      ComposedAdapterFactory adapterFactory = null;
-      AdapterFactoryLabelProvider labelProvider = null;
-
-      try
+      if (object instanceof CDOView)
       {
-        adapterFactory = CDOEditor.createAdapterFactory(false);
+        return new DefaultPropertySource<CDOView>((CDOView)object, ViewProperties.INSTANCE);
+      }
 
-        IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(eObject,
-            IItemPropertySource.class);
-        if (propertySource != null)
+      if (object instanceof EObject)
+      {
+        EObject eObject = (EObject)object;
+
+        final Map<String, Object> propertyValues = new HashMap<String, Object>();
+        DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(eObject, ObjectProperties.INSTANCE)
         {
-          List<IItemPropertyDescriptor> propertyDescriptors = propertySource.getPropertyDescriptors(eObject);
-          if (propertyDescriptors != null)
+          @Override
+          public Object getPropertyValue(Object id)
           {
-            labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-
-            for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
+            Object value = propertyValues.get(id);
+            if (value != null)
             {
-              if (propertyDescriptor instanceof CDOPropertyDescriptor)
+              return value;
+            }
+
+            return super.getPropertyValue(id);
+          }
+        };
+
+        ComposedAdapterFactory adapterFactory = null;
+        AdapterFactoryLabelProvider labelProvider = null;
+
+        try
+        {
+          adapterFactory = CDOEditor.createAdapterFactory(false);
+
+          IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(eObject,
+              IItemPropertySource.class);
+          if (propertySource != null)
+          {
+            List<IItemPropertyDescriptor> propertyDescriptors = propertySource.getPropertyDescriptors(eObject);
+            if (propertyDescriptors != null)
+            {
+              labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+
+              for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
               {
-                continue;
-              }
-
-              String category = getTypeText(adapterFactory, eObject);
-              String id = "___EMF___" + propertyDescriptor.getId(eObject);
-              String displayName = propertyDescriptor.getDisplayName(eObject);
-              String description = propertyDescriptor.getDescription(eObject);
-
-              PropertyDescriptor descriptor = result.addDescriptor(category, id, displayName, description);
-
-              Object value = propertyDescriptor.getPropertyValue(eObject);
-              propertyValues.put(id, value);
-
-              final String text = labelProvider.getText(value);
-              descriptor.setLabelProvider(new LabelProvider()
-              {
-                @Override
-                public String getText(Object element)
+                if (propertyDescriptor instanceof CDOPropertyDescriptor)
                 {
-                  return text;
+                  continue;
                 }
-              });
+
+                String category = getTypeText(adapterFactory, eObject);
+                String id = "___EMF___" + propertyDescriptor.getId(eObject);
+                String displayName = propertyDescriptor.getDisplayName(eObject);
+                String description = propertyDescriptor.getDescription(eObject);
+
+                PropertyDescriptor descriptor = result.addDescriptor(category, id, displayName, description);
+
+                Object value = propertyDescriptor.getPropertyValue(eObject);
+                propertyValues.put(id, value);
+
+                final String text = labelProvider.getText(value);
+                descriptor.setLabelProvider(new LabelProvider()
+                {
+                  @Override
+                  public String getText(Object element)
+                  {
+                    return text;
+                  }
+                });
+              }
             }
           }
         }
+        finally
+        {
+          if (labelProvider != null)
+          {
+            labelProvider.dispose();
+          }
+
+          if (adapterFactory != null)
+          {
+            adapterFactory.dispose();
+          }
+        }
+
+        return result;
       }
-      finally
+    }
+    catch (LifecycleException ex)
+    {
+      //$FALL-THROUGH$
+    }
+    catch (Throwable ex)
+    {
+      if (LifecycleUtil.isActive(object))
       {
-        if (labelProvider != null)
-        {
-          labelProvider.dispose();
-        }
-
-        if (adapterFactory != null)
-        {
-          adapterFactory.dispose();
-        }
+        OM.LOG.error(ex);
       }
-
-      return result;
     }
 
     return null;

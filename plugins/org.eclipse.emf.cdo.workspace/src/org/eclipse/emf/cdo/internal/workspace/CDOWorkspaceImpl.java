@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -67,6 +68,7 @@ import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
@@ -96,6 +98,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -510,6 +513,11 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   public InternalCDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp)
   {
+    return merge(merger, branchPath, CDOBranchPoint.UNSPECIFIED_DATE, false);
+  }
+
+  private InternalCDOTransaction merge(CDOMerger merger, String branchPath, long timeStamp, boolean saveBranchPoint)
+  {
     final InternalCDOSession remoteSession = openRemoteSession();
 
     try
@@ -522,7 +530,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       final long newTimeStamp = timeStamp;
 
       final InternalCDOBranchManager branchManager = remoteSession.getBranchManager();
-      final CDOBranchPoint basePoint = branchManager.getBranch(branchPath).getPoint(this.timeStamp);
+      final CDOBranchPoint basePoint = branchManager.getBranch(this.branchPath).getPoint(this.timeStamp);
       final CDOBranchPoint remotePoint = branchManager.getBranch(branchPath).getPoint(newTimeStamp);
 
       final CDOBranchPointRange range = CDOBranchUtil.createRange(basePoint, remotePoint);
@@ -642,6 +650,15 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
           return revision;
         }
       });
+
+      if (saveBranchPoint)
+      {
+        CDOBranch branch = remotePoint.getBranch();
+        branchID = branch.getID();
+        this.branchPath = branch.getPathName();
+        this.timeStamp = timeStamp;
+        saveProperties();
+      }
 
       return transaction;
     }
@@ -779,8 +796,31 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   public void replace(String branchPath, long timeStamp)
   {
-    // TODO: implement CDOWorkspaceImpl.replace(branchPath, timeStamp)
-    throw new UnsupportedOperationException();
+    CDOChangeSetData revertData = getLocalChanges(false);
+    replace(branchPath, timeStamp, revertData);
+  }
+
+  public void replace(String branchPath, long timeStamp, CDOChangeSetData revertData)
+  {
+    revert(revertData);
+    CDOTransaction transaction = merge(new DefaultCDOMerger.PerFeature.ManyValued(), branchPath, timeStamp, true);
+
+    try
+    {
+      transaction.commit();
+    }
+    catch (ConcurrentAccessException ex)
+    {
+      throw new CDOException(ex);
+    }
+    catch (CommitException ex)
+    {
+      throw new CDOException(ex);
+    }
+    finally
+    {
+      transaction.close();
+    }
   }
 
   public CDOCommitInfo checkin() throws CommitException

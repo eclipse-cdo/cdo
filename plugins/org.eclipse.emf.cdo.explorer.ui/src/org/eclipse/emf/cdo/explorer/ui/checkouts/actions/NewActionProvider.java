@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.checkouts;
+package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.NewRootMenuPopulator;
@@ -64,7 +65,7 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutNewActionProvider extends CommonActionProvider implements ISelectionChangedListener
+public class NewActionProvider extends CommonActionProvider implements ISelectionChangedListener
 {
   private static final String NEW_MENU_NAME = "common.new.menu"; //$NON-NLS-1$
 
@@ -80,7 +81,7 @@ public class CDOCheckoutNewActionProvider extends CommonActionProvider implement
 
   private Object selectedObject;
 
-  public CDOCheckoutNewActionProvider()
+  public NewActionProvider()
   {
     adapterFactory = CDOEditor.createAdapterFactory(true);
   }

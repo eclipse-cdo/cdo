@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -37,6 +38,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 import org.eclipse.emf.ecore.EObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.WeakHashMap;
@@ -56,9 +59,19 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public static final String PROP_BRANCH_PATH = "branchPath";
 
+  public static final String PROP_BRANCH_POINTS = "branchPoints";
+
   public static final String PROP_REPOSITORY = "repository";
 
   public static final String EDITOR_PROPERTIES = "editor.properties";
+
+  private static final CDOBranchPoint[] NO_BRANCH_POINTS = {};
+
+  private static final int BRANCH_POINTS_MAX = 10;
+
+  private static final String BRANCH_POINT_SEPARATOR = ",";
+
+  private static final String BRANCH_AND_POINT_SEPARATOR = "_";
 
   private final Map<CDOID, String> editorIDs = new WeakHashMap<CDOID, String>();
 
@@ -82,6 +95,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private int branchID;
 
   private String branchPath;
+
+  private String branchPoints;
 
   private long timeStamp;
 
@@ -115,30 +130,6 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return branchID;
   }
 
-  public final void setBranchPoint(int branchID, long timeStamp)
-  {
-    if (this.branchID != branchID || this.timeStamp != timeStamp)
-    {
-      this.branchID = branchID;
-      this.timeStamp = timeStamp;
-
-      if (isOpen())
-      {
-        CDOBranch branch = view.getSession().getBranchManager().getBranch(branchID);
-        CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
-        view.setBranchPoint(branchPoint);
-
-        branchPath = branch.getPathName();
-      }
-      else
-      {
-        branchPath = null;
-      }
-
-      save();
-    }
-  }
-
   public final void setBranchID(int branchID)
   {
     setBranchPoint(branchID, timeStamp);
@@ -156,6 +147,145 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       this.branchPath = branchPath;
       save();
     }
+  }
+
+  public final CDOBranchPoint getBranchPoint()
+  {
+    return view;
+  }
+
+  public final void setBranchPoint(CDOBranchPoint branchPoint)
+  {
+    setBranchPoint(branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
+  }
+
+  public final void setBranchPoint(int branchID, long timeStamp)
+  {
+    boolean changed = addBranchPoint(this.branchID, this.timeStamp);
+
+    if (this.branchID != branchID || this.timeStamp != timeStamp)
+    {
+      this.branchID = branchID;
+      this.timeStamp = timeStamp;
+
+      if (isOpen())
+      {
+        branchPath = doSetBranchPoint(branchID, timeStamp);
+      }
+      else
+      {
+        branchPath = null;
+      }
+
+      changed = true;
+    }
+
+    if (changed)
+    {
+      save();
+    }
+  }
+
+  protected String doSetBranchPoint(int branchID, long timeStamp)
+  {
+    CDOBranch branch = view.getSession().getBranchManager().getBranch(branchID);
+    CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
+    view.setBranchPoint(branchPoint);
+
+    String pathName = branch.getPathName();
+    return pathName;
+  }
+
+  public CDOBranchPoint[] getBranchPoints()
+  {
+    if (branchPoints != null && isOpen())
+    {
+      List<CDOBranchPoint> result = new ArrayList<CDOBranchPoint>();
+      CDOBranchManager branchManager = view.getSession().getBranchManager();
+
+      for (String token : branchPoints.split(BRANCH_POINT_SEPARATOR))
+      {
+        String[] branchAndPoint = token.split(BRANCH_AND_POINT_SEPARATOR);
+        int branchID = Integer.parseInt(branchAndPoint[0]);
+        CDOBranch branch = branchManager.getBranch(branchID);
+        if (branch != null)
+        {
+          long timeStamp;
+          if (branchAndPoint.length >= 2)
+          {
+            timeStamp = Long.parseLong(branchAndPoint[1]);
+          }
+          else
+          {
+            timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+          }
+
+          result.add(branch.getPoint(timeStamp));
+        }
+      }
+
+      return result.toArray(new CDOBranchPoint[result.size()]);
+    }
+
+    return NO_BRANCH_POINTS;
+  }
+
+  public boolean addBranchPoint(CDOBranchPoint branchPoint)
+  {
+    int branchID = branchPoint.getBranch().getID();
+    long timeStamp = branchPoint.getTimeStamp();
+
+    boolean changed = addBranchPoint(branchID, timeStamp);
+    if (changed)
+    {
+      save();
+    }
+
+    return changed;
+  }
+
+  private boolean addBranchPoint(int branchID, long timeStamp)
+  {
+    String oldBranchPoints = branchPoints;
+
+    String newToken = Integer.toString(branchID);
+    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      newToken += BRANCH_AND_POINT_SEPARATOR + timeStamp;
+    }
+
+    if (branchPoints != null)
+    {
+      StringBuilder builder = new StringBuilder(newToken);
+      int count = 1;
+
+      for (String token : branchPoints.split(BRANCH_POINT_SEPARATOR))
+      {
+        if (count++ == BRANCH_POINTS_MAX)
+        {
+          break;
+        }
+
+        if (!token.equals(newToken))
+        {
+          builder.append(BRANCH_POINT_SEPARATOR);
+          builder.append(token);
+        }
+      }
+
+      branchPoints = builder.toString();
+    }
+    else
+    {
+      branchPoints = newToken;
+    }
+
+    if (!ObjectUtil.equals(branchPoints, oldBranchPoints))
+    {
+      return true;
+    }
+
+    return false;
   }
 
   public final long getTimeStamp()
@@ -456,6 +586,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     repository = OM.getRepositoryManager().getElement(properties.getProperty(PROP_REPOSITORY));
     branchID = Integer.parseInt(properties.getProperty(PROP_BRANCH_ID));
     branchPath = properties.getProperty(PROP_BRANCH_PATH);
+    branchPoints = properties.getProperty(PROP_BRANCH_POINTS);
     timeStamp = Long.parseLong(properties.getProperty(PROP_TIME_STAMP));
     readOnly = Boolean.parseBoolean(properties.getProperty(PROP_READ_ONLY));
     rootID = CDOIDUtil.read(properties.getProperty(PROP_ROOT_ID));
@@ -475,6 +606,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     if (branchPath != null)
     {
       properties.put(PROP_BRANCH_PATH, branchPath);
+    }
+
+    if (branchPoints != null)
+    {
+      properties.put(PROP_BRANCH_POINTS, branchPoints);
     }
 
     String string = getCDOIDString(rootID);

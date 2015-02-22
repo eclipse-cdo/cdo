@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.checkouts;
+package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -60,7 +60,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutOpenWithActionProvider extends CommonActionProvider
+public class OpenWithActionProvider extends CommonActionProvider
 {
   private static final Map<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>> VIEWS = new HashMap<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>>();
 

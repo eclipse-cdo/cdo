@@ -176,7 +176,7 @@
             </or>
          </possibleChildren>
          <actionProvider
-               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutNewActionProvider"
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.NewActionProvider"
                id="org.eclipse.emf.cdo.explorer.ui.checkouts.NewActions">
            <enablement>
              <or>
@@ -198,7 +198,7 @@
            </enablement>
          </actionProvider>
          <actionProvider
-               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutOpenWithActionProvider"
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider"
                id="org.eclipse.emf.cdo.explorer.ui.checkouts.OpenWithActions">
            <enablement>
              <or>
@@ -213,7 +213,7 @@
            </enablement>
          </actionProvider>
          <actionProvider
-               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutShowInActionProvider"
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider"
                id="org.eclipse.emf.cdo.explorer.ui.checkouts.ShowInActions">
             <enablement>
                <or>
@@ -227,11 +227,21 @@
             </enablement>
          </actionProvider>
          <actionProvider
-               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutSwitchToActionProvider"
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.SwitchToActionProvider$Online"
                id="org.eclipse.emf.cdo.explorer.ui.checkouts.SwitchToActions">
             <enablement>
               <and>
-                 <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                 <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OnlineCDOCheckout"/>
+                 <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+              </and>
+            </enablement>
+         </actionProvider>
+         <actionProvider
+               class="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.SwitchToActionProvider$Offline"
+               id="org.eclipse.emf.cdo.explorer.ui.checkouts.ReplaceWithActions">
+            <enablement>
+              <and>
+                 <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
               </and>
             </enablement>

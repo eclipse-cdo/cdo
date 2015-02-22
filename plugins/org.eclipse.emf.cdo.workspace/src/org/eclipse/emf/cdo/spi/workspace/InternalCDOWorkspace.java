@@ -70,4 +70,9 @@ public interface InternalCDOWorkspace extends CDOWorkspace
    * @since 4.2
    */
   public void revert(CDOChangeSetData revertData);
+
+  /**
+   * @since 4.2
+   */
+  public void replace(String branchPath, long timeStamp, CDOChangeSetData revertData);
 }

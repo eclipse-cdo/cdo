@@ -1,0 +1,129 @@
+/*
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.internal.ui.dialogs;
+
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.ui.widgets.CommitHistoryComposite;
+
+import org.eclipse.net4j.util.ui.UIUtil;
+
+import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchPage;
+
+/**
+ * @author Eike Stepper
+ */
+public class SelectCommitDialog extends TitleAreaDialog
+{
+  private static final String TITLE = "Select Commit";
+
+  private final CDOSession session;
+
+  private CommitHistoryComposite commitHistoryComposite;
+
+  private CDOCommitInfo commitInfo;
+
+  public SelectCommitDialog(IWorkbenchPage page, CDOSession session)
+  {
+    super(page.getWorkbenchWindow().getShell());
+    setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
+
+    this.session = session;
+  }
+
+  public CDOSession getSession()
+  {
+    return session;
+  }
+
+  public final CDOCommitInfo getCommitInfo()
+  {
+    return commitInfo;
+  }
+
+  public final void setCommitInfo(CDOCommitInfo commitInfo)
+  {
+    this.commitInfo = commitInfo;
+    validate();
+  }
+
+  @Override
+  protected void configureShell(Shell newShell)
+  {
+    super.configureShell(newShell);
+    newShell.setSize(750, 600);
+  }
+
+  @Override
+  protected Control createDialogArea(Composite parent)
+  {
+    getShell().setText(TITLE);
+    setTitle(TITLE);
+    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_COMMIT));
+    setMessage("Select a commit from the history.");
+
+    Composite area = (Composite)super.createDialogArea(parent);
+
+    GridLayout containerGridLayout = new GridLayout(1, false);
+    containerGridLayout.marginWidth = 10;
+    containerGridLayout.marginHeight = 10;
+
+    Composite container = new Composite(area, SWT.NONE);
+    container.setLayoutData(new GridData(GridData.FILL_BOTH));
+    container.setLayout(containerGridLayout);
+
+    commitHistoryComposite = new CommitHistoryComposite(container, SWT.BORDER)
+    {
+      @Override
+      protected void commitInfoChanged(CDOCommitInfo commitInfo)
+      {
+        setCommitInfo(commitInfo);
+      }
+
+      @Override
+      protected void doubleClicked(CDOCommitInfo commitInfo)
+      {
+        close();
+      }
+    };
+
+    commitHistoryComposite.setLayoutData(UIUtil.createGridData());
+    commitHistoryComposite.setInput(new CommitHistoryComposite.Input(session, null, null));
+
+    return area;
+  }
+
+  @Override
+  protected void createButtonsForButtonBar(Composite parent)
+  {
+    super.createButtonsForButtonBar(parent);
+    validate();
+  }
+
+  protected void validate()
+  {
+    Button button = getButton(IDialogConstants.OK_ID);
+    if (button != null)
+    {
+      button.setEnabled(commitInfo != null);
+    }
+  }
+}

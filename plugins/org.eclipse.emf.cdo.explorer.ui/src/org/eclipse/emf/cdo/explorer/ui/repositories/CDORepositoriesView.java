@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutShowInActionProvider;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider;
 import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
@@ -39,6 +39,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.ITreeViewerListener;
@@ -55,6 +56,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.navigator.ICommonMenuConstants;
 
 import java.util.Properties;
 
@@ -194,7 +196,15 @@ public class CDORepositoriesView extends ContainerView
 
     IWorkbenchPage page = getSite().getPage();
     Object selectedElement = selection.getFirstElement();
-    CDOCheckoutShowInActionProvider.addShowInActions(page, manager, selectedElement);
+
+    IMenuManager subMenu = new MenuManager(ShowInActionProvider.TITLE, ICommonMenuConstants.GROUP_OPEN_WITH);
+    subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
+
+    if (ShowInActionProvider.fillMenu(page, subMenu, selectedElement))
+    {
+      subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
+      manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN_WITH, subMenu);
+    }
   }
 
   @Override

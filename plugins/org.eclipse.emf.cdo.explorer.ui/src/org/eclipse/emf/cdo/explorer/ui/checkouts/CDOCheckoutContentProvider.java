@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutOpenEvent;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -733,7 +734,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         else if (element instanceof EObject)
         {
           EObject eObject = (EObject)element;
-          CDOCheckoutOpenWithActionProvider.openEditor(getWorkbenchPage(), eObject, null);
+          OpenWithActionProvider.openEditor(getWorkbenchPage(), eObject, null);
         }
       }
     }

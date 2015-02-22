@@ -26,6 +26,7 @@ Export-Package: org.eclipse.emf.cdo.explorer.ui;version="4.4.0";x-internal:=true
  org.eclipse.emf.cdo.explorer.ui.application;version="4.4.0";x-internal:=true,
  org.eclipse.emf.cdo.explorer.ui.bundle;version="4.4.0";x-internal:=true,
  org.eclipse.emf.cdo.explorer.ui.checkouts;version="4.4.0";x-internal:=true,
+ org.eclipse.emf.cdo.explorer.ui.checkouts.actions;version="4.4.0";x-internal:=true,
  org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;version="4.4.0";x-internal:=true,
  org.eclipse.emf.cdo.explorer.ui.handlers;version="4.4.0";x-internal:=true,
  org.eclipse.emf.cdo.explorer.ui.properties;version="4.4.0";x-internal:=true,

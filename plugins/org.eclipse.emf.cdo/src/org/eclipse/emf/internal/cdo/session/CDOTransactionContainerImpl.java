@@ -63,7 +63,7 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
   public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
   {
     checkArg(target.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Target is not head of a branch: " + target);
-    return null;
+    return openTransaction(target.getBranch());
   }
 
   public CDOTransaction openTransaction(CDOBranchPoint target)

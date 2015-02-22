@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
@@ -154,6 +155,30 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     }
 
     return super.getBranchPath();
+  }
+
+  @Override
+  protected String doSetBranchPoint(int branchID, long timeStamp)
+  {
+    CDORepository repository = getRepository();
+    CDOSession session = repository.acquireSession();
+
+    try
+    {
+      CDOBranch branch = session.getBranchManager().getBranch(branchID);
+      if (branch != null)
+      {
+        String branchPath = branch.getPathName();
+        workspace.replace(branchPath, timeStamp);
+        return branchPath;
+      }
+    }
+    finally
+    {
+      repository.releaseSession();
+    }
+
+    return null;
   }
 
   @Override

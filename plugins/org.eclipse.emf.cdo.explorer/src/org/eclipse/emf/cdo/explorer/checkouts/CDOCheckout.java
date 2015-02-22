@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.checkouts;
 
 import org.eclipse.emf.cdo.CDOElement.StateProvider;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
@@ -43,13 +44,21 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public CDORepository getRepository();
 
-  public void setBranchPoint(int branchID, long timeStamp);
-
   public int getBranchID();
 
   public void setBranchID(int branchID);
 
   public String getBranchPath();
+
+  public CDOBranchPoint getBranchPoint();
+
+  public void setBranchPoint(CDOBranchPoint branchPoint);
+
+  public void setBranchPoint(int branchID, long timeStamp);
+
+  public CDOBranchPoint[] getBranchPoints();
+
+  public boolean addBranchPoint(CDOBranchPoint branchPoint);
 
   public long getTimeStamp();
 

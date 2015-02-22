@@ -145,6 +145,11 @@ public class SharedIcons
 
   public static final String OBJ_REPO = OBJ + "repo.gif"; //$NON-NLS-1$
 
+  /**
+   * @since 4.3
+   */
+  public static final String OBJ_BRANCH_POINT = OBJ + "branchpoint.gif"; //$NON-NLS-1$
+
   public static final String OBJ_BRANCH = OBJ + "branch.gif"; //$NON-NLS-1$
 
   /**
@@ -197,9 +202,21 @@ public class SharedIcons
   public static final String WIZBAN_IMPORT = WIZBAN + "import_wiz" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
 
   /**
-   * @since 4.1
+   * @since 4.3
    */
+  public static final String WIZBAN_EXPORT = WIZBAN + "export_wiz" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
+
+  /**
+   * @since 4.1
+   * @deprecated as of 4.2 use {@link #WIZBAN_EXPORT}.
+   */
+  @Deprecated
   public static final String WIZBAN_EXPOR = WIZBAN + "export_wiz" + IMAGE_FORMAT_PNG; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String WIZBAN_COMMIT = WIZBAN + "commit" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static Image getImage(String key)
   {

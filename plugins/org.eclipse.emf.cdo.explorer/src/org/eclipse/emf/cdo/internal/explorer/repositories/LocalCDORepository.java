@@ -134,10 +134,10 @@ public class LocalCDORepository extends CDORepositoryImpl
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put(PROP_VERSIONING_MODE, versioningMode.toString());
-    properties.put(PROP_ID_GENERATION, idGeneration.toString());
-    properties.put(PROP_TCP_DISABLED, Boolean.toString(tcpDisabled));
-    properties.put(PROP_TCP_PORT, Integer.toString(tcpPort));
+    properties.setProperty(PROP_VERSIONING_MODE, versioningMode.toString());
+    properties.setProperty(PROP_ID_GENERATION, idGeneration.toString());
+    properties.setProperty(PROP_TCP_DISABLED, Boolean.toString(tcpDisabled));
+    properties.setProperty(PROP_TCP_PORT, Integer.toString(tcpPort));
   }
 
   @Override

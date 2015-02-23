@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
-import org.eclipse.emf.cdo.internal.ui.actions.RemoveResourceActionDelegate;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.team.IRepositoryManager;
 import org.eclipse.emf.cdo.team.IRepositoryProject;
@@ -534,12 +533,13 @@ public class RepositoryContentProvider extends StructuredContentProvider<IWorksp
     {
     }
 
+    @SuppressWarnings({ "deprecation", "restriction" })
     @Override
     public void keyPressed(KeyEvent e)
     {
       if (e.keyCode == SWT.DEL)
       {
-        RemoveResourceActionDelegate action = new RemoveResourceActionDelegate();
+        org.eclipse.emf.cdo.internal.ui.actions.delegates.RemoveResourceActionDelegate action = new org.eclipse.emf.cdo.internal.ui.actions.delegates.RemoveResourceActionDelegate();
         action.selectionChanged(null, getViewer().getSelection());
         action.run(null);
       }

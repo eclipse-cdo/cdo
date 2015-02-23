@@ -541,7 +541,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       }
 
       String idString = getCDOIDString(objectID);
-      properties.put(idString, editorID);
+      properties.setProperty(idString, editorID);
 
       saveProperties(EDITOR_PROPERTIES, properties);
       editorIDs.put(objectID, editorID);
@@ -616,23 +616,23 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put(PROP_REPOSITORY, repository.getID());
-    properties.put(PROP_BRANCH_ID, Integer.toString(branchID));
-    properties.put(PROP_TIME_STAMP, Long.toString(timeStamp));
-    properties.put(PROP_READ_ONLY, Boolean.toString(readOnly));
+    properties.setProperty(PROP_REPOSITORY, repository.getID());
+    properties.setProperty(PROP_BRANCH_ID, Integer.toString(branchID));
+    properties.setProperty(PROP_TIME_STAMP, Long.toString(timeStamp));
+    properties.setProperty(PROP_READ_ONLY, Boolean.toString(readOnly));
 
     if (branchPath != null)
     {
-      properties.put(PROP_BRANCH_PATH, branchPath);
+      properties.setProperty(PROP_BRANCH_PATH, branchPath);
     }
 
     if (branchPoints != null)
     {
-      properties.put(PROP_BRANCH_POINTS, branchPoints);
+      properties.setProperty(PROP_BRANCH_POINTS, branchPoints);
     }
 
     String string = getCDOIDString(rootID);
-    properties.put(PROP_ROOT_ID, string);
+    properties.setProperty(PROP_ROOT_ID, string);
   }
 
   protected IManagedContainer getContainer()

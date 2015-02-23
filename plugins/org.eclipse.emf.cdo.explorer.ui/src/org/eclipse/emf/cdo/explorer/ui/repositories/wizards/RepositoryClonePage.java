@@ -132,11 +132,11 @@ public class RepositoryClonePage extends AbstractRepositoryPage
       throw new Exception("Invalid recommit attempts.");
     }
 
-    properties.put(CloneCDORepository.PROP_CONNECTOR_TYPE, "tcp");
-    properties.put(CloneCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
-    properties.put(CloneCDORepository.PROP_NAME, name);
-    properties.put(CloneCDORepository.PROP_RECONNECT_SECONDS, reconnectSeconds);
-    properties.put(CloneCDORepository.PROP_RECOMMIT_SECONDS, recommitSeconds);
-    properties.put(CloneCDORepository.PROP_RECOMMIT_ATTEMPTS, recommitAttempts);
+    properties.setProperty(CloneCDORepository.PROP_CONNECTOR_TYPE, "tcp");
+    properties.setProperty(CloneCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.setProperty(CloneCDORepository.PROP_NAME, name);
+    properties.setProperty(CloneCDORepository.PROP_RECONNECT_SECONDS, reconnectSeconds);
+    properties.setProperty(CloneCDORepository.PROP_RECOMMIT_SECONDS, recommitSeconds);
+    properties.setProperty(CloneCDORepository.PROP_RECOMMIT_ATTEMPTS, recommitAttempts);
   }
 }

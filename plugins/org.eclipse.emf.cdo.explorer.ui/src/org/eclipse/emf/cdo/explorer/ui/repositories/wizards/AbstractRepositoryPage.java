@@ -100,7 +100,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
   protected final void validate()
   {
     properties = new Properties();
-    properties.put(CDORepositoryImpl.PROP_TYPE, getName());
+    properties.setProperty(CDORepositoryImpl.PROP_TYPE, getName());
 
     try
     {
@@ -124,7 +124,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
       throw new Exception("Label is empty.");
     }
 
-    properties.put(CDORepositoryImpl.PROP_LABEL, label);
+    properties.setProperty(CDORepositoryImpl.PROP_LABEL, label);
   }
 
   protected abstract void fillPage(Composite container);

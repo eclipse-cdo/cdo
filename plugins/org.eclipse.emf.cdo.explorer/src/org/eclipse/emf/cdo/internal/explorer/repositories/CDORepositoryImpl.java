@@ -421,7 +421,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put(PROP_NAME, name);
+    properties.setProperty(PROP_NAME, name);
   }
 
   protected IConnector getConnector()

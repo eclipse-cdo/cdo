@@ -12,7 +12,8 @@
 -->
 
 <plugin>
-   <extension
+    
+   <!--extension
          point="org.eclipse.team.core.repository">
       <repository
             class="org.eclipse.emf.cdo.internal.team.RepositoryTeamProvider"
@@ -20,7 +21,6 @@
             metaFilePaths=".cdo"
             typeClass="org.eclipse.emf.cdo.internal.team.RepositoryTeamProviderType">
       </repository>
-   </extension>
-    
+   </extension-->
 
 </plugin>

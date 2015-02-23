@@ -156,32 +156,32 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
       throw new Exception("Name is empty.");
     }
 
-    properties.put(LocalCDORepository.PROP_NAME, name);
+    properties.setProperty(LocalCDORepository.PROP_NAME, name);
 
     if (normalButton.getSelection())
     {
-      properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Normal.toString());
+      properties.setProperty(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Normal.toString());
     }
     else if (auditingButton.getSelection())
     {
-      properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Auditing.toString());
+      properties.setProperty(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Auditing.toString());
     }
     else if (branchingButton.getSelection())
     {
-      properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
+      properties.setProperty(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
     }
 
     if (counterButton.getSelection())
     {
-      properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.Counter.toString());
+      properties.setProperty(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.Counter.toString());
     }
     else if (uuidButton.getSelection())
     {
-      properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
+      properties.setProperty(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
     }
 
     boolean tcpPortDisabled = portText.isDisabled();
-    properties.put(LocalCDORepository.PROP_TCP_DISABLED, Boolean.toString(tcpPortDisabled));
+    properties.setProperty(LocalCDORepository.PROP_TCP_DISABLED, Boolean.toString(tcpPortDisabled));
 
     if (!tcpPortDisabled)
     {
@@ -205,7 +205,7 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
         throw new Exception("TCP port " + port + " is not available.");
       }
 
-      properties.put(LocalCDORepository.PROP_TCP_PORT, port);
+      properties.setProperty(LocalCDORepository.PROP_TCP_PORT, Integer.toString(port));
     }
   }
 

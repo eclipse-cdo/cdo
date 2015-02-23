@@ -64,8 +64,8 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
       throw new Exception("Name is empty.");
     }
 
-    properties.put(RemoteCDORepository.PROP_CONNECTOR_TYPE, "tcp");
-    properties.put(RemoteCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
-    properties.put(RemoteCDORepository.PROP_NAME, name);
+    properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_TYPE, "tcp");
+    properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.setProperty(RemoteCDORepository.PROP_NAME, name);
   }
 }

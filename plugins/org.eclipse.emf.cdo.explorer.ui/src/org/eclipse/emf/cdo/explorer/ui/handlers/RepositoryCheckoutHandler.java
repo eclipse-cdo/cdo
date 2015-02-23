@@ -44,13 +44,13 @@ public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepository
       CDORepository repository = repositoryElement.getRepository();
 
       Properties properties = new Properties();
-      properties.put("type", type);
-      properties.put("label", repository.getLabel());
-      properties.put("repository", repository.getID());
-      properties.put("branchID", Integer.toString(repositoryElement.getBranchID()));
-      properties.put("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
-      properties.put("readOnly", Boolean.FALSE.toString());
-      properties.put("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
+      properties.setProperty("type", type);
+      properties.setProperty("label", repository.getLabel());
+      properties.setProperty("repository", repository.getID());
+      properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
+      properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
+      properties.setProperty("readOnly", Boolean.FALSE.toString());
+      properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
 
       CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
       checkout.open();

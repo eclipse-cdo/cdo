@@ -287,12 +287,12 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   protected void collectProperties(Properties properties)
   {
-    properties.put(PROP_TYPE, type);
-    properties.put(PROP_LABEL, label);
+    properties.setProperty(PROP_TYPE, type);
+    properties.setProperty(PROP_LABEL, label);
 
     if (serverBrowserPort != 0)
     {
-      properties.put(PROP_SERVER_BROWSER_PORT, Integer.toString(serverBrowserPort));
+      properties.setProperty(PROP_SERVER_BROWSER_PORT, Integer.toString(serverBrowserPort));
     }
   }
 

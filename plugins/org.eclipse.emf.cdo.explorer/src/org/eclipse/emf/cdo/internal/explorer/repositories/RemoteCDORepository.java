@@ -72,7 +72,7 @@ public class RemoteCDORepository extends CDORepositoryImpl
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put(PROP_CONNECTOR_TYPE, connectorType);
-    properties.put(PROP_CONNECTOR_DESCRIPTION, connectorDescription);
+    properties.setProperty(PROP_CONNECTOR_TYPE, connectorType);
+    properties.setProperty(PROP_CONNECTOR_DESCRIPTION, connectorDescription);
   }
 }

@@ -135,13 +135,13 @@ public class CDORepositoriesView extends ContainerView
       public void run()
       {
         Properties properties = new Properties();
-        properties.put(LocalCDORepository.PROP_TYPE, CDORepository.TYPE_LOCAL);
-        properties.put(LocalCDORepository.PROP_LABEL, "repo2");
-        properties.put(LocalCDORepository.PROP_NAME, "repo2");
-        properties.put(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
-        properties.put(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
-        properties.put(LocalCDORepository.PROP_TCP_DISABLED, "false");
-        properties.put(LocalCDORepository.PROP_TCP_PORT, "2037");
+        properties.setProperty(LocalCDORepository.PROP_TYPE, CDORepository.TYPE_LOCAL);
+        properties.setProperty(LocalCDORepository.PROP_LABEL, "repo2");
+        properties.setProperty(LocalCDORepository.PROP_NAME, "repo2");
+        properties.setProperty(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
+        properties.setProperty(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
+        properties.setProperty(LocalCDORepository.PROP_TCP_DISABLED, "false");
+        properties.setProperty(LocalCDORepository.PROP_TCP_PORT, "2037");
 
         CDORepository repository = CDOExplorerUtil.getRepositoryManager().addRepository(properties);
         repository.connect();

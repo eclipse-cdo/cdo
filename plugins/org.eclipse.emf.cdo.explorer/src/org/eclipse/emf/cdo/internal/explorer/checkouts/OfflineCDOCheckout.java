@@ -192,7 +192,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.put(PROP_DIRTY, Boolean.toString(dirty));
+    properties.setProperty(PROP_DIRTY, Boolean.toString(dirty));
   }
 
   @Override

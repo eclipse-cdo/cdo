@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
@@ -57,6 +58,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
@@ -739,18 +741,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     if (element instanceof CDOSession)
     {
-      CDOSession session = (CDOSession)element;
-      for (CDOView view : session.getViews())
-      {
-        elementListener.attach(view);
-      }
-
-      for (CDOView view : session.getTransactions())
-      {
-        elementListener.attach(view);
-      }
-
-      elementListener.attach(session);
+      elementListener.attach((CDOSession)element);
     }
   }
 
@@ -848,7 +839,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   /**
    * @author Eike Stepper
    */
-  private final class ElementListener implements IListener
+  private final class ElementListener implements IListener, CDOObjectHandler
   {
     private final Set<INotifier> notifiers = new HashSet<INotifier>();
 
@@ -862,9 +853,44 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
         {
           if (notifiers.add(notifier))
           {
-            notifier.addListener(this);
+            if (notifier instanceof CDOSession)
+            {
+              CDOSession session = (CDOSession)notifier;
+              for (CDOView view : session.getViews())
+              {
+                attachView(view);
+              }
+
+              for (CDOView view : session.getTransactions())
+              {
+                attachView(view);
+              }
+
+              notifier.addListener(this);
+            }
+            else if (notifier instanceof CDOView)
+            {
+              CDOView view = (CDOView)notifier;
+              attachView(view);
+            }
           }
         }
+      }
+    }
+
+    private void attachView(CDOView view)
+    {
+      view.addListener(this);
+      view.addObjectHandler(this);
+    }
+
+    private void detach(INotifier notifier)
+    {
+      notifier.removeListener(this);
+      if (notifier instanceof CDOView)
+      {
+        CDOView view = (CDOView)notifier;
+        view.removeObjectHandler(this);
       }
     }
 
@@ -875,7 +901,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
         disposed = true;
         for (INotifier notifier : notifiers)
         {
-          notifier.removeListener(this);
+          detach(notifier);
         }
 
         notifiers.clear();
@@ -910,8 +936,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
             Object element = delta.getElement();
             if (element instanceof CDOView)
             {
-              CDOView view = (CDOView)element;
-              attach(view);
+              attach((CDOView)element);
             }
           }
         }
@@ -933,6 +958,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
           updateLabels(objects.toArray());
         }
       }
+    }
+
+    public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
+    {
+      updateLabels(object);
     }
   }
 }

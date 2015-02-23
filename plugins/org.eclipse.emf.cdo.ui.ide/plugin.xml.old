@@ -13,7 +13,7 @@
 
 <plugin>
 
-   <extension
+   <!--extension
          point="org.eclipse.team.ui.configurationWizards">
       <wizard
             class="org.eclipse.emf.cdo.ui.internal.ide.wizards.TeamConfigurationWizard"
@@ -162,6 +162,6 @@
             class="org.eclipse.emf.cdo.ui.internal.ide.actions.RegisterWorkspacePackagesFactory"
             productGroup="org.eclipse.emf.cdo.ui.packageRegistryDialogCustomizers"
             type="RegisterWorkspacePackages"/>
-   </extension>
+   </extension-->
 
 </plugin>

@@ -81,13 +81,13 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
       {
         EObject eObject = (EObject)object;
 
-        final Map<String, Object> propertyValues = new HashMap<String, Object>();
+        final Map<String, Object> emfProperties = new HashMap<String, Object>();
         DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(eObject, ObjectProperties.INSTANCE)
         {
           @Override
           public Object getPropertyValue(Object id)
           {
-            Object value = propertyValues.get(id);
+            Object value = emfProperties.get(id);
             if (value != null)
             {
               return value;
@@ -128,7 +128,7 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
                 PropertyDescriptor descriptor = result.addDescriptor(category, id, displayName, description);
 
                 Object value = propertyDescriptor.getPropertyValue(eObject);
-                propertyValues.put(id, value);
+                emfProperties.put(id, value);
 
                 final String text = labelProvider.getText(value);
                 descriptor.setLabelProvider(new LabelProvider()

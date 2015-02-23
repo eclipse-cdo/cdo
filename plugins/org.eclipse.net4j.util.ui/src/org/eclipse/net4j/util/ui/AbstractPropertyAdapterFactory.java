@@ -22,7 +22,11 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
 @SuppressWarnings("rawtypes")
 public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
 {
-  private static final Class[] CLASSES = { IPropertySourceProvider.class, IActionFilter.class };
+  private static final Class<IPropertySourceProvider> CLASS_IPROPERTYSOURCEPROVIDER = IPropertySourceProvider.class;
+
+  private static final Class<IActionFilter> CLASS_IACTIONFILTER = IActionFilter.class;
+
+  private static final Class[] CLASSES = { CLASS_IPROPERTYSOURCEPROVIDER, CLASS_IACTIONFILTER };
 
   public AbstractPropertyAdapterFactory()
   {
@@ -35,7 +39,7 @@ public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
 
   public Object getAdapter(Object adaptableObject, Class adapterType)
   {
-    if (adapterType == CLASSES[0])
+    if (adapterType == CLASS_IPROPERTYSOURCEPROVIDER)
     {
       final IPropertySource propertySource = createPropertySource(adaptableObject);
       if (propertySource != null)
@@ -50,7 +54,7 @@ public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
       }
     }
 
-    if (adapterType == CLASSES[1])
+    if (adapterType == CLASS_IACTIONFILTER)
     {
       return createActionFilter(adaptableObject);
     }

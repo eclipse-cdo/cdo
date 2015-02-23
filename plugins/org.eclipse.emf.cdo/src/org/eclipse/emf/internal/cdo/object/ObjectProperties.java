@@ -13,7 +13,9 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -52,6 +54,50 @@ public class ObjectProperties extends Properties<EObject>
         }
 
         return cdoObject.cdoID();
+      }
+    });
+
+    add(new Property<EObject>("version", //$NON-NLS-1$
+        "Version", "The version of this object.", CATEGORY_CDO)
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return 0;
+        }
+
+        CDORevision revision = cdoObject.cdoRevision();
+        if (revision == null)
+        {
+          return 0;
+        }
+
+        return revision.getVersion();
+      }
+    });
+
+    add(new Property<EObject>("branch", //$NON-NLS-1$
+        "Branch", "The branch of this object.", CATEGORY_CDO)
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return null;
+        }
+
+        CDORevision revision = cdoObject.cdoRevision();
+        if (revision == null)
+        {
+          return null;
+        }
+
+        return revision.getBranch().getPathName();
       }
     });
 
@@ -299,6 +345,28 @@ public class ObjectProperties extends Properties<EObject>
       }
     });
 
+    add(new Property<EObject>("uri", "URI", "The URI of this object.", CATEGORY_CDO) //$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return null;
+        }
+
+        Resource resource = cdoObject.eResource();
+        if (resource == null)
+        {
+          return null;
+        }
+
+        CDOID id = cdoObject.cdoID();
+        String fragment = id != null ? id.toURIFragment() : resource.getURIFragment(cdoObject);
+        return resource.getURI().appendFragment(fragment).toString();
+      }
+    });
   }
 
   public static void main(String[] args)

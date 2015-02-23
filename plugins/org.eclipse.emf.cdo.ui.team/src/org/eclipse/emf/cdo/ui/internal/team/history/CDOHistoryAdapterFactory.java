@@ -19,7 +19,9 @@ import org.eclipse.team.ui.history.IHistoryPageSource;
 @SuppressWarnings("rawtypes")
 public class CDOHistoryAdapterFactory implements IAdapterFactory
 {
-  private static final Class[] ADAPTER_TYPES = { IHistoryPageSource.class };
+  private static final Class<IHistoryPageSource> CLASS_IHISTORYPAGESOURCE = IHistoryPageSource.class;
+
+  private static final Class[] ADAPTER_TYPES = { CLASS_IHISTORYPAGESOURCE };
 
   public CDOHistoryAdapterFactory()
   {
@@ -32,7 +34,7 @@ public class CDOHistoryAdapterFactory implements IAdapterFactory
 
   public Object getAdapter(Object adaptableObject, Class adapterType)
   {
-    if (adapterType == IHistoryPageSource.class)
+    if (adapterType == CLASS_IHISTORYPAGESOURCE)
     {
       return CDOHistoryPageSource.INSTANCE;
     }

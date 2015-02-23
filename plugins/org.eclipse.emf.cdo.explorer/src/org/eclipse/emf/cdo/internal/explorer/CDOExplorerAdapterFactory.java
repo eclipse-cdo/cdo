@@ -29,7 +29,9 @@ import org.eclipse.core.runtime.IAdapterFactory;
 @SuppressWarnings("rawtypes")
 public class CDOExplorerAdapterFactory implements IAdapterFactory
 {
-  private static final Class[] CLASSES = { CDORepositoryElement.class };
+  private static final Class<CDORepositoryElement> CLASS_CDOREPOSITORYELEMENT = CDORepositoryElement.class;
+
+  private static final Class[] CLASSES = { CLASS_CDOREPOSITORYELEMENT };
 
   public CDOExplorerAdapterFactory()
   {
@@ -42,7 +44,7 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
 
   public Object getAdapter(Object adaptableObject, Class adapterType)
   {
-    if (adapterType == CLASSES[0])
+    if (adapterType == CLASS_CDOREPOSITORYELEMENT)
     {
       if (adaptableObject instanceof CDOBranch)
       {

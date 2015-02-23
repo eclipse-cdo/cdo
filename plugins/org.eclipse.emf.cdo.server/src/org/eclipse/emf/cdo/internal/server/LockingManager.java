@@ -75,7 +75,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 {
   private InternalRepository repository;
 
-  private Map<String, InternalView> openViews = new HashMap<String, InternalView>();
+  private Map<String, InternalView> openDurableViews = new HashMap<String, InternalView>();
 
   private Map<String, DurableView> durableViews = new HashMap<String, DurableView>();
 
@@ -97,13 +97,13 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       String durableLockingID = view.getDurableLockingID();
       if (durableLockingID == null)
       {
-        unlock(view);
+        repository.unlock((InternalView)view, null, null, false);
       }
       else
       {
         DurableView durableView = new DurableView(durableLockingID);
         changeContext(view, durableView);
-        unregisterOpenView(durableLockingID);
+        unregisterOpenDurableView(durableLockingID);
         durableViews.put(durableLockingID, durableView);
       }
     }
@@ -368,9 +368,9 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     Map<CDOID, LockGrade> locks = getLocks(view);
 
     LockArea area = createLockArea(userID, branchPoint, readOnly, locks, lockAreaID);
-    synchronized (openViews)
+    synchronized (openDurableViews)
     {
-      openViews.put(area.getDurableLockingID(), view);
+      openDurableViews.put(area.getDurableLockingID(), view);
     }
 
     return area;
@@ -397,14 +397,14 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
     DurableLocking accessor = getDurableLocking();
     accessor.deleteLockArea(durableLockingID);
-    unregisterOpenView(durableLockingID);
+    unregisterOpenDurableView(durableLockingID);
   }
 
   public IView openView(ISession session, int viewID, boolean readOnly, final String durableLockingID)
   {
-    synchronized (openViews)
+    synchronized (openDurableViews)
     {
-      InternalView view = openViews.get(durableLockingID);
+      InternalView view = openDurableViews.get(durableLockingID);
       if (view != null)
       {
         throw new IllegalStateException("Durable view is already open: " + view);
@@ -445,14 +445,14 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         @Override
         protected void onDeactivated(ILifecycle lifecycle)
         {
-          synchronized (openViews)
+          synchronized (openDurableViews)
           {
-            openViews.remove(durableLockingID);
+            openDurableViews.remove(durableLockingID);
           }
         }
       });
 
-      openViews.put(durableLockingID, view);
+      openDurableViews.put(durableLockingID, view);
       return view;
     }
   }
@@ -526,11 +526,11 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   }
 
-  private void unregisterOpenView(String durableLockingID)
+  private void unregisterOpenDurableView(String durableLockingID)
   {
-    synchronized (openViews)
+    synchronized (openDurableViews)
     {
-      InternalView view = openViews.remove(durableLockingID);
+      InternalView view = openDurableViews.remove(durableLockingID);
       if (view != null)
       {
         view.setDurableLockingID(null);
@@ -737,7 +737,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
     private IView getView(String lockAreaID)
     {
-      IView view = openViews.get(lockAreaID);
+      IView view = openDurableViews.get(lockAreaID);
       if (view == null)
       {
         view = durableViews.get(lockAreaID);

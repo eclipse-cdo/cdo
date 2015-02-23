@@ -15,17 +15,17 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.edit.messages.Messages;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.internal.cdo.object.ObjectProperties;
+
+import org.eclipse.net4j.util.properties.Property;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -88,117 +88,149 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     if (itemPropertyDescriptors == null)
     {
       super.getPropertyDescriptors(object);
-      addIDDescriptor(object);
-      addVersionDescriptor(object);
-      addStateDescriptor(object);
-      addViewDescriptor(object);
-      addContainerDescriptor(object);
-      addDirectResourceDescriptor(object);
-      addReadLockedDescriptor(object);
-      addWriteLockedDescriptor(object);
-      addWriteOptionDescriptor(object);
-      addAdaptersDescriptor(object);
-      addChangeSubscriptionPoliciesDescriptor(object);
-      addURIDescriptor(object);
+
+      if (object instanceof EObject)
+      {
+        EObject eObject = (EObject)object;
+        for (Property<EObject> property : ObjectProperties.INSTANCE.getProperties())
+        {
+          if (property.getLabel() != null)
+          {
+            addCDOPropertyDescriptor(eObject, property);
+          }
+        }
+      }
     }
 
     return itemPropertyDescriptors;
   }
 
   /**
-   * @since 2.0
+   * @since 4.4
    */
+  protected void addCDOPropertyDescriptor(EObject object, Property<EObject> property)
+  {
+    itemPropertyDescriptors.add(new CDOPropertyDescriptor(property));
+  }
+
+  /**
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addIDDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new IDDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addVersionDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new VersionDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addStateDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new StateDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addViewDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new ViewDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addContainerDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new ContainerDescriptor(adapterFactory));
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addDirectResourceDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new DirectResourceDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addReadLockedDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new ReadLockedDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addWriteLockedDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new WriteLockedDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 4.3
-   */
+  * @since 4.3
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addWriteOptionDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new WriteOptionDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addAdaptersDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new AdaptersDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addChangeSubscriptionPoliciesDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new ChangeSubscriptionPoliciesDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
-   * @since 2.0
-   */
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   protected void addURIDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new URIDescriptor());
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -208,7 +240,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
    * @since 2.0
    * @author Victor Roldan Betancort
    */
-  public static abstract class CDOPropertyDescriptor implements IItemPropertyDescriptor
+  public static class CDOPropertyDescriptor implements IItemPropertyDescriptor, IItemLabelProvider
   {
     /**
      * The filter id for expert properties
@@ -220,24 +252,89 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
      */
     public static final String CDO_CATEGORY = Messages.getString("CDOItemProviderAdapter.0"); //$NON-NLS-1$
 
+    private final Property<EObject> property;
+
+    /**
+     * @deprecated as of 4.4. use {@link #CDOPropertyDescriptor(Property)}.
+     */
+    @Deprecated
     public CDOPropertyDescriptor()
     {
+      this(null);
     }
 
-    public boolean canSetProperty(Object object)
+    /**
+     * @since 4.4
+     */
+    public CDOPropertyDescriptor(Property<EObject> property)
     {
-      return false;
+      this.property = property;
+    }
+
+    /**
+     * @since 4.4
+     */
+    public final Property<EObject> getProperty()
+    {
+      return property;
+    }
+
+    /**
+     * @since 4.4
+     */
+    public String getId(Object object)
+    {
+      return "___CDO___" + property.getName();
+    }
+
+    /**
+     * @since 4.4
+     */
+    public Object getFeature(Object object)
+    {
+      return getId(object);
+    }
+
+    /**
+     * @since 4.4
+     */
+    public String getDisplayName(Object object)
+    {
+      return property.getLabel();
+    }
+
+    /**
+     * @since 4.4
+     */
+    public String getDescription(Object object)
+    {
+      return property.getDescription();
+    }
+
+    public boolean isPropertySet(Object object)
+    {
+      return true;
+    }
+
+    /**
+     * @since 4.4
+     */
+    public Object getPropertyValue(Object object)
+    {
+      return property.getValue((EObject)object);
     }
 
     public void setPropertyValue(Object object, Object value)
     {
+      // Do nothing.
     }
 
     public void resetPropertyValue(Object object)
     {
+      // Do nothing.
     }
 
-    public boolean isPropertySet(Object object)
+    public boolean canSetProperty(Object object)
     {
       return false;
     }
@@ -285,14 +382,32 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
 
     public IItemLabelProvider getLabelProvider(Object object)
     {
-      return new DefaultLabelProvider();
+      return this;
+    }
+
+    /**
+     * @since 4.4
+     */
+    public Object getImage(Object object)
+    {
+      return null;
+    }
+
+    /**
+     * @since 4.4
+     */
+    public String getText(Object object)
+    {
+      return object.toString();
     }
 
     /**
      * A default implementation of {@link IItemLabelProvider}.
      *
      * @author Eike Stepper
+     * @deprecated as of 4.4 not used any more.
      */
+    @Deprecated
     public static class DefaultLabelProvider implements IItemLabelProvider
     {
       public DefaultLabelProvider()
@@ -312,779 +427,149 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-   * Adds the {@link CDOID} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the {@link CDOID} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class IDDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.1"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.2"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.3"); //$NON-NLS-1$
-
-    public IDDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      return CDOUtil.getCDOObject((EObject)object).cdoID();
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
   }
 
   /**
-   * Adds the version of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the version of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class VersionDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.4"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.5"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.6"); //$NON-NLS-1$
-
-    public VersionDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof CDOObject)
-      {
-        return CDOUtil.getCDOObject((EObject)object).cdoRevision();
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      return new DefaultLabelProvider()
-      {
-        @Override
-        public String getText(Object object)
-        {
-          if (object instanceof CDORevision)
-          {
-            return String.valueOf(((CDORevision)object).getVersion());
-          }
-
-          return null;
-        }
-      };
-    }
   }
 
   /**
-   * Adds the {@link CDOState state} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the {@link CDOState state} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class StateDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.7"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.8"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.9"); //$NON-NLS-1$
-
-    public StateDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof CDOObject)
-      {
-        return CDOUtil.getCDOObject((EObject)object).cdoState();
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
   }
 
   /**
-   * Adds the associate {@link CDOView view} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the associate {@link CDOView view} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class ViewDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.10"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.11"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.12"); //$NON-NLS-1$
-
-    public ViewDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof EObject)
-      {
-        return CDOUtil.getCDOObject((EObject)object).cdoView();
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
   }
 
   /**
-   * Adds the {@link EObject#eContainer() eContainer} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the {@link EObject#eContainer() eContainer} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class ContainerDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.13"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.14"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.15"); //$NON-NLS-1$
-
-    private static AdapterFactory adapterFactory;
-
     public ContainerDescriptor(AdapterFactory adapterFactory)
     {
-      ContainerDescriptor.adapterFactory = adapterFactory;
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      return CDOUtil.getCDOObject((EObject)object).eContainer();
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      // Needs a wrapped delegator to IItemLabelProvider since eContainer might be null for top level CDOObjects
-      // and we can't return a null IItemLabelProvider
-      return new IItemLabelProvider()
-      {
-        public Object getImage(Object object)
-        {
-          if (object != null)
-          {
-            IItemLabelProvider itemLabelProvider = (IItemLabelProvider)ContainerDescriptor.adapterFactory.adapt(object,
-                IItemLabelProvider.class);
-            if (itemLabelProvider != null)
-            {
-              return itemLabelProvider.getImage(object);
-            }
-          }
-
-          return null;
-        }
-
-        public String getText(Object object)
-        {
-          if (object != null)
-          {
-            IItemLabelProvider itemLabelProvider = (IItemLabelProvider)ContainerDescriptor.adapterFactory.adapt(object,
-                IItemLabelProvider.class);
-            if (itemLabelProvider != null)
-            {
-              return itemLabelProvider.getText(object);
-            }
-          }
-
-          return null;
-        }
-      };
     }
   }
 
   /**
-   * Adds the {@link InternalEObject#eDirectResource() direct resource} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the {@link InternalEObject#eDirectResource() direct resource} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class DirectResourceDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.16"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.17"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.18"); //$NON-NLS-1$
-
-    public DirectResourceDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof InternalEObject)
-      {
-        return ((InternalEObject)object).eDirectResource();
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      return new DefaultLabelProvider()
-      {
-        @Override
-        public String getText(Object object)
-        {
-          if (object instanceof CDOResource)
-          {
-            return ((Resource)object).getURI().toString();
-          }
-
-          return null;
-        }
-      };
-    }
   }
 
   /**
-   * Adds the {@link CDOLock read lock} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the {@link CDOLock read lock} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class ReadLockedDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.19"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.20"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.21"); //$NON-NLS-1$
-
-    public ReadLockedDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof EObject)
-      {
-        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)object);
-        if (cdoObject.cdoView() != null)
-        {
-          return cdoObject.cdoReadLock();
-        }
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      return new DefaultLabelProvider()
-      {
-        @Override
-        public String getText(Object object)
-        {
-          if (object instanceof CDOLock)
-          {
-            return String.valueOf(((CDOLock)object).isLocked());
-          }
-
-          return null;
-        }
-      };
-    }
   }
 
   /**
-   * Adds the {@link CDOLock write lock} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the {@link CDOLock write lock} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class WriteLockedDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.22"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.23"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.24"); //$NON-NLS-1$
-
-    public WriteLockedDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof EObject)
-      {
-        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)object);
-        if (cdoObject.cdoView() != null)
-        {
-          return cdoObject.cdoWriteLock();
-        }
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      return new DefaultLabelProvider()
-      {
-        @Override
-        public String getText(Object object)
-        {
-          if (object instanceof CDOLock)
-          {
-            return String.valueOf(((CDOLock)object).isLocked());
-          }
-
-          return null;
-        }
-      };
-    }
   }
 
   /**
-   * Adds the {@link CDOLock write option} of a {@link CDOObject} to the Properties view.
-   *
-   * @since 4.3
-   * @author Eike Stepper
-   */
+  * Adds the {@link CDOLock write option} of a {@link CDOObject} to the Properties view.
+  *
+  * @author Eike Stepper
+  * @since 4.3
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class WriteOptionDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.34"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.35"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.36"); //$NON-NLS-1$
-
-    public WriteOptionDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof EObject)
-      {
-        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)object);
-        if (cdoObject.cdoView() != null)
-        {
-          return cdoObject.cdoWriteOption();
-        }
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      return new DefaultLabelProvider()
-      {
-        @Override
-        public String getText(Object object)
-        {
-          if (object instanceof CDOLock)
-          {
-            return String.valueOf(((CDOLock)object).isLocked());
-          }
-
-          return null;
-        }
-      };
-    }
   }
 
   /**
-   * Adds the {@link EObject#eAdapters() eAdapters} list of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the {@link EObject#eAdapters() eAdapters} list of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class AdaptersDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.25"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.26"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.27"); //$NON-NLS-1$
-
-    public AdaptersDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof EObject)
-      {
-        return CDOUtil.getCDOObject((EObject)object).eAdapters();
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
   }
 
   /**
-   * Adds the change subscription policies list of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the change subscription policies list of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class ChangeSubscriptionPoliciesDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.28"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.29"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.30"); //$NON-NLS-1$
-
-    public ChangeSubscriptionPoliciesDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof EObject)
-      {
-        CDOView cdoView = CDOUtil.getCDOObject((EObject)object).cdoView();
-        if (cdoView != null)
-        {
-          return cdoView.options().getChangeSubscriptionPolicies();
-        }
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      return new DefaultLabelProvider()
-      {
-        @Override
-        public String getText(Object object)
-        {
-          if (object instanceof CDOAdapterPolicy[])
-          {
-            StringBuilder builder = new StringBuilder();
-            CDOAdapterPolicy[] policies = (CDOAdapterPolicy[])object;
-            for (CDOAdapterPolicy policy : policies)
-            {
-              builder.append(policy.toString());
-              builder.append(", "); //$NON-NLS-1$
-            }
-
-            return builder.toString();
-          }
-
-          return null;
-        }
-      };
-    }
   }
 
   /**
-   * Adds the URI of a {@link CDOObject} to the Properties view.
-   *
-   * @since 2.0
-   * @author Victor Roldan Betancort
-   */
+  * Adds the URI of a {@link CDOObject} to the Properties view.
+  *
+  * @author Victor Roldan Betancort
+  * @since 2.0
+  * @deprecated as of 4.4 not used any more.
+  */
+  @Deprecated
   public static class URIDescriptor extends CDOPropertyDescriptor
   {
-    private static final String FEATURE_ID = Messages.getString("CDOItemProviderAdapter.31"); //$NON-NLS-1$
-
-    private static final String DISPLAY_NAME = Messages.getString("CDOItemProviderAdapter.32"); //$NON-NLS-1$
-
-    private static final String DESCRIPTION = Messages.getString("CDOItemProviderAdapter.33"); //$NON-NLS-1$
-
-    public URIDescriptor()
-    {
-    }
-
-    public Object getPropertyValue(Object object)
-    {
-      if (object instanceof EObject)
-      {
-        CDOObject cdoObject = CDOUtil.getCDOObject((EObject)object);
-        Resource resource = cdoObject.eResource();
-        if (resource != null)
-        {
-          CDOID id = cdoObject.cdoID();
-          String fragment = id != null ? id.toURIFragment() : resource.getURIFragment(cdoObject);
-          return resource.getURI().appendFragment(fragment).toString();
-        }
-      }
-
-      return null;
-    }
-
-    public String getDescription(Object object)
-    {
-      return DESCRIPTION;
-    }
-
-    public String getDisplayName(Object object)
-    {
-      return DISPLAY_NAME;
-    }
-
-    public Object getFeature(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    public String getId(Object object)
-    {
-      return FEATURE_ID;
-    }
-
-    @Override
-    public IItemLabelProvider getLabelProvider(Object object)
-    {
-      return new DefaultLabelProvider()
-      {
-        @Override
-        public String getText(Object object)
-        {
-          if (object instanceof String)
-          {
-            return (String)object;
-          }
-
-          return null;
-        }
-      };
-    }
   }
 }

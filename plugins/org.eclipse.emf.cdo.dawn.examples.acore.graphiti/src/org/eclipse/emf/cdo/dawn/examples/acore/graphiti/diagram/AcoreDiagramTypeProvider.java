@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.dawn.examples.acore.graphiti.util.DawnGraphitiAcoreRe
 
 import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
-import org.eclipse.graphiti.platform.IDiagramEditor;
+import org.eclipse.graphiti.platform.IDiagramBehavior;
 import org.eclipse.graphiti.tb.IToolBehaviorProvider;
 
 /**
@@ -48,7 +48,7 @@ public class AcoreDiagramTypeProvider extends AbstractDiagramTypeProvider
   }
 
   @Override
-  public void init(Diagram diagram, IDiagramEditor diagramEditor)
+  public void init(Diagram diagram, IDiagramBehavior diagramEditor)
   {
     super.init(diagram, diagramEditor);
     DawnGraphitiAcoreResourceUtil.wireDomainModel(diagram, diagram.eResource().getResourceSet(), getDiagramBehavior()

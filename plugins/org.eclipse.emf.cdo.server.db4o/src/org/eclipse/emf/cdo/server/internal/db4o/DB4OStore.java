@@ -204,6 +204,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
     }
   }
 
+  @SuppressWarnings("deprecation")
   protected void initObjectServer()
   {
     Configuration configuration = serverConfiguration;
@@ -347,6 +348,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   protected Configuration createServerConfiguration()
   {
+    @SuppressWarnings("deprecation")
     Configuration config = Db4o.newConfiguration();
     config.reflectWith(new JdkReflector(getClass().getClassLoader()));
 
@@ -440,7 +442,7 @@ public class DB4OStore extends LongIDStore implements IDB4OStore
 
   /**
    * Carries {@link IStore}-related information.
-   * 
+   *
    * @author Victor Roldan Betancort
    */
   private static final class ServerInfo

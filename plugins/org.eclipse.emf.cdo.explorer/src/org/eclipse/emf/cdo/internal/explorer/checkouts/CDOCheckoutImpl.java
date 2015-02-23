@@ -34,8 +34,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
-import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -76,21 +76,6 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private static final String BRANCH_AND_POINT_SEPARATOR = "_";
 
   private final Map<CDOID, String> editorIDs = new WeakHashMap<CDOID, String>();
-
-  private final IListener viewListener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof ILifecycleEvent)
-      {
-        ILifecycleEvent e = (ILifecycleEvent)event;
-        if (e.getKind() == Kind.DEACTIVATED)
-        {
-          close();
-        }
-      }
-    }
-  };
 
   private CDORepository repository;
 
@@ -330,11 +315,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return view != null;
   }
 
-  public final synchronized void open()
+  public final void open()
   {
     boolean opened = false;
 
-    synchronized (viewListener)
+    synchronized (this)
     {
       if (!isOpen())
       {
@@ -346,7 +331,15 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
           CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
 
           view = openView(session);
-          view.addListener(viewListener);
+          view.addListener(new LifecycleEventAdapter()
+          {
+            @Override
+            protected void onDeactivated(ILifecycle lifecycle)
+            {
+              close();
+            }
+          });
+
           configureView(view);
 
           rootObject = loadRootObject();
@@ -384,12 +377,12 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     // Do nothing.
   }
 
-  public final synchronized void close()
+  public final void close()
   {
     boolean closed = false;
     CDOView oldView = null;
 
-    synchronized (viewListener)
+    synchronized (this)
     {
       if (isOpen())
       {

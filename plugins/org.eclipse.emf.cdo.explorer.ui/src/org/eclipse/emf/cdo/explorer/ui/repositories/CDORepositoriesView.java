@@ -129,7 +129,6 @@ public class CDORepositoriesView extends ContainerView
   {
     addCollapseAllAction(manager);
 
-    int xxx;
     manager.add(new Action("Local")
     {
       @Override

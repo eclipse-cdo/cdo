@@ -351,8 +351,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
   public void handleLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
   {
     CDOLockOwner owner = lockChangeInfo.getLockOwner();
-    
-    int xxx;
     if (owner == null)
     {
       return;

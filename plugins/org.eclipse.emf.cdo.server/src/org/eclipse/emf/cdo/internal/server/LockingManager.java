@@ -12,7 +12,6 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -20,7 +19,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ISessionManager;
@@ -30,12 +31,11 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalView;
-import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
@@ -51,9 +51,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
-
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.runtime.PlatformObject;
 
@@ -239,46 +236,34 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   private Set<? extends Object> createContentSet(Collection<? extends Object> objectsToLock, IView view)
   {
     CDOBranch branch = view.getBranch();
-    CDOView cdoView = CDOServerUtil.openView(view.getSession(), branch.getHead());
+    boolean branching = repository.isSupportingBranches();
+
+    CDORevisionManager revisionManager = view.getSession().getManager().getRepository().getRevisionManager();
+    CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branch.getHead());
 
     Set<Object> contents = new HashSet<Object>();
-    for (Object o : objectsToLock)
+
+    for (Object objectToLock : objectsToLock)
     {
-      contents.add(o);
+      contents.add(objectToLock);
 
-      boolean isIDandBranch = o instanceof CDOIDAndBranch;
-      CDOID id;
-      if (isIDandBranch)
-      {
-        id = ((CDOIDAndBranch)o).getID();
-      }
-      else
-      {
-        id = (CDOID)o;
-      }
-
-      CDOObject obj = cdoView.getObject(id);
-      TreeIterator<EObject> iter = obj.eAllContents();
-      while (iter.hasNext())
-      {
-        EObject eObj = iter.next();
-        CDOObject cdoObj = CDOUtil.getCDOObject(eObj);
-        CDOID childID = cdoObj.cdoID();
-        Object child;
-        if (isIDandBranch)
-        {
-          child = CDOIDUtil.createIDAndBranch(childID, branch);
-        }
-        else
-        {
-          child = childID;
-        }
-
-        contents.add(child);
-      }
+      CDOID id = branching ? ((CDOIDAndBranch)objectToLock).getID() : (CDOID)objectToLock;
+      CDORevision revision = revisionProvider.getRevision(id);
+      createContentSet(branch, branching, revisionProvider, revision, contents);
     }
 
     return contents;
+  }
+
+  private void createContentSet(CDOBranch branch, boolean branching, CDORevisionProvider revisionProvider,
+      CDORevision revision, Set<Object> contents)
+  {
+    for (CDORevision child : CDORevisionUtil.getChildRevisions(revision, revisionProvider))
+    {
+      CDOID childID = child.getID();
+      contents.add(branching ? CDOIDUtil.createIDAndBranch(childID, branch) : childID);
+      createContentSet(branch, branching, revisionProvider, child, contents);
+    }
   }
 
   @Deprecated

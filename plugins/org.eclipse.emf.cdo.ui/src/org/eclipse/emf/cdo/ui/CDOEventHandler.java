@@ -294,41 +294,11 @@ public class CDOEventHandler
   }
 
   /**
-   * @since 4.3
+   * @since 4.4
    */
   public void updateElement(final Object element)
   {
-    try
-    {
-      Control control = treeViewer.getControl();
-      if (!control.isDisposed())
-      {
-        control.getDisplay().asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            try
-            {
-              if (element instanceof Object[])
-              {
-                Object[] elements = (Object[])element;
-                treeViewer.update(elements, null);
-              }
-              else
-              {
-                treeViewer.update(element, null);
-              }
-            }
-            catch (Exception ignore)
-            {
-            }
-          }
-        });
-      }
-    }
-    catch (Exception ignore)
-    {
-    }
+    UIUtil.updateElements(treeViewer, element);
   }
 
   /**

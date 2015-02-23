@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
@@ -39,6 +40,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.FeatureMap;
 
@@ -359,6 +361,64 @@ public final class CDORevisionUtil
     }
 
     return (InternalCDORevision)provider.getRevision(parentID);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static List<CDORevision> getChildRevisions(CDOID container, CDORevisionProvider provider)
+  {
+    InternalCDORevision revision = (InternalCDORevision)provider.getRevision(container);
+    return getChildRevisions(revision, provider);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static List<CDORevision> getChildRevisions(CDORevision container, CDORevisionProvider provider)
+  {
+    List<CDORevision> children = new ArrayList<CDORevision>();
+
+    InternalCDORevision revisionData = (InternalCDORevision)container;
+    CDOClassInfo classInfo = revisionData.getClassInfo();
+
+    for (EStructuralFeature feature : classInfo.getAllPersistentContainments())
+    {
+      if (feature instanceof EReference)
+      {
+        if (feature.isMany())
+        {
+          CDOList list = revisionData.getList(feature);
+          if (list != null)
+          {
+            for (Object value : list)
+            {
+              addChildRevision(value, provider, children);
+            }
+          }
+        }
+        else
+        {
+          Object value = revisionData.getValue(feature);
+          addChildRevision(value, provider, children);
+        }
+      }
+    }
+
+    return children;
+  }
+
+  private static void addChildRevision(Object value, CDORevisionProvider provider, List<CDORevision> children)
+  {
+    if (value instanceof CDOID)
+    {
+      CDOID id = (CDOID)value;
+      CDORevision child = provider.getRevision(id);
+      if (child != null)
+      {
+        children.add(child);
+      }
+    }
   }
 
   /**

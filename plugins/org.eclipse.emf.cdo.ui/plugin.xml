@@ -319,6 +319,22 @@
             id="org.eclipse.emf.cdo.ui.CreateBranch"
             name="Create Branch"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler"/>
+      <command
+            id="org.eclipse.emf.cdo.ui.LockObject"
+            name="Lock Object"
+            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$LockObject"/>
+      <command
+            id="org.eclipse.emf.cdo.ui.LockTree"
+            name="Lock Tree"
+            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$LockTree"/>
+      <command
+            id="org.eclipse.emf.cdo.ui.UnlockObject"
+            name="Unlock Object"
+            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$UnlockObject"/>
+      <command
+            id="org.eclipse.emf.cdo.ui.UnlockTree"
+            name="Unlock Tree"
+            defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$UnlockTree"/>
   </extension>
 
   <extension point="org.eclipse.ui.menus">
@@ -335,6 +351,95 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext"/>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.ui.LockObject"
+               icon="icons/full/elcl16/lock.gif"
+               label="Lock Object"
+               style="push"
+               tooltip="Acquire write locks for the selected objects">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate>
+                    <and>
+                      <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <test property="org.eclipse.emf.cdo.object.writeLocked" value="false"/>
+                      <test property="org.eclipse.emf.cdo.object.writeLockedByOthers" value="false"/>
+                    </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.ui.LockTree"
+               icon="icons/full/elcl16/lock.gif"
+               label="Lock Tree"
+               style="push"
+               tooltip="Acquire write locks for the selected objects and their children">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate>
+                    <and>
+                      <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <test property="org.eclipse.emf.cdo.object.writeLocked" value="false"/>
+                      <test property="org.eclipse.emf.cdo.object.writeLockedByOthers" value="false"/>
+                      <test property="org.eclipse.emf.cdo.object.children" value="true"/>
+                    </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.ui.UnlockObject"
+               icon="icons/full/elcl16/unlock.gif"
+               label="Unlock Object"
+               style="push"
+               tooltip="Release write locks for the selected objects">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate>
+                    <and>
+                      <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <test property="org.eclipse.emf.cdo.object.writeLocked" value="true"/>
+                    </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
+         <command
+               commandId="org.eclipse.emf.cdo.ui.UnlockTree"
+               icon="icons/full/elcl16/unlock.gif"
+               label="Unlock Tree"
+               style="push"
+               tooltip="Release write locks for the selected objects and their children">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate>
+                    <and>
+                      <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <test property="org.eclipse.emf.cdo.object.writeLocked" value="true"/>
+                      <test property="org.eclipse.emf.cdo.object.children" value="true"/>
+                    </and>
                   </iterate>
                </with>
             </visibleWhen>

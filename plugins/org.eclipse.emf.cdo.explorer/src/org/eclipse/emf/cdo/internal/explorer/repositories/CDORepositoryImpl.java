@@ -57,15 +57,6 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private final Set<CDOCheckout> openCheckouts = new HashSet<CDOCheckout>();
 
-  private final LifecycleEventAdapter sessionListener = new LifecycleEventAdapter()
-  {
-    @Override
-    protected void onDeactivated(ILifecycle lifecycle)
-    {
-      disconnect();
-    }
-  };
-
   private final IListener branchManagerListener = new IListener()
   {
     public void notifyEvent(IEvent event)
@@ -149,7 +140,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     boolean connected = false;
 
-    synchronized (sessionListener)
+    synchronized (this)
     {
       if (!isConnected())
       {
@@ -158,7 +149,14 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           state = State.Connecting;
 
           session = openSession();
-          session.addListener(sessionListener);
+          session.addListener(new LifecycleEventAdapter()
+          {
+            @Override
+            protected void onDeactivated(ILifecycle lifecycle)
+            {
+              disconnect();
+            }
+          });
 
           CDOBranchManager branchManager = session.getBranchManager();
           branchManager.addListener(branchManagerListener);
@@ -212,7 +210,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     boolean disconnected = false;
     CDOSession oldSession = null;
 
-    synchronized (sessionListener)
+    synchronized (this)
     {
       if (isConnected())
       {

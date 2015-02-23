@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.internal.cdo.object;
 
+import org.eclipse.emf.cdo.CDOElement;
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -179,35 +181,55 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = null;
-
-        EObject eContainer = object.eContainer();
-        if (eContainer != null)
-        {
-          cdoObject = CDOUtil.getCDOObject(eContainer);
-        }
-
-        if (cdoObject == null)
-        {
-          Resource resource = object.eResource();
-          if (resource instanceof CDOObject)
-          {
-            cdoObject = (CDOObject)resource;
-          }
-        }
-
-        if (cdoObject == null)
+        EObject container = CDOElement.getParentOf(object);
+        if (container == null)
         {
           return true;
         }
 
-        CDOView view = cdoObject.cdoView();
+        CDOObject cdoContainer = CDOUtil.getCDOObject(container);
+        if (cdoContainer == null)
+        {
+          return true;
+        }
+
+        CDOView view = cdoContainer.cdoView();
         if (view == null)
         {
           return true;
         }
 
-        return !view.isReadOnly() && cdoObject.cdoPermission() == CDOPermission.WRITE;
+        return !view.isReadOnly() && cdoContainer.cdoPermission() == CDOPermission.WRITE;
+      }
+    });
+
+    add(new Property<EObject>("container") //$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        EObject container = CDOElement.getParentOf(object);
+        if (container == null)
+        {
+          return false;
+        }
+
+        CDOObject cdoContainer = CDOUtil.getCDOObject(container);
+        if (cdoContainer == null)
+        {
+          return false;
+        }
+
+        return true;
+      }
+    });
+
+    add(new Property<EObject>("children") //$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        return !object.eContents().isEmpty();
       }
     });
 
@@ -280,6 +302,48 @@ public class ObjectProperties extends Properties<EObject>
       }
     });
 
+    add(new Property<EObject>("readLocked")//$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOLock lock = cdoObject.cdoReadLock();
+        if (lock == null)
+        {
+          return false;
+        }
+
+        return lock.isLocked();
+      }
+    });
+
+    add(new Property<EObject>("readLockedByOthers")//$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOLock lock = cdoObject.cdoReadLock();
+        if (lock == null)
+        {
+          return false;
+        }
+
+        return lock.isLockedByOthers();
+      }
+    });
+
     add(new Property<EObject>("writeLock", //$NON-NLS-1$
         "Write Lock", "The owner of a write lock on this object.", CATEGORY_CDO)
     {
@@ -302,6 +366,48 @@ public class ObjectProperties extends Properties<EObject>
       }
     });
 
+    add(new Property<EObject>("writeLocked")//$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOLock lock = cdoObject.cdoWriteLock();
+        if (lock == null)
+        {
+          return false;
+        }
+
+        return lock.isLocked();
+      }
+    });
+
+    add(new Property<EObject>("writeLockedByOthers")//$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOLock lock = cdoObject.cdoWriteLock();
+        if (lock == null)
+        {
+          return false;
+        }
+
+        return lock.isLockedByOthers();
+      }
+    });
+
     add(new Property<EObject>("writeOption", //$NON-NLS-1$
         "Write Option", "The owner of a write option on this object.", CATEGORY_CDO)
     {
@@ -321,6 +427,48 @@ public class ObjectProperties extends Properties<EObject>
         }
 
         return lockState.getWriteOptionOwner();
+      }
+    });
+
+    add(new Property<EObject>("writeOptioned")//$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOLock lock = cdoObject.cdoWriteOption();
+        if (lock == null)
+        {
+          return false;
+        }
+
+        return lock.isLocked();
+      }
+    });
+
+    add(new Property<EObject>("writeOptionedByOthers")//$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOLock lock = cdoObject.cdoWriteOption();
+        if (lock == null)
+        {
+          return false;
+        }
+
+        return lock.isLockedByOthers();
       }
     });
 

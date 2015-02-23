@@ -57,7 +57,7 @@
          id="org.eclipse.emf.cdo.object.properties"
          type="org.eclipse.emf.ecore.EObject"
          namespace="org.eclipse.emf.cdo.object"
-         properties="id,state,transactional,readable,writable,writableContainer,permission,permissionContainer,readLocks,writeLock,writeOption,viewHistorical"
+         properties="id,version,branch,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,viewHistorical,uri"
          class="org.eclipse.emf.internal.cdo.object.ObjectProperties$Tester"/>
    </extension>
 

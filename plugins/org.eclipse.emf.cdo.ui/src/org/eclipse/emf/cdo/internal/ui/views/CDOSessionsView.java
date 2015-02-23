@@ -95,8 +95,8 @@ public class CDOSessionsView extends ContainerView
   @Override
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(openSessionAction);
     super.fillLocalToolBar(manager);
+    manager.add(openSessionAction);
   }
 
   @Override

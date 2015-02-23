@@ -58,12 +58,18 @@ import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
@@ -91,7 +97,9 @@ import org.eclipse.ui.PlatformUI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implements multiple functionality related with UI representation of basic CDO concepts on
@@ -111,6 +119,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 
   private IPropertyListener editorRegistryListener;
+
+  private final ElementListener elementListener = new ElementListener();
 
   private ResourceManager resourceManager;
 
@@ -132,6 +142,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public void dispose()
   {
+    elementListener.dispose();
+
     if (editorRegistryListener != null)
     {
       EDITOR_REGISTRY.removePropertyListener(editorRegistryListener);
@@ -725,36 +737,20 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     super.elementAdded(element, parent);
 
-    // TODO Remove listeners?
-
     if (element instanceof CDOSession)
     {
       CDOSession session = (CDOSession)element;
-      session.addListener(new IListener()
+      for (CDOView view : session.getViews())
       {
-        public void notifyEvent(IEvent event)
-        {
-          if (event instanceof CDOSessionInvalidationEvent)
-          {
-            refreshViewer(true);
-          }
-        }
-      });
-    }
+        elementListener.attach(view);
+      }
 
-    if (element instanceof CDOView)
-    {
-      final CDOView view = (CDOView)element;
-      view.addListener(new IListener()
+      for (CDOView view : session.getTransactions())
       {
-        public void notifyEvent(IEvent event)
-        {
-          if (event instanceof CDOViewTargetChangedEvent)
-          {
-            refreshViewer(true);
-          }
-        }
-      });
+        elementListener.attach(view);
+      }
+
+      elementListener.attach(session);
     }
   }
 
@@ -845,6 +841,97 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       if (propId == IEditorRegistry.PROP_CONTENTS)
       {
         itemProvider.fireLabelProviderChanged();
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ElementListener implements IListener
+  {
+    private final Set<INotifier> notifiers = new HashSet<INotifier>();
+
+    private boolean disposed;
+
+    public void attach(INotifier notifier)
+    {
+      synchronized (notifiers)
+      {
+        if (!disposed)
+        {
+          if (notifiers.add(notifier))
+          {
+            notifier.addListener(this);
+          }
+        }
+      }
+    }
+
+    public void dispose()
+    {
+      synchronized (notifiers)
+      {
+        disposed = true;
+        for (INotifier notifier : notifiers)
+        {
+          notifier.removeListener(this);
+        }
+
+        notifiers.clear();
+      }
+    }
+
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof ILifecycleEvent)
+      {
+        ILifecycleEvent e = (ILifecycleEvent)event;
+        if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
+        {
+          ILifecycle notifier = e.getSource();
+
+          synchronized (notifiers)
+          {
+            if (notifiers.remove(notifier))
+            {
+              notifier.removeListener(this);
+            }
+          }
+        }
+      }
+      else if (event instanceof IContainerEvent<?>)
+      {
+        IContainerEvent<?> e = (IContainerEvent<?>)event;
+        for (IContainerDelta<?> delta : e.getDeltas())
+        {
+          if (delta.getKind() == IContainerDelta.Kind.ADDED)
+          {
+            Object element = delta.getElement();
+            if (element instanceof CDOView)
+            {
+              CDOView view = (CDOView)element;
+              attach(view);
+            }
+          }
+        }
+      }
+      else if (event instanceof CDOSessionInvalidationEvent)
+      {
+        refreshViewer(true);
+      }
+      else if (event instanceof CDOViewTargetChangedEvent)
+      {
+        refreshViewer(true);
+      }
+      else if (event instanceof CDOViewLocksChangedEvent)
+      {
+        CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
+        List<CDOObject> objects = e.getAffectedObjects(e.getSource());
+        if (!objects.isEmpty())
+        {
+          updateLabels(objects.toArray());
+        }
       }
     }
   }

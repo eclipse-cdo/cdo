@@ -260,7 +260,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     @Deprecated
     public CDOPropertyDescriptor()
     {
-      this(null);
+      throw new UnsupportedOperationException();
     }
 
     /**

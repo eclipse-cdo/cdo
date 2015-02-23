@@ -417,21 +417,18 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
 
   protected void fillLocalPullDown(IMenuManager manager)
   {
-    addSeparator(manager);
     addRefreshAction(manager);
     manager.add(new IntrospectAction(getViewer()));
   }
 
   protected void fillLocalToolBar(IToolBarManager manager)
   {
-    addSeparator(manager);
     addCollapseAllAction(manager);
   }
 
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     itemProvider.fillContextMenu(manager, selection);
-    addSeparator(manager);
   }
 
   /**

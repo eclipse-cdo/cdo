@@ -123,7 +123,7 @@ public abstract class StructuredContentProvider<INPUT> extends ViewerSorter impl
   /**
    * @since 3.1
    */
-  public void refreshElement(final Object element, final boolean updateLabels)
+  public void refreshElement(Object element, boolean updateLabels)
   {
     UIUtil.refreshElement(viewer, element, updateLabels);
   }
@@ -133,7 +133,7 @@ public abstract class StructuredContentProvider<INPUT> extends ViewerSorter impl
    * @deprecated Use {@link #refreshElement(Object, boolean)}
    */
   @Deprecated
-  public void refreshSynced(final Object element, final boolean updateLabels)
+  public void refreshSynced(Object element, boolean updateLabels)
   {
     refreshElement(element, updateLabels);
   }
@@ -141,27 +141,9 @@ public abstract class StructuredContentProvider<INPUT> extends ViewerSorter impl
   /**
    * @since 3.1
    */
-  public void updateLabels(final Object element)
+  public void updateLabels(Object element)
   {
-    try
-    {
-      getDisplay().asyncExec(new Runnable()
-      {
-        public void run()
-        {
-          try
-          {
-            viewer.update(element, null);
-          }
-          catch (RuntimeException ignore)
-          {
-          }
-        }
-      });
-    }
-    catch (RuntimeException ignore)
-    {
-    }
+    UIUtil.updateElements(viewer, element);
   }
 
   /**

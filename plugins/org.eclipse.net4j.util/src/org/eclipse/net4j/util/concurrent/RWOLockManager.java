@@ -182,12 +182,10 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     {
       OBJECT o = it.next();
       LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(o);
-      if (lockState == null || !lockState.canUnlock(type, context))
+      if (lockState != null && lockState.canUnlock(type, context))
       {
-        throw new IllegalMonitorStateException();
+        lockStates.add(lockState);
       }
-
-      lockStates.add(lockState);
     }
 
     for (LockState<OBJECT, CONTEXT> lockState : lockStates)

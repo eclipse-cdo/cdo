@@ -606,6 +606,44 @@ public final class UIUtil
   }
 
   /**
+   * @since 3.5
+   */
+  public static void updateElements(final StructuredViewer viewer, final Object element)
+  {
+    try
+    {
+      Control control = viewer.getControl();
+      if (!control.isDisposed())
+      {
+        control.getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            try
+            {
+              if (element instanceof Object[])
+              {
+                Object[] elements = (Object[])element;
+                viewer.update(elements, null);
+              }
+              else
+              {
+                viewer.update(element, null);
+              }
+            }
+            catch (Exception ignore)
+            {
+            }
+          }
+        });
+      }
+    }
+    catch (Exception ignore)
+    {
+    }
+  }
+
+  /**
    * Shows a message in the StatusBar. Image can be omitted by passing a null parameter
    *
    * @since 2.0

@@ -13,9 +13,12 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.dialogs.EditObjectDialog;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -23,7 +26,12 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -35,6 +43,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
@@ -360,7 +369,8 @@ public class OpenWithActionProvider extends CommonActionProvider
     }.schedule();
   }
 
-  public static void openEditor(IWorkbenchPage page, EObject object, String editorID)
+  public static void openEditor(IWorkbenchPage page, ComposedAdapterFactory adapterFactory, EObject object,
+      String editorID)
   {
     if (page == null)
     {
@@ -370,6 +380,20 @@ public class OpenWithActionProvider extends CommonActionProvider
     if (object == null)
     {
       throw new IllegalArgumentException("object is null");
+    }
+
+    if (!(object instanceof CDOResourceNode))
+    {
+      if (adapterFactory == null)
+      {
+        return;
+      }
+
+      Shell shell = page.getWorkbenchWindow().getShell();
+      if (editObject(shell, adapterFactory, object))
+      {
+        return;
+      }
     }
 
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
@@ -412,6 +436,45 @@ public class OpenWithActionProvider extends CommonActionProvider
     }
 
     openEditor(page, cdoObject, resourceLeaf, editorID, key);
+  }
+
+  public static boolean editObject(Shell shell, ComposedAdapterFactory adapterFactory, EObject object)
+  {
+    boolean edited = false;
+
+    if (!(object instanceof CDOResourceNode))
+    {
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
+      if (checkout != null)
+      {
+        EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack());
+        ResourceSet resourceSet = editingDomain.getResourceSet();
+        CDOTransaction transaction = checkout.openTransaction(resourceSet);
+
+        try
+        {
+          EObject txObject = transaction.getObject(object);
+
+          int result = new EditObjectDialog(shell, adapterFactory, txObject).open();
+          edited = true;
+
+          if (result == EditObjectDialog.OK)
+          {
+            transaction.commit();
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+        finally
+        {
+          transaction.close();
+        }
+      }
+    }
+
+    return edited;
   }
 
   /**
@@ -463,7 +526,7 @@ public class OpenWithActionProvider extends CommonActionProvider
     @Override
     public void run()
     {
-      openEditor(page, openableElement, editorID);
+      openEditor(page, null, openableElement, editorID);
     }
   }
 }

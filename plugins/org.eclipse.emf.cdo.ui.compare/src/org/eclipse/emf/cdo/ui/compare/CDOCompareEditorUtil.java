@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.compare.Comparison;
@@ -31,6 +32,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
+import org.eclipse.jface.util.IPropertyChangeListener;
 
 /**
  * Static methods to open an EMF Compare dialog.
@@ -40,22 +42,41 @@ import org.eclipse.compare.CompareUI;
  */
 public class CDOCompareEditorUtil
 {
+  private static final ThreadLocal<Boolean> ACTIVATE_EDITOR = new ThreadLocal<Boolean>();
+
+  private static final ThreadLocal<Runnable> DISPOSE_RUNNABLE = new ThreadLocal<Runnable>();
+
   public static boolean openDialog(CDOSession session, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint)
   {
-    CDOView leftView = null;
-    CDOView rightView = null;
+    final Boolean activateEditor = ACTIVATE_EDITOR.get();
+    final CDOView[] leftAndRightView = { null, null };
+    final Runnable disposeRunnable = new Runnable()
+    {
+      public void run()
+      {
+        LifecycleUtil.deactivate(leftAndRightView[0]);
+        LifecycleUtil.deactivate(leftAndRightView[1]);
+      }
+    };
 
     try
     {
-      leftView = session.openView(leftPoint);
-      rightView = session.openView(rightPoint);
+      leftAndRightView[0] = session.openView(leftPoint);
+      leftAndRightView[1] = session.openView(rightPoint);
 
-      return openDialog(leftView, rightView, null);
+      if (activateEditor != null)
+      {
+        DISPOSE_RUNNABLE.set(disposeRunnable);
+      }
+
+      return openDialog(leftAndRightView[0], leftAndRightView[1], null);
     }
     finally
     {
-      LifecycleUtil.deactivate(rightView);
-      LifecycleUtil.deactivate(leftView);
+      if (activateEditor == null)
+      {
+        disposeRunnable.run();
+      }
     }
   }
 
@@ -81,6 +102,104 @@ public class CDOCompareEditorUtil
 
   public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView)
   {
+    final Input input = createComparisonInput(leftView, rightView, originView);
+
+    final Boolean activateEditor = ACTIVATE_EDITOR.get();
+    if (activateEditor != null)
+    {
+      input.setDisposeRunnable(DISPOSE_RUNNABLE.get());
+      DISPOSE_RUNNABLE.remove();
+
+      UIUtil.getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          CompareUI.openCompareEditor(input, activateEditor);
+        }
+      });
+    }
+    else
+    {
+      CompareUI.openCompareDialog(input);
+    }
+
+    return input.isOK();
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean openEditor(CDOSession session, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
+      boolean activate)
+  {
+    ACTIVATE_EDITOR.set(activate);
+
+    try
+    {
+      return openDialog(session, leftPoint, rightPoint);
+    }
+    finally
+    {
+      ACTIVATE_EDITOR.remove();
+    }
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean openEditor(CDOCommitInfo leftCommitInfo, CDOBranchPoint rightPoint, boolean activate)
+  {
+    ACTIVATE_EDITOR.set(activate);
+
+    try
+    {
+      return openDialog(leftCommitInfo, rightPoint);
+    }
+    finally
+    {
+      ACTIVATE_EDITOR.remove();
+    }
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean openEditor(CDOCommitInfo commitInfo, boolean activate)
+  {
+    ACTIVATE_EDITOR.set(activate);
+
+    try
+    {
+      return openDialog(commitInfo);
+    }
+    finally
+    {
+      ACTIVATE_EDITOR.remove();
+    }
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean openEditor(CDOView leftView, CDOView rightView, CDOView[] originView, boolean activate)
+  {
+    ACTIVATE_EDITOR.set(activate);
+
+    try
+    {
+      return openDialog(leftView, rightView, originView);
+    }
+    finally
+    {
+      ACTIVATE_EDITOR.remove();
+    }
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static Input createComparisonInput(CDOView leftView, CDOView rightView, CDOView[] originView)
+  {
     Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView);
 
     IComparisonScope scope = CDOCompare.getScope(comparison);
@@ -94,9 +213,7 @@ public class CDOCompareEditorUtil
     configuration.setLeftEditable(!leftView.isReadOnly());
     configuration.setRightEditable(!rightView.isReadOnly());
 
-    Input input = new Input(configuration, comparison, editingDomain, adapterFactory);
-    CompareUI.openCompareDialog(input);
-    return input.isOK();
+    return new Input(configuration, comparison, editingDomain, adapterFactory);
   }
 
   /**
@@ -105,6 +222,8 @@ public class CDOCompareEditorUtil
   @SuppressWarnings("restriction")
   private static final class Input extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput
   {
+    private Runnable disposeRunnable;
+
     private boolean ok;
 
     private Input(CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
@@ -112,7 +231,12 @@ public class CDOCompareEditorUtil
     {
       super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration),
           comparison, editingDomain, adapterFactory);
-      setTitle("Model Comparison");
+      setTitle("CDO Model Comparison");
+    }
+
+    public void setDisposeRunnable(Runnable disposeRunnable)
+    {
+      this.disposeRunnable = disposeRunnable;
     }
 
     public boolean isOK()
@@ -123,8 +247,44 @@ public class CDOCompareEditorUtil
     @Override
     public boolean okPressed()
     {
-      ok = true;
-      return super.okPressed();
+      try
+      {
+        ok = true;
+        return super.okPressed();
+      }
+      finally
+      {
+        dispose();
+      }
+    }
+
+    @Override
+    public void removePropertyChangeListener(IPropertyChangeListener listener)
+    {
+      try
+      {
+        super.removePropertyChangeListener(listener);
+      }
+      finally
+      {
+        dispose();
+      }
+    }
+
+    private void dispose()
+    {
+      AdapterFactory adapterFactory = getAdapterFactory();
+      if (adapterFactory instanceof ComposedAdapterFactory)
+      {
+        ComposedAdapterFactory composedAdapterFactory = (ComposedAdapterFactory)adapterFactory;
+        composedAdapterFactory.dispose();
+      }
+
+      if (disposeRunnable != null)
+      {
+        disposeRunnable.run();
+        disposeRunnable = null;
+      }
     }
   }
 }

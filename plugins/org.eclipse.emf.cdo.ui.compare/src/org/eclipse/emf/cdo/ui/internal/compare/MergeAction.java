@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import org.eclipse.jface.action.IAction;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class MergeAction extends AbstractAction<CDOTransaction>
+public abstract class MergeAction extends AbstractCompareAction<CDOTransaction>
 {
   private final boolean allowTimeStamp;
 
@@ -38,7 +38,7 @@ public abstract class MergeAction extends AbstractAction<CDOTransaction>
   }
 
   @Override
-  protected void run(IAction action, List<CDOTransaction> targets)
+  protected void run(List<CDOTransaction> targets, IProgressMonitor progressMonitor)
   {
     if (targets.size() == 1)
     {

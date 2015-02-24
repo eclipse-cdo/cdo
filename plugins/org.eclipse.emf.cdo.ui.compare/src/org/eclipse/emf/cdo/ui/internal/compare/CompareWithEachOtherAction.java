@@ -13,14 +13,14 @@ package org.eclipse.emf.cdo.ui.internal.compare;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 
-import org.eclipse.jface.action.IAction;
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.util.List;
 
 /**
  * @author Eike Stepper
  */
-public class CompareWithEachOtherAction extends AbstractAction<CDOCommitInfo>
+public class CompareWithEachOtherAction extends AbstractCompareAction<CDOCommitInfo>
 {
   public CompareWithEachOtherAction()
   {
@@ -28,7 +28,7 @@ public class CompareWithEachOtherAction extends AbstractAction<CDOCommitInfo>
   }
 
   @Override
-  protected void run(IAction action, List<CDOCommitInfo> targets)
+  protected void run(List<CDOCommitInfo> targets, IProgressMonitor progressMonitor)
   {
     if (targets.size() == 2)
     {

@@ -10,11 +10,13 @@
  */
 package org.eclipse.emf.cdo.ui.internal.compare;
 
+import org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate;
+
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractAction<TARGET> implements IObjectActionDelegate
+public abstract class AbstractCompareAction<TARGET> extends LongRunningActionDelegate
 {
   private final Class<TARGET> targetClass;
 
@@ -32,7 +34,7 @@ public abstract class AbstractAction<TARGET> implements IObjectActionDelegate
 
   private ISelection selection;
 
-  public AbstractAction(Class<TARGET> targetClass)
+  public AbstractCompareAction(Class<TARGET> targetClass)
   {
     this.targetClass = targetClass;
   }
@@ -47,12 +49,14 @@ public abstract class AbstractAction<TARGET> implements IObjectActionDelegate
     this.targetPart = targetPart;
   }
 
+  @Override
   public void selectionChanged(IAction action, ISelection selection)
   {
     this.selection = selection;
   }
 
-  public void run(IAction action)
+  @Override
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
     if (selection instanceof IStructuredSelection)
     {
@@ -72,11 +76,11 @@ public abstract class AbstractAction<TARGET> implements IObjectActionDelegate
         }
       }
 
-      run(action, targets);
+      run(targets, progressMonitor);
     }
   }
 
-  protected abstract void run(IAction action, List<TARGET> targets);
+  protected abstract void run(List<TARGET> targets, IProgressMonitor progressMonitor);
 
   @SuppressWarnings("unchecked")
   public static <T> T getAdapter(Object adaptable, Class<T> c)

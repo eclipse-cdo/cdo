@@ -52,8 +52,10 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -100,7 +102,7 @@ public class CommitHistoryComposite extends Composite
 
     tableViewer = createTableViewer();
     tableViewer.setContentProvider(createContentProvider());
-    tableViewer.addDoubleClickListener(new DoubleClickListener());
+
     tableViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
       public void selectionChanged(SelectionChangedEvent event)
@@ -111,6 +113,22 @@ public class CommitHistoryComposite extends Composite
         {
           commitInfoChanged((CDOCommitInfo)selectedElement);
         }
+      }
+    });
+
+    tableViewer.addDoubleClickListener(new IDoubleClickListener()
+    {
+      public void doubleClick(DoubleClickEvent event)
+      {
+        doubleClicked();
+      }
+    });
+
+    tableViewer.addOpenListener(new IOpenListener()
+    {
+      public void open(OpenEvent event)
+      {
+        doubleClicked();
       }
     });
 
@@ -247,25 +265,19 @@ public class CommitHistoryComposite extends Composite
   {
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private final class DoubleClickListener implements IDoubleClickListener
+  private void doubleClicked()
   {
-    public void doubleClick(DoubleClickEvent event)
+    IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
+    CDOCommitInfo commitInfo = (CDOCommitInfo)selection.getFirstElement();
+    if (commitInfo != null)
     {
-      IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
-      CDOCommitInfo commitInfo = (CDOCommitInfo)selection.getFirstElement();
-      if (commitInfo != null)
+      if (commitInfo instanceof TriggerLoadElement)
       {
-        if (commitInfo instanceof TriggerLoadElement)
-        {
-          history.triggerLoad(new RevealElementHandler());
-        }
-        else
-        {
-          doubleClicked(commitInfo);
-        }
+        history.triggerLoad(new RevealElementHandler());
+      }
+      else
+      {
+        doubleClicked(commitInfo);
       }
     }
   }

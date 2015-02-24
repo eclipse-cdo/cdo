@@ -169,6 +169,7 @@ public class CDOHistoryPage extends HistoryPage
 
     IPageSite site = getSite();
     TableViewer tableViewer = commitHistoryComposite.getTableViewer();
+
     UIUtil.addDragSupport(tableViewer);
 
     MenuManager menuManager = new MenuManager(POPUP_ID);

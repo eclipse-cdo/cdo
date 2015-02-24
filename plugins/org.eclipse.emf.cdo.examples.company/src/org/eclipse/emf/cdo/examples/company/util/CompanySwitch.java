@@ -32,22 +32,21 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.examples.company.CompanyPackage
  * @generated
  */
 public class CompanySwitch<T>
 {
   /**
-   * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached model package
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected static CompanyPackage modelPackage;
 
   /**
-   * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the switch.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CompanySwitch()
@@ -61,7 +60,6 @@ public class CompanySwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -73,7 +71,6 @@ public class CompanySwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -93,7 +90,6 @@ public class CompanySwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -197,12 +193,12 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Addressable</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Addressable</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch.
    * 
    * @since 4.0 <!-- end-user-doc -->
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Addressable</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -213,11 +209,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Supplier</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Supplier</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Supplier</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -228,11 +223,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Purchase Order</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Purchase Order</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Purchase Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -243,11 +237,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Order Detail</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Order Detail</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order Detail</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -258,11 +251,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Category</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Category</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Category</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -273,11 +265,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Product</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Product</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Product</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -288,11 +279,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Company</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Company</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Company</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -303,11 +293,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Customer</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Customer</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Customer</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -318,11 +307,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Order</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>Order</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -333,11 +321,10 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Sales Order</em>'. <!-- begin-user-doc -->
+   * Returns the result of interpreting the object as an instance of '<em>Sales Order</em>'.
+   * <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Sales Order</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
@@ -348,12 +335,11 @@ public class CompanySwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
+   * Returns the result of interpreting the object as an instance of '<em>EObject</em>'.
+   * <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * 
-   * @param object
-   *          the target of the switch.
+   * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
@@ -27,9 +28,11 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutOpenEve
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider;
+import org.eclipse.emf.cdo.internal.ui.dialogs.EditObjectDialog;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -38,12 +41,17 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
@@ -734,7 +742,11 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         else if (element instanceof EObject)
         {
           EObject eObject = (EObject)element;
-          OpenWithActionProvider.openEditor(getWorkbenchPage(), eObject, null);
+
+          if (!editObject(eObject, adapterFactory, getWorkbenchPage().getWorkbenchWindow().getShell()))
+          {
+            OpenWithActionProvider.openEditor(getWorkbenchPage(), eObject, null);
+          }
         }
       }
     }
@@ -857,6 +869,45 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     {
       return LOADING_OBJECTS.contains(object);
     }
+  }
+
+  public static boolean editObject(EObject eObject, AdapterFactory adapterFactory, Shell shell)
+  {
+    boolean edited = false;
+  
+    if (!(eObject instanceof CDOResourceNode))
+    {
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(eObject);
+      if (checkout != null)
+      {
+        EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack());
+        ResourceSet resourceSet = editingDomain.getResourceSet();
+        CDOTransaction transaction = checkout.openTransaction(resourceSet);
+  
+        try
+        {
+          EObject txObject = transaction.getObject(eObject);
+  
+          int result = new EditObjectDialog(shell, txObject).open();
+          edited = true;
+  
+          if (result == EditObjectDialog.OK)
+          {
+            transaction.commit();
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+        finally
+        {
+          transaction.close();
+        }
+      }
+    }
+  
+    return edited;
   }
 
   public static final CDOCheckoutContentProvider getInstance()

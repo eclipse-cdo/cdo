@@ -310,7 +310,11 @@
                  <adapt type="org.eclipse.emf.ecore.EObject"/>
               </or>
            </possibleDropTargets>
-        </dropAssistant>        
+        </dropAssistant>
+        <commonSorter
+              class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutViewerSorter"
+              id="org.eclipse.emf.cdo.explorer.ui.checkouts.ViewerSorter">
+        </commonSorter>        
      </navigatorContent>
   </extension>
 

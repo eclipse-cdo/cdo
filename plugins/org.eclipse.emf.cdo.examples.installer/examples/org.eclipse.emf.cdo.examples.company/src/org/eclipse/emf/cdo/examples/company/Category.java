@@ -15,15 +15,16 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Category</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Category#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Category#getCategories <em>Categories</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Category#getProducts <em>Products</em>}</li>
- * </ul>
  * </p>
- * 
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Category#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Category#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Category#getProducts <em>Products</em>}</li>
+ * </ul>
+ *
  * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCategory()
  * @model
  * @generated
@@ -31,12 +32,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface Category extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCategory_Name()
@@ -57,14 +58,14 @@ public interface Category extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Categories</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.examples.company.Category}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Categories</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.examples.company.Category}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Categories</em>' containment reference list isn't clear, there really should be more of
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Categories</em>' containment reference list.
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCategory_Categories()
    * @model containment="true"
@@ -73,14 +74,14 @@ public interface Category extends EObject
   EList<Category> getCategories();
 
   /**
-   * Returns the value of the '<em><b>Products</b></em>' containment reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.examples.company.Product}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Products</b></em>' containment reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.examples.company.Product}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Products</em>' containment reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Products</em>' containment reference list.
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getCategory_Products()
    * @model containment="true"

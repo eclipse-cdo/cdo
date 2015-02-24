@@ -32,84 +32,72 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass addressableEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass supplierEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass purchaseOrderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderDetailEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EEnum vatEEnum = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass categoryEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass productEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass companyEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass customerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass orderEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private EClass salesOrderEClass = null;
@@ -134,18 +122,17 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * <p>
-   * This method is used to initialize {@link CompanyPackage#eINSTANCE} when that field is accessed. Clients should not
-   * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
    * 
+   * <p>This method is used to initialize {@link CompanyPackage#eINSTANCE} when that field is accessed.
+   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -222,7 +209,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getSupplier()
@@ -232,7 +218,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getSupplier_PurchaseOrders()
@@ -242,7 +227,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getSupplier_Preferred()
@@ -252,7 +236,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getPurchaseOrder()
@@ -262,7 +245,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getPurchaseOrder_Date()
@@ -272,7 +254,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getPurchaseOrder_Supplier()
@@ -282,7 +263,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrderDetail()
@@ -292,7 +272,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrderDetail_Order()
@@ -302,7 +281,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrderDetail_Product()
@@ -312,7 +290,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getOrderDetail_Price()
@@ -322,7 +299,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EEnum getVAT()
@@ -332,7 +308,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCategory()
@@ -342,7 +317,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getCategory_Name()
@@ -352,7 +326,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCategory_Categories()
@@ -362,7 +335,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCategory_Products()
@@ -372,7 +344,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getProduct()
@@ -382,7 +353,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct_Name()
@@ -392,7 +362,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getProduct_OrderDetails()
@@ -402,7 +371,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct_Vat()
@@ -412,7 +380,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getProduct_Description()
@@ -433,7 +400,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCompany()
@@ -443,7 +409,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Categories()
@@ -453,7 +418,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Suppliers()
@@ -463,7 +427,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_PurchaseOrders()
@@ -473,7 +436,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_Customers()
@@ -483,7 +445,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCompany_SalesOrders()
@@ -493,7 +454,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getCustomer()
@@ -503,7 +463,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getCustomer_SalesOrders()
@@ -513,7 +472,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getOrder()
@@ -523,7 +481,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getOrder_OrderDetails()
@@ -533,7 +490,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EClass getSalesOrder()
@@ -543,7 +499,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EAttribute getSalesOrder_Id()
@@ -553,7 +508,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public EReference getSalesOrder_Customer()
@@ -563,7 +517,6 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CompanyFactory getCompanyFactory()
@@ -573,15 +526,14 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
-   * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the meta-model objects for the package.  This method is
+   * guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void createPackageContents()
@@ -644,15 +596,14 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
-   * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Complete the initialization of the package and its meta-model.  This
+   * method is guarded to have no affect on any invocation but its first.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void initializePackageContents()
@@ -786,8 +737,8 @@ public class CompanyPackageImpl extends EPackageImpl implements CompanyPackage
   }
 
   /**
-   * Initializes the annotations for <b>teneo.jpa</b>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Initializes the annotations for <b>teneo.jpa</b>.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void createTeneoAnnotations()

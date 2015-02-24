@@ -16,14 +16,16 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Addressable</b></em>'.
  * 
  * @since 4.0 <!-- end-user-doc -->
- *        <p>
- *        The following features are supported:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.examples.company.Addressable#getName <em>Name</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.examples.company.Addressable#getStreet <em>Street</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.examples.company.Addressable#getCity <em>City</em>}</li>
- *        </ul>
- *        </p>
+ *
+ * <p>
+ * The following features are supported:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Addressable#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Addressable#getStreet <em>Street</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Addressable#getCity <em>City</em>}</li>
+ * </ul>
+ *
  * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getAddressable()
  * @model abstract="true"
  * @generated
@@ -31,12 +33,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface Addressable extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getAddressable_Name()
@@ -48,21 +50,19 @@ public interface Addressable extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Addressable#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Name</em>' attribute.
+   * @param value the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Street</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Street</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Street</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Street</em>' attribute.
    * @see #setStreet(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getAddressable_Street()
@@ -72,23 +72,21 @@ public interface Addressable extends EObject
   String getStreet();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Addressable#getStreet <em>Street</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Street</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Addressable#getStreet <em>Street</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Street</em>' attribute.
    * @see #getStreet()
    * @generated
    */
   void setStreet(String value);
 
   /**
-   * Returns the value of the '<em><b>City</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>City</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>City</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>City</em>' attribute.
    * @see #setCity(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getAddressable_City()
@@ -100,9 +98,7 @@ public interface Addressable extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Addressable#getCity <em>City</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>City</em>' attribute.
+   * @param value the new value of the '<em>City</em>' attribute.
    * @see #getCity()
    * @generated
    */

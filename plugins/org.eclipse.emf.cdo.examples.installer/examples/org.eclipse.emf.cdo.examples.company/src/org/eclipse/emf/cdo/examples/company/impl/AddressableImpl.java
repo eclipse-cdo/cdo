@@ -21,21 +21,21 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Addressable</b></em>'.
  * 
  * @since 4.0 <!-- end-user-doc -->
- *        <p>
- *        The following features are implemented:
- *        <ul>
- *        <li>{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl#getName <em>Name</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl#getStreet <em>Street</em>}</li>
- *        <li>{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl#getCity <em>City</em>}</li>
- *        </ul>
- *        </p>
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl#getStreet <em>Street</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl#getCity <em>City</em>}</li>
+ * </ul>
+ *
  * @generated
  */
 public abstract class AddressableImpl extends CDOObjectImpl implements Addressable
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected AddressableImpl()
@@ -45,7 +45,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -56,7 +55,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -67,7 +65,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getName()
@@ -77,7 +74,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setName(String newName)
@@ -87,7 +83,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getStreet()
@@ -97,7 +92,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setStreet(String newStreet)
@@ -107,7 +101,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String getCity()
@@ -117,7 +110,6 @@ public abstract class AddressableImpl extends CDOObjectImpl implements Addressab
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setCity(String newCity)

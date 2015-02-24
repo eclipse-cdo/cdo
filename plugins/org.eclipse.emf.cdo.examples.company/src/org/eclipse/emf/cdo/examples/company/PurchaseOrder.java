@@ -14,14 +14,15 @@ import java.util.Date;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Purchase Order</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getDate <em>Date</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getSupplier <em>Supplier</em>}</li>
- * </ul>
  * </p>
- * 
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getDate <em>Date</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getSupplier <em>Supplier</em>}</li>
+ * </ul>
+ *
  * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getPurchaseOrder()
  * @model
  * @generated
@@ -29,12 +30,12 @@ import java.util.Date;
 public interface PurchaseOrder extends Order
 {
   /**
-   * Returns the value of the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Date</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Date</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Date</em>' attribute.
    * @see #setDate(Date)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getPurchaseOrder_Date()
@@ -46,9 +47,7 @@ public interface PurchaseOrder extends Order
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getDate <em>Date</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Date</em>' attribute.
+   * @param value the new value of the '<em>Date</em>' attribute.
    * @see #getDate()
    * @generated
    */
@@ -74,11 +73,9 @@ public interface PurchaseOrder extends Order
   Supplier getSupplier();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getSupplier <em>Supplier</em>}'
-   * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Supplier</em>' reference.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getSupplier <em>Supplier</em>}' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Supplier</em>' reference.
    * @see #getSupplier()
    * @generated
    */

@@ -21,19 +21,18 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Supplier</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
- * </ul>
  * </p>
- * 
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
+ * </ul>
+ *
  * @generated
  */
 public class SupplierImpl extends AddressableImpl implements Supplier
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected SupplierImpl()
@@ -43,7 +42,6 @@ public class SupplierImpl extends AddressableImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -54,7 +52,6 @@ public class SupplierImpl extends AddressableImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -65,7 +62,6 @@ public class SupplierImpl extends AddressableImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public boolean isPreferred()
@@ -75,7 +71,6 @@ public class SupplierImpl extends AddressableImpl implements Supplier
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setPreferred(boolean newPreferred)

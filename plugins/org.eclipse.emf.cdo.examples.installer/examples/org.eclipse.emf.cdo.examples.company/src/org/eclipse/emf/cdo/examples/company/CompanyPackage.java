@@ -25,46 +25,44 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
  * @see org.eclipse.emf.cdo.examples.company.CompanyFactory
- * @model kind="package" annotation="teneo.jpa value='@hbGenericGenerators(       {@GenericGenerator(name=\"system-uuid\",
- *  strategy =
- *        \"org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator\")})'"
+ * @model kind="package"
+ *        annotation="teneo.jpa value='@hbGenericGenerators({@GenericGenerator(name=\"system-uuid\", strategy = \"org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator\")})'"
  * @generated
  */
 public interface CompanyPackage extends EPackage
 {
   /**
-   * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNAME = "company";
 
   /**
-   * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace URI.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/emf/CDO/examples/company/1.0.0";
 
   /**
-   * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The package namespace name.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   String eNS_PREFIX = "company";
 
   /**
-   * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The singleton instance of the package.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   CompanyPackage eINSTANCE = org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl <em>Addressable</em>}'
-   * class. <!-- begin-user-doc -->
+   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl <em>Addressable</em>}' class.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.examples.company.impl.AddressableImpl
@@ -74,7 +72,8 @@ public interface CompanyPackage extends EPackage
   int ADDRESSABLE = 0;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0 <!-- end-user-doc -->
    * @generated
@@ -83,7 +82,8 @@ public interface CompanyPackage extends EPackage
   int ADDRESSABLE__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Street</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Street</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @generated
@@ -92,7 +92,8 @@ public interface CompanyPackage extends EPackage
   int ADDRESSABLE__STREET = 1;
 
   /**
-   * The feature id for the '<em><b>City</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>City</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @generated
@@ -101,7 +102,8 @@ public interface CompanyPackage extends EPackage
   int ADDRESSABLE__CITY = 2;
 
   /**
-   * The number of structural features of the '<em>Addressable</em>' class. <!-- begin-user-doc -->
+   * The number of structural features of the '<em>Addressable</em>' class.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @generated
@@ -110,9 +112,8 @@ public interface CompanyPackage extends EPackage
   int ADDRESSABLE_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl <em>Supplier</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl <em>Supplier</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.examples.company.impl.SupplierImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getSupplier()
    * @generated
@@ -120,9 +121,8 @@ public interface CompanyPackage extends EPackage
   int SUPPLIER = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl
-   * <em>Purchase Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl <em>Purchase Order</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getPurchaseOrder()
    * @generated
@@ -130,9 +130,8 @@ public interface CompanyPackage extends EPackage
   int PURCHASE_ORDER = 6;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl <em>Order Detail</em>}
-   * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl <em>Order Detail</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getOrderDetail()
    * @generated
@@ -140,9 +139,8 @@ public interface CompanyPackage extends EPackage
   int ORDER_DETAIL = 5;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.CategoryImpl <em>Category</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.CategoryImpl <em>Category</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.examples.company.impl.CategoryImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCategory()
    * @generated
@@ -152,7 +150,6 @@ public interface CompanyPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl <em>Company</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCompany()
    * @generated
@@ -160,101 +157,101 @@ public interface CompanyPackage extends EPackage
   int COMPANY = 1;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int COMPANY__NAME = ADDRESSABLE__NAME;
 
   /**
-   * The feature id for the '<em><b>Street</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Street</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int COMPANY__STREET = ADDRESSABLE__STREET;
 
   /**
-   * The feature id for the '<em><b>City</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>City</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int COMPANY__CITY = ADDRESSABLE__CITY;
 
   /**
-   * The feature id for the '<em><b>Categories</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Categories</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int COMPANY__CATEGORIES = ADDRESSABLE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Suppliers</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Suppliers</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int COMPANY__SUPPLIERS = ADDRESSABLE_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Customers</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Customers</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int COMPANY__CUSTOMERS = ADDRESSABLE_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Purchase Orders</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Purchase Orders</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int COMPANY__PURCHASE_ORDERS = ADDRESSABLE_FEATURE_COUNT + 3;
 
   /**
-   * The feature id for the '<em><b>Sales Orders</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Sales Orders</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int COMPANY__SALES_ORDERS = ADDRESSABLE_FEATURE_COUNT + 4;
 
   /**
-   * The number of structural features of the '<em>Company</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Company</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int COMPANY_FEATURE_COUNT = ADDRESSABLE_FEATURE_COUNT + 5;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SUPPLIER__NAME = ADDRESSABLE__NAME;
 
   /**
-   * The feature id for the '<em><b>Street</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Street</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SUPPLIER__STREET = ADDRESSABLE__STREET;
 
   /**
-   * The feature id for the '<em><b>City</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>City</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -270,25 +267,24 @@ public interface CompanyPackage extends EPackage
   int SUPPLIER__PURCHASE_ORDERS = ADDRESSABLE_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Preferred</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Preferred</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SUPPLIER__PREFERRED = ADDRESSABLE_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Supplier</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Supplier</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SUPPLIER_FEATURE_COUNT = ADDRESSABLE_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.CustomerImpl <em>Customer</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.CustomerImpl <em>Customer</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.examples.company.impl.CustomerImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCustomer()
    * @generated
@@ -296,40 +292,40 @@ public interface CompanyPackage extends EPackage
   int CUSTOMER = 3;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CUSTOMER__NAME = ADDRESSABLE__NAME;
 
   /**
-   * The feature id for the '<em><b>Street</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Street</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CUSTOMER__STREET = ADDRESSABLE__STREET;
 
   /**
-   * The feature id for the '<em><b>City</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>City</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CUSTOMER__CITY = ADDRESSABLE__CITY;
 
   /**
-   * The feature id for the '<em><b>Sales Orders</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Sales Orders</b></em>' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CUSTOMER__SALES_ORDERS = ADDRESSABLE_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Customer</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Customer</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -346,41 +342,41 @@ public interface CompanyPackage extends EPackage
   int ORDER = 4;
 
   /**
-   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Order Details</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int ORDER__ORDER_DETAILS = 0;
 
   /**
-   * The number of structural features of the '<em>Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Order</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER_FEATURE_COUNT = 1;
 
   /**
-   * The feature id for the '<em><b>Order</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Order</b></em>' container reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER_DETAIL__ORDER = 0;
 
   /**
-   * The feature id for the '<em><b>Product</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Product</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int ORDER_DETAIL__PRODUCT = 1;
 
   /**
-   * The feature id for the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Price</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -396,9 +392,8 @@ public interface CompanyPackage extends EPackage
   int ORDER_DETAIL_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl <em>Sales Order</em>}'
-   * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl <em>Sales Order</em>}' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getSalesOrder()
    * @generated
@@ -408,7 +403,6 @@ public interface CompanyPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl <em>Product</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @see org.eclipse.emf.cdo.examples.company.impl.ProductImpl
    * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getProduct()
    * @generated
@@ -416,25 +410,25 @@ public interface CompanyPackage extends EPackage
   int PRODUCT = 9;
 
   /**
-   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Order Details</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int PURCHASE_ORDER__ORDER_DETAILS = ORDER__ORDER_DETAILS;
 
   /**
-   * The feature id for the '<em><b>Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Date</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int PURCHASE_ORDER__DATE = ORDER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Supplier</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Supplier</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -450,25 +444,25 @@ public interface CompanyPackage extends EPackage
   int PURCHASE_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Order Details</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Order Details</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int SALES_ORDER__ORDER_DETAILS = ORDER__ORDER_DETAILS;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int SALES_ORDER__ID = ORDER_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Customer</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Customer</b></em>' reference.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -484,42 +478,42 @@ public interface CompanyPackage extends EPackage
   int SALES_ORDER_FEATURE_COUNT = ORDER_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CATEGORY__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Categories</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Categories</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int CATEGORY__CATEGORIES = 1;
 
   /**
-   * The feature id for the '<em><b>Products</b></em>' containment reference list. <!-- begin-user-doc --> <!--
+   * The feature id for the '<em><b>Products</b></em>' containment reference list.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    * @ordered
    */
   int CATEGORY__PRODUCTS = 2;
 
   /**
-   * The number of structural features of the '<em>Category</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Category</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int CATEGORY_FEATURE_COUNT = 3;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -535,23 +529,24 @@ public interface CompanyPackage extends EPackage
   int PRODUCT__ORDER_DETAILS = 1;
 
   /**
-   * The feature id for the '<em><b>Vat</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Vat</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int PRODUCT__VAT = 2;
 
   /**
-   * The feature id for the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The feature id for the '<em><b>Description</b></em>' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
   int PRODUCT__DESCRIPTION = 3;
 
   /**
-   * The feature id for the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc -->
+   * The feature id for the '<em><b>Price</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @generated
@@ -560,8 +555,8 @@ public interface CompanyPackage extends EPackage
   int PRODUCT__PRICE = 4;
 
   /**
-   * The number of structural features of the '<em>Product</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The number of structural features of the '<em>Product</em>' class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -589,8 +584,8 @@ public interface CompanyPackage extends EPackage
   EClass getAddressable();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Addressable#getName
-   * <em>Name</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Addressable#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
@@ -601,8 +596,8 @@ public interface CompanyPackage extends EPackage
   EAttribute getAddressable_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Addressable#getStreet
-   * <em>Street</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Addressable#getStreet <em>Street</em>}'.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Street</em>'.
@@ -613,8 +608,8 @@ public interface CompanyPackage extends EPackage
   EAttribute getAddressable_Street();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Addressable#getCity
-   * <em>City</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Addressable#getCity <em>City</em>}'.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @return the meta object for the attribute '<em>City</em>'.
@@ -647,9 +642,8 @@ public interface CompanyPackage extends EPackage
   EReference getSupplier_PurchaseOrders();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Supplier#isPreferred
-   * <em>Preferred</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Supplier#isPreferred <em>Preferred</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Preferred</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Supplier#isPreferred()
    * @see #getSupplier()
@@ -658,9 +652,8 @@ public interface CompanyPackage extends EPackage
   EAttribute getSupplier_Preferred();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder
-   * <em>Purchase Order</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder <em>Purchase Order</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for class '<em>Purchase Order</em>'.
    * @see org.eclipse.emf.cdo.examples.company.PurchaseOrder
    * @generated
@@ -668,9 +661,8 @@ public interface CompanyPackage extends EPackage
   EClass getPurchaseOrder();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getDate
-   * <em>Date</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getDate <em>Date</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Date</em>'.
    * @see org.eclipse.emf.cdo.examples.company.PurchaseOrder#getDate()
    * @see #getPurchaseOrder()
@@ -679,9 +671,8 @@ public interface CompanyPackage extends EPackage
   EAttribute getPurchaseOrder_Date();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getSupplier
-   * <em>Supplier</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.examples.company.PurchaseOrder#getSupplier <em>Supplier</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Supplier</em>'.
    * @see org.eclipse.emf.cdo.examples.company.PurchaseOrder#getSupplier()
    * @see #getPurchaseOrder()
@@ -692,7 +683,6 @@ public interface CompanyPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.examples.company.OrderDetail <em>Order Detail</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Order Detail</em>'.
    * @see org.eclipse.emf.cdo.examples.company.OrderDetail
    * @generated
@@ -700,10 +690,9 @@ public interface CompanyPackage extends EPackage
   EClass getOrderDetail();
 
   /**
-   * Returns the meta object for the container reference '
-   * {@link org.eclipse.emf.cdo.examples.company.OrderDetail#getOrder <em>Order</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getOrder <em>Order</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the container reference '<em>Order</em>'.
    * @see org.eclipse.emf.cdo.examples.company.OrderDetail#getOrder()
    * @see #getOrderDetail()
@@ -712,9 +701,8 @@ public interface CompanyPackage extends EPackage
   EReference getOrderDetail_Order();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct
-   * <em>Product</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct <em>Product</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Product</em>'.
    * @see org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct()
    * @see #getOrderDetail()
@@ -723,9 +711,8 @@ public interface CompanyPackage extends EPackage
   EReference getOrderDetail_Product();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getPrice
-   * <em>Price</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getPrice <em>Price</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Price</em>'.
    * @see org.eclipse.emf.cdo.examples.company.OrderDetail#getPrice()
    * @see #getOrderDetail()
@@ -754,9 +741,8 @@ public interface CompanyPackage extends EPackage
   EClass getCategory();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Category#getName
-   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Category#getName <em>Name</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Category#getName()
    * @see #getCategory()
@@ -765,10 +751,9 @@ public interface CompanyPackage extends EPackage
   EAttribute getCategory_Name();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Category#getCategories <em>Categories</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.examples.company.Category#getCategories <em>Categories</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Categories</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Category#getCategories()
    * @see #getCategory()
@@ -777,10 +762,9 @@ public interface CompanyPackage extends EPackage
   EReference getCategory_Categories();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Category#getProducts <em>Products</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.examples.company.Category#getProducts <em>Products</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Products</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Category#getProducts()
    * @see #getCategory()
@@ -799,9 +783,8 @@ public interface CompanyPackage extends EPackage
   EClass getProduct();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getName
-   * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getName <em>Name</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getName()
    * @see #getProduct()
@@ -810,10 +793,9 @@ public interface CompanyPackage extends EPackage
   EAttribute getProduct_Name();
 
   /**
-   * Returns the meta object for the reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference list '<em>Order Details</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getOrderDetails()
    * @see #getProduct()
@@ -822,9 +804,8 @@ public interface CompanyPackage extends EPackage
   EReference getProduct_OrderDetails();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}
-   * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Vat</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getVat()
    * @see #getProduct()
@@ -833,9 +814,8 @@ public interface CompanyPackage extends EPackage
   EAttribute getProduct_Vat();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getDescription
-   * <em>Description</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getDescription <em>Description</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Description</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Product#getDescription()
    * @see #getProduct()
@@ -844,8 +824,8 @@ public interface CompanyPackage extends EPackage
   EAttribute getProduct_Description();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getPrice
-   * <em>Price</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getPrice <em>Price</em>}'.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Price</em>'.
@@ -866,10 +846,9 @@ public interface CompanyPackage extends EPackage
   EClass getCompany();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Company#getCategories <em>Categories</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.examples.company.Company#getCategories <em>Categories</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Categories</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Company#getCategories()
    * @see #getCompany()
@@ -878,10 +857,9 @@ public interface CompanyPackage extends EPackage
   EReference getCompany_Categories();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Company#getSuppliers <em>Suppliers</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.examples.company.Company#getSuppliers <em>Suppliers</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Suppliers</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Company#getSuppliers()
    * @see #getCompany()
@@ -902,10 +880,9 @@ public interface CompanyPackage extends EPackage
   EReference getCompany_PurchaseOrders();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Company#getCustomers <em>Customers</em>}'. <!-- begin-user-doc --> <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.examples.company.Company#getCustomers <em>Customers</em>}'.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Customers</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Company#getCustomers()
    * @see #getCompany()
@@ -914,10 +891,9 @@ public interface CompanyPackage extends EPackage
   EReference getCompany_Customers();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Company#getSalesOrders <em>Sales Orders</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.examples.company.Company#getSalesOrders <em>Sales Orders</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Sales Orders</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Company#getSalesOrders()
    * @see #getCompany()
@@ -936,10 +912,9 @@ public interface CompanyPackage extends EPackage
   EClass getCustomer();
 
   /**
-   * Returns the meta object for the reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Customer#getSalesOrders <em>Sales Orders</em>}'. <!-- begin-user-doc
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.examples.company.Customer#getSalesOrders <em>Sales Orders</em>}'.
+   * <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
    * @return the meta object for the reference list '<em>Sales Orders</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Customer#getSalesOrders()
    * @see #getCustomer()
@@ -958,10 +933,9 @@ public interface CompanyPackage extends EPackage
   EClass getOrder();
 
   /**
-   * Returns the meta object for the containment reference list '
-   * {@link org.eclipse.emf.cdo.examples.company.Order#getOrderDetails <em>Order Details</em>}'. <!-- begin-user-doc -->
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.examples.company.Order#getOrderDetails <em>Order Details</em>}'.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @return the meta object for the containment reference list '<em>Order Details</em>'.
    * @see org.eclipse.emf.cdo.examples.company.Order#getOrderDetails()
    * @see #getOrder()
@@ -972,7 +946,6 @@ public interface CompanyPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.examples.company.SalesOrder <em>Sales Order</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @return the meta object for class '<em>Sales Order</em>'.
    * @see org.eclipse.emf.cdo.examples.company.SalesOrder
    * @generated
@@ -980,9 +953,8 @@ public interface CompanyPackage extends EPackage
   EClass getSalesOrder();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.SalesOrder#getId
-   * <em>Id</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.SalesOrder#getId <em>Id</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Id</em>'.
    * @see org.eclipse.emf.cdo.examples.company.SalesOrder#getId()
    * @see #getSalesOrder()
@@ -991,9 +963,8 @@ public interface CompanyPackage extends EPackage
   EAttribute getSalesOrder_Id();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.examples.company.SalesOrder#getCustomer
-   * <em>Customer</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.examples.company.SalesOrder#getCustomer <em>Customer</em>}'.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Customer</em>'.
    * @see org.eclipse.emf.cdo.examples.company.SalesOrder#getCustomer()
    * @see #getSalesOrder()
@@ -1002,8 +973,8 @@ public interface CompanyPackage extends EPackage
   EReference getSalesOrder_Customer();
 
   /**
-   * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Returns the factory that creates the instances of the model.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -1018,14 +989,13 @@ public interface CompanyPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl
-     * <em>Addressable</em>}' class. <!-- begin-user-doc -->
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.AddressableImpl <em>Addressable</em>}' class.
+     * <!-- begin-user-doc -->
      * 
      * @since 4.0<!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.AddressableImpl
@@ -1035,7 +1005,8 @@ public interface CompanyPackage extends EPackage
     EClass ADDRESSABLE = eINSTANCE.getAddressable();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
      * 
      * @since 4.0<!-- end-user-doc -->
      * @generated
@@ -1043,7 +1014,8 @@ public interface CompanyPackage extends EPackage
     EAttribute ADDRESSABLE__NAME = eINSTANCE.getAddressable_Name();
 
     /**
-     * The meta object literal for the '<em><b>Street</b></em>' attribute feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Street</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
      * 
      * @since 4.0<!-- end-user-doc -->
      * @generated
@@ -1051,7 +1023,8 @@ public interface CompanyPackage extends EPackage
     EAttribute ADDRESSABLE__STREET = eINSTANCE.getAddressable_Street();
 
     /**
-     * The meta object literal for the '<em><b>City</b></em>' attribute feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>City</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
      * 
      * @since 4.0<!-- end-user-doc -->
      * @generated
@@ -1059,9 +1032,8 @@ public interface CompanyPackage extends EPackage
     EAttribute ADDRESSABLE__CITY = eINSTANCE.getAddressable_City();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl <em>Supplier</em>}
-     * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.SupplierImpl <em>Supplier</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.SupplierImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getSupplier()
      * @generated
@@ -1069,25 +1041,24 @@ public interface CompanyPackage extends EPackage
     EClass SUPPLIER = eINSTANCE.getSupplier();
 
     /**
-     * The meta object literal for the '<em><b>Purchase Orders</b></em>' reference list feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Purchase Orders</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference SUPPLIER__PURCHASE_ORDERS = eINSTANCE.getSupplier_PurchaseOrders();
 
     /**
-     * The meta object literal for the '<em><b>Preferred</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Preferred</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute SUPPLIER__PREFERRED = eINSTANCE.getSupplier_Preferred();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl
-     * <em>Purchase Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl <em>Purchase Order</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.PurchaseOrderImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getPurchaseOrder()
      * @generated
@@ -1095,25 +1066,24 @@ public interface CompanyPackage extends EPackage
     EClass PURCHASE_ORDER = eINSTANCE.getPurchaseOrder();
 
     /**
-     * The meta object literal for the '<em><b>Date</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Date</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute PURCHASE_ORDER__DATE = eINSTANCE.getPurchaseOrder_Date();
 
     /**
-     * The meta object literal for the '<em><b>Supplier</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Supplier</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference PURCHASE_ORDER__SUPPLIER = eINSTANCE.getPurchaseOrder_Supplier();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl
-     * <em>Order Detail</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl <em>Order Detail</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.OrderDetailImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getOrderDetail()
      * @generated
@@ -1121,25 +1091,25 @@ public interface CompanyPackage extends EPackage
     EClass ORDER_DETAIL = eINSTANCE.getOrderDetail();
 
     /**
-     * The meta object literal for the '<em><b>Order</b></em>' container reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Order</b></em>' container reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference ORDER_DETAIL__ORDER = eINSTANCE.getOrderDetail_Order();
 
     /**
-     * The meta object literal for the '<em><b>Product</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Product</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference ORDER_DETAIL__PRODUCT = eINSTANCE.getOrderDetail_Product();
 
     /**
-     * The meta object literal for the '<em><b>Price</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Price</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute ORDER_DETAIL__PRICE = eINSTANCE.getOrderDetail_Price();
@@ -1155,9 +1125,8 @@ public interface CompanyPackage extends EPackage
     EEnum VAT = eINSTANCE.getVAT();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.CategoryImpl <em>Category</em>}
-     * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.CategoryImpl <em>Category</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.CategoryImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCategory()
      * @generated
@@ -1165,9 +1134,9 @@ public interface CompanyPackage extends EPackage
     EClass CATEGORY = eINSTANCE.getCategory();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute CATEGORY__NAME = eINSTANCE.getCategory_Name();
@@ -1189,9 +1158,8 @@ public interface CompanyPackage extends EPackage
     EReference CATEGORY__PRODUCTS = eINSTANCE.getCategory_Products();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl <em>Product</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl <em>Product</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.ProductImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getProduct()
      * @generated
@@ -1199,39 +1167,40 @@ public interface CompanyPackage extends EPackage
     EClass PRODUCT = eINSTANCE.getProduct();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute PRODUCT__NAME = eINSTANCE.getProduct_Name();
 
     /**
-     * The meta object literal for the '<em><b>Order Details</b></em>' reference list feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Order Details</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference PRODUCT__ORDER_DETAILS = eINSTANCE.getProduct_OrderDetails();
 
     /**
-     * The meta object literal for the '<em><b>Vat</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Vat</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute PRODUCT__VAT = eINSTANCE.getProduct_Vat();
 
     /**
-     * The meta object literal for the '<em><b>Description</b></em>' attribute feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EAttribute PRODUCT__DESCRIPTION = eINSTANCE.getProduct_Description();
 
     /**
-     * The meta object literal for the '<em><b>Price</b></em>' attribute feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Price</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
      * 
      * @since 4.0<!-- end-user-doc -->
      * @generated
@@ -1239,9 +1208,8 @@ public interface CompanyPackage extends EPackage
     EAttribute PRODUCT__PRICE = eINSTANCE.getProduct_Price();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl <em>Company</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl <em>Company</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCompany()
      * @generated
@@ -1289,9 +1257,8 @@ public interface CompanyPackage extends EPackage
     EReference COMPANY__SALES_ORDERS = eINSTANCE.getCompany_SalesOrders();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.CustomerImpl <em>Customer</em>}
-     * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.CustomerImpl <em>Customer</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.CustomerImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getCustomer()
      * @generated
@@ -1299,17 +1266,16 @@ public interface CompanyPackage extends EPackage
     EClass CUSTOMER = eINSTANCE.getCustomer();
 
     /**
-     * The meta object literal for the '<em><b>Sales Orders</b></em>' reference list feature. <!-- begin-user-doc -->
+     * The meta object literal for the '<em><b>Sales Orders</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
      * @generated
      */
     EReference CUSTOMER__SALES_ORDERS = eINSTANCE.getCustomer_SalesOrders();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderImpl <em>Order</em>}'
-     * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.OrderImpl <em>Order</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.OrderImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getOrder()
      * @generated
@@ -1325,9 +1291,8 @@ public interface CompanyPackage extends EPackage
     EReference ORDER__ORDER_DETAILS = eINSTANCE.getOrder_OrderDetails();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl
-     * <em>Sales Order</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl <em>Sales Order</em>}' class.
+     * <!-- begin-user-doc --> <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl
      * @see org.eclipse.emf.cdo.examples.company.impl.CompanyPackageImpl#getSalesOrder()
      * @generated
@@ -1343,9 +1308,9 @@ public interface CompanyPackage extends EPackage
     EAttribute SALES_ORDER__ID = eINSTANCE.getSalesOrder_Id();
 
     /**
-     * The meta object literal for the '<em><b>Customer</b></em>' reference feature. <!-- begin-user-doc --> <!--
+     * The meta object literal for the '<em><b>Customer</b></em>' reference feature.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @generated
      */
     EReference SALES_ORDER__CUSTOMER = eINSTANCE.getSalesOrder_Customer();

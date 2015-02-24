@@ -21,18 +21,17 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Customer</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
- * </ul>
  * </p>
- * 
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ * </ul>
+ *
  * @generated
  */
 public class CustomerImpl extends AddressableImpl implements Customer
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CustomerImpl()
@@ -42,7 +41,6 @@ public class CustomerImpl extends AddressableImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -53,7 +51,6 @@ public class CustomerImpl extends AddressableImpl implements Customer
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

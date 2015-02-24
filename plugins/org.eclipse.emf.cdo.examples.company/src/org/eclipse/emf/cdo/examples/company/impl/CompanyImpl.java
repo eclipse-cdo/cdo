@@ -25,22 +25,21 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Company</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
- * </ul>
  * </p>
- * 
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getCategories <em>Categories</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getSuppliers <em>Suppliers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getCustomers <em>Customers</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.CompanyImpl#getSalesOrders <em>Sales Orders</em>}</li>
+ * </ul>
+ *
  * @generated
  */
 public class CompanyImpl extends AddressableImpl implements Company
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CompanyImpl()
@@ -50,7 +49,6 @@ public class CompanyImpl extends AddressableImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -61,7 +59,6 @@ public class CompanyImpl extends AddressableImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -72,7 +69,6 @@ public class CompanyImpl extends AddressableImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -83,7 +79,6 @@ public class CompanyImpl extends AddressableImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -94,7 +89,6 @@ public class CompanyImpl extends AddressableImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -105,7 +99,6 @@ public class CompanyImpl extends AddressableImpl implements Company
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @SuppressWarnings("unchecked")

@@ -20,19 +20,18 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl#getId <em>Id</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
- * </ul>
  * </p>
- * 
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
+ * </ul>
+ *
  * @generated
  */
 public class SalesOrderImpl extends OrderImpl implements SalesOrder
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected SalesOrderImpl()
@@ -42,7 +41,6 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -53,7 +51,6 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public int getId()
@@ -63,7 +60,6 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setId(int newId)
@@ -73,7 +69,6 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Customer getCustomer()
@@ -83,7 +78,6 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public void setCustomer(Customer newCustomer)

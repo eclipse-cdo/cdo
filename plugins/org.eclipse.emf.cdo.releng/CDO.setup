@@ -195,6 +195,8 @@
         <repository
             url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
+            url="http://download.eclipse.org/ecp/releases/releases_target_15"/>
+        <repository
             url="http://www.elver.org/eclipse/2.1.0/update"/>
         <repository
             url="http://download.oracle.com/otn_software/oepe/luna"/>

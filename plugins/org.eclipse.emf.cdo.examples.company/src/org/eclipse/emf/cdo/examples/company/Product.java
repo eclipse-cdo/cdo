@@ -15,17 +15,18 @@ import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Product</b></em>'. <!-- end-user-doc -->
+ *
  * <p>
  * The following features are supported:
- * <ul>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getName <em>Name</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getDescription <em>Description</em>}</li>
- * <li>{@link org.eclipse.emf.cdo.examples.company.Product#getPrice <em>Price</em>}</li>
- * </ul>
  * </p>
- * 
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getName <em>Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getPrice <em>Price</em>}</li>
+ * </ul>
+ *
  * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct()
  * @model
  * @generated
@@ -33,12 +34,12 @@ import org.eclipse.emf.ecore.EObject;
 public interface Product extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Name()
@@ -59,15 +60,15 @@ public interface Product extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Order Details</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.emf.cdo.examples.company.OrderDetail}. It is bidirectional and its opposite is '
-   * {@link org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct <em>Product</em>}'. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Order Details</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.examples.company.OrderDetail}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct <em>Product</em>}'.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Order Details</em>' reference list isn't clear, there really should be more of a
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Order Details</em>' reference list.
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_OrderDetails()
    * @see org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct
@@ -77,18 +78,20 @@ public interface Product extends EObject
   EList<OrderDetail> getOrderDetails();
 
   /**
-   * Returns the value of the '<em><b>Vat</b></em>' attribute. The default value is <code>"vat15"</code>. The literals
-   * are from the enumeration {@link org.eclipse.emf.cdo.examples.company.VAT}. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Vat</b></em>' attribute.
+   * The default value is <code>"vat15"</code>.
+   * The literals are from the enumeration {@link org.eclipse.emf.cdo.examples.company.VAT}.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Vat</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Vat</em>' attribute.
    * @see org.eclipse.emf.cdo.examples.company.VAT
    * @see #setVat(VAT)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Vat()
-   * @model default="vat15" annotation="teneo.jpa value='@Basic(optional=false)\n@Column(nullable=false)'"
+   * @model default="vat15"
+   *        annotation="teneo.jpa value='@Basic(optional=false)\n@Column(nullable=false)'"
    * @generated
    */
   VAT getVat();
@@ -106,13 +109,13 @@ public interface Product extends EObject
   void setVat(VAT value);
 
   /**
-   * Returns the value of the '<em><b>Description</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Description</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Description</em>' attribute isn't clear, there really should be more of a description
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
    * @return the value of the '<em>Description</em>' attribute.
    * @see #setDescription(String)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_Description()
@@ -122,18 +125,17 @@ public interface Product extends EObject
   String getDescription();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Product#getDescription <em>Description</em>}'
-   * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @param value
-   *          the new value of the '<em>Description</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Product#getDescription <em>Description</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @param value the new value of the '<em>Description</em>' attribute.
    * @see #getDescription()
    * @generated
    */
   void setDescription(String value);
 
   /**
-   * Returns the value of the '<em><b>Price</b></em>' attribute. <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Price</b></em>' attribute.
+   * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Price</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
@@ -152,8 +154,7 @@ public interface Product extends EObject
    * <!-- begin-user-doc -->
    * 
    * @since 4.0 <!-- end-user-doc -->
-   * @param value
-   *          the new value of the '<em>Price</em>' attribute.
+   * @param value the new value of the '<em>Price</em>' attribute.
    * @see #getPrice()
    * @generated
    */

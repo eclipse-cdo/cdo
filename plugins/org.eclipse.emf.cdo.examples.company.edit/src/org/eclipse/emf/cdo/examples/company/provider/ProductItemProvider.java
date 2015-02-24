@@ -26,9 +26,6 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITableItemColorProvider;
-import org.eclipse.emf.edit.provider.ITableItemFontProvider;
-import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
@@ -44,11 +41,11 @@ import java.util.List;
  */
 public class ProductItemProvider extends CDOItemProviderAdapter implements IEditingDomainItemProvider,
     IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+    IItemColorProvider, IItemFontProvider
 {
   /**
-   * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This constructs an instance from a factory and a notifier.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public ProductItemProvider(AdapterFactory adapterFactory)
@@ -57,8 +54,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns the property descriptors for the adapted class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -78,8 +75,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Name feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addNamePropertyDescriptor(Object object)
@@ -93,8 +90,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds a property descriptor for the Order Details feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Order Details feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addOrderDetailsPropertyDescriptor(Object object)
@@ -107,8 +104,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds a property descriptor for the Vat feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Vat feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addVatPropertyDescriptor(Object object)
@@ -122,8 +119,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds a property descriptor for the Description feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a property descriptor for the Description feature.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected void addDescriptionPropertyDescriptor(Object object)
@@ -137,7 +134,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds a property descriptor for the Price feature. <!-- begin-user-doc -->
+   * This adds a property descriptor for the Price feature.
+   * <!-- begin-user-doc -->
    * 
    * @since 4.0<!-- end-user-doc -->
    * @generated
@@ -154,7 +152,6 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -164,8 +161,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This returns Product.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns Product.gif.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -176,7 +173,6 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -186,8 +182,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -199,9 +195,9 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
-   * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This handles model notifications by calling {@link #updateChildren} to update any cached
+   * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -222,9 +218,9 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
-   * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
+   * that can be created under this object.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -234,8 +230,8 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
   }
 
   /**
-   * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Return the resource locator for this item provider's resources.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override

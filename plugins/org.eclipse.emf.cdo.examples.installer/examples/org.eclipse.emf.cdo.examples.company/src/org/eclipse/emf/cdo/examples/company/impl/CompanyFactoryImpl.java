@@ -32,22 +32,20 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static CompanyFactory init()
   {
     try
     {
-      CompanyFactory theCompanyFactory = (CompanyFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/examples/company/1.0.0");
+      CompanyFactory theCompanyFactory = (CompanyFactory)EPackage.Registry.INSTANCE.getEFactory(CompanyPackage.eNS_URI);
       if (theCompanyFactory != null)
       {
         return theCompanyFactory;
@@ -61,8 +59,8 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CompanyFactoryImpl()
@@ -72,7 +70,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -105,7 +102,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -122,7 +118,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -139,7 +134,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Supplier createSupplier()
@@ -150,7 +144,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public PurchaseOrder createPurchaseOrder()
@@ -161,7 +154,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public OrderDetail createOrderDetail()
@@ -172,7 +164,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public VAT createVATFromString(EDataType eDataType, String initialValue)
@@ -186,7 +177,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public String convertVATToString(EDataType eDataType, Object instanceValue)
@@ -196,7 +186,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Category createCategory()
@@ -207,7 +196,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Product createProduct()
@@ -218,7 +206,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Company createCompany()
@@ -229,7 +216,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Customer createCustomer()
@@ -240,7 +226,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Order createOrder()
@@ -251,7 +236,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public SalesOrder createSalesOrder()
@@ -262,7 +246,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public CompanyPackage getCompanyPackage()
@@ -272,7 +255,6 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

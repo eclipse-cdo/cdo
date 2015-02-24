@@ -32,9 +32,6 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITableItemColorProvider;
-import org.eclipse.emf.edit.provider.ITableItemFontProvider;
-import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import java.util.ArrayList;
@@ -53,24 +50,24 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
     IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
-   * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--
+   * This keeps track of the root adapter factory that delegates to this adapter factory.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   protected ComposedAdapterFactory parentAdapterFactory;
 
   /**
-   * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!-- begin-user-doc --> <!--
+   * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   protected IChangeNotifier changeNotifier = new ChangeNotifier();
 
   /**
-   * This helps manage the child creation extenders. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This helps manage the child creation extenders.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(
@@ -85,8 +82,8 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
-   * This constructs an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This constructs an instance.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public CompanyItemProviderAdapterFactory()
@@ -96,9 +93,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
     supportedTypes.add(ITreeItemContentProvider.class);
     supportedTypes.add(IItemLabelProvider.class);
     supportedTypes.add(IItemPropertySource.class);
-    supportedTypes.add(ITableItemLabelProvider.class);
-    supportedTypes.add(ITableItemColorProvider.class);
-    supportedTypes.add(ITableItemFontProvider.class);
     supportedTypes.add(IItemColorProvider.class);
     supportedTypes.add(IItemFontProvider.class);
   }
@@ -106,15 +100,14 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Supplier} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected SupplierItemProvider supplierItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Supplier}. <!-- begin-user-doc --> <!--
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Supplier}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -129,17 +122,16 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.PurchaseOrder}
-   * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.PurchaseOrder} instances.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected PurchaseOrderItemProvider purchaseOrderItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.PurchaseOrder}. <!-- begin-user-doc -->
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.PurchaseOrder}.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -154,17 +146,16 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.OrderDetail}
-   * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.OrderDetail} instances.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected OrderDetailItemProvider orderDetailItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.OrderDetail}. <!-- begin-user-doc -->
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.OrderDetail}.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -181,15 +172,14 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Category} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CategoryItemProvider categoryItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Category}. <!-- begin-user-doc --> <!--
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Category}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -206,15 +196,14 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Product} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected ProductItemProvider productItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Product}. <!-- begin-user-doc --> <!--
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Product}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -231,15 +220,14 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Company} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CompanyItemProvider companyItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Company}. <!-- begin-user-doc --> <!--
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Company}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -256,15 +244,14 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Customer} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected CustomerItemProvider customerItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Customer}. <!-- begin-user-doc --> <!--
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Customer}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -287,9 +274,9 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   protected OrderItemProvider orderItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Order}. <!-- begin-user-doc --> <!--
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.Order}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -306,15 +293,14 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.SalesOrder} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   protected SalesOrderItemProvider salesOrderItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.SalesOrder}. <!-- begin-user-doc --> <!--
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.examples.company.SalesOrder}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -329,8 +315,8 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This returns the root adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This returns the root adapter factory that contains this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public ComposeableAdapterFactory getRootAdapterFactory()
@@ -339,8 +325,8 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This sets the composed adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This sets the composed adapter factory that contains this factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
@@ -350,7 +336,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -360,9 +345,9 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This implementation substitutes the factory itself as the key for the adapter. <!-- begin-user-doc --> <!--
+   * This implementation substitutes the factory itself as the key for the adapter.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -373,7 +358,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -393,7 +377,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public List<IChildCreationExtender> getChildCreationExtenders()
@@ -403,7 +386,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
@@ -413,7 +395,6 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public ResourceLocator getResourceLocator()
@@ -422,8 +403,8 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This adds a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This adds a listener.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void addListener(INotifyChangedListener notifyChangedListener)
@@ -432,8 +413,8 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This removes a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This removes a listener.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void removeListener(INotifyChangedListener notifyChangedListener)
@@ -442,9 +423,9 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!-- begin-user-doc --> <!--
+   * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}.
+   * <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
    * @generated
    */
   public void fireNotifyChanged(Notification notification)
@@ -458,8 +439,8 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This disposes all of the item providers created by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * This disposes all of the item providers created by this factory. 
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void dispose()

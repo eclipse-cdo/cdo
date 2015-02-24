@@ -38,6 +38,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -437,27 +439,47 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return ObjectType.valueFor(rootObject);
   }
 
+  protected ResourceSetImpl createResourceSet()
+  {
+    return new ResourceSetImpl();
+  }
+
   public final CDOView openView()
   {
-    return doOpenView(readOnly);
+    return openView(createResourceSet());
+  }
+
+  public CDOView openView(ResourceSet resourceSet)
+  {
+    return openView(readOnly, resourceSet);
   }
 
   public final CDOView openView(boolean readOnly)
   {
-    return doOpenView(readOnly);
+    return openView(readOnly, createResourceSet());
+  }
+
+  public CDOView openView(boolean readOnly, ResourceSet resourceSet)
+  {
+    return doOpenView(readOnly, resourceSet);
   }
 
   public final CDOTransaction openTransaction()
+  {
+    return openTransaction(createResourceSet());
+  }
+
+  public CDOTransaction openTransaction(ResourceSet resourceSet)
   {
     if (readOnly)
     {
       throw new ReadOnlyException("Checkout '" + getLabel() + "' is read-only");
     }
 
-    return (CDOTransaction)doOpenView(false);
+    return (CDOTransaction)doOpenView(false, resourceSet);
   }
 
-  protected CDOView doOpenView(boolean readOnly)
+  protected CDOView doOpenView(boolean readOnly, ResourceSet resourceSet)
   {
     if (view == null)
     {
@@ -466,13 +488,14 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     CDOSession session = view.getSession();
     CDOBranch branch = view.getBranch();
+    CDOBranchPoint head = branch.getHead();
 
     if (readOnly)
     {
-      return configureView(session.openView(branch));
+      return configureView(session.openView(head, resourceSet));
     }
 
-    return configureView(session.openTransaction(branch));
+    return configureView(session.openTransaction(head, resourceSet));
   }
 
   protected CDOView configureView(final CDOView view)

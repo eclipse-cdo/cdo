@@ -44,6 +44,8 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+
 import org.h2.jdbcx.JdbcDataSource;
 
 import java.io.File;
@@ -263,7 +265,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   }
 
   @Override
-  protected CDOView doOpenView(boolean readOnly)
+  protected CDOView doOpenView(boolean readOnly, ResourceSet resourceSet)
   {
     if (workspace == null)
     {
@@ -272,10 +274,10 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
 
     if (readOnly)
     {
-      return workspace.openView();
+      return workspace.openView(resourceSet);
     }
 
-    return workspace.openTransaction();
+    return workspace.openTransaction(resourceSet);
   }
 
   /**

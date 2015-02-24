@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
  * A CDO checkout.
@@ -88,9 +89,15 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public CDOView openView();
 
+  public CDOView openView(ResourceSet resourceSet);
+
   public CDOView openView(boolean readOnly);
 
+  public CDOView openView(boolean readOnly, ResourceSet resourceSet);
+
   public CDOTransaction openTransaction();
+
+  public CDOTransaction openTransaction(ResourceSet resourceSet);
 
   public boolean isDirty();
 

@@ -57,13 +57,15 @@ import java.io.File;
  */
 public class ShowInActionProvider extends AbstractActionProvider<Object>
 {
+  private static final String ID = ShowInActionProvider.class.getName();
+
   public static final String TITLE = "Show In";
 
   private static final String HISTORY_VIEW_ID = "org.eclipse.team.ui.GenericHistoryView";
 
   public ShowInActionProvider()
   {
-    super(Object.class, ICommonMenuConstants.GROUP_OPEN_WITH, TITLE, ICommonMenuConstants.GROUP_OPEN_WITH);
+    super(Object.class, ID, TITLE, ICommonMenuConstants.GROUP_OPEN);
   }
 
   @Override

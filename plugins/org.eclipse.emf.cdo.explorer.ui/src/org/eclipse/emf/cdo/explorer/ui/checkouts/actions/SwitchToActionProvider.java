@@ -36,9 +36,11 @@ import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
  */
 public abstract class SwitchToActionProvider extends AbstractActionProvider<CDOCheckout>
 {
+  private static final String ID = SwitchToActionProvider.class.getName();
+
   public SwitchToActionProvider(String title)
   {
-    super(CDOCheckout.class, "switch-to", title, ICommonMenuConstants.GROUP_ADDITIONS);
+    super(CDOCheckout.class, ID, title, ICommonMenuConstants.GROUP_ADDITIONS);
   }
 
   @Override

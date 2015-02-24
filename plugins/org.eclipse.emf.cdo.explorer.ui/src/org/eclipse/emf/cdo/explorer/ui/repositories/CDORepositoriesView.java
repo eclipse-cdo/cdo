@@ -186,8 +186,10 @@ public class CDORepositoriesView extends ContainerView
 
     manager.add(new Separator("group.new"));
     manager.add(new GroupMarker("group.new.branch"));
+    manager.add(new Separator());
     manager.add(new Separator("group.open"));
     manager.add(new GroupMarker("group.openWith"));
+    manager.add(new Separator());
     manager.add(new Separator("group.checkout"));
     manager.add(new Separator("group.edit"));
     manager.add(new Separator("group.port"));
@@ -204,7 +206,7 @@ public class CDORepositoriesView extends ContainerView
     if (ShowInActionProvider.fillMenu(page, subMenu, selectedElement))
     {
       subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
-      manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN_WITH, subMenu);
+      manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, subMenu);
     }
   }
 

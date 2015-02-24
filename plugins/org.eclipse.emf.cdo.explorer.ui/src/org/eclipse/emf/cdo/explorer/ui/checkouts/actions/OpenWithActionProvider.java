@@ -287,7 +287,7 @@ public class OpenWithActionProvider extends CommonActionProvider
     }
 
     submenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
-    menu.appendToGroup(ICommonMenuConstants.GROUP_OPEN_WITH, submenu);
+    menu.appendToGroup(ICommonMenuConstants.GROUP_OPEN, submenu);
   }
 
   private static EObject getOpenableElement(Object element)
@@ -382,10 +382,11 @@ public class OpenWithActionProvider extends CommonActionProvider
       throw new IllegalArgumentException("object is null");
     }
 
-    if (!(object instanceof CDOResourceNode))
+    if (editorID == null && !(object instanceof CDOResourceNode))
     {
       if (adapterFactory == null)
       {
+        // This must be an unwanted second call through the global open action registration.
         return;
       }
 

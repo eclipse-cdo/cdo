@@ -17,10 +17,13 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -159,6 +162,14 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     }
 
     super.dispose();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public boolean useFullPath(Object object)
+  {
+    return false;
   }
 
   /**
@@ -353,11 +364,35 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   {
     if (obj instanceof CDOBranch)
     {
+      if (useFullPath(obj))
+      {
+        return ((CDOBranch)obj).getPathName();
+      }
+
       return ((CDOBranch)obj).getName();
+    }
+
+    if (obj instanceof CDOBranchPoint)
+    {
+      CDOBranchPoint branchPoint = (CDOBranchPoint)obj;
+      String result = getText(branchPoint.getBranch());
+
+      long timeStamp = branchPoint.getTimeStamp();
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        result += " [" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
+      }
+
+      return result;
     }
 
     if (obj instanceof CDOResourceNode)
     {
+      if (useFullPath(obj))
+      {
+        return ((CDOResourceNode)obj).getPath();
+      }
+
       return ((CDOResourceNode)obj).getName();
     }
 
@@ -388,9 +423,25 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       return getViewImage(view);
     }
 
+    if (obj instanceof CDOCommitInfo)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_COMMIT);
+    }
+
     if (obj instanceof CDOBranch)
     {
       return SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
+    }
+
+    if (obj instanceof CDOBranchPoint)
+    {
+      CDOBranchPoint branchPoint = (CDOBranchPoint)obj;
+      if (branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        return SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
+      }
+
+      return SharedIcons.getImage(SharedIcons.OBJ_BRANCH_POINT);
     }
 
     if (obj instanceof CDOResourceFolder)

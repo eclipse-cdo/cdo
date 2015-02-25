@@ -23,7 +23,9 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -84,15 +86,18 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       return Status.OK_STATUS;
     }
 
-    Operation<?> operation = Operation.getFor(target, transferType);
-    if (operation != null && operation.canDrop())
+    if (dropOperation != DND.DROP_LINK)
     {
-      if (dropOperation == DND.DROP_MOVE && !operation.canMove())
+      Operation<?> operation = Operation.getFor(target, transferType);
+      if (operation != null && operation.canDrop())
       {
-        getCommonDropAdapter().overrideOperation(DND.DROP_COPY);
-      }
+        if (dropOperation == DND.DROP_MOVE && !operation.canMove())
+        {
+          getCommonDropAdapter().overrideOperation(DND.DROP_COPY);
+        }
 
-      return Status.OK_STATUS;
+        return Status.OK_STATUS;
+      }
     }
 
     return Status.CANCEL_STATUS;
@@ -107,20 +112,37 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
     }
 
     TransferData transferType = dropAdapter.getCurrentTransfer();
-    boolean copy = dropAdapter.getCurrentOperation() == DND.DROP_COPY;
+    int dropOperation = dropAdapter.getCurrentOperation();
 
     CDOBranchPoint branchPoint = getSelectedBranchPoint(target, transferType);
     if (branchPoint != null)
     {
       CDOCheckout checkout = (CDOCheckout)target;
-      checkout.setBranchPoint(branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
+      if (dropOperation == DND.DROP_MOVE)
+      {
+        // Switch To (online) / Replace With (offline)
+        checkout.setBranchPoint(branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
+      }
+      else if (dropOperation == DND.DROP_COPY)
+      {
+        // Merge From (online + offline)
+      }
+      else if (dropOperation == DND.DROP_LINK)
+      {
+        // Compare With (online + offline)
+        CDOViewOpener viewOpener = checkout.getRepository();
+        CDOBranchPoint left = checkout.getBranchPoint();
+        CDOBranchPoint right = branchPoint;
+        CDOCompareEditorUtil.openEditor(viewOpener, left, right, null, true);
+      }
+
       return Status.OK_STATUS;
     }
 
     Operation<?> operation = Operation.getFor(target, transferType);
     if (operation != null)
     {
-      operation.drop(copy);
+      operation.drop(dropOperation == DND.DROP_COPY);
       return Status.OK_STATUS;
     }
 

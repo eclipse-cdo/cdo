@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionProvider;
+import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
+import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.util.container.IContainer;
 
@@ -24,7 +26,8 @@ import org.eclipse.net4j.util.container.IContainer;
  * @author Eike Stepper
  * @since 4.4
  */
-public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDOSessionProvider
+public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDOSessionProvider, CDOViewOpener,
+    CDOTransactionOpener
 {
   public static final String TYPE_REMOTE = "remote";
 

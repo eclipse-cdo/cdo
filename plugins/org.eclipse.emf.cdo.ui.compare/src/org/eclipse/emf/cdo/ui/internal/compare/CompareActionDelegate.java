@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.ui.internal.compare;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.viewers.ISelection;
@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCompareAction<TARGET> extends LongRunningActionDelegate
+public abstract class CompareActionDelegate<TARGET> extends LongRunningActionDelegate
 {
   private final Class<TARGET> targetClass;
 
@@ -34,7 +34,7 @@ public abstract class AbstractCompareAction<TARGET> extends LongRunningActionDel
 
   private ISelection selection;
 
-  public AbstractCompareAction(Class<TARGET> targetClass)
+  public CompareActionDelegate(Class<TARGET> targetClass)
   {
     this.targetClass = targetClass;
   }
@@ -69,7 +69,7 @@ public abstract class AbstractCompareAction<TARGET> extends LongRunningActionDel
       while (iterator.hasNext())
       {
         Object element = iterator.next();
-        TARGET target = getAdapter(element, targetClass);
+        TARGET target = AdapterUtil.adapt(element, targetClass);
         if (target != null)
         {
           targets.add(target);
@@ -81,25 +81,4 @@ public abstract class AbstractCompareAction<TARGET> extends LongRunningActionDel
   }
 
   protected abstract void run(List<TARGET> targets, IProgressMonitor progressMonitor);
-
-  @SuppressWarnings("unchecked")
-  public static <T> T getAdapter(Object adaptable, Class<T> c)
-  {
-    if (c.isInstance(adaptable))
-    {
-      return (T)adaptable;
-    }
-
-    if (adaptable instanceof IAdaptable)
-    {
-      IAdaptable a = (IAdaptable)adaptable;
-      Object adapter = a.getAdapter(c);
-      if (c.isInstance(adapter))
-      {
-        return (T)adapter;
-      }
-    }
-
-    return null;
-  }
 }

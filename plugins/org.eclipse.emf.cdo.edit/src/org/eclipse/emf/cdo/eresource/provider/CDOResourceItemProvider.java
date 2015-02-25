@@ -32,6 +32,7 @@ import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.Collection;
 import java.util.List;
@@ -197,12 +198,29 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   /**
    * This returns CDOResource.gif.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public Object getImage(Object object)
   {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/CDOResource")); //$NON-NLS-1$
+    Object image = null;
+
+    CDOResource resource = (CDOResource)object;
+    if (resource.isRoot())
+    {
+      InternalCDOView view = (InternalCDOView)resource.cdoView();
+      if (view != null)
+      {
+        image = getResourceLocator().getImage("full/obj16/repo");
+      }
+    }
+
+    if (image == null)
+    {
+      image = getResourceLocator().getImage("full/obj16/CDOResource");
+    }
+
+    return overlayImage(object, image);
   }
 
   /**
@@ -225,6 +243,15 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   public String getText(Object object)
   {
     CDOResource resource = (CDOResource)object;
+    if (resource.isRoot())
+    {
+      InternalCDOView view = (InternalCDOView)resource.cdoView();
+      if (view != null)
+      {
+        return view.getRepositoryName();
+      }
+    }
+
     String name = resource.getName();
     return name == null ? resource.toString() : name;
   }

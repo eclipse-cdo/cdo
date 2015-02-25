@@ -20,9 +20,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CompareWithPreviousVersionAction extends AbstractCompareAction<CDOCommitInfo>
+public class CompareWithPreviousVersion extends CompareActionDelegate<CDOCommitInfo>
 {
-  public CompareWithPreviousVersionAction()
+  public CompareWithPreviousVersion()
   {
     super(CDOCommitInfo.class);
   }

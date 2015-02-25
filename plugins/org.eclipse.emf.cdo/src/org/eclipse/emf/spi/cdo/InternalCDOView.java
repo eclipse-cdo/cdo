@@ -47,6 +47,16 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 {
   public void setViewID(int viewId);
 
+  /**
+   * @since 4.4
+   */
+  public String getRepositoryName();
+
+  /**
+   * @since 4.4
+   */
+  public void setRepositoryName(String repositoryName);
+
   public InternalCDOSession getSession();
 
   public void setSession(InternalCDOSession session);

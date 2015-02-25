@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
@@ -39,6 +41,8 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.File;
 import java.util.Arrays;
@@ -52,6 +56,8 @@ import java.util.Set;
 public abstract class CDORepositoryImpl extends AbstractElement implements CDORepository
 {
   public static final String PROP_NAME = "name";
+
+  private static final String REPOSITORY_KEY = CDORepository.class.getName();
 
   private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
 
@@ -87,6 +93,15 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
         fireEvent(new ContainerEvent<CDOBranch>(CDORepositoryImpl.this, Arrays.asList(e.getDeltas())));
       }
+    }
+  };
+
+  private final IListener sessionReleaser = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      releaseSession();
     }
   };
 
@@ -149,6 +164,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           state = State.Connecting;
 
           session = openSession();
+          session.properties().put(REPOSITORY_KEY, this);
           session.addListener(new LifecycleEventAdapter()
           {
             @Override
@@ -269,6 +285,38 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     --sessionRefCount;
     doDisconnect(false);
+  }
+
+  public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
+  {
+    CDOSession session = acquireSession();
+    CDOTransaction transaction = session.openTransaction(target, resourceSet);
+    transaction.addListener(sessionReleaser);
+    return transaction;
+  }
+
+  public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet)
+  {
+    CDOSession session = acquireSession();
+    CDOTransaction transaction = session.openTransaction(durableLockingID, resourceSet);
+    transaction.addListener(sessionReleaser);
+    return transaction;
+  }
+
+  public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet)
+  {
+    CDOSession session = acquireSession();
+    CDOView view = session.openView(target, resourceSet);
+    view.addListener(sessionReleaser);
+    return view;
+  }
+
+  public CDOView openView(String durableLockingID, ResourceSet resourceSet)
+  {
+    CDOSession session = acquireSession();
+    CDOView view = session.openView(durableLockingID, resourceSet);
+    view.addListener(sessionReleaser);
+    return view;
   }
 
   @Override

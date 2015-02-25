@@ -20,9 +20,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class CompareWithEachOtherAction extends AbstractCompareAction<CDOCommitInfo>
+public class CompareWithEachOther extends CompareActionDelegate<CDOCommitInfo>
 {
-  public CompareWithEachOtherAction()
+  public CompareWithEachOther()
   {
     super(CDOCommitInfo.class);
   }
@@ -34,7 +34,7 @@ public class CompareWithEachOtherAction extends AbstractCompareAction<CDOCommitI
     {
       CDOCommitInfo commitInfo0 = targets.get(0);
       CDOCommitInfo commitInfo1 = targets.get(1);
-      CDOCompareEditorUtil.openDialog(commitInfo0, commitInfo1);
+      CDOCompareEditorUtil.openEditor(commitInfo0, commitInfo1, true);
     }
   }
 }

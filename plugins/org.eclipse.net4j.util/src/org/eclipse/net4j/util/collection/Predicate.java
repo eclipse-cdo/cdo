@@ -13,7 +13,9 @@ package org.eclipse.net4j.util.collection;
 /**
  * @author Eike Stepper
  * @since 3.3
+ * @deprecated as of 3.5 use {@link org.eclipse.net4j.util.Predicate}.
  */
+@Deprecated
 public interface Predicate<T>
 {
   public boolean apply(T element);

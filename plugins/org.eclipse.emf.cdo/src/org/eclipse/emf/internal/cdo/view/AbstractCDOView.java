@@ -136,6 +136,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, AbstractCDOView.class);
 
+  private static final String REPOSITORY_NAME_KEY = "cdo.repository.name";
+
   private final ViewAndState[] viewAndStates = ViewAndState.create(this);
 
   private CDOBranchPoint branchPoint;
@@ -191,6 +193,22 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public final IRegistry<String, Object> properties()
   {
     return properties;
+  }
+
+  public String getRepositoryName()
+  {
+    Object repositoryName = properties.get(REPOSITORY_NAME_KEY);
+    if (repositoryName instanceof String)
+    {
+      return (String)repositoryName;
+    }
+
+    return getSession().getRepositoryInfo().getName();
+  }
+
+  public void setRepositoryName(String repositoryName)
+  {
+    properties.put(REPOSITORY_NAME_KEY, repositoryName);
   }
 
   public boolean isReadOnly()

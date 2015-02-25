@@ -42,7 +42,6 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorDescriptor;
@@ -71,6 +70,8 @@ import java.util.Map;
  */
 public class OpenWithActionProvider extends CommonActionProvider
 {
+  private static final String WORKBENCH_PART_KEY = IWorkbenchPart.class.getName();
+
   private static final Map<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>> VIEWS = new HashMap<IEditorPart, Pair<CDOView, Pair<CDOResourceLeaf, String>>>();
 
   private static final Map<Pair<CDOResourceLeaf, String>, Object> EDITORS = new HashMap<Pair<CDOResourceLeaf, String>, Object>();
@@ -328,41 +329,44 @@ public class OpenWithActionProvider extends CommonActionProvider
       @Override
       protected IStatus run(IProgressMonitor monitor)
       {
-        CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceLeaf);
+        final CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceLeaf);
         final CDOView view = checkout.openView();
 
-        CDOResourceLeaf contextualLeaf = view.getObject(resourceLeaf);
+        final CDOResourceLeaf contextualLeaf = view.getObject(resourceLeaf);
         final IEditorInput editorInput = CDOEditorUtil.createEditorInput(editorID, contextualLeaf, false, true);
 
-        final IWorkbenchWindow workbenchWindow = page.getWorkbenchWindow();
-        Display display = workbenchWindow.getShell().getDisplay();
-
-        display.asyncExec(new Runnable()
+        Shell shell = page.getWorkbenchWindow().getShell();
+        if (!shell.isDisposed())
         {
-          public void run()
+          shell.getDisplay().asyncExec(new Runnable()
           {
-            try
+            public void run()
             {
-              IEditorPart editor = page.openEditor(editorInput, editorID);
-              if (editor != null)
+              try
               {
-                synchronized (EDITORS)
+                IEditorPart editor = page.openEditor(editorInput, editorID);
+                if (editor != null)
                 {
-                  EDITORS.put(key, editor);
-                }
+                  view.properties().put(WORKBENCH_PART_KEY, editor);
 
-                synchronized (VIEWS)
-                {
-                  VIEWS.put(editor, Pair.create(view, key));
+                  synchronized (EDITORS)
+                  {
+                    EDITORS.put(key, editor);
+                  }
+
+                  synchronized (VIEWS)
+                  {
+                    VIEWS.put(editor, Pair.create(view, key));
+                  }
                 }
               }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
             }
-            catch (Exception ex)
-            {
-              OM.LOG.error(ex);
-            }
-          }
-        });
+          });
+        }
 
         return Status.OK_STATUS;
       }

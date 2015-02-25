@@ -185,6 +185,9 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       }
 
       ids.addAll(requiredParentIDs);
+
+      CDOResource rootResource = (CDOResource)getLeft();
+      ids.remove(rootResource.cdoID());
     }
 
     public Iterator<? extends EObject> getChildren(EObject eObject)

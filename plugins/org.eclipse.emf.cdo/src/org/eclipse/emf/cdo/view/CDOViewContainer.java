@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @apiviz.exclude
  * @apiviz.composedOf {@link CDOView} - - views
  */
-public interface CDOViewContainer extends IContainer<CDOView>
+public interface CDOViewContainer extends IContainer<CDOView>, CDOViewOpener
 {
   /**
    * Returns an array of all open {@link CDOView views} and {@link CDOTransaction transactions} of this session.
@@ -51,14 +51,6 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * @since 4.0
    */
   public CDOView getView(int viewID);
-
-  /**
-   * Opens and returns a new {@link CDOView view} on the given EMF {@link ResourceSet resource set}.
-   *
-   * @see #openView()
-   * @since 4.0
-   */
-  public CDOView openView(CDOBranchPoint target, ResourceSet resourceSet);
 
   /**
    * Opens and returns a new {@link CDOView view} on a new EMF {@link ResourceSet resource set}.
@@ -134,14 +126,4 @@ public interface CDOViewContainer extends IContainer<CDOView>
    * @since 4.0
    */
   public CDOView openView(String durableLockingID);
-
-  /**
-   * Opens and returns a {@link CDOView view} on the given EMF {@link ResourceSet resource set} by resuming a view that
-   * has previously been made durable by calling {@link CDOView#enableDurableLocking(boolean)
-   * CDOView.enableDurableLocking(true)}.
-   *
-   * @see #openView(String)
-   * @since 4.0
-   */
-  public CDOView openView(String durableLockingID, ResourceSet resourceSet);
 }

@@ -17,6 +17,12 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
+
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
+
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
  *
@@ -31,6 +37,21 @@ public abstract class OM
   public static final OMTracer DEBUG = BUNDLE.tracer("debug"); //$NON-NLS-1$
 
   public static final OMLogger LOG = BUNDLE.logger();
+
+  public static Image getImage(String imagePath)
+  {
+    return ExtendedImageRegistry.INSTANCE.getImage(getBundleURI(imagePath));
+  }
+
+  public static ImageDescriptor getImageDescriptor(String imagePath)
+  {
+    return ExtendedImageRegistry.INSTANCE.getImageDescriptor(getBundleURI(imagePath));
+  }
+
+  private static URI getBundleURI(String path)
+  {
+    return URI.createPlatformPluginURI(BUNDLE_ID + "/" + path, true);
+  }
 
   /**
    * @author Eike Stepper

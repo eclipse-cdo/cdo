@@ -27,11 +27,11 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public abstract class MergeAction extends AbstractCompareAction<CDOTransaction>
+public abstract class Merge extends CompareActionDelegate<CDOTransaction>
 {
   private final boolean allowTimeStamp;
 
-  public MergeAction(boolean allowTimeStamp)
+  public Merge(boolean allowTimeStamp)
   {
     super(CDOTransaction.class);
     this.allowTimeStamp = allowTimeStamp;
@@ -49,21 +49,22 @@ public abstract class MergeAction extends AbstractCompareAction<CDOTransaction>
       SelectBranchPointDialog dialog = new SelectBranchPointDialog(page, session, leftView, allowTimeStamp);
       if (dialog.open() == SelectBranchPointDialog.OK)
       {
-        CDOView rightView = openView(session, dialog.getBranchPoint());
-        CDOView[] originView = { null };
+        final CDOView rightView = openView(session, dialog.getBranchPoint());
+        final CDOView[] originView = { null };
 
-        try
+        CDOCompareEditorUtil.addDisposeRunnables(new Runnable()
         {
-          CDOCompareEditorUtil.openDialog(leftView, rightView, originView);
-        }
-        finally
-        {
-          LifecycleUtil.deactivate(originView[0]);
-          if (!rightView.isDirty())
+          public void run()
           {
-            LifecycleUtil.deactivate(rightView);
+            LifecycleUtil.deactivate(originView[0]);
+            if (!rightView.isDirty())
+            {
+              LifecycleUtil.deactivate(rightView);
+            }
           }
-        }
+        });
+
+        CDOCompareEditorUtil.openEditor(leftView, rightView, originView, true);
       }
     }
   }
@@ -81,7 +82,7 @@ public abstract class MergeAction extends AbstractCompareAction<CDOTransaction>
   /**
    * @author Eike Stepper
    */
-  public static class FromBranch extends MergeAction
+  public static class FromBranch extends Merge
   {
     public FromBranch()
     {
@@ -92,7 +93,7 @@ public abstract class MergeAction extends AbstractCompareAction<CDOTransaction>
   /**
    * @author Eike Stepper
    */
-  public static class FromBranchPoint extends MergeAction
+  public static class FromBranchPoint extends Merge
   {
     public FromBranchPoint()
     {

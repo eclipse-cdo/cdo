@@ -10,18 +10,23 @@
  */
 package org.eclipse.emf.cdo.compare;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.util.ReflectUtil;
+
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.Monitor;
+import org.eclipse.emf.compare.CompareFactory;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.EMFCompare;
 import org.eclipse.emf.compare.EMFCompare.Builder;
+import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.conflict.IConflictDetector;
 import org.eclipse.emf.compare.diff.IDiffEngine;
 import org.eclipse.emf.compare.equi.IEquiEngine;
@@ -39,8 +44,17 @@ import org.eclipse.emf.compare.req.IReqEngine;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import com.google.common.base.Function;
+import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
+
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * A class with many overridable factory methods that help to create EMF {@link Comparison comparisons}.
@@ -69,7 +83,7 @@ public class CDOCompare
 
   protected IdentifierEObjectMatcher createMatcher(Function<EObject, String> idFunction)
   {
-    return new IdentifierEObjectMatcher(idFunction);
+    return new CDOMatcher(idFunction);
   }
 
   protected IEqualityHelperFactory createEqualityHelperFactory()
@@ -189,6 +203,200 @@ public class CDOCompare
   }
 
   /**
+   * A {@link IEObjectMatcher matcher} that treats {@link Resource resources} as {@link EObject EObjects}.
+   *
+   * @author Eike Stepper
+   * @since 4.3
+   */
+  public static class CDOMatcher extends IdentifierEObjectMatcher
+  {
+    private static final boolean INCOMPATIBLE_EMF_COMPARE;
+
+    private final Function<EObject, String> idComputation;
+
+    public CDOMatcher(Function<EObject, String> idComputation)
+    {
+      super(idComputation);
+      this.idComputation = idComputation;
+    }
+
+    @Override
+    protected EObject getParentEObject(EObject eObject)
+    {
+      return CDOElement.getParentOf(eObject);
+    }
+
+    @Override
+    protected Set<Match> matchPerId(Iterator<? extends EObject> leftEObjects,
+        Iterator<? extends EObject> rightEObjects, Iterator<? extends EObject> originEObjects,
+        List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
+    {
+      if (INCOMPATIBLE_EMF_COMPARE)
+      {
+        return matchPerIdCompatibility(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID,
+            rightEObjectsNoID, originEObjectsNoID);
+      }
+
+      return super.matchPerId(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID,
+          originEObjectsNoID);
+    }
+
+    private Set<Match> matchPerIdCompatibility(Iterator<? extends EObject> leftEObjects,
+        Iterator<? extends EObject> rightEObjects, Iterator<? extends EObject> originEObjects,
+        List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
+    {
+      final List<EObject> leftEObjectsNoID1 = leftEObjectsNoID;
+      final List<EObject> rightEObjectsNoID1 = rightEObjectsNoID;
+      final List<EObject> originEObjectsNoID1 = originEObjectsNoID;
+      final Set<Match> matches = Sets.newLinkedHashSet();
+
+      // This lookup map will be used by iterations on right and origin to find the match in which they
+      // should add themselves
+      final Map<String, Match> idToMatch = Maps.newHashMap();
+
+      // We will try and mimic the structure of the input model.
+      // These map do not need to be ordered, we only need fast lookup.
+      final Map<EObject, Match> leftEObjectsToMatch = Maps.newHashMap();
+      final Map<EObject, Match> rightEObjectsToMatch = Maps.newHashMap();
+      final Map<EObject, Match> originEObjectsToMatch = Maps.newHashMap();
+
+      // We'll only iterate once on each of the three sides, building the matches as we go
+      while (leftEObjects.hasNext())
+      {
+        final EObject left = leftEObjects.next();
+
+        final String identifier = idComputation.apply(left);
+        if (identifier != null)
+        {
+          final Match match = CompareFactory.eINSTANCE.createMatch();
+          match.setLeft(left);
+
+          // Can we find a parent? Assume we're iterating in containment order
+          final EObject parentEObject = getParentEObject(left);
+          final Match parent = leftEObjectsToMatch.get(parentEObject);
+          if (parent != null)
+          {
+            ((InternalEList<Match>)parent.getSubmatches()).addUnique(match);
+          }
+          else
+          {
+            matches.add(match);
+          }
+          idToMatch.put(identifier, match);
+          leftEObjectsToMatch.put(left, match);
+        }
+        else
+        {
+          leftEObjectsNoID1.add(left);
+        }
+      }
+
+      while (rightEObjects.hasNext())
+      {
+        final EObject right = rightEObjects.next();
+
+        // Do we have an existing match?
+        final String identifier = idComputation.apply(right);
+        if (identifier != null)
+        {
+          Match match = idToMatch.get(identifier);
+          if (match != null)
+          {
+            match.setRight(right);
+
+            rightEObjectsToMatch.put(right, match);
+          }
+          else
+          {
+            // Otherwise, create and place it.
+            match = CompareFactory.eINSTANCE.createMatch();
+            match.setRight(right);
+
+            // Can we find a parent?
+            final EObject parentEObject = getParentEObject(right);
+            final Match parent = rightEObjectsToMatch.get(parentEObject);
+            if (parent != null)
+            {
+              ((InternalEList<Match>)parent.getSubmatches()).addUnique(match);
+            }
+            else
+            {
+              matches.add(match);
+            }
+
+            rightEObjectsToMatch.put(right, match);
+            idToMatch.put(identifier, match);
+          }
+        }
+        else
+        {
+          rightEObjectsNoID1.add(right);
+        }
+      }
+
+      while (originEObjects.hasNext())
+      {
+        final EObject origin = originEObjects.next();
+
+        // Do we have an existing match?
+        final String identifier = idComputation.apply(origin);
+        if (identifier != null)
+        {
+          Match match = idToMatch.get(identifier);
+          if (match != null)
+          {
+            match.setOrigin(origin);
+
+            originEObjectsToMatch.put(origin, match);
+          }
+          else
+          {
+            // Otherwise, create and place it.
+            match = CompareFactory.eINSTANCE.createMatch();
+            match.setOrigin(origin);
+
+            // Can we find a parent?
+            final EObject parentEObject = getParentEObject(origin);
+            final Match parent = originEObjectsToMatch.get(parentEObject);
+            if (parent != null)
+            {
+              ((InternalEList<Match>)parent.getSubmatches()).addUnique(match);
+            }
+            else
+            {
+              matches.add(match);
+            }
+
+            idToMatch.put(identifier, match);
+            originEObjectsToMatch.put(origin, match);
+          }
+        }
+        else
+        {
+          originEObjectsNoID1.add(origin);
+        }
+      }
+      return matches;
+    }
+
+    static
+    {
+      Method method = null;
+
+      try
+      {
+        method = ReflectUtil.getMethod(IdentifierEObjectMatcher.class, "getParentEObject", EObject.class);
+      }
+      catch (Throwable ex)
+      {
+        //$FALL-THROUGH$
+      }
+
+      INCOMPATIBLE_EMF_COMPARE = method == null;
+    }
+  }
+
+  /**
    * A {@link DefaultMatchEngine match engine} that treats {@link Resource resources} as {@link EObject EObjects}.
    *
    * @author Eike Stepper
@@ -204,6 +412,7 @@ public class CDOCompare
     protected void match(Comparison comparison, IComparisonScope scope, final Notifier left, final Notifier right,
         final Notifier origin, Monitor monitor)
     {
+      // Omit special treatment of Resources (and ResourceSets). Just match EObjects.
       match(comparison, scope, (EObject)left, (EObject)right, (EObject)origin, monitor);
     }
 

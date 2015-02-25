@@ -40,6 +40,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -68,6 +69,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   public static final String PROP_REPOSITORY = "repository";
 
   public static final String EDITOR_PROPERTIES = "editor.properties";
+
+  private static final String CHECKOUT_KEY = CDOCheckout.class.getName();
 
   private static final CDOBranchPoint[] NO_BRANCH_POINTS = {};
 
@@ -178,11 +181,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   protected String doSetBranchPoint(int branchID, long timeStamp)
   {
     CDOBranch branch = view.getSession().getBranchManager().getBranch(branchID);
-    CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
-    view.setBranchPoint(branchPoint);
-
-    String pathName = branch.getPathName();
-    return pathName;
+    view.setBranchPoint(branch.getPoint(timeStamp));
+    return branch.getPathName();
   }
 
   public CDOBranchPoint[] getBranchPoints()
@@ -461,7 +461,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public CDOView openView(boolean readOnly, ResourceSet resourceSet)
   {
-    return doOpenView(readOnly, resourceSet);
+    return openAndConfigureView(readOnly, resourceSet);
   }
 
   public final CDOTransaction openTransaction()
@@ -476,7 +476,13 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       throw new ReadOnlyException("Checkout '" + getLabel() + "' is read-only");
     }
 
-    return (CDOTransaction)doOpenView(false, resourceSet);
+    return (CDOTransaction)openAndConfigureView(false, resourceSet);
+  }
+
+  private CDOView openAndConfigureView(boolean readOnly, ResourceSet resourceSet)
+  {
+    CDOView view = doOpenView(readOnly, resourceSet);
+    return configureView(view);
   }
 
   protected CDOView doOpenView(boolean readOnly, ResourceSet resourceSet)
@@ -492,15 +498,18 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     if (readOnly)
     {
-      return configureView(session.openView(head, resourceSet));
+      return session.openView(head, resourceSet);
     }
 
-    return configureView(session.openTransaction(head, resourceSet));
+    return session.openTransaction(head, resourceSet);
   }
 
   protected CDOView configureView(final CDOView view)
   {
     CDOUtil.configureView(view);
+    ((InternalCDOView)view).setRepositoryName(repository.getLabel());
+
+    view.properties().put(CHECKOUT_KEY, this);
     view.addListener(new IListener()
     {
       public void notifyEvent(IEvent event)

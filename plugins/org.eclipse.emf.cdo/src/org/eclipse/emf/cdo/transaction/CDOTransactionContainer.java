@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @apiviz.exclude
  * @apiviz.composedOf {@link CDOTransaction} - - transactions
  */
-public interface CDOTransactionContainer extends CDOViewContainer
+public interface CDOTransactionContainer extends CDOViewContainer, CDOTransactionOpener
 {
   /**
    * Returns an array of all open {@link CDOTransaction transactions} of this session.
@@ -50,14 +50,6 @@ public interface CDOTransactionContainer extends CDOViewContainer
    * @since 4.1
    */
   public CDOTransaction getTransaction(int viewID);
-
-  /**
-   * Opens and returns a new {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set}.
-   *
-   * @see #openTransaction()
-   * @since 4.1
-   */
-  public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet);
 
   /**
    * Opens and returns a new {@link CDOTransaction transaction} on a new EMF {@link ResourceSet resource set}.
@@ -113,14 +105,4 @@ public interface CDOTransactionContainer extends CDOViewContainer
    * @since 4.0
    */
   public CDOTransaction openTransaction(String durableLockingID);
-
-  /**
-   * Opens and returns a {@link CDOTransaction transaction} on the given EMF {@link ResourceSet resource set} by
-   * resuming a transaction that has previously been made durable by calling
-   * {@link CDOTransaction#enableDurableLocking(boolean) CDOTransaction.enableDurableLocking(true)}.
-   *
-   * @see #openTransaction(String)
-   * @since 4.0
-   */
-  public CDOTransaction openTransaction(String durableLockingID, ResourceSet resourceSet);
 }

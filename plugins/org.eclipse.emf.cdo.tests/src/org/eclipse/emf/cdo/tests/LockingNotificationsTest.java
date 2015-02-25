@@ -30,6 +30,9 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.event.IEvent;
+
+import java.util.List;
 
 /**
  * @author Caspar De Groot
@@ -289,7 +292,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
       assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
     }
 
-    assertEquals(0, transactionListener.getEvents().size());
+    List<IEvent> events = transactionListener.getEvents();
+    assertEquals(6, events.size());
 
     if (!mustReceiveNotifications)
     {

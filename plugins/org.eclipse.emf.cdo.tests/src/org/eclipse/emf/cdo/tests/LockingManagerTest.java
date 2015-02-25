@@ -258,14 +258,8 @@ public class LockingManagerTest extends AbstractLockingTest
     lockingManager.lock(LockType.READ, 1, keys, 10000);
     lockingManager.unlock(LockType.READ, 1, keys);
 
-    try
-    {
-      lockingManager.unlock(LockType.READ, 1, keys);
-      fail("Should have an exception");
-    }
-    catch (IllegalMonitorStateException exception)
-    {
-    }
+    // As of 4.4 should not fail anymore.
+    lockingManager.unlock(LockType.READ, 1, keys);
   }
 
   public void testReadTimeout() throws Exception

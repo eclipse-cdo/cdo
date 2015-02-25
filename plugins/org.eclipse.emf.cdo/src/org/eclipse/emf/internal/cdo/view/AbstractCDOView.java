@@ -491,7 +491,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return setBranchPoint(branchPoint, null);
   }
 
-  protected synchronized void basicSetBranchPoint(CDOBranchPoint branchPoint)
+  protected synchronized CDOBranchPoint basicSetBranchPoint(CDOBranchPoint branchPoint)
+  {
+    this.branchPoint = adjustBranchPoint(branchPoint);
+    return this.branchPoint;
+  }
+
+  protected CDOBranchPoint adjustBranchPoint(CDOBranchPoint branchPoint)
   {
     CDOSession session = getSession();
     if (session != null)
@@ -500,7 +506,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       branchPoint = CDOBranchUtil.adjustBranchPoint(branchPoint, branchManager);
     }
 
-    this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
+    return CDOBranchUtil.copyBranchPoint(branchPoint);
   }
 
   public void waitForUpdate(long updateTime)
@@ -1910,7 +1916,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     super.doActivate();
 
-    basicSetBranchPoint(branchPoint);
+    if (branchPoint != null)
+    {
+      basicSetBranchPoint(branchPoint);
+    }
   }
 
   @Override

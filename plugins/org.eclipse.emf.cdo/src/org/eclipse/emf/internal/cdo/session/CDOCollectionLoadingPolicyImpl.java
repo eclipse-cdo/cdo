@@ -38,7 +38,7 @@ public class CDOCollectionLoadingPolicyImpl implements CDOCollectionLoadingPolic
   public CDOCollectionLoadingPolicyImpl(int initialChunkSize, int resolveChunkSize)
   {
     this.resolveChunkSize = resolveChunkSize <= 0 ? CDORevision.UNCHUNKED : resolveChunkSize;
-    this.initialChunkSize = initialChunkSize < 0 ? resolveChunkSize : initialChunkSize;
+    this.initialChunkSize = initialChunkSize < 0 ? this.resolveChunkSize : initialChunkSize;
   }
 
   public CDOSession getSession()

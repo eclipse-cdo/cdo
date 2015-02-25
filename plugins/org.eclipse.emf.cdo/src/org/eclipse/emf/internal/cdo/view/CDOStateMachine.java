@@ -1104,7 +1104,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDORevision newRevision = null;
 
       InternalCDOView view = object.cdoView();
-      InternalCDORevisionCache cache = view.getSession().getRevisionManager().getCache();
+      InternalCDOSession session = view.getSession();
+      InternalCDORevisionCache cache = session.getRevisionManager().getCache();
 
       if (SWITCHING_TARGET.get() == Boolean.TRUE)
       {
@@ -1114,7 +1115,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         if (newRevision == null)
         {
           newRevision = oldRevision.copy();
-          view.getSession().resolveAllElementProxies(newRevision);
+          session.resolveAllElementProxies(newRevision);
           delta.applyTo(newRevision);
           newRevision.setBranchPoint(target);
           newRevision.setVersion(target.getVersion());

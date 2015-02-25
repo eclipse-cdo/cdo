@@ -199,6 +199,7 @@ public class CDOViewImpl extends AbstractCDOView
   public synchronized boolean setBranchPoint(CDOBranchPoint branchPoint, IProgressMonitor progressMonitor)
   {
     checkActive();
+    branchPoint = adjustBranchPoint(branchPoint);
 
     long timeStamp = branchPoint.getTimeStamp();
     long creationTimeStamp = session.getRepositoryInfo().getCreationTime();
@@ -240,12 +241,12 @@ public class CDOViewImpl extends AbstractCDOView
     sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects, monitor);
 
     basicSetBranchPoint(branchPoint);
+    CDOBranch branch = branchPoint.getBranch();
 
     try
     {
       CDOStateMachine.SWITCHING_TARGET.set(Boolean.TRUE);
-      doInvalidate(branchPoint.getBranch(), CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects,
-          oldRevisions, true);
+      doInvalidate(branch, CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects, oldRevisions, true);
     }
     finally
     {

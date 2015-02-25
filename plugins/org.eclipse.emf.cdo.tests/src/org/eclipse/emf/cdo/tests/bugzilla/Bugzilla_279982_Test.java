@@ -57,20 +57,10 @@ public class Bugzilla_279982_Test extends AbstractCDOTest
     EObject element = referencer.getElement();
     assertNotNull(element);
 
-    try
-    {
-      assertEquals(true, CDOUtil.isStaleObject(element));
-      element.eContainer();
-      fail("Should fail");
-    }
-    catch (ObjectNotFoundException ex)
-    {
-      // ignore
-    }
-    catch (Exception ex)
-    {
-      fail("Should have an ObjectNotFoundException");
-    }
+    assertEquals(true, CDOUtil.isStaleObject(element));
+
+    // As of 4.4 should not fail anymore. CDOStaleReferencePolicy.PROXY is more tolerant now.
+    element.eContainer();
 
     tx.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 

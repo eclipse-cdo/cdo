@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.edit;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
@@ -77,6 +78,15 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     }
 
     return false;
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  public Object getParent(Object object)
+  {
+    return CDOElement.getParentOf((EObject)object);
   }
 
   /**

@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.eresource.provider;
 
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter;
-import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 
@@ -189,23 +188,5 @@ public class CDOResourceNodeItemProvider extends CDOItemProviderAdapter implemen
   public ResourceLocator getResourceLocator()
   {
     return ((IChildCreationExtender)adapterFactory).getResourceLocator();
-  }
-
-  /**
-   * Returns the parent of the argument CDOResourceNode
-   *
-   * @ADDED
-   * @since 4.2
-   */
-  @Override
-  public Object getParent(Object object)
-  {
-    CDOResourceNode resourceNode = (CDOResourceNode)object;
-    if (resourceNode.isRoot())
-    {
-      return ((CDOResource)resourceNode).getResourceSet();
-    }
-
-    return resourceNode.getFolder();
   }
 }

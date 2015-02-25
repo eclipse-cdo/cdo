@@ -134,18 +134,7 @@ public class CDOResourceFolderItemProvider extends CDOResourceNodeItemProvider i
   public String getText(Object object)
   {
     String label = ((CDOResourceFolder)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_CDOResourceFolder_type") + "?" : "/" + label; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-  }
-
-  /**
-   * Returns the parent of the folder. Might be another folder, or the root resource
-   *
-   * @ADDED
-   */
-  @Override
-  public Object getParent(Object object)
-  {
-    return ((CDOResourceFolder)object).eContainer();
+    return label == null || label.length() == 0 ? getString("_UI_CDOResourceFolder_type") + "?" : label; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**

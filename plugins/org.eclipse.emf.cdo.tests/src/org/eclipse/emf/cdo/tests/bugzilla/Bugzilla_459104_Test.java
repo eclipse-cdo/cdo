@@ -11,17 +11,17 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateRequest;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.util.RequestCallCounter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView.Options;
 
-import java.util.Map;
+import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.SignalCounter;
 
 /**
  * Bug 459104 about {@link CDOObject#cdoLockState()} which should store loaded lock state into the cache after a request to the server when {@link Options#isLockNotificationEnabled()} return true.
@@ -45,26 +45,24 @@ public class Bugzilla_459104_Test extends AbstractCDOTest
     resource1.getContents().add(company);
     transaction1.commit();
 
-    RequestCallCounter requestCallCounter = new RequestCallCounter(session1);
-
-    Map<Short, Integer> nbRequestsCalls = requestCallCounter.getNBRequestsCalls();
-    nbRequestsCalls.put(CDOProtocolConstants.SIGNAL_LOCK_STATE, 0);
+    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session1).options().getNet4jProtocol();
+    SignalCounter signalCounter = new SignalCounter(protocol);
 
     CDOObject companyCDOObject = CDOUtil.getCDOObject(company);
 
     companyCDOObject.cdoLockState();
-    int nbLockStateRequest = nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOCK_STATE);
+    int nbLockStateRequest = signalCounter.getCountFor(LockStateRequest.class);
     assertEquals(1, nbLockStateRequest);
 
     companyCDOObject.cdoLockState();
-    nbLockStateRequest = nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOCK_STATE);
+    nbLockStateRequest = signalCounter.getCountFor(LockStateRequest.class);
     assertEquals(1, nbLockStateRequest);
 
     companyCDOObject.cdoLockState();
-    nbLockStateRequest = nbRequestsCalls.get(CDOProtocolConstants.SIGNAL_LOCK_STATE);
+    nbLockStateRequest = signalCounter.getCountFor(LockStateRequest.class);
     assertEquals(1, nbLockStateRequest);
 
-    requestCallCounter.dispose();
+    protocol.removeListener(signalCounter);
   }
 
 }

@@ -12,25 +12,27 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
+import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
+import org.eclipse.emf.cdo.internal.net4j.protocol.QueryCancelRequest;
+import org.eclipse.emf.cdo.internal.net4j.protocol.QueryRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
-import org.eclipse.emf.cdo.tests.util.RequestCallCounter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
+import org.eclipse.net4j.signal.MonitorProgressIndication;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
+import org.eclipse.net4j.signal.SignalCounter;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
-
-import java.util.Map;
 
 /**
  * Test {@link RequestWithMonitoring @link IndicationWithMonitoring} with and without {@link OMMonitor}.
@@ -65,23 +67,23 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
         1000 * CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS);
     ((CDONet4jSessionImpl)session).setSignalTimeout(10000 * SignalProtocol.DEFAULT_TIMEOUT);
     CDOTransaction transaction = session.openTransaction();
-    RequestCallCounter nbRequestsCallsCounter = new RequestCallCounter(session);
+    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
+    SignalCounter signalCounter = new SignalCounter(protocol);
     CDOResource resource = transaction.getOrCreateResource(getResourcePath(RESOURCE_NAME));
     Company company = getModel1Factory().createCompany();
     resource.getContents().add(company);
     transaction.commit(useMonitor ? new NullProgressMonitor() : null);
     String assertMessage = " differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and CommitTransactionRequest";
     int nbExpectedCalls;
-    Map<Short, Integer> nbRequestsCalls = nbRequestsCallsCounter.getNBRequestsCalls();
     if (!useMonitor)
     {
       // QueryRequest, QueryCancel are used to get the resourcePath
       nbExpectedCalls = 4;
-      assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, nbRequestsCalls.size());
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_QUERY));
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_QUERY_CANCEL));
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION));
+      assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, signalCounter.getCountForSignalTypes());
+      assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(CommitTransactionRequest.class));
     }
     else
     {
@@ -89,15 +91,15 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
       assertMessage += " and MonitorProgressIndications should have been received";
 
       // QueryRequest, QueryCancel are used to get the resourcePath
-      assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, nbRequestsCalls.size());
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_QUERY));
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_QUERY_CANCEL));
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_LOAD_REVISIONS));
-      assertEquals(true, nbRequestsCalls.containsKey(CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION));
-      assertEquals(true, nbRequestsCalls.containsKey(SignalProtocol.SIGNAL_MONITOR_PROGRESS));
+      assertEquals(nbExpectedCalls + assertMessage, nbExpectedCalls, signalCounter.getCountForSignalTypes());
+      assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(CommitTransactionRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(MonitorProgressIndication.class));
     }
 
-    nbRequestsCallsCounter.dispose();
+    protocol.removeListener(signalCounter);
   }
 
   /**

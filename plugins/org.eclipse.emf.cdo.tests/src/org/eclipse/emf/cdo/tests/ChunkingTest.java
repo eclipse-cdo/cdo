@@ -12,7 +12,10 @@ package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model5.GenListOfInt;
 import org.eclipse.emf.cdo.tests.model5.Model5Factory;
@@ -353,5 +356,55 @@ public class ChunkingTest extends AbstractCDOTest
 
     view.close();
     session.close();
+  }
+
+  public void testRemove() throws CommitException
+  {
+    // Init model
+    Company company = getModel1Factory().createCompany();
+    addCategoryAndProducts(company, "Software");
+
+    CDOSession session = openSession();
+    CDOTransaction tx = session.openTransaction();
+    CDOResource resource = tx.createResource(getResourcePath(RESOURCE_PATH));
+    resource.getContents().add(company);
+
+    tx.commit();
+    tx.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    // Test session
+    session = openSession();
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(3, 3));
+
+    tx = session.openTransaction();
+    resource = tx.getResource(getResourcePath(RESOURCE_PATH));
+    company = (Company)resource.getContents().get(0);
+
+    Category software = company.getCategories().get(0);
+    software.getProducts().remove(15);
+
+    tx.commit();
+  }
+
+  private void addCategoryAndProducts(Company company, String name)
+  {
+    Category category = addCategory(company, name);
+
+    for (int i = 0; i < 20; i++)
+    {
+      Product1 product = getModel1Factory().createProduct1();
+      product.setName(name + "-" + i);
+      category.getProducts().add(product);
+    }
+  }
+
+  private Category addCategory(Company company, String name)
+  {
+    Category category = getModel1Factory().createCategory();
+    category.setName(name);
+    company.getCategories().add(category);
+    return category;
   }
 }

@@ -458,11 +458,9 @@ public class ExternalReferenceTest extends AbstractCDOTest
         externalResource.getContents().add(externalObject);
       }
 
-      SignalCounter signalCounter = new SignalCounter();
-
       CDOSession session = openSession();
       ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
-      protocol.addListener(signalCounter);
+      SignalCounter signalCounter = new SignalCounter(protocol);
 
       CDOTransaction transaction = session.openTransaction(resourceSet);
       transaction.options().setRevisionPrefetchingPolicy(CDOUtil.createRevisionPrefetchingPolicy(10));
@@ -478,6 +476,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
 
       int count = signalCounter.getCountFor(LoadRevisionsRequest.class);
       assertEquals(3, count); // Resource + top folder + top object (supplier)
+      protocol.removeListener(signalCounter);
 
       CDORevisionData data = CDOUtil.getCDOObject(supplier).cdoRevision().data();
       EReference reference = getModel1Package().getSupplier_PurchaseOrders();

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,6 +14,8 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.osgi.service.debug.DebugOptions;
 
 import org.osgi.framework.Bundle;
@@ -28,7 +30,7 @@ import java.util.ResourceBundle;
 
 /**
  * Represents a {@link Bundle bundle}, whether OSGi {@link OMPlatform#isOSGiRunning() is running} or not.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -59,6 +61,16 @@ public interface OMBundle
 
   public OMPreferences preferences();
 
+  /**
+   * @since 3.5
+   */
+  public IStatus getStatus(Object obj);
+
+  /**
+   * @since 3.5
+   */
+  public void coreException(Throwable t) throws CoreException;
+
   public File getConfigFile();
 
   public Properties getConfigProperties();
@@ -80,7 +92,7 @@ public interface OMBundle
   /**
    * A facility for accessing OSGi {@link DebugOptions debug options}, whether OSGi {@link OMPlatform#isOSGiRunning() is
    * running} or not.
-   * 
+   *
    * @author Eike Stepper
    */
   public interface DebugSupport
@@ -106,21 +118,21 @@ public interface OMBundle
 
   /**
    * A facility for accessing {@link ResourceBundle resource bundles}.
-   * 
+   *
    * @author Eike Stepper
    */
   public interface TranslationSupport
   {
     /**
      * Indicates whether strings should be translated by default.
-     * 
+     *
      * @return <code>true</code> if strings should be translated by default; <code>false</code> otherwise.
      */
     public boolean shouldTranslate();
 
     /**
      * Sets whether strings should be translated by default.
-     * 
+     *
      * @param shouldTranslate
      *          whether strings should be translated by default.
      */
@@ -128,7 +140,7 @@ public interface OMBundle
 
     /**
      * Returns the string resource associated with the key.
-     * 
+     *
      * @param key
      *          the key of the string resource.
      * @return the string resource associated with the key.
@@ -137,7 +149,7 @@ public interface OMBundle
 
     /**
      * Returns the string resource associated with the key.
-     * 
+     *
      * @param key
      *          the key of the string resource.
      * @param translate
@@ -148,7 +160,7 @@ public interface OMBundle
 
     /**
      * Returns a string resource associated with the key, and performs substitutions.
-     * 
+     *
      * @param key
      *          the key of the string.
      * @param args
@@ -161,7 +173,7 @@ public interface OMBundle
 
     /**
      * Returns a string resource associated with the key, and performs substitutions.
-     * 
+     *
      * @param key
      *          the key of the string.
      * @param translate

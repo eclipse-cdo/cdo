@@ -20,6 +20,11 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.om.trace.Tracer;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.OperationCanceledException;
+import org.eclipse.core.runtime.Status;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -198,6 +203,57 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     }
 
     return logger;
+  }
+
+  public IStatus getStatus(Object obj)
+  {
+    if (obj instanceof CoreException)
+    {
+      CoreException coreException = (CoreException)obj;
+      return coreException.getStatus();
+    }
+
+    if (obj instanceof Throwable)
+    {
+      Throwable t = (Throwable)obj;
+      String msg = t.getLocalizedMessage();
+      if (msg == null || msg.length() == 0)
+      {
+        msg = t.getClass().getName();
+      }
+
+      return new Status(IStatus.ERROR, getBundleID(), msg, t);
+    }
+
+    return new Status(IStatus.INFO, getBundleID(), obj.toString(), null);
+  }
+
+  public void coreException(Throwable t) throws CoreException
+  {
+    if (t instanceof CoreException)
+    {
+      CoreException ex = (CoreException)t;
+      IStatus status = ex.getStatus();
+      if (status != null && status.getSeverity() == IStatus.CANCEL)
+      {
+        throw new OperationCanceledException();
+      }
+
+      throw ex;
+    }
+
+    if (t instanceof OperationCanceledException)
+    {
+      throw (OperationCanceledException)t;
+    }
+
+    if (t instanceof Error)
+    {
+      throw (Error)t;
+    }
+
+    IStatus status = getStatus(t);
+    throw new CoreException(status);
   }
 
   public File getConfigFile()

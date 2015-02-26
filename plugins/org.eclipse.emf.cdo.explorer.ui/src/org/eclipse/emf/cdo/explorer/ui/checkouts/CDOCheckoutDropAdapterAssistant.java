@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
-import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -126,14 +125,18 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       else if (dropOperation == DND.DROP_COPY)
       {
         // Merge From (online + offline)
+        CDORepository repository = checkout.getRepository();
+        CDOBranchPoint left = checkout.getBranchPoint();
+        CDOBranchPoint right = branchPoint;
+        CDOCompareEditorUtil.openEditor(repository, repository, left, right, null, true);
       }
       else if (dropOperation == DND.DROP_LINK)
       {
         // Compare With (online + offline)
-        CDOViewOpener viewOpener = checkout.getRepository();
+        CDORepository repository = checkout.getRepository();
         CDOBranchPoint left = checkout.getBranchPoint();
         CDOBranchPoint right = branchPoint;
-        CDOCompareEditorUtil.openEditor(viewOpener, left, right, null, true);
+        CDOCompareEditorUtil.openEditor(repository, left, right, null, true);
       }
 
       return Status.OK_STATUS;

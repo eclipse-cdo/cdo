@@ -47,11 +47,14 @@ public class CDOCheckoutViewerSorter extends ViewerSorter
       EObject child2 = (EObject)e2;
 
       EObject parent = CDOElement.getParentOf(child1);
-      EList<EObject> children = parent.eContents();
+      if (parent != null)
+      {
+        EList<EObject> children = parent.eContents();
 
-      int pos1 = children.indexOf(child1);
-      int pos2 = children.indexOf(child2);
-      return pos1 - pos2;
+        int pos1 = children.indexOf(child1);
+        int pos2 = children.indexOf(child2);
+        return pos1 - pos2;
+      }
     }
 
     return super.compare(viewer, e1, e2);

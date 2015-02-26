@@ -10,244 +10,170 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
-import org.eclipse.emf.cdo.CDOElement;
-import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
-import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
-import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
-import org.eclipse.emf.cdo.ui.CDOEditorUtil;
-import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.JFaceResources;
-import org.eclipse.jface.resource.LocalResourceManager;
-import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorRegistry;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPropertyListener;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.navigator.ICommonContentExtensionSite;
+import org.eclipse.ui.navigator.ICommonLabelProvider;
 
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider,
+public class CDOCheckoutLabelProvider extends LabelProvider implements ICommonLabelProvider, IColorProvider,
     IStyledLabelProvider
 {
-  private static final Image CHECKOUT_IMAGE = OM.getImage("icons/checkout.gif");
-
-  private static final Image CHECKOUT_CLOSED_IMAGE = OM.getImage("icons/checkout_closed.gif");
-
-  private static final Image FOLDER_IMAGE = OM.getImage("icons/CDOResourceFolder.gif");
-
-  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
-      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
-
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 
-  private final ComposedAdapterFactory adapterFactory;
+  private final EditorRegistryListener editorRegistryListener = new EditorRegistryListener();
 
-  private IPropertyListener editorRegistryListener;
+  private ICommonContentExtensionSite config;
 
-  private ResourceManager resourceManager;
+  private CDOCheckoutStateManager stateManager;
 
   public CDOCheckoutLabelProvider()
   {
-    super(null);
+  }
 
-    adapterFactory = CDOEditor.createAdapterFactory(true);
-    setAdapterFactory(adapterFactory);
+  public CDOCheckoutLabelProvider(CDOCheckoutContentProvider contentProvider)
+  {
+    stateManager = contentProvider.getStateManager();
+  }
+
+  public void init(ICommonContentExtensionSite config)
+  {
+    this.config = config;
+    EDITOR_REGISTRY.addPropertyListener(editorRegistryListener);
   }
 
   @Override
   public void dispose()
   {
-    if (editorRegistryListener != null)
-    {
-      EDITOR_REGISTRY.removePropertyListener(editorRegistryListener);
-      resourceManager = null;
-    }
-
-    if (resourceManager != null)
-    {
-      resourceManager.dispose();
-      resourceManager = null;
-    }
-
+    EDITOR_REGISTRY.removePropertyListener(editorRegistryListener);
     super.dispose();
-
-    // Must come after super.dispose().
-    adapterFactory.dispose();
   }
 
-  @Override
+  public void saveState(IMemento aMemento)
+  {
+    // Do nothing.
+  }
+
+  public void restoreState(IMemento aMemento)
+  {
+    // Do nothing.
+  }
+
+  public void fireLabelProviderChanged()
+  {
+    fireLabelProviderChanged(new LabelProviderChangedEvent(this));
+  }
+
   public Color getForeground(Object object)
   {
-    if (object instanceof ViewerUtil.Pending)
+    IColorProvider provider = getStateManager().getLabelProvider(object);
+    if (provider != null)
     {
-      return ContainerItemProvider.PENDING_COLOR;
-    }
-
-    return super.getForeground(object);
-  }
-
-  @Override
-  public String getText(Object element)
-  {
-    try
-    {
-      if (element instanceof CDOCheckout)
-      {
-        CDOCheckout checkout = (CDOCheckout)element;
-        return checkout.getLabel();
-      }
-
-      if (element instanceof CDOElement)
-      {
-        CDOElement checkoutElement = (CDOElement)element;
-        return checkoutElement.toString();
-      }
-
-      if (element instanceof EObject)
-      {
-        CDOElement checkoutElement = (CDOElement)EcoreUtil.getExistingAdapter((Notifier)element, CDOElement.class);
-        if (checkoutElement != null)
-        {
-          return checkoutElement.toString(element);
-        }
-
-        if (element instanceof CDOResourceNode)
-        {
-          CDOResourceNode resourceNode = (CDOResourceNode)element;
-
-          String name = resourceNode.getName();
-          if (name == null)
-          {
-            // This must be the root resource.
-            return "";
-          }
-
-          return name;
-        }
-      }
-
-      if (element instanceof ViewerUtil.Pending)
-      {
-        ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
-        return pending.getText();
-      }
-
-      return super.getText(element);
-    }
-    catch (Exception ex)
-    {
-      return ex.getMessage();
-    }
-  }
-
-  @Override
-  public Image getImage(Object element)
-  {
-    try
-    {
-      if (element instanceof CDOCheckout)
-      {
-        CDOCheckout checkout = (CDOCheckout)element;
-        if (checkout.isOpen())
-        {
-          return CDOLabelDecorator.decorate(CHECKOUT_IMAGE, checkout.getRootObject());
-        }
-
-        return CHECKOUT_CLOSED_IMAGE;
-      }
-
-      if (element instanceof ViewerUtil.Pending)
-      {
-        return ContainerItemProvider.PENDING_IMAGE;
-      }
-
-      if (element instanceof CDOElement)
-      {
-        element = ((CDOElement)element).getDelegate();
-        Image image = doGetImage(element);
-        return CDOLabelDecorator.decorate(image, element);
-      }
-
-      return doGetImage(element);
-    }
-    catch (Exception ex)
-    {
-      return ERROR_IMAGE;
-    }
-  }
-
-  private Image doGetImage(Object element)
-  {
-    if (element instanceof CDOResourceLeaf)
-    {
-      String name = ((CDOResourceLeaf)element).getName();
-      if (name == null)
-      {
-        // This must be the root resource.
-        return FOLDER_IMAGE;
-      }
-
-      IEditorDescriptor editorDescriptor = EDITOR_REGISTRY.getDefaultEditor(name);
-      if (editorDescriptor != null && !CDOEditorUtil.TEXT_EDITOR_ID.equals(editorDescriptor.getId()))
-      {
-        Image image = getWorkbenchImage(name);
-        if (image != null)
-        {
-          return image;
-        }
-      }
-    }
-
-    return super.getImage(element);
-  }
-
-  protected Image getWorkbenchImage(String name)
-  {
-    ImageDescriptor imageDescriptor = EDITOR_REGISTRY.getImageDescriptor(name);
-    if (imageDescriptor != null)
-    {
-      if (editorRegistryListener == null)
-      {
-        editorRegistryListener = new EditorRegistryListener();
-        EDITOR_REGISTRY.addPropertyListener(editorRegistryListener);
-      }
-
-      ResourceManager resourceManager = getResourceManager();
-      return (Image)resourceManager.get(imageDescriptor);
+      return provider.getForeground(object);
     }
 
     return null;
   }
 
-  protected ResourceManager getResourceManager()
+  public Color getBackground(Object object)
   {
-    if (resourceManager == null)
+    IColorProvider provider = getStateManager().getLabelProvider(object);
+    if (provider != null)
     {
-      resourceManager = new LocalResourceManager(JFaceResources.getResources());
+      return provider.getBackground(object);
     }
 
-    return resourceManager;
+    return null;
+  }
+
+  public String getDescription(Object object)
+  {
+    int xxx;
+    return null;
+  }
+
+  public StyledString getStyledText(Object object)
+  {
+    IStyledLabelProvider provider = getStateManager().getLabelProvider(object);
+    if (provider != null)
+    {
+      return provider.getStyledText(object);
+    }
+
+    String text = getText(object);
+    return new StyledString(text);
+  }
+
+  @Override
+  public String getText(Object object)
+  {
+    if (object instanceof ViewerUtil.Pending)
+    {
+      ViewerUtil.Pending pending = (ViewerUtil.Pending)object;
+      return pending.getText();
+    }
+
+    ILabelProvider provider = getStateManager().getLabelProvider(object);
+    if (provider != null)
+    {
+      return provider.getText(object);
+    }
+
+    return super.getText(object);
+  }
+
+  @Override
+  public Image getImage(Object object)
+  {
+    if (object instanceof ViewerUtil.Pending)
+    {
+      return ContainerItemProvider.PENDING_IMAGE;
+    }
+
+    ILabelProvider provider = getStateManager().getLabelProvider(object);
+    if (provider != null)
+    {
+      return provider.getImage(object);
+    }
+
+    return super.getImage(object);
+  }
+
+  public CDOCheckoutStateManager getStateManager()
+  {
+    if (stateManager == null)
+    {
+      String viewerID = config.getService().getViewerId();
+      CDOCheckoutContentProvider contentProvider = CDOCheckoutContentProvider.getInstance(viewerID);
+      if (contentProvider != null)
+      {
+        stateManager = contentProvider.getStateManager();
+      }
+    }
+
+    return stateManager;
+  }
+
+  public void setStateManager(CDOCheckoutStateManager stateManager)
+  {
+    this.stateManager = stateManager;
   }
 
   /**
@@ -255,9 +181,8 @@ public class CDOCheckoutLabelProvider extends AdapterFactoryLabelProvider implem
    * from the associated {@link #getItemProvider() item provider} when {@link CDOTransferElement element} labels need to be updated.
    *
    * @author Eike Stepper
-   * @since 4.2
    */
-  protected class EditorRegistryListener implements IPropertyListener
+  private class EditorRegistryListener implements IPropertyListener
   {
     public void propertyChanged(Object source, int propId)
     {

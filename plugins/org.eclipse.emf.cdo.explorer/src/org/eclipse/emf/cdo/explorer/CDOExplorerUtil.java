@@ -88,6 +88,11 @@ public final class CDOExplorerUtil
         path.addFirst(object);
       }
 
+      if (object instanceof CDOCheckout)
+      {
+        return (CDOCheckout)object;
+      }
+
       if (object instanceof EObject)
       {
         EObject eObject = (EObject)object;

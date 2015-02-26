@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.AbstractNewWizard;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.NewRootMenuPopulator;
@@ -59,6 +60,9 @@ import org.eclipse.ui.navigator.ICommonMenuConstants;
 import org.eclipse.ui.navigator.ICommonViewerSite;
 import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 import org.eclipse.ui.navigator.WizardActionGroup;
+import org.eclipse.ui.wizards.IWizardCategory;
+import org.eclipse.ui.wizards.IWizardDescriptor;
+import org.eclipse.ui.wizards.IWizardRegistry;
 
 import java.util.Collection;
 
@@ -69,7 +73,9 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 {
   private static final String NEW_MENU_NAME = "common.new.menu"; //$NON-NLS-1$
 
-  private final ComposedAdapterFactory adapterFactory;
+  private ICommonActionExtensionSite extensionSite;
+
+  private CDOCheckoutContentProvider contentProvider;
 
   private ActionFactory.IWorkbenchAction showDlgAction;
 
@@ -83,12 +89,12 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
   public NewActionProvider()
   {
-    adapterFactory = CDOEditor.createAdapterFactory(true);
   }
 
   @Override
   public void init(ICommonActionExtensionSite extensionSite)
   {
+    this.extensionSite = extensionSite;
     ICommonViewerSite viewSite = extensionSite.getViewSite();
     if (viewSite instanceof ICommonViewerWorkbenchSite)
     {
@@ -97,8 +103,41 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
       showDlgAction = ActionFactory.NEW.create(window);
 
-      newWizardActionGroup = new WizardActionGroup(window, PlatformUI.getWorkbench().getNewWizardRegistry(),
-          WizardActionGroup.TYPE_NEW, extensionSite.getContentService());
+      final CDOCheckoutContentProvider contentProvider = getContentProvider();
+      final IWizardRegistry wizardRegistry = PlatformUI.getWorkbench().getNewWizardRegistry();
+
+      IWizardRegistry wrapperRegistry = new IWizardRegistry()
+      {
+        public IWizardCategory getRootCategory()
+        {
+          return wizardRegistry.getRootCategory();
+        }
+
+        public IWizardDescriptor[] getPrimaryWizards()
+        {
+          return wizardRegistry.getPrimaryWizards();
+        }
+
+        public IWizardDescriptor findWizard(String id)
+        {
+          IWizardDescriptor wizard = wizardRegistry.findWizard(id);
+          if (wizard instanceof AbstractNewWizard)
+          {
+            AbstractNewWizard newWizard = (AbstractNewWizard)wizard;
+            newWizard.setContentProvider(contentProvider);
+          }
+
+          return wizard;
+        }
+
+        public IWizardCategory findCategory(String id)
+        {
+          return wizardRegistry.findCategory(id);
+        }
+      };
+
+      newWizardActionGroup = new WizardActionGroup(window, wrapperRegistry, WizardActionGroup.TYPE_NEW,
+          extensionSite.getContentService());
 
       viewer = (TreeViewer)extensionSite.getStructuredViewer();
       viewer.addSelectionChangedListener(this);
@@ -120,7 +159,6 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       showDlgAction = null;
     }
 
-    adapterFactory.dispose();
     super.dispose();
   }
 
@@ -207,7 +245,13 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       @Override
       protected IAction createAction(EObject object)
       {
-        return new NewRootAction(resource, object);
+        CDOCheckoutContentProvider contentProvider = getContentProvider();
+        ComposedAdapterFactory adapterFactory = contentProvider.getStateManager().getState(object).getAdapterFactory();
+
+        Object image = CDOEditor.getLabelImage(adapterFactory, object);
+        ImageDescriptor imageDescriptor = ExtendedImageRegistry.getInstance().getImageDescriptor(image);
+
+        return new NewRootAction(resource, object, imageDescriptor);
       }
     };
 
@@ -218,6 +262,9 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
   {
     CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
     ResourceSet resourceSet = checkout.getView().getResourceSet();
+
+    CDOCheckoutContentProvider contentProvider = getContentProvider();
+    ComposedAdapterFactory adapterFactory = contentProvider.getStateManager().getState(checkout).getAdapterFactory();
 
     EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack(), resourceSet);
     IStructuredSelection selection = new StructuredSelection(object);
@@ -234,6 +281,17 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       NewChildAction action = new NewChildAction(text, toolTipText, imageDescriptor, cdoObject, childDescriptor);
       menu.add(action);
     }
+  }
+
+  private CDOCheckoutContentProvider getContentProvider()
+  {
+    if (contentProvider == null)
+    {
+      String viewerID = extensionSite.getContentService().getViewerId();
+      contentProvider = CDOCheckoutContentProvider.getInstance(viewerID);
+    }
+
+    return contentProvider;
   }
 
   /**
@@ -276,7 +334,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
         EObject object = view.getObject(newObject);
         if (object != null)
         {
-          CDOCheckoutContentProvider contentProvider = CDOCheckoutContentProvider.getInstance();
+          CDOCheckoutContentProvider contentProvider = getContentProvider();
           if (contentProvider != null)
           {
             contentProvider.selectObject(object);
@@ -293,10 +351,9 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
   {
     private final EObject object;
 
-    public NewRootAction(CDOResource resource, EObject object)
+    public NewRootAction(CDOResource resource, EObject object, ImageDescriptor image)
     {
-      super(object.eClass().getName(), null, ExtendedImageRegistry.getInstance().getImageDescriptor(
-          CDOEditor.getLabelImage(adapterFactory, object)), resource);
+      super(object.eClass().getName(), null, image, resource);
       this.object = object;
     }
 
@@ -326,24 +383,34 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     @Override
     protected EObject doRun(CDOTransaction transaction, CDOObject parent, ISelection selection)
     {
-      BasicCommandStack commandStack = new BasicCommandStack();
-      ResourceSet resourceSet = transaction.getResourceSet();
-      EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
+      ComposedAdapterFactory adapterFactory = CDOEditor.createAdapterFactory(true);
 
-      CreateChildAction delegate = new CreateChildAction(editingDomain, selection, childDescriptor);
-      delegate.run();
-
-      if (childDescriptor instanceof CommandParameter)
+      try
       {
-        CommandParameter parameter = (CommandParameter)childDescriptor;
-        Object value = parameter.getValue();
-        if (value instanceof EObject)
-        {
-          return (EObject)value;
-        }
-      }
+        BasicCommandStack commandStack = new BasicCommandStack();
+        ResourceSet resourceSet = transaction.getResourceSet();
 
-      return null;
+        EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, resourceSet);
+
+        CreateChildAction delegate = new CreateChildAction(editingDomain, selection, childDescriptor);
+        delegate.run();
+
+        if (childDescriptor instanceof CommandParameter)
+        {
+          CommandParameter parameter = (CommandParameter)childDescriptor;
+          Object value = parameter.getValue();
+          if (value instanceof EObject)
+          {
+            return (EObject)value;
+          }
+        }
+
+        return null;
+      }
+      finally
+      {
+        adapterFactory.dispose();
+      }
     }
   }
 }

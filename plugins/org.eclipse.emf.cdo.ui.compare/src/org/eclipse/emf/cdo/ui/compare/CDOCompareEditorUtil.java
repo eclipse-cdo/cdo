@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.compare.CDOCompareUtil;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.ui.internal.compare.bundle.OM;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -30,6 +32,7 @@ import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
 import org.eclipse.emf.compare.scope.IComparisonScope;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
@@ -37,6 +40,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.swt.graphics.Image;
 
@@ -62,11 +67,20 @@ public class CDOCompareEditorUtil
   public static boolean openEditor(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
       CDOView[] originView, boolean activate)
   {
+    return openEditor(null, viewOpener, leftPoint, rightPoint, originView, activate);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean openEditor(CDOTransactionOpener transactionOpener, CDOViewOpener viewOpener,
+      CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView, boolean activate)
+  {
     ACTIVATE_EDITOR.set(activate);
 
     try
     {
-      return openDialog(viewOpener, leftPoint, rightPoint, originView);
+      return openDialog(transactionOpener, viewOpener, leftPoint, rightPoint, originView);
     }
     finally
     {
@@ -139,6 +153,15 @@ public class CDOCompareEditorUtil
   public static boolean openDialog(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
       CDOView[] originView)
   {
+    return openDialog(null, viewOpener, leftPoint, rightPoint, originView);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean openDialog(CDOTransactionOpener transactionOpener, CDOViewOpener viewOpener,
+      CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView)
+  {
     final Boolean activateEditor = ACTIVATE_EDITOR.get();
     final CDOView[] leftAndRightView = { null, null };
 
@@ -153,7 +176,17 @@ public class CDOCompareEditorUtil
 
     try
     {
-      leftAndRightView[0] = viewOpener.openView(leftPoint, new ResourceSetImpl());
+      ResourceSet leftResourceSet = new ResourceSetImpl();
+      if (transactionOpener != null)
+      {
+        leftPoint = leftPoint.getBranch().getHead();
+        leftAndRightView[0] = transactionOpener.openTransaction(leftPoint, leftResourceSet);
+      }
+      else
+      {
+        leftAndRightView[0] = viewOpener.openView(leftPoint, leftResourceSet);
+      }
+
       leftAndRightView[1] = viewOpener.openView(rightPoint, new ResourceSetImpl());
 
       return openDialog(leftAndRightView[0], leftAndRightView[1], originView);
@@ -251,18 +284,23 @@ public class CDOCompareEditorUtil
     String rightLabel = itemProvider.getText(rightBranchPoint);
     itemProvider.dispose();
 
+    boolean leftEditable = !leftView.isReadOnly();
+    boolean rightEditable = !rightView.isReadOnly();
+
     CompareConfiguration configuration = new CompareConfiguration();
     configuration.setLeftImage(leftImage);
-    configuration.setLeftLabel(leftLabel);
-    configuration.setLeftEditable(!leftView.isReadOnly());
+    configuration.setLeftLabel("Target: " + leftLabel);
+    configuration.setLeftEditable(leftEditable);
     configuration.setRightImage(rightImage);
-    configuration.setRightLabel(rightLabel);
-    configuration.setRightEditable(!rightView.isReadOnly());
+    configuration.setRightLabel("Source: " + rightLabel);
+    configuration.setRightEditable(rightEditable);
 
-    String title = "Compare " + ((InternalCDOView)leftView).getRepositoryName() + " " + leftLabel + " and "
+    boolean merge = leftEditable || rightEditable;
+    String repositoryName = ((InternalCDOView)leftView).getRepositoryName();
+    String title = (merge ? "Merge " : "Compare ") + repositoryName + " " + leftLabel + (merge ? " from " : " and ")
         + rightLabel;
 
-    Input input = new Input(configuration, comparison, editingDomain, adapterFactory);
+    Input input = new Input(leftView, configuration, comparison, editingDomain, adapterFactory);
     input.setTitle(title);
     return input;
   }
@@ -315,15 +353,18 @@ public class CDOCompareEditorUtil
   {
     private static final Image COMPARE_IMAGE = OM.getImage("icons/compare.gif");
 
+    private final CDOView leftView;
+
     private List<Runnable> disposeRunnables;
 
     private boolean ok;
 
-    private Input(CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
-        AdapterFactory adapterFactory)
+    private Input(CDOView leftView, CompareConfiguration configuration, Comparison comparison,
+        ICompareEditingDomain editingDomain, AdapterFactory adapterFactory)
     {
       super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration),
           comparison, editingDomain, adapterFactory);
+      this.leftView = leftView;
     }
 
     private void dispose()
@@ -348,6 +389,31 @@ public class CDOCompareEditorUtil
     public void setDisposeRunnables(List<Runnable> disposeRunnables)
     {
       this.disposeRunnables = disposeRunnables;
+    }
+
+    @Override
+    public void cancelPressed()
+    {
+      super.cancelPressed();
+    }
+
+    @Override
+    public void saveChanges(IProgressMonitor monitor) throws CoreException
+    {
+      if (leftView instanceof CDOTransaction)
+      {
+        CDOTransaction transaction = (CDOTransaction)leftView;
+
+        try
+        {
+          transaction.commit(monitor);
+          setDirty(false);
+        }
+        catch (Exception ex)
+        {
+          OM.BUNDLE.coreException(ex);
+        }
+      }
     }
 
     public boolean isOK()

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelProvider;
 
 import org.eclipse.net4j.util.ui.views.ItemProvider;
@@ -44,7 +45,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ObjectListController
 {
-  private final LabelProvider labelProvider = new LabelProvider();
+  private final CDOCheckoutContentProvider contentProvider = new CDOCheckoutContentProvider();
+
+  private final LabelProvider labelProvider = new LabelProvider(contentProvider);
 
   private final AtomicBoolean refreshing = new AtomicBoolean();
 
@@ -85,11 +88,15 @@ public class ObjectListController
 
   public void configure(final TreeViewer treeViewer)
   {
+    Control control = treeViewer.getControl();
+    contentProvider.disposeWith(control);
+
+    // The contentProvider field just makes the labelProvider happy.
     treeViewer.setContentProvider(new ContentProvider());
     treeViewer.setLabelProvider(new DecoratingStyledCellLabelProvider(labelProvider, new LabelDecorator(), null));
     treeViewer.setInput(wrappers);
 
-    treeViewer.getControl().getDisplay().asyncExec(new Runnable()
+    control.getDisplay().asyncExec(new Runnable()
     {
       public void run()
       {
@@ -301,8 +308,9 @@ public class ObjectListController
    */
   private static final class LabelProvider extends CDOCheckoutLabelProvider
   {
-    public LabelProvider()
+    public LabelProvider(CDOCheckoutContentProvider contentProvider)
     {
+      super(contentProvider);
     }
 
     @Override

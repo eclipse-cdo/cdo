@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutOpenEve
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider;
-import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -39,16 +38,12 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
-import org.eclipse.emf.edit.provider.ViewerNotification;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -61,21 +56,29 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.CommonViewer;
+import org.eclipse.ui.navigator.ICommonContentExtensionSite;
+import org.eclipse.ui.navigator.ICommonContentProvider;
 import org.eclipse.ui.part.IPage;
+import org.eclipse.ui.views.properties.IPropertySource;
+import org.eclipse.ui.views.properties.IPropertySourceProvider;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
@@ -83,6 +86,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -93,8 +97,10 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider implements IOpenListener
+public class CDOCheckoutContentProvider implements ICommonContentProvider, IPropertySourceProvider, IOpenListener
 {
+  private static final Map<String, CDOCheckoutContentProvider> INSTANCES = new HashMap<String, CDOCheckoutContentProvider>();
+
   private static final Set<Object> LOADING_OBJECTS = new HashSet<Object>();
 
   private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class,
@@ -103,8 +109,6 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
   private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 
   private static final CDOCheckoutManager CHECKOUT_MANAGER = CDOExplorerUtil.getCheckoutManager();
-
-  private static CDOCheckoutContentProvider instance;
 
   private final IListener checkoutManagerListener = new IListener()
   {
@@ -229,11 +233,13 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     }
   };
 
+  private final CDOCheckoutStateManager stateManager = new CDOCheckoutStateManager(this);
+
   private final Map<CDOCheckout, CDOCheckout> openingCheckouts = new ConcurrentHashMap<CDOCheckout, CDOCheckout>();
 
   private final Map<Object, Object[]> childrenCache = new ConcurrentHashMap<Object, Object[]>();
 
-  private final ComposedAdapterFactory adapterFactory;
+  private String viewerID;
 
   private TreeViewer viewer;
 
@@ -241,26 +247,57 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
 
   public CDOCheckoutContentProvider()
   {
-    super(null);
-
-    adapterFactory = CDOEditor.createAdapterFactory(true);
-    setAdapterFactory(adapterFactory);
-
-    CHECKOUT_MANAGER.addListener(checkoutManagerListener);
-    instance = this;
   }
 
-  @Override
+  public void init(ICommonContentExtensionSite config)
+  {
+    viewerID = config.getService().getViewerId();
+    INSTANCES.put(viewerID, this);
+    CHECKOUT_MANAGER.addListener(checkoutManagerListener);
+  }
+
+  public void saveState(IMemento aMemento)
+  {
+    // Do nothing.
+  }
+
+  public void restoreState(IMemento aMemento)
+  {
+    // Do nothing.
+  }
+
   public void dispose()
   {
-    instance = null;
-    super.dispose();
-
     CHECKOUT_MANAGER.removeListener(checkoutManagerListener);
-    adapterFactory.dispose();
+    INSTANCES.remove(viewerID);
   }
 
-  @Override
+  public void disposeWith(Control control)
+  {
+    control.addDisposeListener(new DisposeListener()
+    {
+      public void widgetDisposed(DisposeEvent e)
+      {
+        dispose();
+      }
+    });
+  }
+
+  public final CDOCheckoutStateManager getStateManager()
+  {
+    return stateManager;
+  }
+
+  public final TreeViewer getViewer()
+  {
+    return viewer;
+  }
+
+  public final Object getInput()
+  {
+    return input;
+  }
+
   public void inputChanged(Viewer newViewer, Object oldInput, Object newInput)
   {
     TreeViewer newTreeViewer = null;
@@ -285,11 +322,9 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     }
 
     input = newInput;
-
-    super.inputChanged(newTreeViewer, oldInput, newInput);
+    stateManager.inputChanged(newTreeViewer, oldInput, newInput);
   }
 
-  @Override
   public boolean hasChildren(Object object)
   {
     if (object == input)
@@ -335,7 +370,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         InternalCDORevision revision = cdoObject.cdoRevision(false);
         if (revision != null)
         {
-          ITreeItemContentProvider provider = (ITreeItemContentProvider)adapterFactory.adapt(object,
+          ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
               ITreeItemContentProvider.class);
           if (provider instanceof ItemProviderAdapter)
           {
@@ -352,10 +387,10 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       }
     }
 
-    return super.hasChildren(object);
+    ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
+    return contentProvider.hasChildren(object);
   }
 
-  @Override
   public Object[] getChildren(Object object)
   {
     if (object == input)
@@ -445,7 +480,9 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
             loadedRevisions.addAll(revisions);
           }
 
-          Object[] children = CDOCheckoutContentProvider.super.getChildren(finalObject);
+          ITreeContentProvider contentProvider = stateManager.getContentProvider(finalObject);
+          Object[] children = contentProvider.getChildren(finalObject);
+
           children = CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(finalObject, children);
           childrenCache.put(originalObject, children);
         }
@@ -557,7 +594,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         InternalCDORevision revision = cdoObject.cdoRevision(false);
         if (revision != null)
         {
-          ITreeItemContentProvider provider = (ITreeItemContentProvider)adapterFactory.adapt(object,
+          ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
               ITreeItemContentProvider.class);
           if (provider instanceof ItemProviderAdapter)
           {
@@ -573,7 +610,8 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
             if (missingIDs.isEmpty())
             {
               // All revisions are cached. Just return the objects without server round-trips.
-              return super.getChildren(object);
+              ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
+              return contentProvider.getChildren(object);
             }
           }
         }
@@ -583,13 +621,11 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     return null;
   }
 
-  @Override
   public Object[] getElements(Object object)
   {
     return getChildren(object);
   }
 
-  @Override
   public Object getParent(Object object)
   {
     if (object == input)
@@ -626,37 +662,19 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
       }
     }
 
-    return super.getParent(object);
+    ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
+    return contentProvider.getParent(object);
   }
 
-  @Override
-  public void notifyChanged(Notification notification)
+  public IPropertySource getPropertySource(Object object)
   {
-    Object notifier = notification.getNotifier();
-    if (notifier instanceof EObject)
+    IPropertySourceProvider contentProvider = stateManager.getContentProvider(object);
+    if (contentProvider != null)
     {
-      EObject eObject = (EObject)notifier;
-
-      Object feature = notification.getFeature();
-      if (feature instanceof EReference)
-      {
-        EReference reference = (EReference)feature;
-        if (reference.isContainment())
-        {
-          Adapter adapter = EcoreUtil.getAdapter(eObject.eAdapters(), CDOCheckout.class);
-          if (adapter instanceof CDOCheckout)
-          {
-            CDOCheckout checkout = (CDOCheckout)adapter;
-            if (checkout.isOpen())
-            {
-              notification = new ViewerNotification(notification, checkout, true, true);
-            }
-          }
-        }
-      }
+      return contentProvider.getPropertySource(object);
     }
 
-    super.notifyChanged(notification);
+    return null;
   }
 
   public void selectObject(final Object object)
@@ -735,6 +753,7 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
         {
           EObject eObject = (EObject)element;
           IWorkbenchPage page = getWorkbenchPage();
+          ComposedAdapterFactory adapterFactory = stateManager.getAdapterFactory(eObject);
           OpenWithActionProvider.openEditor(page, adapterFactory, eObject, null);
         }
       }
@@ -860,8 +879,8 @@ public class CDOCheckoutContentProvider extends AdapterFactoryContentProvider im
     }
   }
 
-  public static final CDOCheckoutContentProvider getInstance()
+  public static final CDOCheckoutContentProvider getInstance(String viewerID)
   {
-    return instance;
+    return INSTANCES.get(viewerID);
   }
 }

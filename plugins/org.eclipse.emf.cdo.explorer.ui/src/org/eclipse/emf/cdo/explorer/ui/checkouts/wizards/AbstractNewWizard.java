@@ -43,6 +43,8 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
 
   private IStructuredSelection selection;
 
+  private CDOCheckoutContentProvider contentProvider;
+
   private NewWizardPage page;
 
   protected AbstractNewWizard(String resourceType, String title)
@@ -54,6 +56,11 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
   public void init(IWorkbench workbench, IStructuredSelection selection)
   {
     this.selection = selection;
+  }
+
+  public void setContentProvider(CDOCheckoutContentProvider contentProvider)
+  {
+    this.contentProvider = contentProvider;
   }
 
   public final String getResourceType()
@@ -130,17 +137,13 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
               "An error occured while creating the " + title.toLowerCase() + ".", status);
         }
 
-        if (commitInfo != null)
+        if (commitInfo != null && contentProvider != null)
         {
-          CDOCheckoutContentProvider contentProvider = CDOCheckoutContentProvider.getInstance();
-          if (contentProvider != null)
-          {
-            CDOView view = checkout.getView();
-            view.waitForUpdate(commitInfo.getTimeStamp());
+          CDOView view = checkout.getView();
+          view.waitForUpdate(commitInfo.getTimeStamp());
 
-            CDOObject newObject = view.getObject(newID);
-            contentProvider.selectObject(newObject);
-          }
+          CDOObject newObject = view.getObject(newID);
+          contentProvider.selectObject(newObject);
         }
 
         return Status.OK_STATUS;

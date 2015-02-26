@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelProvider;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
@@ -155,10 +156,15 @@ public class NewWizardPage extends WizardPage
       }
     };
 
+    CDOCheckoutContentProvider contentProvider = new CDOCheckoutContentProvider();
+    contentProvider.disposeWith(parentControl);
+
+    CDOCheckoutLabelProvider labelProvider = new CDOCheckoutLabelProvider(contentProvider);
+
     parentViewer = new TreeViewer(container, SWT.BORDER);
     parentViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
     parentViewer.setContentProvider(parentItemProvider);
-    parentViewer.setLabelProvider(new CDOCheckoutLabelProvider());
+    parentViewer.setLabelProvider(labelProvider);
     parentViewer.setInput(CDOExplorerUtil.getCheckoutManager());
     parentViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {

@@ -480,8 +480,8 @@ public class Repository extends Container<Object> implements InternalRepository
     return accessor.loadCommitData(timeStamp);
   }
 
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
-      int referenceChunk, int prefetchDepth)
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
+      int prefetchDepth)
       {
     for (RevisionInfo info : infos)
     {
@@ -657,22 +657,26 @@ public class Repository extends Container<Object> implements InternalRepository
       {
         MoveableList<Object> list = revision.getList(feature);
         int size = list.size();
-        if (chunkSize == CDORevision.UNCHUNKED)
+        if (size != 0)
         {
-          chunkSize = size;
-        }
-
-        int chunkEnd = Math.min(chunkSize, size);
-        accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
-
-        if (unchunked)
-        {
-          for (int i = chunkEnd + 1; i < size; i++)
+          int chunkSizeToUse = chunkSize;
+          if (chunkSizeToUse == CDORevision.UNCHUNKED)
           {
-            if (list.get(i) == InternalCDOList.UNINITIALIZED)
+            chunkSizeToUse = size;
+          }
+
+          int chunkEnd = Math.min(chunkSizeToUse, size);
+          accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
+
+          if (unchunked)
+          {
+            for (int i = chunkEnd + 1; i < size; i++)
             {
-              unchunked = false;
-              break;
+              if (list.get(i) == InternalCDOList.UNINITIALIZED)
+              {
+                unchunked = false;
+                break;
+              }
             }
           }
         }

@@ -51,7 +51,7 @@
     <repository
         url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
     <repository
-        url="http://download.eclipse.org/egit/updates-nightly"/>
+        url="http://download.eclipse.org/egit/updates-stable-nightly"/>
     <repository
         url="http://download.eclipse.org/oomph/updates"/>
   </setupTask>
@@ -543,7 +543,7 @@
       <requirement
           name="org.eclipse.gmf.sdk.feature.group"/>
       <repository
-          url="http://download.eclipse.org/releases/luna"/>
+          url="http://download.eclipse.org/releases/mars"/>
     </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"

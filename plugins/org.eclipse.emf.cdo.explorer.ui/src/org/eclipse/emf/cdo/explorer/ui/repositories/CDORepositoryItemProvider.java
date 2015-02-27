@@ -67,9 +67,11 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         if (!e.isConnected())
         {
           Node node = getNode(repository);
-          node.disposeChildren();
-
-          ViewerUtil.expand(viewer, repository, false);
+          if (node != null)
+          {
+            node.disposeChildren();
+            ViewerUtil.expand(viewer, repository, false);
+          }
         }
 
         ViewerUtil.refresh(viewer, repository);

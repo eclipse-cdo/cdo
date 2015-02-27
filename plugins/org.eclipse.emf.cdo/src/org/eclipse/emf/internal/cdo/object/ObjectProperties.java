@@ -43,13 +43,22 @@ public class ObjectProperties extends Properties<EObject>
   {
     super(EObject.class);
 
+    add(new Property<EObject>("isCDO") //$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        return getCDOObject(object) != null;
+      }
+    });
+
     add(new Property<EObject>("id", //$NON-NLS-1$
         "ID", "The technical CDOID of this object.", CATEGORY_CDO)
     {
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -65,7 +74,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return 0;
@@ -87,7 +96,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -109,7 +118,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -124,7 +133,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -145,7 +154,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return true;
@@ -160,7 +169,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return true;
@@ -187,7 +196,7 @@ public class ObjectProperties extends Properties<EObject>
           return true;
         }
 
-        CDOObject cdoContainer = CDOUtil.getCDOObject(container);
+        CDOObject cdoContainer = getCDOObject(container);
         if (cdoContainer == null)
         {
           return true;
@@ -214,7 +223,7 @@ public class ObjectProperties extends Properties<EObject>
           return false;
         }
 
-        CDOObject cdoContainer = CDOUtil.getCDOObject(container);
+        CDOObject cdoContainer = getCDOObject(container);
         if (cdoContainer == null)
         {
           return false;
@@ -239,7 +248,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -259,7 +268,7 @@ public class ObjectProperties extends Properties<EObject>
         EObject eContainer = object.eContainer();
         if (eContainer != null)
         {
-          cdoObject = CDOUtil.getCDOObject(eContainer);
+          cdoObject = getCDOObject(eContainer);
         }
 
         if (cdoObject == null)
@@ -286,7 +295,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -307,7 +316,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -328,7 +337,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -350,7 +359,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -371,7 +380,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -392,7 +401,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -414,7 +423,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -435,7 +444,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -456,7 +465,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -477,7 +486,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return false;
@@ -498,7 +507,7 @@ public class ObjectProperties extends Properties<EObject>
       @Override
       protected Object eval(EObject object)
       {
-        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
         {
           return null;
@@ -515,6 +524,11 @@ public class ObjectProperties extends Properties<EObject>
         return resource.getURI().appendFragment(fragment).toString();
       }
     });
+  }
+
+  private static CDOObject getCDOObject(EObject object)
+  {
+    return CDOUtil.getCDOObject(object, false);
   }
 
   public static void main(String[] args)

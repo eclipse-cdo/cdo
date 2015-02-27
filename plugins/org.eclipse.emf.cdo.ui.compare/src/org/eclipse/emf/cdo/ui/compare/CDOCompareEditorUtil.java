@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.ui.compare;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -21,6 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.ui.internal.compare.bundle.OM;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
@@ -29,6 +32,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.compare.Comparison;
+import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
 import org.eclipse.emf.compare.scope.IComparisonScope;
@@ -47,6 +51,7 @@ import org.eclipse.swt.graphics.Image;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -67,20 +72,20 @@ public class CDOCompareEditorUtil
   public static boolean openEditor(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
       CDOView[] originView, boolean activate)
   {
-    return openEditor(null, viewOpener, leftPoint, rightPoint, originView, activate);
+    return openEditor(viewOpener, null, leftPoint, rightPoint, originView, activate);
   }
 
   /**
    * @since 4.3
    */
-  public static boolean openEditor(CDOTransactionOpener transactionOpener, CDOViewOpener viewOpener,
+  public static boolean openEditor(CDOViewOpener viewOpener, CDOTransactionOpener transactionOpener,
       CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView, boolean activate)
   {
     ACTIVATE_EDITOR.set(activate);
 
     try
     {
-      return openDialog(transactionOpener, viewOpener, leftPoint, rightPoint, originView);
+      return openDialog(viewOpener, transactionOpener, leftPoint, rightPoint, originView);
     }
     finally
     {
@@ -153,13 +158,13 @@ public class CDOCompareEditorUtil
   public static boolean openDialog(CDOViewOpener viewOpener, CDOBranchPoint leftPoint, CDOBranchPoint rightPoint,
       CDOView[] originView)
   {
-    return openDialog(null, viewOpener, leftPoint, rightPoint, originView);
+    return openDialog(viewOpener, null, leftPoint, rightPoint, originView);
   }
 
   /**
    * @since 4.3
    */
-  public static boolean openDialog(CDOTransactionOpener transactionOpener, CDOViewOpener viewOpener,
+  public static boolean openDialog(CDOViewOpener viewOpener, CDOTransactionOpener transactionOpener,
       CDOBranchPoint leftPoint, CDOBranchPoint rightPoint, CDOView[] originView)
   {
     final Boolean activateEditor = ACTIVATE_EDITOR.get();
@@ -176,18 +181,18 @@ public class CDOCompareEditorUtil
 
     try
     {
-      ResourceSet leftResourceSet = new ResourceSetImpl();
+      leftAndRightView[0] = viewOpener.openView(leftPoint, new ResourceSetImpl());
+
+      ResourceSet rightResourceSet = new ResourceSetImpl();
       if (transactionOpener != null)
       {
-        leftPoint = leftPoint.getBranch().getHead();
-        leftAndRightView[0] = transactionOpener.openTransaction(leftPoint, leftResourceSet);
+        rightPoint = rightPoint.getBranch().getHead();
+        leftAndRightView[1] = transactionOpener.openTransaction(rightPoint, rightResourceSet);
       }
       else
       {
-        leftAndRightView[0] = viewOpener.openView(leftPoint, leftResourceSet);
+        leftAndRightView[1] = viewOpener.openView(rightPoint, rightResourceSet);
       }
-
-      leftAndRightView[1] = viewOpener.openView(rightPoint, new ResourceSetImpl());
 
       return openDialog(leftAndRightView[0], leftAndRightView[1], originView);
     }
@@ -289,18 +294,18 @@ public class CDOCompareEditorUtil
 
     CompareConfiguration configuration = new CompareConfiguration();
     configuration.setLeftImage(leftImage);
-    configuration.setLeftLabel("Target: " + leftLabel);
+    configuration.setLeftLabel("From " + leftLabel);
     configuration.setLeftEditable(leftEditable);
     configuration.setRightImage(rightImage);
-    configuration.setRightLabel("Source: " + rightLabel);
+    configuration.setRightLabel("Into " + rightLabel);
     configuration.setRightEditable(rightEditable);
 
     boolean merge = leftEditable || rightEditable;
     String repositoryName = ((InternalCDOView)leftView).getRepositoryName();
-    String title = (merge ? "Merge " : "Compare ") + repositoryName + " " + leftLabel + (merge ? " from " : " and ")
+    String title = (merge ? "Merge " : "Compare ") + repositoryName + " " + leftLabel + (merge ? " into " : " and ")
         + rightLabel;
 
-    Input input = new Input(leftView, configuration, comparison, editingDomain, adapterFactory);
+    Input input = new Input(rightView, configuration, comparison, editingDomain, adapterFactory);
     input.setTitle(title);
     return input;
   }
@@ -353,18 +358,21 @@ public class CDOCompareEditorUtil
   {
     private static final Image COMPARE_IMAGE = OM.getImage("icons/compare.gif");
 
-    private final CDOView leftView;
+    private final CDOView targetView;
+
+    private final Comparison comparison;
 
     private List<Runnable> disposeRunnables;
 
     private boolean ok;
 
-    private Input(CDOView leftView, CompareConfiguration configuration, Comparison comparison,
+    private Input(CDOView targetView, CompareConfiguration configuration, Comparison comparison,
         ICompareEditingDomain editingDomain, AdapterFactory adapterFactory)
     {
       super(new org.eclipse.emf.compare.ide.ui.internal.configuration.EMFCompareConfiguration(configuration),
           comparison, editingDomain, adapterFactory);
-      this.leftView = leftView;
+      this.targetView = targetView;
+      this.comparison = comparison;
     }
 
     private void dispose()
@@ -392,26 +400,39 @@ public class CDOCompareEditorUtil
     }
 
     @Override
-    public void cancelPressed()
-    {
-      super.cancelPressed();
-    }
-
-    @Override
     public void saveChanges(IProgressMonitor monitor) throws CoreException
     {
-      if (leftView instanceof CDOTransaction)
+      if (targetView instanceof CDOTransaction)
       {
-        CDOTransaction transaction = (CDOTransaction)leftView;
+        CDOTransaction transaction = (CDOTransaction)targetView;
+        if (transaction.isDirty())
+        {
+          Collection<CDOObject> values = transaction.getNewObjects().values();
+          if (!values.isEmpty())
+          {
+            CDOObject[] rightObjects = values.toArray(new CDOObject[values.size()]);
+            for (CDOObject rightObject : rightObjects)
+            {
+              Match match = comparison.getMatch(rightObject);
+              if (match != null)
+              {
+                CDOObject leftObject = CDOUtil.getCDOObject(match.getLeft());
+                CDOID id = leftObject.cdoID();
 
-        try
-        {
-          transaction.commit(monitor);
-          setDirty(false);
-        }
-        catch (Exception ex)
-        {
-          OM.BUNDLE.coreException(ex);
+                org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl.resurrectObject(rightObject, id);
+              }
+            }
+          }
+
+          try
+          {
+            transaction.commit(monitor);
+            setDirty(false);
+          }
+          catch (Exception ex)
+          {
+            OM.BUNDLE.coreException(ex);
+          }
         }
       }
     }

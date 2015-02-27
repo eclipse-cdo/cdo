@@ -10,10 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter.CDOPropertyDescriptor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.ObjectProperties;
@@ -80,83 +82,87 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
       if (object instanceof EObject)
       {
         EObject eObject = (EObject)object;
-
-        final Map<String, Object> emfProperties = new HashMap<String, Object>();
-        DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(eObject, ObjectProperties.INSTANCE)
+        CDOObject cdoObject = CDOUtil.getCDOObject(eObject, false);
+        if (cdoObject != null)
         {
-          @Override
-          public Object getPropertyValue(Object id)
+          final Map<String, Object> emfProperties = new HashMap<String, Object>();
+          DefaultPropertySource<EObject> result = new DefaultPropertySource<EObject>(cdoObject,
+              ObjectProperties.INSTANCE)
           {
-            Object value = emfProperties.get(id);
-            if (value != null)
+            @Override
+            public Object getPropertyValue(Object id)
             {
-              return value;
-            }
-
-            return super.getPropertyValue(id);
-          }
-        };
-
-        ComposedAdapterFactory adapterFactory = null;
-        AdapterFactoryLabelProvider labelProvider = null;
-
-        try
-        {
-          adapterFactory = CDOEditor.createAdapterFactory(false);
-
-          IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(eObject,
-              IItemPropertySource.class);
-          if (propertySource != null)
-          {
-            List<IItemPropertyDescriptor> propertyDescriptors = propertySource.getPropertyDescriptors(eObject);
-            if (propertyDescriptors != null)
-            {
-              labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-
-              for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
+              Object value = emfProperties.get(id);
+              if (value != null)
               {
-                if (propertyDescriptor instanceof CDOPropertyDescriptor)
+                return value;
+              }
+
+              return super.getPropertyValue(id);
+            }
+          };
+
+          ComposedAdapterFactory adapterFactory = null;
+          AdapterFactoryLabelProvider labelProvider = null;
+
+          try
+          {
+            adapterFactory = CDOEditor.createAdapterFactory(false);
+
+            IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(cdoObject,
+                IItemPropertySource.class);
+            if (propertySource != null)
+            {
+              List<IItemPropertyDescriptor> propertyDescriptors = propertySource.getPropertyDescriptors(cdoObject);
+              if (propertyDescriptors != null)
+              {
+                labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+
+                for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
                 {
-                  continue;
-                }
-
-                String category = getTypeText(adapterFactory, eObject);
-                String id = "___EMF___" + propertyDescriptor.getId(eObject);
-                String displayName = propertyDescriptor.getDisplayName(eObject);
-                String description = propertyDescriptor.getDescription(eObject);
-
-                PropertyDescriptor descriptor = result.addDescriptor(category, id, displayName, description);
-
-                Object value = propertyDescriptor.getPropertyValue(eObject);
-                emfProperties.put(id, value);
-
-                final String text = labelProvider.getText(value);
-                descriptor.setLabelProvider(new LabelProvider()
-                {
-                  @Override
-                  public String getText(Object element)
+                  if (propertyDescriptor instanceof CDOPropertyDescriptor)
                   {
-                    return text;
+                    continue;
                   }
-                });
+
+                  String category = getTypeText(adapterFactory, cdoObject);
+                  String id = "___EMF___" + propertyDescriptor.getId(cdoObject);
+                  String displayName = propertyDescriptor.getDisplayName(cdoObject);
+                  String description = propertyDescriptor.getDescription(cdoObject);
+
+                  PropertyDescriptor descriptor = result.addDescriptor(category, id, displayName, description);
+
+                  Object value = propertyDescriptor.getPropertyValue(cdoObject);
+                  emfProperties.put(id, value);
+
+                  final String text = labelProvider.getText(value);
+                  descriptor.setLabelProvider(new LabelProvider()
+                  {
+                    @Override
+                    public String getText(Object element)
+                    {
+                      return text;
+                    }
+                  });
+                }
               }
             }
           }
-        }
-        finally
-        {
-          if (labelProvider != null)
+          finally
           {
-            labelProvider.dispose();
+            if (labelProvider != null)
+            {
+              labelProvider.dispose();
+            }
+
+            if (adapterFactory != null)
+            {
+              adapterFactory.dispose();
+            }
           }
 
-          if (adapterFactory != null)
-          {
-            adapterFactory.dispose();
-          }
+          return result;
         }
-
-        return result;
       }
     }
     catch (LifecycleException ex)
@@ -189,7 +195,11 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
 
     if (object instanceof EObject)
     {
-      return OBJECT_ACTION_FILTER;
+      EObject eObject = (EObject)object;
+      if (CDOUtil.isCDOObject(eObject))
+      {
+        return OBJECT_ACTION_FILTER;
+      }
     }
 
     return super.createActionFilter(object);

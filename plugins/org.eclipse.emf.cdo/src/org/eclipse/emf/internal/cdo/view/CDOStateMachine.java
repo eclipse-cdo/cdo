@@ -12,13 +12,14 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -1101,8 +1102,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, CDORevisionKey key)
     {
       InternalCDORevision oldRevision = object.cdoRevision();
-      InternalCDORevision newRevision = null;
-
       InternalCDOView view = object.cdoView();
       InternalCDOSession session = view.getSession();
       InternalCDORevisionCache cache = session.getRevisionManager().getCache();
@@ -1111,7 +1110,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         CDORevisionDelta delta = (CDORevisionDelta)key;
         CDORevisable target = delta.getTarget();
-        newRevision = (InternalCDORevision)cache.getRevisionByVersion(delta.getID(), target);
+        InternalCDORevision newRevision = (InternalCDORevision)cache.getRevisionByVersion(delta.getID(), target);
         if (newRevision == null)
         {
           newRevision = oldRevision.copy();
@@ -1130,16 +1129,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       if (key == null || key.getVersion() >= oldRevision.getVersion())
       {
-        CDORevisionKey newKey = null;
-        if (key != null)
-        {
-          int newVersion = getNewVersion(key);
-          newKey = CDORevisionUtil.createRevisionKey(key.getID(), key.getBranch(), newVersion);
-        }
+        InternalCDORevision newRevision = null;
 
-        if (newKey != null)
+        CDOBranch viewBranch = view.getBranch();
+        CDOBranchVersion newBranchVersion = getNewBranchVersion(key, viewBranch);
+        if (newBranchVersion != null)
         {
-          newRevision = (InternalCDORevision)cache.getRevisionByVersion(newKey.getID(), newKey);
+          newRevision = (InternalCDORevision)cache.getRevisionByVersion(key.getID(), newBranchVersion);
         }
 
         if (newRevision != null)
@@ -1160,19 +1156,31 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
     }
 
-    private int getNewVersion(CDORevisionKey key)
+    private CDOBranchVersion getNewBranchVersion(CDORevisionKey key, CDOBranch viewBranch)
     {
-      if (key instanceof CDORevisionDelta)
+      if (key != null)
       {
-        CDORevisionDelta delta = (CDORevisionDelta)key;
-        CDORevisable target = delta.getTarget();
-        if (target != null && key.getBranch() == target.getBranch())
+        CDOBranch keyBranch = key.getBranch();
+
+        if (key instanceof CDORevisionDelta)
         {
-          return target.getVersion();
+          CDORevisionDelta delta = (CDORevisionDelta)key;
+          CDORevisable target = delta.getTarget();
+          if (target != null && keyBranch == target.getBranch())
+          {
+            return target;
+          }
         }
+
+        if (keyBranch == viewBranch)
+        {
+          return keyBranch.getVersion(key.getVersion() + 1);
+        }
+
+        return viewBranch.getVersion(CDOBranchVersion.FIRST_VERSION);
       }
 
-      return key.getVersion() + 1;
+      return null;
     }
   }
 

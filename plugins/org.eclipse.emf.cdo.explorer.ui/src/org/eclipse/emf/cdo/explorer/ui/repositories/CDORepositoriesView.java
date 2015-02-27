@@ -32,7 +32,9 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -129,7 +131,7 @@ public class CDORepositoriesView extends ContainerView
   {
     addCollapseAllAction(manager);
 
-    manager.add(new Action("Local")
+    manager.add(new Action("Test")
     {
       @Override
       public void run()
@@ -156,8 +158,15 @@ public class CDORepositoriesView extends ContainerView
               .getEPackage("http://www.eclipse.org/emf/CDO/examples/company/1.0.0");
           EClass eClass = (EClass)ePackage.getEClassifier("Company");
 
+          EObject company = EcoreUtil.create(eClass);
+          addChild(company, "categories", "Category");
+          addChild(company, "suppliers", "Supplier");
+          addChild(company, "customers", "Customer");
+          addChild(company, "purchaseOrders", "PurchaseOrder");
+          addChild(company, "salesOrders", "SalesOrder");
+
           CDOResource resource = transaction.createResource("model1");
-          resource.getContents().add(EcoreUtil.create(eClass));
+          resource.getContents().add(company);
 
           transaction.commit();
         }
@@ -173,6 +182,16 @@ public class CDORepositoriesView extends ContainerView
         {
           transaction.close();
         }
+      }
+
+      private void addChild(EObject company, String featureName, String className)
+      {
+        EClass companyClass = company.eClass();
+        EObject object = EcoreUtil.create((EClass)companyClass.getEPackage().getEClassifier(className));
+
+        @SuppressWarnings("unchecked")
+        EList<EObject> list = (EList<EObject>)company.eGet(companyClass.getEStructuralFeature(featureName));
+        list.add(object);
       }
     });
 

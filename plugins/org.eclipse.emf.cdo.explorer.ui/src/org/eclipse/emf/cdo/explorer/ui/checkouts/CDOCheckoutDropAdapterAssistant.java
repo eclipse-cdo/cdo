@@ -126,16 +126,16 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       {
         // Merge From (online + offline)
         CDORepository repository = checkout.getRepository();
-        CDOBranchPoint left = checkout.getBranchPoint();
-        CDOBranchPoint right = branchPoint;
+        CDOBranchPoint left = branchPoint;
+        CDOBranchPoint right = checkout.getBranchPoint();
         CDOCompareEditorUtil.openEditor(repository, repository, left, right, null, true);
       }
       else if (dropOperation == DND.DROP_LINK)
       {
         // Compare With (online + offline)
         CDORepository repository = checkout.getRepository();
-        CDOBranchPoint left = checkout.getBranchPoint();
-        CDOBranchPoint right = branchPoint;
+        CDOBranchPoint left = branchPoint;
+        CDOBranchPoint right = checkout.getBranchPoint();
         CDOCompareEditorUtil.openEditor(repository, left, right, null, true);
       }
 

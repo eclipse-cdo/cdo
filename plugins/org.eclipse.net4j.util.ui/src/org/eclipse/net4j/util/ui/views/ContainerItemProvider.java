@@ -91,12 +91,17 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     try
     {
       Node node = getNode(element);
-      return node.hasChildren();
+      if (node != null)
+      {
+        return node.hasChildren();
+      }
     }
     catch (RuntimeException ex)
     {
-      return false;
+      //$FALL-THROUGH$
     }
+
+    return false;
   }
 
   public Object[] getChildren(Object element)
@@ -104,37 +109,42 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     try
     {
       Node node = getNode(element);
-      List<Node> children = node.getChildren();
-      for (Iterator<Node> it = children.iterator(); it.hasNext();)
+      if (node != null)
       {
-        Node child = it.next();
-        if (child.isDisposed())
+        List<Node> children = node.getChildren();
+        for (Iterator<Node> it = children.iterator(); it.hasNext();)
         {
-          it.remove();
-        }
-        else
-        {
-          Object childElement = child.getElement();
-          LifecycleState lifecycleState = LifecycleUtil.getLifecycleState(childElement);
-          if (lifecycleState == LifecycleState.INACTIVE || lifecycleState == LifecycleState.DEACTIVATING)
+          Node child = it.next();
+          if (child.isDisposed())
           {
-            handleInactiveElement(it, child);
+            it.remove();
+          }
+          else
+          {
+            Object childElement = child.getElement();
+            LifecycleState lifecycleState = LifecycleUtil.getLifecycleState(childElement);
+            if (lifecycleState == LifecycleState.INACTIVE || lifecycleState == LifecycleState.DEACTIVATING)
+            {
+              handleInactiveElement(it, child);
+            }
           }
         }
-      }
 
-      Object[] result = new Object[children.size()];
-      for (int i = 0; i < result.length; i++)
-      {
-        result[i] = children.get(i).getElement();
-      }
+        Object[] result = new Object[children.size()];
+        for (int i = 0; i < result.length; i++)
+        {
+          result[i] = children.get(i).getElement();
+        }
 
-      return result;
+        return result;
+      }
     }
     catch (RuntimeException ex)
     {
-      return NO_ELEMENTS;
+      //$FALL-THROUGH$
     }
+
+    return NO_ELEMENTS;
   }
 
   public Object getParent(Object element)
@@ -142,13 +152,18 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     try
     {
       Node node = getNode(element);
-      Node parentNode = node.getParent();
-      return parentNode == null ? null : parentNode.getElement();
+      if (node != null)
+      {
+        Node parentNode = node.getParent();
+        return parentNode == null ? null : parentNode.getElement();
+      }
     }
     catch (RuntimeException ex)
     {
-      return null;
+      //$FALL-THROUGH$
     }
+
+    return null;
   }
 
   /**
@@ -234,18 +249,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
   protected Node getNode(Object element)
   {
-    Node node = root;
-    if (element != getInput())
+    if (element == getInput())
     {
-      node = nodes.get(element);
+      return root;
     }
 
-    if (node == null)
-    {
-      throw new IllegalStateException("No node for " + element); //$NON-NLS-1$
-    }
-
-    return node;
+    return nodes.get(element);
   }
 
   protected Node createNode(Node parent, Object element)

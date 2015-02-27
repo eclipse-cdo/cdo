@@ -192,6 +192,12 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       return;
     }
 
+    CDOCheckout checkout = CDOExplorerUtil.getCheckout(selectedObject);
+    if (checkout == null)
+    {
+      return;
+    }
+
     // Fill the menu from the commonWizard contributions.
     newWizardActionGroup.setContext(getContext());
     newWizardActionGroup.fillContextMenu(submenu);
@@ -216,7 +222,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
     if (selectedObject instanceof CDOResource)
     {
-      fillNewRootActions(submenu, (CDOResource)selectedObject);
+      fillNewRootActions(submenu, checkout, (CDOResource)selectedObject);
     }
     else if (selectedObject instanceof CDOResourceNode)
     {
@@ -224,7 +230,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     }
     else if (selectedObject instanceof EObject)
     {
-      fillNewChildActions(submenu, (EObject)selectedObject);
+      fillNewChildActions(submenu, checkout, (EObject)selectedObject);
     }
 
     submenu.add(new Separator(ICommonMenuConstants.GROUP_ADDITIONS));
@@ -237,7 +243,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     menu.insertAfter(ICommonMenuConstants.GROUP_NEW, submenu);
   }
 
-  private void fillNewRootActions(IMenuManager menu, final CDOResource resource)
+  private void fillNewRootActions(IMenuManager menu, final CDOCheckout checkout, final CDOResource resource)
   {
     CDOPackageRegistry packageRegistry = resource.cdoView().getSession().getPackageRegistry();
     NewRootMenuPopulator populator = new NewRootMenuPopulator(packageRegistry)
@@ -245,26 +251,23 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       @Override
       protected IAction createAction(EObject object)
       {
-        CDOCheckoutContentProvider contentProvider = getContentProvider();
-        ComposedAdapterFactory adapterFactory = contentProvider.getStateManager().getState(object).getAdapterFactory();
+        ComposedAdapterFactory adapterFactory = getAdapterFactory(checkout);
 
         Object image = CDOEditor.getLabelImage(adapterFactory, object);
         ImageDescriptor imageDescriptor = ExtendedImageRegistry.getInstance().getImageDescriptor(image);
 
-        return new NewRootAction(resource, object, imageDescriptor);
+        return new NewRootAction(resource, checkout, object, imageDescriptor);
       }
     };
 
     populator.populateMenu(menu);
   }
 
-  private void fillNewChildActions(IMenuManager menu, EObject object)
+  private void fillNewChildActions(IMenuManager menu, CDOCheckout checkout, EObject object)
   {
-    CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
     ResourceSet resourceSet = checkout.getView().getResourceSet();
 
-    CDOCheckoutContentProvider contentProvider = getContentProvider();
-    ComposedAdapterFactory adapterFactory = contentProvider.getStateManager().getState(checkout).getAdapterFactory();
+    ComposedAdapterFactory adapterFactory = getAdapterFactory(checkout);
 
     EditingDomain editingDomain = new AdapterFactoryEditingDomain(adapterFactory, new BasicCommandStack(), resourceSet);
     IStructuredSelection selection = new StructuredSelection(object);
@@ -278,9 +281,16 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       String toolTipText = delegate.getToolTipText();
       ImageDescriptor imageDescriptor = delegate.getImageDescriptor();
 
-      NewChildAction action = new NewChildAction(text, toolTipText, imageDescriptor, cdoObject, childDescriptor);
+      NewChildAction action = new NewChildAction(text, toolTipText, imageDescriptor, checkout, cdoObject,
+          childDescriptor);
       menu.add(action);
     }
+  }
+
+  private ComposedAdapterFactory getAdapterFactory(CDOCheckout checkout)
+  {
+    CDOCheckoutContentProvider contentProvider = getContentProvider();
+    return contentProvider.getStateManager().getState(checkout).getAdapterFactory();
   }
 
   private CDOCheckoutContentProvider getContentProvider()
@@ -299,17 +309,20 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
    */
   private abstract class AbstractNewAction extends TransactionalBackgroundAction
   {
+    private CDOCheckout checkout;
+
     private EObject newObject;
 
-    public AbstractNewAction(String text, String toolTipText, ImageDescriptor image, CDOObject parent)
+    public AbstractNewAction(String text, String toolTipText, ImageDescriptor image, CDOCheckout checkout,
+        CDOObject parent)
     {
       super(page, text, toolTipText, image, parent);
+      this.checkout = checkout;
     }
 
     @Override
     protected CDOTransaction openTransaction(CDOObject AbstractNewAction)
     {
-      CDOCheckout checkout = CDOExplorerUtil.getCheckout(AbstractNewAction);
       if (checkout != null)
       {
         return checkout.openTransaction();
@@ -351,9 +364,9 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
   {
     private final EObject object;
 
-    public NewRootAction(CDOResource resource, EObject object, ImageDescriptor image)
+    public NewRootAction(CDOResource resource, CDOCheckout checkout, EObject object, ImageDescriptor image)
     {
-      super(object.eClass().getName(), null, image, resource);
+      super(object.eClass().getName(), null, image, checkout, resource);
       this.object = object;
     }
 
@@ -373,10 +386,10 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
   {
     private final Object childDescriptor;
 
-    public NewChildAction(String text, String toolTipText, ImageDescriptor image, CDOObject parent,
-        Object childDescriptor)
+    public NewChildAction(String text, String toolTipText, ImageDescriptor image, CDOCheckout checkout,
+        CDOObject parent, Object childDescriptor)
     {
-      super(text, toolTipText, image, parent);
+      super(text, toolTipText, image, checkout, parent);
       this.childDescriptor = childDescriptor;
     }
 

@@ -499,17 +499,38 @@ public final class CDOUtil
    */
   public static CDOObject getCDOObject(EObject object)
   {
+    return getCDOObject(object, true);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static CDOObject getCDOObject(EObject object, boolean adaptLegacy)
+  {
     if (object == null)
     {
       return null;
     }
 
-    if (object instanceof CDOObject)
+    if (object instanceof InternalCDOObject)
     {
       return (CDOObject)object;
     }
 
-    return FSMUtil.adaptLegacy((InternalEObject)object);
+    if (adaptLegacy)
+    {
+      return FSMUtil.adaptLegacy((InternalEObject)object);
+    }
+
+    return (CDOObject)FSMUtil.getLegacyAdapter(object);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static boolean isCDOObject(EObject object)
+  {
+    return getCDOObject(object, false) != null;
   }
 
   /**

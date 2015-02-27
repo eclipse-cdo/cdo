@@ -11,12 +11,15 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -907,5 +910,51 @@ public class InvalidationTest extends AbstractCDOTest
         return false;
       }
     }.assertNoTimeOut();
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testDeleteFromOtherBranch() throws Exception
+  {
+    Company companyA = getModel1Factory().createCompany();
+    Category categoryA = getModel1Factory().createCategory();
+    companyA.getCategories().add(categoryA);
+
+    CDOSession session = openSession();
+    session.options().setPassiveUpdateEnabled(true);
+    session.options().setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
+
+    CDOTransaction transactionA = session.openTransaction();
+    CDOResource resourceA = transactionA.createResource(getResourcePath("/test1"));
+    resourceA.getContents().add(companyA);
+
+    CDOBranch mainBranch = transactionA.getBranch();
+    transactionA.commit(); // company v1
+    assertEquals(mainBranch, CDOUtil.getCDOObject(companyA).cdoRevision().getBranch());
+    assertEquals(1, CDOUtil.getCDOObject(companyA).cdoRevision().getVersion());
+
+    companyA.setName("ESC");
+    transactionA.commit(); // company v2
+    assertEquals(mainBranch, CDOUtil.getCDOObject(companyA).cdoRevision().getBranch());
+    assertEquals(2, CDOUtil.getCDOObject(companyA).cdoRevision().getVersion());
+
+    CDOTransaction transactionB = session.openTransaction();
+    CDOResource resourceB = transactionB.getResource(getResourcePath("/test1"));
+    Company companyB = (Company)resourceB.getContents().get(0);
+    companyB.getCategories().get(0);
+    CDOObject cdoCompanyB = CDOUtil.getCDOObject(companyB);
+
+    CDOBranch branch1 = mainBranch.createBranch("branch1");
+    transactionB.setBranch(branch1);
+    transactionA.setBranch(branch1);
+
+    assertEquals(mainBranch, cdoCompanyB.cdoRevision().getBranch());
+    assertEquals(2, cdoCompanyB.cdoRevision().getVersion());
+
+    companyA.getCategories().remove(0);
+    commitAndSync(transactionA, transactionB);
+
+    assertEquals(CDOState.CLEAN, cdoCompanyB.cdoState());
+    assertEquals(branch1, cdoCompanyB.cdoRevision().getBranch());
+    assertEquals(1, cdoCompanyB.cdoRevision().getVersion());
   }
 }

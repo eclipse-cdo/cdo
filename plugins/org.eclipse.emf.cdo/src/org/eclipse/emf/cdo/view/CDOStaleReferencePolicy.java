@@ -126,7 +126,7 @@ public interface CDOStaleReferencePolicy
 
           if (name.equals("toString")) //$NON-NLS-1$
           {
-            return "StaleReferenceProxy[" + target + "]";
+            return "StaleReference[" + type.getName() + "@" + target + "]";
           }
 
           if (tracer.isEnabled())

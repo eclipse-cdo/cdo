@@ -80,7 +80,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
   }
 
   public void testExportDate() throws Exception
@@ -99,7 +98,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
   }
 
   public void testExportBlob() throws Exception
@@ -132,7 +130,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
   }
 
   public void testExportClob() throws Exception
@@ -164,7 +161,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
   }
 
   public void testExportCustomDataType() throws Exception
@@ -181,7 +177,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
   }
 
   public void testExportFeatureMap() throws Exception
@@ -200,7 +195,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
   }
 
   public void testExportExternalReference() throws Exception
@@ -224,7 +218,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
   }
 
   private void useAfterImport(String repoName) throws CommitException
@@ -275,7 +268,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
 
     InternalRepository repo2 = getRepository("repo2", false);
 
@@ -303,7 +295,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
 
     InternalRepository repo2 = getRepository("repo2", false);
 
@@ -343,7 +334,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
 
     InternalRepository repo2 = getRepository("repo2", false);
 
@@ -382,7 +372,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
 
     InternalRepository repo2 = getRepository("repo2", false);
 
@@ -406,7 +395,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
 
     InternalRepository repo2 = getRepository("repo2", false);
 
@@ -432,7 +420,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
 
     InternalRepository repo2 = getRepository("repo2", false);
 
@@ -463,7 +450,6 @@ public class BackupTest extends AbstractCDOTest
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     CDOServerExporter.XML exporter = new CDOServerExporter.XML(repo1);
     exporter.exportRepository(baos);
-    System.out.println(baos.toString());
 
     InternalRepository repo2 = getRepository("repo2", false);
 

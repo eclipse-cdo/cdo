@@ -46,8 +46,10 @@ import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -238,6 +240,20 @@ public class CDOCompareEditorUtil
   {
     final Input input = createComparisonInput(leftView, rightView, originView, viewOpener);
 
+    if (input == null)
+    {
+      UIUtil.getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          Shell shell = UIUtil.getShell();
+          MessageDialog.openInformation(shell, "Compare", "There are no differences between the selected inputs.");
+        }
+      });
+
+      return false;
+    }
+
     final Boolean activateEditor = ACTIVATE_EDITOR.get();
     if (activateEditor != null)
     {
@@ -267,6 +283,10 @@ public class CDOCompareEditorUtil
       CDOViewOpener viewOpener)
   {
     Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView, viewOpener);
+    if (comparison.getDifferences().isEmpty())
+    {
+      return null;
+    }
 
     IComparisonScope scope = CDOCompare.getScope(comparison);
     ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(),

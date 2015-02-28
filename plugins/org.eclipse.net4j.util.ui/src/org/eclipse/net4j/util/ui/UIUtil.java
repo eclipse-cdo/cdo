@@ -45,6 +45,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbench;
@@ -163,6 +164,59 @@ public final class UIUtil
     }
 
     return display;
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static Shell getShell()
+  {
+    final Shell[] shell = { null };
+
+    final Display display = getDisplay();
+    display.syncExec(new Runnable()
+    {
+      public void run()
+      {
+        shell[0] = display.getActiveShell();
+
+        if (shell[0] == null)
+        {
+          try
+          {
+            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            if (window == null)
+            {
+              IWorkbenchWindow[] windows = PlatformUI.getWorkbench().getWorkbenchWindows();
+              if (windows.length != 0)
+              {
+                window = windows[0];
+              }
+            }
+
+            if (window != null)
+            {
+              shell[0] = window.getShell();
+            }
+          }
+          catch (Throwable ignore)
+          {
+            //$FALL-THROUGH$
+          }
+        }
+
+        if (shell[0] == null)
+        {
+          Shell[] shells = display.getShells();
+          if (shells.length > 0)
+          {
+            shell[0] = shells[0];
+          }
+        }
+      }
+    });
+
+    return shell[0];
   }
 
   /**

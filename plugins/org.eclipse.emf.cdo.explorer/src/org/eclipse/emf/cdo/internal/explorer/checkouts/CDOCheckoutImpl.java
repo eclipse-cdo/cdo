@@ -178,6 +178,19 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
+  public final CDOBranchPoint getBranchPoint(CDOCheckout fromCheckout)
+  {
+    if (repository == fromCheckout.getRepository() && repository.isConnected())
+    {
+
+      CDOBranchManager branchManager = repository.getSession().getBranchManager();
+      CDOBranch branch = branchManager.getBranch(fromCheckout.getBranchID());
+      return branch.getPoint(fromCheckout.getTimeStamp());
+    }
+
+    return null;
+  }
+
   protected String doSetBranchPoint(int branchID, long timeStamp)
   {
     CDOBranch branch = view.getSession().getBranchManager().getBranch(branchID);

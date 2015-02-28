@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -71,9 +69,10 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
     CDOBranchPoint checkoutBranchPoint = checkout.getBranchPoint();
 
     // Repository of offline checkout is not necessarily open.
-    if (checkout.getRepository().isConnected())
+    CDORepository repository = checkout.getRepository();
+    if (repository.isConnected())
     {
-      subMenu.add(new Separator("historized"));
+      subMenu.add(new Separator("history"));
       for (CDOBranchPoint branchPoint : checkout.getBranchPoints())
       {
         if (!ObjectUtil.equals(branchPoint, checkoutBranchPoint))
@@ -81,33 +80,35 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
           subMenu.add(new HistorizedBranchPointAction(page, checkout, branchPoint));
         }
       }
-    }
 
-    subMenu.add(new Separator("dialogs"));
-    subMenu.add(new OtherBranchPointAction(page, checkout, false));
-    subMenu.add(new OtherBranchPointAction(page, checkout, true));
-    subMenu.add(new CommitBranchPointAction(page, checkout));
+      subMenu.add(new Separator("other"));
+      subMenu.add(new OtherBranchPointAction(page, checkout, false));
+      subMenu.add(new OtherBranchPointAction(page, checkout, true));
 
-    subMenu.add(new Separator("checkouts"));
-    for (CDOCheckout otherCheckout : CDOExplorerUtil.getCheckoutManager().getCheckouts())
-    {
-      if (otherCheckout == checkout)
+      subMenu.add(new Separator("commit"));
+      subMenu.add(new CommitBranchPointAction(page, checkout));
+
+      subMenu.add(new Separator("checkout"));
+      for (CDOCheckout otherCheckout : CDOExplorerUtil.getCheckoutManager().getCheckouts())
       {
-        continue;
-      }
+        if (otherCheckout == checkout)
+        {
+          continue;
+        }
 
-      if (otherCheckout.getRepository() != checkout.getRepository())
-      {
-        continue;
-      }
+        if (otherCheckout.getRepository() != repository)
+        {
+          continue;
+        }
 
-      if (otherCheckout.getBranchID() == checkout.getBranchID()
-          && otherCheckout.getTimeStamp() == checkout.getTimeStamp())
-      {
-        continue;
-      }
+        if (otherCheckout.getBranchID() == checkout.getBranchID()
+            && otherCheckout.getTimeStamp() == checkout.getTimeStamp())
+        {
+          continue;
+        }
 
-      subMenu.add(new OtherCheckoutAction(page, checkout, otherCheckout));
+        subMenu.add(new OtherCheckoutAction(page, checkout, otherCheckout));
+      }
     }
   }
 
@@ -271,10 +272,7 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
     {
       super(page);
       this.checkout = checkout;
-
-      CDOBranchManager branchManager = checkout.getView().getSession().getBranchManager();
-      CDOBranch branch = branchManager.getBranch(otherCheckout.getBranchID());
-      branchPoint = branch.getPoint(otherCheckout.getTimeStamp());
+      branchPoint = checkout.getBranchPoint(otherCheckout);
 
       String text = otherCheckout.getLabel() + "  -  " + branchPoint.getBranch().getPathName();
 

@@ -57,6 +57,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public void setBranchPoint(int branchID, long timeStamp);
 
+  public CDOBranchPoint getBranchPoint(CDOCheckout fromCheckout);
+
   public CDOBranchPoint[] getBranchPoints();
 
   public boolean addBranchPoint(CDOBranchPoint branchPoint);

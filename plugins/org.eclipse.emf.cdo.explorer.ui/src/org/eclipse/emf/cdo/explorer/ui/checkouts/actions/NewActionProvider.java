@@ -176,6 +176,12 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       if (ssel.size() == 1)
       {
         selectedObject = ssel.getFirstElement();
+        if (selectedObject instanceof CDOCheckout)
+        {
+          CDOCheckout checkout = (CDOCheckout)selectedObject;
+          selectedObject = checkout.getRootObject();
+        }
+
         return;
       }
     }

@@ -50,6 +50,9 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -295,11 +298,6 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return viewer;
   }
 
-  public final Object getInput()
-  {
-    return input;
-  }
-
   public void inputChanged(Viewer newViewer, Object oldInput, Object newInput)
   {
     TreeViewer newTreeViewer = null;
@@ -327,13 +325,28 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     stateManager.inputChanged(newTreeViewer, oldInput, newInput);
   }
 
+  public Object getInput()
+  {
+    return input;
+  }
+
+  public Object[] getElements(Object object)
+  {
+    return getChildren(object);
+  }
+
   public boolean hasChildren(Object object)
   {
     try
     {
-      if (object == input)
+      if (object instanceof IResource)
       {
-        return !CHECKOUT_MANAGER.isEmpty();
+        if (object instanceof IWorkspaceRoot)
+        {
+          return !CHECKOUT_MANAGER.isEmpty();
+        }
+
+        return false;
       }
 
       if (object instanceof ViewerUtil.Pending)
@@ -418,9 +431,14 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
   {
     try
     {
-      if (object == input)
+      if (object instanceof IResource)
       {
-        return CHECKOUT_MANAGER.getCheckouts();
+        if (object instanceof IWorkspaceRoot)
+        {
+          return CHECKOUT_MANAGER.getCheckouts();
+        }
+
+        return ViewerUtil.NO_CHILDREN;
       }
 
       if (object instanceof ViewerUtil.Pending)
@@ -668,23 +686,13 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return null;
   }
 
-  public Object[] getElements(Object object)
-  {
-    return getChildren(object);
-  }
-
   public Object getParent(Object object)
   {
     try
     {
-      if (object == input)
-      {
-        return null;
-      }
-
       if (object instanceof CDOCheckout)
       {
-        return input;
+        return ResourcesPlugin.getWorkspace().getRoot();
       }
 
       if (object instanceof ViewerUtil.Pending)
@@ -702,19 +710,28 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       {
         EObject eObject = (EObject)object;
 
+        CDOElement element = CDOElement.getFor(eObject);
+        if (element != null)
         {
-          Adapter adapter = EcoreUtil.getAdapter(eObject.eAdapters(), CDOCheckout.class);
-          if (adapter instanceof CDOCheckout)
-          {
-            return adapter;
-          }
+          return element;
         }
-      }
 
-      ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
-      if (contentProvider != null)
-      {
-        return contentProvider.getParent(object);
+        ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
+        if (contentProvider != null)
+        {
+          Object parent = contentProvider.getParent(object);
+          if (parent instanceof EObject)
+          {
+            EObject eParent = (EObject)parent;
+            Adapter adapter = EcoreUtil.getAdapter(eParent.eAdapters(), CDOCheckout.class);
+            if (adapter != null)
+            {
+              return adapter;
+            }
+          }
+
+          return parent;
+        }
       }
     }
     catch (LifecycleException ex)

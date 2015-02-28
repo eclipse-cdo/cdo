@@ -32,5 +32,9 @@ public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comp
 
   public void setLabel(String label);
 
+  public String getDescription();
+
+  public void setDescription(String description);
+
   public void delete(boolean deleteContents);
 }

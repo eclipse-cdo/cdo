@@ -228,7 +228,15 @@ public class CDOCompareEditorUtil
 
   public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView)
   {
-    final Input input = createComparisonInput(leftView, rightView, originView);
+    return openDialog(leftView, rightView, originView, CDOCompareUtil.DEFAULT_VIEW_OPENER);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
+  {
+    final Input input = createComparisonInput(leftView, rightView, originView, viewOpener);
 
     final Boolean activateEditor = ACTIVATE_EDITOR.get();
     if (activateEditor != null)
@@ -255,9 +263,10 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static Input createComparisonInput(CDOView leftView, CDOView rightView, CDOView[] originView)
+  public static Input createComparisonInput(CDOView leftView, CDOView rightView, CDOView[] originView,
+      CDOViewOpener viewOpener)
   {
-    Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView);
+    Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView, viewOpener);
 
     IComparisonScope scope = CDOCompare.getScope(comparison);
     ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(),
@@ -291,16 +300,21 @@ public class CDOCompareEditorUtil
 
     boolean leftEditable = !leftView.isReadOnly();
     boolean rightEditable = !rightView.isReadOnly();
+    boolean merge = leftEditable || rightEditable;
+    if (merge)
+    {
+      leftLabel = "From " + leftLabel;
+      rightLabel = "Into " + rightLabel;
+    }
 
     CompareConfiguration configuration = new CompareConfiguration();
     configuration.setLeftImage(leftImage);
-    configuration.setLeftLabel("From " + leftLabel);
+    configuration.setLeftLabel(leftLabel);
     configuration.setLeftEditable(leftEditable);
     configuration.setRightImage(rightImage);
-    configuration.setRightLabel("Into " + rightLabel);
+    configuration.setRightLabel(rightLabel);
     configuration.setRightEditable(rightEditable);
 
-    boolean merge = leftEditable || rightEditable;
     String repositoryName = ((InternalCDOView)leftView).getRepositoryName();
     String title = (merge ? "Merge " : "Compare ") + repositoryName + " " + leftLabel + (merge ? " into " : " and ")
         + rightLabel;

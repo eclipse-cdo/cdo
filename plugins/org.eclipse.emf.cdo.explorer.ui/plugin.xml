@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <!--
-	Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others.
-	All rights reserved. This program and the accompanying materials
-	are made available under the terms of the Eclipse Public License v1.0
-	which accompanies this distribution, and is available at
-	http://www.eclipse.org/legal/epl-v10.html
+  Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License v1.0
+  which accompanies this distribution, and is available at
+  http://www.eclipse.org/legal/epl-v10.html
 
-	Contributors:
-	  Eike Stepper - initial API and implementation
+  Contributors:
+    Eike Stepper - initial API and implementation
 -->
 
 <plugin>
@@ -18,15 +18,15 @@
          <run class="org.eclipse.emf.cdo.explorer.ui.application.CDOExplorerApplication"/>
       </application>
   </extension>
-   
- 	<extension id="product" point="org.eclipse.core.runtime.products">
-    	<product
-      	name="CDO Explorer"
+
+   <extension id="product" point="org.eclipse.core.runtime.products">
+      <product
+        name="CDO Explorer"
         description="%product.description"
         application="org.eclipse.emf.cdo.explorer.app">
-      		<property name="appName" value="CDO Explorer"/>
-    	</product>
- 	</extension>
+          <property name="appName" value="CDO Explorer"/>
+      </product>
+   </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
       <factory
@@ -108,7 +108,7 @@
             allowMultiple="false">
       </view>
   </extension>
-   
+
   <extension point="org.eclipse.ui.newWizards">
      <wizard
            category="org.eclipse.emf.cdo.category"
@@ -173,6 +173,7 @@
                <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                <instanceof value="org.eclipse.emf.cdo.common.branch.CDOBranchPoint"/>
                <instanceof value="org.eclipse.emf.cdo.common.branch.CDOBranch"/>
+               <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
             </or>
          </possibleChildren>
          <actionProvider
@@ -195,6 +196,23 @@
                   </not>
                </and>
              </or>
+           </enablement>
+         </actionProvider>
+         <actionProvider
+              class="org.eclipse.ui.navigator.resources.GoIntoActionProvider"
+              id="org.eclipse.emf.cdo.explorer.ui.checkouts.GoIntoActions">
+           <enablement>
+               <or>
+                 <and>
+                   <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
+                   <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                 </and>
+                 <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
+                 <and>
+                    <adapt type="org.eclipse.emf.ecore.EObject"/>
+                    <test property="org.eclipse.emf.cdo.object.children" value="true"/>
+                 </and>
+               </or>
            </enablement>
          </actionProvider>
          <actionProvider
@@ -258,7 +276,7 @@
                 <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
             </enablement>
-         </commonWizard>   
+         </commonWizard>
          <commonWizard
               type="new"
               wizardId="org.eclipse.emf.cdo.explorer.ui.new.resource">
@@ -271,7 +289,7 @@
                 <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
            </enablement>
-         </commonWizard>              
+         </commonWizard>
          <commonWizard
               type="new"
               wizardId="org.eclipse.emf.cdo.explorer.ui.new.resource.binary">
@@ -284,7 +302,7 @@
                 <adapt type="org.eclipse.emf.cdo.eresource.CDOResourceFolder"/>
               </or>
            </enablement>
-         </commonWizard>              
+         </commonWizard>
          <commonWizard
               type="new"
               wizardId="org.eclipse.emf.cdo.explorer.ui.new.resource.text">
@@ -314,7 +332,7 @@
         <commonSorter
               class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutViewerSorter"
               id="org.eclipse.emf.cdo.explorer.ui.checkouts.ViewerSorter">
-        </commonSorter>        
+        </commonSorter>
      </navigatorContent>
   </extension>
 
@@ -382,7 +400,7 @@
             name="Revert Workspace"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceRevertHandler"/>
   </extension>
-   
+
   <extension point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.emf.cdo.explorer.ui.handlers.RenameHandler"

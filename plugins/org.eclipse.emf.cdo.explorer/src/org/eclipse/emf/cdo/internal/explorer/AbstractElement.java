@@ -42,6 +42,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public static final String PROP_LABEL = "label";
 
+  public static final String PROP_DESCRIPTION = "description";
+
   public static final String PROP_SERVER_BROWSER_PORT = "serverBrowserPort";
 
   private org.eclipse.emf.common.notify.Notifier target;
@@ -53,6 +55,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   private String type;
 
   private String label;
+
+  private String description;
 
   private int serverBrowserPort;
 
@@ -90,6 +94,22 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
       save();
 
       fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT);
+    }
+  }
+
+  public final String getDescription()
+  {
+    return description;
+  }
+
+  public final void setDescription(String description)
+  {
+    if (!ObjectUtil.equals(this.description, description))
+    {
+      this.description = description;
+      save();
+
+      fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.NONE);
     }
   }
 
@@ -277,6 +297,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
     this.type = type;
     label = properties.getProperty(PROP_LABEL);
+    description = properties.getProperty(PROP_DESCRIPTION);
 
     String property = properties.getProperty(PROP_SERVER_BROWSER_PORT);
     if (property != null)
@@ -289,6 +310,10 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   {
     properties.setProperty(PROP_TYPE, type);
     properties.setProperty(PROP_LABEL, label);
+    if (!StringUtil.isEmpty(description))
+    {
+      properties.setProperty(PROP_DESCRIPTION, description);
+    }
 
     if (serverBrowserPort != 0)
     {

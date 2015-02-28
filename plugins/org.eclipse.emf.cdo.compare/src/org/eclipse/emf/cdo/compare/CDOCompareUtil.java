@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Match;
@@ -64,6 +65,11 @@ import java.util.Set;
  */
 public final class CDOCompareUtil
 {
+  /**
+   * @since 4.3
+   */
+  public static final CDOViewOpener DEFAULT_VIEW_OPENER = null;
+
   private CDOCompareUtil()
   {
   }
@@ -80,7 +86,24 @@ public final class CDOCompareUtil
    */
   public static Comparison compare(CDOObject left, CDOView rightView, CDOView[] originView)
   {
-    return compare(CDOComparisonScope.AllContents.create(left, rightView, originView));
+    return compare(left, rightView, originView, DEFAULT_VIEW_OPENER);
+  }
+
+  /**
+   * Takes an arbitrary {@link CDOObject object} (including {@link CDOResourceNode resource nodes}) and returns {@link Match matches} for <b>all</b> elements of its {@link EObject#eAllContents() content tree}. This scope has the advantage that the comparison can
+   * be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
+   * matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
+   *
+   * @since 4.3
+   */
+  public static Comparison compare(CDOObject left, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
+  {
+    if (viewOpener == DEFAULT_VIEW_OPENER)
+    {
+      viewOpener = left.cdoView().getSession();
+    }
+
+    return compare(CDOComparisonScope.AllContents.create(left, rightView, originView, viewOpener));
   }
 
   /**
@@ -91,16 +114,61 @@ public final class CDOCompareUtil
    */
   public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView)
   {
-    return compare(CDOComparisonScope.Minimal.create(leftView, rightView, originView));
+    return compare(leftView, rightView, originView, DEFAULT_VIEW_OPENER);
+  }
+
+  /**
+   * Takes a {@link CDOView view}/{@link CDOTransaction transaction}
+   * and returns {@link Match matches} only for the <b>changed</b> elements of the entire content tree of its {@link CDOView#getRootResource() root resource}.
+   * The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
+   * objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
+   *
+   * @since 4.3
+   */
+  public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
+  {
+    if (viewOpener == DEFAULT_VIEW_OPENER)
+    {
+      viewOpener = leftView.getSession();
+    }
+
+    return compare(CDOComparisonScope.Minimal.create(leftView, rightView, originView, viewOpener));
   }
 
   public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids)
   {
-    return compare(CDOComparisonScope.Minimal.create(leftView, rightView, originView, ids));
+    return compare(leftView, rightView, originView, ids, DEFAULT_VIEW_OPENER);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static Comparison compare(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids,
+      CDOViewOpener viewOpener)
+  {
+    if (viewOpener == DEFAULT_VIEW_OPENER)
+    {
+      viewOpener = leftView.getSession();
+    }
+
+    return compare(CDOComparisonScope.Minimal.create(leftView, rightView, originView, ids, viewOpener));
   }
 
   public static Comparison compareUncommittedChanges(CDOTransaction transaction)
   {
-    return compare(CDOComparisonScope.Minimal.create(transaction));
+    return compareUncommittedChanges(transaction, DEFAULT_VIEW_OPENER);
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static Comparison compareUncommittedChanges(CDOTransaction transaction, CDOViewOpener viewOpener)
+  {
+    if (viewOpener == DEFAULT_VIEW_OPENER)
+    {
+      viewOpener = transaction.getSession();
+    }
+
+    return compare(CDOComparisonScope.Minimal.create(transaction, viewOpener));
   }
 }

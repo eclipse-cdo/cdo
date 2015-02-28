@@ -19,12 +19,12 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.AbstractTreeIterator;
@@ -34,6 +34,7 @@ import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ProperContentIterator;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -54,6 +55,8 @@ import java.util.Set;
  */
 public abstract class CDOComparisonScope extends AbstractComparisonScope
 {
+  private static final CDOViewOpener DEFAULT_VIEW_OPENER = CDOCompareUtil.DEFAULT_VIEW_OPENER;
+
   private boolean resolveProxies = true;
 
   public CDOComparisonScope(Notifier left, Notifier right, Notifier origin)
@@ -81,7 +84,8 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
     this.resolveProxies = resolveProxies;
   }
 
-  private static CDOView openOriginView(CDOView leftView, CDOView rightView, CDOView[] originView)
+  private static CDOView openOriginView(CDOView leftView, CDOView rightView, CDOView[] originView,
+      CDOViewOpener viewOpener)
   {
     if (leftView.getSession() != rightView.getSession())
     {
@@ -103,7 +107,12 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(leftView, rightView);
       if (!ancestor.equals(leftView) && !ancestor.equals(rightView))
       {
-        originView[0] = leftView.getSession().openView(ancestor);
+        if (viewOpener == DEFAULT_VIEW_OPENER)
+        {
+          viewOpener = leftView.getSession();
+        }
+
+        originView[0] = viewOpener.openView(ancestor, new ResourceSetImpl());
         return originView[0];
       }
     }
@@ -142,8 +151,20 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
      */
     public static AllContents create(CDOObject left, CDOView rightView, CDOView[] originView)
     {
+      return create(left, rightView, originView, DEFAULT_VIEW_OPENER);
+    }
+
+    /**
+     * Takes an arbitrary {@link CDOObject object} (including {@link CDOResourceNode resource nodes}) and returns {@link Match matches} for <b>all</b> elements of its {@link EObject#eAllContents() content tree}. This scope has the advantage that the comparison can
+     * be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
+     * matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
+     *
+     * @since 4.3
+     */
+    public static AllContents create(CDOObject left, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
+    {
       CDOView leftView = left.cdoView();
-      CDOView view = openOriginView(leftView, rightView, originView);
+      CDOView view = openOriginView(leftView, rightView, originView, viewOpener);
 
       CDOObject right = CDOUtil.getCDOObject(rightView.getObject(left));
       CDOObject origin = view == null ? null : CDOUtil.getCDOObject(view.getObject(left));
@@ -286,21 +307,52 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
     public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView)
     {
-      CDOView view = openOriginView(leftView, rightView, originView);
+      return create(leftView, rightView, originView, DEFAULT_VIEW_OPENER);
+    }
+
+    /**
+     * @since 4.3
+     */
+    public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView,
+        CDOViewOpener viewOpener)
+    {
+      CDOView view = openOriginView(leftView, rightView, originView, viewOpener);
       Set<CDOID> ids = getAffectedIDs(leftView, rightView, view);
       return new CDOComparisonScope.Minimal(leftView, rightView, view, ids);
     }
 
     public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids)
     {
-      CDOView view = openOriginView(leftView, rightView, originView);
+      return create(leftView, rightView, originView, ids, DEFAULT_VIEW_OPENER);
+    }
+
+    /**
+     * @since 4.3
+     */
+    public static IComparisonScope create(CDOView leftView, CDOView rightView, CDOView[] originView, Set<CDOID> ids,
+        CDOViewOpener viewOpener)
+    {
+      CDOView view = openOriginView(leftView, rightView, originView, viewOpener);
       return new CDOComparisonScope.Minimal(leftView, rightView, view, ids);
     }
 
     public static IComparisonScope create(CDOTransaction transaction)
     {
-      CDOSession session = transaction.getSession();
-      CDOView lastView = session.openView(transaction.getLastUpdateTime());
+      return create(transaction, DEFAULT_VIEW_OPENER);
+    }
+
+    /**
+     * @since 4.3
+     */
+    public static IComparisonScope create(CDOTransaction transaction, CDOViewOpener viewOpener)
+    {
+      if (viewOpener == null)
+      {
+        viewOpener = transaction.getSession();
+      }
+
+      CDOBranchPoint lastUpdate = transaction.getBranch().getPoint(transaction.getLastUpdateTime());
+      CDOView lastView = viewOpener.openView(lastUpdate, new ResourceSetImpl());
 
       Set<CDOID> ids = new HashSet<CDOID>();
       ids.addAll(transaction.getNewObjects().keySet());

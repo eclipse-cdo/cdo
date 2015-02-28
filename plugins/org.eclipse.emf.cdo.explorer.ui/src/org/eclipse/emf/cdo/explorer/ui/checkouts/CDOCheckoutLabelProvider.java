@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 
@@ -105,7 +106,12 @@ public class CDOCheckoutLabelProvider extends LabelProvider implements ICommonLa
 
   public String getDescription(Object object)
   {
-    int xxx;
+    if (object instanceof CDOExplorerElement)
+    {
+      CDOExplorerElement element = (CDOExplorerElement)object;
+      return element.getDescription();
+    }
+
     return null;
   }
 

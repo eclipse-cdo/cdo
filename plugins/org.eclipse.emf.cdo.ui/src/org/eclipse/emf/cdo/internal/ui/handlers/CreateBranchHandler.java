@@ -52,7 +52,7 @@ public class CreateBranchHandler extends AbstractBaseHandler<CDOBranchCreationCo
       CreateBranchDialog dialog = new CreateBranchDialog(shell, base, name);
       if (dialog.open() == CreateBranchDialog.OK)
       {
-        base = dialog.getBase();
+        base = dialog.getBranchPoint();
         name = dialog.getName();
         return;
       }

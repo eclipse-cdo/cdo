@@ -21,9 +21,12 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.ObjectType;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.CompareWithActionProvider;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.MergeFromActionProvider;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ReplaceWithActionProvider;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.SwitchToActionProvider;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -119,24 +122,22 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       CDOCheckout checkout = (CDOCheckout)target;
       if (dropOperation == DND.DROP_MOVE)
       {
-        // Switch To (online) / Replace With (offline)
-        checkout.setBranchPoint(branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
+        if (checkout.isOnline())
+        {
+          SwitchToActionProvider.switchTo(checkout, branchPoint);
+        }
+        else
+        {
+          ReplaceWithActionProvider.replaceWith(checkout, branchPoint);
+        }
       }
       else if (dropOperation == DND.DROP_COPY)
       {
-        // Merge From (online + offline)
-        CDORepository repository = checkout.getRepository();
-        CDOBranchPoint left = branchPoint;
-        CDOBranchPoint right = checkout.getBranchPoint();
-        CDOCompareEditorUtil.openEditor(repository, repository, left, right, null, true);
+        MergeFromActionProvider.mergeFrom(checkout, branchPoint);
       }
       else if (dropOperation == DND.DROP_LINK)
       {
-        // Compare With (online + offline)
-        CDORepository repository = checkout.getRepository();
-        CDOBranchPoint left = branchPoint;
-        CDOBranchPoint right = checkout.getBranchPoint();
-        CDOCompareEditorUtil.openEditor(repository, left, right, null, true);
+        CompareWithActionProvider.compareWith(checkout, branchPoint);
       }
 
       return Status.OK_STATUS;

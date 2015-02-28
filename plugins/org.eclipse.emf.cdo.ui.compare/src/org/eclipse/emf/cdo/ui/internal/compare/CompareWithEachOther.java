@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.ui.internal.compare;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -34,6 +35,14 @@ public class CompareWithEachOther extends CompareActionDelegate<CDOCommitInfo>
     {
       CDOCommitInfo commitInfo0 = targets.get(0);
       CDOCommitInfo commitInfo1 = targets.get(1);
+
+      if (CDOCommonUtil.compareTimeStamps(commitInfo0.getTimeStamp(), commitInfo1.getTimeStamp()) < 0)
+      {
+        CDOCommitInfo tmp = commitInfo0;
+        commitInfo0 = commitInfo1;
+        commitInfo1 = tmp;
+      }
+
       CDOCompareEditorUtil.openEditor(commitInfo0, commitInfo1, true);
     }
   }

@@ -6,20 +6,17 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Victor Roldan Betancort - initial API and implementation 
+ *    Victor Roldan Betancort - initial API and implementation
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.ui.dialogs.SelectBranchPointDialog;
+import org.eclipse.emf.cdo.internal.ui.dialogs.AbstractBranchPointDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
-import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -44,37 +41,14 @@ public class SwitchTargetAction extends AbstractViewAction
   @Override
   protected void preRun() throws Exception
   {
+    Shell shell = getShell();
     CDOView view = getView();
-    SelectBranchPointDialog dialog = new SelectBranchPointDialog(getPage(), view.getSession(), view, view.isReadOnly())
-    {
-      @Override
-      protected Control createDialogArea(Composite parent)
-      {
-        getShell().setText(TITLE);
-        setTitle(TITLE);
-        setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TARGET_SELECTION));
-        setMessage("Compose a valid target point or select one from commits, tags or views.");
-        return super.createDialogArea(parent);
-      }
 
-      @Override
-      protected String getComposeTabTitle()
-      {
-        return "Target Point";
-      }
-    };
-
-    if (dialog.open() == Dialog.OK)
-    {
-      target = dialog.getBranchPoint();
-      if (target == null)
-      {
-        cancel();
-      }
-    }
-    else
+    target = AbstractBranchPointDialog.select(shell, true, view);
+    if (target == null)
     {
       cancel();
+      return;
     }
 
     super.preRun();

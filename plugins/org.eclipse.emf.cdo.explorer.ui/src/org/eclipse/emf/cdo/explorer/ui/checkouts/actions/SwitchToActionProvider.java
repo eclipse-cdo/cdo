@@ -12,87 +12,70 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.actions.CreateBranchAction;
-import org.eclipse.emf.cdo.internal.ui.dialogs.SelectCommitDialog;
-import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.shared.SharedIcons;
-
-import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.navigator.ICommonMenuConstants;
-import org.eclipse.ui.navigator.ICommonViewerWorkbenchSite;
 
 /**
  * @author Eike Stepper
  */
-public abstract class SwitchToActionProvider extends AbstractActionProvider<CDOCheckout>
+public class SwitchToActionProvider extends AbstractBranchPointActionProvider
 {
   private static final String ID = SwitchToActionProvider.class.getName();
 
-  public SwitchToActionProvider(String title)
+  public SwitchToActionProvider()
   {
-    super(CDOCheckout.class, ID, title, ICommonMenuConstants.GROUP_ADDITIONS);
+    super(ID, "Switch To");
   }
 
   @Override
-  protected boolean fillSubMenu(ICommonViewerWorkbenchSite viewSite, IMenuManager subMenu, CDOCheckout checkout)
+  protected void fillSubMenu(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
   {
-    if (checkout.isOpen())
+    if (checkout.isOnline())
     {
-      IWorkbenchPage page = viewSite.getPage();
-
-      if (checkout.isOnline())
-      {
-        subMenu.add(new SwitchToNewBranchAction(page, checkout));
-      }
-
-      if (checkout.getRepository().isConnected())
-      {
-        subMenu.add(new Separator("branch-point-history"));
-
-        for (CDOBranchPoint branchPoint : checkout.getBranchPoints())
-        {
-          subMenu.add(new SwitchToBranchPointAction(page, checkout, branchPoint));
-        }
-      }
-
-      subMenu.add(new Separator("other"));
-      subMenu.add(new SwitchToCommitAction(page, checkout));
-      return true;
+      subMenu.add(new SwitchToNewBranchAction(page, checkout));
     }
 
-    return false;
+    super.fillSubMenu(page, subMenu, checkout);
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Online extends SwitchToActionProvider
+  @Override
+  protected String getHistorizedBranchPointToolTip(boolean allowTimeStamp)
   {
-    public Online()
-    {
-      super("Switch To");
-    }
+    return allowTimeStamp ? "Switch to this branch point" : "Switch to this branch";
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Offline extends SwitchToActionProvider
+  @Override
+  protected String getOtherBranchPointToolTip(boolean allowTimeStamp)
   {
-    public Offline()
-    {
-      super("Replace With");
-    }
+    return allowTimeStamp ? "Select a branch point and switch to it" : "Select a branch and switch to it";
+  }
+
+  @Override
+  protected String getCommitBranchPointToolTip()
+  {
+    return "Select a commit and switch to it";
+  }
+
+  @Override
+  protected String getOtherCheckoutToolTip()
+  {
+    return "Switch to the branch point of this checkout";
+  }
+
+  @Override
+  protected void execute(CDOCheckout checkout, CDOBranchPoint branchPoint) throws Exception
+  {
+    switchTo(checkout, branchPoint);
+  }
+
+  public static void switchTo(CDOCheckout checkout, CDOBranchPoint branchPoint)
+  {
+    checkout.setBranchPoint(branchPoint);
   }
 
   /**
@@ -123,98 +106,6 @@ public abstract class SwitchToActionProvider extends AbstractActionProvider<CDOC
       CDOBranchPoint base = getBase();
       CDOBranch newBranch = base.getBranch().getBranch(getName());
       checkout.setBranchPoint(newBranch.getHead());
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class SwitchToBranchPointAction extends LongRunningAction
-  {
-    private static final String ID = OM.BUNDLE_ID + ".SwitchToBranchPointAction"; //$NON-NLS-1$
-
-    private final CDOCheckout checkout;
-
-    private final CDOBranchPoint branchPoint;
-
-    public SwitchToBranchPointAction(IWorkbenchPage page, CDOCheckout checkout, CDOBranchPoint branchPoint)
-    {
-      super(page);
-      this.checkout = checkout;
-      this.branchPoint = branchPoint;
-      setId(ID);
-
-      String text = branchPoint.getBranch().getPathName();
-
-      long timeStamp = branchPoint.getTimeStamp();
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        setText(text + "  [" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]");
-        setToolTipText("Switch to this branch point");
-        setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.OBJ_BRANCH_POINT));
-      }
-      else
-      {
-        setText(text);
-        setToolTipText("Switch to this branch");
-        setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.OBJ_BRANCH));
-      }
-    }
-
-    @Override
-    protected void doRun(IProgressMonitor progressMonitor) throws Exception
-    {
-      checkout.setBranchPoint(branchPoint);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class SwitchToCommitAction extends LongRunningAction
-  {
-    private static final String ID = OM.BUNDLE_ID + ".SwitchToCommitAction"; //$NON-NLS-1$
-
-    private final CDOCheckout checkout;
-
-    private CDOCommitInfo commitInfo;
-
-    public SwitchToCommitAction(IWorkbenchPage page, CDOCheckout checkout)
-    {
-      super(page, "Commit...", SharedIcons.getDescriptor(SharedIcons.OBJ_COMMIT));
-      this.checkout = checkout;
-      setId(ID);
-      setToolTipText("Select a commit and switch to it");
-    }
-
-    @Override
-    protected void preRun() throws Exception
-    {
-      CDORepository repository = checkout.getRepository();
-      CDOSession session = repository.acquireSession();
-
-      SelectCommitDialog dialog = new SelectCommitDialog(getPage(), session);
-      if (dialog.open() == SelectCommitDialog.OK)
-      {
-        commitInfo = dialog.getCommitInfo();
-        return;
-      }
-
-      repository.releaseSession();
-      cancel();
-    }
-
-    @Override
-    protected void doRun(IProgressMonitor progressMonitor) throws Exception
-    {
-      try
-      {
-        checkout.setBranchPoint(commitInfo);
-      }
-      finally
-      {
-        checkout.getRepository().releaseSession();
-      }
     }
   }
 }

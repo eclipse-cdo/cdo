@@ -96,13 +96,13 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openEditor(CDOCommitInfo leftCommitInfo, CDOBranchPoint rightPoint, boolean activate)
+  public static boolean openEditor(CDOCommitInfo rightCommitInfo, CDOBranchPoint leftPoint, boolean activate)
   {
     ACTIVATE_EDITOR.set(activate);
 
     try
     {
-      return openDialog(leftCommitInfo, rightPoint);
+      return openDialog(rightCommitInfo, leftPoint);
     }
     finally
     {
@@ -206,12 +206,12 @@ public class CDOCompareEditorUtil
     }
   }
 
-  public static boolean openDialog(CDOCommitInfo leftCommitInfo, CDOBranchPoint rightPoint)
+  public static boolean openDialog(CDOCommitInfo rightCommitInfo, CDOBranchPoint leftPoint)
   {
-    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)leftCommitInfo.getCommitInfoManager().getRepository();
+    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)rightCommitInfo.getCommitInfoManager().getRepository();
     CDOSession session = repositoryInfo.getSession();
 
-    return openDialog(session, leftCommitInfo, rightPoint);
+    return openDialog(session, leftPoint, rightCommitInfo);
   }
 
   public static boolean openDialog(CDOCommitInfo commitInfo)

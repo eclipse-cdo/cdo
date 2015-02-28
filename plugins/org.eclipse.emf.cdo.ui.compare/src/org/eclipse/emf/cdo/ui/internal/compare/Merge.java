@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.ui.internal.compare;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.ui.dialogs.SelectBranchPointDialog;
+import org.eclipse.emf.cdo.internal.ui.dialogs.AbstractBranchPointDialog;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.swt.widgets.Shell;
 
 import java.util.List;
 
@@ -42,14 +42,14 @@ public abstract class Merge extends CompareActionDelegate<CDOTransaction>
   {
     if (targets.size() == 1)
     {
-      IWorkbenchPage page = getTargetPart().getSite().getPage();
+      Shell shell = getTargetPart().getSite().getShell();
       CDOTransaction leftView = targets.get(0);
       CDOSession session = leftView.getSession();
 
-      SelectBranchPointDialog dialog = new SelectBranchPointDialog(page, session, leftView, allowTimeStamp);
-      if (dialog.open() == SelectBranchPointDialog.OK)
+      CDOBranchPoint branchPoint = AbstractBranchPointDialog.select(shell, allowTimeStamp, leftView);
+      if (branchPoint != null)
       {
-        final CDOView rightView = openView(session, dialog.getBranchPoint());
+        final CDOView rightView = openView(session, branchPoint);
         final CDOView[] originView = { null };
 
         CDOCompareEditorUtil.addDisposeRunnables(new Runnable()

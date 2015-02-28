@@ -20,13 +20,13 @@ import org.eclipse.swt.widgets.Shell;
 /**
  * @author Eike Stepper
  */
-public class SelectBranchPointDialog extends AbstractBranchPointDialog
+public class SelectBranchDialog extends AbstractBranchPointDialog
 {
   public static final String TITLE = "Select Branch Point";
 
-  public SelectBranchPointDialog(Shell parentShell, CDOBranchPoint branchPoint)
+  public SelectBranchDialog(Shell parentShell, CDOBranchPoint branchPoint)
   {
-    super(parentShell, true, branchPoint);
+    super(parentShell, false, branchPoint);
   }
 
   @Override
@@ -34,8 +34,8 @@ public class SelectBranchPointDialog extends AbstractBranchPointDialog
   {
     getShell().setText(TITLE);
     setTitle(TITLE);
-    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_BRANCH_POINT_SELECTION));
-    setMessage("Select a branch and a point in time.");
+    setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_BRANCH_SELECTION));
+    setMessage("Select a branch.");
 
     return super.createDialogArea(parent);
   }

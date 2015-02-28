@@ -211,6 +211,7 @@ public abstract class LongRunningAction extends SafeAction
 
   protected void preRun() throws Exception
   {
+    // Do nothing.
   }
 
   protected String getBundleID()

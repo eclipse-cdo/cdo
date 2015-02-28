@@ -62,7 +62,7 @@ public class CreateBranchAction extends LongRunningAction
     CreateBranchDialog dialog = new CreateBranchDialog(getShell(), base, name);
     if (dialog.open() == CreateBranchDialog.OK)
     {
-      base = dialog.getBase();
+      base = dialog.getBranchPoint();
       name = dialog.getName();
       return;
     }

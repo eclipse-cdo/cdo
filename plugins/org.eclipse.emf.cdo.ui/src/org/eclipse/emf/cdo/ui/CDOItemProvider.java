@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.ui;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -362,6 +363,12 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
   @Override
   public String getText(Object obj)
   {
+    if (obj instanceof CDOCommonView)
+    {
+      // Don't treat views as branch points (see below).
+      return super.getText(obj);
+    }
+
     if (obj instanceof CDOBranch)
     {
       if (useFullPath(obj))

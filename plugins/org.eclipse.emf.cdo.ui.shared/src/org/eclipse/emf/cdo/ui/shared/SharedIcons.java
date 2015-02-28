@@ -209,7 +209,21 @@ public class SharedIcons
 
   public static final String WIZBAN_PROTOCOL_PROBLEM = WIZBAN + "ProtocolProblem" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  /**
+   * @deprecated as of 4.3 use {@link #WIZBAN_BRANCH_SELECTION}
+   */
+  @Deprecated
   public static final String WIZBAN_TARGET_SELECTION = WIZBAN + "BranchBanner" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String WIZBAN_BRANCH_SELECTION = WIZBAN + "BranchBanner" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
+  public static final String WIZBAN_BRANCH_POINT_SELECTION = WIZBAN + "BranchPointBanner" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String WIZBAN_TIME_SELECTION = WIZBAN + "TimeBanner" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 

@@ -6,24 +6,21 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Eike Stepper - initial API and implementation 
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.internal.ui.actions;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.internal.ui.dialogs.SelectBranchPointDialog;
+import org.eclipse.emf.cdo.internal.ui.dialogs.AbstractBranchPointDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -48,38 +45,14 @@ public class MergeBranchPointAction extends AbstractViewAction
   @Override
   protected void preRun() throws Exception
   {
+    Shell shell = getShell();
     CDOTransaction target = (CDOTransaction)getView();
-    SelectBranchPointDialog dialog = new SelectBranchPointDialog(getPage(), target.getSession(), target,
-        target.isReadOnly())
-    {
-      @Override
-      protected Control createDialogArea(Composite parent)
-      {
-        getShell().setText(TITLE);
-        setTitle(TITLE);
-        setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_TARGET_SELECTION));
-        setMessage("Compose a valid source point or select one from commits, tags or views.");
-        return super.createDialogArea(parent);
-      }
 
-      @Override
-      protected String getComposeTabTitle()
-      {
-        return "Source Point";
-      }
-    };
-
-    if (dialog.open() == Dialog.OK)
-    {
-      source = dialog.getBranchPoint();
-      if (source == null)
-      {
-        cancel();
-      }
-    }
-    else
+    source = AbstractBranchPointDialog.select(shell, true, target);
+    if (source == null)
     {
       cancel();
+      return;
     }
 
     super.preRun();

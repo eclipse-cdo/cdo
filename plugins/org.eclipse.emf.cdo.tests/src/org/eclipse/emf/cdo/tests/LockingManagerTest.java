@@ -1135,9 +1135,24 @@ public class LockingManagerTest extends AbstractLockingTest
     final CDOObject category2cv = CDOUtil.getCDOObject(r.getContents().get(1));
     final CDOObject category3cv = CDOUtil.getCDOObject(r.getContents().get(2));
 
-    assertEquals(true, category1cv.cdoReadLock().isLockedByOthers());
-    assertEquals(true, category2cv.cdoWriteLock().isLockedByOthers());
-    assertEquals(true, category3cv.cdoWriteOption().isLockedByOthers());
+    new PollingTimeOuter()
+    {
+      @Override
+      protected boolean successful()
+      {
+        try
+        {
+          assertEquals(true, category1cv.cdoReadLock().isLockedByOthers());
+          assertEquals(true, category2cv.cdoWriteLock().isLockedByOthers());
+          assertEquals(true, category3cv.cdoWriteOption().isLockedByOthers());
+          return true;
+        }
+        catch (Exception ex)
+        {
+          return false;
+        }
+      }
+    }.assertNoTimeOut();
 
     readUnlock(category1);
     writeUnlock(category2);

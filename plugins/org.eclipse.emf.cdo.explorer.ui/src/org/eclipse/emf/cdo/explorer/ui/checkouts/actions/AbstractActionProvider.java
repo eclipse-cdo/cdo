@@ -14,6 +14,7 @@ import org.eclipse.jface.action.GroupMarker;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.ui.navigator.CommonActionProvider;
 import org.eclipse.ui.navigator.ICommonActionExtensionSite;
 import org.eclipse.ui.navigator.ICommonMenuConstants;
@@ -53,6 +54,11 @@ public abstract class AbstractActionProvider<T> extends CommonActionProvider
   public final ICommonViewerWorkbenchSite getViewSite()
   {
     return viewSite;
+  }
+
+  public final StructuredViewer getViewer()
+  {
+    return config.getStructuredViewer();
   }
 
   public final IStructuredSelection getSelection()

@@ -11,25 +11,35 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOView.Options;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EAdapterList;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Specifies a policy on how to deal with stale references.
@@ -40,7 +50,7 @@ import java.util.Arrays;
 public interface CDOStaleReferencePolicy
 {
   /**
-   * A default stale reference policy. It will throw an exception each time.
+   * A stale reference policy that throws an {@link ObjectNotFoundException} each time.
    */
   public static final CDOStaleReferencePolicy EXCEPTION = new CDOStaleReferencePolicy()
   {
@@ -57,33 +67,44 @@ public interface CDOStaleReferencePolicy
   };
 
   /**
-   * Returns a proxy object with the appropriate EClass. The proxy object supports the following methods:
-   * <ul>
-   * <li>
-   * {@link CDOStaleObject#cdoID()}
-   * <li>
-   * {@link InternalEObject#eClass()}
-   * <li>
-   * {@link InternalEObject#eIsProxy()}
-   * <li>
-   * {@link Notifier#eAdapters()}
-   * </ul>
-   * For all invocations of other methods the proxy object throws an {@link ObjectNotFoundException}. The receiver can
-   * use {@link CDOUtil#isStaleObject(Object)} or <code>instanceof {@link CDOStaleObject}</code> to detect proxy objects.
+   * A stale reference policy that returns dynamic Java proxies with the appropriate EClasses.
    */
-  public static final CDOStaleReferencePolicy PROXY = new CDOStaleReferencePolicy()
+  public static final CDOStaleReferencePolicy PROXY = new DynamicProxy();
+
+  /**
+   * @since 4.2
+   */
+  public static final CDOStaleReferencePolicy DEFAULT = PROXY;
+
+  /**
+   * Returns an object that we want to return to the caller (clients). Exception thrown will be received by the caller
+   * (clients).
+   */
+  public Object processStaleReference(EObject source, EStructuralFeature feature, int index, CDOID target);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.4
+   */
+  public static class DynamicProxy implements CDOStaleReferencePolicy
   {
-    private final ContextTracer tracer = new ContextTracer(OM.DEBUG, CDOStaleReferencePolicy.class);
+    private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOStaleReferencePolicy.class);
 
     public Object processStaleReference(final EObject source, final EStructuralFeature feature, int index,
         final CDOID target)
     {
-      final EClassifier type = feature.getEType();
+      final EClassifier type = getType(source, feature, index, target);
       InvocationHandler handler = new InvocationHandler()
       {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
         {
           String name = method.getName();
+
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Proxy invocation: " + target + "." + name + (args == null ? "()" : Arrays.asList(args)));
+          }
+
           if (name.equals("cdoID")) //$NON-NLS-1$
           {
             return target;
@@ -101,7 +122,7 @@ public interface CDOStaleReferencePolicy
 
           if (name.equals("eAdapters")) //$NON-NLS-1$
           {
-            return source.eAdapters();
+            return new EAdapterList<Adapter>((Notifier)proxy);
           }
 
           if (name.equals("eContainer")) //$NON-NLS-1$
@@ -114,7 +135,38 @@ public interface CDOStaleReferencePolicy
             return null;
           }
 
-          if (name.equals("equals")) //$NON-NLS-1$
+          if (name.equals("eInvoke")) //$NON-NLS-1$
+          {
+            return null;
+          }
+
+          if (name.equals("eGet") && args != null && args.length >= 1) //$NON-NLS-1$
+          {
+            EStructuralFeature featureParam = (EStructuralFeature)args[0];
+            if (featureParam.isMany())
+            {
+              return new BasicEList<Object>();
+            }
+
+            return featureParam.getDefaultValue();
+          }
+
+          if (name.equals("eIsSet")) //$NON-NLS-1$
+          {
+            return false;
+          }
+
+          if (name.equals("eSet")) //$NON-NLS-1$
+          {
+            return null;
+          }
+
+          if (name.equals("eUnset")) //$NON-NLS-1$
+          {
+            return null;
+          }
+
+          if (name.equals("equals") && args != null && args.length == 1) //$NON-NLS-1$
           {
             return target.equals(args[0]);
           }
@@ -129,12 +181,54 @@ public interface CDOStaleReferencePolicy
             return "StaleReference[" + type.getName() + "@" + target + "]";
           }
 
-          if (tracer.isEnabled())
+          Class<?> returnType = method.getReturnType();
+          if (returnType == null || returnType == void.class)
           {
-            tracer.trace("Illegal proxy invocation: " + target + "." + method.getName() + Arrays.asList(args));
+            return null;
           }
 
-          throw new ObjectNotFoundException(target);
+          if (returnType.isPrimitive())
+          {
+            if (returnType == boolean.class)
+            {
+              return false;
+            }
+            else if (returnType == char.class)
+            {
+              return (char)0;
+            }
+            else if (returnType == byte.class)
+            {
+              return (byte)0;
+            }
+            else if (returnType == short.class)
+            {
+              return (short)0;
+            }
+            else if (returnType == int.class)
+            {
+              return (int)0;
+            }
+            else if (returnType == long.class)
+            {
+              return (long)0;
+            }
+            else if (returnType == float.class)
+            {
+              return (float)0;
+            }
+            else if (returnType == double.class)
+            {
+              return (double)0;
+            }
+          }
+
+          if (List.class.isAssignableFrom(returnType))
+          {
+            return new BasicEList<Object>();
+          }
+
+          return null;
         }
       };
 
@@ -154,21 +248,74 @@ public interface CDOStaleReferencePolicy
       return Proxy.newProxyInstance(instanceClass.getClassLoader(), interfaces, handler);
     }
 
+    protected EClassifier getType(EObject source, EStructuralFeature feature, int index, CDOID target)
+    {
+      return feature.getEType();
+    }
+
     @Override
     public String toString()
     {
       return Messages.getString("CDOStaleReferencePolicy.1"); //$NON-NLS-1$
     }
-  };
 
-  /**
-   * @since 4.2
-   */
-  public static final CDOStaleReferencePolicy DEFAULT = PROXY;
+    /**
+     * @author Eike Stepper
+     */
+    public static class Enhanced extends DynamicProxy implements CDOObjectHandler
+    {
+      private final ConcurrentMap<CDOID, EClassifier> types = new ConcurrentHashMap<CDOID, EClassifier>();
 
-  /**
-   * Returns an object that we want to return to the caller (clients). Exception thrown will be received by the caller
-   * (clients).
-   */
-  public Object processStaleReference(EObject source, EStructuralFeature feature, int index, CDOID target);
+      private final CDOView view;
+
+      private final CDOStaleReferencePolicy oldPolicy;
+
+      public Enhanced(CDOView view)
+      {
+        this.view = view;
+
+        for (InternalCDOObject object : ((InternalCDOView)view).getObjectsList())
+        {
+          addType(object);
+        }
+
+        view.addObjectHandler(this);
+
+        Options options = view.options();
+        oldPolicy = options.getStaleReferencePolicy();
+        options.setStaleReferencePolicy(this);
+      }
+
+      public void dispose()
+      {
+        Options options = view.options();
+        options.setStaleReferencePolicy(oldPolicy);
+
+        view.removeObjectHandler(this);
+        types.clear();
+      }
+
+      public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
+      {
+        addType(object);
+      }
+
+      @Override
+      protected EClassifier getType(EObject source, EStructuralFeature feature, int index, CDOID target)
+      {
+        EClassifier type = types.get(target);
+        if (type != null)
+        {
+          return type;
+        }
+
+        return super.getType(source, feature, index, target);
+      }
+
+      private void addType(CDOObject object)
+      {
+        types.putIfAbsent(object.cdoID(), object.eClass());
+      }
+    }
+  }
 }

@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
@@ -24,12 +25,13 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.BulkAddDialog;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
-import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.ui.widgets.TimeSlider;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ValidationException;
@@ -115,11 +117,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
-import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -130,8 +130,6 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -139,7 +137,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Scale;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IActionBars;
@@ -173,14 +170,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.EventObject;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-//import org.eclipse.emf.cdo.internal.ui.editor.provider.CDOItemProviderAdapterFactory;
-//import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * @author Eike Stepper
@@ -1209,17 +1202,63 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       // Create a page for the selection tree view.
       getContainer().setLayoutData(UIUtil.createGridData());
       getContainer().setLayout(UIUtil.createGridLayout(1));
-      Composite composite = UIUtil.createGridComposite(getContainer(), 1);
+
+      final Composite composite = UIUtil.createGridComposite(getContainer(), 1);
       composite.setLayoutData(UIUtil.createGridData());
       composite.setLayout(UIUtil.createGridLayout(1));
+
       Tree tree = new Tree(composite, SWT.MULTI);
       tree.setLayoutData(UIUtil.createGridData());
 
-      final Set<CDOID> expandedIDs = new HashSet<CDOID>();
-      final boolean sliderAllowed = view.isReadOnly() && view.getSession().getRepositoryInfo().isSupportingAudits();
-      if (sliderAllowed)
+      final boolean timeSliderAllowed = view.isReadOnly() && view.getSession().getRepositoryInfo().isSupportingAudits();
+      if (timeSliderAllowed)
       {
-        createTimeSlider(composite, expandedIDs);
+        IAction toolbarToggleAction = new Action()
+        {
+          private Group group;
+
+          private TimeSlider timeSlider;
+
+          @Override
+          public void run()
+          {
+            if (group == null)
+            {
+              group = new Group(composite, SWT.NONE);
+              group.setLayoutData(new GridData(SWT.FILL, 50, true, false));
+              group.setLayout(new FillLayout());
+              group.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND));
+
+              timeSlider = new TimeSlider(group, SWT.HORIZONTAL)
+              {
+                @Override
+                protected void timeStampChanged(long timeStamp)
+                {
+                  super.timeStampChanged(timeStamp);
+                  group.setText(formatTimeSliderLabel(timeStamp));
+                }
+              };
+
+              timeSlider.connect(view, selectionViewer);
+              group.setText(formatTimeSliderLabel(timeSlider.getTimeStamp()));
+            }
+            else
+            {
+              timeSlider.disconnect();
+              group.dispose();
+              group = null;
+              timeSlider = null;
+            }
+
+            composite.layout();
+          }
+        };
+
+        toolbarToggleAction.setEnabled(true);
+        toolbarToggleAction.setChecked(false);
+        toolbarToggleAction.setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_SLIDER));
+        toolbarToggleAction.setToolTipText(Messages.getString("CDOEditor.1")); //$NON-NLS-1$
+        getActionBars().getToolBarManager().add(toolbarToggleAction);
       }
 
       selectionViewer = new TreeViewer(tree)
@@ -1227,7 +1266,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         @Override
         public void setSelection(ISelection selection, boolean reveal)
         {
-          if (sliderAllowed && selection instanceof IStructuredSelection)
+          if (timeSliderAllowed && selection instanceof IStructuredSelection)
           {
             IStructuredSelection ssel = (IStructuredSelection)selection;
             for (Iterator<?> it = ssel.iterator(); it.hasNext();)
@@ -1257,38 +1296,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           return "SelectionViewer";
         }
       };
-
-      selectionViewer.addTreeListener(new ITreeViewerListener()
-      {
-        public void treeExpanded(TreeExpansionEvent event)
-        {
-          CDOID id = getID(event.getElement());
-          if (id != null)
-          {
-            expandedIDs.add(id);
-          }
-        }
-
-        public void treeCollapsed(TreeExpansionEvent event)
-        {
-          CDOID id = getID(event.getElement());
-          if (id != null)
-          {
-            expandedIDs.remove(id);
-          }
-        }
-
-        protected CDOID getID(Object element)
-        {
-          if (element instanceof EObject)
-          {
-            CDOObject object = CDOUtil.getCDOObject((EObject)element);
-            return object.cdoID();
-          }
-
-          return null;
-        }
-      });
 
       setCurrentViewer(selectionViewer);
 
@@ -1445,89 +1452,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     });
   }
 
-  /**
-   * @ADDED
-   */
-  protected void createTimeSlider(final Composite composite, final Set<CDOID> expandedIDs)
+  protected String formatTimeSliderLabel(long timeStamp)
   {
-    final CDOSession session = view.getSession();
-    final long startTimeStamp = session.getRepositoryInfo().getCreationTime();
-    final long endTimeStamp = session.getLastUpdateTime();
-
-    final int MIN = 0;
-    final int MAX = 100000;
-    final long absoluteTimeWindowLength = endTimeStamp - startTimeStamp;
-    final long scaleFactor = MAX - MIN;
-    final double stepSize = (double)absoluteTimeWindowLength / (double)scaleFactor;
-
-    final Group group = new Group(composite, SWT.NONE);
-    group.setLayoutData(UIUtil.createEmptyGridData());
-    group.setLayout(new FillLayout());
-    group.setText(CDOCommonUtil.formatTimeStamp(endTimeStamp));
-    group.setVisible(false);
-
-    final Scale scale = new Scale(group, SWT.HORIZONTAL);
-    scale.setMinimum(MIN);
-    scale.setMaximum(MAX);
-    scale.setSelection(MAX);
-
-    scale.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        long value = scale.getSelection();
-        long timeStamp = startTimeStamp + Math.round(stepSize * value);
-
-        group.setText(CDOCommonUtil.formatTimeStamp(timeStamp));
-
-        view.setTimeStamp(timeStamp);
-        selectionViewer.refresh();
-        setExpandedStates();
-      }
-
-      protected void setExpandedStates()
-      {
-        for (CDOID id : expandedIDs)
-        {
-          try
-          {
-            CDOObject object = view.getObject(id);
-            selectionViewer.setExpandedState(object, true);
-          }
-          catch (Exception ex)
-          {
-            // Ignore
-          }
-        }
-      }
-    });
-
-    IAction action = new Action()
-    {
-      @Override
-      public void run()
-      {
-        if (group.isVisible())
-        {
-          group.setVisible(false);
-          group.setLayoutData(UIUtil.createEmptyGridData());
-          composite.layout();
-        }
-        else
-        {
-          group.setVisible(true);
-          group.setLayoutData(new GridData(SWT.FILL, 50, true, false));
-          composite.layout();
-        }
-      }
-    };
-
-    action.setEnabled(true);
-    action.setChecked(false);
-    action.setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_SLIDER));
-    action.setToolTipText(Messages.getString("CDOEditor.1")); //$NON-NLS-1$
-    getActionBars().getToolBarManager().add(action);
+    CDOBranchPoint branchPoint = CDOBranchUtil.normalizeBranchPoint(view.getBranch(), timeStamp);
+    return branchPoint.getBranch().getPathName() + "  [" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
   }
 
   /**

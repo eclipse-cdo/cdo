@@ -47,7 +47,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader2;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -78,7 +78,8 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader3, RevisionLoader, CommitInfoLoader
+public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader3, RevisionLoader2,
+    CommitInfoLoader
 {
   public RepositoryTimeResult getRepositoryTime();
 

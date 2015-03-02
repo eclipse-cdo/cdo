@@ -16,7 +16,9 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
@@ -549,6 +551,15 @@ public final class CDOUtil
     }
 
     return result;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static CDOBranchPointRange getLifetime(CDOObject object)
+  {
+    CDORevisionManager revisionManager = object.cdoView().getSession().getRevisionManager();
+    return revisionManager.getObjectLifetime(object.cdoID(), object.cdoRevision());
   }
 
   /**

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 
@@ -43,7 +44,7 @@ import java.util.List;
  * If querying by timestamp it's also possible to ask for multiple revisions (identified by a list of object IDs) in one
  * round trip (to the server if this revision manager is contained by a {@link CDOCommonSession session} or to the
  * backend store if it is contained by a {@link CDOCommonRepository repository}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -60,7 +61,7 @@ public interface CDORevisionManager extends INotifier
    * cache, <code>null</code> otherwise.
    * <p>
    * Same as calling {@link #getObjectType(CDOID, CDOBranchManager) getObjectType(id, null)}.
-   * 
+   *
    * @see EObject#eClass()
    * @see #getObjectType(CDOID, CDOBranchManager)
    */
@@ -80,7 +81,7 @@ public interface CDORevisionManager extends INotifier
    * A {@link CDOBranchManager branch manager} is required instead of just a boolean value to specify whether to
    * demand-load or not because this revision manager must be able to access the
    * {@link CDOBranchManager#getMainBranch() main branch} while demand-loading.
-   * 
+   *
    * @see EObject#eClass()
    * @see #getObjectType(CDOID)
    * @since 4.1
@@ -91,7 +92,7 @@ public interface CDORevisionManager extends INotifier
    * Returns <code>true</code> if the {@link CDORevisionCache revision cache} contains a {@link CDORevision revision}
    * with the given {@link CDOID ID} at the given {@link CDOBranchPoint branch point} (branch + timestamp),
    * <code>false</code> otherwise.
-   * 
+   *
    * @see CDORevisionManager#getRevision(CDOID, CDOBranchPoint, int, int, boolean)
    * @see CDORevisionManager#getRevisions(List, CDOBranchPoint, int, int, boolean)
    */
@@ -101,7 +102,7 @@ public interface CDORevisionManager extends INotifier
    * Returns the {@link CDORevision revision} with the given {@link CDOID ID} at the given {@link CDOBranchPoint branch
    * point} (branch + timestamp), optionally demand loading it if it is not already in the {@link CDORevisionCache
    * cache}.
-   * 
+   *
    * @param referenceChunk
    *          The number of target {@link CDOID IDs} to load for each many-valued reference in the returned revision, or
    *          {@link CDORevision#UNCHUNKED} for all such list elements (IDs).
@@ -124,7 +125,7 @@ public interface CDORevisionManager extends INotifier
    * Returns the {@link CDORevision revisions} with the given {@link CDOID IDs} at the given {@link CDOBranchPoint
    * branch point} (branch + timestamp), optionally demand loading them if they are not already in the
    * {@link CDORevisionCache cache}.
-   * 
+   *
    * @param referenceChunk
    *          The number of target {@link CDOID IDs} to load for each many-valued reference in the returned revisions,
    *          or {@link CDORevision#UNCHUNKED} for all such list elements (IDs).
@@ -147,7 +148,7 @@ public interface CDORevisionManager extends INotifier
    * Returns <code>true</code> if the {@link CDORevisionCache revision cache} contains a {@link CDORevision revision}
    * with the given {@link CDOID ID} at the given {@link CDOBranchVersion branch version} (branch + version),
    * <code>false</code> otherwise.
-   * 
+   *
    * @see #getRevisionByVersion(CDOID, CDOBranchVersion, int, boolean)
    */
   public boolean containsRevisionByVersion(CDOID id, CDOBranchVersion branchVersion);
@@ -159,7 +160,7 @@ public interface CDORevisionManager extends INotifier
    * <p>
    * Prefetching of nested containment levels is not support by this method because the version of a particular revision
    * can not serve as a reasonable baseline criterium for a consistent graph of multiple revisions.
-   * 
+   *
    * @param referenceChunk
    *          The number of target {@link CDOID IDs} to load for each many-valued reference in the returned revision, or
    *          {@link CDORevision#UNCHUNKED} for all such list elements (IDs).
@@ -170,6 +171,11 @@ public interface CDORevisionManager extends INotifier
    */
   public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk,
       boolean loadOnDemand);
+
+  /**
+   * @since 4.4
+   */
+  public CDOBranchPointRange getObjectLifetime(CDOID id, CDOBranchPoint branchPoint);
 
   /**
    * @since 4.3

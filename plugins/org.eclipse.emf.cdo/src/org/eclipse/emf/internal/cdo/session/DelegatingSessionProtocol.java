@@ -661,6 +661,22 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.loadObjectLifetime(id, branchPoint);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch,
       LockType lockType, long timeout) throws InterruptedException

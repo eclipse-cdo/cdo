@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.spi.common.revision;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -32,6 +33,8 @@ import java.util.List;
  *
  * @author Eike Stepper
  * @since 3.0
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
 public interface InternalCDORevisionManager extends CDORevisionManager, CDORevisionCacheAdder, ILifecycle
 {
@@ -97,8 +100,8 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    */
   public interface RevisionLoader
   {
-    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint,
-        int referenceChunk, int prefetchDepth);
+    public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
+        int prefetchDepth);
 
     public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk);
 
@@ -107,6 +110,19 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
      */
     public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp,
         boolean exactTime, CDORevisionHandler handler);
+  }
+
+  /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
+   * @author Eike Stepper
+   * @since 4.4
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface RevisionLoader2 extends RevisionLoader
+  {
+    public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint);
   }
 
   /**

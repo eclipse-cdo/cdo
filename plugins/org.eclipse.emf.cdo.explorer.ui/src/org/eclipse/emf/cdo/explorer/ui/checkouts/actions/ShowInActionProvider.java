@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -42,7 +43,21 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Layout;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Sash;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -57,11 +72,13 @@ import java.io.File;
  */
 public class ShowInActionProvider extends AbstractActionProvider<Object>
 {
-  private static final String ID = ShowInActionProvider.class.getName();
-
   public static final String TITLE = "Show In";
 
+  private static final String ID = ShowInActionProvider.class.getName();
+
   private static final String HISTORY_VIEW_ID = "org.eclipse.team.ui.GenericHistoryView";
+
+  private static final String DASHBOARD_KEY = CDOCheckoutDashboard.class.getName();
 
   public ShowInActionProvider()
   {
@@ -69,13 +86,26 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   }
 
   @Override
+  public void fillActionBars(IActionBars actionBars)
+  {
+    super.fillActionBars(actionBars);
+
+    int dashBoardHeight = OM.PREF_DASHBOARD_HEIGHT.getValue();
+    if (dashBoardHeight >= 0)
+    {
+      showDashboard(getViewer(), getViewSite().getPage());
+    }
+  }
+
+  @Override
   protected boolean fillSubMenu(ICommonViewerWorkbenchSite viewSite, IMenuManager subMenu, Object selectedElement)
   {
     IWorkbenchPage page = viewSite.getPage();
-    return fillMenu(page, subMenu, selectedElement);
+    StructuredViewer viewer = getViewer();
+    return fillMenu(page, viewer, subMenu, selectedElement);
   }
 
-  public static boolean fillMenu(IWorkbenchPage page, IMenuManager menu, Object selectedElement)
+  public static boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Object selectedElement)
   {
     boolean filled = false;
 
@@ -108,6 +138,12 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       CDOCheckout checkout = (CDOCheckout)selectedElement;
       if (checkout.isOpen())
       {
+        if (viewer != null)
+        {
+          menu.add(new ShowInDashboardAction(viewer, page));
+          filled = true;
+        }
+
         if (checkout.isOffline())
         {
           OfflineCDOCheckout offlineCheckout = (OfflineCDOCheckout)checkout;
@@ -160,13 +196,100 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     return false;
   }
 
+  public static void showDashboard(final StructuredViewer viewer, ISelectionService selectionService)
+  {
+    final CDOCheckoutDashboard[] dashboard = { (CDOCheckoutDashboard)viewer.getData(DASHBOARD_KEY) };
+    if (dashboard[0] == null)
+    {
+      final Control control = viewer.getControl();
+      final Object controlLayoutData = control.getLayoutData();
+
+      final Composite parent = control.getParent();
+      final Layout parentLayout = parent.getLayout();
+
+      final int[] minimumHeight = { 0 };
+
+      GridLayout layout = new GridLayout(1, false);
+      layout.marginWidth = 0;
+      layout.marginHeight = 0;
+      layout.verticalSpacing = 0;
+
+      parent.setLayout(layout);
+      control.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+
+      final Sash sash = new Sash(parent, SWT.HORIZONTAL | SWT.SMOOTH);
+      sash.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+      sash.addListener(SWT.Selection, new Listener()
+      {
+        public void handleEvent(Event e)
+        {
+          int dashBoardHeight = parent.getBounds().height - e.y;
+          if (dashBoardHeight < minimumHeight[0])
+          {
+            e.doit = false;
+          }
+
+          dashBoardHeight = Math.max(dashBoardHeight, minimumHeight[0]);
+          OM.PREF_DASHBOARD_HEIGHT.setValue(dashBoardHeight);
+
+          GridData gridData = (GridData)dashboard[0].getLayoutData();
+          gridData.heightHint = dashBoardHeight;
+
+          parent.layout();
+        }
+      });
+
+      GridData gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
+
+      dashboard[0] = new CDOCheckoutDashboard(parent, selectionService);
+      dashboard[0].setLayoutData(gridData);
+      dashboard[0].addDisposeListener(new DisposeListener()
+      {
+        public void widgetDisposed(DisposeEvent e)
+        {
+          viewer.setData(DASHBOARD_KEY, null);
+          if (!control.isDisposed())
+          {
+            sash.dispose();
+
+            control.setLayoutData(controlLayoutData);
+            parent.setLayout(parentLayout);
+
+            parent.getDisplay().asyncExec(new Runnable()
+            {
+              public void run()
+              {
+                parent.layout();
+              }
+            });
+          }
+        }
+      });
+
+      viewer.setData(DASHBOARD_KEY, dashboard[0]);
+      parent.layout();
+
+      minimumHeight[0] = dashboard[0].getBounds().height;
+
+      int dashBoardHeight = OM.PREF_DASHBOARD_HEIGHT.getValue();
+      if (dashBoardHeight != 0)
+      {
+        gridData.heightHint = Math.abs(dashBoardHeight);
+        parent.layout();
+        OM.PREF_DASHBOARD_HEIGHT.setValue(gridData.heightHint);
+      }
+      else
+      {
+        OM.PREF_DASHBOARD_HEIGHT.setValue(minimumHeight[0]);
+      }
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
   private static final class ShowInServerBrowserAction extends Action
   {
-    private static final String ID = OM.BUNDLE_ID + ".ShowInServerBrowserAction"; //$NON-NLS-1$
-
     private static final String PRODUCT_GROUP = CDOServerBrowser.ContainerBased.Factory.PRODUCT_GROUP;
 
     private static final String TYPE = CDOServerBrowser.ContainerBased.Factory.TYPE;
@@ -175,12 +298,11 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
     private final IManagedContainer container;
 
-    private ShowInServerBrowserAction(CDOExplorerElement element, IManagedContainer container)
+    public ShowInServerBrowserAction(CDOExplorerElement element, IManagedContainer container)
     {
       this.element = element;
       this.container = container;
 
-      setId(ID);
       setText("CDO Server Browser");
       setImageDescriptor(OM.getImageDescriptor("icons/web.gif"));
       setToolTipText("Show this element in a CDO server browser");
@@ -218,10 +340,34 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   /**
    * @author Eike Stepper
    */
+  private static final class ShowInDashboardAction extends Action
+  {
+    private final StructuredViewer viewer;
+
+    private final ISelectionService selectionService;
+
+    public ShowInDashboardAction(StructuredViewer viewer, ISelectionService selectionService)
+    {
+      this.viewer = viewer;
+      this.selectionService = selectionService;
+
+      setText("CDO Dashboard");
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.OBJ_EDITOR));
+      setToolTipText("Show this element in the CDO dashboard");
+    }
+
+    @Override
+    public void run()
+    {
+      showDashboard(viewer, selectionService);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static class ShowInViewAction extends Action
   {
-    private static final String ID_PREFIX = OM.BUNDLE_ID + ".ShowInViewAction"; //$NON-NLS-1$
-
     private final IWorkbenchPage page;
 
     private final IViewDescriptor viewDescriptor;
@@ -230,7 +376,6 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
     public ShowInViewAction(IWorkbenchPage page, String viewID)
     {
-      setId(ID_PREFIX + "." + viewID);
       this.page = page;
 
       viewDescriptor = PlatformUI.getWorkbench().getViewRegistry().find(viewID);
@@ -370,15 +515,12 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
    */
   private static final class ShowInSystemExplorerAction extends Action
   {
-    private static final String ID = OM.BUNDLE_ID + ".ShowInSystemExplorerAction"; //$NON-NLS-1$
-
     private final File folder;
 
     private ShowInSystemExplorerAction(File folder)
     {
       this.folder = folder;
 
-      setId(ID);
       setText("System Explorer");
       setImageDescriptor(OM.getImageDescriptor("icons/system_explorer.gif"));
       setToolTipText("Show the folder of this element in the system explorer");

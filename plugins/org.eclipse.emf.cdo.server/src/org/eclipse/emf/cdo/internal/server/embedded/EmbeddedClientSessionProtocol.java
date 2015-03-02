@@ -225,6 +225,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     }
   }
 
+  public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk,
       int prefetchDepth)
   {

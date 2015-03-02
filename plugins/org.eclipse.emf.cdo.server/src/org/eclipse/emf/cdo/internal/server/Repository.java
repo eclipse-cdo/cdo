@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchHandler;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
@@ -145,6 +146,10 @@ import java.util.concurrent.Semaphore;
  */
 public class Repository extends Container<Object> implements InternalRepository
 {
+  private static final int UNCHUNKED = CDORevision.UNCHUNKED;
+
+  private static final int NONE = CDORevision.DEPTH_NONE;
+
   private String name;
 
   private String uuid;
@@ -548,7 +553,7 @@ public class Repository extends Container<Object> implements InternalRepository
           InternalCDORevision target = loadRevisionTarget(id, branchPoint, referenceChunk, accessor);
           if (target != null)
           {
-            if (referenceChunk == CDORevision.UNCHUNKED)
+            if (referenceChunk == UNCHUNKED)
             {
               target.setUnchunked();
             }
@@ -575,7 +580,7 @@ public class Repository extends Container<Object> implements InternalRepository
       }
       else
       {
-        if (referenceChunk == CDORevision.UNCHUNKED)
+        if (referenceChunk == UNCHUNKED)
         {
           revision.setUnchunked();
         }
@@ -610,8 +615,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private long loadRevisionRevised(CDOID id, CDOBranch branch)
   {
-    InternalCDORevision revision = loadRevisionByVersion(id, branch.getVersion(CDORevision.FIRST_VERSION),
-        CDORevision.UNCHUNKED);
+    InternalCDORevision revision = loadRevisionByVersion(id, branch.getVersion(CDORevision.FIRST_VERSION), UNCHUNKED);
     if (revision != null)
     {
       return revision.getTimeStamp() - 1;
@@ -624,6 +628,80 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     return accessor.readRevisionByVersion(id, branchVersion, referenceChunk, revisionManager);
+  }
+
+  public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
+  {
+    CDORevision revision = revisionManager.getRevision(id, branchPoint, UNCHUNKED, NONE, true);
+    if (revision == null)
+    {
+      return null;
+    }
+
+    CDORevision firstRevision = getFirstRevision(id, revision);
+    if (firstRevision == null)
+    {
+      return null;
+    }
+
+    CDOBranchPoint lastPoint = getLastBranchPoint(revision, branchPoint);
+    return CDOBranchUtil.createRange(firstRevision, lastPoint);
+  }
+
+  private CDORevision getFirstRevision(CDOID id, CDORevision revision)
+  {
+    CDOBranch branch = revision.getBranch();
+
+    for (int version = revision.getVersion() - 1; version >= CDOBranchVersion.FIRST_VERSION; --version)
+    {
+      CDORevision rev = revisionManager.getRevisionByVersion(id, branch.getVersion(version), UNCHUNKED, true);
+      if (rev == null)
+      {
+        return revision;
+      }
+
+      revision = rev;
+    }
+
+    if (!branch.isMainBranch())
+    {
+      CDOBranchPoint base = branch.getBase();
+      CDORevision baseRevision = revisionManager.getRevision(id, base, UNCHUNKED, NONE, true);
+      if (baseRevision != null)
+      {
+        return getFirstRevision(id, baseRevision);
+      }
+    }
+
+    return revision;
+  }
+
+  private CDOBranchPoint getLastBranchPoint(CDORevision revision, CDOBranchPoint branchPoint)
+  {
+    CDOBranch branch = branchPoint.getBranch();
+    if (revision.getBranch() != branch)
+    {
+      return branch.getHead();
+    }
+
+    CDOID id = revision.getID();
+    for (int version = revision.getVersion() + 1; version <= Integer.MAX_VALUE; ++version)
+    {
+      if (revision.getRevised() == CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        break;
+      }
+
+      CDORevision rev = revisionManager.getRevisionByVersion(id, branch.getVersion(version), UNCHUNKED, true);
+      if (rev == null)
+      {
+        break;
+      }
+
+      revision = rev;
+    }
+
+    return branch.getPoint(revision.getRevised());
   }
 
   /**
@@ -645,7 +723,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   public void ensureChunks(InternalCDORevision revision)
   {
-    ensureChunks(revision, CDORevision.UNCHUNKED);
+    ensureChunks(revision, UNCHUNKED);
   }
 
   public void ensureChunks(InternalCDORevision revision, int chunkSize)
@@ -666,7 +744,7 @@ public class Repository extends Container<Object> implements InternalRepository
         if (size != 0)
         {
           int chunkSizeToUse = chunkSize;
-          if (chunkSizeToUse == CDORevision.UNCHUNKED)
+          if (chunkSizeToUse == UNCHUNKED)
           {
             chunkSizeToUse = size;
           }
@@ -1533,7 +1611,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalCDORevision getRevisionFromBranch(CDOID id, CDOBranchPoint branchPoint)
   {
-    return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    return revisionManager.getRevision(id, branchPoint, UNCHUNKED, NONE, true);
   }
 
   public void queryLobs(List<byte[]> ids)
@@ -1686,8 +1764,7 @@ public class Repository extends Container<Object> implements InternalRepository
       for (CDORevisionKey revKey : revisionKeys)
       {
         CDOID id = revKey.getID();
-        InternalCDORevision rev = revManager.getRevision(id, viewedBranch.getHead(), CDORevision.UNCHUNKED,
-            CDORevision.DEPTH_NONE, true);
+        InternalCDORevision rev = revManager.getRevision(id, viewedBranch.getHead(), UNCHUNKED, NONE, true);
 
         if (rev == null)
         {

@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.internal.common.revision;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -264,6 +265,17 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     {
       releaseAtomicRequestLock(loadAndAddLock);
     }
+  }
+
+  public CDOBranchPointRange getObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
+  {
+    if (revisionLoader instanceof RevisionLoader2)
+    {
+      RevisionLoader2 revisionLoader2 = (RevisionLoader2)revisionLoader;
+      return revisionLoader2.loadObjectLifetime(id, branchPoint);
+    }
+
+    return null;
   }
 
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,

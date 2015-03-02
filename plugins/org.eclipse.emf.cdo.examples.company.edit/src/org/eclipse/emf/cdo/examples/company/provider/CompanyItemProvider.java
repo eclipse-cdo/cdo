@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Company} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class CompanyItemProvider extends AddressableItemProvider

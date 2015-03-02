@@ -94,4 +94,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/widgets/ImageButton.java" type="org.eclipse.net4j.util.ui.widgets.ImageButton">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Label"/>
+                <message_argument value="ImageButton"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/widgets/SecondaryToolItem.java" type="org.eclipse.net4j.util.ui.widgets.SecondaryToolItem">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ToolItem"/>
+                <message_argument value="SecondaryToolItem"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/widgets/ToolButton.java" type="org.eclipse.net4j.util.ui.widgets.ToolButton">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="ToolBar"/>
+                <message_argument value="ToolButton"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

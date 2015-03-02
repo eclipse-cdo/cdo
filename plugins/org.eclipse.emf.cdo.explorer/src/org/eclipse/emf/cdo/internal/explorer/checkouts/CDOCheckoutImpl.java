@@ -159,6 +159,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     {
       this.branchID = branchID;
       this.timeStamp = timeStamp;
+      readOnly = timeStamp != CDOBranchPoint.UNSPECIFIED_DATE;
 
       if (isOpen())
       {

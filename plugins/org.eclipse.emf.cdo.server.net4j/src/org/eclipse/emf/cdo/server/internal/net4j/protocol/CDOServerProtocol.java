@@ -375,6 +375,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case SIGNAL_RENAME_BRANCH:
       return new RenameBranchIndication(this);
 
+    case SIGNAL_LOAD_OBJECT_LIFETIME:
+      return new LoadObjectLifetimeIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

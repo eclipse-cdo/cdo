@@ -283,7 +283,7 @@ public class OpenWithActionProvider extends CommonActionProvider
 
     for (String editorID : editorIDs)
     {
-      OpenFileAction action = new OpenFileAction(viewSite.getPage(), resourceLeaf, editorID);
+      OpenFileAction action = new OpenFileAction(viewSite.getPage(), cdoObject, editorID);
       submenu.add(action);
     }
 
@@ -329,7 +329,7 @@ public class OpenWithActionProvider extends CommonActionProvider
       @Override
       protected IStatus run(IProgressMonitor monitor)
       {
-        final CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceLeaf);
+        final CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
         final CDOView view = checkout.openView();
 
         final CDOResourceLeaf contextualLeaf = view.getObject(resourceLeaf);

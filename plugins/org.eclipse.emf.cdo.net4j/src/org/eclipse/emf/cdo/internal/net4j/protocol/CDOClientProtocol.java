@@ -200,6 +200,11 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new LoadRevisionByVersionRequest(this, id, branchVersion, referenceChunk));
   }
 
+  public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
+  {
+    return send(new LoadObjectLifetimeRequest(this, id, branchPoint));
+  }
+
   public RefreshSessionResult refresh(long lastUpdateTime,
       Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)

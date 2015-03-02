@@ -1524,4 +1524,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/ui/widgets/TimeSlider.java" type="org.eclipse.emf.cdo.ui.widgets.TimeSlider">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Scale"/>
+                <message_argument value="TimeSlider"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

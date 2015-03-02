@@ -384,6 +384,12 @@
                 <message_argument value="InternalRepository"/>
             </message_arguments>
         </filter>
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="RevisionLoader2"/>
+                <message_argument value="InternalRepository"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/InternalSession.java" type="org.eclipse.emf.cdo.spi.server.InternalSession">
         <filter id="571473929">

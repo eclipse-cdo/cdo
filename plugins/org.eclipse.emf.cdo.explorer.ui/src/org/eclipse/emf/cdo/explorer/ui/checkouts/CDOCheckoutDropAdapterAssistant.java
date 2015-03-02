@@ -177,7 +177,8 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
                 element = repository.getSession().getBranchManager().getMainBranch();
               }
             }
-            else if (element instanceof CDOCheckout)
+
+            if (element instanceof CDOCheckout)
             {
               CDOCheckout otherCheckout = (CDOCheckout)element;
               CDOBranchPoint branchPoint = checkout.getBranchPoint(otherCheckout);
@@ -186,7 +187,8 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
                 element = branchPoint;
               }
             }
-            else if (element instanceof CDOBranch)
+
+            if (element instanceof CDOBranch)
             {
               CDOBranch branch = (CDOBranch)element;
               element = branch.getHead();

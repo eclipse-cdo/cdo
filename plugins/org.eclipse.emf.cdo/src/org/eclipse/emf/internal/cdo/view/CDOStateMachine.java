@@ -1118,6 +1118,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           delta.applyTo(newRevision);
           newRevision.setBranchPoint(target);
           newRevision.setVersion(target.getVersion());
+          newRevision.setRevised(target.getRevised());
           cache.addRevision(newRevision);
         }
 

@@ -217,14 +217,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.java" type="org.eclipse.emf.cdo.view.CDOStaleReferencePolicy">
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.view.CDOStaleReferencePolicy"/>
-                <message_argument value="DEFAULT"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/view/CDOView.java" type="org.eclipse.emf.cdo.view.CDOView">
         <filter id="571473929">
             <message_arguments>
@@ -701,6 +693,12 @@
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="RevisionLoader"/>
+                <message_argument value="CDOSessionProtocol"/>
+            </message_arguments>
+        </filter>
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="RevisionLoader2"/>
                 <message_argument value="CDOSessionProtocol"/>
             </message_arguments>
         </filter>

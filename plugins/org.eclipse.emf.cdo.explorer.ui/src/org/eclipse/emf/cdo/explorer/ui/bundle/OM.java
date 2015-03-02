@@ -51,6 +51,9 @@ public abstract class OM
   public static final OMPreference<Boolean> PREF_REPOSITORY_TIMEOUT_DISABLED = //
   PREFS.init("PREF_REPOSITORY_TIMEOUT_DISABLED", false); //$NON-NLS-1$
 
+  public static final OMPreference<Integer> PREF_DASHBOARD_HEIGHT = //
+  PREFS.init("PREF_DASHBOARD_HEIGHT", 0); //$NON-NLS-1$
+
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
   {
     ComposedImage composedImage = new OverlayImage(image, overlayImage, x, y);

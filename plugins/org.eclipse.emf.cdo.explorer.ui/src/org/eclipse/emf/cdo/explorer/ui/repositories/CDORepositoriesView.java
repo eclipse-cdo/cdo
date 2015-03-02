@@ -222,7 +222,7 @@ public class CDORepositoriesView extends ContainerView
     IMenuManager subMenu = new MenuManager(ShowInActionProvider.TITLE, ICommonMenuConstants.GROUP_OPEN_WITH);
     subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
 
-    if (ShowInActionProvider.fillMenu(page, subMenu, selectedElement))
+    if (ShowInActionProvider.fillMenu(page, null, subMenu, selectedElement))
     {
       subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_ADDITIONS));
       manager.appendToGroup(ICommonMenuConstants.GROUP_OPEN, subMenu);

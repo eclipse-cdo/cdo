@@ -57,6 +57,11 @@ public class SharedIcons
 
   public static final String OBJ_CHAT = OBJ + "chat"; //$NON-NLS-1$
 
+  /**
+   * @since 4.3
+   */
+  public static final String OBJ_INFO = OBJ + "information"; //$NON-NLS-1$
+
   private static final String ETOOL = "etool16/"; //$NON-NLS-1$
 
   public static final String ETOOL_ADD_ACCEPTOR = ETOOL + "add_acceptor"; //$NON-NLS-1$

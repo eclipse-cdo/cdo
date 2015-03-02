@@ -15,10 +15,12 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
@@ -28,6 +30,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -1099,6 +1102,42 @@ public class BranchingTest extends AbstractCDOTest
     long future = System.currentTimeMillis() + 1000000L;
     CDOBranch subBranch = mainBranch.createBranch(name, future);
     assertEquals(true, subBranch.getBase().getTimeStamp() < future);
+  }
+
+  public void testObjectLifetime() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+
+    CDOSession session = openSession1();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("test"));
+    resource.getContents().add(company);
+    CDOCommitInfo firstCommit = transaction.commit();
+
+    modifyCompany(transaction, company, getBranchName("sub1"));
+    modifyCompany(transaction, company, getBranchName("sub2"));
+    CDOBranch sub3 = modifyCompany(transaction, company, getBranchName("sub3"));
+
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    CDOBranchPoint branchPoint = sub3.getHead();
+    CDORevisionManager revisionManager = session.getRevisionManager();
+    CDOBranchPointRange lifetime = revisionManager.getObjectLifetime(id, branchPoint);
+
+    assertEquals(firstCommit, lifetime.getStartPoint());
+    assertEquals(sub3.getHead(), lifetime.getEndPoint());
+  }
+
+  private CDOBranch modifyCompany(CDOTransaction transaction, Company company, String branchName) throws Exception
+  {
+    for (int i = 0; i < 10; i++)
+    {
+      company.setName("Company" + i);
+      transaction.commit();
+    }
+
+    CDOBranch branch = transaction.getBranch().createBranch(branchName);
+    transaction.setBranch(branch);
+    return branch;
   }
 
   private void check(CDOSession session, CDOBranch branch, long timeStamp, String name)

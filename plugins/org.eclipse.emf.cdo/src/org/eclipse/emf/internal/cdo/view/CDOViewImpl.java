@@ -267,7 +267,7 @@ public class CDOViewImpl extends AbstractCDOView
     List<InternalCDOObject> result = new ArrayList<InternalCDOObject>();
     for (InternalCDOObject object : getModifiableObjects().values())
     {
-      CDORevision revision = object.cdoRevision();
+      CDORevision revision = object.cdoRevision(false);
       if (revision == null || !revision.isValid(branchPoint))
       {
         result.add(object);

@@ -445,6 +445,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   {
     CDOID folderID = (CDOID)revision.data().getContainerID();
     String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
+
     CDOID existingID = accessor.readResourceID(folderID, name, revision.getBranch().getHead());
     if (existingID != null && !existingID.equals(revision.getID()))
     {
@@ -498,7 +499,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       try
       {
         async = monitor.forkAsync();
-        if (revision.isResourceFolder() || revision.isResource())
+        if (revision.isResourceNode())
         {
           checkDuplicateResources(accessor, revision);
         }

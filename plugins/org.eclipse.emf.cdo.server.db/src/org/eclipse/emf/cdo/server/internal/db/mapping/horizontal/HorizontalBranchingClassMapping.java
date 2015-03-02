@@ -352,7 +352,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = null;
     boolean success = false;
-    
+
     try
     {
       if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
@@ -381,7 +381,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       DBUtil.close(stmt);
     }
-    
+
     // Read multival tables only if revision exists
     if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
     {
@@ -397,7 +397,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion,
         ReuseProbability.HIGH);
     boolean success = false;
-    
+
     try
     {
       idHandler.setCDOID(stmt, 1, revision.getID());
@@ -415,7 +415,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       DBUtil.close(stmt);
     }
-    
+
     // Read multival tables only if revision exists
     if (success)
     {
@@ -742,7 +742,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       try
       {
         async = monitor.forkAsync();
-        if (revision.isResourceFolder() || revision.isResource())
+        if (revision.isResourceNode())
         {
           checkDuplicateResources(accessor, revision);
         }

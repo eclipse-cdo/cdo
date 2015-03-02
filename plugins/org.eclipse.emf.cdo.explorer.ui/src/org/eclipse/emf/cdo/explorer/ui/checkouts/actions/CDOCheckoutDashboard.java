@@ -356,7 +356,7 @@ public class CDOCheckoutDashboard extends Composite implements ISelectionListene
     protected void viewChanged(CDOView oldView, CDOView newView)
     {
       super.viewChanged(oldView, newView);
-      // timeSlider.connect(newView, null);
+      timeSlider.connect(newView, null);
     }
   }
 

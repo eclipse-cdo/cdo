@@ -138,11 +138,12 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       CDOCheckout checkout = (CDOCheckout)selectedElement;
       if (checkout.isOpen())
       {
-        if (viewer != null)
-        {
-          menu.add(new ShowInDashboardAction(viewer, page));
-          filled = true;
-        }
+        // TODO
+        // if (viewer != null)
+        // {
+        // menu.add(new ShowInDashboardAction(viewer, page));
+        // filled = true;
+        // }
 
         if (checkout.isOffline())
         {
@@ -340,6 +341,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   /**
    * @author Eike Stepper
    */
+  @SuppressWarnings("unused")
   private static final class ShowInDashboardAction extends Action
   {
     private final StructuredViewer viewer;

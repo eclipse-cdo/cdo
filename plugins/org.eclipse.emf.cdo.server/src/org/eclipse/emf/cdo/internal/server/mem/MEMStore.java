@@ -1226,7 +1226,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
 
   private void addRevision(List<InternalCDORevision> list, InternalCDORevision revision, boolean raw)
   {
-    boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResource();
+    boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResourceNode();
     if (resource && resourceNameFeature == null)
     {
       resourceNameFeature = revision.getEClass().getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);

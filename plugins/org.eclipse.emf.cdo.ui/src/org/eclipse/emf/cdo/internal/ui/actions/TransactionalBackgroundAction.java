@@ -57,13 +57,14 @@ public abstract class TransactionalBackgroundAction extends LongRunningAction
     progressMonitor.beginTask(Messages.getString("TransactionalBackgroundAction_1"), 100); //$NON-NLS-1$
 
     CDOTransaction transaction = openTransaction(object);
-    CDOObject transactionalObject = transaction.getObject(object);
-    progressMonitor.worked(5);
-
+    CDOObject transactionalObject = null;
     CDOCommitInfo commitInfo = null;
 
     try
     {
+      transactionalObject = transaction.getObject(object);
+      progressMonitor.worked(5);
+
       doRun(transaction, transactionalObject, new SubProgressMonitor(progressMonitor, 5));
       commitInfo = transaction.commit(new SubProgressMonitor(progressMonitor, 90));
     }

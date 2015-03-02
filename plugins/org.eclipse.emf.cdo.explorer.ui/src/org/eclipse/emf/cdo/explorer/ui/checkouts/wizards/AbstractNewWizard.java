@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -110,21 +112,21 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
 
         CDOTransaction transaction = checkout.openTransaction();
 
-        CDOResourceNode txParent = transaction.getObject(parentResourceNode);
-        if (txParent instanceof CDOResourceFolder)
-        {
-          ((CDOResourceFolder)txParent).getNodes().add(newResourceNode);
-        }
-        else
-        {
-          transaction.getRootResource().getContents().add(newResourceNode);
-        }
-
         CDOCommitInfo commitInfo = null;
         CDOID newID = null;
 
         try
         {
+          CDOResourceNode txParent = transaction.getObject(parentResourceNode);
+          if (txParent instanceof CDOResourceFolder)
+          {
+            ((CDOResourceFolder)txParent).getNodes().add(newResourceNode);
+          }
+          else
+          {
+            transaction.getRootResource().getContents().add(newResourceNode);
+          }
+
           commitInfo = transaction.commit();
           newID = newResourceNode.cdoID();
         }
@@ -132,9 +134,21 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
         {
           OM.LOG.error(ex);
 
-          IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
-          ErrorDialog.openError(getShell(), "Error",
-              "An error occured while creating the " + title.toLowerCase() + ".", status);
+          final IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, ex.getMessage(), ex);
+          UIUtil.getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              ErrorDialog.openError(getShell(), "Error", "An error occured while creating the " + title.toLowerCase()
+                  + ".", status);
+            }
+          });
+
+          return Status.OK_STATUS;
+        }
+        finally
+        {
+          transaction.close();
         }
 
         if (commitInfo != null && contentProvider != null)

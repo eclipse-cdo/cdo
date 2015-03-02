@@ -507,13 +507,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     object.cdoInternalPostAttach();
 
     // Compute a revision delta and register it with the tx
-    CDORevisionDelta revisionDelta = revision.compare(cleanRevision);
+    InternalCDORevisionDelta revisionDelta = revision.compare(cleanRevision);
     if (revisionDelta.isEmpty())
     {
       changeState(object, CDOState.CLEAN);
     }
     else
     {
+      revisionDelta.setTarget(null);
       transaction.registerRevisionDelta(revisionDelta);
       transaction.registerDirty(object, (CDOFeatureDelta)null);
       changeState(object, CDOState.DIRTY);

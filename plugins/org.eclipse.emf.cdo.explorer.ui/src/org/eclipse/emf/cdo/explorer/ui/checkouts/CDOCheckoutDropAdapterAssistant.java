@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
 import org.eclipse.emf.cdo.CDOElement;
-import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -372,7 +371,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
         @Override
         protected IStatus run(IProgressMonitor monitor)
         {
-          monitor.beginTask(title, 110 + (copy ? objects.length + 1 : 0));
+          monitor.beginTask(title, 111 + objects.length);
 
           CDOCheckout checkout = CDOExplorerUtil.getCheckout(objects[0]);
           CDOTransaction transaction = checkout.openTransaction();
@@ -395,10 +394,14 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
               if (copier != null)
               {
                 transactionalObject = copier.copy(transactionalObject);
-                monitor.worked(1);
+              }
+              else
+              {
+                EcoreUtil.remove(transactionalObject);
               }
 
               transactionalObjects.add(transactionalObject);
+              monitor.worked(1);
             }
 
             if (copier != null)
@@ -409,12 +412,13 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
 
             T transactionalTarget = transaction.getObject(target);
 
-            insert(transactionalObjects, transactionalTarget, new SubProgressMonitor(monitor, 10));
+            insert(transactionalObjects, transactionalTarget, copy, new SubProgressMonitor(monitor, 10));
             transaction.commit(new SubProgressMonitor(monitor, 100));
           }
           catch (Exception ex)
           {
             OM.LOG.error(ex);
+            return new Status(IStatus.ERROR, OM.BUNDLE_ID, "The operation did not complete sucessfully.", ex);
           }
           finally
           {
@@ -427,7 +431,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       }.schedule();
     }
 
-    protected abstract void insert(List<? extends EObject> objects, T target, IProgressMonitor monitor);
+    protected abstract void insert(List<? extends EObject> objects, T target, boolean copy, IProgressMonitor monitor);
 
     @SuppressWarnings("unchecked")
     public static <T extends EObject> Operation<T> getFor(Object target, TransferData transferType)
@@ -502,17 +506,18 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       return null;
     }
 
-    private static void setUniqueName(CDOResourceNode resourceNode, EList<? extends EObject> contents)
+    private static void setUniqueName(CDOResourceNode resourceNode, EList<? extends EObject> targetContents,
+        boolean copy)
     {
       boolean nameConflict = false;
       String resourceName = resourceNode.getName();
       Set<String> names = new HashSet<String>();
 
-      for (Object object : contents)
+      for (Object existingChild : targetContents)
       {
-        if (object != resourceNode)
+        if (existingChild != resourceNode)
         {
-          String name = ((CDOResourceNode)object).getName();
+          String name = ((CDOResourceNode)existingChild).getName();
           if (ObjectUtil.equals(name, resourceName))
           {
             nameConflict = true;
@@ -524,10 +529,10 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
 
       if (nameConflict)
       {
-        String copyName = resourceName + "-copy";
+        String renamed = resourceName + (copy ? "-copy" : "-renamed");
         for (int i = 0; i < Integer.MAX_VALUE; i++)
         {
-          String name = copyName;
+          String name = renamed;
           if (i != 0)
           {
             name += i;
@@ -553,7 +558,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       }
 
       @Override
-      protected void insert(List<? extends EObject> objects, CDOResource target, IProgressMonitor monitor)
+      protected void insert(List<? extends EObject> objects, CDOResource target, boolean copy, IProgressMonitor monitor)
       {
         target.getContents().addAll(objects);
       }
@@ -647,7 +652,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       }
 
       @Override
-      protected void insert(List<? extends EObject> objects, EObject target, IProgressMonitor monitor)
+      protected void insert(List<? extends EObject> objects, EObject target, boolean copy, IProgressMonitor monitor)
       {
         for (EObject object : objects)
         {
@@ -694,24 +699,14 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
        * TODO Consolidate with {@link ResourceNodeToFolder#insert(List, CDOResourceFolder, IProgressMonitor)}.
        */
       @Override
-      protected void insert(List<? extends EObject> objects, CDOResource target, IProgressMonitor monitor)
+      protected void insert(List<? extends EObject> objects, CDOResource target, boolean copy, IProgressMonitor monitor)
       {
         EList<EObject> contents = target.getContents();
         for (EObject object : objects)
         {
           CDOResourceNode resourceNode = (CDOResourceNode)object;
-          boolean copy = resourceNode.cdoState() == CDOState.TRANSIENT;
+          setUniqueName(resourceNode, contents, copy);
           contents.add(resourceNode);
-          // resourceNode.setFolder(null);
-
-          if (copy)
-          {
-            // The object must be attached before getParent() is called!
-            if (CDOExplorerUtil.getParent(object) == target)
-            {
-              setUniqueName(resourceNode, contents);
-            }
-          }
         }
       }
     }
@@ -727,24 +722,15 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       }
 
       @Override
-      protected void insert(List<? extends EObject> objects, CDOResourceFolder target, IProgressMonitor monitor)
+      protected void insert(List<? extends EObject> objects, CDOResourceFolder target, boolean copy,
+          IProgressMonitor monitor)
       {
         EList<CDOResourceNode> nodes = target.getNodes();
         for (EObject object : objects)
         {
           CDOResourceNode resourceNode = (CDOResourceNode)object;
-          boolean copy = resourceNode.cdoState() == CDOState.TRANSIENT;
+          setUniqueName(resourceNode, nodes, copy);
           nodes.add(resourceNode);
-          // ((InternalCDOObject)resourceNode).eSetResource(null, null);
-
-          if (copy)
-          {
-            // The resourceNode must be attached before getParent() is called!
-            if (CDOExplorerUtil.getParent(resourceNode) == target)
-            {
-              setUniqueName(resourceNode, nodes);
-            }
-          }
         }
       }
     }

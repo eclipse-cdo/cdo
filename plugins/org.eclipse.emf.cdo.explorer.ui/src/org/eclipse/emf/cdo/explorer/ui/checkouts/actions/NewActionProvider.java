@@ -36,6 +36,7 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.action.CreateChildAction;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.ActionContributionItem;
 import org.eclipse.jface.action.IAction;
@@ -52,6 +53,7 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.navigator.CommonActionProvider;
@@ -103,38 +105,8 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
       showDlgAction = ActionFactory.NEW.create(window);
 
-      final CDOCheckoutContentProvider contentProvider = getContentProvider();
-      final IWizardRegistry wizardRegistry = PlatformUI.getWorkbench().getNewWizardRegistry();
-
-      IWizardRegistry wrapperRegistry = new IWizardRegistry()
-      {
-        public IWizardCategory getRootCategory()
-        {
-          return wizardRegistry.getRootCategory();
-        }
-
-        public IWizardDescriptor[] getPrimaryWizards()
-        {
-          return wizardRegistry.getPrimaryWizards();
-        }
-
-        public IWizardDescriptor findWizard(String id)
-        {
-          IWizardDescriptor wizard = wizardRegistry.findWizard(id);
-          if (wizard instanceof AbstractNewWizard)
-          {
-            AbstractNewWizard newWizard = (AbstractNewWizard)wizard;
-            newWizard.setContentProvider(contentProvider);
-          }
-
-          return wizard;
-        }
-
-        public IWizardCategory findCategory(String id)
-        {
-          return wizardRegistry.findCategory(id);
-        }
-      };
+      CDOCheckoutContentProvider contentProvider = getContentProvider();
+      IWizardRegistry wrapperRegistry = new WizardRegistryWrapper(contentProvider);
 
       newWizardActionGroup = new WizardActionGroup(window, wrapperRegistry, WizardActionGroup.TYPE_NEW,
           extensionSite.getContentService());
@@ -312,6 +284,135 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     }
 
     return contentProvider;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class WizardRegistryWrapper implements IWizardRegistry
+  {
+    private static final IWizardRegistry DELEGATE = PlatformUI.getWorkbench().getNewWizardRegistry();
+
+    private final CDOCheckoutContentProvider contentProvider;
+
+    private WizardRegistryWrapper(CDOCheckoutContentProvider contentProvider)
+    {
+      this.contentProvider = contentProvider;
+    }
+
+    public IWizardCategory getRootCategory()
+    {
+      return DELEGATE.getRootCategory();
+    }
+
+    public IWizardDescriptor[] getPrimaryWizards()
+    {
+      return DELEGATE.getPrimaryWizards();
+    }
+
+    public IWizardDescriptor findWizard(String id)
+    {
+      final IWizardDescriptor delegate = DELEGATE.findWizard(id);
+      if (delegate != null)
+      {
+        return new WizardDescriptorWrapper(delegate, contentProvider);
+      }
+
+      return delegate;
+    }
+
+    public IWizardCategory findCategory(String id)
+    {
+      return DELEGATE.findCategory(id);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class WizardDescriptorWrapper implements IWizardDescriptor
+  {
+    private final IWizardDescriptor delegate;
+
+    private final CDOCheckoutContentProvider contentProvider;
+
+    private WizardDescriptorWrapper(IWizardDescriptor delegate, CDOCheckoutContentProvider contentProvider)
+    {
+      this.delegate = delegate;
+      this.contentProvider = contentProvider;
+    }
+
+    public String getId()
+    {
+      return delegate.getId();
+    }
+
+    public ImageDescriptor getImageDescriptor()
+    {
+      return delegate.getImageDescriptor();
+    }
+
+    public IStructuredSelection adaptedSelection(IStructuredSelection selection)
+    {
+      return delegate.adaptedSelection(selection);
+    }
+
+    public String getLabel()
+    {
+      return delegate.getLabel();
+    }
+
+    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+    {
+      return delegate.getAdapter(adapter);
+    }
+
+    public String getDescription()
+    {
+      return delegate.getDescription();
+    }
+
+    public String[] getTags()
+    {
+      return delegate.getTags();
+    }
+
+    public IWorkbenchWizard createWizard() throws CoreException
+    {
+      IWorkbenchWizard wizard = delegate.createWizard();
+      if (wizard instanceof AbstractNewWizard)
+      {
+        AbstractNewWizard newWizard = (AbstractNewWizard)wizard;
+        newWizard.setContentProvider(contentProvider);
+      }
+
+      return wizard;
+    }
+
+    public ImageDescriptor getDescriptionImage()
+    {
+      return delegate.getDescriptionImage();
+    }
+
+    public String getHelpHref()
+    {
+      return delegate.getHelpHref();
+    }
+
+    public IWizardCategory getCategory()
+    {
+      return delegate.getCategory();
+    }
+
+    public boolean canFinishEarly()
+    {
+      return delegate.canFinishEarly();
+    }
+
+    public boolean hasPages()
+    {
+      return delegate.hasPages();
+    }
   }
 
   /**

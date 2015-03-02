@@ -228,7 +228,11 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
 
     if (selectedObject instanceof CDOResource)
     {
-      fillNewRootActions(submenu, checkout, (CDOResource)selectedObject);
+      CDOResource resource = (CDOResource)selectedObject;
+      if (!resource.isRoot())
+      {
+        fillNewRootActions(submenu, checkout, resource);
+      }
     }
     else if (selectedObject instanceof CDOResourceNode)
     {

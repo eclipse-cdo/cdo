@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Tests properties of receiver objects against expected values.
- * 
+ *
  * @author Eike Stepper
  * @since 3.2
  */
@@ -65,9 +65,30 @@ public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements I
       return false;
     }
 
+    if (!getReceiverType().isInstance(receiver))
+    {
+      receiver = convertReceiver(receiver);
+    }
+
     @SuppressWarnings("unchecked")
     RECEIVER typed = (RECEIVER)receiver;
     return property.testValue(typed, args, expectedValue);
+  }
+
+  /**
+   * @since 3.5
+   */
+  protected RECEIVER convertReceiver(Object receiver)
+  {
+    return null;
+  }
+
+  /**
+   * @since 3.5
+   */
+  protected String getReceiverTypeName()
+  {
+    return getReceiverType().getName();
   }
 
   public void dumpContributionMarkup()
@@ -75,7 +96,7 @@ public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements I
     System.out.println("   <extension point=\"org.eclipse.core.expressions.propertyTesters\">");
     System.out.println("      <propertyTester");
     System.out.println("         id=\"" + getNamespace() + ".properties\"");
-    System.out.println("         type=\"" + getReceiverType().getName() + "\"");
+    System.out.println("         type=\"" + getReceiverTypeName() + "\"");
     System.out.println("         namespace=\"" + getNamespace() + "\"");
     System.out.print("         properties=\"");
 

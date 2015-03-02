@@ -183,6 +183,12 @@
         <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
         <adapter type="org.eclipse.ui.IActionFilter"/>
      </factory>
+     <factory
+           adaptableType="org.eclipse.emf.cdo.CDOElement"
+           class="org.eclipse.emf.cdo.internal.ui.CDOPropertyAdapterFactory">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
+        <adapter type="org.eclipse.ui.IActionFilter"/>
+     </factory>
   </extension>
 
 	<!--

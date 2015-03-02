@@ -37,6 +37,8 @@ public class ObjectProperties extends Properties<EObject>
 {
   public static final IProperties<EObject> INSTANCE = new ObjectProperties();
 
+  public static final String NAMESPACE = "org.eclipse.emf.cdo.object";
+
   private static final String CATEGORY_CDO = "CDO"; //$NON-NLS-1$
 
   private ObjectProperties()
@@ -534,6 +536,7 @@ public class ObjectProperties extends Properties<EObject>
   public static void main(String[] args)
   {
     new Tester().dumpContributionMarkup();
+    new ElementTester().dumpContributionMarkup();
   }
 
   /**
@@ -541,11 +544,42 @@ public class ObjectProperties extends Properties<EObject>
    */
   public static final class Tester extends DefaultPropertyTester<EObject>
   {
-    public static final String NAMESPACE = "org.eclipse.emf.cdo.object";
-
     public Tester()
     {
       super(NAMESPACE, INSTANCE);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ElementTester extends DefaultPropertyTester<EObject>
+  {
+    public ElementTester()
+    {
+      super(NAMESPACE, INSTANCE);
+    }
+
+    @Override
+    protected EObject convertReceiver(Object receiver)
+    {
+      if (receiver instanceof CDOElement)
+      {
+        CDOElement element = (CDOElement)receiver;
+        Object delegate = element.getDelegate();
+        if (delegate instanceof EObject)
+        {
+          return (EObject)delegate;
+        }
+      }
+
+      return super.convertReceiver(receiver);
+    }
+
+    @Override
+    protected String getReceiverTypeName()
+    {
+      return CDOElement.class.getName();
     }
   }
 }

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter.CDOPropertyDescriptor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
@@ -77,6 +78,11 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
       if (object instanceof CDOView)
       {
         return new DefaultPropertySource<CDOView>((CDOView)object, ViewProperties.INSTANCE);
+      }
+
+      if (object instanceof CDOElement)
+      {
+        object = ((CDOElement)object).getDelegate();
       }
 
       if (object instanceof EObject)

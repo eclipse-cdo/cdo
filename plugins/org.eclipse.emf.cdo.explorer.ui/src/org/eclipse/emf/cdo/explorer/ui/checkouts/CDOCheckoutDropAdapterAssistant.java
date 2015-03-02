@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -224,41 +225,66 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
 
   private static EObject[] getSelectedObjects(IStructuredSelection selection)
   {
-    List<EObject> selectedObjects = new ArrayList<EObject>();
-    ObjectType firstObjectType = null;
-
-    for (Iterator<?> it = selection.iterator(); it.hasNext();)
+    try
     {
-      Object object = it.next();
+      List<EObject> selectedObjects = new ArrayList<EObject>();
+      ObjectType firstObjectType = null;
 
-      EObject eObject = AdapterUtil.adapt(object, EObject.class);
-      if (eObject != null)
+      for (Iterator<?> it = selection.iterator(); it.hasNext();)
       {
-        ObjectType objectType = ObjectType.valueFor(eObject);
-        if (objectType == null || objectType == ObjectType.Root)
-        {
-          return NO_OBJECTS;
-        }
+        Object object = it.next();
 
-        if (firstObjectType == null)
+        if (object instanceof CDOElement)
         {
-          firstObjectType = objectType;
+          CDOElement element = (CDOElement)object;
+          for (Object child : element.getChildren())
+          {
+            firstObjectType = addSelectedObject(selectedObjects, firstObjectType, child);
+          }
         }
         else
         {
-          boolean firstIsObject = firstObjectType == ObjectType.Object;
-          boolean isObject = objectType == ObjectType.Object;
-          if (firstIsObject != isObject)
-          {
-            return NO_OBJECTS;
-          }
+          firstObjectType = addSelectedObject(selectedObjects, firstObjectType, object);
         }
-
-        selectedObjects.add(eObject);
       }
+
+      return selectedObjects.toArray(new EObject[selectedObjects.size()]);
+    }
+    catch (RuntimeException ex)
+    {
+      return NO_OBJECTS;
+    }
+  }
+
+  private static ObjectType addSelectedObject(List<EObject> selectedObjects, ObjectType firstObjectType, Object object)
+  {
+    EObject eObject = AdapterUtil.adapt(object, EObject.class);
+    if (eObject != null)
+    {
+      ObjectType objectType = ObjectType.valueFor(eObject);
+      if (objectType == null || objectType == ObjectType.Root)
+      {
+        throw new RuntimeException();
+      }
+
+      if (firstObjectType == null)
+      {
+        firstObjectType = objectType;
+      }
+      else
+      {
+        boolean firstIsObject = firstObjectType == ObjectType.Object;
+        boolean isObject = objectType == ObjectType.Object;
+        if (firstIsObject != isObject)
+        {
+          throw new RuntimeException();
+        }
+      }
+
+      selectedObjects.add(eObject);
     }
 
-    return selectedObjects.toArray(new EObject[selectedObjects.size()]);
+    return firstObjectType;
   }
 
   /**

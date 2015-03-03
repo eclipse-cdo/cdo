@@ -47,7 +47,7 @@
                enablesFor="2"
                id="org.eclipse.emf.cdo.ui.compare.CompareWithEachOtherAction"
                label="Compare With Each Other..."
-               menubarPath="additions"
+               menubarPath="compare"
                style="push">
          </action>
          <action
@@ -55,7 +55,7 @@
                enablesFor="1"
                id="org.eclipse.emf.cdo.ui.compare.CompareWithPreviousVersionAction"
                label="Compare With Previous Version..."
-               menubarPath="additions"
+               menubarPath="compare"
                style="push">
          </action>
       </objectContribution>

@@ -314,7 +314,7 @@
                icon="icons/full/obj16/branch.gif"
                id="org.eclipse.emf.cdo.ui.CreateBranchAction"
                label="Create Branch..."
-               menubarPath="additions"
+               menubarPath="branching"
                style="push">
          </action>
       </objectContribution>

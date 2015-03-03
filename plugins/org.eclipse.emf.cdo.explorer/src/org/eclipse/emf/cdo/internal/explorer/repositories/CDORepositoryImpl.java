@@ -57,7 +57,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 {
   public static final String PROP_NAME = "name";
 
-  private static final String REPOSITORY_KEY = CDORepository.class.getName();
+  public static final String REPOSITORY_KEY = CDORepository.class.getName();
 
   private final Set<CDOCheckout> checkouts = new HashSet<CDOCheckout>();
 

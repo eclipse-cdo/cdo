@@ -1,0 +1,86 @@
+/*
+ * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.explorer.ui.actions;
+
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
+import org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CDOUtil;
+
+import org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+
+/**
+ * @author Eike Stepper
+ */
+public class CheckoutCommitInfoActionDelegate extends LongRunningActionDelegate
+{
+  public CheckoutCommitInfoActionDelegate()
+  {
+  }
+
+  @Override
+  protected void doRun(IProgressMonitor progressMonitor) throws Exception
+  {
+    ISelection selection = getSelection();
+    if (selection instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+      if (ssel.size() == 1)
+      {
+        Object element = ssel.getFirstElement();
+        if (element instanceof CDOCommitInfo)
+        {
+          final CDOCommitInfo commitInfo = (CDOCommitInfo)element;
+          final CDOSession session = CDOUtil.getSession(commitInfo);
+          if (session != null)
+          {
+            final CDORepository repository = (CDORepository)session.properties().get(CDORepositoryImpl.REPOSITORY_KEY);
+            if (repository != null)
+            {
+              CDORepositoryElement repositoryElement = new CDORepositoryElement()
+              {
+                public CDORepository getRepository()
+                {
+                  return repository;
+                }
+
+                public int getBranchID()
+                {
+                  return commitInfo.getBranch().getID();
+                }
+
+                public long getTimeStamp()
+                {
+                  return commitInfo.getTimeStamp();
+                }
+
+                public CDOID getObjectID()
+                {
+                  return session.getRepositoryInfo().getRootResourceID();
+                }
+              };
+
+              RepositoryCheckoutHandler.checkout(repositoryElement, "online");
+            }
+          }
+        }
+      }
+    }
+  }
+}

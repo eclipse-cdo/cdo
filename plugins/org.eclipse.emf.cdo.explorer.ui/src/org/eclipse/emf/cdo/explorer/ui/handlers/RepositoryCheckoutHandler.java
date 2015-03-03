@@ -32,29 +32,31 @@ public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepository
 
   protected RepositoryCheckoutHandler(String type)
   {
-    super(CDORepositoryElement.class, null);
+    super(CDORepositoryElement.class, false);
     this.type = type;
   }
 
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    for (CDORepositoryElement repositoryElement : elements)
-    {
-      CDORepository repository = repositoryElement.getRepository();
+    checkout(elements.get(0), type);
+  }
 
-      Properties properties = new Properties();
-      properties.setProperty("type", type);
-      properties.setProperty("label", repository.getLabel());
-      properties.setProperty("repository", repository.getID());
-      properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
-      properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
-      properties.setProperty("readOnly", Boolean.FALSE.toString());
-      properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
+  public static void checkout(CDORepositoryElement repositoryElement, String type)
+  {
+    CDORepository repository = repositoryElement.getRepository();
 
-      CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
-      checkout.open();
-    }
+    Properties properties = new Properties();
+    properties.setProperty("type", type);
+    properties.setProperty("label", repository.getLabel());
+    properties.setProperty("repository", repository.getID());
+    properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
+    properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
+    properties.setProperty("readOnly", Boolean.FALSE.toString());
+    properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
+
+    CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
+    checkout.open();
   }
 
   /**

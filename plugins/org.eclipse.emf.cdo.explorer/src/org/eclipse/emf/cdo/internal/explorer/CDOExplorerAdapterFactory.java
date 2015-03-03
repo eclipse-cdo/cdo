@@ -46,9 +46,17 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
   {
     if (adapterType == CLASS_CDOREPOSITORYELEMENT)
     {
+      boolean head = false;
       if (adaptableObject instanceof CDOBranch)
       {
-        final CDOBranch branch = (CDOBranch)adaptableObject;
+        head = true;
+      }
+
+      if (adaptableObject instanceof CDOBranchPoint)
+      {
+        final CDOBranchPoint branchPoint = (CDOBranchPoint)adaptableObject;
+        final CDOBranch branch = branchPoint.getBranch();
+        final long timeStamp = head ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
 
         CDOCommonRepository commonRepository = branch.getBranchManager().getRepository();
         if (commonRepository instanceof CDORepositoryInfo)
@@ -76,7 +84,7 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
 
               public long getTimeStamp()
               {
-                return CDOBranchPoint.UNSPECIFIED_DATE;
+                return timeStamp;
               }
 
               public CDOID getObjectID()

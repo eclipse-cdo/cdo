@@ -382,6 +382,23 @@
       </decorator>
   </extension>
 
+  <extension point="org.eclipse.ui.popupMenus">
+    <objectContribution
+          adaptable="true"
+          id="org.eclipse.emf.cdo.explorer.ui.contribution1"
+          objectClass="org.eclipse.emf.cdo.common.commit.CDOCommitInfo">
+       <action
+             class="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate"
+             enablesFor="1"
+             icon="icons/checkout_online.gif"
+             id="org.eclipse.emf.cdo.explorer.ui.CheckoutCommitInfo"
+             label="Checkout..."
+             menubarPath="additions"
+             style="push">
+       </action>
+    </objectContribution>
+  </extension>
+
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"

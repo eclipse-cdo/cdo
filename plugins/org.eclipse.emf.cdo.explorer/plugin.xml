@@ -20,6 +20,11 @@
            class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerAdapterFactory">
         <adapter type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
      </factory>
+     <factory
+           adaptableType="org.eclipse.emf.cdo.common.branch.CDOBranchPoint"
+           class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerAdapterFactory">
+        <adapter type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+     </factory>
   </extension>
 
    <extension point="org.eclipse.core.expressions.propertyTesters">

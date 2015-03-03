@@ -35,6 +35,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -43,6 +44,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.team.ui.history.HistoryPage;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.IPageSite;
 
 /**
@@ -173,8 +175,13 @@ public class CDOHistoryPage extends HistoryPage
     UIUtil.addDragSupport(tableViewer);
 
     MenuManager menuManager = new MenuManager(POPUP_ID);
+    menuManager.add(new Separator("compare"));
+    menuManager.add(new Separator("branching"));
+    menuManager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+
     Menu menu = menuManager.createContextMenu(tableViewer.getControl());
     tableViewer.getControl().setMenu(menu);
+
     site.registerContextMenu(POPUP_ID, menuManager, tableViewer);
     site.setSelectionProvider(tableViewer);
 

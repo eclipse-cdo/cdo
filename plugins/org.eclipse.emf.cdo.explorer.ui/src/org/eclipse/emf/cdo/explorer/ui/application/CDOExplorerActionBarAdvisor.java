@@ -45,7 +45,7 @@ public class CDOExplorerActionBarAdvisor extends ActionBarAdvisor
   @Override
   protected void fillMenuBar(IMenuManager menuBar)
   {
-    menuBar.add(new Separator("additions"));
+    menuBar.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 
     // Help
     MenuManager helpMenu = new MenuManager("&Help", IWorkbenchActionConstants.M_HELP);

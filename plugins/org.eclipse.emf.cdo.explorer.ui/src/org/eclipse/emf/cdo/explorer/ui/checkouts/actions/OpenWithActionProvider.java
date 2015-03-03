@@ -78,108 +78,11 @@ public class OpenWithActionProvider extends CommonActionProvider
 
   private static final Object EDITOR_OPENING = new Object();
 
-  private static final IPartListener2 PART_LISTENER = new IPartListener2()
-  {
-    public void partOpened(IWorkbenchPartReference partRef)
-    {
-    }
+  private static final IPartListener2 PART_LISTENER = new PartListener();
 
-    public void partClosed(IWorkbenchPartReference partRef)
-    {
-      IWorkbenchPart part = partRef.getPart(false);
-      if (part != null)
-      {
-        Pair<CDOView, Pair<CDOResourceLeaf, String>> pair;
-        synchronized (VIEWS)
-        {
-          pair = VIEWS.remove(part);
-        }
+  private static final IPageListener PAGE_LISTENER = new PageListener();
 
-        if (pair != null)
-        {
-          CDOView view = pair.getElement1();
-          view.close();
-
-          Pair<CDOResourceLeaf, String> key = pair.getElement2();
-          synchronized (EDITORS)
-          {
-            EDITORS.remove(key);
-          }
-        }
-      }
-    }
-
-    public void partVisible(IWorkbenchPartReference partRef)
-    {
-      // Do nothing
-    }
-
-    public void partHidden(IWorkbenchPartReference partRef)
-    {
-      // Do nothing
-    }
-
-    public void partActivated(IWorkbenchPartReference partRef)
-    {
-      // Do nothing
-    }
-
-    public void partDeactivated(IWorkbenchPartReference partRef)
-    {
-      // Do nothing
-    }
-
-    public void partBroughtToTop(IWorkbenchPartReference partRef)
-    {
-      // Do nothing
-    }
-
-    public void partInputChanged(IWorkbenchPartReference partRef)
-    {
-      // Do nothing
-    }
-  };
-
-  private static final IPageListener PAGE_LISTENER = new IPageListener()
-  {
-    public void pageOpened(IWorkbenchPage page)
-    {
-      page.addPartListener(PART_LISTENER);
-    }
-
-    public void pageClosed(IWorkbenchPage page)
-    {
-      page.removePartListener(PART_LISTENER);
-    }
-
-    public void pageActivated(IWorkbenchPage page)
-    {
-      // Do nothing
-    }
-  };
-
-  private static final IWindowListener WINDOW_LISTENER = new IWindowListener()
-  {
-    public void windowOpened(IWorkbenchWindow window)
-    {
-      window.addPageListener(PAGE_LISTENER);
-    }
-
-    public void windowClosed(IWorkbenchWindow window)
-    {
-      window.removePageListener(PAGE_LISTENER);
-    }
-
-    public void windowActivated(IWorkbenchWindow window)
-    {
-      // Do nothing
-    }
-
-    public void windowDeactivated(IWorkbenchWindow window)
-    {
-      // Do nothing
-    }
-  };
+  private static final IWindowListener WINDOW_LISTENER = new WindowListener();
 
   static
   {
@@ -200,6 +103,10 @@ public class OpenWithActionProvider extends CommonActionProvider
   private ICommonViewerWorkbenchSite viewSite;
 
   private OpenFileAction openFileAction;
+
+  public OpenWithActionProvider()
+  {
+  }
 
   @Override
   public void init(ICommonActionExtensionSite aConfig)
@@ -480,6 +387,118 @@ public class OpenWithActionProvider extends CommonActionProvider
     }
 
     return edited;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class WindowListener implements IWindowListener
+  {
+    public void windowOpened(IWorkbenchWindow window)
+    {
+      window.addPageListener(PAGE_LISTENER);
+    }
+
+    public void windowClosed(IWorkbenchWindow window)
+    {
+      window.removePageListener(PAGE_LISTENER);
+    }
+
+    public void windowActivated(IWorkbenchWindow window)
+    {
+      // Do nothing
+    }
+
+    public void windowDeactivated(IWorkbenchWindow window)
+    {
+      // Do nothing
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class PageListener implements IPageListener
+  {
+    public void pageOpened(IWorkbenchPage page)
+    {
+      page.addPartListener(PART_LISTENER);
+    }
+
+    public void pageClosed(IWorkbenchPage page)
+    {
+      page.removePartListener(PART_LISTENER);
+    }
+
+    public void pageActivated(IWorkbenchPage page)
+    {
+      // Do nothing
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class PartListener implements IPartListener2
+  {
+    public void partOpened(IWorkbenchPartReference partRef)
+    {
+    }
+
+    public void partClosed(IWorkbenchPartReference partRef)
+    {
+      IWorkbenchPart part = partRef.getPart(false);
+      if (part != null)
+      {
+        Pair<CDOView, Pair<CDOResourceLeaf, String>> pair;
+        synchronized (VIEWS)
+        {
+          pair = VIEWS.remove(part);
+        }
+
+        if (pair != null)
+        {
+          CDOView view = pair.getElement1();
+          view.close();
+
+          Pair<CDOResourceLeaf, String> key = pair.getElement2();
+          synchronized (EDITORS)
+          {
+            EDITORS.remove(key);
+          }
+        }
+      }
+    }
+
+    public void partVisible(IWorkbenchPartReference partRef)
+    {
+      // Do nothing
+    }
+
+    public void partHidden(IWorkbenchPartReference partRef)
+    {
+      // Do nothing
+    }
+
+    public void partActivated(IWorkbenchPartReference partRef)
+    {
+      // Do nothing
+    }
+
+    public void partDeactivated(IWorkbenchPartReference partRef)
+    {
+      // Do nothing
+    }
+
+    public void partBroughtToTop(IWorkbenchPartReference partRef)
+    {
+      // Do nothing
+    }
+
+    public void partInputChanged(IWorkbenchPartReference partRef)
+    {
+      // Do nothing
+    }
   }
 
   /**

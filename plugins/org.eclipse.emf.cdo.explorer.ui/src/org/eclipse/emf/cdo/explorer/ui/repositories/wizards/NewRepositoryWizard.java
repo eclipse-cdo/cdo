@@ -11,8 +11,14 @@
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 
@@ -80,7 +86,24 @@ public class NewRepositoryWizard extends Wizard
     Properties properties = page.getProperties();
 
     CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
-    repositoryManager.addRepository(properties);
+    final CDORepository repository = repositoryManager.addRepository(properties);
+
+    new Job("Connect")
+    {
+      @Override
+      protected IStatus run(IProgressMonitor monitor)
+      {
+        try
+        {
+          repository.connect();
+          return Status.OK_STATUS;
+        }
+        catch (Exception ex)
+        {
+          return OM.BUNDLE.getStatus(ex);
+        }
+      }
+    }.schedule();
 
     return true;
   }

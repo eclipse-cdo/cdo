@@ -460,7 +460,7 @@
   <extension point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.open">
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.open">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
                icon="icons/connect.gif"
@@ -481,9 +481,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutOpen"
                icon="icons/checkout.gif"
-               label="Open Project"
+               label="Open Checkout"
                style="push"
-               tooltip="Open the project">
+               tooltip="Open the checkout">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate>
@@ -498,7 +498,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.checkout">
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.checkout">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutOnline"
                icon="icons/checkout_online.gif"
@@ -530,7 +530,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.edit">
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.edit">
          <command
                commandId="org.eclipse.ui.edit.rename"
                icon="icons/rename.gif"
@@ -593,7 +593,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.build">
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.build">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
                icon="icons/disconnect.gif"
@@ -614,9 +614,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
                icon="icons/checkout_closed.gif"
-               label="Close Project"
+               label="Close Checkout"
                style="push"
-               tooltip="Close the project">
+               tooltip="Close the checkout">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate>
@@ -631,7 +631,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
                icon="icons/update.gif"

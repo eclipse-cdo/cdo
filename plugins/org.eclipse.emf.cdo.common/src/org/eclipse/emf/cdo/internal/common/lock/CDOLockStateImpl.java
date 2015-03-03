@@ -28,9 +28,11 @@ import java.util.Set;
  */
 public class CDOLockStateImpl implements InternalCDOLockState
 {
+  private static final Set<CDOLockOwner> NO_LOCK_OWNERS = Collections.emptySet();
+
   private Object lockedObject;
 
-  private Set<CDOLockOwner> readLockOwners = new HashSet<CDOLockOwner>();
+  private Set<CDOLockOwner> readLockOwners;
 
   private CDOLockOwner writeLockOwner;
 
@@ -46,11 +48,15 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public CDOLockStateImpl copy()
   {
-    checkDisposed();
+    checkNotDisposed();
     CDOLockStateImpl newLockState = new CDOLockStateImpl(lockedObject);
-    for (CDOLockOwner owner : readLockOwners)
+
+    if (readLockOwners != null)
     {
-      newLockState.readLockOwners.add(owner);
+      for (CDOLockOwner owner : readLockOwners)
+      {
+        newLockState.addReadLockOwner(owner);
+      }
     }
 
     newLockState.writeLockOwner = writeLockOwner;
@@ -61,7 +67,17 @@ public class CDOLockStateImpl implements InternalCDOLockState
   public void updateFrom(Object object, CDOLockState source)
   {
     lockedObject = object;
-    readLockOwners = source.getReadLockOwners();
+
+    Set<CDOLockOwner> owners = source.getReadLockOwners();
+    if (owners.isEmpty())
+    {
+      readLockOwners = null;
+    }
+    else
+    {
+      readLockOwners = new HashSet<CDOLockOwner>(owners);
+    }
+
     writeLockOwner = source.getWriteLockOwner();
     writeOptionOwner = source.getWriteOptionOwner();
   }
@@ -90,6 +106,11 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   private boolean isReadLocked(CDOLockOwner by, boolean others)
   {
+    if (readLockOwners == null)
+    {
+      return false;
+    }
+
     int n = readLockOwners.size();
     if (n == 0)
     {
@@ -126,9 +147,9 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public Set<CDOLockOwner> getReadLockOwners()
   {
-    if (lockedObject == null)
+    if (lockedObject == null || readLockOwners == null)
     {
-      return Collections.emptySet();
+      return NO_LOCK_OWNERS;
     }
 
     return Collections.unmodifiableSet(readLockOwners);
@@ -136,14 +157,32 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public void addReadLockOwner(CDOLockOwner lockOwner)
   {
-    checkDisposed();
+    checkNotDisposed();
+
+    if (readLockOwners == null)
+    {
+      readLockOwners = new HashSet<CDOLockOwner>();
+    }
+
     readLockOwners.add(lockOwner);
   }
 
   public boolean removeReadLockOwner(CDOLockOwner lockOwner)
   {
-    checkDisposed();
-    return readLockOwners.remove(lockOwner);
+    checkNotDisposed();
+
+    if (readLockOwners == null)
+    {
+      return false;
+    }
+
+    boolean changed = readLockOwners.remove(lockOwner);
+    if (changed && readLockOwners.isEmpty())
+    {
+      readLockOwners = null;
+    }
+
+    return changed;
   }
 
   public CDOLockOwner getWriteLockOwner()
@@ -153,7 +192,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public void setWriteLockOwner(CDOLockOwner lockOwner)
   {
-    checkDisposed();
+    checkNotDisposed();
     writeLockOwner = lockOwner;
   }
 
@@ -164,8 +203,27 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public void setWriteOptionOwner(CDOLockOwner lockOwner)
   {
-    checkDisposed();
+    checkNotDisposed();
     writeOptionOwner = lockOwner;
+  }
+
+  public boolean removeOwner(CDOLockOwner lockOwner)
+  {
+    boolean changed = removeReadLockOwner(lockOwner);
+
+    if (lockOwner.equals(writeLockOwner))
+    {
+      writeLockOwner = null;
+      changed = true;
+    }
+
+    if (lockOwner.equals(writeOptionOwner))
+    {
+      writeOptionOwner = null;
+      changed = true;
+    }
+
+    return changed;
   }
 
   public Object getLockedObject()
@@ -264,7 +322,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     writeOptionOwner = null;
   }
 
-  private void checkDisposed()
+  private void checkNotDisposed()
   {
     if (lockedObject == null)
     {

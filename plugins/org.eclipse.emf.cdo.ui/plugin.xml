@@ -346,7 +346,7 @@
   <extension point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=group.new.branch">
+            locationURI="popup:org.eclipse.ui.popup.any?after=group.new.branch">
          <command
                commandId="org.eclipse.emf.cdo.ui.CreateBranch"
                icon="icons/full/obj16/branch.gif"
@@ -364,7 +364,7 @@
       </menuContribution>
       <menuContribution
             allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="org.eclipse.emf.cdo.ui.LockObject"
                icon="icons/full/elcl16/lock.gif"
@@ -376,6 +376,7 @@
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <test property="org.eclipse.emf.cdo.object.transactional" value="true"/>
                       <test property="org.eclipse.emf.cdo.object.writeLocked" value="false"/>
                       <test property="org.eclipse.emf.cdo.object.writeLockedByOthers" value="false"/>
                     </and>
@@ -383,10 +384,6 @@
                </with>
             </visibleWhen>
          </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
          <command
                commandId="org.eclipse.emf.cdo.ui.LockTree"
                icon="icons/full/elcl16/lock.gif"
@@ -398,6 +395,7 @@
                   <iterate>
                     <and>
                       <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <test property="org.eclipse.emf.cdo.object.transactional" value="true"/>
                       <test property="org.eclipse.emf.cdo.object.writeLocked" value="false"/>
                       <test property="org.eclipse.emf.cdo.object.writeLockedByOthers" value="false"/>
                       <test property="org.eclipse.emf.cdo.object.children" value="true"/>
@@ -407,10 +405,6 @@
             </visibleWhen>
 
          </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
          <command
                commandId="org.eclipse.emf.cdo.ui.UnlockObject"
                icon="icons/full/elcl16/unlock.gif"
@@ -428,10 +422,6 @@
                </with>
             </visibleWhen>
          </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="popup:org.eclipse.ui.popup.any?group=additions">
          <command
                commandId="org.eclipse.emf.cdo.ui.UnlockTree"
                icon="icons/full/elcl16/unlock.gif"

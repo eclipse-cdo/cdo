@@ -133,6 +133,8 @@ public class CDOViewImpl extends AbstractCDOView
 
   private long lastUpdateTime;
 
+  private CDOLockOwner lockOwner;
+
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
 
   private QueueRunner invalidationRunner = createInvalidationRunner();
@@ -430,7 +432,11 @@ public class CDOViewImpl extends AbstractCDOView
     {
       CDOLockChangeInfo lockChangeInfo = makeLockChangeInfo(op, type, timestamp, lockStates);
       session.handleLockNotification(lockChangeInfo, this);
-      fireLocksChangedEvent(this, lockChangeInfo);
+
+      if (isActive())
+      {
+        fireLocksChangedEvent(this, lockChangeInfo);
+      }
     }
   }
 
@@ -467,9 +473,7 @@ public class CDOViewImpl extends AbstractCDOView
           return;
         }
 
-        // If lockChangeInfo represents lock changes authored by this view itself, do nothing.
-        CDOLockOwner thisView = CDOLockUtil.createLockOwner(this);
-        if (lockChangeInfo.getLockOwner().equals(thisView))
+        if (lockChangeInfo.getLockOwner().equals(lockOwner))
         {
           return;
         }
@@ -1209,6 +1213,8 @@ public class CDOViewImpl extends AbstractCDOView
     {
       runnable.run();
     }
+
+    lockOwner = CDOLockUtil.createLockOwner(this);
   }
 
   @Override
@@ -1227,27 +1233,6 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doDeactivate() throws Exception
   {
-    // TODO A prototype of resource-less object URIs:
-    // try
-    // {
-    // String repositoryUUID = session.getRepositoryInfo().getUUID();
-    // String prefix = CDOURIUtil.PROTOCOL_NAME + "://" + repositoryUUID + "/";
-    // for (Entry<CDOID, InternalCDOObject> entry : getObjects().entrySet())
-    // {
-    // InternalCDOObject object = entry.getValue();
-    // StringBuilder builder = new StringBuilder(prefix);
-    // CDOIDUtil.write(builder, object.cdoID());
-    // URI uri = URI.createURI(builder.toString());
-    // object.eSetProxyURI(uri);
-    // int xxx;
-    // System.out.println(uri);
-    // }
-    // }
-    // catch (Exception ex)
-    // {
-    // OM.LOG.error(ex);
-    // }
-
     CDOViewRegistryImpl.INSTANCE.deregister(this);
     LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);
 
@@ -1262,6 +1247,33 @@ public class CDOViewImpl extends AbstractCDOView
     catch (Exception ex)
     {
       OM.LOG.error(ex);
+    }
+    finally
+    {
+      synchronized (lockStates)
+      {
+        if (!lockStates.isEmpty())
+        {
+          List<CDOLockState> result = new ArrayList<CDOLockState>();
+          for (CDOLockState lockState : lockStates.values())
+          {
+            if (((InternalCDOLockState)lockState).removeOwner(lockOwner))
+            {
+              result.add(lockState);
+            }
+          }
+
+          if (!result.isEmpty())
+          {
+            CDOLockState[] deactivateLockStates = result.toArray(new CDOLockState[result.size()]);
+            long timeStamp = session.getLastUpdateTime();
+            notifyOtherViewsAboutLockChanges(Operation.UNLOCK, null, timeStamp, deactivateLockStates);
+          }
+
+          lockStates.clear();
+          lockOwner = null;
+        }
+      }
     }
 
     try

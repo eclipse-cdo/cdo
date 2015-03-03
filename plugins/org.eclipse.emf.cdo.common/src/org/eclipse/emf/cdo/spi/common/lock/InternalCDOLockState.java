@@ -32,6 +32,11 @@ public interface InternalCDOLockState extends CDOLockState
   public void setWriteOptionOwner(CDOLockOwner lockOwner);
 
   /**
+   * @since 4.4
+   */
+  public boolean removeOwner(CDOLockOwner lockOwner);
+
+  /**
    * @since 4.2
    */
   public void updateFrom(Object object, CDOLockState source);

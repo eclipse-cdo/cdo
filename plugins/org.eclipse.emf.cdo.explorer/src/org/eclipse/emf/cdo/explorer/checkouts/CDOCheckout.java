@@ -83,6 +83,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public void close();
 
+  public CDOView[] getViews();
+
   public CDOView getView();
 
   public EObject getRootObject();

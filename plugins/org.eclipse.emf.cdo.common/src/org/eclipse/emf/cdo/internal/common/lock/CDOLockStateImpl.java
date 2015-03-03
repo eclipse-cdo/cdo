@@ -281,7 +281,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
     builder.append(lockedObject);
 
     builder.append("\n  readLockOwners=");
-    if (readLockOwners.size() > 0)
+    if (readLockOwners != null && readLockOwners.size() > 0)
     {
       boolean first = true;
       for (CDOLockOwner lockOwner : readLockOwners)

@@ -35,6 +35,8 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import org.eclipse.emf.ecore.EObject;
@@ -44,9 +46,11 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
@@ -79,6 +83,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private static final String BRANCH_POINT_SEPARATOR = ",";
 
   private static final String BRANCH_AND_POINT_SEPARATOR = "_";
+
+  private final Set<CDOView> views = new HashSet<CDOView>();
 
   private final Map<CDOID, String> editorIDs = new WeakHashMap<CDOID, String>();
 
@@ -352,6 +358,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
             @Override
             protected void onDeactivated(ILifecycle lifecycle)
             {
+              removeView(view);
               close();
             }
           });
@@ -411,6 +418,12 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
           {
             rootObject.eAdapters().remove(this);
             closeView();
+
+            CDOView[] remainingViews = getViews();
+            for (CDOView remainingView : remainingViews)
+            {
+              remainingView.close();
+            }
           }
           finally
           {
@@ -435,6 +448,30 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       {
         manager.fireCheckoutOpenEvent(this, oldView, false);
       }
+    }
+  }
+
+  private void addView(CDOView view)
+  {
+    synchronized (this)
+    {
+      views.add(view);
+    }
+  }
+
+  private void removeView(CDOView view)
+  {
+    synchronized (this)
+    {
+      views.remove(view);
+    }
+  }
+
+  public CDOView[] getViews()
+  {
+    synchronized (this)
+    {
+      return views.toArray(new CDOView[views.size()]);
     }
   }
 
@@ -496,7 +533,12 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   private CDOView openAndConfigureView(boolean readOnly, ResourceSet resourceSet)
   {
     CDOView view = doOpenView(readOnly, resourceSet);
-    return configureView(view);
+    view = configureView(view);
+
+    EObject object = view.getObject(rootObject);
+    object.eAdapters().add(this);
+
+    return view;
   }
 
   protected CDOView doOpenView(boolean readOnly, ResourceSet resourceSet)
@@ -543,9 +585,18 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
             getManager().fireElementsChangedEvent(elements);
           }
         }
+        else if (event instanceof ILifecycleEvent)
+        {
+          ILifecycleEvent e = (ILifecycleEvent)event;
+          if (e.getKind() == Kind.DEACTIVATED)
+          {
+            removeView(view);
+          }
+        }
       }
     });
 
+    addView(view);
     return view;
   }
 

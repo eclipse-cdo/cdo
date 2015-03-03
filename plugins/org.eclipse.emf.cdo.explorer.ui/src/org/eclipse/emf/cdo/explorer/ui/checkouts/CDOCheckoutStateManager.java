@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutState.ContentProvider;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutState.LabelProvider;
 
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
+
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 
 import org.eclipse.jface.resource.JFaceResources;
@@ -62,20 +64,27 @@ public final class CDOCheckoutStateManager
 
   public CDOCheckoutState getState(Object object)
   {
-    CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
-    if (checkout != null)
+    try
     {
-      synchronized (states)
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
+      if (checkout != null)
       {
-        CDOCheckoutState state = states.get(checkout);
-        if (state == null)
+        synchronized (states)
         {
-          state = new CDOCheckoutState(this, checkout);
-          states.put(checkout, state);
-        }
+          CDOCheckoutState state = states.get(checkout);
+          if (state == null)
+          {
+            state = new CDOCheckoutState(this, checkout);
+            states.put(checkout, state);
+          }
 
-        return state;
+          return state;
+        }
       }
+    }
+    catch (LifecycleException ex)
+    {
+      //$FALL-THROUGH$
     }
 
     return null;

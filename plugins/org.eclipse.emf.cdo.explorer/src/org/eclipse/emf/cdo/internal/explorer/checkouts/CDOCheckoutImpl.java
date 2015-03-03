@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -154,33 +155,37 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public final void setBranchPoint(CDOBranchPoint branchPoint)
   {
-    setBranchPoint(branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
+    int branchID = branchPoint.getBranch().getID();
+    long timeStamp = branchPoint.getTimeStamp();
+    setBranchPoint(branchID, timeStamp);
   }
 
   public final void setBranchPoint(int branchID, long timeStamp)
   {
-    boolean changed = addBranchPoint(this.branchID, this.timeStamp);
-
     if (this.branchID != branchID || this.timeStamp != timeStamp)
     {
+      addBranchPoint(this.branchID, this.timeStamp);
+
       this.branchID = branchID;
       this.timeStamp = timeStamp;
-      readOnly = timeStamp != CDOBranchPoint.UNSPECIFIED_DATE;
 
       if (isOpen())
       {
         branchPath = doSetBranchPoint(branchID, timeStamp);
+
+        for (CDOView view : getViews())
+        {
+          if (view != this.view)
+          {
+            view.setBranchPoint(this.view);
+          }
+        }
       }
       else
       {
         branchPath = null;
       }
 
-      changed = true;
-    }
-
-    if (changed)
-    {
       save();
     }
   }
@@ -582,8 +587,17 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
               elements.add(object);
             }
 
-            getManager().fireElementsChangedEvent(elements);
+            CDOCheckoutManagerImpl manager = getManager();
+            if (manager != null)
+            {
+              manager.fireElementsChangedEvent(elements);
+            }
           }
+        }
+        else if (event instanceof CDOViewTargetChangedEvent)
+        {
+          CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
+          setBranchPoint(e.getBranchPoint());
         }
         else if (event instanceof ILifecycleEvent)
         {

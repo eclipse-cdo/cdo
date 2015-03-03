@@ -39,6 +39,8 @@ public final class CDOCheckoutStateManager
 
   private final CDOCheckoutContentProvider mainContentProvider;
 
+  private CDOCheckoutViewerRefresh viewerRefresh;
+
   public CDOCheckoutStateManager(CDOCheckoutContentProvider mainContentProvider)
   {
     this.mainContentProvider = mainContentProvider;
@@ -52,6 +54,11 @@ public final class CDOCheckoutStateManager
   public ResourceManager getResourceManager()
   {
     return resourceManager;
+  }
+
+  public CDOCheckoutViewerRefresh getViewerRefresh()
+  {
+    return viewerRefresh;
   }
 
   public CDOCheckoutState[] getStates()
@@ -92,6 +99,8 @@ public final class CDOCheckoutStateManager
 
   public void inputChanged(TreeViewer newTreeViewer, Object oldInput, Object newInput)
   {
+    viewerRefresh = new CDOCheckoutViewerRefresh(newTreeViewer);
+
     for (CDOCheckoutState state : getStates())
     {
       IContentProvider contentProvider = state.getContentProvider();

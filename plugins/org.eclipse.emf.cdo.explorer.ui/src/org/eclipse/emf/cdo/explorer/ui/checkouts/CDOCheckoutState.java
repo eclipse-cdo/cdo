@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider.ViewerRefresh;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 
 import org.eclipse.core.commands.common.EventManager;
@@ -80,9 +81,10 @@ public final class CDOCheckoutState
     this.checkout = checkout;
 
     adapterFactory = CDOEditor.createAdapterFactory(true);
+    ViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
 
     CDOCheckoutContentProvider main = stateManager.getMainContentProvider();
-    contentProvider = new ContentProvider(adapterFactory);
+    contentProvider = new ContentProvider(adapterFactory, viewerRefresh);
     contentProvider.inputChanged(main.getViewer(), null, main.getInput());
 
     ResourceManager resourceManager = stateManager.getResourceManager();
@@ -170,9 +172,10 @@ public final class CDOCheckoutState
    */
   public static final class ContentProvider extends AdapterFactoryContentProvider
   {
-    public ContentProvider(AdapterFactory adapterFactory)
+    public ContentProvider(AdapterFactory adapterFactory, ViewerRefresh viewerRefresh)
     {
       super(adapterFactory);
+      this.viewerRefresh = viewerRefresh;
     }
 
     @Override

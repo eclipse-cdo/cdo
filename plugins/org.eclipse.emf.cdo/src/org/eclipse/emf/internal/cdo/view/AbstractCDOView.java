@@ -1642,7 +1642,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     boolean hasConflictResolvers = this instanceof CDOTransaction
         && ((CDOTransaction)this).options().getConflictResolvers().length != 0;
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = null;
-    // 363355 : manage detached objects before changed objects to avoid issue on eContainer
+
+    // Bug 363355: manage detached objects before changed objects to avoid issue on eContainer
     for (CDOIDAndVersion key : allDetachedObjects)
     {
       InternalCDOObject detachedObject = removeObject(key.getID());

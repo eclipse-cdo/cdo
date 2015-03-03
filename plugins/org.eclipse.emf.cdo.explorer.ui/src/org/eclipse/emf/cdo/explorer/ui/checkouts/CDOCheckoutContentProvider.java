@@ -119,9 +119,11 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
   {
     public void notifyEvent(IEvent event)
     {
+      CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
+
       if (event instanceof IContainerEvent)
       {
-        ViewerUtil.refresh(viewer, null);
+        viewerRefresh.addNotification(null, true, true);
       }
       else if (event instanceof CheckoutOpenEvent)
       {
@@ -133,7 +135,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
           ViewerUtil.expand(viewer, checkout, false);
         }
 
-        ViewerUtil.refresh(viewer, checkout);
+        viewerRefresh.addNotification(checkout, true, true);
 
         if (e.isOpen())
         {
@@ -161,11 +163,14 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             changedElement = CDOExplorerUtil.getParent(changedElement);
           }
 
-          ViewerUtil.refresh(viewer, changedElement);
+          viewerRefresh.addNotification(changedElement, true, true);
         }
         else
         {
-          ViewerUtil.update(viewer, changedElements);
+          for (Object changedElement : changedElements)
+          {
+            viewerRefresh.addNotification(changedElement, false, true);
+          }
         }
 
         updatePropertySheetPage(changedElements);
@@ -568,14 +573,17 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             }
           }
 
-          // The viewer must be refreshed synchronously so that the loaded children don't get garbage collected.
-          // Set the selection again to trigger, e.g., a History page update.
-          ViewerUtil.refresh(viewer, originalObject, false, true);
-
-          synchronized (LOADING_OBJECTS)
+          CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
+          viewerRefresh.addNotification(originalObject, true, true, new Runnable()
           {
-            LOADING_OBJECTS.remove(originalObject);
-          }
+            public void run()
+            {
+              synchronized (LOADING_OBJECTS)
+              {
+                LOADING_OBJECTS.remove(originalObject);
+              }
+            }
+          });
 
           return Status.OK_STATUS;
         }

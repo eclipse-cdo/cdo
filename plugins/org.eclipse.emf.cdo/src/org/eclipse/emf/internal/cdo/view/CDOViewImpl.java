@@ -883,9 +883,16 @@ public class CDOViewImpl extends AbstractCDOView
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
       Map<CDOID, InternalCDORevision> oldRevisions, boolean clearResourcePathCache)
   {
+    if (getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE && CDOStateMachine.SWITCHING_TARGET.get() != Boolean.TRUE)
+    {
+      // Don't invalidate historical views unless during a branch point switch.
+      return;
+    }
+
     try
     {
-      if (branch == getBranch()) // Also false for FailureCommitInfos. Only setLastUpdateTime() is called below.
+      // Also false for FailureCommitInfos (because of branch==null). Only setLastUpdateTime() is called below.
+      if (branch == getBranch())
       {
         if (clearResourcePathCache)
         {

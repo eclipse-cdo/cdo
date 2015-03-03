@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
@@ -81,7 +82,11 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
       {
         if (event instanceof CDOViewTargetChangedEvent)
         {
-          getManager().fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.ELEMENT, OnlineCDOCheckout.this);
+          CDOCheckoutManagerImpl manager = getManager();
+          if (manager != null)
+          {
+            manager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.ELEMENT, OnlineCDOCheckout.this);
+          }
         }
       }
     });
@@ -92,19 +97,14 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   private CDOView openView(CDOSession session, CDOBranch branch)
   {
     return session.openView(branch, getTimeStamp());
-
-    // if (isReadOnly())
-    // {
-    // return session.openView(branch, getTimeStamp());
-    // }
-    //
-    // return session.openTransaction(branch);
   }
 
   @Override
   protected void prepareOpen()
   {
-    getRepository().connect();
+    CDORepository repository = getRepository();
+    repository.connect();
+
     super.prepareOpen();
   }
 }

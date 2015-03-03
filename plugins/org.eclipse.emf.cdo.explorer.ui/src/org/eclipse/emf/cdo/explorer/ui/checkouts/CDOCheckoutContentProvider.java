@@ -465,10 +465,11 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       }
 
       CDOCheckout openingCheckout = null;
+      CDOCheckout checkout = null;
 
       if (object instanceof CDOCheckout)
       {
-        CDOCheckout checkout = (CDOCheckout)object;
+        checkout = (CDOCheckout)object;
         if (!checkout.isOpen())
         {
           openingCheckout = openingCheckouts.remove(checkout);
@@ -486,6 +487,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
       final Object finalObject = object;
       final CDOCheckout finalOpeningCheckout = openingCheckout;
+      final CDOCheckout finalCheckout = checkout;
       final ITreeContentProvider contentProvider = stateManager.getContentProvider(finalObject);
       if (contentProvider == null)
       {
@@ -533,7 +535,13 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
               loadedRevisions.addAll(revisions);
             }
 
-            Object[] children = contentProvider.getChildren(finalObject);
+            Object[] children;
+            CDOCheckout checkout = finalCheckout != null ? finalCheckout : CDOExplorerUtil.getCheckout(finalObject);
+            synchronized (checkout.getView())
+            {
+              children = contentProvider.getChildren(finalObject);
+            }
+
             children = CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(finalObject, children);
             childrenCache.put(originalObject, children);
           }

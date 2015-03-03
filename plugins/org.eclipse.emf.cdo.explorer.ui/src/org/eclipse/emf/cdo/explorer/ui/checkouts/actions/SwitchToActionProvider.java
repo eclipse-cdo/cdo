@@ -44,6 +44,53 @@ public class SwitchToActionProvider extends AbstractBranchPointActionProvider
   }
 
   @Override
+  protected void fillHistorizedAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
+      CDOBranchPoint branchPoint)
+  {
+    if (checkout.isReadOnly() || branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      super.fillHistorizedAction(page, subMenu, checkout, branchPoint);
+    }
+  }
+
+  @Override
+  protected void fillOtherBranchAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
+  {
+    if (!checkout.isReadOnly())
+    {
+      super.fillOtherBranchAction(page, subMenu, checkout);
+    }
+  }
+
+  @Override
+  protected void fillOtherBranchPointAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
+  {
+    if (checkout.isReadOnly())
+    {
+      super.fillOtherBranchPointAction(page, subMenu, checkout);
+    }
+  }
+
+  @Override
+  protected void fillCommitAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
+  {
+    if (checkout.isReadOnly())
+    {
+      super.fillCommitAction(page, subMenu, checkout);
+    }
+  }
+
+  @Override
+  protected void fillOtherCheckoutAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
+      CDOCheckout otherCheckout)
+  {
+    if (checkout.isReadOnly() == otherCheckout.isReadOnly())
+    {
+      super.fillOtherCheckoutAction(page, subMenu, checkout, otherCheckout);
+    }
+  }
+
+  @Override
   protected String getHistorizedBranchPointToolTip(boolean allowTimeStamp)
   {
     return allowTimeStamp ? "Switch to this branch point" : "Switch to this branch";

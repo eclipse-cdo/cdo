@@ -507,9 +507,12 @@
                tooltip="Check the repository out as an online connection">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
-                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
-                  </iterate>
+                  <and>
+                     <count value="1"/>
+                    <iterate>
+                      <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+                    </iterate>
+                  </and>
                </with>
             </visibleWhen>
          </command>
@@ -521,9 +524,12 @@
                tooltip="Check the repository out as an offline connection">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
-                    <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
-                  </iterate>
+                  <and>
+                     <count value="1"/>
+                    <iterate>
+                      <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+                    </iterate>
+                  </and>
                </with>
             </visibleWhen>
          </command>

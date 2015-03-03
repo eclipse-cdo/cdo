@@ -217,7 +217,7 @@ public class CDORepositoriesView extends ContainerView
     manager.add(new Separator("group.properties"));
 
     IWorkbenchPage page = getSite().getPage();
-    Object selectedElement = selection.getFirstElement();
+    Object selectedElement = selection.size() == 1 ? selection.getFirstElement() : null;
 
     IMenuManager subMenu = new MenuManager(ShowInActionProvider.TITLE, ICommonMenuConstants.GROUP_OPEN_WITH);
     subMenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));

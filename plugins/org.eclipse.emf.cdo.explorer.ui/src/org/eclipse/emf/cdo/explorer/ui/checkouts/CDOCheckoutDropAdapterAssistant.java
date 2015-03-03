@@ -200,7 +200,10 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
               CDOSession session = CDOUtil.getSession(branchPoint);
               if (session == checkout.getView().getSession())
               {
-                return branchPoint;
+                if (checkout.isReadOnly() || branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+                {
+                  return branchPoint;
+                }
               }
             }
           }

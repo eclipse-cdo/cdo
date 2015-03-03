@@ -128,6 +128,12 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
     if (this.timeStamp != timeStamp)
     {
       this.timeStamp = timeStamp;
+      int newSelection = (int)((timeStamp - startTimeStamp) / stepSize);
+      if (getSelection() != newSelection)
+      {
+        setSelection(newSelection);
+      }
+
       timeStampChanged(timeStamp);
     }
   }
@@ -164,7 +170,7 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
     absoluteTimeWindowLength = endTimeStamp - startTimeStamp;
     stepSize = absoluteTimeWindowLength / FACTOR;
 
-    setTimeStamp(endTimeStamp);
+    setTimeStamp(view.getTimeStamp());
 
     staleReferencePolicy = new CDOStaleReferencePolicy.DynamicProxy.Enhanced(view);
     view.addListener(this);

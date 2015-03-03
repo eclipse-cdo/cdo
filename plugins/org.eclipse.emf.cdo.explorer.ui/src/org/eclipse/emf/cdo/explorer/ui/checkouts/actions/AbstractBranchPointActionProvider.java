@@ -77,16 +77,16 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
       {
         if (!ObjectUtil.equals(branchPoint, checkoutBranchPoint))
         {
-          subMenu.add(new HistorizedBranchPointAction(page, checkout, branchPoint));
+          fillHistorizedAction(page, subMenu, checkout, branchPoint);
         }
       }
 
       subMenu.add(new Separator("other"));
-      subMenu.add(new OtherBranchPointAction(page, checkout, false));
-      subMenu.add(new OtherBranchPointAction(page, checkout, true));
+      fillOtherBranchAction(page, subMenu, checkout);
+      fillOtherBranchPointAction(page, subMenu, checkout);
 
       subMenu.add(new Separator("commit"));
-      subMenu.add(new CommitBranchPointAction(page, checkout));
+      fillCommitAction(page, subMenu, checkout);
 
       subMenu.add(new Separator("checkout"));
       for (CDOCheckout otherCheckout : CDOExplorerUtil.getCheckoutManager().getCheckouts())
@@ -107,9 +107,36 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
           continue;
         }
 
-        subMenu.add(new OtherCheckoutAction(page, checkout, otherCheckout));
+        fillOtherCheckoutAction(page, subMenu, checkout, otherCheckout);
       }
     }
+  }
+
+  protected void fillHistorizedAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
+      CDOBranchPoint branchPoint)
+  {
+    subMenu.add(new HistorizedBranchPointAction(page, checkout, branchPoint));
+  }
+
+  protected void fillOtherBranchAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
+  {
+    subMenu.add(new OtherBranchPointAction(page, checkout, false));
+  }
+
+  protected void fillOtherBranchPointAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
+  {
+    subMenu.add(new OtherBranchPointAction(page, checkout, true));
+  }
+
+  protected void fillCommitAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
+  {
+    subMenu.add(new CommitBranchPointAction(page, checkout));
+  }
+
+  protected void fillOtherCheckoutAction(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout,
+      CDOCheckout otherCheckout)
+  {
+    subMenu.add(new OtherCheckoutAction(page, checkout, otherCheckout));
   }
 
   protected abstract String getHistorizedBranchPointToolTip(boolean allowTimeStamp);

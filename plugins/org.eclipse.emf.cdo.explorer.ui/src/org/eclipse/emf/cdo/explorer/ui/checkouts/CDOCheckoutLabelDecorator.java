@@ -118,6 +118,10 @@ public class CDOCheckoutLabelDecorator extends BaseLabelDecorator
         {
           text += "  " + CDOCommonUtil.formatTimeStamp(timeStamp);
         }
+        else if (checkout.isReadOnly())
+        {
+          text += "  read-only";
+        }
 
         if (checkout.isOffline())
         {

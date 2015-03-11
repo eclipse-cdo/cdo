@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
 /**
  * @author Eike Stepper
  */
-public class NewTextResourceWizard extends AbstractNewWizard
+public class NewTextResourceWizard extends NewWizard
 {
   public NewTextResourceWizard()
   {

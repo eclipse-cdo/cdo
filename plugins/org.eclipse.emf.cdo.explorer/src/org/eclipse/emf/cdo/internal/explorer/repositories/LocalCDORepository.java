@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.repositories;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -38,17 +37,9 @@ import java.util.Properties;
  */
 public class LocalCDORepository extends CDORepositoryImpl
 {
-  public static final String PROP_VERSIONING_MODE = "versioningMode";
-
-  public static final String PROP_ID_GENERATION = "idGeneration";
-
   public static final String PROP_TCP_DISABLED = "tcpDisabled";
 
   public static final String PROP_TCP_PORT = "tcpPort";
-
-  private VersioningMode versioningMode;
-
-  private IDGeneration idGeneration;
 
   private boolean tcpDisabled;
 
@@ -97,16 +88,6 @@ public class LocalCDORepository extends CDORepositoryImpl
     return "tcp://localhost:" + tcpPort + "/" + getName();
   }
 
-  public final VersioningMode getVersioningMode()
-  {
-    return versioningMode;
-  }
-
-  public final IDGeneration getIDGeneration()
-  {
-    return idGeneration;
-  }
-
   public final boolean isTCPDisabled()
   {
     return tcpDisabled;
@@ -121,8 +102,6 @@ public class LocalCDORepository extends CDORepositoryImpl
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
-    versioningMode = VersioningMode.valueOf(properties.getProperty(PROP_VERSIONING_MODE));
-    idGeneration = IDGeneration.valueOf(properties.getProperty(PROP_ID_GENERATION));
     tcpDisabled = Boolean.parseBoolean(properties.getProperty(PROP_TCP_DISABLED));
     if (!tcpDisabled)
     {
@@ -134,8 +113,6 @@ public class LocalCDORepository extends CDORepositoryImpl
   protected void collectProperties(Properties properties)
   {
     super.collectProperties(properties);
-    properties.setProperty(PROP_VERSIONING_MODE, versioningMode.toString());
-    properties.setProperty(PROP_ID_GENERATION, idGeneration.toString());
     properties.setProperty(PROP_TCP_DISABLED, Boolean.toString(tcpDisabled));
     properties.setProperty(PROP_TCP_PORT, Integer.toString(tcpPort));
   }
@@ -149,8 +126,8 @@ public class LocalCDORepository extends CDORepositoryImpl
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + folder);
 
-    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(versioningMode.isSupportingAudits(),
-        versioningMode.isSupportingBranches(), false);
+    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(getVersioningMode()
+        .isSupportingAudits(), getVersioningMode().isSupportingBranches(), false);
     mappingStrategy.setProperties(getMappingStrategyProperties());
 
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
@@ -175,9 +152,9 @@ public class LocalCDORepository extends CDORepositoryImpl
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(IRepository.Props.OVERRIDE_UUID, "");
-    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(versioningMode.isSupportingAudits()));
-    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(versioningMode.isSupportingBranches()));
-    props.put(IRepository.Props.ID_GENERATION_LOCATION, idGeneration.getLocation().toString());
+    props.put(IRepository.Props.SUPPORTING_AUDITS, Boolean.toString(getVersioningMode().isSupportingAudits()));
+    props.put(IRepository.Props.SUPPORTING_BRANCHES, Boolean.toString(getVersioningMode().isSupportingBranches()));
+    props.put(IRepository.Props.ID_GENERATION_LOCATION, getIDGeneration().getLocation().toString());
     return props;
   }
 
@@ -199,53 +176,5 @@ public class LocalCDORepository extends CDORepositoryImpl
 
     LifecycleUtil.deactivate(repository);
     repository = null;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum VersioningMode
-  {
-    Normal(false, false), Auditing(true, false), Branching(true, true);
-
-    private boolean supportingAudits;
-
-    private boolean supportingBranches;
-
-    private VersioningMode(boolean supportingAudits, boolean supportingBranches)
-    {
-      this.supportingAudits = supportingAudits;
-      this.supportingBranches = supportingBranches;
-    }
-
-    public boolean isSupportingAudits()
-    {
-      return supportingAudits;
-    }
-
-    public boolean isSupportingBranches()
-    {
-      return supportingBranches;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public enum IDGeneration
-  {
-    Counter(IDGenerationLocation.STORE), UUID(IDGenerationLocation.CLIENT);
-
-    private IDGenerationLocation location;
-
-    private IDGeneration(IDGenerationLocation location)
-    {
-      this.location = location;
-    }
-
-    public final IDGenerationLocation getLocation()
-    {
-      return location;
-    }
   }
 }

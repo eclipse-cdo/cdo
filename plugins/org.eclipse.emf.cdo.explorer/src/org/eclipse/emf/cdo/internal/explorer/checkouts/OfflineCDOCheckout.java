@@ -109,6 +109,12 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     return false;
   }
 
+  @Override
+  public void setReadOnly(boolean readOnly)
+  {
+    throw new IllegalStateException("Checkout is offline: " + this);
+  }
+
   public final InternalCDOWorkspace getWorkspace()
   {
     return workspace;

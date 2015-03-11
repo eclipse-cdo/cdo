@@ -68,6 +68,14 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
   private Button timeBrowseButton;
 
+  /**
+   * @since 4.4
+   */
+  public SelectTimeStampComposite(Composite parent, int style)
+  {
+    this(parent, style, null, CDOBranchPoint.UNSPECIFIED_DATE);
+  }
+
   public SelectTimeStampComposite(Composite parent, int style, CDOBranch branch, long timeStamp)
   {
     super(parent, style);
@@ -79,23 +87,6 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
     pointGroup = new Composite(this, SWT.NONE);
     pointGroup.setLayout(layout);
-
-    headRadio = new Button(pointGroup, SWT.RADIO);
-    headRadio.setText(Messages.getString("BranchSelectionDialog.1")); //$NON-NLS-1$
-    headRadio.addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        if (headRadio.getSelection())
-        {
-          setTimeStamp(CDOBranchPoint.UNSPECIFIED_DATE);
-        }
-      }
-    });
-
-    new Label(pointGroup, SWT.NONE);
-    new Label(pointGroup, SWT.NONE);
 
     baseRadio = new Button(pointGroup, SWT.RADIO);
     baseRadio.setText(Messages.getString("BranchSelectionDialog.2")); //$NON-NLS-1$
@@ -165,6 +156,23 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
         }
       }
     });
+
+    headRadio = new Button(pointGroup, SWT.RADIO);
+    headRadio.setText(Messages.getString("BranchSelectionDialog.1")); //$NON-NLS-1$
+    headRadio.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        if (headRadio.getSelection())
+        {
+          setTimeStamp(CDOBranchPoint.UNSPECIFIED_DATE);
+        }
+      }
+    });
+
+    new Label(pointGroup, SWT.NONE);
+    new Label(pointGroup, SWT.NONE);
 
     setBranch(branch);
     setTimeStamp(timeStamp);

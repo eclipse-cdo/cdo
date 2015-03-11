@@ -34,10 +34,9 @@ public class RepositoryTypePage extends WizardPage
   public RepositoryTypePage()
   {
     super("wizardPage");
-    setImageDescriptor(OM.getImageDescriptor("icons/wiz/repo_wizban.png"));
+    setImageDescriptor(OM.getImageDescriptor("icons/wiz/new_repo.gif"));
     setTitle("New Repository");
     setMessage("Select the type of the new repository.");
-    setDescription("Wizard Page description");
   }
 
   public void createControl(Composite parent)
@@ -54,13 +53,13 @@ public class RepositoryTypePage extends WizardPage
     NewRepositoryWizard wizard = getWizard();
 
     RepositoryRemotePage remotePage = wizard.getRemotePage();
-    addChoice(composite, "Connect to an existing remote repository.", "icons/wiz/repo_remote.gif", remotePage, true);
+    addChoice(composite, "Connect to an existing remote repository.", "icons/wiz/new_repo_remote.gif", remotePage, true);
 
     RepositoryClonePage clonePage = wizard.getClonePage();
-    addChoice(composite, "Clone an existing remote repository.", "icons/wiz/repo_clone.gif", clonePage, false);
+    addChoice(composite, "Clone an existing remote repository.", "icons/wiz/new_repo_clone.gif", clonePage, false);
 
     RepositoryLocalPage localPage = wizard.getLocalPage();
-    addChoice(composite, "Create a new local repository.", "icons/wiz/repo_local.gif", localPage, true);
+    addChoice(composite, "Create a new local repository.", "icons/wiz/new_repo_local.gif", localPage, true);
 
     nextPage = remotePage;
     setPageComplete(true);
@@ -71,10 +70,7 @@ public class RepositoryTypePage extends WizardPage
   {
     this.nextPage = nextPage;
 
-    Button button = new Button(composite, SWT.RADIO);
-    button.setText(text);
-    button.setEnabled(enabled);
-    button.addSelectionListener(new SelectionListener()
+    final SelectionListener listener = new SelectionListener()
     {
       public void widgetSelected(SelectionEvent e)
       {
@@ -86,15 +82,18 @@ public class RepositoryTypePage extends WizardPage
         widgetSelected(e);
         getContainer().showPage(nextPage);
       }
-    });
+    };
 
+    Button button = new Button(composite, SWT.RADIO);
+    button.setText(text);
+    button.setEnabled(enabled);
+    button.addSelectionListener(listener);
     button.addMouseListener(new MouseAdapter()
     {
       @Override
       public void mouseDoubleClick(MouseEvent e)
       {
-        RepositoryTypePage.this.nextPage = nextPage;
-        getContainer().showPage(nextPage);
+        listener.widgetDefaultSelected(null);
       }
     });
 

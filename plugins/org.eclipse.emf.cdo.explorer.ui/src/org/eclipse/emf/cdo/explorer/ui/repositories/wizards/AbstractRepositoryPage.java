@@ -42,7 +42,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
   public AbstractRepositoryPage(String pageName, String defaultLabel)
   {
     super(pageName);
-    setImageDescriptor(OM.getImageDescriptor("icons/wiz/repo_wizban.png"));
+    setImageDescriptor(OM.getImageDescriptor("icons/wiz/new_repo.gif"));
     this.defaultLabel = defaultLabel;
   }
 

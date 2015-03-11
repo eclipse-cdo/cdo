@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.AbstractNewWizard;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewWizard;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.NewRootMenuPopulator;
@@ -380,9 +380,9 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     public IWorkbenchWizard createWizard() throws CoreException
     {
       IWorkbenchWizard wizard = delegate.createWizard();
-      if (wizard instanceof AbstractNewWizard)
+      if (wizard instanceof NewWizard)
       {
-        AbstractNewWizard newWizard = (AbstractNewWizard)wizard;
+        NewWizard newWizard = (NewWizard)wizard;
         newWizard.setContentProvider(contentProvider);
       }
 

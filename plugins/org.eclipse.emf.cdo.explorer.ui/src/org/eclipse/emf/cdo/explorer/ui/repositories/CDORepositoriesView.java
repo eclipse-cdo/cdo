@@ -17,10 +17,9 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider;
 import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
-import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.IDGeneration;
-import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository.VersioningMode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -140,8 +139,9 @@ public class CDORepositoriesView extends ContainerView
         properties.setProperty(LocalCDORepository.PROP_TYPE, CDORepository.TYPE_LOCAL);
         properties.setProperty(LocalCDORepository.PROP_LABEL, "repo2");
         properties.setProperty(LocalCDORepository.PROP_NAME, "repo2");
-        properties.setProperty(LocalCDORepository.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
-        properties.setProperty(LocalCDORepository.PROP_ID_GENERATION, IDGeneration.UUID.toString());
+        properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE,
+            CDORepository.VersioningMode.Branching.toString());
+        properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, CDORepository.IDGeneration.UUID.toString());
         properties.setProperty(LocalCDORepository.PROP_TCP_DISABLED, "false");
         properties.setProperty(LocalCDORepository.PROP_TCP_PORT, "2037");
 
@@ -250,6 +250,20 @@ public class CDORepositoriesView extends ContainerView
     itemProvider.connectRepository(repository);
   }
 
+  public static void newRepository(Shell shell)
+  {
+    try
+    {
+      WizardDialog dialog = new WizardDialog(shell, new NewRepositoryWizard());
+      dialog.open();
+    }
+    catch (RuntimeException ex)
+    {
+      OM.LOG.error(ex);
+      throw ex;
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -347,17 +361,8 @@ public class CDORepositoriesView extends ContainerView
     @Override
     public void run()
     {
-      try
-      {
-        Shell shell = getSite().getShell();
-        WizardDialog dialog = new WizardDialog(shell, new NewRepositoryWizard());
-        dialog.open();
-      }
-      catch (RuntimeException ex)
-      {
-        OM.LOG.error(ex);
-        throw ex;
-      }
+      Shell shell = getSite().getShell();
+      newRepository(shell);
     }
   }
 }

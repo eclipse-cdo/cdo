@@ -88,6 +88,14 @@
     </editor>
   </extension>
 
+  <extension 
+        point="org.eclipse.ui.importWizards">
+     <category
+           id="org.eclipse.emf.cdo.category"
+           name="CDO">
+     </category>
+  </extension>
+  
   <extension
         point="org.eclipse.ui.newWizards">
      <category

@@ -107,6 +107,10 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private String name;
 
+  private CDORepository.VersioningMode versioningMode;
+
+  private CDORepository.IDGeneration idGeneration;
+
   private State state = State.Disconnected;
 
   private boolean explicitelyConnected;
@@ -114,6 +118,10 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   private int sessionRefCount;
 
   private CDOSession session;
+
+  public static final String PROP_VERSIONING_MODE = "versioningMode";
+
+  public static final String PROP_ID_GENERATION = "idGeneration";
 
   public CDORepositoryImpl()
   {
@@ -133,6 +141,16 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   public final String getName()
   {
     return name;
+  }
+
+  public final CDORepository.VersioningMode getVersioningMode()
+  {
+    return versioningMode;
+  }
+
+  public final CDORepository.IDGeneration getIDGeneration()
+  {
+    return idGeneration;
   }
 
   public final State getState()
@@ -463,6 +481,9 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     super.init(folder, type, properties);
     name = properties.getProperty(PROP_NAME);
+    versioningMode = CDORepository.VersioningMode.valueOf(properties
+        .getProperty(CDORepositoryImpl.PROP_VERSIONING_MODE));
+    idGeneration = CDORepository.IDGeneration.valueOf(properties.getProperty(CDORepositoryImpl.PROP_ID_GENERATION));
   }
 
   @Override
@@ -470,6 +491,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     super.collectProperties(properties);
     properties.setProperty(PROP_NAME, name);
+    properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, versioningMode.toString());
+    properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, idGeneration.toString());
   }
 
   protected IConnector getConnector()

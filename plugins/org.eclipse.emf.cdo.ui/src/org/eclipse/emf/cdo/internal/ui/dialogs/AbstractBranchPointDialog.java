@@ -12,19 +12,10 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.ui.CDOItemProvider;
-import org.eclipse.emf.cdo.ui.widgets.SelectTimeStampComposite;
-
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.ui.ValidationContext;
+import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -34,7 +25,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -44,11 +34,9 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
 {
   private final boolean allowTimeStamp;
 
-  private CDOBranchPoint branchPoint;
+  private final CDOBranchPoint branchPoint;
 
-  private TreeViewer branchViewer;
-
-  private SelectTimeStampComposite timeStampComposite;
+  private ComposeBranchPointComposite branchPointComposite;
 
   private String timeStampError;
 
@@ -68,6 +56,11 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
 
   public final CDOBranchPoint getBranchPoint()
   {
+    if (branchPointComposite != null)
+    {
+      return branchPointComposite.getBranchPoint();
+    }
+
     return branchPoint;
   }
 
@@ -99,72 +92,40 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
 
   protected void createUI(Composite container)
   {
-    CDOBranch branch = branchPoint.getBranch();
-    CDOItemProvider itemProvider = new CDOItemProvider(null);
-
-    branchViewer = new TreeViewer(container, SWT.BORDER | SWT.SINGLE);
-    branchViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-    branchViewer.setLabelProvider(itemProvider);
-    branchViewer.setContentProvider(itemProvider);
-    branchViewer.setInput(branch.getBranchManager());
-    branchViewer.addSelectionChangedListener(new ISelectionChangedListener()
+    branchPointComposite = new ComposeBranchPointComposite(container, allowTimeStamp, branchPoint)
     {
-      public void selectionChanged(SelectionChangedEvent event)
+      @Override
+      protected void timeStampError(String message)
       {
-        IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-        CDOBranch branch = (CDOBranch)selection.getFirstElement();
-
-        if (timeStampComposite != null)
-        {
-          timeStampComposite.setBranch(branch);
-        }
-
-        composeBranchPoint();
+        timeStampError = message;
         validate();
       }
-    });
 
-    branchViewer.addDoubleClickListener(new IDoubleClickListener()
-    {
-      public void doubleClick(DoubleClickEvent event)
+      @Override
+      protected void branchPointChanged(CDOBranchPoint branchPoint)
       {
-        doubleClicked();
+        if (validate())
+        {
+          AbstractBranchPointDialog.this.branchPointChanged(branchPoint);
+        }
       }
-    });
 
+      @Override
+      protected void doubleClicked()
+      {
+        AbstractBranchPointDialog.this.doubleClicked();
+      }
+    };
+
+    branchPointComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+    CDOBranch branch = branchPoint.getBranch();
+
+    TreeViewer branchViewer = branchPointComposite.getBranchViewer();
     branchViewer.setSelection(new StructuredSelection(branch));
     branchViewer.setExpandedState(branch, true);
-
-    if (allowTimeStamp)
-    {
-      Group timeStampGroup = new Group(container, SWT.NONE);
-      timeStampGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
-      timeStampGroup.setLayout(new GridLayout(1, false));
-      timeStampGroup.setText("Time Stamp:");
-
-      timeStampComposite = new SelectTimeStampComposite(timeStampGroup, SWT.NONE, branch, branchPoint.getTimeStamp())
-      {
-        @Override
-        protected void timeStampChanged(long timeStamp)
-        {
-          composeBranchPoint();
-        }
-      };
-
-      timeStampComposite.getTimeBrowseButton().setVisible(false);
-      timeStampComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-      timeStampComposite.setValidationContext(new ValidationContext()
-      {
-        public void setValidationError(Object source, String message)
-        {
-          timeStampError = message;
-          validate();
-        }
-      });
-    }
   }
 
-  protected final void validate()
+  protected final boolean validate()
   {
     String error = timeStampError;
 
@@ -187,6 +148,8 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
     {
       button.setEnabled(error == null);
     }
+
+    return error == null;
   }
 
   protected void doValidate() throws Exception
@@ -194,33 +157,9 @@ public abstract class AbstractBranchPointDialog extends TitleAreaDialog
     // Do nothing.
   }
 
-  private void composeBranchPoint()
-  {
-    if (branchViewer == null)
-    {
-      return;
-    }
-
-    CDOBranchPoint oldBranchPoint = branchPoint;
-
-    IStructuredSelection selection = (IStructuredSelection)branchViewer.getSelection();
-    CDOBranch branch = (CDOBranch)selection.getFirstElement();
-
-    long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
-    if (timeStampComposite != null)
-    {
-      timeStamp = timeStampComposite.getTimeStamp();
-    }
-
-    branchPoint = branch.getPoint(timeStamp);
-    if (!ObjectUtil.equals(branchPoint, oldBranchPoint))
-    {
-      branchPointChanged(branchPoint);
-    }
-  }
-
   protected void branchPointChanged(CDOBranchPoint branchPoint)
   {
+    // Do nothing.
   }
 
   protected void doubleClicked()

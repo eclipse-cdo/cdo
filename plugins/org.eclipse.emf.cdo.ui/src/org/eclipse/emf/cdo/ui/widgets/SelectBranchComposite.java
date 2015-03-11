@@ -42,7 +42,9 @@ import org.eclipse.swt.widgets.Listener;
  *
  * @author Eike Stepper
  * @since 4.0
+ * @deprecated as of 4.4 no longer supported.
  */
+@Deprecated
 public class SelectBranchComposite extends Composite implements ValidationParticipant
 {
   private ValidationContext validationContext;

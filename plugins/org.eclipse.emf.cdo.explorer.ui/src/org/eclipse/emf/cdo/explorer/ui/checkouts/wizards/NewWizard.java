@@ -37,7 +37,7 @@ import org.eclipse.ui.IWorkbench;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractNewWizard extends Wizard implements INewWizard
+public abstract class NewWizard extends Wizard implements INewWizard
 {
   private final String resourceType;
 
@@ -49,7 +49,7 @@ public abstract class AbstractNewWizard extends Wizard implements INewWizard
 
   private NewWizardPage page;
 
-  protected AbstractNewWizard(String resourceType, String title)
+  protected NewWizard(String resourceType, String title)
   {
     this.resourceType = resourceType;
     this.title = title;

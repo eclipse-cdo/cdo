@@ -317,9 +317,18 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return readOnly;
   }
 
-  public final void setReadOnly(boolean readOnly)
+  public void setReadOnly(boolean readOnly)
   {
-    this.readOnly = readOnly;
+    if (state != State.Open)
+    {
+      throw new IllegalStateException("Checkout is not closed: " + this);
+    }
+
+    if (this.readOnly != readOnly)
+    {
+      this.readOnly = readOnly;
+      save();
+    }
   }
 
   public final CDOID getRootID()
@@ -717,7 +726,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     branchPath = properties.getProperty(PROP_BRANCH_PATH);
     branchPoints = properties.getProperty(PROP_BRANCH_POINTS);
     timeStamp = Long.parseLong(properties.getProperty(PROP_TIME_STAMP));
-    readOnly = Boolean.parseBoolean(properties.getProperty(PROP_READ_ONLY));
+    readOnly = isOnline() ? Boolean.parseBoolean(properties.getProperty(PROP_READ_ONLY)) : false;
     rootID = CDOIDUtil.read(properties.getProperty(PROP_ROOT_ID));
 
     ((CDORepositoryImpl)repository).addCheckout(this);
@@ -730,7 +739,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     properties.setProperty(PROP_REPOSITORY, repository.getID());
     properties.setProperty(PROP_BRANCH_ID, Integer.toString(branchID));
     properties.setProperty(PROP_TIME_STAMP, Long.toString(timeStamp));
-    properties.setProperty(PROP_READ_ONLY, Boolean.toString(readOnly));
+    properties.setProperty(PROP_READ_ONLY, Boolean.toString(isOnline() ? readOnly : false));
 
     if (branchPath != null)
     {

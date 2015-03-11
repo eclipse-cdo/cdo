@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2012 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,63 +13,76 @@ package org.eclipse.emf.cdo.ui.widgets;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.ValidationContext;
 
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Group;
 
 /**
  * Composed UI widget offering functionality for users to select {@link org.eclipse.emf.cdo.common.branch.CDOBranch
  * branches} and a {@link org.eclipse.emf.cdo.common.branch.CDOBranchPoint timestamp} within a branch for a particular
  * {@link org.eclipse.emf.cdo.session.CDOSession CDOSession}
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */
 public class ComposeBranchPointComposite extends Composite
 {
-  private CDOSession session;
+  private final boolean allowTimeStamp;
 
   private CDOBranchPoint branchPoint;
 
-  private SelectBranchComposite selectBranchComposite;
+  private TreeViewer branchViewer;
 
-  private SelectTimeStampComposite selectTimeStampComposite;
+  private SelectTimeStampComposite timeStampComposite;
 
+  /**
+   * @since 4.4
+   */
+  public ComposeBranchPointComposite(Composite parent, boolean allowTimeStamp, CDOBranchPoint branchPoint)
+  {
+    this(parent, SWT.NONE, null, branchPoint, allowTimeStamp);
+  }
+
+  /**
+   * @deprecated as of 4.4 use {@link #ComposeBranchPointComposite(Composite, boolean, CDOBranchPoint)}.
+   */
+  @Deprecated
   public ComposeBranchPointComposite(Composite parent, int style, CDOSession session, CDOBranchPoint branchPoint,
       boolean allowTimeStamp)
   {
     super(parent, style);
-    this.session = session;
+    this.allowTimeStamp = allowTimeStamp;
     this.branchPoint = branchPoint;
 
-    GridLayout gridLayout = UIUtil.createGridLayout(1);
-    gridLayout.verticalSpacing = 5;
+    GridLayout containerGridLayout = new GridLayout(1, false);
+    containerGridLayout.marginWidth = 0;
+    containerGridLayout.marginHeight = 0;
+    containerGridLayout.verticalSpacing = 10;
 
-    setLayout(gridLayout);
-
-    CDOBranch branch = branchPoint == null ? session.getBranchManager().getMainBranch() : branchPoint.getBranch();
-    if (session.getRepositoryInfo().isSupportingBranches())
-    {
-      selectBranchComposite = createSelectBranchComposite(session, branch);
-      selectBranchComposite.setLayoutData(UIUtil.createGridData());
-      selectBranchComposite.getBranchViewer().expandAll();
-    }
-
-    if (allowTimeStamp)
-    {
-      long timeStamp = branchPoint == null ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
-      selectTimeStampComposite = createSelectTimeStampComposite(branch, timeStamp);
-      selectTimeStampComposite.setLayoutData(UIUtil.createGridData(true, false));
-    }
+    setLayout(containerGridLayout);
+    createUI();
   }
 
-  public CDOSession getSession()
+  /**
+   * @since 4.4
+   */
+  public boolean isAllowTimeStamp()
   {
-    return session;
+    return allowTimeStamp;
   }
 
   public CDOBranchPoint getBranchPoint()
@@ -77,19 +90,130 @@ public class ComposeBranchPointComposite extends Composite
     return branchPoint;
   }
 
-  public SelectBranchComposite getSelectBranchComposite()
+  /**
+   * @since 4.4
+   */
+  public void setBranchPoint(CDOBranchPoint branchPoint)
   {
-    return selectBranchComposite;
+    this.branchPoint = branchPoint;
+    if (branchPoint != null)
+    {
+      CDOBranch branch = branchPoint.getBranch();
+      long timeStamp = branchPoint.getTimeStamp();
+
+      if (branchViewer != null)
+      {
+        branchViewer.setSelection(new StructuredSelection(branch));
+      }
+
+      if (timeStampComposite != null)
+      {
+        timeStampComposite.setBranch(branch);
+        timeStampComposite.setTimeStamp(timeStamp);
+      }
+    }
+  }
+
+  /**
+   * @since 4.4
+   */
+  public TreeViewer getBranchViewer()
+  {
+    return branchViewer;
   }
 
   public SelectTimeStampComposite getSelectTimeComposite()
   {
-    return selectTimeStampComposite;
+    return timeStampComposite;
   }
 
-  protected SelectTimeStampComposite createSelectTimeStampComposite(CDOBranch branch, long timeStamp)
+  /**
+   * @deprecated as of 4.4 use {@link #getBranchViewer()}.
+   */
+  @Deprecated
+  public SelectBranchComposite getSelectBranchComposite()
   {
-    return new SelectTimeStampComposite(this, SWT.NONE, branch, timeStamp)
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated as of 4.4 no longer supported.
+   */
+  @Deprecated
+  public CDOSession getSession()
+  {
+    return null;
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void createUI()
+  {
+    branchViewer = createBranchViewer();
+    branchViewer.addSelectionChangedListener(new ISelectionChangedListener()
+    {
+      public void selectionChanged(SelectionChangedEvent event)
+      {
+        IStructuredSelection selection = (IStructuredSelection)event.getSelection();
+        CDOBranch branch = (CDOBranch)selection.getFirstElement();
+
+        if (timeStampComposite != null)
+        {
+          timeStampComposite.setBranch(branch);
+        }
+
+        composeBranchPoint();
+      }
+    });
+
+    if (allowTimeStamp)
+    {
+      timeStampComposite = createSelectTimeStampComposite();
+      timeStampComposite.setValidationContext(new ValidationContext()
+      {
+        public void setValidationError(Object source, String message)
+        {
+          timeStampError(message);
+        }
+      });
+    }
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected TreeViewer createBranchViewer()
+  {
+    CDOItemProvider itemProvider = new CDOItemProvider(null);
+
+    TreeViewer branchViewer = new TreeViewer(this, SWT.BORDER | SWT.SINGLE);
+    branchViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    branchViewer.setLabelProvider(itemProvider);
+    branchViewer.setContentProvider(itemProvider);
+
+    branchViewer.addDoubleClickListener(new IDoubleClickListener()
+    {
+      public void doubleClick(DoubleClickEvent event)
+      {
+        doubleClicked();
+      }
+    });
+
+    return branchViewer;
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected SelectTimeStampComposite createSelectTimeStampComposite()
+  {
+    Group timeStampGroup = new Group(this, SWT.NONE);
+    timeStampGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    timeStampGroup.setLayout(new GridLayout(1, false));
+    timeStampGroup.setText("Time Stamp:");
+
+    SelectTimeStampComposite timeStampComposite = new SelectTimeStampComposite(timeStampGroup, SWT.NONE)
     {
       @Override
       protected void timeStampChanged(long timeStamp)
@@ -97,8 +221,25 @@ public class ComposeBranchPointComposite extends Composite
         composeBranchPoint();
       }
     };
+
+    timeStampComposite.getTimeBrowseButton().setVisible(false);
+    timeStampComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    return timeStampComposite;
   }
 
+  /**
+   * @deprecated as of 4.4 use {@link #createSelectTimeStampComposite()}.
+   */
+  @Deprecated
+  protected SelectTimeStampComposite createSelectTimeStampComposite(CDOBranch branch, long timeStamp)
+  {
+    return createSelectTimeStampComposite();
+  }
+
+  /**
+   * @deprecated as of 4.4 use {@link #createSelectBranchComposite(Composite)}.
+   */
+  @Deprecated
   protected SelectBranchComposite createSelectBranchComposite(CDOSession session, CDOBranch branch)
   {
     return new SelectBranchComposite(this, SWT.NONE, session, branch)
@@ -106,9 +247,9 @@ public class ComposeBranchPointComposite extends Composite
       @Override
       protected void branchChanged(CDOBranch newBranch)
       {
-        if (selectTimeStampComposite != null)
+        if (timeStampComposite != null)
         {
-          selectTimeStampComposite.setBranch(newBranch);
+          timeStampComposite.setBranch(newBranch);
         }
 
         composeBranchPoint();
@@ -116,30 +257,46 @@ public class ComposeBranchPointComposite extends Composite
     };
   }
 
-  protected void branchPointChanged(CDOBranchPoint newBranchPoint)
-  {
-  }
-
   private void composeBranchPoint()
   {
+    if (branchViewer == null)
+    {
+      return;
+    }
+
     CDOBranchPoint oldBranchPoint = branchPoint;
 
-    CDOBranch branch = session.getBranchManager().getMainBranch();
-    if (selectBranchComposite != null)
-    {
-      branch = selectBranchComposite.getBranch();
-    }
+    IStructuredSelection selection = (IStructuredSelection)branchViewer.getSelection();
+    CDOBranch branch = (CDOBranch)selection.getFirstElement();
 
     long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
-    if (selectTimeStampComposite != null)
+    if (timeStampComposite != null)
     {
-      timeStamp = selectTimeStampComposite.getTimeStamp();
+      timeStamp = timeStampComposite.getTimeStamp();
     }
 
-    branchPoint = branch == null ? null : branch.getPoint(timeStamp);
+    branchPoint = branch.getPoint(timeStamp);
     if (!ObjectUtil.equals(branchPoint, oldBranchPoint))
     {
       branchPointChanged(branchPoint);
     }
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void timeStampError(String message)
+  {
+  }
+
+  protected void branchPointChanged(CDOBranchPoint branchPoint)
+  {
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void doubleClicked()
+  {
   }
 }

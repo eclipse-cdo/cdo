@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.eresource.EresourceFactory;
 /**
  * @author Eike Stepper
  */
-public class NewBinaryResourceWizard extends AbstractNewWizard
+public class NewBinaryResourceWizard extends NewWizard
 {
   public NewBinaryResourceWizard()
   {

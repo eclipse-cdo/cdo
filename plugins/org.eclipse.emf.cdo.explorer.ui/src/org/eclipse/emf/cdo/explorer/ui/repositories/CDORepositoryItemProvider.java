@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -43,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<Object>>
+public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<Object>> implements ITableLabelProvider
 {
   private static final Image IMAGE_REPO = SharedIcons.getImage(SharedIcons.OBJ_REPO);
 
@@ -91,25 +92,36 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
 
     private void updatePropertySheetPage(final Object element)
     {
-      getDisplay().asyncExec(new Runnable()
+      if (repositoriesView != null)
       {
-        public void run()
+        getDisplay().asyncExec(new Runnable()
         {
-          IStructuredSelection selection = (IStructuredSelection)repositoriesView.getSelection();
-          for (Object object : selection.toArray())
+          public void run()
           {
-            if (object == element)
+            IStructuredSelection selection = (IStructuredSelection)repositoriesView.getSelection();
+            for (Object object : selection.toArray())
             {
-              repositoriesView.refreshPropertySheetPage();
-              return;
+              if (object == element)
+              {
+                repositoriesView.refreshPropertySheetPage();
+                return;
+              }
             }
           }
-        }
-      });
+        });
+      }
     }
   };
 
   private final CDORepositoriesView repositoriesView;
+
+  private boolean grayOutDisconnectedRepositories = true;
+
+  public CDORepositoryItemProvider()
+  {
+    this(null);
+    grayOutDisconnectedRepositories = false;
+  }
 
   public CDORepositoryItemProvider(CDORepositoriesView repositoriesView)
   {
@@ -269,13 +281,40 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     return super.getText(element);
   }
 
+  public String getColumnText(Object element, int columnIndex)
+  {
+    switch (columnIndex)
+    {
+    case 0:
+      return getText(element);
+
+    case 1:
+      if (element instanceof CDORepository)
+      {
+        CDORepository repository = (CDORepository)element;
+        return repository.getVersioningMode().toString();
+      }
+
+      break;
+
+    case 2:
+      if (element instanceof CDORepository)
+      {
+        CDORepository repository = (CDORepository)element;
+        return repository.getIDGeneration().toString();
+      }
+    }
+
+    return "";
+  }
+
   @Override
   public Image getImage(Object obj)
   {
     if (obj instanceof CDORepository)
     {
       CDORepository repository = (CDORepository)obj;
-      if (!repository.isConnected())
+      if (!repository.isConnected() && grayOutDisconnectedRepositories)
       {
         return imageRepoDisconnected;
       }
@@ -289,6 +328,16 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     }
 
     return super.getImage(obj);
+  }
+
+  public Image getColumnImage(Object element, int columnIndex)
+  {
+    if (columnIndex == 0)
+    {
+      return getImage(element);
+    }
+
+    return null;
   }
 
   @Override

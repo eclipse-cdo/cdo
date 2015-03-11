@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.repositories;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
@@ -49,6 +50,10 @@ public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>
 
   public String getURI();
 
+  public VersioningMode getVersioningMode();
+
+  public IDGeneration getIDGeneration();
+
   public State getState();
 
   public boolean isConnected();
@@ -64,6 +69,54 @@ public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>
   public CDOSession acquireSession();
 
   public void releaseSession();
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum VersioningMode
+  {
+    Normal(false, false), Auditing(true, false), Branching(true, true);
+
+    private boolean supportingAudits;
+
+    private boolean supportingBranches;
+
+    private VersioningMode(boolean supportingAudits, boolean supportingBranches)
+    {
+      this.supportingAudits = supportingAudits;
+      this.supportingBranches = supportingBranches;
+    }
+
+    public boolean isSupportingAudits()
+    {
+      return supportingAudits;
+    }
+
+    public boolean isSupportingBranches()
+    {
+      return supportingBranches;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum IDGeneration
+  {
+    Counter(IDGenerationLocation.STORE), UUID(IDGenerationLocation.CLIENT);
+
+    private IDGenerationLocation location;
+
+    private IDGeneration(IDGenerationLocation location)
+    {
+      this.location = location;
+    }
+
+    public final IDGenerationLocation getLocation()
+    {
+      return location;
+    }
+  }
 
   /**
    * @author Eike Stepper

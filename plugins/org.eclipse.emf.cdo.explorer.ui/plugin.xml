@@ -109,6 +109,19 @@
       </view>
   </extension>
 
+  <extension point="org.eclipse.ui.importWizards">
+     <wizard
+           category="org.eclipse.emf.cdo.category"
+           class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard"
+           icon="icons/checkout.gif"
+           id="org.eclipse.emf.cdo.explorer.ui.checkout"
+           name="Checkout from CDO">
+        <description>
+           Connect to or checkout from a CDO model repository.
+        </description>
+     </wizard>
+  </extension>
+  
   <extension point="org.eclipse.ui.newWizards">
      <wizard
            category="org.eclipse.emf.cdo.category"
@@ -117,6 +130,9 @@
            icon="icons/CDOResourceFolder.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.folder"
            name="Folder">
+        <description>
+           Create a new folder.
+        </description>
      </wizard>
      <wizard
            category="org.eclipse.emf.cdo.category"
@@ -125,6 +141,9 @@
            icon="icons/CDOResource.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.resource"
            name="Model Resource">
+        <description>
+           Create a new model resource.
+        </description>
      </wizard>
      <wizard
            category="org.eclipse.emf.cdo.category"
@@ -133,6 +152,9 @@
            icon="icons/CDOBinaryResource.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.resource.binary"
            name="Binary File">
+        <description>
+           Create a new binary file.
+        </description>
      </wizard>
      <wizard
            category="org.eclipse.emf.cdo.category"
@@ -141,6 +163,9 @@
            icon="icons/CDOTextResource.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.resource.text"
            name="Text File">
+        <description>
+           Create a new text file.
+        </description>
      </wizard>
   </extension>
 

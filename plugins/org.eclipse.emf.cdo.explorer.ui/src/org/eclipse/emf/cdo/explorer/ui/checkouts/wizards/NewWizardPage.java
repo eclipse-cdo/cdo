@@ -79,9 +79,9 @@ public class NewWizardPage extends WizardPage
   }
 
   @Override
-  public AbstractNewWizard getWizard()
+  public NewWizard getWizard()
   {
-    return (AbstractNewWizard)super.getWizard();
+    return (NewWizard)super.getWizard();
   }
 
   public final Object getParent()

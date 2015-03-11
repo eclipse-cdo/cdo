@@ -95,7 +95,7 @@ public class CreateBranchDialog extends AbstractBranchPointDialog
 
     if (name.contains("/") || name.contains("\\"))
     {
-      throw new Exception("Name constains a path separator.");
+      throw new Exception("Name contains a path separator.");
     }
 
     CDOBranch baseBranch = getBranchPoint().getBranch();

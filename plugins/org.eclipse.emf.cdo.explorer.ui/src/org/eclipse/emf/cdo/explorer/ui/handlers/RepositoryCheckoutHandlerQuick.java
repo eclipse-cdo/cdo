@@ -66,7 +66,7 @@ public abstract class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler
   {
     public Online()
     {
-      super("online");
+      super(CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
     }
   }
 
@@ -77,7 +77,7 @@ public abstract class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler
   {
     public Offline()
     {
-      super("offline");
+      super(CDOCheckout.TYPE_OFFLINE);
     }
   }
 }

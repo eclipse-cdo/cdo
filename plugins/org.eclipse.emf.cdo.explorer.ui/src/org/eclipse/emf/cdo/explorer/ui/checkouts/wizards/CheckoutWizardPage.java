@@ -142,7 +142,7 @@ public abstract class CheckoutWizardPage extends WizardPage
 
   protected static void log(String message)
   {
-    System.out.println(message);
+    // System.out.println(message);
   }
 
   /**

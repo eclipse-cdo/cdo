@@ -45,6 +45,8 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
 {
   private CDORepository repository;
 
+  private boolean skip;
+
   private CDOSession session;
 
   private TableViewer tableViewer;
@@ -69,6 +71,11 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
       this.repository = repository;
       repositoryChanged(repository);
     }
+  }
+
+  public final void skip()
+  {
+    skip = true;
   }
 
   public CDOSession getSession()
@@ -186,6 +193,12 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
     if (repository != null)
     {
       tableViewer.setSelection(new StructuredSelection(repository));
+    }
+
+    if (skip)
+    {
+      skip = false;
+      showNextPage();
     }
   }
 

@@ -130,11 +130,15 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
     if (selectedElement != null)
     {
       CDORepository repository = selectedElement.getRepository();
-      repositoryPage.setRepository(repository);
+      if (repository != null)
+      {
+        repositoryPage.setRepository(repository);
+        repositoryPage.skip();
 
-      int branchID = selectedElement.getBranchID();
-      long timeStamp = selectedElement.getTimeStamp();
-      branchPointPage.setBranchPoint(branchID, timeStamp);
+        int branchID = selectedElement.getBranchID();
+        long timeStamp = selectedElement.getTimeStamp();
+        branchPointPage.setBranchPoint(branchID, timeStamp);
+      }
     }
   }
 

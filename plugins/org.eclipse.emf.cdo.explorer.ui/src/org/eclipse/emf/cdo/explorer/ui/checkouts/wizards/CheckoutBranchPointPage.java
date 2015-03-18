@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
@@ -167,6 +168,18 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected boolean doValidate() throws ValidationProblem
   {
+    TreeViewer branchViewer = branchPointComposite.getBranchViewer();
+    if (branchViewer.getInput() == null)
+    {
+      return false;
+    }
+
+    ISelection selection = branchViewer.getSelection();
+    if (selection == null || selection.isEmpty())
+    {
+      return false;
+    }
+
     if (timeStampError != null)
     {
       throw new ValidationProblem(timeStampError);

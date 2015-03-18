@@ -47,11 +47,11 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<Object>> implements ITableLabelProvider
 {
-  private static final Image IMAGE_REPO = SharedIcons.getImage(SharedIcons.OBJ_REPO);
+  public static final Image REPOSITORY_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_REPO);
 
-  private static final Image IMAGE_BRANCH = SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
+  public static final Image BRANCH_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_BRANCH);
 
-  private final Image imageRepoDisconnected = new Image(UIUtil.getDisplay(), IMAGE_REPO, SWT.IMAGE_GRAY);
+  private final Image imageRepoDisconnected = new Image(UIUtil.getDisplay(), REPOSITORY_IMAGE, SWT.IMAGE_GRAY);
 
   private final Map<CDORepository, CDORepository> connectingRepositories = new ConcurrentHashMap<CDORepository, CDORepository>();
 
@@ -322,12 +322,12 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         return imageRepoDisconnected;
       }
 
-      return IMAGE_REPO;
+      return REPOSITORY_IMAGE;
     }
 
     if (obj instanceof CDOBranch)
     {
-      return IMAGE_BRANCH;
+      return BRANCH_IMAGE;
     }
 
     return super.getImage(obj);

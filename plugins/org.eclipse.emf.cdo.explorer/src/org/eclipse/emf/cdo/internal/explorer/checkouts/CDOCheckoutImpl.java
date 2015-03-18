@@ -727,7 +727,12 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     branchPoints = properties.getProperty(PROP_BRANCH_POINTS);
     timeStamp = Long.parseLong(properties.getProperty(PROP_TIME_STAMP));
     readOnly = isOnline() ? Boolean.parseBoolean(properties.getProperty(PROP_READ_ONLY)) : false;
-    rootID = CDOIDUtil.read(properties.getProperty(PROP_ROOT_ID));
+
+    String property = properties.getProperty(PROP_ROOT_ID);
+    if (property != null)
+    {
+      rootID = CDOIDUtil.read(property);
+    }
 
     ((CDORepositoryImpl)repository).addCheckout(this);
   }
@@ -751,8 +756,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       properties.setProperty(PROP_BRANCH_POINTS, branchPoints);
     }
 
-    String string = getCDOIDString(rootID);
-    properties.setProperty(PROP_ROOT_ID, string);
+    if (!CDOIDUtil.isNull(rootID))
+    {
+      String string = getCDOIDString(rootID);
+      properties.setProperty(PROP_ROOT_ID, string);
+    }
   }
 
   protected IManagedContainer getContainer()
@@ -762,6 +770,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   protected EObject loadRootObject()
   {
+    if (CDOIDUtil.isNull(rootID))
+    {
+      rootID = view.getSession().getRepositoryInfo().getRootResourceID();
+    }
+
     return view.getObject(rootID);
   }
 

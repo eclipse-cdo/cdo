@@ -377,6 +377,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public final CDOSession openCheckout(CDOCheckout checkout)
   {
+    connect();
+
     synchronized (checkouts)
     {
       openCheckouts.add(checkout);

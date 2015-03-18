@@ -10,22 +10,39 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutViewerSorter;
+import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryItemProvider;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
+import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 
@@ -38,7 +55,9 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
 {
   private CDOID rootID;
 
-  private TreeViewer objectViewer;
+  private String rootObjectText;
+
+  private TreeViewer treeViewer;
 
   private CDOView view;
 
@@ -64,6 +83,16 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
     }
   }
 
+  public String getRootObjectText()
+  {
+    if (rootObjectText == null)
+    {
+      return repository.getLabel();
+    }
+
+    return rootObjectText;
+  }
+
   @Override
   public void dispose()
   {
@@ -74,9 +103,116 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
   @Override
   protected void createUI(Composite parent)
   {
-    // TODO This is not lazy, async:
-    CDOItemProvider itemProvider = new CDOItemProvider(null)
+    final CDOItemProvider itemProvider = new CDOItemProvider(null)
     {
+      private final ComposedAdapterFactory adapterFactory = CDOEditor.createAdapterFactory(true);
+
+      private final ITreeContentProvider contentProvider = new AdapterFactoryContentProvider(adapterFactory);
+
+      private final ILabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+
+      @Override
+      public void dispose()
+      {
+        labelProvider.dispose();
+        contentProvider.dispose();
+        adapterFactory.dispose();
+        super.dispose();
+      }
+
+      @Override
+      public boolean hasChildren(Object element)
+      {
+        CDOResource rootResource = view.getRootResource();
+        if (element == repository)
+        {
+          return true;
+        }
+
+        if (element == rootResource)
+        {
+          return !rootResource.getContents().isEmpty();
+        }
+
+        if (element instanceof EObject)
+        {
+          return contentProvider.hasChildren(element);
+        }
+
+        return super.hasChildren(element);
+      }
+
+      @Override
+      public Object[] getChildren(Object element)
+      {
+        CDOResource rootResource = view.getRootResource();
+        if (element == repository)
+        {
+          return new Object[] { rootResource };
+        }
+
+        if (element == rootResource)
+        {
+          return rootResource.getContents().toArray();
+        }
+
+        if (element instanceof EObject)
+        {
+          return contentProvider.getChildren(element);
+        }
+
+        return super.getChildren(element);
+      }
+
+      @Override
+      public Object getParent(Object element)
+      {
+        CDOResource rootResource = view.getRootResource();
+        if (element == rootResource)
+        {
+          return repository;
+        }
+
+        if (element instanceof EObject)
+        {
+          return contentProvider.getParent(element);
+        }
+
+        return super.getParent(element);
+      }
+
+      @Override
+      public Image getImage(Object element)
+      {
+        if (element == view.getRootResource())
+        {
+          return CDORepositoryItemProvider.REPOSITORY_IMAGE;
+        }
+
+        if (element instanceof EObject)
+        {
+          return labelProvider.getImage(element);
+        }
+
+        return super.getImage(element);
+      }
+
+      @Override
+      public String getText(Object element)
+      {
+        if (element == view.getRootResource())
+        {
+          return repository.getLabel();
+        }
+
+        if (element instanceof EObject)
+        {
+          return labelProvider.getText(element);
+        }
+
+        return super.getText(element);
+      }
+
       @Override
       public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
       {
@@ -84,16 +220,55 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
       }
     };
 
-    objectViewer = new TreeViewer(parent, SWT.BORDER);
-    objectViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-    objectViewer.setContentProvider(itemProvider);
-    objectViewer.setLabelProvider(itemProvider);
-    objectViewer.setSorter(new CDOCheckoutViewerSorter());
-    objectViewer.addSelectionChangedListener(new ISelectionChangedListener()
+    treeViewer = new TreeViewer(parent, SWT.BORDER);
+    treeViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+    treeViewer.setContentProvider(itemProvider);
+    treeViewer.setLabelProvider(itemProvider);
+    treeViewer.setSorter(new CDOCheckoutViewerSorter());
+    treeViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
       public void selectionChanged(SelectionChangedEvent event)
       {
+        IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+        Object element = selection.getFirstElement();
+        if (element instanceof EObject)
+        {
+          EObject eObject = (EObject)element;
+          CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+          rootID = cdoObject.cdoID();
+
+          if (cdoObject != view.getRootResource())
+          {
+            rootObjectText = getText(itemProvider, cdoObject);
+          }
+        }
+
         validate();
+      }
+
+      private String getText(final CDOItemProvider itemProvider, EObject object)
+      {
+        String text = itemProvider.getText(object);
+        for (int i = 0; i < AbstractElement.ILLEGAL_LABEL_CHARACTERS.length(); i++)
+        {
+          text = text.replace(AbstractElement.ILLEGAL_LABEL_CHARACTERS.charAt(i), '.');
+        }
+
+        Object parent = itemProvider.getParent(object);
+        if (parent instanceof EObject)
+        {
+          text = getText(itemProvider, (EObject)parent) + "." + text;
+        }
+
+        return text;
+      }
+    });
+
+    treeViewer.addDoubleClickListener(new IDoubleClickListener()
+    {
+      public void doubleClick(DoubleClickEvent event)
+      {
+        showNextPage();
       }
     });
   }
@@ -122,29 +297,48 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
   @Override
   protected void pageActivated()
   {
-    CDOSession session = repository.getSession();
-    CDOBranchPoint branchPoint = getWizard().getBranchPointPage().getBranchPoint();
+    if (view == null)
+    {
+      CDOSession session = repository.getSession();
+      CDOBranchPoint branchPoint = getWizard().getBranchPointPage().getBranchPoint();
 
-    view = session.openView(branchPoint);
-    objectViewer.setInput(view);
+      log("Opening view to " + repository);
+      view = session.openView(branchPoint);
+      treeViewer.setInput(repository);
+      rootObjectText = null;
+
+      getShell().getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          CDOResource rootResource = view.getRootResource();
+          treeViewer.setSelection(new StructuredSelection(rootResource));
+          treeViewer.expandToLevel(rootResource, 1);
+        }
+      });
+    }
   }
 
   @Override
   protected void fillProperties(Properties properties)
   {
-    properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(rootID));
+    if (rootID != null)
+    {
+      properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(rootID));
+    }
   }
 
   private void closeView()
   {
     if (view != null)
     {
-      if (objectViewer != null)
+      if (treeViewer != null)
       {
-        objectViewer.setSelection(StructuredSelection.EMPTY);
-        objectViewer.setInput(null);
+        treeViewer.setSelection(StructuredSelection.EMPTY);
+        treeViewer.setInput(null);
       }
 
+      log("Closing view to " + repository);
       view.close();
       view = null;
     }

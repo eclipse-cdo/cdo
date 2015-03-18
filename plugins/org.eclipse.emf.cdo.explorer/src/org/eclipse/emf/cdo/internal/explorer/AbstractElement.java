@@ -38,6 +38,8 @@ import java.util.Properties;
  */
 public abstract class AbstractElement extends Notifier implements CDOExplorerElement, Adapter.Internal
 {
+  public static final String ILLEGAL_LABEL_CHARACTERS = "/\\:;,";
+
   public static final String PROP_TYPE = "type";
 
   public static final String PROP_LABEL = "label";

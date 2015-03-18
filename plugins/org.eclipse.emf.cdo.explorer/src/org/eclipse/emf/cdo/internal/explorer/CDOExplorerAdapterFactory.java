@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
-import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.core.runtime.IAdapterFactory;
 
@@ -46,28 +45,25 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
   {
     if (adapterType == CLASS_CDOREPOSITORYELEMENT)
     {
-      boolean head = false;
       if (adaptableObject instanceof CDOBranch)
       {
-        head = true;
+        adaptableObject = ((CDOBranch)adaptableObject).getHead();
       }
 
       if (adaptableObject instanceof CDOBranchPoint)
       {
         final CDOBranchPoint branchPoint = (CDOBranchPoint)adaptableObject;
         final CDOBranch branch = branchPoint.getBranch();
-        final long timeStamp = head ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
+        final long timeStamp = branchPoint.getTimeStamp();
 
         CDOCommonRepository commonRepository = branch.getBranchManager().getRepository();
         if (commonRepository instanceof CDORepositoryInfo)
         {
           final CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)commonRepository;
           final CDOID objectID = repositoryInfo.getRootResourceID();
-          CDOSession session = repositoryInfo.getSession();
 
           CDORepositoryManagerImpl repositoryManager = (CDORepositoryManagerImpl)CDOExplorerUtil.getRepositoryManager();
-          final CDORepository repository = repositoryManager.getRepository(session);
-
+          final CDORepository repository = repositoryManager.getRepository(repositoryInfo.getSession());
           if (repository != null)
           {
             return new CDORepositoryElement()

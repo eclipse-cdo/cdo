@@ -41,11 +41,13 @@ import org.eclipse.swt.widgets.Group;
  */
 public class ComposeBranchPointComposite extends Composite
 {
-  private final boolean allowTimeStamp;
+  private boolean allowTimeStamp;
 
   private CDOBranchPoint branchPoint;
 
   private TreeViewer branchViewer;
+
+  private Group timeStampGroup;
 
   private SelectTimeStampComposite timeStampComposite;
 
@@ -83,6 +85,30 @@ public class ComposeBranchPointComposite extends Composite
   public boolean isAllowTimeStamp()
   {
     return allowTimeStamp;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public final void setAllowTimeStamp(boolean allowTimeStamp)
+  {
+    if (this.allowTimeStamp != allowTimeStamp)
+    {
+      this.allowTimeStamp = allowTimeStamp;
+
+      if (timeStampGroup != null && !allowTimeStamp)
+      {
+        timeStampGroup.dispose();
+        timeStampGroup = null;
+        timeStampComposite = null;
+      }
+      else if (timeStampGroup == null && allowTimeStamp)
+      {
+        timeStampComposite = createSelectTimeStampComposite();
+      }
+
+      layout();
+    }
   }
 
   public CDOBranchPoint getBranchPoint()
@@ -170,13 +196,6 @@ public class ComposeBranchPointComposite extends Composite
     if (allowTimeStamp)
     {
       timeStampComposite = createSelectTimeStampComposite();
-      timeStampComposite.setValidationContext(new ValidationContext()
-      {
-        public void setValidationError(Object source, String message)
-        {
-          timeStampError(message);
-        }
-      });
     }
   }
 
@@ -208,7 +227,7 @@ public class ComposeBranchPointComposite extends Composite
    */
   protected SelectTimeStampComposite createSelectTimeStampComposite()
   {
-    Group timeStampGroup = new Group(this, SWT.NONE);
+    timeStampGroup = new Group(this, SWT.NONE);
     timeStampGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     timeStampGroup.setLayout(new GridLayout(1, false));
     timeStampGroup.setText("Time Stamp:");
@@ -224,6 +243,14 @@ public class ComposeBranchPointComposite extends Composite
 
     timeStampComposite.getTimeBrowseButton().setVisible(false);
     timeStampComposite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    timeStampComposite.setValidationContext(new ValidationContext()
+    {
+      public void setValidationError(Object source, String message)
+      {
+        timeStampError(message);
+      }
+    });
+
     return timeStampComposite;
   }
 
@@ -271,7 +298,7 @@ public class ComposeBranchPointComposite extends Composite
     if (branch != null)
     {
       long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
-      if (timeStampComposite != null)
+      if (allowTimeStamp && timeStampComposite != null)
       {
         timeStamp = timeStampComposite.getTimeStamp();
       }

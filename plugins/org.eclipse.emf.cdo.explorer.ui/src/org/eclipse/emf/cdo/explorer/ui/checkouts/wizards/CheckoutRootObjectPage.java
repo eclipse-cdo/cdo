@@ -44,8 +44,6 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
 
   private CDORepository repository;
 
-  private CDOBranchPoint branchPoint;
-
   public CheckoutRootObjectPage()
   {
     super("Root Object", "Select the root object of the new checkout.");
@@ -115,17 +113,18 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
   }
 
   @Override
-  protected void branchPointChanged(CDOBranchPoint branchPoint)
+  protected void branchPointChanged(int branchID, long timeStamp)
   {
-    this.branchPoint = branchPoint;
     closeView();
-    super.branchPointChanged(branchPoint);
+    super.branchPointChanged(branchID, timeStamp);
   }
 
   @Override
   protected void pageActivated()
   {
     CDOSession session = repository.getSession();
+    CDOBranchPoint branchPoint = getWizard().getBranchPointPage().getBranchPoint();
+
     view = session.openView(branchPoint);
     objectViewer.setInput(view);
   }

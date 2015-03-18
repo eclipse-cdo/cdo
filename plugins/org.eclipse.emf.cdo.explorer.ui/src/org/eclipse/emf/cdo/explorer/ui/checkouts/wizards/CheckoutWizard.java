@@ -55,6 +55,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
 
   public CheckoutWizard()
   {
+    setWindowTitle("New Checkout");
   }
 
   public final CheckoutRepositoryPage getRepositoryPage()

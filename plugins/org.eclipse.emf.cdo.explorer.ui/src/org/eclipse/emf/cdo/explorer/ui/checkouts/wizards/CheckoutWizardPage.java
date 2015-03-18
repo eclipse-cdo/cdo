@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
@@ -90,21 +89,21 @@ public abstract class CheckoutWizardPage extends WizardPage
     }
   }
 
-  protected void typeChanged(String type, boolean readOnly)
+  protected void typeChanged(String type)
   {
     CheckoutWizardPage nextPage = (CheckoutWizardPage)getNextPage();
     if (nextPage != null)
     {
-      nextPage.typeChanged(type, readOnly);
+      nextPage.typeChanged(type);
     }
   }
 
-  protected void branchPointChanged(CDOBranchPoint branchPoint)
+  protected void branchPointChanged(int branchID, long timeStamp)
   {
     CheckoutWizardPage nextPage = (CheckoutWizardPage)getNextPage();
     if (nextPage != null)
     {
-      nextPage.branchPointChanged(branchPoint);
+      nextPage.branchPointChanged(branchID, timeStamp);
     }
   }
 

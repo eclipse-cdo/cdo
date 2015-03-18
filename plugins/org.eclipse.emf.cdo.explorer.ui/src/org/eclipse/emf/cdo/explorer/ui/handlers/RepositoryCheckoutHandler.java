@@ -10,22 +10,18 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard;
-import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-
-import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -50,23 +46,11 @@ public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepository
     {
       public void run()
       {
-        CDORepository repository = repositoryElement.getRepository();
         CheckoutWizard wizard = new CheckoutWizard();
-        WizardDialog dialog = new WizardDialog(shell, wizard);
-        if (dialog.open() == WizardDialog.OK)
-        {
-          Properties properties = new Properties();
-          // properties.setProperty("type", type);
-          properties.setProperty("label", repository.getLabel());
-          properties.setProperty("repository", repository.getID());
-          properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
-          properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
-          properties.setProperty("readOnly", Boolean.FALSE.toString());
-          properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
+        wizard.init(PlatformUI.getWorkbench(), new StructuredSelection(repositoryElement));
 
-          CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
-          checkout.open();
-        }
+        WizardDialog dialog = new WizardDialog(shell, wizard);
+        dialog.open();
       }
     });
   }

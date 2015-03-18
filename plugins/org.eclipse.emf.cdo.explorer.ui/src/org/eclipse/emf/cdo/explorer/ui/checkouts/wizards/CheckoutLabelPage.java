@@ -23,7 +23,7 @@ public class CheckoutLabelPage extends CheckoutWizardPage
 
   public CheckoutLabelPage()
   {
-    super("Label", "Enter the label of the new checkout.");
+    super("Checkout Label", "Enter the label of the new checkout.");
   }
 
   public final String getLabel()

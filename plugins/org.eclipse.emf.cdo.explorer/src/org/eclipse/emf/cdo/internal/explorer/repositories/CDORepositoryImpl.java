@@ -437,34 +437,32 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
           };
         }
       }
+    }
 
-      if (adapter == CDORepositoryElement.class)
+    if (adapter == CDORepositoryElement.class)
+    {
+      return new CDORepositoryElement()
       {
-        final CDOID objectID = session.getRepositoryInfo().getRootResourceID();
-
-        return new CDORepositoryElement()
+        public CDORepository getRepository()
         {
-          public CDORepository getRepository()
-          {
-            return CDORepositoryImpl.this;
-          }
+          return CDORepositoryImpl.this;
+        }
 
-          public int getBranchID()
-          {
-            return CDOBranch.MAIN_BRANCH_ID;
-          }
+        public int getBranchID()
+        {
+          return CDOBranch.MAIN_BRANCH_ID;
+        }
 
-          public long getTimeStamp()
-          {
-            return CDOBranchPoint.UNSPECIFIED_DATE;
-          }
+        public long getTimeStamp()
+        {
+          return CDOBranchPoint.UNSPECIFIED_DATE;
+        }
 
-          public CDOID getObjectID()
-          {
-            return objectID;
-          }
-        };
-      }
+        public CDOID getObjectID()
+        {
+          return null;
+        }
+      };
     }
 
     return super.getAdapter(adapter);

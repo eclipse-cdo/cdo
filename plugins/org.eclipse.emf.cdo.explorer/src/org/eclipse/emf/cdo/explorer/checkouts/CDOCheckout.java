@@ -35,7 +35,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateProvider
 {
-  public static final String TYPE_ONLINE = "online";
+  public static final String TYPE_ONLINE_TRANSACTIONAL = "online-transactional";
+
+  public static final String TYPE_ONLINE_HISTORICAL = "online-historical";
 
   public static final String TYPE_OFFLINE = "offline";
 

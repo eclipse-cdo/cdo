@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
@@ -22,6 +24,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 
 import java.util.Properties;
 
@@ -30,9 +33,9 @@ import java.util.Properties;
  */
 public class CheckoutBranchPointPage extends CheckoutWizardPage
 {
-  private CDORepository repository;
+  private int branchID = CDOBranch.MAIN_BRANCH_ID;
 
-  private CDOBranchPoint branchPoint;
+  private long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
 
   private ComposeBranchPointComposite branchPointComposite;
 
@@ -43,35 +46,17 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
     super("Branch Point", "Select the branch point of the new checkout.");
   }
 
+  public final int getBranchID()
+  {
+    return branchID;
+  }
+
+  public final long getTimeStamp()
+  {
+    return timeStamp;
+  }
+
   public final CDOBranchPoint getBranchPoint()
-  {
-    return branchPoint;
-  }
-
-  public final void setBranchPoint(CDOBranchPoint branchPoint)
-  {
-    if (this.branchPoint != branchPoint)
-    {
-      log("Setting branch point to " + branchPoint);
-      this.branchPoint = branchPoint;
-
-      if (branchPointComposite != null)
-      {
-        if (branchPoint != null)
-        {
-          CDOBranch branch = branchPoint.getBranch();
-
-          TreeViewer branchViewer = branchPointComposite.getBranchViewer();
-          branchViewer.setSelection(new StructuredSelection(branch));
-          branchViewer.setExpandedState(branch, true);
-        }
-      }
-
-      branchPointChanged(branchPoint);
-    }
-  }
-
-  public void setBranchPoint(int branchID, long timeStamp)
   {
     CheckoutRepositoryPage repositoryPage = getWizard().getRepositoryPage();
     CDOSession session = repositoryPage.getSession();
@@ -79,13 +64,35 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch branch = branchManager.getBranch(branchID);
 
-    setBranchPoint(branch.getPoint(timeStamp));
+    return branch.getPoint(timeStamp);
+  }
+
+  public void setBranchPoint(int branchID, long timeStamp)
+  {
+    if (this.branchID != branchID || this.timeStamp != timeStamp)
+    {
+      log("Setting branch point to " + branchID + "/" + CDOCommonUtil.formatTimeStamp(timeStamp));
+      this.branchID = branchID;
+      this.timeStamp = timeStamp;
+
+      if (branchPointComposite != null)
+      {
+        CDOBranchPoint branchPoint = getBranchPoint();
+        CDOBranch branch = branchPoint.getBranch();
+
+        TreeViewer branchViewer = branchPointComposite.getBranchViewer();
+        branchViewer.setSelection(new StructuredSelection(branch));
+        branchViewer.setExpandedState(branch, true);
+      }
+
+      branchPointChanged(branchID, timeStamp);
+    }
   }
 
   @Override
   protected void createUI(Composite parent)
   {
-    branchPointComposite = new ComposeBranchPointComposite(parent, true, branchPoint)
+    branchPointComposite = new ComposeBranchPointComposite(parent, true, null)
     {
       @Override
       protected void timeStampError(String message)
@@ -97,7 +104,9 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
       @Override
       protected void branchPointChanged(CDOBranchPoint branchPoint)
       {
-        CheckoutBranchPointPage.this.setBranchPoint(branchPoint);
+        int id = branchPoint.getBranch().getID();
+        long timeStamp = branchPoint.getTimeStamp();
+        CheckoutBranchPointPage.this.setBranchPoint(id, timeStamp);
         validate();
       }
 
@@ -114,12 +123,12 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected void repositoryChanged(CDORepository repository)
   {
-    this.repository = repository;
-
-    TreeViewer branchViewer = branchPointComposite.getBranchViewer();
-    branchViewer.setSelection(StructuredSelection.EMPTY);
-    branchViewer.setInput(null);
-    setBranchPoint(null);
+    if (branchPointComposite != null)
+    {
+      TreeViewer branchViewer = branchPointComposite.getBranchViewer();
+      branchViewer.setSelection(StructuredSelection.EMPTY);
+      branchViewer.setInput(null);
+    }
 
     super.repositoryChanged(repository);
   }
@@ -127,12 +136,32 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected void pageActivated()
   {
-    CDOSession session = getWizard().getRepositoryPage().getSession();
+    final CheckoutWizard wizard = getWizard();
+    String type = wizard.getTypePage().getType();
 
-    TreeViewer branchViewer = branchPointComposite.getBranchViewer();
-    branchViewer.setInput(session.getBranchManager());
+    branchPointComposite.setAllowTimeStamp(!CDOCheckout.TYPE_ONLINE_TRANSACTIONAL.equals(type));
 
-    setBranchPoint(CDOBranch.MAIN_BRANCH_ID, CDOBranchPoint.UNSPECIFIED_DATE);
+    final Display display = branchPointComposite.getDisplay();
+    display.asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        final CDOSession session = wizard.getRepositoryPage().getSession();
+        final CDOBranchPoint branchPoint = wizard.getBranchPointPage().getBranchPoint();
+        final TreeViewer branchViewer = branchPointComposite.getBranchViewer();
+
+        branchViewer.setInput(session.getBranchManager());
+        display.asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            CDOBranch branch = branchPoint.getBranch();
+            branchViewer.setSelection(new StructuredSelection(branch));
+            branchViewer.expandToLevel(branch, 1);
+          }
+        });
+      }
+    });
   }
 
   @Override
@@ -149,7 +178,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected void fillProperties(Properties properties)
   {
-    properties.setProperty("branchID", Integer.toString(branchPoint.getBranch().getID()));
-    properties.setProperty("timeStamp", Long.toString(branchPoint.getTimeStamp()));
+    properties.setProperty("branchID", Integer.toString(branchID));
+    properties.setProperty("timeStamp", Long.toString(timeStamp));
   }
 }

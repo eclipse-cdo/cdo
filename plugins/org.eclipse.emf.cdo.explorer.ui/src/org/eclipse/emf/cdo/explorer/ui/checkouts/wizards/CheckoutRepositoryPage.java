@@ -23,6 +23,7 @@ import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -117,6 +118,12 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
     {
       public void selectionChanged(SelectionChangedEvent event)
       {
+        IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
+        if (selection.size() == 1)
+        {
+          setRepository((CDORepository)selection.getFirstElement());
+        }
+
         validate();
       }
     });
@@ -163,21 +170,28 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
         CDORepositoriesView.newRepository(shell);
       }
     });
+
+    getShell().getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        pageActivated();
+      }
+    });
+  }
+
+  @Override
+  protected void pageActivated()
+  {
+    if (repository != null)
+    {
+      tableViewer.setSelection(new StructuredSelection(repository));
+    }
   }
 
   @Override
   protected boolean doValidate() throws ValidationProblem
   {
-    IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
-    if (selection.size() == 1)
-    {
-      setRepository((CDORepository)selection.getFirstElement());
-    }
-    else
-    {
-      setRepository(null);
-    }
-
     return repository != null;
   }
 

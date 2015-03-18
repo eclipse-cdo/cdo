@@ -81,7 +81,7 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
   @Override
   protected CDOCheckout createElement(String type)
   {
-    if (CDOCheckout.TYPE_ONLINE.equals(type))
+    if (CDOCheckout.TYPE_ONLINE_TRANSACTIONAL.equals(type))
     {
       return new OnlineCDOCheckout();
     }

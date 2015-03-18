@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -60,11 +62,9 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
   {
     if (this.repository != repository)
     {
-      if (this.repository != null && session != null)
-      {
-        this.repository.releaseSession();
-      }
+      releaseSession();
 
+      log("Setting repository to " + repository);
       this.repository = repository;
       repositoryChanged(repository);
     }
@@ -74,10 +74,28 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
   {
     if (session == null && repository != null)
     {
+      log("Acquiring session from " + repository);
       session = repository.acquireSession();
     }
 
     return session;
+  }
+
+  private void releaseSession()
+  {
+    if (repository != null && session != null)
+    {
+      log("Releasing session of " + repository);
+      repository.releaseSession();
+      session = null;
+    }
+  }
+
+  @Override
+  public void dispose()
+  {
+    releaseSession();
+    super.dispose();
   }
 
   @Override
@@ -103,6 +121,14 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
       }
     });
 
+    tableViewer.addDoubleClickListener(new IDoubleClickListener()
+    {
+      public void doubleClick(DoubleClickEvent event)
+      {
+        showNextPage();
+      }
+    });
+
     Table table = tableViewer.getTable();
     table.setHeaderVisible(true);
 
@@ -112,11 +138,11 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
 
     TableColumn modeColumn = new TableColumn(table, SWT.NONE);
     modeColumn.setText("Versioning Mode");
-    tableLayout.setColumnData(modeColumn, new ColumnWeightData(0, 100, true));
+    tableLayout.setColumnData(modeColumn, new ColumnWeightData(0, 120, true));
 
     TableColumn idColumn = new TableColumn(table, SWT.NONE);
     idColumn.setText("ID Generation");
-    tableLayout.setColumnData(idColumn, new ColumnWeightData(0, 90, true));
+    tableLayout.setColumnData(idColumn, new ColumnWeightData(0, 100, true));
 
     GridLayout gridLayout = new GridLayout(1, false);
     gridLayout.marginWidth = 0;
@@ -140,7 +166,7 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
   }
 
   @Override
-  protected boolean doValidate() throws Exception
+  protected boolean doValidate() throws ValidationProblem
   {
     IStructuredSelection selection = (IStructuredSelection)tableViewer.getSelection();
     if (selection.size() == 1)

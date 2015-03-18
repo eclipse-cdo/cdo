@@ -25,8 +25,12 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.IPageChangedListener;
+import org.eclipse.jface.dialogs.PageChangedEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
@@ -35,7 +39,7 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public class CheckoutWizard extends Wizard implements IImportWizard
+public class CheckoutWizard extends Wizard implements IImportWizard, IPageChangedListener
 {
   private CDORepositoryElement selectedElement;
 
@@ -84,6 +88,32 @@ public class CheckoutWizard extends Wizard implements IImportWizard
     {
       Object element = selection.getFirstElement();
       selectedElement = AdapterUtil.adapt(element, CDORepositoryElement.class);
+    }
+  }
+
+  @Override
+  public void setContainer(IWizardContainer wizardContainer)
+  {
+    if (getContainer() instanceof WizardDialog)
+    {
+      ((WizardDialog)getContainer()).removePageChangedListener(this);
+    }
+
+    super.setContainer(wizardContainer);
+
+    if (getContainer() instanceof WizardDialog)
+    {
+      ((WizardDialog)getContainer()).addPageChangedListener(this);
+    }
+  }
+
+  public void pageChanged(PageChangedEvent event)
+  {
+    Object page = event.getSelectedPage();
+    if (page instanceof CheckoutWizardPage)
+    {
+      CheckoutWizardPage checkoutWizardPage = (CheckoutWizardPage)page;
+      checkoutWizardPage.pageActivated();
     }
   }
 

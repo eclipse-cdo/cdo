@@ -23,7 +23,7 @@ public class CheckoutLabelPage extends CheckoutWizardPage
 
   public CheckoutLabelPage()
   {
-    super("New Checkout", "Select the type of the new checkout.");
+    super("Label", "Enter the label of the new checkout.");
   }
 
   public final String getLabel()
@@ -42,7 +42,7 @@ public class CheckoutLabelPage extends CheckoutWizardPage
   }
 
   @Override
-  protected boolean doValidate() throws Exception
+  protected boolean doValidate() throws ValidationProblem
   {
     return true;
   }

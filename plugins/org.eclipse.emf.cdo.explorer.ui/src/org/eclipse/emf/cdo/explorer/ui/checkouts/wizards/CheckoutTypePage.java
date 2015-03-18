@@ -37,7 +37,7 @@ public class CheckoutTypePage extends CheckoutWizardPage
 
   public CheckoutTypePage()
   {
-    super("New Checkout", "Select the type of the new checkout.");
+    super("Type", "Select the type of the new checkout.");
   }
 
   public final String getType()
@@ -88,7 +88,7 @@ public class CheckoutTypePage extends CheckoutWizardPage
       public void widgetDefaultSelected(SelectionEvent e)
       {
         widgetSelected(e);
-        getContainer().showPage(getNextPage());
+        showNextPage();
       }
     };
 
@@ -118,7 +118,7 @@ public class CheckoutTypePage extends CheckoutWizardPage
   }
 
   @Override
-  protected boolean doValidate() throws Exception
+  protected boolean doValidate() throws ValidationProblem
   {
     return true;
   }

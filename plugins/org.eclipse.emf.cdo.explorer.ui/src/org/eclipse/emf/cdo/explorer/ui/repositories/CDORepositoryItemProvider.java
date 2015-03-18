@@ -30,6 +30,7 @@ import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -62,7 +63,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       {
         RepositoryConnectionEvent e = (RepositoryConnectionEvent)event;
 
-        TreeViewer viewer = getViewer();
+        StructuredViewer viewer = getViewer();
         CDORepository repository = e.getRepository();
 
         if (!e.isConnected())
@@ -71,7 +72,11 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
           if (node != null)
           {
             node.disposeChildren();
-            ViewerUtil.expand(viewer, repository, false);
+
+            if (viewer instanceof TreeViewer)
+            {
+              ViewerUtil.expand((TreeViewer)viewer, repository, false);
+            }
           }
         }
 
@@ -82,7 +87,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       {
         CDOExplorerManager.ElementsChangedEvent e = (CDOExplorerManager.ElementsChangedEvent)event;
 
-        TreeViewer viewer = getViewer();
+        StructuredViewer viewer = getViewer();
         Collection<Object> changedElements = e.getChangedElements();
 
         ViewerUtil.update(viewer, changedElements);
@@ -135,20 +140,18 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
     super.dispose();
   }
 
-  @Override
-  public TreeViewer getViewer()
-  {
-    return (TreeViewer)super.getViewer();
-  }
-
   public void connectRepository(CDORepository repository)
   {
     // Mark this repository as connecting.
     connectingRepositories.put(repository, repository);
 
-    TreeViewer viewer = getViewer();
+    StructuredViewer viewer = getViewer();
     ViewerUtil.refresh(viewer, repository); // Trigger hasChildren().
-    ViewerUtil.expand(viewer, repository, true); // Trigger getChildren().
+
+    if (viewer instanceof TreeViewer)
+    {
+      ViewerUtil.expand((TreeViewer)viewer, repository, true); // Trigger getChildren().
+    }
   }
 
   @Override

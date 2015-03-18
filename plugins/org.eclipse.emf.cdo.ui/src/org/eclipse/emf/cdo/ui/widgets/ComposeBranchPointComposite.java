@@ -268,17 +268,19 @@ public class ComposeBranchPointComposite extends Composite
 
     IStructuredSelection selection = (IStructuredSelection)branchViewer.getSelection();
     CDOBranch branch = (CDOBranch)selection.getFirstElement();
-
-    long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
-    if (timeStampComposite != null)
+    if (branch != null)
     {
-      timeStamp = timeStampComposite.getTimeStamp();
-    }
+      long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+      if (timeStampComposite != null)
+      {
+        timeStamp = timeStampComposite.getTimeStamp();
+      }
 
-    branchPoint = branch.getPoint(timeStamp);
-    if (!ObjectUtil.equals(branchPoint, oldBranchPoint))
-    {
-      branchPointChanged(branchPoint);
+      branchPoint = branch.getPoint(timeStamp);
+      if (!ObjectUtil.equals(branchPoint, oldBranchPoint))
+      {
+        branchPointChanged(branchPoint);
+      }
     }
   }
 

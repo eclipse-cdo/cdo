@@ -73,6 +73,14 @@ public abstract class CheckoutWizardPage extends WizardPage
 
   protected abstract void createUI(Composite parent);
 
+  protected void showNextPage()
+  {
+    if (isPageComplete())
+    {
+      getContainer().showPage(getNextPage());
+    }
+  }
+
   protected void repositoryChanged(CDORepository repository)
   {
     CheckoutWizardPage nextPage = (CheckoutWizardPage)getNextPage();
@@ -109,6 +117,10 @@ public abstract class CheckoutWizardPage extends WizardPage
     }
   }
 
+  protected void pageActivated()
+  {
+  }
+
   protected final void validate()
   {
     try
@@ -117,14 +129,33 @@ public abstract class CheckoutWizardPage extends WizardPage
       setErrorMessage(null);
       setPageComplete(valid);
     }
-    catch (Exception ex)
+    catch (ValidationProblem ex)
     {
-      setErrorMessage(ex.getMessage());
+      String message = ex.getMessage();
+      setErrorMessage(message);
       setPageComplete(false);
     }
   }
 
-  protected abstract boolean doValidate() throws Exception;
+  protected abstract boolean doValidate() throws ValidationProblem;
 
   protected abstract void fillProperties(Properties properties);
+
+  protected static void log(String message)
+  {
+    System.out.println(message);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ValidationProblem extends Exception
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ValidationProblem(String message)
+    {
+      super(message);
+    }
+  }
 }

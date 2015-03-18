@@ -14,12 +14,16 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.wizard.WizardDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 import java.util.Properties;
 
@@ -28,56 +32,42 @@ import java.util.Properties;
  */
 public class RepositoryCheckoutHandler extends AbstractBaseHandler<CDORepositoryElement>
 {
-  private final String type;
-
-  protected RepositoryCheckoutHandler(String type)
+  public RepositoryCheckoutHandler()
   {
     super(CDORepositoryElement.class, false);
-    this.type = type;
   }
 
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    checkout(elements.get(0), type);
+    Shell shell = HandlerUtil.getActiveShell(event);
+    checkout(shell, elements.get(0));
   }
 
-  public static void checkout(CDORepositoryElement repositoryElement, String type)
+  public static void checkout(final Shell shell, final CDORepositoryElement repositoryElement)
   {
-    CDORepository repository = repositoryElement.getRepository();
-
-    Properties properties = new Properties();
-    properties.setProperty("type", type);
-    properties.setProperty("label", repository.getLabel());
-    properties.setProperty("repository", repository.getID());
-    properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
-    properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
-    properties.setProperty("readOnly", Boolean.FALSE.toString());
-    properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
-
-    CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
-    checkout.open();
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Online extends RepositoryCheckoutHandler
-  {
-    public Online()
+    shell.getDisplay().asyncExec(new Runnable()
     {
-      super("online");
-    }
-  }
+      public void run()
+      {
+        CDORepository repository = repositoryElement.getRepository();
+        CheckoutWizard wizard = new CheckoutWizard();
+        WizardDialog dialog = new WizardDialog(shell, wizard);
+        if (dialog.open() == WizardDialog.OK)
+        {
+          Properties properties = new Properties();
+          // properties.setProperty("type", type);
+          properties.setProperty("label", repository.getLabel());
+          properties.setProperty("repository", repository.getID());
+          properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
+          properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
+          properties.setProperty("readOnly", Boolean.FALSE.toString());
+          properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Offline extends RepositoryCheckoutHandler
-  {
-    public Offline()
-    {
-      super("offline");
-    }
+          CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
+          checkout.open();
+        }
+      }
+    });
   }
 }

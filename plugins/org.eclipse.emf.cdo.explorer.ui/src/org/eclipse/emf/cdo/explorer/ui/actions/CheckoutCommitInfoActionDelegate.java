@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
-import org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler;
+import org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandlerQuick;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -76,7 +76,7 @@ public class CheckoutCommitInfoActionDelegate extends LongRunningActionDelegate
                 }
               };
 
-              RepositoryCheckoutHandler.checkout(repositoryElement, "online");
+              RepositoryCheckoutHandlerQuick.checkout(repositoryElement, "online");
             }
           }
         }

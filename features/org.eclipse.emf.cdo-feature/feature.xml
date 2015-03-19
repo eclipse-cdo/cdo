@@ -197,4 +197,18 @@
          fragment="true"
          unpack="false"/>
 
+   <plugin
+         id="org.eclipse.emf.cdo.explorer"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.emf.cdo.explorer.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>

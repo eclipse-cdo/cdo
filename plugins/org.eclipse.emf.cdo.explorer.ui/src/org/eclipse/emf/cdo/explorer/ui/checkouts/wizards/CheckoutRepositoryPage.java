@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryItemProvider;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -211,6 +212,6 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
   @Override
   protected void fillProperties(Properties properties)
   {
-    properties.setProperty("repository", repository.getID());
+    properties.setProperty(CDOCheckoutImpl.PROP_REPOSITORY, repository.getID());
   }
 }

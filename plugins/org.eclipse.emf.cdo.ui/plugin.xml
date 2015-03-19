@@ -402,7 +402,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <and>
-                      <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <instanceof value="org.eclipse.emf.ecore.EObject"/>
                       <test property="org.eclipse.emf.cdo.object.transactional" value="true"/>
                       <test property="org.eclipse.emf.cdo.object.writeLocked" value="false"/>
                       <test property="org.eclipse.emf.cdo.object.writeLockedByOthers" value="false"/>
@@ -440,7 +440,7 @@
                <with variable="activeMenuSelection">
                   <iterate>
                     <and>
-                      <adapt type="org.eclipse.emf.ecore.EObject"/>
+                      <instanceof value="org.eclipse.emf.ecore.EObject"/>
                       <test property="org.eclipse.emf.cdo.object.writeLocked" value="true"/>
                       <test property="org.eclipse.emf.cdo.object.children" value="true"/>
                     </and>

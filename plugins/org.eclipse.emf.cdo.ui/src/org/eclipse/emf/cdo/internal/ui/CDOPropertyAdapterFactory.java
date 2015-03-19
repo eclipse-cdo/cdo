@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.CDOElement;
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter.CDOPropertyDescriptor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
@@ -38,6 +37,7 @@ import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.ui.IActionFilter;
@@ -88,7 +88,7 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
       if (object instanceof EObject)
       {
         EObject eObject = (EObject)object;
-        CDOObject cdoObject = CDOUtil.getCDOObject(eObject, false);
+        InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(eObject, false);
         if (cdoObject != null)
         {
           final Map<String, Object> emfProperties = new HashMap<String, Object>();
@@ -115,8 +115,8 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
           {
             adapterFactory = CDOEditor.createAdapterFactory(false);
 
-            IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(cdoObject,
-                IItemPropertySource.class);
+            IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(
+                cdoObject.cdoInternalInstance(), IItemPropertySource.class);
             if (propertySource != null)
             {
               List<IItemPropertyDescriptor> propertyDescriptors = propertySource.getPropertyDescriptors(cdoObject);

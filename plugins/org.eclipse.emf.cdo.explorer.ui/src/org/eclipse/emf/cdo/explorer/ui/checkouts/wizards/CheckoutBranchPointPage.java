@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 
@@ -199,7 +200,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected void fillProperties(Properties properties)
   {
-    properties.setProperty("branchID", Integer.toString(branchID));
-    properties.setProperty("timeStamp", Long.toString(timeStamp));
+    properties.setProperty(CDOCheckoutImpl.PROP_BRANCH_ID, Integer.toString(branchID));
+    properties.setProperty(CDOCheckoutImpl.PROP_TIME_STAMP, Long.toString(timeStamp));
   }
 }

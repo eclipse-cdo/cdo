@@ -14,8 +14,10 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
@@ -23,6 +25,7 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -75,15 +78,16 @@ public class CheckoutTypePage extends CheckoutWizardPage
   protected void createUI(Composite parent)
   {
     transactionalButton = addChoice(parent, "Online Transactional", "icons/transactional.gif",
-        CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
+        "Creates a remote connection for online editing.", CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
 
     historicalButton = addChoice(parent, "Online Historical", "icons/historical.gif",
-        CDOCheckout.TYPE_ONLINE_HISTORICAL);
+        "Creates a remote connection for online auditing.", CDOCheckout.TYPE_ONLINE_HISTORICAL);
 
-    offlineButton = addChoice(parent, "Offline", "icons/disconnect.gif", CDOCheckout.TYPE_OFFLINE);
+    offlineButton = addChoice(parent, "Offline", "icons/disconnect.gif",
+        "Creates a local checkout for offline editing.", CDOCheckout.TYPE_OFFLINE);
   }
 
-  private Button addChoice(Composite composite, String text, String imagePath, final String type)
+  private Button addChoice(Composite composite, String text, String imagePath, String description, final String type)
   {
     final SelectionListener listener = new SelectionListener()
     {
@@ -112,25 +116,21 @@ public class CheckoutTypePage extends CheckoutWizardPage
       }
     });
 
-    Label imageLabel = new Label(composite, SWT.NONE);
+    GridLayout descriptionLayout = UIUtil.createGridLayout(2);
+    descriptionLayout.marginLeft = 20;
+    descriptionLayout.horizontalSpacing = 5;
+
+    Composite descriptionComposite = new Composite(composite, SWT.NONE);
+    descriptionComposite.setLayout(descriptionLayout);
+
+    Label imageLabel = new Label(descriptionComposite, SWT.NONE);
     imageLabel.setImage(OM.getImage(imagePath));
+
+    Label descriptionLabel = new Label(descriptionComposite, SWT.NONE);
+    descriptionLabel.setText(description);
 
     new Label(composite, SWT.NONE);
     return button;
-  }
-
-  @Override
-  protected void repositoryChanged(CDORepository repository)
-  {
-    this.repository = repository;
-
-    Button button = getButton(type);
-    if (button != null && !button.isEnabled())
-    {
-      setType(CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
-    }
-
-    super.repositoryChanged(repository);
   }
 
   private Button getButton(String type)
@@ -151,6 +151,20 @@ public class CheckoutTypePage extends CheckoutWizardPage
     }
 
     return null;
+  }
+
+  @Override
+  protected void repositoryChanged(CDORepository repository)
+  {
+    this.repository = repository;
+
+    Button button = getButton(type);
+    if (button != null && !button.isEnabled())
+    {
+      setType(CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
+    }
+
+    super.repositoryChanged(repository);
   }
 
   @Override
@@ -185,10 +199,11 @@ public class CheckoutTypePage extends CheckoutWizardPage
         }
       }
 
-      transactionalButton.setSelection(type == CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
+      transactionalButton.setSelection(CDOCheckout.TYPE_ONLINE_TRANSACTIONAL.equals(type));
     }
-    historicalButton.setSelection(type == CDOCheckout.TYPE_ONLINE_HISTORICAL);
-    offlineButton.setSelection(type == CDOCheckout.TYPE_OFFLINE);
+
+    historicalButton.setSelection(CDOCheckout.TYPE_ONLINE_HISTORICAL.equals(type));
+    offlineButton.setSelection(CDOCheckout.TYPE_OFFLINE.equals(type));
   }
 
   @Override
@@ -200,6 +215,8 @@ public class CheckoutTypePage extends CheckoutWizardPage
   @Override
   protected void fillProperties(Properties properties)
   {
-    properties.setProperty("type", type);
+    properties.setProperty(CDOCheckoutImpl.PROP_TYPE, type);
+    properties.setProperty(CDOCheckoutImpl.PROP_READ_ONLY,
+        Boolean.toString(CDOCheckout.TYPE_ONLINE_HISTORICAL.equals(type)));
   }
 }

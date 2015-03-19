@@ -324,7 +324,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
   {
     if (rootID != null)
     {
-      properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(rootID));
+      properties.setProperty(CDOCheckoutImpl.PROP_ROOT_ID, CDOCheckoutImpl.getCDOIDString(rootID));
     }
   }
 

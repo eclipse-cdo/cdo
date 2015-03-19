@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -225,7 +226,7 @@ public class CheckoutLabelPage extends CheckoutWizardPage
   @Override
   protected void fillProperties(Properties properties)
   {
-    properties.setProperty("label", label);
+    properties.setProperty(CDOCheckoutImpl.PROP_LABEL, label);
   }
 
   private void clearLabel()
@@ -240,13 +241,13 @@ public class CheckoutLabelPage extends CheckoutWizardPage
   public static String getUniqueLabel(String label)
   {
     Set<String> names = new HashSet<String>();
-  
+
     CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
     for (CDOCheckout checkout : checkoutManager.getCheckouts())
     {
       names.add(checkout.getLabel());
     }
-  
+
     for (int i = 1; i < Integer.MAX_VALUE; i++)
     {
       String name = i == 1 ? label : label + " (" + i + ")";
@@ -255,7 +256,7 @@ public class CheckoutLabelPage extends CheckoutWizardPage
         return name;
       }
     }
-  
+
     throw new IllegalStateException("Too many checkouts");
   }
 }

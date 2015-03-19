@@ -312,10 +312,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @since 3.5
    */
-  protected SlowElement createSlowElement(IContainer<? super Object> container)
+  protected SlowElement createSlowElement(IContainer<?> container)
   {
-    String text = getSlowText(container);
-    return new SlowElement(container, text);
+    @SuppressWarnings("unchecked")
+    IContainer<Object> objectContainer = (IContainer<Object>)container;
+
+    String text = getSlowText(objectContainer);
+    return new SlowElement(objectContainer, text);
   }
 
   /**

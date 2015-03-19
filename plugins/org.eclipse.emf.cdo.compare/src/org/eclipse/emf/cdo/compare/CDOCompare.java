@@ -210,7 +210,7 @@ public class CDOCompare
    */
   public static class CDOMatcher extends IdentifierEObjectMatcher
   {
-    private static final boolean INCOMPATIBLE_EMF_COMPARE;
+    private static final Method GETPARENTEOBJECT_METHOD;
 
     private final Function<EObject, String> idComputation;
 
@@ -220,7 +220,6 @@ public class CDOCompare
       this.idComputation = idComputation;
     }
 
-    @Override
     protected EObject getParentEObject(EObject eObject)
     {
       return CDOElement.getParentOf(eObject);
@@ -231,7 +230,7 @@ public class CDOCompare
         Iterator<? extends EObject> rightEObjects, Iterator<? extends EObject> originEObjects,
         List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
     {
-      if (INCOMPATIBLE_EMF_COMPARE)
+      if (GETPARENTEOBJECT_METHOD == null)
       {
         return matchPerIdCompatibility(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID,
             rightEObjectsNoID, originEObjectsNoID);
@@ -392,7 +391,7 @@ public class CDOCompare
         //$FALL-THROUGH$
       }
 
-      INCOMPATIBLE_EMF_COMPARE = method == null;
+      GETPARENTEOBJECT_METHOD = method;
     }
   }
 

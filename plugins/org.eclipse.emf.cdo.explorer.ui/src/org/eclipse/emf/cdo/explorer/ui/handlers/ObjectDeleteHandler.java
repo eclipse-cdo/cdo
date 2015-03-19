@@ -67,7 +67,10 @@ public class ObjectDeleteHandler extends AbstractObjectHandler
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        // TODO Exceptions due to deleting children of already deleted parents are expected, but hard to detect.
+        // It would be better to determine the set of top-most objects plus all their transitive children.
+        // This should happen in a ProgressRunnable before the DeleteObjectsDialog is even shown.
+        // ex.printStackTrace();
       }
     }
 

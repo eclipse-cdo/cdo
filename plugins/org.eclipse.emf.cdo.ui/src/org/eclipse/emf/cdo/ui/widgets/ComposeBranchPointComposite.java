@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
@@ -124,12 +125,20 @@ public class ComposeBranchPointComposite extends Composite
     this.branchPoint = branchPoint;
     if (branchPoint != null)
     {
-      CDOBranch branch = branchPoint.getBranch();
-      long timeStamp = branchPoint.getTimeStamp();
+      final CDOBranch branch = branchPoint.getBranch();
+      final long timeStamp = branchPoint.getTimeStamp();
 
       if (branchViewer != null)
       {
-        branchViewer.setSelection(new StructuredSelection(branch));
+        setBranchViewerInput();
+
+        getDisplay().asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            branchViewer.setSelection(new StructuredSelection(branch));
+          }
+        });
       }
 
       if (timeStampComposite != null)
@@ -197,6 +206,11 @@ public class ComposeBranchPointComposite extends Composite
     {
       timeStampComposite = createSelectTimeStampComposite();
     }
+
+    if (branchPoint != null)
+    {
+      setBranchViewerInput();
+    }
   }
 
   /**
@@ -204,7 +218,7 @@ public class ComposeBranchPointComposite extends Composite
    */
   protected TreeViewer createBranchViewer()
   {
-    CDOItemProvider itemProvider = new CDOItemProvider(null);
+    CDOItemProvider itemProvider = createBranchItemProvider();
 
     TreeViewer branchViewer = new TreeViewer(this, SWT.BORDER | SWT.SINGLE);
     branchViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -220,6 +234,14 @@ public class ComposeBranchPointComposite extends Composite
     });
 
     return branchViewer;
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected CDOItemProvider createBranchItemProvider()
+  {
+    return new CDOItemProvider(null);
   }
 
   /**
@@ -284,6 +306,33 @@ public class ComposeBranchPointComposite extends Composite
     };
   }
 
+  /**
+   * @since 4.4
+   */
+  protected void timeStampError(String message)
+  {
+  }
+
+  protected void branchPointChanged(CDOBranchPoint branchPoint)
+  {
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void doubleClicked()
+  {
+  }
+
+  private void setBranchViewerInput()
+  {
+    CDOBranchManager input = branchPoint.getBranch().getBranchManager();
+    if (input != branchViewer.getInput())
+    {
+      branchViewer.setInput(input);
+    }
+  }
+
   private void composeBranchPoint()
   {
     if (branchViewer == null)
@@ -309,23 +358,5 @@ public class ComposeBranchPointComposite extends Composite
         branchPointChanged(branchPoint);
       }
     }
-  }
-
-  /**
-   * @since 4.4
-   */
-  protected void timeStampError(String message)
-  {
-  }
-
-  protected void branchPointChanged(CDOBranchPoint branchPoint)
-  {
-  }
-
-  /**
-   * @since 4.4
-   */
-  protected void doubleClicked()
-  {
   }
 }

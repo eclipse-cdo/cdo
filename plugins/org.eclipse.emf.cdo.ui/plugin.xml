@@ -363,9 +363,12 @@
                tooltip="Add a new branch">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
-                    <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext"/>
-                  </iterate>
+                  <and>
+                    <count value="1"/>
+                    <iterate>
+                      <adapt type="org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext"/>
+                    </iterate>
+                  </and>
                </with>
             </visibleWhen>
          </command>
@@ -381,7 +384,7 @@
                tooltip="Acquire write locks for the selected objects">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <adapt type="org.eclipse.emf.ecore.EObject"/>
                       <test property="org.eclipse.emf.cdo.object.transactional" value="true"/>
@@ -400,7 +403,7 @@
                tooltip="Acquire write locks for the selected objects and their children">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <instanceof value="org.eclipse.emf.ecore.EObject"/>
                       <test property="org.eclipse.emf.cdo.object.transactional" value="true"/>
@@ -421,7 +424,7 @@
                tooltip="Release write locks for the selected objects">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <adapt type="org.eclipse.emf.ecore.EObject"/>
                       <test property="org.eclipse.emf.cdo.object.writeLocked" value="true"/>
@@ -438,7 +441,7 @@
                tooltip="Release write locks for the selected objects and their children">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <instanceof value="org.eclipse.emf.ecore.EObject"/>
                       <test property="org.eclipse.emf.cdo.object.writeLocked" value="true"/>

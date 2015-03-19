@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.ISlow;
+import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -311,10 +312,10 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   /**
    * @since 3.5
    */
-  @SuppressWarnings("unchecked")
-  protected ContainerItemProvider<CONTAINER>.LazyElement createLazyElement(IContainer<?> container)
+  protected SlowElement createSlowElement(IContainer<? super Object> container)
   {
-    return new LazyElement((IContainer<Object>)container);
+    String text = getSlowText(container);
+    return new SlowElement(container, text);
   }
 
   /**
@@ -383,7 +384,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   @Override
   public Font getFont(Object obj)
   {
-    if (obj instanceof ContainerItemProvider.LazyElement)
+    if (obj instanceof ContainerItemProvider.SlowElement)
     {
       return getItalicFont();
     }
@@ -394,7 +395,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   @Override
   public Color getForeground(Object obj)
   {
-    if (obj instanceof ContainerItemProvider.LazyElement)
+    if (obj instanceof ContainerItemProvider.SlowElement)
     {
       return PENDING_COLOR;
     }
@@ -405,7 +406,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
   @Override
   public Image getImage(Object obj)
   {
-    if (obj instanceof ContainerItemProvider.LazyElement)
+    if (obj instanceof ContainerItemProvider.SlowElement)
     {
       return PENDING_IMAGE;
     }
@@ -416,6 +417,19 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     }
 
     return super.getImage(obj);
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static IContainer<Object> createSlowInput(final String text)
+  {
+    return new SetContainer<Object>(Object.class)
+    {
+      {
+        addElement(new ContainerItemProvider.SlowElement(this, text));
+      }
+    };
   }
 
   /**
@@ -657,10 +671,10 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
       {
         final Node[] lazyNode = { null };
 
-        LazyElement lazyElement = createLazyElement(container);
-        if (lazyElement != null)
+        SlowElement slowElement = createSlowElement(container);
+        if (slowElement != null)
         {
-          lazyNode[0] = addChild(children, lazyElement);
+          lazyNode[0] = addChild(children, slowElement);
         }
 
         Runnable runnable = new Runnable()
@@ -819,37 +833,56 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
   /**
    * @author Eike Stepper
-   * @since 3.1
+   * @since 3.5
    */
-  public class LazyElement
+  public static class SlowElement
   {
     private final IContainer<Object> container;
 
     private final String text;
 
-    /**
-     * @since 3.5
-     */
-    public LazyElement(IContainer<Object> container, String text)
+    public SlowElement(IContainer<Object> container, String text)
     {
       this.container = container;
       this.text = text;
     }
 
-    public LazyElement(IContainer<Object> container)
-    {
-      this(container, getSlowText(container));
-    }
-
-    public IContainer<Object> getContainer()
+    public final IContainer<Object> getContainer()
     {
       return container;
+    }
+
+    public final String getText()
+    {
+      return text;
     }
 
     @Override
     public String toString()
     {
       return text;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.1
+   * @deprecated as of 3.5 use {@link SlowElement}.
+   */
+  @Deprecated
+  public class LazyElement extends SlowElement
+  {
+    /**
+     * @since 3.5
+     */
+    public LazyElement(IContainer<Object> container, String text)
+    {
+      super(container, text);
+    }
+
+    public LazyElement(IContainer<Object> container)
+    {
+      this(container, getSlowText(container));
     }
   }
 

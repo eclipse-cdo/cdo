@@ -494,7 +494,7 @@
                tooltip="Connect to the repository">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                      <and>
                         <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                         <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Disconnected"/>
@@ -511,7 +511,7 @@
                tooltip="Open the checkout">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Closed"/>
@@ -570,7 +570,7 @@
                tooltip="Rename the element">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                      <adapt type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
                   </iterate>
                </with>
@@ -584,7 +584,7 @@
                tooltip="Delete the repositories">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                      <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                   </iterate>
                </with>
@@ -598,7 +598,7 @@
                tooltip="Delete the checkouts">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                      <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   </iterate>
                </with>
@@ -612,7 +612,7 @@
                tooltip="Delete the objects">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <or>
                       <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                       <adapt type="org.eclipse.emf.ecore.EObject"/>
@@ -633,7 +633,7 @@
                tooltip="Disconnect from the repository">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                      <and>
                         <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                         <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected"/>
@@ -650,7 +650,7 @@
                tooltip="Close the checkout">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
@@ -671,7 +671,7 @@
                tooltip="Update the checkout from the remote repository">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
@@ -688,7 +688,7 @@
                tooltip="Checkin the local changes into the remote repository">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
@@ -705,7 +705,7 @@
                tooltip="Revert the local changes">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
-                  <iterate>
+                  <iterate ifEmpty="false">
                     <and>
                       <instanceof value="org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>

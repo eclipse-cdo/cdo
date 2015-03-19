@@ -20,6 +20,9 @@ import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -35,6 +38,8 @@ import java.util.Properties;
  */
 public class CheckoutBranchPointPage extends CheckoutWizardPage
 {
+  private static final IContainer<Object> CONNECTING_INPUT = ContainerItemProvider.createSlowInput("Connecting...");
+
   private int branchID = CDOBranch.MAIN_BRANCH_ID;
 
   private long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
@@ -120,6 +125,8 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
     };
 
     branchPointComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
+    branchPointComposite.getBranchViewer().setInput(CONNECTING_INPUT);
+
   }
 
   @Override
@@ -129,7 +136,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
     {
       TreeViewer branchViewer = branchPointComposite.getBranchViewer();
       branchViewer.setSelection(StructuredSelection.EMPTY);
-      branchViewer.setInput(null);
+      branchViewer.setInput(CONNECTING_INPUT);
     }
 
     super.repositoryChanged(repository);

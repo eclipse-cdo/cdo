@@ -211,19 +211,19 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
   {
     long oldTimeStamp = this.timeStamp;
     this.timeStamp = timeStamp;
-    if (headRadio.isEnabled()
-        && (timeStamp == CDOBranchPoint.INVALID_DATE || timeStamp == CDOBranchPoint.UNSPECIFIED_DATE))
+    if (branch != null && (timeStamp == CDOBranchPoint.INVALID_DATE || timeStamp == CDOBranchPoint.UNSPECIFIED_DATE))
     {
       selectRadio(headRadio);
     }
-    else if (baseRadio.isEnabled() && timeStamp == branch.getBase().getTimeStamp())
+    else if (branch != null && timeStamp == branch.getBase().getTimeStamp())
     {
       selectRadio(baseRadio);
     }
     else
     {
       selectRadio(timeRadio);
-      String text = timeStamp == CDOBranchPoint.INVALID_DATE ? "" : CDOCommonUtil.formatTimeStamp(timeStamp);
+      String text = CDOCommonUtil.formatTimeStamp(timeStamp == CDOBranchPoint.INVALID_DATE
+          || timeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? System.currentTimeMillis() : timeStamp);
       if (!timeText.getText().equals(text))
       {
         timeText.setText(text);

@@ -25,6 +25,9 @@ import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
@@ -53,6 +56,8 @@ import java.util.Properties;
  */
 public class CheckoutRootObjectPage extends CheckoutWizardPage
 {
+  private static final IContainer<Object> LOADING_INPUT = ContainerItemProvider.createSlowInput("Loading...");
+
   private CDOID rootID;
 
   private String rootObjectText;
@@ -123,15 +128,18 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
       @Override
       public boolean hasChildren(Object element)
       {
-        CDOResource rootResource = view.getRootResource();
-        if (element == repository)
+        if (view != null)
         {
-          return true;
-        }
+          CDOResource rootResource = view.getRootResource();
+          if (element == repository)
+          {
+            return true;
+          }
 
-        if (element == rootResource)
-        {
-          return !rootResource.getContents().isEmpty();
+          if (element == rootResource)
+          {
+            return !rootResource.getContents().isEmpty();
+          }
         }
 
         if (element instanceof EObject)
@@ -145,15 +153,18 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
       @Override
       public Object[] getChildren(Object element)
       {
-        CDOResource rootResource = view.getRootResource();
-        if (element == repository)
+        if (view != null)
         {
-          return new Object[] { rootResource };
-        }
+          CDOResource rootResource = view.getRootResource();
+          if (element == repository)
+          {
+            return new Object[] { rootResource };
+          }
 
-        if (element == rootResource)
-        {
-          return rootResource.getContents().toArray();
+          if (element == rootResource)
+          {
+            return rootResource.getContents().toArray();
+          }
         }
 
         if (element instanceof EObject)
@@ -167,10 +178,13 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
       @Override
       public Object getParent(Object element)
       {
-        CDOResource rootResource = view.getRootResource();
-        if (element == rootResource)
+        if (view != null)
         {
-          return repository;
+          CDOResource rootResource = view.getRootResource();
+          if (element == rootResource)
+          {
+            return repository;
+          }
         }
 
         if (element instanceof EObject)
@@ -184,9 +198,12 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
       @Override
       public Image getImage(Object element)
       {
-        if (element == view.getRootResource())
+        if (view != null)
         {
-          return CDORepositoryItemProvider.REPOSITORY_IMAGE;
+          if (element == view.getRootResource())
+          {
+            return CDORepositoryItemProvider.REPOSITORY_IMAGE;
+          }
         }
 
         if (element instanceof EObject)
@@ -200,9 +217,12 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
       @Override
       public String getText(Object element)
       {
-        if (element == view.getRootResource())
+        if (view != null)
         {
-          return repository.getLabel();
+          if (element == view.getRootResource())
+          {
+            return repository.getLabel();
+          }
         }
 
         if (element instanceof EObject)
@@ -271,6 +291,8 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
         showNextPage();
       }
     });
+
+    treeViewer.setInput(LOADING_INPUT);
   }
 
   @Override
@@ -332,15 +354,18 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
   {
     if (view != null)
     {
+      // Prevent the item provider to use the view while it's closing.
+      CDOView oldView = view;
+      view = null;
+
       if (treeViewer != null)
       {
         treeViewer.setSelection(StructuredSelection.EMPTY);
-        treeViewer.setInput(null);
+        treeViewer.setInput(LOADING_INPUT);
       }
 
       log("Closing view to " + repository);
-      view.close();
-      view = null;
+      oldView.close();
     }
   }
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,10 +12,12 @@ package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
@@ -53,6 +55,14 @@ public abstract class SafeAction extends Action
   public SafeAction(String text)
   {
     super(text);
+  }
+
+  /**
+   * @since 3.5
+   */
+  public Shell getShell()
+  {
+    return UIUtil.getShell();
   }
 
   @Override

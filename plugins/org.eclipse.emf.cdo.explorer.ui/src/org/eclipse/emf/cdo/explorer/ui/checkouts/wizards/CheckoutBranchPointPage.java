@@ -140,7 +140,15 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
     final CheckoutWizard wizard = getWizard();
     String type = wizard.getTypePage().getType();
 
-    branchPointComposite.setAllowTimeStamp(!CDOCheckout.TYPE_ONLINE_TRANSACTIONAL.equals(type));
+    if (CDOCheckout.TYPE_ONLINE_TRANSACTIONAL.equals(type))
+    {
+      branchPointComposite.setAllowTimeStamp(false);
+    }
+    else
+    {
+      branchPointComposite.setAllowTimeStamp(true);
+      branchPointComposite.getSelectTimeComposite().setTimeStamp(timeStamp);
+    }
 
     final Display display = branchPointComposite.getDisplay();
     display.asyncExec(new Runnable()

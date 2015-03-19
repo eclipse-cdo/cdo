@@ -10,12 +10,14 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -33,6 +35,10 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.views.IViewDescriptor;
 
 import java.util.Properties;
 
@@ -137,6 +143,12 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
 
         int branchID = selectedElement.getBranchID();
         long timeStamp = selectedElement.getTimeStamp();
+
+        if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          typePage.setType(CDOCheckout.TYPE_ONLINE_HISTORICAL);
+        }
+
         branchPointPage.setBranchPoint(branchID, timeStamp);
       }
     }
@@ -162,6 +174,8 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
           CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
           CDOCheckout checkout = checkoutManager.addCheckout(properties);
           checkout.open();
+
+          showInProjectExplorer(checkout);
         }
         catch (Exception ex)
         {
@@ -187,5 +201,45 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
     }.schedule();
 
     return true;
+  }
+
+  public static void showInProjectExplorer(final CDOCheckout checkout)
+  {
+    UIUtil.getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        IWorkbench workbench = PlatformUI.getWorkbench();
+
+        IViewDescriptor viewDescriptor = workbench.getViewRegistry().find(
+            CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
+        if (viewDescriptor != null)
+        {
+          IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+          if (window != null)
+          {
+            IWorkbenchPage page = window.getActivePage();
+            if (page != null)
+            {
+              try
+              {
+                page.showView(viewDescriptor.getId());
+
+                CDOCheckoutContentProvider checkoutContentProvider = CDOCheckoutContentProvider
+                    .getInstance(CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
+                if (checkoutContentProvider != null)
+                {
+                  checkoutContentProvider.selectObjects(checkout);
+                }
+              }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
+            }
+          }
+        }
+      }
+    });
   }
 }

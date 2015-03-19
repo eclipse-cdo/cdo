@@ -236,4 +236,26 @@ public class CheckoutLabelPage extends CheckoutWizardPage
       labelText.setText("");
     }
   }
+
+  public static String getUniqueLabel(String label)
+  {
+    Set<String> names = new HashSet<String>();
+  
+    CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
+    for (CDOCheckout checkout : checkoutManager.getCheckouts())
+    {
+      names.add(checkout.getLabel());
+    }
+  
+    for (int i = 1; i < Integer.MAX_VALUE; i++)
+    {
+      String name = i == 1 ? label : label + " (" + i + ")";
+      if (!names.contains(name))
+      {
+        return name;
+      }
+    }
+  
+    throw new IllegalStateException("Too many checkouts");
+  }
 }

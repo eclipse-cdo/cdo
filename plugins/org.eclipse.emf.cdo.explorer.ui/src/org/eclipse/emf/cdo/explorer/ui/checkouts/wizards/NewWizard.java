@@ -157,7 +157,7 @@ public abstract class NewWizard extends Wizard implements INewWizard
           view.waitForUpdate(commitInfo.getTimeStamp());
 
           CDOObject newObject = view.getObject(newID);
-          contentProvider.selectObject(newObject);
+          contentProvider.selectObjects(newObject);
         }
 
         return Status.OK_STATUS;

@@ -461,7 +461,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
           CDOCheckoutContentProvider contentProvider = getContentProvider();
           if (contentProvider != null)
           {
-            contentProvider.selectObject(object);
+            contentProvider.selectObjects(object);
           }
         }
       }

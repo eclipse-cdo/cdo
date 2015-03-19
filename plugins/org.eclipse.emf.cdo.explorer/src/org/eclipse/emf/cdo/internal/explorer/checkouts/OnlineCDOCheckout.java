@@ -31,6 +31,11 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   {
   }
 
+  public OnlineCDOCheckout(boolean readOnly)
+  {
+    super(readOnly);
+  }
+
   public boolean isOffline()
   {
     return false;

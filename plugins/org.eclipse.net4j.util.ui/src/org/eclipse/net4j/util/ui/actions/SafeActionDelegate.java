@@ -12,10 +12,12 @@ package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionDelegate;
 
 /**
@@ -34,6 +36,14 @@ public abstract class SafeActionDelegate implements IActionDelegate
 
   public SafeActionDelegate()
   {
+  }
+
+  /**
+   * @since 3.5
+   */
+  public Shell getShell()
+  {
+    return UIUtil.getShell();
   }
 
   public IAction getAction()

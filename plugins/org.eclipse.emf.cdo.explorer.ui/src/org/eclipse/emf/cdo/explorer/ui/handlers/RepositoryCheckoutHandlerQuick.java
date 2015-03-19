@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutLabelPage;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
@@ -26,20 +28,17 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public abstract class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler<CDORepositoryElement>
+public class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler<CDORepositoryElement>
 {
-  private final String type;
-
-  protected RepositoryCheckoutHandlerQuick(String type)
+  public RepositoryCheckoutHandlerQuick()
   {
     super(CDORepositoryElement.class, false);
-    this.type = type;
   }
 
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    checkout(elements.get(0), type);
+    checkout(elements.get(0), CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
   }
 
   public static void checkout(CDORepositoryElement repositoryElement, String type)
@@ -48,7 +47,7 @@ public abstract class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler
 
     Properties properties = new Properties();
     properties.setProperty("type", type);
-    properties.setProperty("label", repository.getLabel());
+    properties.setProperty("label", CheckoutLabelPage.getUniqueLabel(repository.getLabel()));
     properties.setProperty("repository", repository.getID());
     properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
     properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
@@ -57,27 +56,7 @@ public abstract class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler
 
     CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
     checkout.open();
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Online extends RepositoryCheckoutHandlerQuick
-  {
-    public Online()
-    {
-      super(CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class Offline extends RepositoryCheckoutHandlerQuick
-  {
-    public Offline()
-    {
-      super(CDOCheckout.TYPE_OFFLINE);
-    }
+    CheckoutWizard.showInProjectExplorer(checkout);
   }
 }

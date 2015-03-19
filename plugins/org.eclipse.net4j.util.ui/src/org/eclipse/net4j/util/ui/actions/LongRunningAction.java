@@ -142,6 +142,7 @@ public abstract class LongRunningAction extends SafeAction
     return PlatformUI.getWorkbench().getDisplay();
   }
 
+  @Override
   public Shell getShell()
   {
     IWorkbenchWindow workbenchWindow = getWorkbenchWindow();

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
@@ -112,6 +113,13 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     if (selectedElement instanceof CDORepository)
     {
       final CDORepository repository = (CDORepository)selectedElement;
+
+      CDOCheckout[] checkouts = repository.getCheckouts();
+      if (checkouts.length != 0)
+      {
+        filled |= addAction(menu, repository, new ShowInProjectExplorerAction(page, checkouts));
+      }
+
       if (repository.isConnected())
       {
         if (repository.isLocal())
@@ -418,13 +426,38 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   /**
    * @author Eike Stepper
    */
+  private static final class ShowInProjectExplorerAction extends ShowInViewAction
+  {
+    private final CDOCheckout[] checkouts;
+
+    public ShowInProjectExplorerAction(IWorkbenchPage page, CDOCheckout[] checkouts)
+    {
+      super(page, CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
+      this.checkouts = checkouts;
+    }
+
+    @Override
+    protected void run(IViewPart viewPart) throws Exception
+    {
+      CDOCheckoutContentProvider checkoutContentProvider = CDOCheckoutContentProvider
+          .getInstance(CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
+      if (checkoutContentProvider != null)
+      {
+        checkoutContentProvider.selectObjects((Object[])checkouts);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static final class ShowInSessionsViewAction extends ShowInViewAction
   {
     private final CDORepository repository;
 
     private final CDOCheckout checkout;
 
-    private ShowInSessionsViewAction(IWorkbenchPage page, CDORepository repository, CDOCheckout checkout)
+    public ShowInSessionsViewAction(IWorkbenchPage page, CDORepository repository, CDOCheckout checkout)
     {
       super(page, CDOSessionsView.ID);
       this.repository = repository;
@@ -519,7 +552,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
   {
     private final File folder;
 
-    private ShowInSystemExplorerAction(File folder)
+    public ShowInSystemExplorerAction(File folder)
     {
       this.folder = folder;
 

@@ -113,6 +113,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   {
   }
 
+  public CDOCheckoutImpl(boolean readOnly)
+  {
+    this.readOnly = readOnly;
+  }
+
   @Override
   public final CDOCheckoutManagerImpl getManager()
   {
@@ -319,7 +324,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public void setReadOnly(boolean readOnly)
   {
-    if (state != State.Open)
+    if (state != State.Closed)
     {
       throw new IllegalStateException("Checkout is not closed: " + this);
     }

@@ -86,6 +86,11 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout> impleme
       return new OnlineCDOCheckout();
     }
 
+    if (CDOCheckout.TYPE_ONLINE_HISTORICAL.equals(type))
+    {
+      return new OnlineCDOCheckout(true);
+    }
+
     if (CDOCheckout.TYPE_OFFLINE.equals(type))
     {
       return new OfflineCDOCheckout();

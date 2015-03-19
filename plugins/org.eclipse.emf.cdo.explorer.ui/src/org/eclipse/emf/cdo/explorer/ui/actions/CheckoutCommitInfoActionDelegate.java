@@ -12,8 +12,10 @@ package org.eclipse.emf.cdo.explorer.ui.actions;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
+import org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler;
 import org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandlerQuick;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -76,11 +78,28 @@ public class CheckoutCommitInfoActionDelegate extends LongRunningActionDelegate
                 }
               };
 
-              RepositoryCheckoutHandlerQuick.checkout(repositoryElement, "online");
+              checkout(repositoryElement);
             }
           }
         }
       }
+    }
+  }
+
+  protected void checkout(CDORepositoryElement repositoryElement)
+  {
+    RepositoryCheckoutHandler.checkout(getShell(), repositoryElement);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class Quick extends CheckoutCommitInfoActionDelegate
+  {
+    @Override
+    protected void checkout(CDORepositoryElement repositoryElement)
+    {
+      RepositoryCheckoutHandlerQuick.checkout(repositoryElement, CDOCheckout.TYPE_ONLINE_HISTORICAL);
     }
   }
 }

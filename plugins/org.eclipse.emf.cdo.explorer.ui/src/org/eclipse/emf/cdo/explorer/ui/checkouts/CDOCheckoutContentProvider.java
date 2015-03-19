@@ -90,6 +90,7 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -254,6 +255,8 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
   private TreeViewer viewer;
 
   private Object input;
+
+  public static final String PROJECT_EXPLORER_ID = "org.eclipse.ui.navigator.ProjectExplorer";
 
   public CDOCheckoutContentProvider()
   {
@@ -778,7 +781,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     return null;
   }
 
-  public void selectObject(final Object object)
+  public void selectObjects(final Object... objects)
   {
     final Control control = viewer.getControl();
     if (!control.isDisposed())
@@ -794,27 +797,42 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             return;
           }
 
-          LinkedList<Object> path = new LinkedList<Object>();
-          CDOCheckout checkout = CDOExplorerUtil.walkUp(object, path);
-          if (checkout != null)
+          for (Object object : objects)
           {
-            viewer.setExpandedState(checkout, true);
-
-            path.removeFirst();
-            path.removeLast();
-
-            for (Object object : path)
+            LinkedList<Object> path = new LinkedList<Object>();
+            CDOCheckout checkout = CDOExplorerUtil.walkUp(object, path);
+            if (checkout != null)
             {
-              viewer.setExpandedState(object, true);
-            }
+              viewer.setExpandedState(checkout, true);
 
-            viewer.setSelection(new StructuredSelection(object), true);
-            if (viewer.getSelection().isEmpty())
-            {
-              if (isObjectLoading(object) || System.currentTimeMillis() < end)
+              if (!path.isEmpty())
               {
-                display.timerExec(50, this);
+                path.removeFirst();
               }
+
+              if (!path.isEmpty())
+              {
+                path.removeLast();
+              }
+
+              for (Object parent : path)
+              {
+                viewer.setExpandedState(parent, true);
+              }
+            }
+          }
+
+          viewer.setSelection(new StructuredSelection(objects), true);
+          IStructuredSelection selection = (IStructuredSelection)viewer.getSelection();
+
+          Set<Object> actual = new HashSet<Object>(Arrays.asList(selection.toArray()));
+          Set<Object> expected = new HashSet<Object>(Arrays.asList(objects));
+
+          if (!actual.equals(expected))
+          {
+            if (isObjectLoading(objects) || System.currentTimeMillis() < end)
+            {
+              display.timerExec(50, this);
             }
           }
         }
@@ -961,11 +979,19 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
     }
   }
 
-  private static boolean isObjectLoading(Object object)
+  private static boolean isObjectLoading(Object... objects)
   {
     synchronized (LOADING_OBJECTS)
     {
-      return LOADING_OBJECTS.contains(object);
+      for (Object object : objects)
+      {
+        if (LOADING_OBJECTS.contains(object))
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
   }
 

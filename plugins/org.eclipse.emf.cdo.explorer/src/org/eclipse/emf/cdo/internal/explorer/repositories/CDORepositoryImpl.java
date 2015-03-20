@@ -41,6 +41,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -56,6 +57,8 @@ import java.util.Set;
 public abstract class CDORepositoryImpl extends AbstractElement implements CDORepository
 {
   public static final String PROP_NAME = "name";
+
+  public static final String PROP_REALM = "realm";
 
   public static final String REPOSITORY_KEY = CDORepository.class.getName();
 
@@ -111,6 +114,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private CDORepository.IDGeneration idGeneration;
 
+  private String realm;
+
   private State state = State.Disconnected;
 
   private boolean explicitelyConnected;
@@ -151,6 +156,25 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   public final CDORepository.IDGeneration getIDGeneration()
   {
     return idGeneration;
+  }
+
+  public IPasswordCredentials getCredentials()
+  {
+    return getCredentials(null);
+  }
+
+  public IPasswordCredentials getCredentials(String realm)
+  {
+    return null;
+  }
+
+  public void setCredentials(IPasswordCredentials credentials)
+  {
+  }
+
+  public boolean isInteractive()
+  {
+    return false;
   }
 
   public final State getState()
@@ -481,9 +505,9 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     super.init(folder, type, properties);
     name = properties.getProperty(PROP_NAME);
-    versioningMode = CDORepository.VersioningMode.valueOf(properties
-        .getProperty(CDORepositoryImpl.PROP_VERSIONING_MODE));
-    idGeneration = CDORepository.IDGeneration.valueOf(properties.getProperty(CDORepositoryImpl.PROP_ID_GENERATION));
+    versioningMode = VersioningMode.valueOf(properties.getProperty(PROP_VERSIONING_MODE));
+    idGeneration = IDGeneration.valueOf(properties.getProperty(PROP_ID_GENERATION));
+    realm = properties.getProperty(PROP_REALM);
   }
 
   @Override
@@ -491,8 +515,13 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     super.collectProperties(properties);
     properties.setProperty(PROP_NAME, name);
-    properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, versioningMode.toString());
-    properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, idGeneration.toString());
+    properties.setProperty(PROP_VERSIONING_MODE, versioningMode.toString());
+    properties.setProperty(PROP_ID_GENERATION, idGeneration.toString());
+
+    if (realm != null)
+    {
+      properties.setProperty(PROP_REALM, realm);
+    }
   }
 
   protected IConnector getConnector()
@@ -516,6 +545,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     CDOSessionConfiguration sessionConfiguration = createSessionConfiguration();
     sessionConfiguration.setPassiveUpdateEnabled(true);
     sessionConfiguration.setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
+    sessionConfiguration.setCredentialsProvider(this);
 
     CDOSession session = sessionConfiguration.openSession();
     session.options().setGeneratedPackageEmulationEnabled(true);

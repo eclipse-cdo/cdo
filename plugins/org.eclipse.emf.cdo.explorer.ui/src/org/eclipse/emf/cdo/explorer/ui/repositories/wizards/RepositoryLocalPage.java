@@ -105,7 +105,7 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
     Group modeGroup = new Group(composite, SWT.NONE);
     modeGroup.setLayout(new GridLayout(1, false));
-    modeGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_BEGINNING));
+    modeGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_FILL));
     modeGroup.setText("Versioning Mode");
 
     normalButton = new Button(modeGroup, SWT.RADIO);
@@ -123,7 +123,7 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
     Group idGroup = new Group(composite, SWT.NONE);
     idGroup.setLayout(new GridLayout(1, false));
-    idGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_BEGINNING));
+    idGroup.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.VERTICAL_ALIGN_FILL));
     idGroup.setText("ID Generation");
 
     counterButton = new Button(idGroup, SWT.RADIO);

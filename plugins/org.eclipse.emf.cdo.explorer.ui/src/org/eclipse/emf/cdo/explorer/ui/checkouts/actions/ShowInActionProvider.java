@@ -94,7 +94,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     int dashBoardHeight = OM.PREF_DASHBOARD_HEIGHT.getValue();
     if (dashBoardHeight >= 0)
     {
-      showDashboard(getViewer(), getViewSite().getPage());
+      // showDashboard(getViewer(), getViewSite().getPage());
     }
   }
 

@@ -27,6 +27,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> implements CDORepositoryManager
 {
+  public static final String SECURE_STORE_PATH = "/CDO/repositories";
+
   private static final String PROPERTIES_FILE = "repository.properties";
 
   private final Map<CDOSession, CDORepository> sessionMap = new ConcurrentHashMap<CDOSession, CDORepository>();

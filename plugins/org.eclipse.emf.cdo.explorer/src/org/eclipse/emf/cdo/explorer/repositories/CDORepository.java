@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
 
 /**
  * A CDO server independent representation of a repository.
@@ -27,8 +29,8 @@ import org.eclipse.net4j.util.container.IContainer;
  * @author Eike Stepper
  * @since 4.4
  */
-public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, CDOSessionProvider, CDOViewOpener,
-    CDOTransactionOpener
+public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, IPasswordCredentialsProvider2,
+    CDOSessionProvider, CDOViewOpener, CDOTransactionOpener
 {
   public static final String TYPE_REMOTE = "remote";
 
@@ -53,6 +55,10 @@ public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>
   public VersioningMode getVersioningMode();
 
   public IDGeneration getIDGeneration();
+
+  public IPasswordCredentials getCredentials();
+
+  public void setCredentials(IPasswordCredentials credentials);
 
   public State getState();
 

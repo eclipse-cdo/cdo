@@ -53,13 +53,13 @@ public class Bugzilla_365204_Test extends AbstractCDOTest
 
     // Make version 2 of the category
     category.setName("version 2");
-    CDOCommitInfo commit2 = commitAndSync(transaction, auditView);
+    CDOCommitInfo commit2 = transaction.commit();
     assertEquals(true, commit1.getTimeStamp() < commit2.getTimeStamp());
     assertEquals(2, CDOUtil.getCDOObject(category).cdoRevision().getVersion());
 
     // Make version 3 of the category
     category.setName("version 3");
-    CDOCommitInfo commit3 = commitAndSync(transaction, auditView);
+    CDOCommitInfo commit3 = transaction.commit();
     assertEquals(true, commit2.getTimeStamp() < commit3.getTimeStamp());
     assertEquals(3, CDOUtil.getCDOObject(category).cdoRevision().getVersion());
 

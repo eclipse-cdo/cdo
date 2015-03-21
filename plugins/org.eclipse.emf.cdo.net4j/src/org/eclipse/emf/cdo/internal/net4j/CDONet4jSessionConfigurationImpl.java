@@ -156,6 +156,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private CDOID rootResourceID;
 
+    private boolean authenticating;
+
     private boolean supportingAudits;
 
     private boolean supportingBranches;
@@ -180,6 +182,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       creationTime = result.getRepositoryCreationTime();
       timeResult = result.getRepositoryTimeResult();
       rootResourceID = result.getRootResourceID();
+      authenticating = result.isRepositoryAuthenticating();
       supportingAudits = result.isRepositorySupportingAudits();
       supportingBranches = result.isRepositorySupportingBranches();
       serializingCommits = result.isRepositoryEnsuringReferentialIntegrity();
@@ -275,6 +278,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       {
         throw new IllegalStateException("rootResourceID must not be changed unless it is null");
       }
+    }
+
+    public boolean isAuthenticating()
+    {
+      return authenticating;
     }
 
     public boolean isSupportingAudits()

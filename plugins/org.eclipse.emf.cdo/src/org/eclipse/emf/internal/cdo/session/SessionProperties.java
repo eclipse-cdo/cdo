@@ -166,6 +166,17 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
       }
     });
 
+    add(new Property<CDOSession>("authenticating", Messages.getString("SessionPropertyTester_40"), //
+        Messages.getString("SessionPropertyTester_41"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().isAuthenticating();
+      }
+    });
+
     add(new Property<CDOSession>("supportingAudits", Messages.getString("SessionPropertyTester_20"), //
         Messages.getString("SessionPropertyTester_21"), //$NON-NLS-1$
         CATEGORY_REPOSITORY)
@@ -316,6 +327,11 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
   }
 
   public CDOID getRootResourceID()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isAuthenticating()
   {
     throw new UnsupportedOperationException();
   }

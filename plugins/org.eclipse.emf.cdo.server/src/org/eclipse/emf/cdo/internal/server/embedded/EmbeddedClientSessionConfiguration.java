@@ -125,6 +125,11 @@ public class EmbeddedClientSessionConfiguration extends CDOSessionConfigurationI
       return session.getRepository().getRootResourceID();
     }
 
+    public boolean isAuthenticating()
+    {
+      return session.getRepository().isAuthenticating();
+    }
+
     public boolean isSupportingAudits()
     {
       return session.getRepository().isSupportingAudits();

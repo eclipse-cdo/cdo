@@ -88,6 +88,12 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public CDOID getRootResourceID();
 
   /**
+   * Returns <code>true</code> if this repository requires user authentication, <code>false</code> otherwise.
+   * @since 4.4
+   */
+  public boolean isAuthenticating();
+
+  /**
    * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
    */
   public boolean isSupportingAudits();

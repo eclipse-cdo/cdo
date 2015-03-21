@@ -152,6 +152,11 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.getRootResourceID();
   }
 
+  public boolean isAuthenticating()
+  {
+    return delegate.isAuthenticating();
+  }
+
   public boolean isSupportingAudits()
   {
     return delegate.isSupportingAudits();

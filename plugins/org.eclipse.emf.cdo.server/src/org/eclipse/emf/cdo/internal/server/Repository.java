@@ -330,6 +330,16 @@ public class Repository extends Container<Object> implements InternalRepository
     this.properties = properties;
   }
 
+  public boolean isAuthenticating()
+  {
+    if (sessionManager != null)
+    {
+      return sessionManager.getAuthenticator() != null;
+    }
+
+    return false;
+  }
+
   public boolean isSupportingAudits()
   {
     return supportingAudits;

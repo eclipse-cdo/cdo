@@ -57,6 +57,8 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private CDOID rootResourceID;
 
+  private boolean authenticating;
+
   private boolean supportingAudits;
 
   private boolean supportingBranches;
@@ -86,6 +88,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
     creationTime = in.readLong();
     rootResourceID = new CDODataInputImpl.Default(in).readCDOID();
+    authenticating = in.readBoolean();
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();
     serializingCommits = in.readBoolean();
@@ -136,6 +139,11 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
   public CDOID getRootResourceID()
   {
     return rootResourceID;
+  }
+
+  public boolean isAuthenticating()
+  {
+    return authenticating;
   }
 
   public boolean isSupportingAudits()

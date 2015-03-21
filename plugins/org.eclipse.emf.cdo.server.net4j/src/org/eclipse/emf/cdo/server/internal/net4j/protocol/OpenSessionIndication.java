@@ -175,6 +175,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeLong(repository.getCreationTime());
       out.writeLong(repository.getLastCommitTimeStamp());
       out.writeCDOID(repository.getRootResourceID());
+      out.writeBoolean(repository.isAuthenticating());
       out.writeBoolean(repository.isSupportingAudits());
       out.writeBoolean(repository.isSupportingBranches());
       out.writeBoolean(repository.isSerializingCommits());

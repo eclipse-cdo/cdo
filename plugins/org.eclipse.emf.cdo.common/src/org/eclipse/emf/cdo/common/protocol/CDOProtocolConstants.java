@@ -30,8 +30,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 24; // SIGNAL_LOAD_OBJECT_LIFETIME
+  public static final int PROTOCOL_VERSION = 25; // OpenSessionResponse.repositoryAuthenticating
 
+  // public static final int PROTOCOL_VERSION = 24; // SIGNAL_LOAD_OBJECT_LIFETIME
   // public static final int PROTOCOL_VERSION = 23; // Fix branch renaming
   // public static final int PROTOCOL_VERSION = 22; // Prefetch returns RevisionInfo instead of CDORevision to have
   // PointerCDORevision

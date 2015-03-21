@@ -23,12 +23,14 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOID.ObjectType;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -66,6 +68,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -343,7 +346,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private String storeType;
 
-    private Set<CDOID.ObjectType> objectIDTypes;
+    private final Set<CDOID.ObjectType> objectIDTypes = new HashSet<ObjectType>();
 
     private long repositoryCreationTime;
 
@@ -353,6 +356,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOID rootResourceID;
 
+    private boolean repositoryAuthenticating;
+
     private boolean repositorySupportingAudits;
 
     private boolean repositorySupportingBranches;
@@ -361,34 +366,57 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean repositoryEnsuringReferentialIntegrity;
 
-    private List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
+    private final List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
     private IDGenerationLocation repositoryIDGenerationLocation;
 
     /**
-     * @since 4.2
+     * @since 4.4
      */
+    public OpenSessionResult(CDODataInput in, int sessionID) throws IOException
+    {
+      userID = in.readString();
+      repositoryUUID = in.readString();
+      repositoryType = in.readEnum(CDOCommonRepository.Type.class);
+      repositoryState = in.readEnum(CDOCommonRepository.State.class);
+      storeType = in.readString();
+
+      int types = in.readInt();
+      for (int i = 0; i < types; i++)
+      {
+        CDOID.ObjectType objectIDType = in.readEnum(CDOID.ObjectType.class);
+        objectIDTypes.add(objectIDType);
+      }
+
+      repositoryCreationTime = in.readLong();
+      lastUpdateTime = in.readLong();
+      rootResourceID = in.readCDOID();
+      repositoryAuthenticating = in.readBoolean();
+      repositorySupportingAudits = in.readBoolean();
+      repositorySupportingBranches = in.readBoolean();
+      repositorySerializingCommits = in.readBoolean();
+      repositoryEnsuringReferentialIntegrity = in.readBoolean();
+      repositoryIDGenerationLocation = in.readEnum(IDGenerationLocation.class);
+
+      CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
+      for (int i = 0; i < packageUnits.length; i++)
+      {
+        this.packageUnits.add((InternalCDOPackageUnit)packageUnits[i]);
+      }
+    }
+
+    /**
+     * @since 4.2
+     * @deprecated as of 4.4 use {@link #OpenSessionResult(CDODataInput, int)}.
+     */
+    @Deprecated
     public OpenSessionResult(int sessionID, String userID, String repositoryUUID,
         CDOCommonRepository.Type repositoryType, CDOCommonRepository.State repositoryState, String storeType,
         Set<CDOID.ObjectType> objectIDTypes, long repositoryCreationTime, long lastUpdateTime, CDOID rootResourceID,
         boolean repositorySupportingAudits, boolean repositorySupportingBranches, boolean repositorySerializingCommits,
         boolean repositoryEnsuringReferentialIntegrity, IDGenerationLocation repositoryIDGenerationLocation)
     {
-      this.sessionID = sessionID;
-      this.userID = userID;
-      this.repositoryUUID = repositoryUUID;
-      this.repositoryType = repositoryType;
-      this.repositoryState = repositoryState;
-      this.storeType = storeType;
-      this.objectIDTypes = objectIDTypes;
-      this.repositoryCreationTime = repositoryCreationTime;
-      this.lastUpdateTime = lastUpdateTime;
-      this.rootResourceID = rootResourceID;
-      this.repositorySupportingAudits = repositorySupportingAudits;
-      this.repositorySupportingBranches = repositorySupportingBranches;
-      this.repositorySerializingCommits = repositoryEnsuringReferentialIntegrity;
-      this.repositoryEnsuringReferentialIntegrity = repositoryEnsuringReferentialIntegrity;
-      this.repositoryIDGenerationLocation = repositoryIDGenerationLocation;
+      throw new UnsupportedOperationException();
     }
 
     public int getSessionID()
@@ -452,6 +480,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public long getRepositoryCreationTime()
     {
       return repositoryCreationTime;
+    }
+
+    /**
+     * @since 4.4
+     */
+    public boolean isRepositoryAuthenticating()
+    {
+      return repositoryAuthenticating;
     }
 
     public boolean isRepositorySupportingAudits()

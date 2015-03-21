@@ -713,6 +713,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return repository.getRootResourceID();
     }
 
+    public boolean isAuthenticating()
+    {
+      return repository.isAuthenticating();
+    }
+
     public boolean isSupportingAudits()
     {
       return repository.isSupportingAudits();

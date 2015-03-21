@@ -375,6 +375,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      */
     public OpenSessionResult(CDODataInput in, int sessionID) throws IOException
     {
+      this.sessionID = sessionID;
+
       userID = in.readString();
       repositoryUUID = in.readString();
       repositoryType = in.readEnum(CDOCommonRepository.Type.class);

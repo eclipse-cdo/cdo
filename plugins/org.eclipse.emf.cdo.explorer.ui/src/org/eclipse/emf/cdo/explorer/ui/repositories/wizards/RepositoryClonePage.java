@@ -43,15 +43,15 @@ public class RepositoryClonePage extends AbstractRepositoryPage
   @Override
   protected void fillPage(Composite container)
   {
-    controller = new MasterRepositoryController(container)
-    {
-      @Override
-      protected void validateController()
-      {
-        super.validateController();
-        validate();
-      }
-    };
+    // controller = new MasterRepositoryController(container)
+    // {
+    // @Override
+    // protected void validateController()
+    // {
+    // super.validateController();
+    // validate();
+    // }
+    // };
 
     createLabel(container, "Reconnect seconds:");
     reconnectSecondsText = createText(container, 50);

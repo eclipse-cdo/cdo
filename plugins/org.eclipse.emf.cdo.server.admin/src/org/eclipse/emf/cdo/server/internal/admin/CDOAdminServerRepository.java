@@ -228,6 +228,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
 
     out.writeLong(getCreationTime());
     new CDODataOutputImpl(out).writeCDOID(getRootResourceID());
+    out.writeBoolean(isAuthenticating());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());
     out.writeBoolean(isSerializingCommits());

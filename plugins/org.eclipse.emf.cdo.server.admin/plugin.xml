@@ -23,12 +23,12 @@
         	productGroup="org.eclipse.emf.cdo.server.admin.adminServers"
           type="default"
           class="org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer$Factory$Plugin"/>
-        <factory
-            productGroup="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers"
+    <factory
+          productGroup="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers"
           type="default"
           class="org.eclipse.emf.cdo.server.internal.admin.DefaultCDORepositoryConfigurationManager$Factory"/>
-        <factory
-            productGroup="org.eclipse.emf.cdo.server.admin.adminHandlers"
+    <factory
+          productGroup="org.eclipse.emf.cdo.server.admin.adminHandlers"
           type="default"
           class="org.eclipse.emf.cdo.server.internal.admin.DefaultCDOAdminHandler$Factory"/>
  	</extension>

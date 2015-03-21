@@ -48,7 +48,7 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
 
   public void start(File configFile) throws Exception
   {
-    OM.LOG.info("Repository configuration manager extension starting.");
+    OM.LOG.info("Repository configuration manager extension starting");
 
     IManagedContainer container = IPluginContainer.INSTANCE;
 
@@ -63,12 +63,13 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension
       }
     }
 
-    OM.LOG.info("Repository configuration manager extension started.");
+    OM.LOG.info("Repository configuration manager extension started");
   }
 
   public void stop() throws Exception
   {
-    OM.LOG.info("Repository configuration manager extension stopped.");
+    OM.LOG.info("Repository configuration manager extension stopping");
+    OM.LOG.info("Repository configuration manager extension stopped");
   }
 
   protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException

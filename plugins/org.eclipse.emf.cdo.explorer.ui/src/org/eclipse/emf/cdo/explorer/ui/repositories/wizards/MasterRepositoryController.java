@@ -24,8 +24,8 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -108,10 +108,9 @@ public class MasterRepositoryController
     }
   };
 
-  private IListener adminListener = new ContainerEventAdapter<CDOAdminClientRepository>()
+  private IListener adminListener = new IListener()
   {
-    @Override
-    protected void notifyContainerEvent(IContainerEvent<CDOAdminClientRepository> event)
+    public void notifyEvent(IEvent event)
     {
       ViewerUtil.refresh(repositoryTableViewer, null);
     }
@@ -189,6 +188,9 @@ public class MasterRepositoryController
     {
       nameText.cancelValidation();
       portText.cancelValidation();
+
+      LifecycleUtil.deactivate(adminManager);
+      adminManager = null;
 
       container.deactivate();
       container = null;
@@ -451,7 +453,7 @@ public class MasterRepositoryController
     {
       nameText.modifyText(false);
 
-      if (valid)
+      if (valid && connectorDescription != null)
       {
         adminManager.addConnection("tcp://" + connectorDescription);
       }
@@ -572,7 +574,7 @@ public class MasterRepositoryController
         }
       }
 
-      return new Object[0];
+      return ContainerItemProvider.NO_ELEMENTS;
     }
   }
 

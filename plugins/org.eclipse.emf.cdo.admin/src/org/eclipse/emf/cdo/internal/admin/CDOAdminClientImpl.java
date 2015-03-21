@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.common.admin.CDOAdminRepository;
-import org.eclipse.emf.cdo.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.internal.admin.protocol.CDOAdminClientProtocol;
 import org.eclipse.emf.cdo.spi.common.admin.AbstractCDOAdmin;
 
@@ -66,7 +65,6 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
     this.container = container;
 
     executorService = ExecutorServiceFactory.get(container);
-    activate();
   }
 
   public final String getURL()
@@ -307,22 +305,13 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
    */
   protected class ConnectRunnable implements Runnable
   {
-    private void sleep() throws InterruptedException
-    {
-      long now = System.currentTimeMillis();
-      if (connectAttempt != 0)
-      {
-        long passed = now - connectAttempt;
-        long timeout = getTimeout();
-        long sleep = Math.max(timeout - passed, timeout);
-        Thread.sleep(sleep);
-      }
-
-      connectAttempt = now;
-    }
-
     public void run()
     {
+      if (!container.isActive())
+      {
+        return;
+      }
+
       try
       {
         sleep();
@@ -360,7 +349,6 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
       }
       catch (InterruptedException ex)
       {
-        OM.LOG.error(ex);
         return;
       }
       catch (Throwable ex)
@@ -373,6 +361,20 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
 
         connect();
       }
+    }
+
+    private void sleep() throws InterruptedException
+    {
+      long now = System.currentTimeMillis();
+      if (connectAttempt != 0)
+      {
+        long passed = now - connectAttempt;
+        long timeout = getTimeout();
+        long sleep = Math.max(timeout - passed, timeout);
+        Thread.sleep(sleep);
+      }
+
+      connectAttempt = now;
     }
   }
 

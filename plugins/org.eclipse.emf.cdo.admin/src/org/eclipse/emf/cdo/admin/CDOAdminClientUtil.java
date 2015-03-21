@@ -42,7 +42,9 @@ public final class CDOAdminClientUtil
 
   public static CDOAdminClient openAdmin(String url, long timeout, IManagedContainer container)
   {
-    return new CDOAdminClientImpl(url, timeout, container);
+    CDOAdminClientImpl client = new CDOAdminClientImpl(url, timeout, container);
+    client.activate();
+    return client;
   }
 
   public static CDOAdminClientManager createAdminManager()

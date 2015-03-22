@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -41,6 +41,12 @@ public class OpenSessionIndication extends IndicationWithResponse
   public OpenSessionIndication(BuddiesServerProtocol protocol)
   {
     super(protocol, ProtocolConstants.SIGNAL_OPEN_SESSION);
+  }
+
+  @Override
+  protected boolean closeChannelAfterException()
+  {
+    return true;
   }
 
   @Override

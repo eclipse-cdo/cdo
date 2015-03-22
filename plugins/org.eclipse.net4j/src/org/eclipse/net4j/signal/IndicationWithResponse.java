@@ -48,6 +48,14 @@ public abstract class IndicationWithResponse extends SignalReactor
   }
 
   /**
+   * @since 4.4
+   */
+  protected boolean closeChannelAfterException()
+  {
+    return false;
+  }
+
+  /**
    * @since 2.0
    */
   protected String getExceptionMessage(Throwable t)
@@ -103,6 +111,17 @@ public abstract class IndicationWithResponse extends SignalReactor
     SignalProtocol<?> protocol = getProtocol();
     int correlationID = -getCorrelationID();
     String message = getExceptionMessage(t);
-    new RemoteExceptionRequest(protocol, correlationID, responding, message, t).sendAsync();
+    final boolean closeChannel = closeChannelAfterException();
+
+    RemoteExceptionRequest request = new RemoteExceptionRequest(protocol, correlationID, responding, message, t)
+    {
+      @Override
+      protected boolean closeChannelAfterMe()
+      {
+        return closeChannel;
+      }
+    };
+
+    request.sendAsync();
   }
 }

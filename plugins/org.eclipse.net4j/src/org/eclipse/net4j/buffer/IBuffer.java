@@ -51,33 +51,33 @@ import java.nio.channels.SocketChannel;
  * <p>
  * An example for <b>putting</b> values into a buffer and writing it to a {@link SocketChannel}:
  * <p>
- * 
+ *
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  * // Obtain a fresh buffer
  * Buffer buffer = bufferProvider.getBuffer(); // Start filling the buffer for channelID 4711 ByteBuffer byteBuffer =
  * buffer.startPutting(4711); byteBuffer.putDouble(15.47); // Write the contents of the Buffer to a // SocketChannel
  * without blocking while (!buffer.write(socketChannel)) { // Do something else }
  * </pre>
- * 
+ *
  * An example for reading a buffer from a {@link SocketChannel} and <b>getting</b> values from it:
  * <p>
- * 
+ *
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  * // Obtain a fresh buffer
  * Buffer buffer = bufferProvider.getBuffer();
- * 
+ *
  * // Read the contents of the Buffer from a SocketChannel without blocking
  * ByteBuffer byteBuffer;
  * while ((byteBuffer = buffer.startGetting(socketChannel)) == null)
  * {
  *   // Do something else
  * }
- * 
+ *
  * // Access the contents of the buffer and release it to its provider
  * double value = byteBuffer.getDouble();
  * buffer.release();
  * </pre>
- * 
+ *
  * @see IBufferProvider
  * @see IChannel#sendBuffer(IBuffer)
  * @see IChannel#setReceiveHandler(IBufferHandler)
@@ -114,7 +114,7 @@ public interface IBuffer
 
   /**
    * Returns the channel index value stored in the header of this buffer.
-   * 
+   *
    * @since 2.0
    */
   public short getChannelID();
@@ -163,7 +163,7 @@ public interface IBuffer
    * <li>all other methods that do not influence {@link ByteBuffer#position()}, {@link ByteBuffer#limit()} and
    * {@link ByteBuffer#capacity()}
    * </ul>
-   * 
+   *
    * @param socketChannel
    *          The <code>socketChannel</code> to read the {@link ByteBuffer} from.
    * @return A {@link ByteBuffer} that can be used for getting data if it was possible to completely read the data from
@@ -204,7 +204,7 @@ public interface IBuffer
    * <li>all other methods that do not influence {@link ByteBuffer#position()}, {@link ByteBuffer#limit()} and
    * {@link ByteBuffer#capacity()}
    * </ul>
-   * 
+   *
    * @param channelID
    *          The index of an {@link IChannel} that this buffer is intended to be passed to later or {@link #NO_CHANNEL}
    *          .
@@ -222,7 +222,7 @@ public interface IBuffer
    * This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to completely
    * write the data to the <code>SocketChannel</code> <code>false</code> is returned and the state of this buffer
    * remains {@link BufferState#WRITING WRITING}.
-   * 
+   *
    * @param socketChannel
    *          The <code>socketChannel</code> to write the data to.
    * @return <code>true</code> if it was possible to completely write the data to the <code>SocketChannel</code>,
@@ -237,7 +237,7 @@ public interface IBuffer
 
   /**
    * Turns the state of this buffer from {@link BufferState#PUTTING PUTTING} into {@link BufferState#GETTING GETTING}.
-   * 
+   *
    * @throws IllegalStateException
    *           If the state of this buffer is not {@link BufferState#PUTTING PUTTING}.
    */
@@ -245,7 +245,7 @@ public interface IBuffer
 
   /**
    * Returns the <code>ByteBuffer</code> that can be used for putting or getting data.
-   * 
+   *
    * @throws IllegalStateException
    *           If the state of this buffer is not {@link BufferState#PUTTING PUTTING} or {@link BufferState#GETTING
    *           GETTING}.
@@ -253,14 +253,29 @@ public interface IBuffer
   public ByteBuffer getByteBuffer() throws IllegalStateException;
 
   /**
-   * Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.
+   * Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.
    */
   public boolean isEOS();
 
   /**
-   * Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.
+   * Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.
    */
   public void setEOS(boolean eos);
+
+  /**
+   * Returns the <em>Close Channel After Me</em> flag.
+   *
+   * @since 4.4
+   */
+
+  public boolean isCCAM();
+
+  /**
+   * Sets the <em>Close Channel After Me</em> flag.
+   *
+   * @since 4.4
+   */
+  public void setCCAM(boolean ccam);
 
   /**
    * Releases this buffer to its original {@link IBufferProvider}.

@@ -308,11 +308,18 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
             IBuffer buffer = channelSendQueue.peek();
             if (buffer != null)
             {
+              boolean closeChannelAfterMe = buffer.isCCAM();
+
               if (buffer.write(socketChannel))
               {
                 writeQueue.poll();
                 channelSendQueue.poll();
                 buffer.release();
+              }
+
+              if (closeChannelAfterMe)
+              {
+                channel.close();
               }
             }
           }

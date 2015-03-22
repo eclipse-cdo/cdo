@@ -30,6 +30,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
+import org.eclipse.spi.net4j.InternalChannel;
 import org.eclipse.spi.net4j.Protocol;
 
 import java.io.IOException;
@@ -39,6 +40,7 @@ import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 /**
  * The default implementation of a {@link ISignalProtocol signal protocol}.
@@ -622,6 +624,26 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     public long getMillisBeforeTimeout()
     {
       return timeout;
+    }
+
+    @Override
+    public int read() throws IOException
+    {
+      if (isCCAM())
+      {
+        final InternalChannel channel = (InternalChannel)getChannel();
+
+        ExecutorService executorService = channel.getReceiveExecutor();
+        executorService.submit(new Runnable()
+        {
+          public void run()
+          {
+            channel.close();
+          }
+        });
+      }
+
+      return super.read();
     }
   }
 

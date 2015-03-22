@@ -37,7 +37,11 @@ import java.text.MessageFormat;
  */
 public class Buffer implements InternalBuffer
 {
-  public static final int EOS_OFFSET = 1;
+  public static final int FLAGS_OFFSET = 1;
+
+  private static final byte FLAG_EOS = 1 << 0;
+
+  private static final byte FLAG_CCAM = 1 << 1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER, Buffer.class);
 
@@ -51,7 +55,7 @@ public class Buffer implements InternalBuffer
 
   private short channelID;
 
-  private boolean eos;
+  private byte flags;
 
   private BufferState state = BufferState.INITIAL;
 
@@ -65,12 +69,36 @@ public class Buffer implements InternalBuffer
 
   public boolean isEOS()
   {
-    return eos;
+    return (flags & FLAG_EOS) != 0;
   }
 
   public void setEOS(boolean eos)
   {
-    this.eos = eos;
+    if (eos)
+    {
+      flags |= FLAG_EOS;
+    }
+    else
+    {
+      flags &= ~FLAG_EOS;
+    }
+  }
+
+  public boolean isCCAM()
+  {
+    return (flags & FLAG_CCAM) != 0;
+  }
+
+  public void setCCAM(boolean ccam)
+  {
+    if (ccam)
+    {
+      flags |= FLAG_CCAM;
+    }
+    else
+    {
+      flags &= ~FLAG_CCAM;
+    }
   }
 
   public IBufferProvider getBufferProvider()
@@ -127,7 +155,7 @@ public class Buffer implements InternalBuffer
   {
     state = BufferState.INITIAL;
     channelID = NO_CHANNEL;
-    eos = false;
+    flags = 0;
     byteBuffer.clear();
   }
 
@@ -179,11 +207,11 @@ public class Buffer implements InternalBuffer
         short payloadSize = byteBuffer.getShort();
         if (payloadSize < 0)
         {
-          eos = true;
+          setEOS(true);
           payloadSize = (short)-payloadSize;
         }
 
-        payloadSize -= EOS_OFFSET;
+        payloadSize -= FLAGS_OFFSET;
 
         byteBuffer.clear();
         byteBuffer.limit(payloadSize);
@@ -199,7 +227,7 @@ public class Buffer implements InternalBuffer
       if (TRACER.isEnabled())
       {
         TRACER.trace("Read " + byteBuffer.limit() + " bytes" //$NON-NLS-1$ //$NON-NLS-2$
-            + (eos ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
+            + (isEOS() ? " (EOS)" : "") + StringUtil.NL + formatContent(false)); //$NON-NLS-1$ //$NON-NLS-2$
       }
 
       byteBuffer.flip();
@@ -286,7 +314,9 @@ public class Buffer implements InternalBuffer
           throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
-        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + EOS_OFFSET;
+        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + FLAGS_OFFSET;
+
+        boolean eos = isEOS();
         if (eos)
         {
           payloadSize = -payloadSize;
@@ -475,7 +505,7 @@ public class Buffer implements InternalBuffer
       eos = true;
     }
 
-    payloadSize -= EOS_OFFSET;
+    payloadSize -= FLAGS_OFFSET;
 
     System.out.println("channelID:     " + channelID);
     System.out.println("payloadSize:   " + payloadSize);

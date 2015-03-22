@@ -18,12 +18,17 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.SignalProtocol.TimeoutChangedEvent;
 import org.eclipse.net4j.util.WrappedException;
@@ -43,6 +48,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import java.util.Collection;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -446,5 +452,30 @@ public class SessionTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     transaction.createResource(getResourcePath("ttt"));
     transaction.commit();
+  }
+
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
+  public void testRepositoryNotFound() throws Exception
+  {
+    CDOSession session = null;
+
+    try
+    {
+      session = openSession("sdkghfaifuzicxuhvnjlksah");
+    }
+    catch (Exception ex)
+    {
+    }
+
+    assertEquals(null, session);
+    sleep(200);
+
+    Net4j sessionConfig = (Net4j)getSessionConfig();
+    IAcceptor acceptor = sessionConfig.getAcceptor();
+    for (IConnector connector : acceptor.getAcceptedConnectors())
+    {
+      Collection<IChannel> channels = connector.getChannels();
+      assertEquals(0, channels.size());
+    }
   }
 }

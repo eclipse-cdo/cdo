@@ -59,6 +59,12 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
   }
 
   @Override
+  protected boolean closeChannelAfterException()
+  {
+    return true;
+  }
+
+  @Override
   protected InternalRepository getRepository()
   {
     return repository;

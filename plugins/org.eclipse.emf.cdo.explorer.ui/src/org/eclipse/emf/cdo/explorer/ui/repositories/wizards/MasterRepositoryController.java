@@ -18,9 +18,12 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 
+import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -467,8 +470,6 @@ public class MasterRepositoryController
    */
   private final class RepositoryValidatingText extends ValidatingText
   {
-    private CDONet4jSession session;
-
     private RepositoryValidatingText(Composite parent)
     {
       super(parent, 120);
@@ -477,7 +478,6 @@ public class MasterRepositoryController
     @Override
     protected String getValidationInfo()
     {
-      session = null;
       if (connectorDescription == null)
       {
         return null;
@@ -495,40 +495,69 @@ public class MasterRepositoryController
     @Override
     protected String validate(String repositoryName) throws Exception
     {
-      String description = "tcp://" + connectorDescription + "?repositoryName=" + repositoryName;
+      CDONet4jSession session = null;
 
       try
       {
-        session = CDONet4jUtil.getNet4jSession(container, description);
-        if (session != null && session.isClosed())
+        IConnector connector = null;
+
+        try
+        {
+          connector = Net4jUtil.getConnector(container, "tcp", connectorDescription);
+        }
+        catch (Exception ex)
+        {
+          connector = null;
+        }
+
+        if (connector == null)
+        {
+          throw new Exception("Host unreachable");
+        }
+
+        try
+        {
+          CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
+          config.setConnector(connector);
+          config.setRepositoryName(repositoryName);
+          // config.setCredentialsProvider(this);
+
+          session = config.openNet4jSession();
+          if (session != null && session.isClosed())
+          {
+            session = null;
+          }
+        }
+        catch (Exception ex)
         {
           session = null;
         }
-      }
-      catch (Exception ex)
-      {
-        //$FALL-THROUGH$
-      }
 
-      if (session == null)
-      {
-        throw new Exception("Unreachable");
-      }
+        if (session == null)
+        {
+          throw new Exception("Repository unreachable");
+        }
 
-      CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
-      String message = getMode(repositoryInfo);
+        CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
+        String message = getMode(repositoryInfo);
 
-      if (repositoryInfo.isSupportingBranches()
-          && repositoryInfo.getIDGenerationLocation() == IDGenerationLocation.CLIENT)
-      {
-        message += ", Replicable";
-      }
-      else
-      {
-        message += ", Non-Replicable";
-      }
+        if (repositoryInfo.isSupportingBranches()
+            && repositoryInfo.getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+        {
+          message += ", Replicable";
+        }
 
-      return message;
+        if (repositoryInfo.isAuthenticating())
+        {
+          message += ", Authenticating";
+        }
+
+        return message;
+      }
+      finally
+      {
+        LifecycleUtil.deactivate(session);
+      }
     }
 
     private String getMode(CDORepositoryInfo repositoryInfo)

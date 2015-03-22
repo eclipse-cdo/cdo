@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Andre Dietisheim -  Bug 262875: java.nio.BufferUnderFlowException https://bugs.eclipse.org/bugs/show_bug.cgi?id=262875
@@ -27,7 +27,7 @@ import java.nio.ByteBuffer;
 /**
  * An {@link OutputStream output stream} that fragments the written byte sequence into fixed-sized {@link IBuffer
  * buffers} and passes them to configured {@link IBufferHandler buffer handler}.
- * 
+ *
  * @author Eike Stepper
  */
 public class BufferOutputStream extends OutputStream
@@ -120,7 +120,7 @@ public class BufferOutputStream extends OutputStream
 
   /**
    * Flushes the current buffer, it's handled over to the buffer handler.
-   * 
+   *
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    * @see #currentBuffer
@@ -134,7 +134,7 @@ public class BufferOutputStream extends OutputStream
 
   /**
    * Flushes the current buffer if it has no remaining space.
-   * 
+   *
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    */
@@ -157,9 +157,18 @@ public class BufferOutputStream extends OutputStream
 
   public void flushWithEOS() throws IOException
   {
+    flushWithEOS(false);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void flushWithEOS(boolean ccam) throws IOException
+  {
     throwExceptionOnError();
     ensureBufferPrivate();
     currentBuffer.setEOS(true);
+    currentBuffer.setCCAM(ccam);
     flushPrivate();
   }
 
@@ -191,7 +200,7 @@ public class BufferOutputStream extends OutputStream
   /**
    * Ensures that this BufferOutputStream has a buffer. If the current buffer was flushed a new one is fetched from the
    * buffer provider.
-   * 
+   *
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    * @see #flush()
@@ -214,7 +223,7 @@ public class BufferOutputStream extends OutputStream
 
   /**
    * Throws an exception if there's an error.
-   * 
+   *
    * @throws IOException
    *           Signals that an I/O exception has occurred.
    * @see #error

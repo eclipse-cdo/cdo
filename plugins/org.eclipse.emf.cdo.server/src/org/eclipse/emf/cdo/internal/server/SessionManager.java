@@ -423,9 +423,10 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         throw notAuthenticated();
       }
 
-      ByteArrayInputStream baos = new ByteArrayInputStream(authenticationServer.handleResponse(response));
+      ByteArrayInputStream bais = new ByteArrayInputStream(authenticationServer.handleResponse(response));
+
       @SuppressWarnings("resource")
-      ExtendedDataInputStream stream = new ExtendedDataInputStream(baos);
+      ExtendedDataInputStream stream = new ExtendedDataInputStream(bais);
       String userID = stream.readString();
       char[] password = stream.readString().toCharArray();
 

@@ -110,6 +110,11 @@ public abstract class HTTPConnector extends Connector implements IHTTPConnector
     }
 
     outputOperations.add(new BufferChannelOperation(httpChannel.getID(), outputOperationCount, buffer));
+
+    if (buffer.isCCAM())
+    {
+      httpChannel.close();
+    }
   }
 
   /**

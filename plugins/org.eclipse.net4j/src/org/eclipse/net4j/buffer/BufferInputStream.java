@@ -50,6 +50,8 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private boolean eos;
 
+  private boolean ccam;
+
   private RemoteException exception;
 
   private long stopTimeMillis;
@@ -57,6 +59,14 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   public BufferInputStream()
   {
     tracerEnabled = TRACER.isEnabled();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public boolean isCCAM()
+  {
+    return ccam;
   }
 
   public long getMillisBeforeTimeout()
@@ -110,13 +120,13 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       if (eos)
       {
         // End of stream
-        return IOUtil.EOF;
+        return readEOF();
       }
 
       if (!ensureBuffer())
       {
         // Timeout or interrupt
-        return IOUtil.EOF;
+        return readEOF();
       }
     }
 
@@ -124,7 +134,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     if (!byteBuffer.hasRemaining())
     {
       // End of stream
-      return IOUtil.EOF;
+      return readEOF();
     }
 
     final int result = byteBuffer.get() & 0xFF;
@@ -198,7 +208,17 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     }
 
     eos = currentBuffer.isEOS();
+    ccam = currentBuffer.isCCAM();
+
     return true;
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected int readEOF()
+  {
+    return IOUtil.EOF;
   }
 
   private long computeTimeout(final long check) throws IOTimeoutException

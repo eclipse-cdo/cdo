@@ -186,6 +186,14 @@ public abstract class Signal implements Runnable
   }
 
   /**
+   * @since 4.4
+   */
+  protected boolean closeChannelAfterMe()
+  {
+    return false;
+  }
+
+  /**
    * @since 2.0
    */
   protected InputStream getCurrentInputStream()
@@ -226,13 +234,13 @@ public abstract class Signal implements Runnable
   protected void finishInputStream(InputStream in) throws IOException
   {
     currentStream = null;
-    getProtocol().finishInputStream(in);
+    protocol.finishInputStream(in);
   }
 
   protected void finishOutputStream(OutputStream out) throws IOException
   {
     currentStream = null;
-    getProtocol().finishOutputStream(out);
+    protocol.finishOutputStream(out);
   }
 
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;
@@ -257,7 +265,7 @@ public abstract class Signal implements Runnable
     }
     finally
     {
-      getProtocol().stopSignal(this, exception);
+      protocol.stopSignal(this, exception);
     }
   }
 
@@ -303,7 +311,8 @@ public abstract class Signal implements Runnable
       finishOutputStream(wrappedOutputStream);
     }
 
-    out.flushWithEOS();
+    boolean ccam = closeChannelAfterMe();
+    out.flushWithEOS(ccam);
   }
 
   void doInput(BufferInputStream in) throws Exception

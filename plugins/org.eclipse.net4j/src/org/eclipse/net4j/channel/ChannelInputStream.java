@@ -13,12 +13,16 @@ package org.eclipse.net4j.channel;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.IBuffer;
 
+import org.eclipse.spi.net4j.InternalChannel;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
 
 /**
  * An {@link InputStream input stream} that provides the {@link IBuffer buffers} which arrive at a {@link IChannel
  * channel} as a continuous byte sequence.
- * 
+ *
  * @author Eike Stepper
  */
 public class ChannelInputStream extends BufferInputStream
@@ -67,6 +71,24 @@ public class ChannelInputStream extends BufferInputStream
   public void setMillisInterruptCheck(long millisInterruptCheck)
   {
     this.millisInterruptCheck = millisInterruptCheck;
+  }
+
+  @Override
+  public int read() throws IOException
+  {
+    if (isCCAM())
+    {
+      ExecutorService executorService = ((InternalChannel)channel).getReceiveExecutor();
+      executorService.submit(new Runnable()
+      {
+        public void run()
+        {
+          channel.close();
+        }
+      });
+    }
+
+    return super.read();
   }
 
   @Override

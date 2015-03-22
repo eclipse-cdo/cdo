@@ -375,7 +375,7 @@ public class Channel extends Lifecycle implements InternalChannel
 
   /**
    * A queue that holds buffers that shall be sent. This implementation notifies observers of enqueued and dequeued
-   * buffers. The notification's deliberately not synchronized. It shall only be used by O&M tooling to offer (not 100%
+   * buffers. The notification is deliberately not synchronized. It shall only be used by O&M tooling to offer (not 100%
    * accurate) statistical insights
    *
    * @author Eike Stepper

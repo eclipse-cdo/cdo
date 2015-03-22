@@ -81,10 +81,10 @@ public class RepositoryClonePage extends AbstractRepositoryPage
       throw new Exception("Host is empty.");
     }
 
-    String name = controller.getName();
-    if (StringUtil.isEmpty(name))
+    String repositoryName = controller.getRepositoryName();
+    if (StringUtil.isEmpty(repositoryName))
     {
-      throw new Exception("Name is empty.");
+      throw new Exception("Repository name is empty.");
     }
 
     String reconnectSeconds = reconnectSecondsText.getText();
@@ -134,7 +134,7 @@ public class RepositoryClonePage extends AbstractRepositoryPage
 
     properties.setProperty(CloneCDORepository.PROP_CONNECTOR_TYPE, "tcp");
     properties.setProperty(CloneCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
-    properties.setProperty(CloneCDORepository.PROP_NAME, name);
+    properties.setProperty(CloneCDORepository.PROP_NAME, repositoryName);
     properties.setProperty(CloneCDORepository.PROP_RECONNECT_SECONDS, reconnectSeconds);
     properties.setProperty(CloneCDORepository.PROP_RECOMMIT_SECONDS, recommitSeconds);
     properties.setProperty(CloneCDORepository.PROP_RECOMMIT_ATTEMPTS, recommitAttempts);

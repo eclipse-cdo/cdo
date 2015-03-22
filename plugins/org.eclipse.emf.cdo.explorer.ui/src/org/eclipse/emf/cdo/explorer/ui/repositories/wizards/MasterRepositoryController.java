@@ -218,9 +218,19 @@ public class MasterRepositoryController
     return connectorDescription;
   }
 
-  public final String getName()
+  public final String getRepositoryName()
   {
     return repositoryName;
+  }
+
+  public final String getUserName()
+  {
+    return userName;
+  }
+
+  public final String getPassword()
+  {
+    return password;
   }
 
   public final boolean isValid()

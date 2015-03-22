@@ -58,14 +58,14 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
       throw new Exception("Host is empty.");
     }
 
-    String name = controller.getName();
-    if (StringUtil.isEmpty(name))
+    String repositoryName = controller.getRepositoryName();
+    if (StringUtil.isEmpty(repositoryName))
     {
-      throw new Exception("Name is empty.");
+      throw new Exception("Repository name is empty.");
     }
 
     properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_TYPE, "tcp");
     properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
-    properties.setProperty(RemoteCDORepository.PROP_NAME, name);
+    properties.setProperty(RemoteCDORepository.PROP_NAME, repositoryName);
   }
 }

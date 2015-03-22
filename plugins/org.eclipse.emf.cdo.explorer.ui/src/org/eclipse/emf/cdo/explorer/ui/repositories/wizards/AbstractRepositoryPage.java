@@ -129,11 +129,12 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
 
   protected abstract void fillPage(Composite container);
 
-  public static void createLabel(Composite parent, String text)
+  public static Label createLabel(Composite parent, String text)
   {
     Label label = new Label(parent, SWT.NONE);
-    label.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+    label.setLayoutData(new GridData(SWT.RIGHT, SWT.TOP, false, false));
     label.setText(text);
+    return label;
   }
 
   public static Text createText(Composite container, int widthHint)

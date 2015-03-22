@@ -31,6 +31,10 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
+import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -67,12 +71,12 @@ public class MasterRepositoryController
 
   private static final Image EMPTY_IMAGE = OM.getImage("icons/empty.gif");
 
-  private static final Image VALIDATING_IMAGE = ContainerItemProvider.PENDING_IMAGE;
-
   private static final Image OK_IMAGE = OM.getImage("icons/ok.gif");
 
   private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
       .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+
+  private static final int VALIDATING_WIDTH = 120;
 
   private final DisposeListener disposeListener = new DisposeListener()
   {
@@ -82,19 +86,13 @@ public class MasterRepositoryController
     }
   };
 
-  private Composite parent;
-
-  private Text hostText;
-
-  private ValidatingText portText;
-
-  private ValidatingText nameText;
-
-  private TableViewer repositoryTableViewer;
-
-  private IManagedContainer container;
-
-  private CDOAdminClientManager adminManager;
+  private IListener adminListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      ViewerUtil.refresh(repositoryTableViewer, null);
+    }
+  };
 
   private IListener adminManagerListener = new ContainerEventAdapter<CDOAdminClient>()
   {
@@ -111,17 +109,35 @@ public class MasterRepositoryController
     }
   };
 
-  private IListener adminListener = new IListener()
-  {
-    public void notifyEvent(IEvent event)
-    {
-      ViewerUtil.refresh(repositoryTableViewer, null);
-    }
-  };
+  private CDOAdminClientManager adminManager;
+
+  private IManagedContainer container;
+
+  private Composite parent;
+
+  private Text hostText;
+
+  private ValidatingText portText;
+
+  private TableViewer repositoryTableViewer;
+
+  private ValidatingText repositoryNameText;
+
+  private Label userNameLabel;
+
+  private Text userNameText;
+
+  private Label passwordLabel;
+
+  private Text passwordText;
 
   private String connectorDescription;
 
-  private String name;
+  private String repositoryName;
+
+  private String userName;
+
+  private String password;
 
   public MasterRepositoryController(Composite parent)
   {
@@ -144,10 +160,7 @@ public class MasterRepositoryController
     portText.setText("2036");
     hostText.addModifyListener(portText);
 
-    AbstractRepositoryPage.createLabel(parent, "Repository name:");
-    nameText = new RepositoryValidatingText(parent);
-
-    new Label(parent, SWT.NONE);
+    AbstractRepositoryPage.createLabel(parent, "Repositories:");
     repositoryTableViewer = new TableViewer(parent, SWT.BORDER | SWT.SINGLE);
     repositoryTableViewer.setContentProvider(new AdminContentProvider());
     repositoryTableViewer.setLabelProvider(new AdminLabelProvider());
@@ -161,14 +174,41 @@ public class MasterRepositoryController
         CDOAdminClientRepository adminRepository = (CDOAdminClientRepository)selection.getFirstElement();
         if (adminRepository != null)
         {
-          nameText.setText(adminRepository.getName());
-          nameText.modifyText(false);
+          repositoryNameText.setText(adminRepository.getName());
+          repositoryNameText.modifyText(false);
         }
       }
     });
 
+    AbstractRepositoryPage.createLabel(parent, "Repository name:");
+    repositoryNameText = new RepositoryValidatingText(parent);
+
+    userNameLabel = AbstractRepositoryPage.createLabel(parent, "User name:");
+    userNameText = new Text(parent, SWT.BORDER);
+    userNameText.setLayoutData(createWidthGridData());
+    userNameText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        userName = userNameText.getText();
+        repositoryNameText.modifyText(true);
+      }
+    });
+
+    passwordLabel = AbstractRepositoryPage.createLabel(parent, "Password:");
+    passwordText = new Text(parent, SWT.BORDER | SWT.PASSWORD);
+    passwordText.setLayoutData(createWidthGridData());
+    passwordText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        password = passwordText.getText();
+        repositoryNameText.modifyText(true);
+      }
+    });
+
     portText.modifyText(false);
-    nameText.modifyText(false);
+    repositoryNameText.modifyText(false);
 
     parent.addDisposeListener(disposeListener);
   }
@@ -180,7 +220,12 @@ public class MasterRepositoryController
 
   public final String getName()
   {
-    return name;
+    return repositoryName;
+  }
+
+  public final boolean isValid()
+  {
+    return portText.isValid() && repositoryNameText.isValid();
   }
 
   public void dispose()
@@ -189,7 +234,7 @@ public class MasterRepositoryController
 
     if (container != null)
     {
-      nameText.cancelValidation();
+      repositoryNameText.cancelValidation();
       portText.cancelValidation();
 
       LifecycleUtil.deactivate(adminManager);
@@ -202,10 +247,34 @@ public class MasterRepositoryController
 
   protected void validateController()
   {
-    if (nameText != null)
+    if (repositoryNameText != null)
     {
-      name = nameText.getText();
+      repositoryName = repositoryNameText.getText();
     }
+  }
+
+  protected void showCredentials(final boolean show)
+  {
+    parent.getDisplay().asyncExec(new Runnable()
+    {
+      public void run()
+      {
+        if (!parent.isDisposed())
+        {
+          userNameLabel.setEnabled(show);
+          userNameText.setEnabled(show);
+          passwordLabel.setEnabled(show);
+          passwordText.setEnabled(show);
+        }
+      }
+    });
+  }
+
+  private static GridData createWidthGridData()
+  {
+    GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
+    gridData.widthHint = VALIDATING_WIDTH;
+    return gridData;
   }
 
   /**
@@ -219,9 +288,11 @@ public class MasterRepositoryController
 
     private Label statusLabel;
 
+    private boolean valid;
+
     private ValidationThread validationThread;
 
-    public ValidatingText(Composite parent, int widthHint)
+    public ValidatingText(Composite parent)
     {
       super(parent, SWT.NONE);
       setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -231,11 +302,8 @@ public class MasterRepositoryController
       layout.marginHeight = 0;
       setLayout(layout);
 
-      GridData gridData = new GridData(SWT.LEFT, SWT.CENTER, false, false);
-      gridData.widthHint = widthHint;
-
       text = new Text(this, SWT.BORDER);
-      text.setLayoutData(gridData);
+      text.setLayoutData(createWidthGridData());
       text.addModifyListener(this);
 
       imageLabel = new Label(this, SWT.NONE);
@@ -252,6 +320,11 @@ public class MasterRepositoryController
     public final void setText(String text)
     {
       this.text.setText(text);
+    }
+
+    public final boolean isValid()
+    {
+      return valid;
     }
 
     public void cancelValidation()
@@ -333,18 +406,21 @@ public class MasterRepositoryController
       public void run()
       {
         updateLabels(null, false);
-
         String message = null;
-        boolean valid = true;
+        valid = false;
 
         try
         {
           message = validate(validationInfo);
+
+          if (!canceled)
+          {
+            valid = true;
+          }
         }
         catch (Exception ex)
         {
           message = ex.getMessage();
-          valid = false;
         }
 
         if (canceled)
@@ -366,12 +442,7 @@ public class MasterRepositoryController
             {
               try
               {
-                if (message == null)
-                {
-                  imageLabel.setImage(VALIDATING_IMAGE);
-                  statusLabel.setText("Validating...");
-                }
-                else
+                if (message != null)
                 {
                   imageLabel.setImage(valid ? OK_IMAGE : ERROR_IMAGE);
                   statusLabel.setText(message);
@@ -394,9 +465,9 @@ public class MasterRepositoryController
    */
   private final class HostValidatingText extends ValidatingText
   {
-    private HostValidatingText(Composite parent)
+    public HostValidatingText(Composite parent)
     {
-      super(parent, 120);
+      super(parent);
     }
 
     @Override
@@ -447,13 +518,13 @@ public class MasterRepositoryController
       }
 
       connectorDescription = validationInfo;
-      return "Valid";
+      return "Valid address";
     }
 
     @Override
     protected void finished(boolean valid)
     {
-      nameText.modifyText(false);
+      repositoryNameText.modifyText(false);
 
       if (valid && connectorDescription != null)
       {
@@ -469,9 +540,11 @@ public class MasterRepositoryController
    */
   private final class RepositoryValidatingText extends ValidatingText
   {
-    private RepositoryValidatingText(Composite parent)
+    private boolean authenticating;
+
+    public RepositoryValidatingText(Composite parent)
     {
-      super(parent, 120);
+      super(parent);
     }
 
     @Override
@@ -495,37 +568,37 @@ public class MasterRepositoryController
     protected String validate(String repositoryName) throws Exception
     {
       CDONet4jSession session = null;
+      authenticating = false;
 
       try
       {
-        IConnector connector = null;
-
-        try
+        IConnector connector = getConnector();
+        IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(userName, password)
         {
-          connector = Net4jUtil.getConnector(container, "tcp", connectorDescription);
-        }
-        catch (Exception ex)
-        {
-          connector = null;
-        }
-
-        if (connector == null)
-        {
-          throw new Exception("Host unreachable");
-        }
+          @Override
+          public IPasswordCredentials getCredentials()
+          {
+            authenticating = true;
+            return super.getCredentials();
+          }
+        };
 
         try
         {
           CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
           config.setConnector(connector);
           config.setRepositoryName(repositoryName);
-          // config.setCredentialsProvider(this);
+          config.setCredentialsProvider(credentialsProvider);
 
           session = config.openNet4jSession();
           if (session != null && session.isClosed())
           {
             session = null;
           }
+        }
+        catch (NotAuthenticatedException ex)
+        {
+          authenticating = true;
         }
         catch (Exception ex)
         {
@@ -534,8 +607,16 @@ public class MasterRepositoryController
 
         if (session == null)
         {
+          showCredentials(true);
+          if (authenticating)
+          {
+            throw new Exception("Authentication failed");
+          }
+
           throw new Exception("Repository unreachable");
         }
+
+        showCredentials(authenticating);
 
         CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
         String message = getMode(repositoryInfo);
@@ -546,17 +627,33 @@ public class MasterRepositoryController
           message += ", Replicable";
         }
 
-        if (repositoryInfo.isAuthenticating())
-        {
-          message += ", Authenticating";
-        }
-
         return message;
       }
       finally
       {
         LifecycleUtil.deactivate(session);
       }
+    }
+
+    private IConnector getConnector() throws Exception
+    {
+      IConnector connector = null;
+
+      try
+      {
+        connector = Net4jUtil.getConnector(container, "tcp", connectorDescription);
+      }
+      catch (Exception ex)
+      {
+        connector = null;
+      }
+
+      if (connector == null)
+      {
+        throw new Exception("Host unreachable");
+      }
+
+      return connector;
     }
 
     private String getMode(CDORepositoryInfo repositoryInfo)

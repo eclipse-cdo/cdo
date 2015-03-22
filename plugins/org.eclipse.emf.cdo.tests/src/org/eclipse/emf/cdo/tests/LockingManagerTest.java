@@ -45,6 +45,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import junit.framework.AssertionFailedError;
+
 /**
  * @author Simon McDuff
  */
@@ -313,7 +315,7 @@ public class LockingManagerTest extends AbstractLockingTest
           assertEquals(true, cdoCompany2.cdoReadLock().isLockedByOthers());
           return true;
         }
-        catch (Exception ex)
+        catch (AssertionFailedError ex)
         {
           return false;
         }
@@ -358,7 +360,7 @@ public class LockingManagerTest extends AbstractLockingTest
           assertEquals(false, CDOUtil.getCDOObject(company2).cdoReadLock().isLockedByOthers());
           return true;
         }
-        catch (Exception ex)
+        catch (AssertionFailedError ex)
         {
           return false;
         }
@@ -393,7 +395,7 @@ public class LockingManagerTest extends AbstractLockingTest
           assertEquals(false, cdoCompany2.cdoReadLock().isLockedByOthers());
           return true;
         }
-        catch (Exception ex)
+        catch (AssertionFailedError ex)
         {
           return false;
         }
@@ -1147,7 +1149,7 @@ public class LockingManagerTest extends AbstractLockingTest
           assertEquals(true, category3cv.cdoWriteOption().isLockedByOthers());
           return true;
         }
-        catch (Exception ex)
+        catch (AssertionFailedError ex)
         {
           return false;
         }
@@ -1170,7 +1172,7 @@ public class LockingManagerTest extends AbstractLockingTest
           assertEquals(false, category3cv.cdoReadLock().isLockedByOthers());
           return true;
         }
-        catch (Exception ex)
+        catch (AssertionFailedError ex)
         {
           return false;
         }

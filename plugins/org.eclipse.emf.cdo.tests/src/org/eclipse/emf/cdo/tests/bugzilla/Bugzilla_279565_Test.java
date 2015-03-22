@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
  * Invalid listener might prevent CDOTransaction to close properly
  * <p>
  * See bug 279565
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_279565_Test extends AbstractCDOTest
@@ -58,7 +58,6 @@ public class Bugzilla_279565_Test extends AbstractCDOTest
 
     new PollingTimeOuter()
     {
-
       @Override
       protected boolean successful()
       {

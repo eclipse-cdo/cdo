@@ -403,7 +403,6 @@ public class MasterRepositoryController
     protected String getValidationInfo()
     {
       connectorDescription = null;
-      ViewerUtil.refresh(repositoryTableViewer, null);
 
       String host = hostText.getText();
       if (host.length() == 0)

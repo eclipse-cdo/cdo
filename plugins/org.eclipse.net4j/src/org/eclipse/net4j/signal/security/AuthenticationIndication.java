@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.DiffieHellman;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
@@ -29,11 +30,13 @@ import java.io.ByteArrayOutputStream;
 
 /**
  * @author Eike Stepper
- * 
+ *
  * @since 4.3
  */
 public class AuthenticationIndication extends IndicationWithMonitoring
 {
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, AuthenticationIndication.class);
+
   private Challenge challenge;
 
   public AuthenticationIndication(AuthenticatingSignalProtocol<?> protocol, short id, String name)
@@ -112,7 +115,11 @@ public class AuthenticationIndication extends IndicationWithMonitoring
     catch (Throwable ex)
     {
       out.writeBoolean(false);
-      OM.LOG.error(ex);
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
     }
     finally
     {

@@ -92,6 +92,7 @@ public abstract class IndicationWithMonitoring extends IndicationWithResponse
       int monitorTimeoutSeconds = in.readInt();
       monitor = new TimeoutMonitor(1000L * monitorTimeoutSeconds);
     }
+
     monitor.begin(OMMonitor.HUNDRED);
     subMonitor = monitor.fork(getIndicatingWorkPercent());
     indicating(in, subMonitor);

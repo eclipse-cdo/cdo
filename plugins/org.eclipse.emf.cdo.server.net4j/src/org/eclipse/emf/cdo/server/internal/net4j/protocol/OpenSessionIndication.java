@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -118,7 +119,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
     try
     {
-      CDOServerProtocol protocol = getProtocol();
+      final CDOServerProtocol protocol = getProtocol();
+
       IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
       repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
       if (repository == null)
@@ -135,6 +137,17 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       {
         // Skip response because the user has canceled the authentication
         out.writeInt(0);
+        flush();
+
+        protocol.getExecutorService().submit(new Runnable()
+        {
+          public void run()
+          {
+            ConcurrencyUtil.sleep(500);
+            protocol.getChannel().close();
+          }
+        });
+
         return;
       }
 

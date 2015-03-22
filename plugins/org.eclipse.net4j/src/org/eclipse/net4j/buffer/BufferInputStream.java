@@ -120,13 +120,13 @@ public class BufferInputStream extends InputStream implements IBufferHandler
       if (eos)
       {
         // End of stream
-        return readEOF();
+        return IOUtil.EOF;
       }
 
       if (!ensureBuffer())
       {
         // Timeout or interrupt
-        return readEOF();
+        return IOUtil.EOF;
       }
     }
 
@@ -134,7 +134,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     if (!byteBuffer.hasRemaining())
     {
       // End of stream
-      return readEOF();
+      return IOUtil.EOF;
     }
 
     final int result = byteBuffer.get() & 0xFF;
@@ -211,14 +211,6 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     ccam = currentBuffer.isCCAM();
 
     return true;
-  }
-
-  /**
-   * @since 4.4
-   */
-  protected int readEOF()
-  {
-    return IOUtil.EOF;
   }
 
   private long computeTimeout(final long check) throws IOTimeoutException

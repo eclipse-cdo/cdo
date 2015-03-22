@@ -12,6 +12,7 @@ package org.eclipse.net4j.channel;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.IBuffer;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import org.eclipse.spi.net4j.InternalChannel;
 
@@ -83,6 +84,7 @@ public class ChannelInputStream extends BufferInputStream
       {
         public void run()
         {
+          ConcurrencyUtil.sleep(500);
           channel.close();
         }
       });

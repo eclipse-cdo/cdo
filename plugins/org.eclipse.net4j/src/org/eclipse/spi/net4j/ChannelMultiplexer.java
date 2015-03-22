@@ -143,7 +143,9 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
 
     InternalChannel channel = createChannel();
     initChannel(channel, protocol);
-    channel.setID(getNextChannelID());
+
+    short channelID = getNextChannelID();
+    channel.setID(channelID);
     addChannel(channel);
 
     try
@@ -156,7 +158,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
           throw new TimeoutRuntimeException();
         }
 
-        registerChannelWithPeer(channel.getID(), timeout, protocol);
+        registerChannelWithPeer(channelID, timeout, protocol);
       }
       catch (TimeoutRuntimeException ex)
       {

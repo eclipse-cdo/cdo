@@ -54,7 +54,7 @@
 
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/{0}">
+			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.5milestones">
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
 		</rm:provider>

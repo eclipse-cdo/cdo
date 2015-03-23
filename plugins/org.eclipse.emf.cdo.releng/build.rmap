@@ -81,6 +81,11 @@
 			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/nightly/latest"/>
 		</rm:provider>
 
+		<!-- EMF Clientt Platform -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.eclipse.org/ecp/rt/150_MS3"/>
+		</rm:provider>
+
 		<!-- MWE -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>

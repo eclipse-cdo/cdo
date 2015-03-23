@@ -123,7 +123,7 @@
 
 		<!-- QVTO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones/3.5.0"/>
 		</rm:provider>
 
 		<!-- UML2 -->

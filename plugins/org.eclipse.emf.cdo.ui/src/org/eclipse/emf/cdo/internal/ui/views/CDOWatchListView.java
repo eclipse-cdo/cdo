@@ -288,13 +288,13 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     }
   }
 
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   @Override
-  public Object getAdapter(Class adapter)
+  public <T> T getAdapter(Class<T> adapter)
   {
     if (adapter.equals(IPropertySheetPage.class))
     {
-      return getPropertySheetPage();
+      return (T)getPropertySheetPage();
     }
 
     return super.getAdapter(adapter);

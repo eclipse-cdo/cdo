@@ -16,27 +16,27 @@ import org.eclipse.team.ui.history.IHistoryPageSource;
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("rawtypes")
 public class CDOHistoryAdapterFactory implements IAdapterFactory
 {
   private static final Class<IHistoryPageSource> CLASS_IHISTORYPAGESOURCE = IHistoryPageSource.class;
 
-  private static final Class[] ADAPTER_TYPES = { CLASS_IHISTORYPAGESOURCE };
+  private static final Class<?>[] ADAPTER_TYPES = { CLASS_IHISTORYPAGESOURCE };
 
   public CDOHistoryAdapterFactory()
   {
   }
 
-  public Class[] getAdapterList()
+  public Class<?>[] getAdapterList()
   {
     return ADAPTER_TYPES;
   }
 
-  public Object getAdapter(Object adaptableObject, Class adapterType)
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Object adaptableObject, Class<T> adapterType)
   {
     if (adapterType == CLASS_IHISTORYPAGESOURCE)
     {
-      return CDOHistoryPageSource.INSTANCE;
+      return (T)CDOHistoryPageSource.INSTANCE;
     }
 
     return null;

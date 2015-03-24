@@ -212,7 +212,7 @@ public class ManageSecurityHandler extends LongRunningHandler
     IWorkbenchPart part = HandlerUtil.getActivePart(event);
     if (part != null)
     {
-      result = (ISecurityManagementContext)part.getAdapter(ISecurityManagementContext.class);
+      result = part.getAdapter(ISecurityManagementContext.class);
     }
 
     if (result == null)
@@ -280,7 +280,7 @@ public class ManageSecurityHandler extends LongRunningHandler
   /**
    * A specialized handler that gets or creates a session in the context of a repository in the
    * CDO Administration view.
-   * 
+   *
    * @author Christian W. Damus (CEA LIST)
    */
   public static class Sessionless extends ManageSecurityHandler implements CDOAdminClientRepository.SessionConfigurator

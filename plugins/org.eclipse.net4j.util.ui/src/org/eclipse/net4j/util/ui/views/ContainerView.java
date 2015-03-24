@@ -586,7 +586,8 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   }
 
   @Override
-  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Class<T> adapter)
   {
     if (adapter == IPropertySheetPage.class)
     {
@@ -595,7 +596,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
         propertySheetPage = new PropertySheetPage();
       }
 
-      return propertySheetPage;
+      return (T)propertySheetPage;
     }
 
     return super.getAdapter(adapter);

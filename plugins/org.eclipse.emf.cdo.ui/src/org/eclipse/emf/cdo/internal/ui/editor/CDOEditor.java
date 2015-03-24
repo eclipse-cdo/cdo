@@ -1544,17 +1544,17 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings("unchecked")
   @Override
-  public Object getAdapter(Class key)
+  public <T> T getAdapter(Class<T> key)
   {
     if (key.equals(IContentOutlinePage.class))
     {
-      return showOutlineView() ? getContentOutlinePage() : null;
+      return (T)(showOutlineView() ? getContentOutlinePage() : null);
     }
     else if (key.equals(IPropertySheetPage.class))
     {
-      return getPropertySheetPage();
+      return (T)getPropertySheetPage();
     }
     else
     {

@@ -144,12 +144,13 @@ public final class CDOEditorUtil
         return editingDomain;
       }
 
+      @SuppressWarnings("unchecked")
       @Override
-      public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+      public <T> T getAdapter(Class<T> adapter)
       {
         if (adapter == IEditingDomainProvider.class)
         {
-          return this;
+          return (T)this;
         }
 
         return super.getAdapter(adapter);

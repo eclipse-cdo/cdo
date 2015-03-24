@@ -1135,7 +1135,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public Object getAdapter(Class key)
   {
@@ -1444,7 +1444,7 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
+    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()

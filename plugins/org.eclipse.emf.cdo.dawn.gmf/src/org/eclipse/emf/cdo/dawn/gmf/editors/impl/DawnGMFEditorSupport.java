@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  *    Christian W. Damus (CEA) - bug 399285 support IDawnEditor adapters
@@ -71,7 +71,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
    * <p>
    * <strong>Note</strong> that this method is called in the constructor, so subclasses must
    * be aware that {@code this} has not been fully initialized.
-   * 
+   *
    * @since 2.1
    */
   protected DawnGMFHandler createDawnGMFHandler(IDawnEditor editor)
@@ -116,7 +116,7 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
    * {@code editor} is a {@link DiagramDocumentEditor}, then that is returned as
    * is.  Otherwise, try to get an {@code DiagramDocumentEditor}
    * {@linkplain IAdaptable#getAdapter(Class) adapter} from the {@code editor}.
-   * 
+   *
    * @param editor the Dawn editor from which to get the GMF editor
    * @since 2.1
    */
@@ -126,7 +126,8 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     {
       return (DiagramDocumentEditor)editor;
     }
-    return (DiagramDocumentEditor)editor.getAdapter(DiagramDocumentEditor.class);
+
+    return editor.getAdapter(DiagramDocumentEditor.class);
   }
 
   public void refresh()

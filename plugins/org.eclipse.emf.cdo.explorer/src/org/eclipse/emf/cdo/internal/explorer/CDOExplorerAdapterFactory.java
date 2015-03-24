@@ -25,23 +25,23 @@ import org.eclipse.core.runtime.IAdapterFactory;
 /**
  * @since 4.4
  */
-@SuppressWarnings("rawtypes")
 public class CDOExplorerAdapterFactory implements IAdapterFactory
 {
   private static final Class<CDORepositoryElement> CLASS_CDOREPOSITORYELEMENT = CDORepositoryElement.class;
 
-  private static final Class[] CLASSES = { CLASS_CDOREPOSITORYELEMENT };
+  private static final Class<?>[] CLASSES = { CLASS_CDOREPOSITORYELEMENT };
 
   public CDOExplorerAdapterFactory()
   {
   }
 
-  public Class[] getAdapterList()
+  public Class<?>[] getAdapterList()
   {
     return CLASSES;
   }
 
-  public Object getAdapter(Object adaptableObject, Class adapterType)
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Object adaptableObject, Class<T> adapterType)
   {
     if (adapterType == CLASS_CDOREPOSITORYELEMENT)
     {
@@ -66,7 +66,7 @@ public class CDOExplorerAdapterFactory implements IAdapterFactory
           final CDORepository repository = repositoryManager.getRepository(repositoryInfo.getSession());
           if (repository != null)
           {
-            return new CDORepositoryElement()
+            return (T)new CDORepositoryElement()
             {
               public CDORepository getRepository()
               {

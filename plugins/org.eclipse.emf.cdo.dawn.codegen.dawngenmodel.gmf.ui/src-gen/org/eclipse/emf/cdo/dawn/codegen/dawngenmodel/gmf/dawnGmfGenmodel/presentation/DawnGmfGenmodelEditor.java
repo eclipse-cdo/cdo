@@ -1089,7 +1089,7 @@ public class DawnGmfGenmodelEditor extends MultiPageEditorPart implements IEditi
    *
    * @generated
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public Object getAdapter(Class key)
   {

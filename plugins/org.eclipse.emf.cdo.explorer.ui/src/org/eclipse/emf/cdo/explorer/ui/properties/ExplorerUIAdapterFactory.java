@@ -40,42 +40,42 @@ import org.eclipse.core.runtime.jobs.Job;
 /**
  * @since 4.4
  */
-@SuppressWarnings("rawtypes")
 public class ExplorerUIAdapterFactory implements IAdapterFactory
 {
   private static final Class<CDORenameContext> CLASS_EXPLORER_RENAME_CONTEXT = CDORenameContext.class;
 
   private static final Class<StateProvider> CLASS_STATE_PROVIDER = StateProvider.class;
 
-  private static final Class[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_STATE_PROVIDER };
+  private static final Class<?>[] CLASSES = { CLASS_EXPLORER_RENAME_CONTEXT, CLASS_STATE_PROVIDER };
 
   public ExplorerUIAdapterFactory()
   {
   }
 
-  public Class[] getAdapterList()
+  public Class<?>[] getAdapterList()
   {
     return CLASSES;
   }
 
-  public Object getAdapter(Object adaptableObject, Class adapterType)
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Object adaptableObject, Class<T> adapterType)
   {
     if (adapterType == CLASS_EXPLORER_RENAME_CONTEXT)
     {
       if (adaptableObject instanceof AbstractElement)
       {
         AbstractElement element = (AbstractElement)adaptableObject;
-        return createRenameContext(element);
+        return (T)createRenameContext(element);
       }
       else if (adaptableObject instanceof CDOBranch)
       {
         CDOBranch branch = (CDOBranch)adaptableObject;
-        return createRenameContext(branch);
+        return (T)createRenameContext(branch);
       }
       else if (adaptableObject instanceof CDOResourceNode)
       {
         CDOResourceNode resourceNode = (CDOResourceNode)adaptableObject;
-        return createRenameContext(resourceNode);
+        return (T)createRenameContext(resourceNode);
       }
     }
     else if (adapterType == CLASS_STATE_PROVIDER)
@@ -86,7 +86,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(eObject);
         if (checkout != null)
         {
-          return checkout;
+          return (T)checkout;
         }
       }
     }

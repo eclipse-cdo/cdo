@@ -1143,7 +1143,7 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
    *
    * @generated
    */
-  @SuppressWarnings("rawtypes")
+  @SuppressWarnings({ "rawtypes", "unchecked" })
   @Override
   public Object getAdapter(Class key)
   {

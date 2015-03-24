@@ -362,7 +362,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       return delegate.getLabel();
     }
 
-    public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+    public <T> T getAdapter(Class<T> adapter)
     {
       return delegate.getAdapter(adapter);
     }

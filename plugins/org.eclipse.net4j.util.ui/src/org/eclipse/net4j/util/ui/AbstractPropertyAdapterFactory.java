@@ -19,32 +19,32 @@ import org.eclipse.ui.views.properties.IPropertySourceProvider;
  * @author Eike Stepper
  * @since 3.2
  */
-@SuppressWarnings("rawtypes")
 public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
 {
   private static final Class<IPropertySourceProvider> CLASS_IPROPERTYSOURCEPROVIDER = IPropertySourceProvider.class;
 
   private static final Class<IActionFilter> CLASS_IACTIONFILTER = IActionFilter.class;
 
-  private static final Class[] CLASSES = { CLASS_IPROPERTYSOURCEPROVIDER, CLASS_IACTIONFILTER };
+  private static final Class<?>[] CLASSES = { CLASS_IPROPERTYSOURCEPROVIDER, CLASS_IACTIONFILTER };
 
   public AbstractPropertyAdapterFactory()
   {
   }
 
-  public Class[] getAdapterList()
+  public Class<?>[] getAdapterList()
   {
     return CLASSES;
   }
 
-  public Object getAdapter(Object adaptableObject, Class adapterType)
+  @SuppressWarnings("unchecked")
+  public <T> T getAdapter(Object adaptableObject, Class<T> adapterType)
   {
     if (adapterType == CLASS_IPROPERTYSOURCEPROVIDER)
     {
       final IPropertySource propertySource = createPropertySource(adaptableObject);
       if (propertySource != null)
       {
-        return new IPropertySourceProvider()
+        return (T)new IPropertySourceProvider()
         {
           public IPropertySource getPropertySource(Object object)
           {
@@ -56,7 +56,7 @@ public abstract class AbstractPropertyAdapterFactory implements IAdapterFactory
 
     if (adapterType == CLASS_IACTIONFILTER)
     {
-      return createActionFilter(adaptableObject);
+      return (T)createActionFilter(adaptableObject);
     }
 
     return null;

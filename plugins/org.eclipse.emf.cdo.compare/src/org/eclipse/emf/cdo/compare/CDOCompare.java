@@ -220,6 +220,7 @@ public class CDOCompare
       this.idComputation = idComputation;
     }
 
+    @Override
     protected EObject getParentEObject(EObject eObject)
     {
       return CDOElement.getParentOf(eObject);

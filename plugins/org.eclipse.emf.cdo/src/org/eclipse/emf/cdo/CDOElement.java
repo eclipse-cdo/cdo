@@ -117,6 +117,11 @@ public class CDOElement extends AdapterImpl implements IAdaptable
 
   public static EObject getParentOf(EObject eObject)
   {
+    if (eObject == null)
+    {
+      return null;
+    }
+
     EObject container = eObject.eContainer();
     if (container != null)
     {

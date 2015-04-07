@@ -48,7 +48,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 import org.eclipse.emf.ecore.util.FeatureMap;
@@ -101,8 +100,7 @@ public final class CDOStoreImpl implements CDOStore
       }
 
       InternalCDORevision revision = readRevision(cdoObject);
-      return (InternalEObject)convertIDToObject(view, cdoObject, EcorePackage.eINSTANCE.eContainingFeature(), -1,
-          revision.getContainerID());
+      return (InternalEObject)convertIDToObject(view, cdoObject, null, -1, revision.getContainerID());
     }
   }
 
@@ -138,8 +136,7 @@ public final class CDOStoreImpl implements CDOStore
       }
 
       InternalCDORevision revision = readRevision(cdoObject);
-      return (InternalEObject)convertIDToObject(view, cdoObject, EcorePackage.eINSTANCE.eContainingFeature(), -1,
-          revision.getResourceID());
+      return (InternalEObject)convertIDToObject(view, cdoObject, null, -1, revision.getResourceID());
     }
   }
 
@@ -695,8 +692,17 @@ public final class CDOStoreImpl implements CDOStore
     {
       if (value instanceof CDOID)
       {
-        CDOStaleReferencePolicy staleReferencePolicy = view.options().getStaleReferencePolicy();
-        value = staleReferencePolicy.processStaleReference(eObject, feature, index, ex.getID());
+        // If feature == null then we come from getContainer()/getResource() and are in case of detached object
+        // consequently to a remote parent object remove then must return null
+        if (feature != null)
+        {
+          CDOStaleReferencePolicy staleReferencePolicy = view.options().getStaleReferencePolicy();
+          value = staleReferencePolicy.processStaleReference(eObject, feature, index, ex.getID());
+        }
+        else
+        {
+          value = null;
+        }
       }
     }
 

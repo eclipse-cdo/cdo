@@ -175,7 +175,7 @@
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.4M6"/>
+            url="http://download.eclipse.org/tools/buckminster/updates-4.4"/>
         <repository
             url="http://download.eclipse.org/technology/nebula/snapshot"/>
         <repository

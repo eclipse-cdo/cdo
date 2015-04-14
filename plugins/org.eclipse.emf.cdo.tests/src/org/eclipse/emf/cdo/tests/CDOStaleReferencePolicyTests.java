@@ -10,11 +10,14 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -28,7 +31,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class CDOStaleReferencePolicyTests extends AbstractCDOTest
 {
-
   private static final String RESOURCE_NAME = "test1.model1";
 
   /**
@@ -48,8 +50,10 @@ public class CDOStaleReferencePolicyTests extends AbstractCDOTest
     CDOTransaction transaction2 = session2.openTransaction();
     CDOResource resource2 = transaction2.getResource(getResourcePath(RESOURCE_NAME));
     Company companyFromTx2 = (Company)resource2.getContents().get(0);
+    CDOObject companyCDOObjectFromTx2 = CDOUtil.getCDOObject(companyFromTx2);
 
     Category categoryFromTx2 = getModel1Factory().createCategory();
+    // CDOObject categoryCDOObjectFromTx2 = CDOUtil.getCDOObject(categoryFromTx2);
     companyFromTx2.getCategories().add(categoryFromTx2);
 
     EcoreUtil.remove(companyFromTx1);
@@ -58,7 +62,12 @@ public class CDOStaleReferencePolicyTests extends AbstractCDOTest
 
     EObject eContainer = categoryFromTx2.eContainer();
     assertNull(eContainer);
-    // FIXME/TODO : CDOState should be at TRANSIENT and not NEW
+    assertEquals(CDOState.INVALID_CONFLICT, companyCDOObjectFromTx2.cdoState());
+    // assertEquals(CDOState.PROXY, categoryCDOObjectFromTx2.cdoState());
+    // Assert.assertTrue(transaction2.hasConflict());
+    // transaction2.rollback();
+    // assertEquals(CDOState.INVALID, companyCDOObjectFromTx2.cdoState());
+    // assertEquals(CDOState.TRANSIENT, categoryCDOObjectFromTx2.cdoState());
   }
 
   /**
@@ -77,6 +86,7 @@ public class CDOStaleReferencePolicyTests extends AbstractCDOTest
     CDOResource resource2 = transaction2.getResource(getResourcePath(RESOURCE_NAME));
 
     Company companyFromTx2 = getModel1Factory().createCompany();
+    // CDOObject companyCDOObjectFromTx2 = CDOUtil.getCDOObject(companyFromTx2);
     resource2.getContents().add(companyFromTx2);
 
     resource1.delete(null);
@@ -85,7 +95,11 @@ public class CDOStaleReferencePolicyTests extends AbstractCDOTest
 
     Resource resource = companyFromTx2.eResource();
     assertNull(resource);
-    // FIXME/TODO : CDOState should be at TRANSIENT and not NEW
+    assertEquals(CDOState.INVALID_CONFLICT, resource2.cdoState());
+    // assertEquals(CDOState.PROXY, companyCDOObjectFromTx2.cdoState());
+    // Assert.assertTrue(transaction2.hasConflict());
+    // transaction2.rollback();
+    // assertEquals(CDOState.INVALID, resource2.cdoState());
+    // assertEquals(CDOState.TRANSIENT, companyCDOObjectFromTx2.cdoState());
   }
-
 }

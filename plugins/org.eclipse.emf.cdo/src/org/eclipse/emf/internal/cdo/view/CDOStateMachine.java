@@ -121,7 +121,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.REATTACH, FAIL);
     init(CDOState.NEW, CDOEvent.READ, IGNORE);
     init(CDOState.NEW, CDOEvent.WRITE, new WriteNewTransition());
-    init(CDOState.NEW, CDOEvent.INVALIDATE, FAIL);
+    init(CDOState.NEW, CDOEvent.INVALIDATE, DetachRemoteTransition.INSTANCE);
     init(CDOState.NEW, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition(false));
     init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
@@ -734,8 +734,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    *
    * @author Caspar De Groot
    */
-  private final class ReattachTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
+  private final class ReattachTransition
+      implements ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
@@ -834,8 +834,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private static final class DetachTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, List<InternalCDOObject>>
+  private static final class DetachTransition
+      implements ITransition<CDOState, CDOEvent, InternalCDOObject, List<InternalCDOObject>>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
         List<InternalCDOObject> objectsToDetach)
@@ -864,8 +864,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  final private class CommitTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
+  final private class CommitTransition
+      implements ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
   {
     public CommitTransition(boolean useDeltas)
     {
@@ -924,8 +924,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private static abstract class AbstractWriteTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, FeatureDeltaAndResult>
+  private static abstract class AbstractWriteTransition
+      implements ITransition<CDOState, CDOEvent, InternalCDOObject, FeatureDeltaAndResult>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
         FeatureDeltaAndResult featureDeltaAndResult)
@@ -952,8 +952,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private final class WriteNewTransition extends AbstractWriteTransition
   {
     @Override
-    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction,
-        CDOFeatureDelta featureDelta, InternalCDORevision revision)
+    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction, CDOFeatureDelta featureDelta,
+        InternalCDORevision revision)
     {
       Object result = null;
       if (featureDelta != null)
@@ -991,8 +991,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
 
     @Override
-    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction,
-        CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision)
+    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction, CDOFeatureDelta featureDelta,
+        InternalCDORevision cleanRevision)
     {
       InternalCDORevision revision = cleanRevision.copy();
 
@@ -1026,8 +1026,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private final class RewriteTransition extends AbstractWriteTransition
   {
     @Override
-    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction,
-        CDOFeatureDelta featureDelta, InternalCDORevision revision)
+    protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction, CDOFeatureDelta featureDelta,
+        InternalCDORevision revision)
     {
       Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
       InternalCDORevision cleanRevision = cleanRevisions.get(object);

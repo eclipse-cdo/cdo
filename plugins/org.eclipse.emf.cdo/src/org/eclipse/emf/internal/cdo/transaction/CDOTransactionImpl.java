@@ -150,6 +150,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.EClassImpl.FeatureSubsetSupplier;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Internal;
@@ -2466,6 +2467,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       Set<CDOObject> remotelyDetachedObjects = getObjects(allDetachedObjects);
       removeCrossReferences(remotelyDetachedObjects, getDirtyObjects().values());
       removeCrossReferences(remotelyDetachedObjects, getNewObjects().values());
+      invalidateNewChildrenOfRemotelyDetached(remotelyDetachedObjects);
     }
 
     // Bug 290032 - Sticky views
@@ -2486,6 +2488,39 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return conflicts;
+  }
+
+  private void invalidateNewChildrenOfRemotelyDetached(Set<CDOObject> remotelyDetachedObjects)
+  {
+    // Test EObject.eInternalContainer()/eDirectResource() implicit references to have them return null in legacy for
+    // objects in NEW state whose a direct/indirect parent has been remotelly detached
+    for (CDOObject referencer : getNewObjects().values())
+    {
+
+      if (CDOUtil.isLegacyObject(referencer))
+      {
+        InternalEObject referencerInternalEObject = (InternalEObject)referencer;
+        InternalEObject eContainer = referencerInternalEObject.eInternalContainer();
+        if (eContainer != null)
+        {
+          CDOObject containerCDOObject = CDOUtil.getCDOObject(eContainer);
+          if (remotelyDetachedObjects.contains(containerCDOObject))
+          {
+            CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)referencer, referencer.cdoRevision());
+          }
+        }
+
+        Internal eDirectResource = referencerInternalEObject.eDirectResource();
+        if (eDirectResource instanceof CDOResource)
+        {
+          CDOObject cdoResource = (CDOObject)eDirectResource;
+          if (remotelyDetachedObjects.contains(cdoResource))
+          {
+            CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)referencer, referencer.cdoRevision());
+          }
+        }
+      }
+    }
   }
 
   private Set<CDOObject> getObjects(Collection<? extends CDOIdentifiable> identifiables)

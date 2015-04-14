@@ -275,6 +275,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     if (remote)
     {
       setInstanceContainer(null, eContainerFeatureID());
+      setInstanceResource(null);
       return;
     }
 

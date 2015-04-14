@@ -1566,11 +1566,11 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         if (feature.isMany())
         {
           @SuppressWarnings("unchecked")
-          List<Object> list = (InternalEList<Object>)eObject.eGet(feature);
+          List<Object> list = (InternalEList<Object>)eObject.eGet(feature, false);
           return list != null && !list.isEmpty();
         }
 
-        return !ObjectUtil.equals(eObject.eGet(feature), feature.getDefaultValue());
+        return !ObjectUtil.equals(eObject.eGet(feature, false), feature.getDefaultValue());
       }
 
       Object[] settings = ((CDOObjectImpl)eObject).eSettings;
@@ -1590,7 +1590,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       if (feature.isMany())
       {
         // Object object = get(eObject, feature, NO_INDEX);
-        Object object = cdoObject.eGet(feature);
+        Object object = cdoObject.eGet(feature, false);
         if (object instanceof List<?>)
         {
           List<?> list = (List<?>)object;

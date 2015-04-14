@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -124,7 +124,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     init(CDOState.NEW, CDOEvent.INVALIDATE, DetachRemoteTransition.INSTANCE);
     init(CDOState.NEW, CDOEvent.DETACH_REMOTE, FAIL);
     init(CDOState.NEW, CDOEvent.COMMIT, new CommitTransition(false));
-    init(CDOState.NEW, CDOEvent.ROLLBACK, FAIL);
+    init(CDOState.NEW, CDOEvent.ROLLBACK, new RollbackTransition());
 
     init(CDOState.CLEAN, CDOEvent.PREPARE, FAIL);
     init(CDOState.CLEAN, CDOEvent.ATTACH, FAIL);
@@ -416,7 +416,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  public void rollback(InternalCDOObject object)
+  public void rollback(InternalCDOObject object, InternalCDOTransaction transaction)
   {
     synchronized (getMonitor(object))
     {
@@ -425,7 +425,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         trace(object, CDOEvent.ROLLBACK);
       }
 
-      process(object, CDOEvent.ROLLBACK, null);
+      process(object, CDOEvent.ROLLBACK, transaction);
     }
   }
 
@@ -901,15 +901,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   /**
    * @author Eike Stepper
    */
-  private final class RollbackTransition implements ITransition<CDOState, CDOEvent, InternalCDOObject, Object>
+  private final class RollbackTransition implements
+      ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
   {
-    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, Object NULL)
+    public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
-      InternalCDOTransaction transaction = object.cdoView().toTransaction();
       if (transaction.getLastSavepoint().isNewObject(object.cdoID()))
       {
-        changeState(object, CDOState.TRANSIENT);
         object.cdoInternalPostDetach(false);
+        changeState(object, CDOState.TRANSIENT);
       }
       else
       {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009-2014 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2009-2015 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -1332,16 +1332,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
       });
     }
-
-    InternalCDOObject internal = (InternalCDOObject)object;
-    internal.cdoInternalSetView(null);
-    internal.cdoInternalSetID(null);
-    internal.cdoInternalSetState(CDOState.TRANSIENT);
   }
 
   private Set<CDOID> rollbackCompletely(CDOUserSavepoint savepoint)
   {
     Set<CDOID> idsOfNewObjectsWithDeltas = new HashSet<CDOID>();
+    Set<InternalCDOObject> newObjects = new HashSet<InternalCDOObject>();
 
     // Start from the last savepoint and come back up to the active
     for (InternalCDOSavepoint itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint
@@ -1353,11 +1349,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       Map<CDOID, CDOObject> newObjectsMap = itrSavepoint.getNewObjects();
       for (CDOID id : newObjectsMap.keySet())
       {
-        CDOObject object = newObjectsMap.get(id);
+        InternalCDOObject object = (InternalCDOObject)newObjectsMap.get(id);
+
         toBeDetached.add(id);
         toBeDetached.add(object);
-        toBeDetached.add(((InternalCDOObject)object).cdoInternalInstance());
+        toBeDetached.add(object.cdoInternalInstance());
         removeObject(id, object);
+        newObjects.add(object);
       }
 
       // Rollback new objects re-attached after the save point
@@ -1368,10 +1366,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDOID id = reattachedObject.cdoID();
         if (!detachedIDs.contains(id))
         {
+          InternalCDOObject internal = (InternalCDOObject)reattachedObject;
+
           toBeDetached.add(id);
-          toBeDetached.add(reattachedObject);
-          toBeDetached.add(((InternalCDOObject)reattachedObject).cdoInternalInstance());
-          removeObject(id, reattachedObject);
+          toBeDetached.add(internal);
+          toBeDetached.add(internal.cdoInternalInstance());
+          removeObject(id, internal);
+
+          internal.cdoInternalSetView(null);
+          internal.cdoInternalSetID(null);
+          internal.cdoInternalSetState(CDOState.TRANSIENT);
         }
       }
 
@@ -1445,7 +1449,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           // they were already reset to TRANSIENT earlier in this method
           if (!reattachedObjectsMap.values().contains(internalDirtyObject))
           {
-            CDOStateMachine.INSTANCE.rollback(internalDirtyObject);
+            CDOStateMachine.INSTANCE.rollback(internalDirtyObject, this);
           }
         }
       }
@@ -1453,6 +1457,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (savepoint == itrSavepoint)
       {
         break;
+      }
+    }
+
+    for (InternalCDOObject internalCDOObject : newObjects)
+    {
+      if (FSMUtil.isNew(internalCDOObject))
+      {
+        CDOStateMachine.INSTANCE.rollback(internalCDOObject, this);
+        internalCDOObject.cdoInternalSetID(null);
+        internalCDOObject.cdoInternalSetView(null);
       }
     }
 

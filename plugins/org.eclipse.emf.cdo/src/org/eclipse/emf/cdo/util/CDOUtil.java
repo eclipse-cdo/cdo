@@ -377,6 +377,20 @@ public final class CDOUtil
       }
     }
 
+    if (notifier instanceof Resource)
+    {
+      Resource resource = (Resource)notifier;
+      ResourceSet resourceSet = resource.getResourceSet();
+      if (resourceSet != null)
+      {
+        CDOViewSet viewSet = getViewSet(resourceSet);
+        if (viewSet != null)
+        {
+          return viewSet;
+        }
+      }
+    }
+
     if (notifier instanceof InternalEObject)
     {
       InternalEObject object = (InternalEObject)notifier;
@@ -394,20 +408,6 @@ public final class CDOUtil
       if (resource != null)
       {
         CDOViewSet viewSet = getViewSet(resource);
-        if (viewSet != null)
-        {
-          return viewSet;
-        }
-      }
-    }
-
-    if (notifier instanceof Resource)
-    {
-      Resource resource = (Resource)notifier;
-      ResourceSet resourceSet = resource.getResourceSet();
-      if (resourceSet != null)
-      {
-        CDOViewSet viewSet = getViewSet(resourceSet);
         if (viewSet != null)
         {
           return viewSet;

@@ -26,14 +26,14 @@ import java.io.PrintWriter;
  * -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 {
   /**
    * The default value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUrl()
    * @generated
    * @ordered
@@ -42,7 +42,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 
   /**
    * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUrl()
    * @generated
    * @ordered
@@ -53,7 +53,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ExternalTargetImpl()
@@ -70,7 +70,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -81,7 +81,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getUrl()
@@ -91,7 +91,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -107,7 +107,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -123,7 +123,7 @@ public class ExternalTargetImpl extends LinkTargetImpl implements ExternalTarget
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

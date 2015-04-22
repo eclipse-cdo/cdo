@@ -18,7 +18,7 @@ package org.eclipse.emf.cdo.releng.doc.article;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Body#getCategory <em>Category</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBody()
  * @model abstract="true"
  * @generated
@@ -32,7 +32,7 @@ public interface Body extends StructuralElement, BodyElementContainer
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Category</em>' reference.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBody_Category()
    * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"

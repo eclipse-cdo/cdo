@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -42,7 +42,7 @@ public class AcoreCreationWizardPage extends WizardNewFileCreationPage
 
   /**
    * Override to create files with this extension.
-   * 
+   *
    * @generated
    */
   protected String getExtension()
@@ -79,6 +79,7 @@ public class AcoreCreationWizardPage extends WizardNewFileCreationPage
   /**
    * @generated
    */
+  @Override
   public void createControl(Composite parent)
   {
     super.createControl(parent);
@@ -89,6 +90,7 @@ public class AcoreCreationWizardPage extends WizardNewFileCreationPage
   /**
    * @generated
    */
+  @Override
   protected boolean validatePage()
   {
     if (!super.validatePage())

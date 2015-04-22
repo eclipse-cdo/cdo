@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticleFactory
  * @model kind="package"
  * @generated
@@ -34,28 +34,28 @@ public interface ArticlePackage extends EPackage
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "article";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/ARTICLE/1.0";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "article";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   ArticlePackage eINSTANCE = org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl.init();
@@ -63,7 +63,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.Identifiable <em>Identifiable</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.Identifiable
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getIdentifiable()
    * @generated
@@ -72,7 +72,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -81,7 +81,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Identifiable</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -90,7 +90,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl <em>Link Target</em>}
    * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getLinkTarget()
    * @generated
@@ -99,7 +99,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -107,7 +107,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -115,7 +115,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -124,7 +124,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Link Target</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -133,7 +133,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl
    * <em>Structural Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getStructuralElement()
    * @generated
@@ -142,7 +142,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -150,7 +150,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -158,7 +158,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -167,7 +167,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -175,7 +175,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -183,7 +183,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -191,7 +191,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -199,7 +199,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -208,7 +208,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Structural Element</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -217,7 +217,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl
    * <em>Documentation</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDocumentation()
    * @generated
@@ -226,7 +226,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -234,7 +234,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -242,7 +242,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -251,7 +251,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -259,7 +259,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -267,7 +267,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -275,7 +275,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -283,7 +283,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -291,7 +291,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Context</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -300,7 +300,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Embeddable Elements</b></em>' containment reference list. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -308,7 +308,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Dependencies</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -316,7 +316,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Project</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -325,7 +325,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Plugins</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -334,7 +334,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Documentation</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -343,7 +343,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ContextImpl <em>Context</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ContextImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getContext()
    * @generated
@@ -352,7 +352,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Base Folder</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -360,7 +360,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Project</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -369,7 +369,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentations</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -377,7 +377,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Root</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -385,7 +385,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Context</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -394,7 +394,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl <em>Body</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBody()
    * @generated
@@ -403,7 +403,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -411,7 +411,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -419,7 +419,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -428,7 +428,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -436,7 +436,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -444,7 +444,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -452,7 +452,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -460,7 +460,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -469,7 +469,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -477,7 +477,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -485,7 +485,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Body</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -494,7 +494,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CategoryImpl <em>Category</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.CategoryImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getCategory()
    * @generated
@@ -503,7 +503,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -511,7 +511,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -519,7 +519,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -528,7 +528,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -536,7 +536,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -544,7 +544,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -552,7 +552,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -560,7 +560,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -569,7 +569,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -577,7 +577,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -585,7 +585,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Category</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -594,7 +594,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ChapterImpl <em>Chapter</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ChapterImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getChapter()
    * @generated
@@ -603,7 +603,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -611,7 +611,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -619,7 +619,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -628,7 +628,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -636,7 +636,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -644,7 +644,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -652,7 +652,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -660,7 +660,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -669,7 +669,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -677,7 +677,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -685,7 +685,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -693,7 +693,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Chapter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -702,7 +702,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ArticleImpl <em>Article</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticleImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getArticle()
    * @generated
@@ -711,7 +711,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -719,7 +719,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -727,7 +727,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -736,7 +736,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -744,7 +744,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -752,7 +752,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -760,7 +760,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -768,7 +768,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -777,7 +777,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -785,7 +785,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -793,7 +793,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -801,7 +801,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Article</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -810,7 +810,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddableElementImpl
    * <em>Embeddable Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddableElementImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getEmbeddableElement()
    * @generated
@@ -819,7 +819,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -828,7 +828,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' container reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -836,7 +836,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -845,7 +845,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Embeddable Element</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -854,7 +854,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl <em>Snippet</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSnippet()
    * @generated
@@ -863,7 +863,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -872,7 +872,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' container reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -880,7 +880,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -889,7 +889,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Callouts</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -898,7 +898,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Formatter</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -906,7 +906,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Snippet</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -915,7 +915,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl
    * <em>Body Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBodyElement()
    * @generated
@@ -925,7 +925,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -933,7 +933,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -942,7 +942,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Body Element</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -951,7 +951,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DiagramImpl <em>Diagram</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.DiagramImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDiagram()
    * @generated
@@ -961,7 +961,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -969,7 +969,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -977,7 +977,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Diagram</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -986,7 +986,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FactoryImpl <em>Factory</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.FactoryImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFactory()
    * @generated
@@ -995,7 +995,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1004,7 +1004,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Documentation</b></em>' container reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1012,7 +1012,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1020,7 +1020,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Factory</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1029,7 +1029,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaElementImpl
    * <em>Java Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaElementImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaElement()
    * @generated
@@ -1038,7 +1038,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1046,7 +1046,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1054,7 +1054,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1062,7 +1062,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Class File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1071,7 +1071,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Java Element</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1080,7 +1080,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
    * <em>Body Element Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBodyElementContainer()
    * @generated
@@ -1090,7 +1090,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1099,7 +1099,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Body Element Container</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1108,7 +1108,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl <em>Callout</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getCallout()
    * @generated
@@ -1118,7 +1118,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1126,7 +1126,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1134,7 +1134,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Callout</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1143,7 +1143,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalTargetImpl
    * <em>External Target</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExternalTargetImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExternalTarget()
    * @generated
@@ -1152,7 +1152,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1160,7 +1160,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1168,7 +1168,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1176,7 +1176,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1185,7 +1185,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>External Target</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1194,7 +1194,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TextImpl <em>Text</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.TextImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getText()
    * @generated
@@ -1204,7 +1204,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1212,7 +1212,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1220,7 +1220,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Text</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1229,7 +1229,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkImpl <em>Link</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.LinkImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getLink()
    * @generated
@@ -1239,7 +1239,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1247,7 +1247,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1255,7 +1255,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Target</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1263,7 +1263,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Link</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1272,7 +1272,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddingImpl <em>Embedding</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddingImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getEmbedding()
    * @generated
@@ -1282,7 +1282,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1290,7 +1290,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1298,7 +1298,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Element</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1306,7 +1306,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Embedding</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1315,7 +1315,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SourceCodeImpl <em>Source Code</em>}
    * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.SourceCodeImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSourceCode()
    * @generated
@@ -1324,7 +1324,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1332,7 +1332,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1340,7 +1340,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1348,7 +1348,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1357,7 +1357,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Source Code</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1366,7 +1366,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl <em>Plugin</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPlugin()
    * @generated
@@ -1375,7 +1375,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1384,7 +1384,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Packages</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1392,7 +1392,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1401,7 +1401,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Extension Points</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1409,7 +1409,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Plugin</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1418,7 +1418,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
    * <em>Java Package</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaPackage()
    * @generated
@@ -1427,7 +1427,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1435,7 +1435,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Plugin</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1444,7 +1444,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Java Package</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1453,7 +1453,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocImpl <em>Javadoc</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavadocImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavadoc()
    * @generated
@@ -1462,7 +1462,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1470,7 +1470,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1478,7 +1478,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1487,7 +1487,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1495,7 +1495,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1503,7 +1503,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1511,7 +1511,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1519,7 +1519,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1528,7 +1528,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1536,7 +1536,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1544,7 +1544,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Javadoc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1553,7 +1553,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
    * <em>External Article</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExternalArticle()
    * @generated
@@ -1562,7 +1562,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1570,7 +1570,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1578,7 +1578,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1587,7 +1587,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1595,7 +1595,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1603,7 +1603,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1611,7 +1611,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1619,7 +1619,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1628,7 +1628,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1636,7 +1636,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1644,7 +1644,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1652,7 +1652,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1661,7 +1661,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>External Article</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1670,7 +1670,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl <em>Schemadoc</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSchemadoc()
    * @generated
@@ -1679,7 +1679,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1687,7 +1687,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1695,7 +1695,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1704,7 +1704,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1712,7 +1712,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1720,7 +1720,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1728,7 +1728,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1736,7 +1736,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1745,7 +1745,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1753,7 +1753,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1761,7 +1761,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Schemadoc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1770,7 +1770,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
    * <em>Extension Point</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExtensionPoint()
    * @generated
@@ -1779,7 +1779,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1787,7 +1787,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Plugin</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1796,7 +1796,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Extension Point</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1805,7 +1805,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl <em>Toc</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getToc()
    * @generated
@@ -1815,7 +1815,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1823,7 +1823,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1831,7 +1831,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Levels</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1839,7 +1839,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Toc</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1848,7 +1848,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
    * <em>Plugin Resource</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPluginResource()
    * @generated
@@ -1857,7 +1857,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1865,7 +1865,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Default Label</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1873,7 +1873,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tooltip</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1882,7 +1882,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1890,7 +1890,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1898,7 +1898,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Title</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1906,7 +1906,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Documentation</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1914,7 +1914,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Doc</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1923,7 +1923,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Elements</b></em>' containment reference list. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1931,7 +1931,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Category</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1939,7 +1939,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Article</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1947,7 +1947,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Url</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1956,7 +1956,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Plugin Resource</em>' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1965,7 +1965,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl <em>Excel</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExcel()
    * @generated
@@ -1975,7 +1975,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1983,7 +1983,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1991,7 +1991,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Excel</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2000,7 +2000,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl <em>Formatter</em>}'
    * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFormatter()
    * @generated
@@ -2009,7 +2009,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2017,7 +2017,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Formatter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2026,7 +2026,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
    * <em>Java Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaFormatter()
    * @generated
@@ -2035,7 +2035,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2044,7 +2044,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Java Formatter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2053,7 +2053,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
    * <em>Xml Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getXmlFormatter()
    * @generated
@@ -2062,7 +2062,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Snippet</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2070,7 +2070,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2079,7 +2079,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The number of structural features of the '<em>Xml Formatter</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2088,7 +2088,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl <em>Image</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getImage()
    * @generated
@@ -2098,7 +2098,7 @@ public interface ArticlePackage extends EPackage
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2106,7 +2106,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Tag</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2114,7 +2114,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>File</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2122,7 +2122,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Image</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -2130,7 +2130,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The meta object id for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see com.sun.javadoc.RootDoc
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
    * @generated
@@ -2139,7 +2139,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The meta object id for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see java.io.File
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
    * @generated
@@ -2148,7 +2148,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The meta object id for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see com.sun.javadoc.Doc
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
    * @generated
@@ -2157,7 +2157,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * The meta object id for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see com.sun.javadoc.Tag
    * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
    * @generated
@@ -2167,7 +2167,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
    * <em>Documentation</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Documentation</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation
    * @generated
@@ -2178,7 +2178,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getContext <em>Context</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Context</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation#getContext()
    * @see #getDocumentation()
@@ -2190,7 +2190,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getEmbeddableElements <em>Embeddable Elements</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Embeddable Elements</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation#getEmbeddableElements()
    * @see #getDocumentation()
@@ -2202,7 +2202,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getDependencies <em>Dependencies</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Dependencies</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation#getDependencies()
    * @see #getDocumentation()
@@ -2213,7 +2213,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getProject
    * <em>Project</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Project</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation#getProject()
    * @see #getDocumentation()
@@ -2225,7 +2225,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getPlugins <em>Plugins</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Plugins</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation#getPlugins()
    * @see #getDocumentation()
@@ -2236,7 +2236,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Context <em>Context</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Context</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Context
    * @generated
@@ -2246,7 +2246,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Context#getBaseFolder
    * <em>Base Folder</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Base Folder</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Context#getBaseFolder()
    * @see #getContext()
@@ -2257,7 +2257,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Context#getProject
    * <em>Project</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Project</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Context#getProject()
    * @see #getContext()
@@ -2269,7 +2269,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Context#getDocumentations <em>Documentations</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Documentations</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Context#getDocumentations()
    * @see #getContext()
@@ -2280,7 +2280,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Context#getRoot
    * <em>Root</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Root</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Context#getRoot()
    * @see #getContext()
@@ -2291,7 +2291,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Category <em>Category</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Category</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Category
    * @generated
@@ -2301,7 +2301,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Article <em>Article</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Article</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Article
    * @generated
@@ -2311,7 +2311,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Chapter <em>Chapter</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Chapter</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Chapter
    * @generated
@@ -2321,7 +2321,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.doc.article.Chapter#getArticle
    * <em>Article</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Article</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Chapter#getArticle()
    * @see #getChapter()
@@ -2332,7 +2332,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Snippet <em>Snippet</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Snippet</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Snippet
    * @generated
@@ -2343,7 +2343,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Snippet#getCallouts <em>Callouts</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Callouts</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Snippet#getCallouts()
    * @see #getSnippet()
@@ -2355,7 +2355,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Snippet#getFormatter <em>Formatter</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Formatter</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Snippet#getFormatter()
    * @see #getSnippet()
@@ -2366,7 +2366,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Diagram <em>Diagram</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Diagram</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Diagram
    * @generated
@@ -2376,7 +2376,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Factory <em>Factory</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Factory</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Factory
    * @generated
@@ -2386,7 +2386,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaElement <em>Java Element</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Java Element</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaElement
    * @generated
@@ -2396,7 +2396,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.JavaElement#getClassFile
    * <em>Class File</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Class File</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaElement#getClassFile()
    * @see #getJavaElement()
@@ -2407,7 +2407,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement
    * <em>Structural Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Structural Element</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement
    * @generated
@@ -2418,7 +2418,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getChildren <em>Children</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getChildren()
    * @see #getStructuralElement()
@@ -2430,7 +2430,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getParent <em>Parent</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getParent()
    * @see #getStructuralElement()
@@ -2442,7 +2442,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getTitle <em>Title</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Title</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getTitle()
    * @see #getStructuralElement()
@@ -2454,7 +2454,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getDocumentation <em>Documentation</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Documentation</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getDocumentation()
    * @see #getStructuralElement()
@@ -2465,7 +2465,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getDoc
    * <em>Doc</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Doc</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getDoc()
    * @see #getStructuralElement()
@@ -2476,7 +2476,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget <em>Link Target</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Link Target</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.LinkTarget
    * @generated
@@ -2487,7 +2487,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getDefaultLabel <em>Default Label</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Default Label</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getDefaultLabel()
    * @see #getLinkTarget()
@@ -2498,7 +2498,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getTooltip
    * <em>Tooltip</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Tooltip</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getTooltip()
    * @see #getLinkTarget()
@@ -2509,7 +2509,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Callout <em>Callout</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Callout</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Callout
    * @generated
@@ -2520,7 +2520,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Callout#getSnippet <em>Snippet</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Snippet</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Callout#getSnippet()
    * @see #getCallout()
@@ -2531,7 +2531,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement
    * <em>Embeddable Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Embeddable Element</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement
    * @generated
@@ -2542,7 +2542,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDocumentation <em>Documentation</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Documentation</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDocumentation()
    * @see #getEmbeddableElement()
@@ -2553,7 +2553,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDoc
    * <em>Doc</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Doc</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDoc()
    * @see #getEmbeddableElement()
@@ -2564,7 +2564,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalTarget
    * <em>External Target</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>External Target</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExternalTarget
    * @generated
@@ -2574,7 +2574,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalTarget#getUrl
    * <em>Url</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Url</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExternalTarget#getUrl()
    * @see #getExternalTarget()
@@ -2585,7 +2585,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Identifiable
    * <em>Identifiable</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Identifiable</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Identifiable
    * @generated
@@ -2595,7 +2595,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Identifiable#getId
    * <em>Id</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Id</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Identifiable#getId()
    * @see #getIdentifiable()
@@ -2606,7 +2606,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Body <em>Body</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Body</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Body
    * @generated
@@ -2616,7 +2616,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.doc.article.Body#getCategory
    * <em>Category</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Category</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Body#getCategory()
    * @see #getBody()
@@ -2627,7 +2627,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
    * <em>Body Element Container</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Body Element Container</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
    * @generated
@@ -2638,7 +2638,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer#getElements()
    * @see #getBodyElementContainer()
@@ -2649,7 +2649,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement <em>Body Element</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Body Element</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement
    * @generated
@@ -2660,7 +2660,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getContainer <em>Container</em>}'. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Container</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getContainer()
    * @see #getBodyElement()
@@ -2671,7 +2671,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement#getTag
    * <em>Tag</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Tag</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getTag()
    * @see #getBodyElement()
@@ -2682,7 +2682,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Text <em>Text</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Text</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Text
    * @generated
@@ -2692,7 +2692,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Link <em>Link</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Link</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Link
    * @generated
@@ -2702,7 +2702,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.doc.article.Link#getTarget
    * <em>Target</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Target</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Link#getTarget()
    * @see #getLink()
@@ -2713,7 +2713,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Embedding <em>Embedding</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Embedding</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Embedding
    * @generated
@@ -2723,7 +2723,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.releng.doc.article.Embedding#getElement
    * <em>Element</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Embedding#getElement()
    * @see #getEmbedding()
@@ -2734,7 +2734,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.SourceCode <em>Source Code</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Source Code</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.SourceCode
    * @generated
@@ -2744,7 +2744,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin <em>Plugin</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Plugin</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Plugin
    * @generated
@@ -2754,7 +2754,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getName
    * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getName()
    * @see #getPlugin()
@@ -2766,7 +2766,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getPackages <em>Packages</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Packages</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getPackages()
    * @see #getPlugin()
@@ -2777,7 +2777,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getLabel
    * <em>Label</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Label</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getLabel()
    * @see #getPlugin()
@@ -2789,7 +2789,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getExtensionPoints <em>Extension Points</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Extension Points</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Plugin#getExtensionPoints()
    * @see #getPlugin()
@@ -2800,7 +2800,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage <em>Java Package</em>}
    * '. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Java Package</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage
    * @generated
@@ -2810,7 +2810,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getName
    * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getName()
    * @see #getJavaPackage()
@@ -2822,7 +2822,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getPlugin <em>Plugin</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Plugin</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getPlugin()
    * @see #getJavaPackage()
@@ -2833,7 +2833,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Javadoc <em>Javadoc</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Javadoc</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Javadoc
    * @generated
@@ -2843,7 +2843,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
    * <em>External Article</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>External Article</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
    * @generated
@@ -2853,7 +2853,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalArticle#getUrl
    * <em>Url</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Url</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExternalArticle#getUrl()
    * @see #getExternalArticle()
@@ -2864,7 +2864,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Schemadoc <em>Schemadoc</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Schemadoc</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Schemadoc
    * @generated
@@ -2874,7 +2874,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
    * <em>Extension Point</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Extension Point</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
    * @generated
@@ -2884,7 +2884,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getName
    * <em>Name</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getName()
    * @see #getExtensionPoint()
@@ -2896,7 +2896,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getPlugin <em>Plugin</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Plugin</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getPlugin()
    * @see #getExtensionPoint()
@@ -2907,7 +2907,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Toc <em>Toc</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Toc</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Toc
    * @generated
@@ -2917,7 +2917,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Toc#getLevels
    * <em>Levels</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Levels</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Toc#getLevels()
    * @see #getToc()
@@ -2928,7 +2928,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.PluginResource
    * <em>Plugin Resource</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Plugin Resource</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.PluginResource
    * @generated
@@ -2938,7 +2938,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Excel <em>Excel</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Excel</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Excel
    * @generated
@@ -2948,7 +2948,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Formatter <em>Formatter</em>}'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Formatter</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Formatter
    * @generated
@@ -2959,7 +2959,7 @@ public interface ArticlePackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.releng.doc.article.Formatter#getSnippet <em>Snippet</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Snippet</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Formatter#getSnippet()
    * @see #getFormatter()
@@ -2970,7 +2970,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
    * <em>Java Formatter</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Java Formatter</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
    * @generated
@@ -2980,7 +2980,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
    * <em>Xml Formatter</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Xml Formatter</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
    * @generated
@@ -2990,7 +2990,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter#getFile
    * <em>File</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>File</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.XmlFormatter#getFile()
    * @see #getXmlFormatter()
@@ -3001,7 +3001,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.releng.doc.article.Image <em>Image</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Image</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Image
    * @generated
@@ -3011,7 +3011,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.releng.doc.article.Image#getFile
    * <em>File</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>File</em>'.
    * @see org.eclipse.emf.cdo.releng.doc.article.Image#getFile()
    * @see #getImage()
@@ -3022,7 +3022,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for data type '{@link com.sun.javadoc.RootDoc <em>Root Doc</em>}'. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for data type '<em>Root Doc</em>'.
    * @see com.sun.javadoc.RootDoc
    * @model instanceClass="com.sun.javadoc.RootDoc" serializeable="false"
@@ -3033,7 +3033,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for data type '{@link java.io.File <em>File</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for data type '<em>File</em>'.
    * @see java.io.File
    * @model instanceClass="java.io.File"
@@ -3044,7 +3044,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for data type '{@link com.sun.javadoc.Doc <em>Doc</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for data type '<em>Doc</em>'.
    * @see com.sun.javadoc.Doc
    * @model instanceClass="com.sun.javadoc.Doc" serializeable="false"
@@ -3055,7 +3055,7 @@ public interface ArticlePackage extends EPackage
   /**
    * Returns the meta object for data type '{@link com.sun.javadoc.Tag <em>Tag</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for data type '<em>Tag</em>'.
    * @see com.sun.javadoc.Tag
    * @model instanceClass="com.sun.javadoc.Tag" serializeable="false"
@@ -3065,7 +3065,7 @@ public interface ArticlePackage extends EPackage
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -3080,7 +3080,7 @@ public interface ArticlePackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -3088,7 +3088,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl
      * <em>Documentation</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.DocumentationImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDocumentation()
      * @generated
@@ -3098,7 +3098,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Context</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference DOCUMENTATION__CONTEXT = eINSTANCE.getDocumentation_Context();
@@ -3106,7 +3106,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Embeddable Elements</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference DOCUMENTATION__EMBEDDABLE_ELEMENTS = eINSTANCE.getDocumentation_EmbeddableElements();
@@ -3114,7 +3114,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Dependencies</b></em>' reference list feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference DOCUMENTATION__DEPENDENCIES = eINSTANCE.getDocumentation_Dependencies();
@@ -3122,7 +3122,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Project</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute DOCUMENTATION__PROJECT = eINSTANCE.getDocumentation_Project();
@@ -3130,7 +3130,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Plugins</b></em>' containment reference list feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference DOCUMENTATION__PLUGINS = eINSTANCE.getDocumentation_Plugins();
@@ -3138,7 +3138,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ContextImpl <em>Context</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ContextImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getContext()
      * @generated
@@ -3148,7 +3148,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Base Folder</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute CONTEXT__BASE_FOLDER = eINSTANCE.getContext_BaseFolder();
@@ -3156,7 +3156,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Project</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute CONTEXT__PROJECT = eINSTANCE.getContext_Project();
@@ -3164,7 +3164,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Documentations</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference CONTEXT__DOCUMENTATIONS = eINSTANCE.getContext_Documentations();
@@ -3172,7 +3172,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Root</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute CONTEXT__ROOT = eINSTANCE.getContext_Root();
@@ -3180,7 +3180,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CategoryImpl
      * <em>Category</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.CategoryImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getCategory()
      * @generated
@@ -3190,7 +3190,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ArticleImpl <em>Article</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticleImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getArticle()
      * @generated
@@ -3200,7 +3200,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ChapterImpl <em>Chapter</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ChapterImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getChapter()
      * @generated
@@ -3210,7 +3210,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Article</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference CHAPTER__ARTICLE = eINSTANCE.getChapter_Article();
@@ -3218,7 +3218,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl <em>Snippet</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.SnippetImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSnippet()
      * @generated
@@ -3228,7 +3228,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Callouts</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference SNIPPET__CALLOUTS = eINSTANCE.getSnippet_Callouts();
@@ -3236,7 +3236,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Formatter</b></em>' containment reference feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference SNIPPET__FORMATTER = eINSTANCE.getSnippet_Formatter();
@@ -3244,7 +3244,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.DiagramImpl <em>Diagram</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.DiagramImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDiagram()
      * @generated
@@ -3254,7 +3254,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FactoryImpl <em>Factory</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.FactoryImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFactory()
      * @generated
@@ -3264,7 +3264,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaElementImpl
      * <em>Java Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaElementImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaElement()
      * @generated
@@ -3274,7 +3274,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Class File</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute JAVA_ELEMENT__CLASS_FILE = eINSTANCE.getJavaElement_ClassFile();
@@ -3282,7 +3282,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl
      * <em>Structural Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.StructuralElementImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getStructuralElement()
      * @generated
@@ -3292,7 +3292,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference STRUCTURAL_ELEMENT__CHILDREN = eINSTANCE.getStructuralElement_Children();
@@ -3300,7 +3300,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Parent</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference STRUCTURAL_ELEMENT__PARENT = eINSTANCE.getStructuralElement_Parent();
@@ -3308,7 +3308,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Title</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute STRUCTURAL_ELEMENT__TITLE = eINSTANCE.getStructuralElement_Title();
@@ -3316,7 +3316,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Documentation</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference STRUCTURAL_ELEMENT__DOCUMENTATION = eINSTANCE.getStructuralElement_Documentation();
@@ -3324,7 +3324,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Doc</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute STRUCTURAL_ELEMENT__DOC = eINSTANCE.getStructuralElement_Doc();
@@ -3332,7 +3332,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl
      * <em>Link Target</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.LinkTargetImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getLinkTarget()
      * @generated
@@ -3342,7 +3342,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Default Label</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute LINK_TARGET__DEFAULT_LABEL = eINSTANCE.getLinkTarget_DefaultLabel();
@@ -3350,7 +3350,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Tooltip</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute LINK_TARGET__TOOLTIP = eINSTANCE.getLinkTarget_Tooltip();
@@ -3358,7 +3358,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl <em>Callout</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getCallout()
      * @generated
@@ -3368,7 +3368,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Snippet</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference CALLOUT__SNIPPET = eINSTANCE.getCallout_Snippet();
@@ -3376,7 +3376,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddableElementImpl
      * <em>Embeddable Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddableElementImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getEmbeddableElement()
      * @generated
@@ -3386,7 +3386,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Documentation</b></em>' container reference feature. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference EMBEDDABLE_ELEMENT__DOCUMENTATION = eINSTANCE.getEmbeddableElement_Documentation();
@@ -3394,7 +3394,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Doc</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute EMBEDDABLE_ELEMENT__DOC = eINSTANCE.getEmbeddableElement_Doc();
@@ -3402,7 +3402,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalTargetImpl
      * <em>External Target</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExternalTargetImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExternalTarget()
      * @generated
@@ -3412,7 +3412,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Url</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute EXTERNAL_TARGET__URL = eINSTANCE.getExternalTarget_Url();
@@ -3420,7 +3420,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.Identifiable
      * <em>Identifiable</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.Identifiable
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getIdentifiable()
      * @generated
@@ -3430,7 +3430,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Id</b></em>' attribute feature. <!-- begin-user-doc --> <!-- end-user-doc
      * -->
-     * 
+     *
      * @generated
      */
     EAttribute IDENTIFIABLE__ID = eINSTANCE.getIdentifiable_Id();
@@ -3438,7 +3438,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl <em>Body</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBody()
      * @generated
@@ -3448,7 +3448,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Category</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference BODY__CATEGORY = eINSTANCE.getBody_Category();
@@ -3456,7 +3456,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
      * <em>Body Element Container</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementContainerImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBodyElementContainer()
      * @generated
@@ -3466,7 +3466,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference BODY_ELEMENT_CONTAINER__ELEMENTS = eINSTANCE.getBodyElementContainer_Elements();
@@ -3474,7 +3474,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl
      * <em>Body Element</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.BodyElementImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getBodyElement()
      * @generated
@@ -3484,7 +3484,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Container</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference BODY_ELEMENT__CONTAINER = eINSTANCE.getBodyElement_Container();
@@ -3492,7 +3492,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Tag</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute BODY_ELEMENT__TAG = eINSTANCE.getBodyElement_Tag();
@@ -3500,7 +3500,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TextImpl <em>Text</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.TextImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getText()
      * @generated
@@ -3510,7 +3510,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkImpl <em>Link</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.LinkImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getLink()
      * @generated
@@ -3520,7 +3520,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Target</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference LINK__TARGET = eINSTANCE.getLink_Target();
@@ -3528,7 +3528,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddingImpl
      * <em>Embedding</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddingImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getEmbedding()
      * @generated
@@ -3538,7 +3538,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Element</b></em>' reference feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference EMBEDDING__ELEMENT = eINSTANCE.getEmbedding_Element();
@@ -3546,7 +3546,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SourceCodeImpl
      * <em>Source Code</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.SourceCodeImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSourceCode()
      * @generated
@@ -3556,7 +3556,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl <em>Plugin</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPlugin()
      * @generated
@@ -3566,7 +3566,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute PLUGIN__NAME = eINSTANCE.getPlugin_Name();
@@ -3574,7 +3574,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Packages</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference PLUGIN__PACKAGES = eINSTANCE.getPlugin_Packages();
@@ -3582,7 +3582,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Label</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute PLUGIN__LABEL = eINSTANCE.getPlugin_Label();
@@ -3590,7 +3590,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Extension Points</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference PLUGIN__EXTENSION_POINTS = eINSTANCE.getPlugin_ExtensionPoints();
@@ -3598,7 +3598,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
      * <em>Java Package</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaPackage()
      * @generated
@@ -3608,7 +3608,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute JAVA_PACKAGE__NAME = eINSTANCE.getJavaPackage_Name();
@@ -3616,7 +3616,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Plugin</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference JAVA_PACKAGE__PLUGIN = eINSTANCE.getJavaPackage_Plugin();
@@ -3624,7 +3624,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavadocImpl <em>Javadoc</em>}
      * ' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavadocImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavadoc()
      * @generated
@@ -3634,7 +3634,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
      * <em>External Article</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExternalArticle()
      * @generated
@@ -3644,7 +3644,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Url</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute EXTERNAL_ARTICLE__URL = eINSTANCE.getExternalArticle_Url();
@@ -3652,7 +3652,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl
      * <em>Schemadoc</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.SchemadocImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getSchemadoc()
      * @generated
@@ -3662,7 +3662,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
      * <em>Extension Point</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExtensionPoint()
      * @generated
@@ -3672,7 +3672,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute EXTENSION_POINT__NAME = eINSTANCE.getExtensionPoint_Name();
@@ -3680,7 +3680,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Plugin</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference EXTENSION_POINT__PLUGIN = eINSTANCE.getExtensionPoint_Plugin();
@@ -3688,7 +3688,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl <em>Toc</em>}' class.
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.TocImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getToc()
      * @generated
@@ -3698,7 +3698,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Levels</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute TOC__LEVELS = eINSTANCE.getToc_Levels();
@@ -3706,7 +3706,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
      * <em>Plugin Resource</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.PluginResourceImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getPluginResource()
      * @generated
@@ -3716,7 +3716,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl <em>Excel</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ExcelImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getExcel()
      * @generated
@@ -3726,7 +3726,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl
      * <em>Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFormatter()
      * @generated
@@ -3736,7 +3736,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Snippet</b></em>' container reference feature. <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference FORMATTER__SNIPPET = eINSTANCE.getFormatter_Snippet();
@@ -3744,7 +3744,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
      * <em>Java Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.JavaFormatterImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getJavaFormatter()
      * @generated
@@ -3754,7 +3754,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
      * <em>Xml Formatter</em>}' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.XmlFormatterImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getXmlFormatter()
      * @generated
@@ -3764,7 +3764,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>File</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute XML_FORMATTER__FILE = eINSTANCE.getXmlFormatter_File();
@@ -3772,7 +3772,7 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl <em>Image</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ImageImpl
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getImage()
      * @generated
@@ -3782,14 +3782,14 @@ public interface ArticlePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>File</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute IMAGE__FILE = eINSTANCE.getImage_File();
 
     /**
      * The meta object literal for the '<em>Root Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see com.sun.javadoc.RootDoc
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getRootDoc()
      * @generated
@@ -3798,7 +3798,7 @@ public interface ArticlePackage extends EPackage
 
     /**
      * The meta object literal for the '<em>File</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see java.io.File
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getFile()
      * @generated
@@ -3807,7 +3807,7 @@ public interface ArticlePackage extends EPackage
 
     /**
      * The meta object literal for the '<em>Doc</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see com.sun.javadoc.Doc
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getDoc()
      * @generated
@@ -3816,7 +3816,7 @@ public interface ArticlePackage extends EPackage
 
     /**
      * The meta object literal for the '<em>Tag</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see com.sun.javadoc.Tag
      * @see org.eclipse.emf.cdo.releng.doc.article.impl.ArticlePackageImpl#getTag()
      * @generated

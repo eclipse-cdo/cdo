@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * The type of the to-be-locked objects is either {@link CDOIDAndBranch} or {@link CDOID}, depending on whether
  * branching is supported by the repository or not.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -74,7 +74,7 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
 
   /**
    * Attempts to release for a given locktype, view and objects.
-   * 
+   *
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
    * @since 4.0
@@ -90,7 +90,7 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
 
   /**
    * Attempts to release all locks(read and write) for a given view.
-   * 
+   *
    * @since 4.0
    */
   @Deprecated

@@ -34,40 +34,40 @@ public class DBRevisionCacheSchema
   public static final IDBTable REVISIONS = INSTANCE.addTable("dbrevisioncache_revisions");
 
   public static final IDBField REVISIONS_ID = //
-  REVISIONS.addField("id", DBType.VARCHAR, 254);
+      REVISIONS.addField("id", DBType.VARCHAR, 254);
 
   public static final IDBField REVISIONS_VERSION = //
-  REVISIONS.addField("version", DBType.INTEGER);
+      REVISIONS.addField("version", DBType.INTEGER);
 
   public static final IDBField REVISIONS_CREATED = //
-  REVISIONS.addField("created", DBType.BIGINT);
+      REVISIONS.addField("created", DBType.BIGINT);
 
   public static final IDBField REVISIONS_REVISED = //
-  REVISIONS.addField("revised", DBType.BIGINT);
+      REVISIONS.addField("revised", DBType.BIGINT);
 
   public static final IDBField REVISIONS_CDOREVISION = //
-  REVISIONS.addField("revision", DBType.BLOB);
+      REVISIONS.addField("revision", DBType.BLOB);
 
   public static final IDBField REVISIONS_RESOURCENODE_NAME = //
-  REVISIONS.addField("resourcenode_name", DBType.VARCHAR, false);
+      REVISIONS.addField("resourcenode_name", DBType.VARCHAR, false);
 
   public static final IDBField REVISIONS_CONTAINERID = //
-  REVISIONS.addField("container_id", DBType.BIGINT, false);
+      REVISIONS.addField("container_id", DBType.BIGINT, false);
 
   public static final IDBIndex INDEX_REVISIONS_RESOURCENODENAME = //
-  REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_RESOURCENODE_NAME);
+      REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_RESOURCENODE_NAME);
 
   public static final IDBIndex INDEX_REVISIONS_ID = //
-  REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_ID);
+      REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_ID);
 
   public static final IDBIndex INDEX_REVISIONS_VERSION = //
-  REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_VERSION);
+      REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_VERSION);
 
   public static final IDBIndex INDEX_REVISIONS_PK = //
-  REVISIONS.addIndex(IDBIndex.Type.PRIMARY_KEY, REVISIONS_ID, REVISIONS_VERSION);
+      REVISIONS.addIndex(IDBIndex.Type.PRIMARY_KEY, REVISIONS_ID, REVISIONS_VERSION);
 
   public static final IDBIndex INDEX_REVISIONS_CONTAINERID = //
-  REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_CONTAINERID);
+      REVISIONS.addIndex(IDBIndex.Type.NON_UNIQUE, REVISIONS_CONTAINERID);
 
   static
   {

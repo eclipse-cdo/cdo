@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -29,8 +29,8 @@ public class DeleteRepositoryAction extends AdminAction<CDOAdminClientRepository
 {
   public DeleteRepositoryAction(CDOAdminClientRepository repository)
   {
-    super(Messages.DeleteRepositoryAction_1, Messages.DeleteRepositoryAction_2, SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_DELETE), repository);
+    super(Messages.DeleteRepositoryAction_1, Messages.DeleteRepositoryAction_2,
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_DELETE), repository);
   }
 
   @Override
@@ -38,8 +38,8 @@ public class DeleteRepositoryAction extends AdminAction<CDOAdminClientRepository
   {
     final int NO_BUTTON = 1;
     String message = MessageFormat.format(Messages.DeleteRepositoryAction_4, target.getName());
-    MessageDialog dlg = new MessageDialog(getShell(), getText(), null, message, MessageDialog.WARNING, new String[] {
-        IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL }, NO_BUTTON);
+    MessageDialog dlg = new MessageDialog(getShell(), getText(), null, message, MessageDialog.WARNING,
+        new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL }, NO_BUTTON);
     if (dlg.open() == NO_BUTTON)
     {
       cancel();

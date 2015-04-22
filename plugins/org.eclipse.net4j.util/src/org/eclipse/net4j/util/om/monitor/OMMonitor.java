@@ -49,7 +49,7 @@ public interface OMMonitor extends OMMonitorProgress
 
   /**
    * Same as calling <code>begin(ONE)</code>.
-   * 
+   *
    * @since 2.0
    */
   public OMMonitor begin() throws MonitorCanceledException;
@@ -61,7 +61,7 @@ public interface OMMonitor extends OMMonitorProgress
 
   /**
    * Same as calling <code>worked(ONE)</code>.
-   * 
+   *
    * @since 2.0
    */
   public void worked() throws MonitorCanceledException;
@@ -73,7 +73,7 @@ public interface OMMonitor extends OMMonitorProgress
 
   /**
    * Same as calling <code>fork(ONE)</code>.
-   * 
+   *
    * @since 2.0
    */
   public OMMonitor fork();
@@ -85,7 +85,7 @@ public interface OMMonitor extends OMMonitorProgress
 
   /**
    * Same as calling <code>forkAsync(ONE)</code>.
-   * 
+   *
    * @since 2.0
    */
   public Async forkAsync();

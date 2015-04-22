@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.PurchaseOrder} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class PurchaseOrderItemProvider extends OrderItemProvider
@@ -67,12 +67,14 @@ public class PurchaseOrderItemProvider extends OrderItemProvider
    */
   protected void addDatePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_PurchaseOrder_date_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_date_feature", "_UI_PurchaseOrder_type"),
-        CompanyPackage.Literals.PURCHASE_ORDER__DATE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(
+            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_PurchaseOrder_date_feature"),
+                getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_date_feature",
+                    "_UI_PurchaseOrder_type"),
+                CompanyPackage.Literals.PURCHASE_ORDER__DATE, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -83,13 +85,11 @@ public class PurchaseOrderItemProvider extends OrderItemProvider
   protected void addSupplierPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(
-            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_PurchaseOrder_supplier_feature"),
-            getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_supplier_feature",
-                "_UI_PurchaseOrder_type"), CompanyPackage.Literals.PURCHASE_ORDER__SUPPLIER, true, false, true, null,
-            null, null));
+    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(), getString("_UI_PurchaseOrder_supplier_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_PurchaseOrder_supplier_feature",
+            "_UI_PurchaseOrder_type"),
+            CompanyPackage.Literals.PURCHASE_ORDER__SUPPLIER, true, false, true, null, null, null));
   }
 
   /**

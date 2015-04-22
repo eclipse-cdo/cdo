@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * A {@link CDOChangeKindProvider change kind provider} with detailed information about {@link #getNewObjects() new},
  * {@link #getChangedObjects() changed} and {@link #getDetachedObjects() detached} objects.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.
@@ -38,14 +38,14 @@ public interface CDOChangeSetData extends CDOChangeKindProvider
 
   /**
    * Returns a deep copy of this change set data.
-   * 
+   *
    * @since 4.0
    */
   public CDOChangeSetData copy();
 
   /**
    * Changes the internal state of this change set data by adding the changes of the given change set data.
-   * 
+   *
    * @since 4.0
    */
   public void merge(CDOChangeSetData changeSetData);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Stefan Winkler - major refactoring
@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * Interface for mapping features with <code>isMany() == true</code>.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 2.0
@@ -39,21 +39,21 @@ public interface IListMapping
 {
   /**
    * Return the mapped feature.
-   * 
+   *
    * @return the mapped feature.
    */
   public EStructuralFeature getFeature();
 
   /**
    * Returns all DB tables which are used by this feature.
-   * 
+   *
    * @return a collection of all tables of this feature.
    */
   public Collection<IDBTable> getDBTables();
 
   /**
    * Write a complete list of values to the database.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param revision
@@ -63,7 +63,7 @@ public interface IListMapping
 
   /**
    * Read the list size and the complete list or the first part of it.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param revision
@@ -77,7 +77,7 @@ public interface IListMapping
 
   /**
    * Used to load-on-demand chunks of a list.
-   * 
+   *
    * @param dbStoreChunkReader
    *          the chunkReader to use
    * @param chunks
@@ -90,7 +90,7 @@ public interface IListMapping
   /**
    * Hook with which a list mapping is notified that a containing object has been revised. Can be implemented in order
    * to clean up lists of revised objects.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param id
@@ -103,7 +103,7 @@ public interface IListMapping
 
   /**
    * Retrieve cross-references from DB.
-   * 
+   *
    * @see IClassMapping#queryXRefs(IDBStoreAccessor, IStoreAccessor.QueryXRefsContext, String)
    * @see IStoreAccessor#queryXRefs(IStoreAccessor.QueryXRefsContext)
    * @since 4.0

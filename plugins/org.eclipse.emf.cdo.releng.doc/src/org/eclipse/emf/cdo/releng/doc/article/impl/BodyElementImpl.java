@@ -110,8 +110,8 @@ public abstract class BodyElementImpl extends EObjectImpl implements BodyElement
    */
   public void setContainer(BodyElementContainer newContainer)
   {
-    if (newContainer != eInternalContainer() || eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CONTAINER
-        && newContainer != null)
+    if (newContainer != eInternalContainer()
+        || eContainerFeatureID() != ArticlePackage.BODY_ELEMENT__CONTAINER && newContainer != null)
     {
       if (EcoreUtil.isAncestor(this, newContainer))
       {

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.parsers;
 
@@ -100,6 +100,7 @@ public class MessageFormatParser extends AbstractParser
   /**
    * @generated
    */
+  @Override
   public void setViewPattern(String viewPattern)
   {
     super.setViewPattern(viewPattern);
@@ -109,6 +110,7 @@ public class MessageFormatParser extends AbstractParser
   /**
    * @generated
    */
+  @Override
   public void setEditorPattern(String editorPattern)
   {
     super.setEditorPattern(editorPattern);
@@ -134,7 +136,8 @@ public class MessageFormatParser extends AbstractParser
   {
     if (editorProcessor == null)
     {
-      editorProcessor = new MessageFormat(getEditorPattern() == null ? getDefaultEditablePattern() : getEditorPattern());
+      editorProcessor = new MessageFormat(
+          getEditorPattern() == null ? getDefaultEditablePattern() : getEditorPattern());
     }
     return editorProcessor;
   }
@@ -165,6 +168,7 @@ public class MessageFormatParser extends AbstractParser
   /**
    * @generated
    */
+  @Override
   public void setEditPattern(String editPattern)
   {
     super.setEditPattern(editPattern);
@@ -188,7 +192,7 @@ public class MessageFormatParser extends AbstractParser
    */
   public String getEditString(IAdaptable adapter, int flags)
   {
-    EObject element = (EObject)adapter.getAdapter(EObject.class);
+    EObject element = adapter.getAdapter(EObject.class);
     return getEditorProcessor().format(getEditableValues(element), new StringBuffer(), new FieldPosition(0)).toString();
   }
 
@@ -201,8 +205,8 @@ public class MessageFormatParser extends AbstractParser
     Object[] values = getEditProcessor().parse(editString, pos);
     if (values == null)
     {
-      return new ParserEditStatus(AcoreDiagramEditorPlugin.ID, IParserEditStatus.UNEDITABLE, NLS.bind(
-          Messages.MessageFormatParser_InvalidInputError, new Integer(pos.getErrorIndex())));
+      return new ParserEditStatus(AcoreDiagramEditorPlugin.ID, IParserEditStatus.UNEDITABLE,
+          NLS.bind(Messages.MessageFormatParser_InvalidInputError, new Integer(pos.getErrorIndex())));
     }
     return validateNewValues(values);
   }
@@ -221,7 +225,7 @@ public class MessageFormatParser extends AbstractParser
    */
   public String getPrintString(IAdaptable adapter, int flags)
   {
-    EObject element = (EObject)adapter.getAdapter(EObject.class);
+    EObject element = adapter.getAdapter(EObject.class);
     return getViewProcessor().format(getValues(element), new StringBuffer(), new FieldPosition(0)).toString();
   }
 

@@ -693,8 +693,8 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   {
     private CollapseAllAction()
     {
-      super(
-          Messages.getString("ContainerView_3"), Messages.getString("ContainerView_4"), getCollapseAllImageDescriptor()); //$NON-NLS-1$ //$NON-NLS-2$
+      super(Messages.getString("ContainerView_3"), Messages.getString("ContainerView_4"), //$NON-NLS-1$ //$NON-NLS-2$
+          getCollapseAllImageDescriptor());
     }
 
     @Override

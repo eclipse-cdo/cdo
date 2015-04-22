@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -38,9 +38,10 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
 
   private static final String TOOL_TIP = Messages.getString("RegisterFilesystemPackagesAction.1"); //$NON-NLS-1$
 
-  private static final String[] FILTER_NAMES = {
-      Messages.getString("RegisterFilesystemPackagesAction.2"), Messages.getString("RegisterFilesystemPackagesAction.3"), Messages.getString("RegisterFilesystemPackagesAction.4"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-      Messages.getString("RegisterFilesystemPackagesAction.5") }; //$NON-NLS-1$
+  private static final String[] FILTER_NAMES = { Messages.getString("RegisterFilesystemPackagesAction.2"), //$NON-NLS-1$
+      Messages.getString("RegisterFilesystemPackagesAction.3"), //$NON-NLS-1$
+      Messages.getString("RegisterFilesystemPackagesAction.4"), //$NON-NLS-1$
+    Messages.getString("RegisterFilesystemPackagesAction.5") }; //$NON-NLS-1$
 
   private static final String[] FILTER_EXTENSIONS = { "ecore", "xmi", "xml", null }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 

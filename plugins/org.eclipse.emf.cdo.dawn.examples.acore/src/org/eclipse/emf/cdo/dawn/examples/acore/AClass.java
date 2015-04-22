@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore;
 
@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.AClass#getAggregations <em>Aggregations</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClass()
  * @model
  * @generated
@@ -40,7 +40,7 @@ public interface AClass extends ABasicClass
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Sub Classes</em>' reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClass_SubClasses()
    * @model
@@ -56,7 +56,7 @@ public interface AClass extends ABasicClass
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Implemented Interfaces</em>' reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClass_ImplementedInterfaces()
    * @model
@@ -72,7 +72,7 @@ public interface AClass extends ABasicClass
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Associations</em>' reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClass_Associations()
    * @model
@@ -88,7 +88,7 @@ public interface AClass extends ABasicClass
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Compositions</em>' reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClass_Compositions()
    * @model
@@ -104,7 +104,7 @@ public interface AClass extends ABasicClass
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Aggregations</em>' reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClass_Aggregations()
    * @model

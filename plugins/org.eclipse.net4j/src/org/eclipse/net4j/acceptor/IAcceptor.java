@@ -40,7 +40,7 @@ import org.eclipse.spi.net4j.Acceptor;
  * COORDS="485,75,564,105" HREF="IAcceptor.html"> <AREA SHAPE="RECT" COORDS="296,325,414,355" HREF="IConnector.html">
  * <AREA SHAPE="RECT" COORDS="64,426,444,506" HREF="ConnectorState.html#CONNECTING"> <AREA SHAPE="RECT"
  * COORDS="64,516,444,596" HREF="ConnectorState.html#NEGOTIATING"> </MAP>
- * 
+ *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */

@@ -47,8 +47,8 @@ import java.util.List;
  */
 @Deprecated
 public class PackagePermissionItemProvider extends PermissionItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -87,42 +87,43 @@ public class PackagePermissionItemProvider extends PermissionItemProvider implem
    */
   protected void addApplicablePackagePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory)
-        .getRootAdapterFactory(), getResourceLocator(), getString("_UI_PackagePermission_applicablePackage_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_PackagePermission_applicablePackage_feature",
-            "_UI_PackagePermission_type"), SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, true,
-        false, true, null, null, null)
-    {
-      @Override
-      public Collection<?> getChoiceOfValues(Object object)
-      {
-        if (object instanceof PackagePermission)
+    itemPropertyDescriptors
+        .add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_PackagePermission_applicablePackage_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_PackagePermission_applicablePackage_feature",
+                "_UI_PackagePermission_type"),
+            SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, true, false, true, null, null, null)
         {
-          PackagePermission packagePermission = (PackagePermission)object;
-          CDOView view = packagePermission.cdoView();
-          if (view != null)
+          @Override
+          public Collection<?> getChoiceOfValues(Object object)
           {
-            List<EPackage> result = new ArrayList<EPackage>();
-            for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
+            if (object instanceof PackagePermission)
             {
-              result.add(packageInfo.getEPackage());
+              PackagePermission packagePermission = (PackagePermission)object;
+              CDOView view = packagePermission.cdoView();
+              if (view != null)
+              {
+                List<EPackage> result = new ArrayList<EPackage>();
+                for (CDOPackageInfo packageInfo : view.getSession().getPackageRegistry().getPackageInfos())
+                {
+                  result.add(packageInfo.getEPackage());
+                }
+
+                Collections.sort(result, new Comparator<EPackage>()
+                {
+                  public int compare(EPackage p1, EPackage p2)
+                  {
+                    return p1.getNsURI().compareTo(p2.getNsURI());
+                  }
+                });
+
+                return result;
+              }
             }
 
-            Collections.sort(result, new Comparator<EPackage>()
-            {
-              public int compare(EPackage p1, EPackage p2)
-              {
-                return p1.getNsURI().compareTo(p2.getNsURI());
-              }
-            });
-
-            return result;
+            return super.getChoiceOfValues(object);
           }
-        }
-
-        return super.getChoiceOfValues(object);
-      }
-    });
+        });
   }
 
   /**

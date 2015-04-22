@@ -74,7 +74,8 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
     return true;
   }
 
-  Object[] eDynamicSettings()
+  @Override
+Object[] eDynamicSettings()
   {
     Object[] settings = eBasicSettings();
     if (settings == null)
@@ -304,12 +305,14 @@ public abstract class MinimalEStoreEObjectImpl extends MinimalEObjectImpl
     super.eBasicSetAdapterArray(adapters);
   }
 
-  protected EObservableAdapterList.Listener[] eBasicAdapterListeners()
+  @Override
+protected EObservableAdapterList.Listener[] eBasicAdapterListeners()
   {
     throw new UnsupportedOperationException();
   }
 
-  protected void eBasicSetAdapterListeners(EObservableAdapterList.Listener[] eAdapterListeners)
+  @Override
+protected void eBasicSetAdapterListeners(EObservableAdapterList.Listener[] eAdapterListeners)
   {
     throw new UnsupportedOperationException();
   }

@@ -22,7 +22,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 /**
  * Changes the state of the {@link Options#isPassiveUpdateEnabled() passive update} option for a given
  * {@link CDOSession session}.
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class ChangePassiveUpdateAction extends EditingDomainAction

@@ -125,7 +125,9 @@ public class Bz380987_PersonImpl extends EObjectImpl implements Bz380987_Person
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ380987_PERSON__NAME, oldName, name));
+    }
   }
 
   /**
@@ -293,7 +295,9 @@ public class Bz380987_PersonImpl extends EObjectImpl implements Bz380987_Person
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

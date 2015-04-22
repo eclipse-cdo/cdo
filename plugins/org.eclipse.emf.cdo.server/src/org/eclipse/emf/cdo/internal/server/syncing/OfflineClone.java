@@ -73,8 +73,8 @@ public class OfflineClone extends SynchronizableRepository
     {
       StoreThreadLocal.setSession(getReplicatorSession());
       InternalCDOBranchManager branchManager = getBranchManager();
-      return branchManager.createBranch(NEW_LOCAL_BRANCH,
-          "Offline-" + baseTimeStamp, (InternalCDOBranch)baseBranch, baseTimeStamp); //$NON-NLS-1$
+      return branchManager.createBranch(NEW_LOCAL_BRANCH, "Offline-" + baseTimeStamp, (InternalCDOBranch)baseBranch, //$NON-NLS-1$
+          baseTimeStamp);
     }
     finally
     {

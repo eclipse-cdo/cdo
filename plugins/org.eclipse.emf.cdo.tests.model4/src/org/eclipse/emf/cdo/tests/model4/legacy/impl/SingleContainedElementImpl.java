@@ -40,7 +40,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -93,7 +93,10 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.SINGLE_CONTAINED_ELEMENT__NAME, oldName, name));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, model4Package.SINGLE_CONTAINED_ELEMENT__NAME, oldName, name));
+    }
   }
 
   /**
@@ -103,7 +106,9 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
   public RefSingleContained getParent()
   {
     if (eContainerFeatureID() != model4Package.SINGLE_CONTAINED_ELEMENT__PARENT)
+    {
       return null;
+    }
     return (RefSingleContained)eContainer();
   }
 
@@ -124,23 +129,33 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
   public void setParent(RefSingleContained newParent)
   {
     if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != model4Package.SINGLE_CONTAINED_ELEMENT__PARENT && newParent != null))
+        || eContainerFeatureID() != model4Package.SINGLE_CONTAINED_ELEMENT__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_SINGLE_CONTAINED__ELEMENT,
             RefSingleContained.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.SINGLE_CONTAINED_ELEMENT__PARENT, newParent,
           newParent));
+    }
   }
 
   /**
@@ -154,7 +169,9 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
     {
     case model4Package.SINGLE_CONTAINED_ELEMENT__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((RefSingleContained)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -271,7 +288,9 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

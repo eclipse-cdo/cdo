@@ -29,8 +29,8 @@ import java.io.ObjectStreamException;
  * @author Martin Taal
  * @since 3.0
  */
-public final class CDOIDObjectLongWithClassifierImpl extends AbstractCDOID implements InternalCDOIDObject,
-    CDOClassifierRef.Provider
+public final class CDOIDObjectLongWithClassifierImpl extends AbstractCDOID
+    implements InternalCDOIDObject, CDOClassifierRef.Provider
 {
   private static final long serialVersionUID = 1L;
 
@@ -77,7 +77,7 @@ public final class CDOIDObjectLongWithClassifierImpl extends AbstractCDOID imple
   public String toURIFragment()
   {
     return classifierRef.getPackageURI() + CDOClassifierRef.URI_SEPARATOR + classifierRef.getClassifierName()
-        + CDOClassifierRef.URI_SEPARATOR + value;
+    + CDOClassifierRef.URI_SEPARATOR + value;
   }
 
   public Type getType()

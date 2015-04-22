@@ -94,13 +94,13 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
         embeddedAttributeName, // Attribute name
         1, // # elements in fixed-size array
         getObjyBaseType() // Type of numeric data
-        ); // Default value
+    ); // Default value
 
     propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
         embeddedAttributeNull, // Attribute name
         1, // # elements in fixed-size array
         ooBaseType.ooBOOLEAN// Type of numeric data
-        ); // Default value
+    ); // Default value
 
     // System.out.println("OBJY: Propose Creating new class: " + embeddedClassName());
 
@@ -143,7 +143,7 @@ public abstract class NumericManyTypeMapper extends BasicTypeMapper implements I
   /**
    * TODO - this is a simple change to the attribute, make it handle more complex cases. I also don't think it does
    * handle the arrays.
-   * 
+   *
    * @param proposedooClass
    * @param feature
    */

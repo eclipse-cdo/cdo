@@ -39,8 +39,8 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClient,
-    IPasswordCredentialsProvider.Provider, IConfirmationProvider.Provider
+public class CDOAdminClientImpl extends AbstractCDOAdmin
+    implements CDOAdminClient, IPasswordCredentialsProvider.Provider, IConfirmationProvider.Provider
 {
   private static final String URL_SEPARATOR = "://";
 
@@ -160,8 +160,8 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin implements CDOAdminClie
   {
     try
     {
-      return (IPasswordCredentialsProvider)container.getElement(CredentialsProviderFactory.PRODUCT_GROUP,
-          "interactive", null); //$NON-NLS-1$
+      return (IPasswordCredentialsProvider)container.getElement(CredentialsProviderFactory.PRODUCT_GROUP, "interactive", //$NON-NLS-1$
+          null);
     }
     catch (Exception ex)
     {

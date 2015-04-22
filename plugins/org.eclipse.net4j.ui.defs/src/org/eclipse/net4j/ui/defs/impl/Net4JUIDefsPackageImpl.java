@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -39,7 +39,7 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.net4j.ui.defs.Net4JUIDefsPackage#eNS_URI
    * @see #init()
@@ -58,7 +58,7 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link Net4JUIDefsPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc
@@ -71,11 +71,14 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
   public static Net4JUIDefsPackage init()
   {
     if (isInited)
+    {
       return (Net4JUIDefsPackage)EPackage.Registry.INSTANCE.getEPackage(Net4JUIDefsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
-    Net4JUIDefsPackageImpl theNet4JUIDefsPackage = (Net4JUIDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Net4JUIDefsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new Net4JUIDefsPackageImpl());
+    Net4JUIDefsPackageImpl theNet4JUIDefsPackage = (Net4JUIDefsPackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof Net4JUIDefsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new Net4JUIDefsPackageImpl());
 
     isInited = true;
 
@@ -129,7 +132,9 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -151,7 +156,9 @@ public class Net4JUIDefsPackageImpl extends EPackageImpl implements Net4JUIDefsP
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

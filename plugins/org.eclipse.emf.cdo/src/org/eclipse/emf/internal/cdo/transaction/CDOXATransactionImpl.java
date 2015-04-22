@@ -358,8 +358,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
 
       try
       {
-        send(activeContexts.values(), progressMonitor != null ? new SubProgressMonitor(progressMonitor, 2 - phase)
-            : null);
+        send(activeContexts.values(),
+            progressMonitor != null ? new SubProgressMonitor(progressMonitor, 2 - phase) : null);
       }
       catch (InterruptedException ex1)
       {

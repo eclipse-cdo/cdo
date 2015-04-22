@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *   Andre Dietisheim - initial API and implementation
  *   Eike Stepper - maintenance
@@ -131,8 +131,10 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
       if (bufferProvider != oldBufferProvider)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.ACCEPTOR_DEF__BUFFER_PROVIDER,
               oldBufferProvider, bufferProvider));
+        }
       }
     }
     return bufferProvider;
@@ -156,8 +158,10 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     BufferPoolDef oldBufferProvider = bufferProvider;
     bufferProvider = newBufferProvider;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.ACCEPTOR_DEF__BUFFER_PROVIDER,
           oldBufferProvider, bufferProvider));
+    }
   }
 
   /**
@@ -173,8 +177,10 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
       if (executorService != oldExecutorService)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.ACCEPTOR_DEF__EXECUTOR_SERVICE,
               oldExecutorService, executorService));
+        }
       }
     }
     return executorService;
@@ -198,8 +204,10 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     ThreadPoolDef oldExecutorService = executorService;
     executorService = newExecutorService;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.ACCEPTOR_DEF__EXECUTOR_SERVICE,
           oldExecutorService, executorService));
+    }
   }
 
   /**
@@ -215,8 +223,10 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
       if (negotiator != oldNegotiator)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR,
               oldNegotiator, negotiator));
+        }
       }
     }
     return negotiator;
@@ -242,8 +252,10 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     boolean oldNegotiatorESet = negotiatorESet;
     negotiatorESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR, oldNegotiator,
           negotiator, !oldNegotiatorESet));
+    }
   }
 
   /**
@@ -257,8 +269,10 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     negotiator = null;
     negotiatorESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR, oldNegotiator,
           null, oldNegotiatorESet));
+    }
   }
 
   /**
@@ -291,7 +305,9 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
   public void unsetServerProtocolProvider()
   {
     if (serverProtocolProvider != null)
+    {
       ((InternalEList.Unsettable<?>)serverProtocolProvider).unset();
+    }
   }
 
   /**
@@ -314,15 +330,21 @@ public abstract class AcceptorDefImpl extends DefImpl implements AcceptorDef
     {
     case Net4jDefsPackage.ACCEPTOR_DEF__BUFFER_PROVIDER:
       if (resolve)
+      {
         return getBufferProvider();
+      }
       return basicGetBufferProvider();
     case Net4jDefsPackage.ACCEPTOR_DEF__EXECUTOR_SERVICE:
       if (resolve)
+      {
         return getExecutorService();
+      }
       return basicGetExecutorService();
     case Net4jDefsPackage.ACCEPTOR_DEF__NEGOTIATOR:
       if (resolve)
+      {
         return getNegotiator();
+      }
       return basicGetNegotiator();
     case Net4jDefsPackage.ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER:
       return getServerProtocolProvider();

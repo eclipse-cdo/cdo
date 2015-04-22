@@ -294,7 +294,7 @@ public class DBField extends DBSchemaElement implements InternalDBField
       TRACK_CONSTRUCTION.remove();
     }
   }
-  
+
   public static boolean isTrackConstruction()
   {
     return TRACK_CONSTRUCTION.get();

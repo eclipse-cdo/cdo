@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -41,7 +41,7 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -90,8 +90,10 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
       if (key != oldKey)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY, oldKey,
               key));
+        }
       }
     }
     return key;
@@ -115,7 +117,9 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
     EObject oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY, oldKey, key));
+    }
   }
 
   /**
@@ -131,8 +135,10 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
       if (value != oldValue)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE,
               oldValue, value));
+        }
       }
     }
     return value;
@@ -156,8 +162,10 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
     EObject oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE, oldValue,
-          value));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -171,11 +179,15 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
     {
     case Model2Package.EOBJECT_TO_EOBJECT_MAP__KEY:
       if (resolve)
+      {
         return getTypedKey();
+      }
       return basicGetTypedKey();
     case Model2Package.EOBJECT_TO_EOBJECT_MAP__VALUE:
       if (resolve)
+      {
         return getTypedValue();
+      }
       return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -251,7 +263,7 @@ public class EObjectToEObjectMapImpl extends EObjectImpl implements BasicEMap.En
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

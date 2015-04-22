@@ -198,7 +198,7 @@ public class TestDefTest extends AbstractOMTest
     /**
      * (Blocking) Wait for deactivation. The deactivation is triggered in a separate thread. This method allows you
      * blocking wait for deactivation
-     * 
+     *
      * @throws InterruptedException
      *           the interrupted exception
      */

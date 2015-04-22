@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
@@ -113,13 +113,13 @@ public class AcoreDomainNavigatorItem extends PlatformObject
   /**
    * @generated
    */
+  @Override
   public boolean equals(Object obj)
   {
     if (obj instanceof org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreDomainNavigatorItem)
     {
-      return EcoreUtil.getURI(getEObject()).equals(
-          EcoreUtil.getURI(((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreDomainNavigatorItem)obj)
-              .getEObject()));
+      return EcoreUtil.getURI(getEObject()).equals(EcoreUtil.getURI(
+          ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreDomainNavigatorItem)obj).getEObject()));
     }
     return super.equals(obj);
   }
@@ -127,6 +127,7 @@ public class AcoreDomainNavigatorItem extends PlatformObject
   /**
    * @generated
    */
+  @Override
   public int hashCode()
   {
     return EcoreUtil.getURI(getEObject()).hashCode();

@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class SessionImpl extends QueueWorker<MessageConsumerImpl> implements Session
+public class SessionImpl extends QueueWorker<MessageConsumerImpl>implements Session
 {
   private ConnectionImpl connection;
 

@@ -28,7 +28,7 @@ public interface IDBPreparedStatement extends Comparable<IDBPreparedStatement>, 
   public IDBConnection getConnection() throws SQLException;
 
   /**
-   * @deprecated As of 4.3 use {@link #getConnection()}.  
+   * @deprecated As of 4.3 use {@link #getConnection()}.
    */
   @Deprecated
   public IDBConnection getTransaction();

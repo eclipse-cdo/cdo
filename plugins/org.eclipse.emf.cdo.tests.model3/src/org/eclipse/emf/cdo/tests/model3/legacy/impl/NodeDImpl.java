@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -57,7 +57,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -133,7 +133,9 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   public NodeD getParent()
   {
     if (eContainerFeatureID() != Model3Package.NODE_D__PARENT)
+    {
       return null;
+    }
     return (NodeD)eContainer();
   }
 
@@ -153,22 +155,31 @@ public class NodeDImpl extends EObjectImpl implements NodeD
    */
   public void setParent(NodeD newParent)
   {
-    if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != Model3Package.NODE_D__PARENT && newParent != null))
+    if (newParent != eInternalContainer() || eContainerFeatureID() != Model3Package.NODE_D__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, Model3Package.NODE_D__CHILDREN, NodeD.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_D__PARENT, newParent, newParent));
+    }
   }
 
   /**
@@ -189,7 +200,9 @@ public class NodeDImpl extends EObjectImpl implements NodeD
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_D__NAME, oldName, name));
+    }
   }
 
   /**
@@ -219,8 +232,10 @@ public class NodeDImpl extends EObjectImpl implements NodeD
       if (oppositeNode != oldOppositeNode)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model3Package.NODE_D__OPPOSITE_NODE,
               oldOppositeNode, oppositeNode));
+        }
       }
     }
     return oppositeNode;
@@ -248,9 +263,13 @@ public class NodeDImpl extends EObjectImpl implements NodeD
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model3Package.NODE_D__OPPOSITE_NODE, oldOppositeNode, newOppositeNode);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -265,18 +284,26 @@ public class NodeDImpl extends EObjectImpl implements NodeD
     {
       NotificationChain msgs = null;
       if (oppositeNode != null)
+      {
         msgs = ((InternalEObject)oppositeNode).eInverseRemove(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class,
             msgs);
+      }
       if (newOppositeNode != null)
+      {
         msgs = ((InternalEObject)newOppositeNode).eInverseAdd(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class,
             msgs);
+      }
       msgs = basicSetOppositeNode(newOppositeNode, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_D__OPPOSITE_NODE, newOppositeNode,
           newOppositeNode));
+    }
   }
 
   /**
@@ -293,14 +320,18 @@ public class NodeDImpl extends EObjectImpl implements NodeD
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case Model3Package.NODE_D__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((NodeD)otherEnd, msgs);
     case Model3Package.NODE_D__OTHER_NODES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getOtherNodes()).basicAdd(otherEnd, msgs);
     case Model3Package.NODE_D__OPPOSITE_NODE:
       if (oppositeNode != null)
+      {
         msgs = ((InternalEObject)oppositeNode).eInverseRemove(this, Model3Package.NODE_D__OTHER_NODES, NodeD.class,
             msgs);
+      }
       return basicSetOppositeNode((NodeD)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -361,7 +392,9 @@ public class NodeDImpl extends EObjectImpl implements NodeD
       return getOtherNodes();
     case Model3Package.NODE_D__OPPOSITE_NODE:
       if (resolve)
+      {
         return getOppositeNode();
+      }
       return basicGetOppositeNode();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -457,7 +490,9 @@ public class NodeDImpl extends EObjectImpl implements NodeD
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

@@ -109,8 +109,8 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
   private static final Set<Object> LOADING_OBJECTS = new HashSet<Object>();
 
-  private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class,
-      "getChildrenFeatures", Object.class);
+  private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class, "getChildrenFeatures",
+      Object.class);
 
   private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
 

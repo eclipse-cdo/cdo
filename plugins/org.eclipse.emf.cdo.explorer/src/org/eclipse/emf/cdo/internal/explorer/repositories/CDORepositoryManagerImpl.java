@@ -25,7 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> implements CDORepositoryManager
+public class CDORepositoryManagerImpl extends AbstractManager<CDORepository>implements CDORepositoryManager
 {
   public static final String SECURE_STORE_PATH = "/CDO/repositories";
 

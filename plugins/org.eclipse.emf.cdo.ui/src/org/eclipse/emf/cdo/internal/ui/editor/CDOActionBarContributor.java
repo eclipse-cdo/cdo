@@ -163,7 +163,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * This is the menu manager into which menu contribution items should be added for CreateChild actions. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IMenuManager createChildMenuManager;
@@ -179,14 +179,14 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * This is the menu manager into which menu contribution items should be added for CreateSibling actions. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IMenuManager createSiblingMenuManager;
 
   /**
    * This creates an instance of the contributor. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public CDOActionBarContributor()
@@ -264,7 +264,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * When the active editor changes, this remembers the change and registers with it as a selection provider. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -430,7 +430,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * This generates a {@link org.eclipse.emf.edit.ui.action.CreateChildAction} for each object in
    * <code>descriptors</code>, and returns the collection of these actions. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected Collection<IAction> generateCreateChildActions(Collection<?> descriptors, ISelection selection)
@@ -450,7 +450,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * This generates a {@link org.eclipse.emf.edit.ui.action.CreateSiblingAction} for each object in
    * <code>descriptors</code>, and returns the collection of these actions. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected Collection<IAction> generateCreateSiblingActions(Collection<?> descriptors, ISelection selection)
@@ -497,7 +497,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * This removes from the specified <code>manager</code> all {@link org.eclipse.jface.action.ActionContributionItem}s
    * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void depopulateManager(IContributionManager manager, Collection<? extends IAction> actions)

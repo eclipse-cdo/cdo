@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 /**
  * Read external reference annotation.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateBugzilla_362270b_Test extends Bugzilla_362270b_Test

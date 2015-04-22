@@ -61,7 +61,7 @@ public class ObjyFeatureMapEntry
 
   /****
    * Factory.
-   * 
+   *
    * @param tagId
    * @param oid
    */

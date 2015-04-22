@@ -76,8 +76,8 @@ public class CredentialsDialog extends BaseDialog<Viewer>
    */
   public CredentialsDialog(Shell shell, String realm, String title, String message)
   {
-    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message,
-        OM.Activator.INSTANCE.getDialogSettings(), OM.getImageDescriptor("icons/credentials_wiz.gif")); //$NON-NLS-1$
+    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message, OM.Activator.INSTANCE.getDialogSettings(),
+        OM.getImageDescriptor("icons/credentials_wiz.gif")); //$NON-NLS-1$
     this.realm = realm;
     users = loadUsers();
   }

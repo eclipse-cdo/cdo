@@ -91,8 +91,8 @@ public class SecurityModelWizard extends Wizard implements INewWizard
    * <!-- end-user-doc -->
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS = SecurityEditorPlugin.INSTANCE.getString(
-      "_UI_SecurityEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  public static final String FORMATTED_FILE_EXTENSIONS = SecurityEditorPlugin.INSTANCE
+      .getString("_UI_SecurityEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
   /**
    * This caches an instance of the model package.
@@ -161,8 +161,8 @@ public class SecurityModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(SecurityEditorPlugin.INSTANCE.getString("_UI_Wizard_label")); //$NON-NLS-1$
-    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(SecurityEditorPlugin.INSTANCE
-        .getImage("full/wizban/NewSecurity"))); //$NON-NLS-1$
+    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
+        .getImageDescriptor(SecurityEditorPlugin.INSTANCE.getImage("full/wizban/NewSecurity"))); //$NON-NLS-1$
   }
 
   /**
@@ -607,8 +607,8 @@ public class SecurityModelWizard extends Wizard implements INewWizard
     newFileCreationPage = new SecurityModelWizardNewFileCreationPage("Whatever", selection); //$NON-NLS-1$
     newFileCreationPage.setTitle(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityModelWizard_label")); //$NON-NLS-1$
     newFileCreationPage.setDescription(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityModelWizard_description")); //$NON-NLS-1$
-    newFileCreationPage
-        .setFileName(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0)); //$NON-NLS-1$ //$NON-NLS-2$
+    newFileCreationPage.setFileName(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityEditorFilenameDefaultBase") //$NON-NLS-1$
+        + "." + FILE_EXTENSIONS.get(0)); //$NON-NLS-1$
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.
@@ -652,8 +652,8 @@ public class SecurityModelWizard extends Wizard implements INewWizard
     }
     initialObjectCreationPage = new SecurityModelWizardInitialObjectCreationPage("Whatever2"); //$NON-NLS-1$
     initialObjectCreationPage.setTitle(SecurityEditorPlugin.INSTANCE.getString("_UI_SecurityModelWizard_label")); //$NON-NLS-1$
-    initialObjectCreationPage.setDescription(SecurityEditorPlugin.INSTANCE
-        .getString("_UI_Wizard_initial_object_description")); //$NON-NLS-1$
+    initialObjectCreationPage
+        .setDescription(SecurityEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description")); //$NON-NLS-1$
     addPage(initialObjectCreationPage);
   }
 

@@ -163,8 +163,10 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     ParameterPassing result = ParameterPassing.get(initialValue);
     if (result == null)
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-          + eDataType.getName() + "'");
+    {
+      throw new IllegalArgumentException(
+          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    }
     return result;
   }
 

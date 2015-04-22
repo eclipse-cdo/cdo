@@ -15,7 +15,7 @@ import java.util.EventObject;
 
 /**
  * A default implementation of an {@link IEvent event}.
- * 
+ *
  * @author Eike Stepper
  */
 public class Event extends EventObject implements IEvent

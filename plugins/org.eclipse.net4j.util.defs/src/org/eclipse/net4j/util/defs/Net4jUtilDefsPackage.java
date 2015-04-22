@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -80,7 +80,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Default Definition</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -89,7 +89,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Def Container</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -98,7 +98,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.net4j.util.defs.impl.DefImpl <em>Def</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.net4j.util.defs.impl.DefImpl
    * @see org.eclipse.net4j.util.defs.impl.Net4jUtilDefsPackageImpl#getDef()
    * @generated
@@ -185,7 +185,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Randomizer Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -203,7 +203,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.net4j.util.defs.impl.UserImpl <em>User</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.net4j.util.defs.impl.UserImpl
    * @see org.eclipse.net4j.util.defs.impl.Net4jUtilDefsPackageImpl#getUser()
    * @generated
@@ -258,7 +258,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.util.defs.DefContainer <em>Def Container</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Def Container</em>'.
    * @see org.eclipse.net4j.util.defs.DefContainer
    * @generated
@@ -372,7 +372,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Negotiator Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -381,7 +381,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Credentials Provider</b></em>' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -452,7 +452,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.util.defs.RandomizerDef <em>Randomizer Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Randomizer Def</em>'.
    * @see org.eclipse.net4j.util.defs.RandomizerDef
    * @generated
@@ -551,7 +551,7 @@ public interface Net4jUtilDefsPackage extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.net4j.util.defs.PasswordCredentialsProviderDef#getPassword <em>Password</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Password</em>'.
    * @see org.eclipse.net4j.util.defs.PasswordCredentialsProviderDef#getPassword()
    * @see #getPasswordCredentialsProviderDef()
@@ -581,7 +581,7 @@ public interface Net4jUtilDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.util.defs.NegotiatorDef <em>Negotiator Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Negotiator Def</em>'.
    * @see org.eclipse.net4j.util.defs.NegotiatorDef
    * @generated
@@ -620,7 +620,7 @@ public interface Net4jUtilDefsPackage extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.net4j.util.defs.ChallengeNegotiatorDef#getUserManager <em>User Manager</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>User Manager</em>'.
    * @see org.eclipse.net4j.util.defs.ChallengeNegotiatorDef#getUserManager()
    * @see #getChallengeNegotiatorDef()
@@ -671,7 +671,7 @@ public interface Net4jUtilDefsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Definitions</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference DEF_CONTAINER__DEFINITIONS = eINSTANCE.getDefContainer_Definitions();
@@ -687,7 +687,7 @@ public interface Net4jUtilDefsPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.net4j.util.defs.impl.DefImpl <em>Def</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.net4j.util.defs.impl.DefImpl
      * @see org.eclipse.net4j.util.defs.impl.Net4jUtilDefsPackageImpl#getDef()
      * @generated
@@ -765,7 +765,7 @@ public interface Net4jUtilDefsPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.net4j.util.defs.impl.UserImpl <em>User</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.net4j.util.defs.impl.UserImpl
      * @see org.eclipse.net4j.util.defs.impl.Net4jUtilDefsPackageImpl#getUser()
      * @generated

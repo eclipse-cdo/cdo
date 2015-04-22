@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
@@ -118,7 +118,9 @@ public class AcoreEditPartFactory implements EditPartFactory
   public static CellEditorLocator getTextCellEditorLocator(ITextAwareEditPart source)
   {
     if (source.getFigure() instanceof WrappingLabel)
+    {
       return new TextCellEditorLocator((WrappingLabel)source.getFigure());
+    }
     else
     {
       return new LabelCellEditorLocator((Label)source.getFigure());

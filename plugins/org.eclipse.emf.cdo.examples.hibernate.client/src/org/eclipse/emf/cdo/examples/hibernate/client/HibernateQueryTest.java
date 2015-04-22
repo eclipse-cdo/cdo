@@ -25,7 +25,9 @@ import org.eclipse.emf.cdo.examples.company.VAT;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOQuery;
+
 import org.eclipse.net4j.util.collection.CloseableIterator;
+
 import org.junit.Before;
 
 import java.io.Serializable;
@@ -38,7 +40,7 @@ import java.util.List;
  * The queries are done on a test set which is created automatically. The size
  * of the testdata is controlled by the static final int's in the top of this
  * class.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateQueryTest extends BaseTest
@@ -97,7 +99,7 @@ public class HibernateQueryTest extends BaseTest
     CDOTransaction transaction = session.openTransaction();
 
     {
-      CDOQuery cdoQuery = transaction.createQuery("hql", "from Product"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery cdoQuery = transaction.createQuery("hql", "from Product"); //$NON-NLS-1$ //$NON-NLS-2$
       final List<Product> products = cdoQuery.getResult(Product.class);
       assertEquals(NUM_OF_PRODUCTS, products.size());
     }
@@ -106,20 +108,20 @@ public class HibernateQueryTest extends BaseTest
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
     // gets resolved
     // {
-    //      CDOQuery cdoQuery = transaction.createQuery("hql", "from Product where name=:name"); //$NON-NLS-1$  //$NON-NLS-2$
-    //      cdoQuery.setParameter("name", "" + 1); //$NON-NLS-1$  //$NON-NLS-2$
+    // CDOQuery cdoQuery = transaction.createQuery("hql", "from Product where name=:name"); //$NON-NLS-1$ //$NON-NLS-2$
+    // cdoQuery.setParameter("name", "" + 1); //$NON-NLS-1$ //$NON-NLS-2$
     // final List<Product> products = cdoQuery.getResult(Product.class);
     // assertEquals(1, products.size());
     // }
 
     {
-      CDOQuery cdoQuery = transaction.createQuery("hql", "from Customer"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery cdoQuery = transaction.createQuery("hql", "from Customer"); //$NON-NLS-1$ //$NON-NLS-2$
       final List<Customer> customers = cdoQuery.getResult(Customer.class);
       assertEquals(NUM_OF_CUSTOMERS, customers.size());
     }
 
     {
-      CDOQuery cdoQuery = transaction.createQuery("hql", "from Product where vat=:vat"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery cdoQuery = transaction.createQuery("hql", "from Product where vat=:vat"); //$NON-NLS-1$ //$NON-NLS-2$
       cdoQuery.setParameter("vat", VAT.VAT15); //$NON-NLS-1$
       final List<Product> products = cdoQuery.getResult(Product.class);
       // MT: re-enable after
@@ -143,7 +145,7 @@ public class HibernateQueryTest extends BaseTest
     CDOTransaction transaction = session.openTransaction();
 
     {
-      CDOQuery cdoQuery = transaction.createQuery("hql", "select count(*) from Product"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery cdoQuery = transaction.createQuery("hql", "select count(*) from Product"); //$NON-NLS-1$ //$NON-NLS-2$
       final List<Long> counts = cdoQuery.getResult(Long.class);
       assertEquals(counts.size(), 1);
       assertEquals(counts.get(0), new Long(NUM_OF_PRODUCTS));
@@ -170,11 +172,11 @@ public class HibernateQueryTest extends BaseTest
     CDOTransaction transaction = session.openTransaction();
 
     {
-      CDOQuery customerQuery = transaction.createQuery("hql", "from Customer order by name"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery customerQuery = transaction.createQuery("hql", "from Customer order by name"); //$NON-NLS-1$ //$NON-NLS-2$
       final List<Customer> customers = customerQuery.getResult(Customer.class);
       assertEquals(NUM_OF_CUSTOMERS, customers.size());
 
-      CDOQuery productQuery = transaction.createQuery("hql", "from Product"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery productQuery = transaction.createQuery("hql", "from Product"); //$NON-NLS-1$ //$NON-NLS-2$
       final List<Product> products = productQuery.getResult(Product.class);
       assertEquals(NUM_OF_PRODUCTS, products.size());
 
@@ -189,10 +191,8 @@ public class HibernateQueryTest extends BaseTest
         for (Product product : products)
         {
           final int productIndex = Integer.parseInt(product.getName());
-          final CDOQuery orderQuery = transaction
-              .createQuery(
-                  "hql", //$NON-NLS-1$
-                  "select so from SalesOrder so, OrderDetail od where so.customer=:customer and od in elements(so.orderDetails) and od.product=:product"); //$NON-NLS-1$
+          final CDOQuery orderQuery = transaction.createQuery("hql", //$NON-NLS-1$
+              "select so from SalesOrder so, OrderDetail od where so.customer=:customer and od in elements(so.orderDetails) and od.product=:product"); //$NON-NLS-1$
           orderQuery.setParameter("customer", customer); //$NON-NLS-1$
           orderQuery.setParameter("product", product); //$NON-NLS-1$
 
@@ -238,7 +238,7 @@ public class HibernateQueryTest extends BaseTest
     CDOTransaction transaction = session.openTransaction();
 
     {
-      CDOQuery odQuery = transaction.createQuery("hql", "from OrderDetail"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery odQuery = transaction.createQuery("hql", "from OrderDetail"); //$NON-NLS-1$ //$NON-NLS-2$
       final List<OrderDetail> orderDetails = odQuery.getResult(OrderDetail.class);
       for (OrderDetail orderDetail : orderDetails)
       {
@@ -263,7 +263,7 @@ public class HibernateQueryTest extends BaseTest
     CDOTransaction transaction = session.openTransaction();
 
     {
-      CDOQuery odQuery = transaction.createQuery("hql", "from Customer"); //$NON-NLS-1$  //$NON-NLS-2$
+      CDOQuery odQuery = transaction.createQuery("hql", "from Customer"); //$NON-NLS-1$ //$NON-NLS-2$
       final List<Customer> customers = odQuery.getResult(Customer.class);
       for (Customer customer : customers)
       {
@@ -377,7 +377,7 @@ public class HibernateQueryTest extends BaseTest
       // MT: re-enable after
       // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
       // gets resolved
-      products.add(createProduct((index++) + i));
+      products.add(createProduct(index++ + i));
     }
 
     resource.getContents().addAll(products);
@@ -391,8 +391,8 @@ public class HibernateQueryTest extends BaseTest
       customer.setStreet("Street " + i); //$NON-NLS-1$
       resource.getContents().add(customer);
 
-      final List<Product> customerProducts = products
-          .subList(productCounter, productCounter + NUM_OF_PRODUCTS_CUSTOMER);
+      final List<Product> customerProducts = products.subList(productCounter,
+          productCounter + NUM_OF_PRODUCTS_CUSTOMER);
       for (int k = 0; k < NUM_OF_SALES_ORDERS; k++)
       {
         resource.getContents().add(createSalesOrder(i * 10 + k, customer, customerProducts));
@@ -410,7 +410,7 @@ public class HibernateQueryTest extends BaseTest
     // https://bugs.eclipse.org/bugs/show_bug.cgi?id=309920
     // gets resolved
     // salesOrder.setId(num);
-    salesOrder.setId((index++ + num));
+    salesOrder.setId(index++ + num);
     createOrderDetail(salesOrder, num, products);
     return salesOrder;
   }

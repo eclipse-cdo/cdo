@@ -19,7 +19,7 @@ import org.eclipse.emf.teneo.annotations.pannotation.PannotationFactory;
 
 /**
  * Extends the Teneo EFeatureAnnotator to add an external annotation to each EReference to an EModelElement.
- * 
+ *
  * @author Martin Taal
  * @since 3.0
  */
@@ -38,12 +38,14 @@ public class CDOEFeatureAnnotator extends EFeatureAnnotator
     if (aStructuralFeature instanceof PAnnotatedEReference)
     {
       final PAnnotatedEReference paReference = (PAnnotatedEReference)aStructuralFeature;
-      final boolean refersToEcoreModelElement = paReference.getModelEReference().getEReferenceType().getEPackage() == EcorePackage.eINSTANCE;
+      final boolean refersToEcoreModelElement = paReference.getModelEReference().getEReferenceType()
+          .getEPackage() == EcorePackage.eINSTANCE;
 
       // these are done with a <any ..> mapping
       final boolean refersToEObject = paReference.getModelEReference().getEReferenceType() == EcorePackage.eINSTANCE
           .getEObject();
-      final boolean isPartOfEcoreModel = paReference.getModelEReference().getEContainingClass().getEPackage() == EcorePackage.eINSTANCE;
+      final boolean isPartOfEcoreModel = paReference.getModelEReference().getEContainingClass()
+          .getEPackage() == EcorePackage.eINSTANCE;
       if (refersToEcoreModelElement && !isPartOfEcoreModel && !refersToEObject)
       {
         paReference.setExternal(PannotationFactory.eINSTANCE.createExternal());

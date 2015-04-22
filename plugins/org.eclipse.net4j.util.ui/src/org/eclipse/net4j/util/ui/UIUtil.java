@@ -736,25 +736,25 @@ public final class UIUtil
   {
     viewer.addDragSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY,
         new Transfer[] { LocalSelectionTransfer.getTransfer() }, new DragSourceAdapter()
+    {
+      private long lastDragTime;
+
+      @Override
+      public void dragStart(DragSourceEvent event)
+      {
+        lastDragTime = System.currentTimeMillis();
+        LocalSelectionTransfer.getTransfer().setSelection(viewer.getSelection());
+        LocalSelectionTransfer.getTransfer().setSelectionSetTime(lastDragTime);
+      }
+
+      @Override
+      public void dragFinished(DragSourceEvent event)
+      {
+        if (LocalSelectionTransfer.getTransfer().getSelectionSetTime() == lastDragTime)
         {
-          private long lastDragTime;
-
-          @Override
-          public void dragStart(DragSourceEvent event)
-          {
-            lastDragTime = System.currentTimeMillis();
-            LocalSelectionTransfer.getTransfer().setSelection(viewer.getSelection());
-            LocalSelectionTransfer.getTransfer().setSelectionSetTime(lastDragTime);
-          }
-
-          @Override
-          public void dragFinished(DragSourceEvent event)
-          {
-            if (LocalSelectionTransfer.getTransfer().getSelectionSetTime() == lastDragTime)
-            {
-              LocalSelectionTransfer.getTransfer().setSelection(null);
-            }
-          }
-        });
+          LocalSelectionTransfer.getTransfer().setSelection(null);
+        }
+      }
+    });
   }
 }

@@ -43,7 +43,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  * COORDS="648,95,767,123" HREF="IConnector.html"> <AREA SHAPE="RECT" COORDS="509,254,608,283" HREF="IChannel.html">
  * <AREA SHAPE="RECT" COORDS="287,355,387,383" HREF="IChannel.html"> <AREA SHAPE="RECT" COORDS="818,195,897,222"
  * HREF="IProtocol.html"> </MAP>
- * 
+ *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  */
@@ -68,7 +68,7 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
 
   /**
    * Synchronous connect with infinite timeout value. Same as {@link #connect() connect(NO_TIMEOUT)}.
-   * 
+   *
    * @throws ConnectorException
    * @since 4.0
    */
@@ -76,7 +76,7 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
 
   /**
    * Synchronous connect. Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
-   * 
+   *
    * @param timeout
    *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
    *          connection occurs.
@@ -88,7 +88,7 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
   /**
    * Asynchronous connect. May leave this {@link IConnector} in a state where <code>{@link #isConnected()} == false
    * </code>.
-   * 
+   *
    * @throws ConnectorException
    * @see #waitForConnection(long)
    * @see #connect(long)
@@ -97,7 +97,7 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
 
   /**
    * Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
-   * 
+   *
    * @param timeout
    *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
    *          connection occurs.

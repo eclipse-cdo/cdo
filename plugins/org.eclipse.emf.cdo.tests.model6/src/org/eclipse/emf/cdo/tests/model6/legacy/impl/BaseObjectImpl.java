@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -40,7 +40,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   /**
    * The default value of the '{@link #getAttributeOptional() <em>Attribute Optional</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getAttributeOptional()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   /**
    * The cached value of the '{@link #getAttributeOptional() <em>Attribute Optional</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getAttributeOptional()
    * @generated
    * @ordered
@@ -60,7 +60,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   /**
    * The default value of the '{@link #getAttributeRequired() <em>Attribute Required</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getAttributeRequired()
    * @generated
    * @ordered
@@ -70,7 +70,7 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   /**
    * The cached value of the '{@link #getAttributeRequired() <em>Attribute Required</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getAttributeRequired()
    * @generated
    * @ordered
@@ -124,8 +124,10 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     String oldAttributeOptional = attributeOptional;
     attributeOptional = newAttributeOptional;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL,
           oldAttributeOptional, attributeOptional));
+    }
   }
 
   /**
@@ -146,8 +148,10 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     String oldAttributeRequired = attributeRequired;
     attributeRequired = newAttributeRequired;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED,
           oldAttributeRequired, attributeRequired));
+    }
   }
 
   /**
@@ -238,11 +242,11 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     switch (featureID)
     {
     case Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL:
-      return ATTRIBUTE_OPTIONAL_EDEFAULT == null ? attributeOptional != null : !ATTRIBUTE_OPTIONAL_EDEFAULT
-          .equals(attributeOptional);
+      return ATTRIBUTE_OPTIONAL_EDEFAULT == null ? attributeOptional != null
+          : !ATTRIBUTE_OPTIONAL_EDEFAULT.equals(attributeOptional);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED:
-      return ATTRIBUTE_REQUIRED_EDEFAULT == null ? attributeRequired != null : !ATTRIBUTE_REQUIRED_EDEFAULT
-          .equals(attributeRequired);
+      return ATTRIBUTE_REQUIRED_EDEFAULT == null ? attributeRequired != null
+          : !ATTRIBUTE_REQUIRED_EDEFAULT.equals(attributeRequired);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_LIST:
       return attributeList != null && !attributeList.isEmpty();
     }
@@ -257,7 +261,9 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attributeOptional: ");

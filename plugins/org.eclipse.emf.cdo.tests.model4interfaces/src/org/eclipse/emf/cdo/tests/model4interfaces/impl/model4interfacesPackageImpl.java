@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -130,7 +130,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage#eNS_URI
    * @see #init()
@@ -153,7 +153,7 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
    * This method is used to initialize {@link model4interfacesPackage#eINSTANCE} when that field is accessed. Clients
    * should not invoke it directly. Instead, they should simply access that field to obtain the package. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -162,12 +162,14 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
   public static model4interfacesPackage init()
   {
     if (isInited)
+    {
       return (model4interfacesPackage)EPackage.Registry.INSTANCE.getEPackage(model4interfacesPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     model4interfacesPackageImpl themodel4interfacesPackage = (model4interfacesPackageImpl)(EPackage.Registry.INSTANCE
         .get(eNS_URI) instanceof model4interfacesPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
-        : new model4interfacesPackageImpl());
+            : new model4interfacesPackageImpl());
 
     isInited = true;
 
@@ -452,7 +454,9 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -513,7 +517,9 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -530,59 +536,57 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
     // Initialize classes and features; add operations and parameters
     initEClass(iSingleRefContainerEClass, ISingleRefContainer.class, "ISingleRefContainer", IS_ABSTRACT, IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getISingleRefContainer_Element(), this.getISingleRefContainedElement(),
-        this.getISingleRefContainedElement_Parent(), "element", null, 0, 1, ISingleRefContainer.class, !IS_TRANSIENT,
+    initEReference(getISingleRefContainer_Element(), getISingleRefContainedElement(),
+        getISingleRefContainedElement_Parent(), "element", null, 0, 1, ISingleRefContainer.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
     initEClass(iSingleRefContainedElementEClass, ISingleRefContainedElement.class, "ISingleRefContainedElement",
         IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getISingleRefContainedElement_Parent(), this.getISingleRefContainer(),
-        this.getISingleRefContainer_Element(), "parent", null, 0, 1, ISingleRefContainedElement.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getISingleRefContainedElement_Parent(), getISingleRefContainer(), getISingleRefContainer_Element(),
+        "parent", null, 0, 1, ISingleRefContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(iSingleRefNonContainerEClass, ISingleRefNonContainer.class, "ISingleRefNonContainer", IS_ABSTRACT,
         IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getISingleRefNonContainer_Element(), this.getISingleRefNonContainedElement(),
-        this.getISingleRefNonContainedElement_Parent(), "element", null, 0, 1, ISingleRefNonContainer.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getISingleRefNonContainer_Element(), getISingleRefNonContainedElement(),
+        getISingleRefNonContainedElement_Parent(), "element", null, 0, 1, ISingleRefNonContainer.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(iSingleRefNonContainedElementEClass, ISingleRefNonContainedElement.class,
         "ISingleRefNonContainedElement", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getISingleRefNonContainedElement_Parent(), this.getISingleRefNonContainer(),
-        this.getISingleRefNonContainer_Element(), "parent", null, 0, 1, ISingleRefNonContainedElement.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getISingleRefNonContainedElement_Parent(), getISingleRefNonContainer(),
+        getISingleRefNonContainer_Element(), "parent", null, 0, 1, ISingleRefNonContainedElement.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(iMultiRefContainerEClass, IMultiRefContainer.class, "IMultiRefContainer", IS_ABSTRACT, IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIMultiRefContainer_Elements(), this.getIMultiRefContainedElement(),
-        this.getIMultiRefContainedElement_Parent(), "elements", null, 0, -1, IMultiRefContainer.class, !IS_TRANSIENT,
+    initEReference(getIMultiRefContainer_Elements(), getIMultiRefContainedElement(),
+        getIMultiRefContainedElement_Parent(), "elements", null, 0, -1, IMultiRefContainer.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
         IS_ORDERED);
 
     initEClass(iMultiRefContainedElementEClass, IMultiRefContainedElement.class, "IMultiRefContainedElement",
         IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIMultiRefContainedElement_Parent(), this.getIMultiRefContainer(),
-        this.getIMultiRefContainer_Elements(), "parent", null, 0, 1, IMultiRefContainedElement.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEReference(getIMultiRefContainedElement_Parent(), getIMultiRefContainer(), getIMultiRefContainer_Elements(),
+        "parent", null, 0, 1, IMultiRefContainedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(iMultiRefNonContainerEClass, IMultiRefNonContainer.class, "IMultiRefNonContainer", IS_ABSTRACT,
         IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIMultiRefNonContainer_Elements(), this.getIMultiRefNonContainedElement(),
-        this.getIMultiRefNonContainedElement_Parent(), "elements", null, 0, -1, IMultiRefNonContainer.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getIMultiRefNonContainer_Elements(), getIMultiRefNonContainedElement(),
+        getIMultiRefNonContainedElement_Parent(), "elements", null, 0, -1, IMultiRefNonContainer.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(iMultiRefNonContainedElementEClass, IMultiRefNonContainedElement.class, "IMultiRefNonContainedElement",
         IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIMultiRefNonContainedElement_Parent(), this.getIMultiRefNonContainer(),
-        this.getIMultiRefNonContainer_Elements(), "parent", null, 0, 1, IMultiRefNonContainedElement.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEReference(getIMultiRefNonContainedElement_Parent(), getIMultiRefNonContainer(),
+        getIMultiRefNonContainer_Elements(), "parent", null, 0, 1, IMultiRefNonContainedElement.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
 
     initEClass(iNamedElementEClass, INamedElement.class, "INamedElement", IS_ABSTRACT, IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -594,26 +598,26 @@ public class model4interfacesPackageImpl extends EPackageImpl implements model4i
 
     initEClass(iSingleRefContainerNPLEClass, ISingleRefContainerNPL.class, "ISingleRefContainerNPL", IS_ABSTRACT,
         IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getISingleRefContainerNPL_Element(), this.getIContainedElementNoParentLink(), null, "element", null,
-        0, 1, ISingleRefContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getISingleRefContainerNPL_Element(), getIContainedElementNoParentLink(), null, "element", null, 0, 1,
+        ISingleRefContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(iSingleRefNonContainerNPLEClass, ISingleRefNonContainerNPL.class, "ISingleRefNonContainerNPL",
         IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getISingleRefNonContainerNPL_Element(), this.getIContainedElementNoParentLink(), null, "element",
-        null, 0, 1, ISingleRefNonContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+    initEReference(getISingleRefNonContainerNPL_Element(), getIContainedElementNoParentLink(), null, "element", null, 0,
+        1, ISingleRefNonContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(iMultiRefContainerNPLEClass, IMultiRefContainerNPL.class, "IMultiRefContainerNPL", IS_ABSTRACT,
         IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIMultiRefContainerNPL_Elements(), this.getIContainedElementNoParentLink(), null, "elements",
-        null, 0, -1, IMultiRefContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
-        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIMultiRefContainerNPL_Elements(), getIContainedElementNoParentLink(), null, "elements", null, 0,
+        -1, IMultiRefContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(iMultiRefNonContainerNPLEClass, IMultiRefNonContainerNPL.class, "IMultiRefNonContainerNPL", IS_ABSTRACT,
         IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getIMultiRefNonContainerNPL_Elements(), this.getIContainedElementNoParentLink(), null, "elements",
-        null, 0, -1, IMultiRefNonContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+    initEReference(getIMultiRefNonContainerNPL_Elements(), getIContainedElementNoParentLink(), null, "elements", null,
+        0, -1, IMultiRefNonContainerNPL.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

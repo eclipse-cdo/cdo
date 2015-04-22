@@ -358,8 +358,8 @@ public class DefaultCDOMerger implements CDOMerger
     }
     else if (data != null)
     {
-      throw new IllegalArgumentException("Must be a CDORevision, a CDORevisionDelta, a CDOID, a Conflict or null: "
-          + data);
+      throw new IllegalArgumentException(
+          "Must be a CDORevision, a CDORevisionDelta, a CDOID, a Conflict or null: " + data);
     }
     else
     {
@@ -379,17 +379,13 @@ public class DefaultCDOMerger implements CDOMerger
   {
     NONE,
 
-    @Deprecated
-    SOURCE_OVER_TARGET,
+    @Deprecated SOURCE_OVER_TARGET,
 
-    @Deprecated
-    TARGET_OVER_SOURCE,
+    @Deprecated TARGET_OVER_SOURCE,
 
-    @Deprecated
-    DETACH_OVER_CHANGE,
+    @Deprecated DETACH_OVER_CHANGE,
 
-    @Deprecated
-    CHANGE_OVER_DETACH
+    @Deprecated CHANGE_OVER_DETACH
   }
 
   /**

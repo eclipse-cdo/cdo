@@ -17,7 +17,7 @@ import java.util.Map;
 
 /**
  * Provides consumers with all {@link CDORevision revisions} available in an instance of this interface.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @apiviz.exclude

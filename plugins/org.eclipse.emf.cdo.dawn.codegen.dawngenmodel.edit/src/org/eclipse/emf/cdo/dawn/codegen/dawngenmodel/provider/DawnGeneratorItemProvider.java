@@ -36,8 +36,8 @@ import java.util.List;
  * @generated
  * @since 1.0
  */
-public class DawnGeneratorItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class DawnGeneratorItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -75,13 +75,13 @@ public class DawnGeneratorItemProvider extends ItemProviderAdapter implements IE
    */
   protected void addConflictColorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_DawnGenerator_conflictColor_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_conflictColor_feature",
-            "_UI_DawnGenerator_type"), DawngenmodelPackage.Literals.DAWN_GENERATOR__CONFLICT_COLOR, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_DawnGenerator_conflictColor_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_conflictColor_feature",
+                "_UI_DawnGenerator_type"),
+            DawngenmodelPackage.Literals.DAWN_GENERATOR__CONFLICT_COLOR, true, false, false,
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -91,13 +91,13 @@ public class DawnGeneratorItemProvider extends ItemProviderAdapter implements IE
    */
   protected void addLocalLockColorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_DawnGenerator_localLockColor_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_localLockColor_feature",
-            "_UI_DawnGenerator_type"), DawngenmodelPackage.Literals.DAWN_GENERATOR__LOCAL_LOCK_COLOR, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_DawnGenerator_localLockColor_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_localLockColor_feature",
+                "_UI_DawnGenerator_type"),
+            DawngenmodelPackage.Literals.DAWN_GENERATOR__LOCAL_LOCK_COLOR, true, false, false,
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -107,13 +107,13 @@ public class DawnGeneratorItemProvider extends ItemProviderAdapter implements IE
    */
   protected void addRemoteLockColorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_DawnGenerator_remoteLockColor_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_remoteLockColor_feature",
-            "_UI_DawnGenerator_type"), DawngenmodelPackage.Literals.DAWN_GENERATOR__REMOTE_LOCK_COLOR, true, false,
-        false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_DawnGenerator_remoteLockColor_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_DawnGenerator_remoteLockColor_feature",
+                "_UI_DawnGenerator_type"),
+            DawngenmodelPackage.Literals.DAWN_GENERATOR__REMOTE_LOCK_COLOR, true, false, false,
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

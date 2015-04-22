@@ -39,7 +39,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> implements InternalCDORemoteSessionManager
+public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession>implements InternalCDORemoteSessionManager
 {
   private InternalCDOSession localSession;
 

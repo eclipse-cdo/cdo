@@ -211,8 +211,8 @@ public class ObjyObject
   }
 
   /**
-  	 *
-  	 */
+   *
+   */
   public ooId ooId()
   {
     return objectId;
@@ -541,8 +541,8 @@ public class ObjyObject
       if (TRACER_DEBUG.isEnabled())
       {
         checkSession();
-        TRACER_DEBUG.trace("ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:"
-            + revision.getVersion());
+        TRACER_DEBUG
+            .trace("ObjyObject.update() - oid:" + ooId().getStoreString() + " - version:" + revision.getVersion());
       }
 
       // this is done in the updateDate()
@@ -597,8 +597,8 @@ public class ObjyObject
         {
           if (TRACER_DEBUG.isEnabled())
           {
-            TRACER_DEBUG.trace("In " + ooId().getStoreString() + " - Can't find mapper for feature "
-                + feature.getName());
+            TRACER_DEBUG
+                .trace("In " + ooId().getStoreString() + " - Can't find mapper for feature " + feature.getName());
           }
           continue;
         }
@@ -627,7 +627,7 @@ public class ObjyObject
             else if (value instanceof CDOIDExternal)
             {
               TRACER_DEBUG
-                  .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
+              .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)value).getURI());
               // System.out.println("value is a proxy object - it should be handled by the mapper.");
               // create an ObjyProxy object to hold the the value.
               ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
@@ -648,8 +648,8 @@ public class ObjyObject
               ooId oid = null;
               if (entryValue instanceof CDOIDExternal)
               {
-                TRACER_DEBUG.trace("... CDOIDExternal inserted, at:" + i + ", content:"
-                    + ((CDOIDExternal)entryValue).getURI());
+                TRACER_DEBUG
+                    .trace("... CDOIDExternal inserted, at:" + i + ", content:" + ((CDOIDExternal)entryValue).getURI());
                 // System.out.println("value is a proxy object - it should be handled by the mapper.");
                 // create an ObjyProxy object to hold the the value.
                 ObjyProxy proxyObject = ObjyProxy.createObject(ooId());
@@ -1065,8 +1065,8 @@ public class ObjyObject
       if (TRACER_DEBUG.isEnabled())
       {
         // TODO - verify the message.
-        TRACER_DEBUG.trace("Size of object " + ooId().getStoreString() + " - is: " + size + " - feature: "
-            + feature.getName());
+        TRACER_DEBUG
+            .trace("Size of object " + ooId().getStoreString() + " - is: " + size + " - feature: " + feature.getName());
       }
     }
     catch (RuntimeException ex)
@@ -1147,8 +1147,8 @@ public class ObjyObject
       checkSession();
       // TODO - verify the message.
       TRACER_DEBUG.trace("Get All objects for ID: " + ooId().getStoreString() + " <feature ' " + feature/*
-                                                                                                         * .getName( )
-                                                                                                         */
+       * .getName( )
+       */
           + "':" + feature.getEType() + "> from " + this);
     }
 
@@ -1441,7 +1441,7 @@ public class ObjyObject
         if (TRACER_DEBUG.isEnabled())
         {
           TRACER_DEBUG.trace("-->> No process to delete() feature (" + i + ") -> feature:" + feature.getName()
-              + " - value:" + objects[i] + " ... nothing to do here.");
+          + " - value:" + objects[i] + " ... nothing to do here.");
         }
       }
     }

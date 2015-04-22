@@ -60,8 +60,8 @@ public class DawnEcoreModelWizard extends EcoreModelWizard
 
     initialObjectCreationPage = new EcoreModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(EcoreEditorPlugin.INSTANCE.getString("_UI_EcoreModelWizard_label"));
-    initialObjectCreationPage.setDescription(EcoreEditorPlugin.INSTANCE
-        .getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage
+        .setDescription(EcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 

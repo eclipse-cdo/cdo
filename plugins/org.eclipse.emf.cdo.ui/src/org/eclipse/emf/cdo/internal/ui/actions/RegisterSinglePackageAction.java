@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -36,8 +36,8 @@ public class RegisterSinglePackageAction extends RegisterPackagesAction
 
   public RegisterSinglePackageAction(IWorkbenchPage page, CDOSession session, String packageURI)
   {
-    super(page, packageURI,
-        Messages.getString("RegisterSinglePackageAction.0") + packageURI, getDescriptor(packageURI), session); //$NON-NLS-1$
+    super(page, packageURI, Messages.getString("RegisterSinglePackageAction.0") + packageURI, getDescriptor(packageURI), //$NON-NLS-1$
+        session);
     this.packageURI = packageURI;
   }
 

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -28,14 +28,14 @@ import org.gastro.inventory.Table;
  * <li>{@link org.gastro.inventory.impl.TableImpl#getRestaurant <em>Restaurant</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TableImpl extends StationImpl implements Table
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected TableImpl()
@@ -45,7 +45,7 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -56,7 +56,7 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getSeats()
@@ -66,7 +66,7 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setSeats(int newSeats)
@@ -76,7 +76,7 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Restaurant getRestaurant()
@@ -86,7 +86,7 @@ public class TableImpl extends StationImpl implements Table
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setRestaurant(Restaurant newRestaurant)

@@ -101,12 +101,12 @@ public class CDOPreferencePage extends OMPreferencePage
     repositoryName.setText(org.eclipse.emf.internal.cdo.bundle.OM.PREF_REPOSITORY_NAME.getValue());
     userName.setText(org.eclipse.emf.internal.cdo.bundle.OM.PREF_USER_NAME.getValue());
     connectorDescription.setText(org.eclipse.emf.internal.cdo.bundle.OM.PREF_CONNECTOR_DESCRIPTION.getValue());
-    referenceChunkSize.setValue(String
-        .valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue()));
-    preloadChunkSize.setValue(String.valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_REVISION_LOADING_CHUNK_SIZE
-        .getValue()));
-    invalidationNotifications.setSelection(org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATION
-        .getValue());
+    referenceChunkSize
+        .setValue(String.valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.getValue()));
+    preloadChunkSize
+        .setValue(String.valueOf(org.eclipse.emf.internal.cdo.bundle.OM.PREF_REVISION_LOADING_CHUNK_SIZE.getValue()));
+    invalidationNotifications
+        .setSelection(org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.getValue());
   }
 
   @Override
@@ -116,12 +116,12 @@ public class CDOPreferencePage extends OMPreferencePage
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_REPOSITORY_NAME.setValue(repositoryName.getText());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_USER_NAME.setValue(userName.getText());
     org.eclipse.emf.internal.cdo.bundle.OM.PREF_CONNECTOR_DESCRIPTION.setValue(connectorDescription.getText());
-    org.eclipse.emf.internal.cdo.bundle.OM.PREF_COLLECTION_LOADING_CHUNK_SIZE.setValue(Integer
-        .parseInt(referenceChunkSize.getValue()));
-    org.eclipse.emf.internal.cdo.bundle.OM.PREF_REVISION_LOADING_CHUNK_SIZE.setValue(Integer.parseInt(preloadChunkSize
-        .getValue()));
-    org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATION.setValue(invalidationNotifications
-        .getSelection());
+    org.eclipse.emf.internal.cdo.bundle.OM.PREF_COLLECTION_LOADING_CHUNK_SIZE
+        .setValue(Integer.parseInt(referenceChunkSize.getValue()));
+    org.eclipse.emf.internal.cdo.bundle.OM.PREF_REVISION_LOADING_CHUNK_SIZE
+        .setValue(Integer.parseInt(preloadChunkSize.getValue()));
+    org.eclipse.emf.internal.cdo.bundle.OM.PREF_ENABLE_INVALIDATION_NOTIFICATION
+        .setValue(invalidationNotifications.getSelection());
     return super.performOk();
   }
 }

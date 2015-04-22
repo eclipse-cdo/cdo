@@ -18,7 +18,7 @@ import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 /**
  * Sets the container information from the String (stored in the db) back into the CDORevision.
- * 
+ *
  * @see ContainerInfoConverter
  * @author Martin Taal
  */

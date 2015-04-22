@@ -87,8 +87,8 @@ public abstract class SecurityManagerFactory extends Factory
 
       if (securityManager instanceof InternalSecurityManager)
       {
-        ((InternalSecurityManager)securityManager).setRepository((InternalRepository)RepositoryFactory.get(container,
-            repositoryName));
+        ((InternalSecurityManager)securityManager)
+            .setRepository((InternalRepository)RepositoryFactory.get(container, repositoryName));
       }
 
       return securityManager;
@@ -137,8 +137,8 @@ public abstract class SecurityManagerFactory extends Factory
     @Override
     public ISecurityManager create(String realmPath) throws ProductCreationException
     {
-      OM.LOG
-          .warn("SecurityManagerFactory.Annotation is deprecated. As of 4.3 use SecurityManagerFactory.Default with a description like \"realmPath:annotation\"");
+      OM.LOG.warn(
+          "SecurityManagerFactory.Annotation is deprecated. As of 4.3 use SecurityManagerFactory.Default with a description like \"realmPath:annotation\"");
 
       InternalSecurityManager securityManager = (InternalSecurityManager)SecurityManagerUtil
           .createSecurityManager(realmPath);

@@ -36,7 +36,7 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -109,7 +109,9 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__NAME, oldName, name));
+    }
   }
 
   /**
@@ -130,7 +132,10 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
     ParameterPassing oldPassing = passing;
     passing = newPassing == null ? PASSING_EDEFAULT : newPassing;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__PASSING, oldPassing, passing));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_PARAMETER__PASSING, oldPassing, passing));
+    }
   }
 
   /**
@@ -213,7 +218,9 @@ public class MangoParameterImpl extends EObjectImpl implements MangoParameter
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

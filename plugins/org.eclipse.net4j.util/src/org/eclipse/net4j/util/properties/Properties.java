@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Contains a list of {@link Property properties}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.2
  */

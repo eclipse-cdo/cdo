@@ -343,8 +343,8 @@ public interface IDBDeltaVisitor
   }
 
   /**
-     * @author Eike Stepper
-     */
+   * @author Eike Stepper
+   */
   public static class Filter extends Default
   {
     public static final Policy DEFAULT_POLICY = new Policy().allowAll().freeze();

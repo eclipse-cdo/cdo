@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -43,7 +43,8 @@ public abstract class PerformanceTestSuite extends ConfigTestSuite
     return runsPerTestCase;
   }
 
-  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName, int runs)
+  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName,
+      int runs)
   {
     PerformanceRecord performanceRecord = new PerformanceRecord(scenario, testName, testCaseName, runs);
     performanceRecords.add(performanceRecord);

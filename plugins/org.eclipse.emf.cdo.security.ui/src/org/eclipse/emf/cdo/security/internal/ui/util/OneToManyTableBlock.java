@@ -70,10 +70,8 @@ public class OneToManyTableBlock extends OneToManyBlock
     {
       TableViewerColumn column = new TableViewerColumn(viewer, SWT.LEFT);
       column.getColumn().setText(columnTitles[i]);
-      layout.setColumnData(
-          column.getColumn(),
-          new ColumnWeightData(tableConfig.getColumnWeight(i), tableConfig.getColumnMinimumSize(i), tableConfig
-              .isColumnResizable(i)));
+      layout.setColumnData(column.getColumn(), new ColumnWeightData(tableConfig.getColumnWeight(i),
+          tableConfig.getColumnMinimumSize(i), tableConfig.isColumnResizable(i)));
 
       final int columnIndex = i;
 

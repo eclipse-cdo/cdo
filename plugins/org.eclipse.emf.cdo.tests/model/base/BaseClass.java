@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.CDOObject;
  * <li>{@link base.BaseClass#getCouter <em>Couter</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see base.BasePackage#getBaseClass()
  * @model
  * @extends CDOObject
@@ -34,7 +34,7 @@ public interface BaseClass extends CDOObject
    * If the meaning of the '<em>Couter</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Couter</em>' attribute.
    * @see #setCouter(int)
    * @see base.BasePackage#getBaseClass_Couter()
@@ -46,7 +46,7 @@ public interface BaseClass extends CDOObject
   /**
    * Sets the value of the '{@link base.BaseClass#getCouter <em>Couter</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Couter</em>' attribute.
    * @see #getCouter()
@@ -56,7 +56,7 @@ public interface BaseClass extends CDOObject
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @model
    * @generated
    */

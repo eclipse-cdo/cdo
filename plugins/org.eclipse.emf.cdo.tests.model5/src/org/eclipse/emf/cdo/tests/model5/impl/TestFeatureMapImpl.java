@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.FeatureMap;
  * <li>{@link org.eclipse.emf.cdo.tests.model5.impl.TestFeatureMapImpl#getPeople <em>People</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
@@ -88,7 +88,7 @@ public class TestFeatureMapImpl extends CDOObjectImpl implements TestFeatureMap
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public FeatureMap getPeople()

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -62,7 +62,7 @@ public interface PurchaseOrder extends Order
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Supplier</em>' reference.
    * @see #setSupplier(Supplier)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getPurchaseOrder_Supplier()

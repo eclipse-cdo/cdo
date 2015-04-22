@@ -107,8 +107,8 @@ public class CDOIDUserType implements UserType
       value = HibernateUtil.getInstance().getCDOIDHibernate((CDORevision)value);
     }
 
-    final String strValue = value instanceof String ? (String)value : HibernateUtil.getInstance().convertCDOIDToString(
-        (CDOID)value);
+    final String strValue = value instanceof String ? (String)value
+        : HibernateUtil.getInstance().convertCDOIDToString((CDOID)value);
     if (strValue == null)
     {
       statement.setNull(index, Types.VARCHAR);

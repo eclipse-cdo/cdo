@@ -20,7 +20,7 @@ import com.sun.javadoc.Tag;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Callout#getSnippet <em>Snippet</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getCallout()
  * @model
  * @generated
@@ -35,7 +35,7 @@ public interface Callout extends BodyElementContainer
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Snippet</em>' container reference.
    * @see #setSnippet(Snippet)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getCallout_Snippet()
@@ -48,7 +48,7 @@ public interface Callout extends BodyElementContainer
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Callout#getSnippet <em>Snippet</em>}'
    * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Snippet</em>' container reference.
    * @see #getSnippet()

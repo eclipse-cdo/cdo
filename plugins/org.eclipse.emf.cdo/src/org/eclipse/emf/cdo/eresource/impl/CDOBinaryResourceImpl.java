@@ -32,7 +32,7 @@ import java.io.InputStream;
  *
  * @generated
  */
-public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream> implements CDOBinaryResource
+public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream>implements CDOBinaryResource
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

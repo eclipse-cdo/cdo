@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.view.CDOQuery;
 /**
  * Represents the execution state of a {@link CDOQuery query} in the server towards a {@link IQueryHandler query
  * handler}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -34,7 +34,7 @@ public interface IQueryContext extends CDOBranchPoint
 
   /**
    * Adds the given object to the results of the associated query.
-   * 
+   *
    * @param object
    *          Support many primitives, CDOID and CDORevision. CDORevision are converted in CDOID and only CDOID are
    *          transfered to the client.

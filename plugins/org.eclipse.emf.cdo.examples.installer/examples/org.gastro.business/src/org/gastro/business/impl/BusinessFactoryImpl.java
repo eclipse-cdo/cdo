@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -77,13 +77,13 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
     switch (eClass.getClassifierID())
     {
     case BusinessPackage.BUSINESS_DAY:
-      return (EObject)createBusinessDay();
+      return createBusinessDay();
     case BusinessPackage.ORDER:
-      return (EObject)createOrder();
+      return createOrder();
     case BusinessPackage.ORDER_DETAIL:
-      return (EObject)createOrderDetail();
+      return createOrderDetail();
     case BusinessPackage.WAITER:
-      return (EObject)createWaiter();
+      return createWaiter();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -169,8 +169,10 @@ public class BusinessFactoryImpl extends EFactoryImpl implements BusinessFactory
   {
     OrderState result = OrderState.get(initialValue);
     if (result == null)
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-          + eDataType.getName() + "'");
+    {
+      throw new IllegalArgumentException(
+          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    }
     return result;
   }
 

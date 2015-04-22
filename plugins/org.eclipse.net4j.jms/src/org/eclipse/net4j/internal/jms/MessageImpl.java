@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -33,7 +33,7 @@ import java.util.Map.Entry;
 public class MessageImpl implements Message, Comparable<MessageImpl>
 {
   private static final String[] KEYWORDS = { "and", "between", "escape", "in", "is", "like", "false", "null", "or", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
-      "not", "true" }; //$NON-NLS-1$ //$NON-NLS-2$
+    "not", "true" }; //$NON-NLS-1$ //$NON-NLS-2$
 
   private Map<String, Object> properties = new HashMap<String, Object>();
 
@@ -310,8 +310,8 @@ public class MessageImpl implements Message, Comparable<MessageImpl>
     }
     else
     {
-      throw new MessageFormatException(MessageFormat.format(
-          Messages.getString("MessageImpl_11"), value.getClass().getName())); //$NON-NLS-1$ 
+      throw new MessageFormatException(
+          MessageFormat.format(Messages.getString("MessageImpl_11"), value.getClass().getName())); //$NON-NLS-1$
     }
   }
 

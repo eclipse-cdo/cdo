@@ -39,8 +39,8 @@ import org.eclipse.core.runtime.IAdaptable;
  * @apiviz.has {@link CDOBranchPoint} oneway - - base
  * @apiviz.composedOf {@link CDOBranch} - - subBranches
  */
-public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<CDOBranch>, Comparable<CDOBranch>,
-    IAdaptable
+public interface CDOBranch
+    extends CDOBranchPoint, CDONameProvider, IContainer<CDOBranch>, Comparable<CDOBranch>, IAdaptable
 {
   /**
    * The fixed ID of the {@link CDOBranchManager#getMainBranch() main branch}.

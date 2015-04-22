@@ -39,7 +39,7 @@ import junit.framework.TestCase;
  * <li>org.apache.commons.logging</li>
  * </ul>
  * The first two dependencies normally do not exist on a client side application.
- * 
+ *
  * @author Martin Taal
  */
 public class GenerateHBMTest extends TestCase

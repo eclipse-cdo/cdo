@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
@@ -104,6 +104,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void createDefaultEditPolicies()
   {
     super.createDefaultEditPolicies();
@@ -112,6 +113,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
     installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new NonResizableEditPolicy()
     {
 
+      @Override
       protected List createSelectionHandles()
       {
         List handles = new ArrayList();
@@ -120,11 +122,13 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
         return handles;
       }
 
+      @Override
       public Command getCommand(Request request)
       {
         return null;
       }
 
+      @Override
       public boolean understandsRequest(Request request)
       {
         return false;
@@ -207,6 +211,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected List getModelChildren()
   {
     return Collections.EMPTY_LIST;
@@ -215,6 +220,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   public IGraphicalEditPart getChildBySemanticHint(String semanticHint)
   {
     return null;
@@ -364,7 +370,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
     {
       parser = AcoreParserProvider.getParser(AcoreElementTypes.AInterface_2001, getParserElement(),
           AcoreVisualIDRegistry
-              .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceNameEditPart.VISUAL_ID));
+          .getType(org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts.AInterfaceNameEditPart.VISUAL_ID));
     }
     return parser;
   }
@@ -427,6 +433,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void performDirectEditRequest(Request request)
   {
     final Request theRequest = request;
@@ -439,13 +446,14 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
         {
           if (isActive() && isEditable())
           {
-            if (theRequest.getExtendedData().get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character)
+            if (theRequest.getExtendedData()
+                .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character)
             {
-              Character initialChar = (Character)theRequest.getExtendedData().get(
-                  RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
+              Character initialChar = (Character)theRequest.getExtendedData()
+                  .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
               performDirectEdit(initialChar.charValue());
             }
-            else if ((theRequest instanceof DirectEditRequest) && (getEditText().equals(getLabelText())))
+            else if (theRequest instanceof DirectEditRequest && getEditText().equals(getLabelText()))
             {
               DirectEditRequest editRequest = (DirectEditRequest)theRequest;
               performDirectEdit(editRequest.getLocation());
@@ -467,6 +475,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void refreshVisuals()
   {
     super.refreshVisuals();
@@ -523,13 +532,14 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void refreshFont()
   {
     FontStyle style = (FontStyle)getFontStyleOwnerView().getStyle(NotationPackage.eINSTANCE.getFontStyle());
     if (style != null)
     {
-      FontData fontData = new FontData(style.getFontName(), style.getFontHeight(), (style.isBold() ? SWT.BOLD
-          : SWT.NORMAL) | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
+      FontData fontData = new FontData(style.getFontName(), style.getFontHeight(),
+          (style.isBold() ? SWT.BOLD : SWT.NORMAL) | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
       setFont(fontData);
     }
   }
@@ -537,6 +547,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void setFontColor(Color color)
   {
     getFigure().setForegroundColor(color);
@@ -545,6 +556,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void addSemanticListeners()
   {
     if (getParser() instanceof ISemanticParser)
@@ -565,6 +577,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void removeSemanticListeners()
   {
     if (parserElements != null)
@@ -583,6 +596,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected AccessibleEditPart getAccessibleEditPart()
   {
     if (accessibleEP == null)
@@ -590,6 +604,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
       accessibleEP = new AccessibleGraphicalEditPart()
       {
 
+        @Override
         public void getName(AccessibleEvent e)
         {
           e.result = getLabelTextHelper(getFigure());
@@ -610,6 +625,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void addNotationalListeners()
   {
     super.addNotationalListeners();
@@ -619,6 +635,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void removeNotationalListeners()
   {
     super.removeNotationalListeners();
@@ -628,6 +645,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected void handleNotificationEvent(Notification event)
   {
     Object feature = event.getFeature();
@@ -677,6 +695,7 @@ public class AInterfaceNameEditPart extends CompartmentEditPart implements IText
   /**
    * @generated
    */
+  @Override
   protected IFigure createFigure()
   {
     // Parent should assign one using setLabel() method

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Supplier} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class SupplierItemProvider extends AddressableItemProvider
@@ -66,11 +66,11 @@ public class SupplierItemProvider extends AddressableItemProvider
    */
   protected void addPurchaseOrdersPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Supplier_purchaseOrders_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Supplier_purchaseOrders_feature", "_UI_Supplier_type"),
-        CompanyPackage.Literals.SUPPLIER__PURCHASE_ORDERS, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Supplier_purchaseOrders_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Supplier_purchaseOrders_feature", "_UI_Supplier_type"),
+            CompanyPackage.Literals.SUPPLIER__PURCHASE_ORDERS, true, false, true, null, null, null));
   }
 
   /**
@@ -80,12 +80,12 @@ public class SupplierItemProvider extends AddressableItemProvider
    */
   protected void addPreferredPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Supplier_preferred_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Supplier_preferred_feature", "_UI_Supplier_type"),
-        CompanyPackage.Literals.SUPPLIER__PREFERRED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Supplier_preferred_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Supplier_preferred_feature", "_UI_Supplier_type"),
+            CompanyPackage.Literals.SUPPLIER__PREFERRED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -118,8 +118,8 @@ public class SupplierItemProvider extends AddressableItemProvider
   public String getText(Object object)
   {
     String label = ((Supplier)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Supplier_type") : getString("_UI_Supplier_type") + " "
-        + label;
+    return label == null || label.length() == 0 ? getString("_UI_Supplier_type")
+        : getString("_UI_Supplier_type") + " " + label;
   }
 
   /**

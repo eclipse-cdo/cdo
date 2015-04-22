@@ -132,7 +132,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */
@@ -143,7 +143,7 @@ public class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.0 <!-- end-user-doc -->
    * @generated
    */

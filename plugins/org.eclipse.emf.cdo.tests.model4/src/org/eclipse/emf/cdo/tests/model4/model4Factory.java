@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -54,7 +54,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Single Non Contained Element</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Single Non Contained Element</em>'.
    * @generated
    */
@@ -121,7 +121,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Ref Single Non Contained NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Ref Single Non Contained NPL</em>'.
    * @generated
    */
@@ -146,7 +146,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Contained Element No Opposite</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Contained Element No Opposite</em>'.
    * @generated
    */
@@ -163,7 +163,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Gen Ref Single Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Gen Ref Single Non Contained</em>'.
    * @generated
    */
@@ -205,7 +205,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Impl Single Ref Non Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Impl Single Ref Non Container</em>'.
    * @generated
    */
@@ -223,7 +223,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Impl Multi Ref Non Container</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Impl Multi Ref Non Container</em>'.
    * @generated
    */
@@ -258,7 +258,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Impl Single Ref Container NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Impl Single Ref Container NPL</em>'.
    * @generated
    */
@@ -276,7 +276,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Impl Multi Ref Container NPL</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Impl Multi Ref Container NPL</em>'.
    * @generated
    */
@@ -302,7 +302,7 @@ public interface model4Factory extends EFactory
   /**
    * Returns a new object of class '<em>Gen Ref Multi NU Non Contained</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>Gen Ref Multi NU Non Contained</em>'.
    * @generated
    */

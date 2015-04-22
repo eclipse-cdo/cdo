@@ -84,8 +84,10 @@ public class ClassWithJavaClassAttributeImpl extends EObjectImpl implements Clas
     Class<?> oldJavaClass = javaClass;
     javaClass = newJavaClass;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.CLASS_WITH_JAVA_CLASS_ATTRIBUTE__JAVA_CLASS,
           oldJavaClass, javaClass));
+    }
   }
 
   /**
@@ -163,7 +165,9 @@ public class ClassWithJavaClassAttributeImpl extends EObjectImpl implements Clas
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (javaClass: ");

@@ -33,7 +33,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
  */
 public class Bugzilla_449806_Test extends AbstractCDOTest
 {
-
   private static final String RESOURCE_NAME = "test1.model1";
 
   private static final int NB_CATEGORY = 10;
@@ -82,5 +81,4 @@ public class Bugzilla_449806_Test extends AbstractCDOTest
     Company company = (Company)resource.getContents().get(0);
     assertEquals(NB_CATEGORY, company.getCategories().size());
   }
-
 }

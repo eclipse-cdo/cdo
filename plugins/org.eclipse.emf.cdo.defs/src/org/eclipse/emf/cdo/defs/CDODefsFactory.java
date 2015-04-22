@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -71,7 +71,7 @@ public interface CDODefsFactory extends EFactory
   /**
    * Returns a new object of class '<em>CDO Eager Package Registry Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>CDO Eager Package Registry Def</em>'.
    * @generated
    */
@@ -80,7 +80,7 @@ public interface CDODefsFactory extends EFactory
   /**
    * Returns a new object of class '<em>CDO Lazy Package Registry Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>CDO Lazy Package Registry Def</em>'.
    * @generated
    */
@@ -105,7 +105,7 @@ public interface CDODefsFactory extends EFactory
   /**
    * Returns a new object of class '<em>CDO Client Protocol Factory Def</em>'. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @return a new object of class '<em>CDO Client Protocol Factory Def</em>'.
    * @generated
    */

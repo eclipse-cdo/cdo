@@ -4,9 +4,9 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
- *     Martin Flüuege - initial API and implementation
+ *     Martin Flï¿½uege - initial API and implementation
  */
 package org.eclipse.emf.cdo.dawn.util.exceptions;
 

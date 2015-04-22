@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.provider;
 
@@ -30,15 +30,15 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AClass} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class AClassItemProvider extends ABasicClassItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AClassItemProvider(AdapterFactory adapterFactory)
@@ -48,7 +48,7 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -69,78 +69,79 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
 
   /**
    * This adds a property descriptor for the Sub Classes feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addSubClassesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_AClass_subClasses_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_AClass_subClasses_feature", "_UI_AClass_type"),
-        AcorePackage.Literals.ACLASS__SUB_CLASSES, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_AClass_subClasses_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_AClass_subClasses_feature", "_UI_AClass_type"),
+            AcorePackage.Literals.ACLASS__SUB_CLASSES, true, false, true, null, null, null));
   }
 
   /**
    * This adds a property descriptor for the Implemented Interfaces feature. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected void addImplementedInterfacesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_AClass_implementedInterfaces_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_AClass_implementedInterfaces_feature", "_UI_AClass_type"),
-        AcorePackage.Literals.ACLASS__IMPLEMENTED_INTERFACES, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_AClass_implementedInterfaces_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_AClass_implementedInterfaces_feature",
+                "_UI_AClass_type"),
+            AcorePackage.Literals.ACLASS__IMPLEMENTED_INTERFACES, true, false, true, null, null, null));
   }
 
   /**
    * This adds a property descriptor for the Associations feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addAssociationsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_AClass_associations_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_AClass_associations_feature", "_UI_AClass_type"),
-        AcorePackage.Literals.ACLASS__ASSOCIATIONS, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_AClass_associations_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_AClass_associations_feature", "_UI_AClass_type"),
+            AcorePackage.Literals.ACLASS__ASSOCIATIONS, true, false, true, null, null, null));
   }
 
   /**
    * This adds a property descriptor for the Compositions feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addCompositionsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_AClass_compositions_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_AClass_compositions_feature", "_UI_AClass_type"),
-        AcorePackage.Literals.ACLASS__COMPOSITIONS, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_AClass_compositions_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_AClass_compositions_feature", "_UI_AClass_type"),
+            AcorePackage.Literals.ACLASS__COMPOSITIONS, true, false, true, null, null, null));
   }
 
   /**
    * This adds a property descriptor for the Aggregations feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addAggregationsPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_AClass_aggregations_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_AClass_aggregations_feature", "_UI_AClass_type"),
-        AcorePackage.Literals.ACLASS__AGGREGATIONS, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_AClass_aggregations_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_AClass_aggregations_feature", "_UI_AClass_type"),
+            AcorePackage.Literals.ACLASS__AGGREGATIONS, true, false, true, null, null, null));
   }
 
   /**
    * This returns AClass.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -151,21 +152,21 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
   public String getText(Object object)
   {
     String label = ((AClass)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_AClass_type") : getString("_UI_AClass_type") + " "
-        + label;
+    return label == null || label.length() == 0 ? getString("_UI_AClass_type")
+        : getString("_UI_AClass_type") + " " + label;
   }
 
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -178,7 +179,7 @@ public class AClassItemProvider extends ABasicClassItemProvider implements IEdit
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

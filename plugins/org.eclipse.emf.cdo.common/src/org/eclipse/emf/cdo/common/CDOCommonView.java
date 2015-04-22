@@ -35,7 +35,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * @apiviz.has {@link CDOCommonView.Options}
  */
 public interface CDOCommonView extends CDOLockOwner, CDOBranchPoint, CDORevisionProvider, IOptionsContainer,
-    IPropertiesContainer, IAdaptable, Closeable
+IPropertiesContainer, IAdaptable, Closeable
 {
   public int getViewID();
 

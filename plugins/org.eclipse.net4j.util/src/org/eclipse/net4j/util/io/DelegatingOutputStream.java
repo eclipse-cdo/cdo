@@ -25,7 +25,7 @@ import java.io.OutputStream;
  * <b>Note:</b> The only difference to {@link java.io.FilterOutputStream} is that <code>DelegatingOutputStream</code>
  * does <b>not</b> override {@link #write(byte[])} or {@link #write(byte[], int, int)} but rather exposes the original
  * implementations of <code>InputStream</code> which call {@link #write(int)} instead of their delegate counterparts.
- * 
+ *
  * @author Eike Stepper
  */
 public class DelegatingOutputStream extends OutputStream
@@ -37,7 +37,7 @@ public class DelegatingOutputStream extends OutputStream
 
   /**
    * Creates an output stream filter built on top of the specified underlying output stream.
-   * 
+   *
    * @param out
    *          the underlying output stream to be assigned to the field <tt>this.out</tt> for later use, or
    *          <code>null</code> if this instance is to be created without an underlying stream.
@@ -59,7 +59,7 @@ public class DelegatingOutputStream extends OutputStream
    * underlying output stream, that is, it performs <tt>out.write(b)</tt>.
    * <p>
    * Implements the abstract <tt>write</tt> method of <tt>OutputStream</tt>.
-   * 
+   *
    * @param b
    *          the <code>byte</code>.
    * @exception IOException
@@ -76,7 +76,7 @@ public class DelegatingOutputStream extends OutputStream
    * <p>
    * The <code>flush</code> method of <code>DelegatingOutputStream</code> calls the <code>flush</code> method of its
    * underlying output stream.
-   * 
+   *
    * @exception IOException
    *              if an I/O error occurs.
    * @see DelegatingOutputStream#out
@@ -92,7 +92,7 @@ public class DelegatingOutputStream extends OutputStream
    * <p>
    * The <code>close</code> method of <code>DelegatingOutputStream</code> calls its <code>flush</code> method, and then
    * calls the <code>close</code> method of its underlying output stream.
-   * 
+   *
    * @exception IOException
    *              if an I/O error occurs.
    * @see DelegatingOutputStream#flush()

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -24,14 +24,14 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass testDefEClass = null;
@@ -43,7 +43,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.net4j.util.tests.defs.TestDefsPackage#eNS_URI
    * @see #init()
@@ -56,7 +56,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -67,7 +67,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
    * This method is used to initialize {@link TestDefsPackage#eINSTANCE} when that field is accessed. Clients should not
    * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -81,8 +81,9 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
     }
 
     // Obtain or create and register package
-    TestDefsPackageImpl theTestDefsPackage = (TestDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TestDefsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new TestDefsPackageImpl());
+    TestDefsPackageImpl theTestDefsPackage = (TestDefsPackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof TestDefsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new TestDefsPackageImpl());
 
     isInited = true;
 
@@ -105,7 +106,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getTestDef()
@@ -115,7 +116,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getTestDef_References()
@@ -125,7 +126,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getTestDef_Attribute()
@@ -135,7 +136,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public TestDefsFactory getTestDefsFactory()
@@ -145,7 +146,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -153,7 +154,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -172,7 +173,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -180,7 +181,7 @@ public class TestDefsPackageImpl extends EPackageImpl implements TestDefsPackage
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

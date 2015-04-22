@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 
 /**
  * This test suite should be executed as JUnit Plug-in test.
- * 
+ *
  * @author Martin Fluegge
  */
 public class AllTestsDawnUI extends AllTests

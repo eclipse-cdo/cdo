@@ -222,8 +222,9 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
     else
     {
       selectRadio(timeRadio);
-      String text = CDOCommonUtil.formatTimeStamp(timeStamp == CDOBranchPoint.INVALID_DATE
-          || timeStamp == CDOBranchPoint.UNSPECIFIED_DATE ? System.currentTimeMillis() : timeStamp);
+      String text = CDOCommonUtil
+          .formatTimeStamp(timeStamp == CDOBranchPoint.INVALID_DATE || timeStamp == CDOBranchPoint.UNSPECIFIED_DATE
+              ? System.currentTimeMillis() : timeStamp);
       if (!timeText.getText().equals(text))
       {
         timeText.setText(text);

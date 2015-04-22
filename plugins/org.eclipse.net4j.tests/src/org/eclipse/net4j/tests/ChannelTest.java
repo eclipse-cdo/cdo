@@ -139,22 +139,22 @@ public abstract class ChannelTest extends AbstractProtocolTest
     for (int i = 0; i < THREADS; i++)
     {
       threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor) //$NON-NLS-1$
+      {
+        @Override
+        protected void doRun() throws Exception
+        {
+          for (int i = 0; i < 100; i++)
           {
-            @Override
-            protected void doRun() throws Exception
-            {
-              for (int i = 0; i < 100; i++)
-              {
-                IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
-                TestSignalProtocol protocol = openTestSignalProtocol();
-                assertActive(protocol);
+            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
+            TestSignalProtocol protocol = openTestSignalProtocol();
+            assertActive(protocol);
 
-                protocol.close();
-                assertInactive(protocol);
-                heartBeat();
-              }
-            }
-          });
+            protocol.close();
+            assertInactive(protocol);
+            heartBeat();
+          }
+        }
+      });
     }
 
     disableConsole();
@@ -169,28 +169,28 @@ public abstract class ChannelTest extends AbstractProtocolTest
     for (int i = 0; i < THREADS; i++)
     {
       threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor) //$NON-NLS-1$
+      {
+        @Override
+        protected void doRun() throws Exception
+        {
+          for (int i = 0; i < 100; i++)
           {
-            @Override
-            protected void doRun() throws Exception
-            {
-              for (int i = 0; i < 100; i++)
-              {
-                IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
-                TestSignalProtocol protocol = openTestSignalProtocol();
-                assertActive(protocol);
-                heartBeat();
+            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i); //$NON-NLS-1$
+            TestSignalProtocol protocol = openTestSignalProtocol();
+            assertActive(protocol);
+            heartBeat();
 
-                byte[] data = TinyData.getBytes();
-                byte[] result = new ArrayRequest(protocol, data).send();
-                assertEquals(true, Arrays.equals(data, result));
-                heartBeat();
+            byte[] data = TinyData.getBytes();
+            byte[] result = new ArrayRequest(protocol, data).send();
+            assertEquals(true, Arrays.equals(data, result));
+            heartBeat();
 
-                protocol.close();
-                assertInactive(protocol);
-                heartBeat();
-              }
-            }
-          });
+            protocol.close();
+            assertInactive(protocol);
+            heartBeat();
+          }
+        }
+      });
     }
 
     disableConsole();
@@ -204,33 +204,33 @@ public abstract class ChannelTest extends AbstractProtocolTest
     for (int i = 0; i < THREADS; i++)
     {
       threadMonitor.addThread(new MonitoredThread("TEST-THREAD-" + i, threadMonitor) //$NON-NLS-1$
+      {
+        @Override
+        protected void doRun() throws Exception
+        {
+          for (int i = 0; i < 10; i++)
           {
-            @Override
-            protected void doRun() throws Exception
+            long start = System.currentTimeMillis();
+            TestSignalProtocol protocol = openTestSignalProtocol();
+            assertActive(protocol);
+
+            for (int j = 0; j < 50; j++)
             {
-              for (int i = 0; i < 10; i++)
-              {
-                long start = System.currentTimeMillis();
-                TestSignalProtocol protocol = openTestSignalProtocol();
-                assertActive(protocol);
+              byte[] data = TinyData.getBytes();
+              byte[] result = new ArrayRequest(protocol, data).send();
+              assertEquals(true, Arrays.equals(data, result));
 
-                for (int j = 0; j < 50; j++)
-                {
-                  byte[] data = TinyData.getBytes();
-                  byte[] result = new ArrayRequest(protocol, data).send();
-                  assertEquals(true, Arrays.equals(data, result));
-
-                  heartBeat();
-                  ConcurrencyUtil.sleep(10L);
-                }
-
-                protocol.close();
-                assertInactive(protocol);
-                long stop = System.currentTimeMillis();
-                IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i + " (" + (stop - start) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-              }
+              heartBeat();
+              ConcurrencyUtil.sleep(10L);
             }
-          });
+
+            protocol.close();
+            assertInactive(protocol);
+            long stop = System.currentTimeMillis();
+            IOUtil.OUT().println(Thread.currentThread().getName() + ": " + i + " (" + (stop - start) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          }
+        }
+      });
     }
 
     disableConsole();

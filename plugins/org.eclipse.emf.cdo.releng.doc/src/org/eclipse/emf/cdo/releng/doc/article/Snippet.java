@@ -21,7 +21,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Snippet#getFormatter <em>Formatter</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getSnippet()
  * @model
  * @generated
@@ -37,7 +37,7 @@ public interface Snippet extends EmbeddableElement
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Callouts</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getSnippet_Callouts()
    * @see org.eclipse.emf.cdo.releng.doc.article.Callout#getSnippet
@@ -54,7 +54,7 @@ public interface Snippet extends EmbeddableElement
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Formatter</em>' containment reference.
    * @see #setFormatter(Formatter)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getSnippet_Formatter()
@@ -67,7 +67,7 @@ public interface Snippet extends EmbeddableElement
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Snippet#getFormatter <em>Formatter</em>}'
    * containment reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Formatter</em>' containment reference.
    * @see #getFormatter()

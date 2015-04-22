@@ -46,8 +46,8 @@ import java.util.List;
  * @generated
  */
 public class CDOResourceItemProvider extends CDOResourceLeafItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -87,13 +87,12 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
    */
   protected void addURIPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_CDOResource_uRI_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_uRI_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        EresourcePackage.Literals.CDO_RESOURCE__URI, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_CDOResource_uRI_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_uRI_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            EresourcePackage.Literals.CDO_RESOURCE__URI, false, false, false,
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -103,13 +102,12 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
    */
   protected void addModifiedPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_CDOResource_modified_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_modified_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, false, false, false,
-        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_CDOResource_modified_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_modified_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            EresourcePackage.Literals.CDO_RESOURCE__MODIFIED, false, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -119,13 +117,12 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
    */
   protected void addLoadedPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_CDOResource_loaded_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_loaded_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        EresourcePackage.Literals.CDO_RESOURCE__LOADED, false, false, false,
-        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_CDOResource_loaded_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_loaded_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            EresourcePackage.Literals.CDO_RESOURCE__LOADED, false, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -137,12 +134,10 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
   protected void addTrackingModificationPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(
-            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_CDOResource_trackingModification_feature"), //$NON-NLS-1$
-            getString(
-                "_UI_PropertyDescriptor_description", "_UI_CDOResource_trackingModification_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(), getString("_UI_CDOResource_trackingModification_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_trackingModification_feature", //$NON-NLS-1$ //$NON-NLS-2$
+                "_UI_CDOResource_type"), //$NON-NLS-1$
             EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
@@ -154,13 +149,13 @@ public class CDOResourceItemProvider extends CDOResourceLeafItemProvider impleme
    */
   protected void addTimeStampPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_CDOResource_timeStamp_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", "_UI_CDOResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true, false, false,
-        ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_CDOResource_timeStamp_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", //$NON-NLS-1$ //$NON-NLS-2$
+                "_UI_CDOResource_type"), //$NON-NLS-1$
+            EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true, false, false,
+            ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**

@@ -14,7 +14,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 /**
  * Stores system related information, is used to keep track that CDO is started for the first time. There should only be
  * one SystemInformation object in the database.
- * 
+ *
  * @author Martin Taal
  */
 public class SystemInformation

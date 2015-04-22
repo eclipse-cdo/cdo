@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
@@ -60,6 +60,7 @@ public class AcoreNavigatorActionProvider extends CommonActionProvider
   /**
    * @generated
    */
+  @Override
   public void init(ICommonActionExtensionSite aSite)
   {
     super.init(aSite);
@@ -85,6 +86,7 @@ public class AcoreNavigatorActionProvider extends CommonActionProvider
   /**
    * @generated
    */
+  @Override
   public void fillActionBars(IActionBars actionBars)
   {
     if (!myContribute)
@@ -102,6 +104,7 @@ public class AcoreNavigatorActionProvider extends CommonActionProvider
   /**
    * @generated
    */
+  @Override
   public void fillContextMenu(IMenuManager menu)
   {
   }
@@ -163,6 +166,7 @@ public class AcoreNavigatorActionProvider extends CommonActionProvider
     /**
      * @generated
      */
+    @Override
     public void run()
     {
       if (myDiagram == null || myDiagram.eResource() == null)

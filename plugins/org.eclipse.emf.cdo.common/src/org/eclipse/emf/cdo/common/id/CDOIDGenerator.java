@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * Generates {@link CDOID IDs}.
- * 
+ *
  * @author Eike Stepper
  * @since 4.1
  */
@@ -59,7 +59,7 @@ public interface CDOIDGenerator
 
   /**
    * Generates a {@link CDOID}.
-   * 
+   *
    * @param object
    *          the object to generate a new CDOID for if available, <code>null</code> otherwise.
    */

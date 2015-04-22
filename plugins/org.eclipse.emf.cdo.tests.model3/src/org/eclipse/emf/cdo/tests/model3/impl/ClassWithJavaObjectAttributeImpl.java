@@ -71,7 +71,7 @@ public class ClassWithJavaObjectAttributeImpl extends CDOObjectImpl implements C
    */
   public Object getJavaObject()
   {
-    return (Object)eGet(Model3Package.eINSTANCE.getClassWithJavaObjectAttribute_JavaObject(), true);
+    return eGet(Model3Package.eINSTANCE.getClassWithJavaObjectAttribute_JavaObject(), true);
   }
 
   /**

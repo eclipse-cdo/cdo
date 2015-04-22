@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -82,6 +82,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   protected String getContextID()
   {
     return CONTEXT_ID;
@@ -90,6 +91,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   protected PaletteRoot createPaletteRoot(PaletteRoot existingPaletteRoot)
   {
     PaletteRoot root = super.createPaletteRoot(existingPaletteRoot);
@@ -100,6 +102,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   protected PreferencesHint getPreferencesHint()
   {
     return AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT;
@@ -108,6 +111,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   public String getContributorId()
   {
     return AcoreDiagramEditorPlugin.ID;
@@ -116,6 +120,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   public Object getAdapter(Class type)
   {
     if (type == IShowInTargetList.class)
@@ -134,6 +139,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   protected IDocumentProvider getDocumentProvider(IEditorInput input)
   {
     if (input instanceof IFileEditorInput || input instanceof URIEditorInput)
@@ -146,6 +152,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   public TransactionalEditingDomain getEditingDomain()
   {
     IDocument document = getEditorInput() != null ? getDocumentProvider().getDocument(getEditorInput()) : null;
@@ -159,6 +166,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   protected void setDocumentProvider(IEditorInput input)
   {
     if (input instanceof IFileEditorInput || input instanceof URIEditorInput)
@@ -182,6 +190,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   public boolean isSaveAsAllowed()
   {
     return true;
@@ -190,6 +199,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   public void doSaveAs()
   {
     performSaveAs(new NullProgressMonitor());
@@ -198,6 +208,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   protected void performSaveAs(IProgressMonitor progressMonitor)
   {
     Shell shell = getSite().getShell();
@@ -288,6 +299,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   public ShowInContext getShowInContext()
   {
     return new ShowInContext(getEditorInput(), getNavigatorSelection());
@@ -316,6 +328,7 @@ public class AcoreDiagramEditor extends DiagramDocumentEditor implements IGotoMa
   /**
    * @generated
    */
+  @Override
   protected void configureGraphicalViewer()
   {
     super.configureGraphicalViewer();

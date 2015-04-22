@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -50,7 +50,7 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.ui.defs.CDOUIDefsPackage#eNS_URI
    * @see #init()
@@ -69,7 +69,7 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link CDOUIDefsPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc
@@ -82,11 +82,14 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
   public static CDOUIDefsPackage init()
   {
     if (isInited)
+    {
       return (CDOUIDefsPackage)EPackage.Registry.INSTANCE.getEPackage(CDOUIDefsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
-    CDOUIDefsPackageImpl theCDOUIDefsPackage = (CDOUIDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CDOUIDefsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new CDOUIDefsPackageImpl());
+    CDOUIDefsPackageImpl theCDOUIDefsPackage = (CDOUIDefsPackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof CDOUIDefsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new CDOUIDefsPackageImpl());
 
     isInited = true;
 
@@ -176,7 +179,9 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -203,7 +208,9 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -222,7 +229,7 @@ public class CDOUIDefsPackageImpl extends EPackageImpl implements CDOUIDefsPacka
 
     // Add supertypes to classes
     editorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    cdoEditorDefEClass.getESuperTypes().add(this.getEditorDef());
+    cdoEditorDefEClass.getESuperTypes().add(getEditorDef());
 
     // Initialize classes and features; add operations and parameters
     initEClass(editorDefEClass, EditorDef.class, "EditorDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

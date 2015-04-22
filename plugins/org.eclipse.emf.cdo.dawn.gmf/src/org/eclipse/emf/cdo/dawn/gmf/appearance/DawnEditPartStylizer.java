@@ -19,7 +19,7 @@ import org.eclipse.gef.EditPart;
  * conflicted and locked. By implementing an own DawnStylizer you can influence the appearance of the three states for
  * your EditPart and it's related models. New stylizer can be registered to Dawn using the
  * <b>org.eclipse.emf.cdo.dawn.editpartstylizers</b> extension point.
- * 
+ *
  * @author Martin Fluegge
  * @since 2.0
  */

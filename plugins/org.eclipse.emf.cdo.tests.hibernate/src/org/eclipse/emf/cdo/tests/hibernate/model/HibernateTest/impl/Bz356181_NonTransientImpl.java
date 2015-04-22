@@ -80,8 +80,10 @@ public class Bz356181_NonTransientImpl extends EObjectImpl implements Bz356181_N
       if (main != oldMain)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ356181_NON_TRANSIENT__MAIN,
               oldMain, main));
+        }
       }
     }
     return main;
@@ -107,8 +109,10 @@ public class Bz356181_NonTransientImpl extends EObjectImpl implements Bz356181_N
     Bz356181_Main oldMain = main;
     main = newMain;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_NON_TRANSIENT__MAIN, oldMain,
           main));
+    }
   }
 
   /**
@@ -123,7 +127,9 @@ public class Bz356181_NonTransientImpl extends EObjectImpl implements Bz356181_N
     {
     case HibernateTestPackage.BZ356181_NON_TRANSIENT__MAIN:
       if (resolve)
+      {
         return getMain();
+      }
       return basicGetMain();
     }
     return super.eGet(featureID, resolve, coreType);

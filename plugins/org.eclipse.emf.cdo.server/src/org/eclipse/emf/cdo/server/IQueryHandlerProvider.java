@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.view.CDOQuery;
 /**
  * Provides the consumer with {@link IQueryHandler query handlers} that are capable of executing {@link CDOQuery
  * queries} represented by specific {@link CDOQueryInfo query infos}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @apiviz.uses {@link IQueryHandler} - - provides

@@ -121,7 +121,8 @@ public abstract class EmbeddableElementImpl extends EObjectImpl implements Embed
    */
   public NotificationChain basicSetDocumentation(Documentation newDocumentation, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newDocumentation, ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION, msgs);
+    msgs = eBasicSetContainer((InternalEObject)newDocumentation, ArticlePackage.EMBEDDABLE_ELEMENT__DOCUMENTATION,
+        msgs);
     return msgs;
   }
 

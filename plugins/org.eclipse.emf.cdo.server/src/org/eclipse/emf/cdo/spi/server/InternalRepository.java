@@ -65,7 +65,7 @@ import java.util.concurrent.Semaphore;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalRepository extends IRepository, PackageProcessor, PackageLoader, BranchLoader3,
-    RevisionLoader2, CommitInfoLoader, CDORevisionUnchunker
+RevisionLoader2, CommitInfoLoader, CDORevisionUnchunker
 {
   public void setName(String name);
 

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
@@ -47,6 +47,7 @@ public class AInterfaceAOperationInterfaceCompartmentEditPart extends ListCompar
   /**
    * @generated
    */
+  @Override
   protected boolean hasModelChildrenChanged(Notification evt)
   {
     return false;
@@ -55,6 +56,7 @@ public class AInterfaceAOperationInterfaceCompartmentEditPart extends ListCompar
   /**
    * @generated
    */
+  @Override
   public String getCompartmentName()
   {
     return Messages.AInterfaceAOperationInterfaceCompartmentEditPart_title;
@@ -63,6 +65,7 @@ public class AInterfaceAOperationInterfaceCompartmentEditPart extends ListCompar
   /**
    * @generated
    */
+  @Override
   public IFigure createFigure()
   {
     ResizableCompartmentFigure result = (ResizableCompartmentFigure)super.createFigure();
@@ -73,6 +76,7 @@ public class AInterfaceAOperationInterfaceCompartmentEditPart extends ListCompar
   /**
    * @generated
    */
+  @Override
   protected void createDefaultEditPolicies()
   {
     super.createDefaultEditPolicies();
@@ -80,12 +84,14 @@ public class AInterfaceAOperationInterfaceCompartmentEditPart extends ListCompar
         new AInterfaceAOperationInterfaceCompartmentItemSemanticEditPolicy());
     installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
     installEditPolicy(EditPolicyRoles.DRAG_DROP_ROLE, new DragDropEditPolicy());
-    installEditPolicy(EditPolicyRoles.CANONICAL_ROLE, new AInterfaceAOperationInterfaceCompartmentCanonicalEditPolicy());
+    installEditPolicy(EditPolicyRoles.CANONICAL_ROLE,
+        new AInterfaceAOperationInterfaceCompartmentCanonicalEditPolicy());
   }
 
   /**
    * @generated
    */
+  @Override
   protected void setRatio(Double ratio)
   {
     // nothing to do -- parent layout does not accept Double constraints as ratio

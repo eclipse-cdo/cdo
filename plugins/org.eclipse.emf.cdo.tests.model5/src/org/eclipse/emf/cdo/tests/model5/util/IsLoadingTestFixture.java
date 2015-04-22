@@ -13,12 +13,12 @@ package org.eclipse.emf.cdo.tests.model5.util;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 
+import org.junit.Assert;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
-import org.junit.Assert;
 
 /**
  * Test fixture for the CDO resource "is loading" tests. Bug 393164.

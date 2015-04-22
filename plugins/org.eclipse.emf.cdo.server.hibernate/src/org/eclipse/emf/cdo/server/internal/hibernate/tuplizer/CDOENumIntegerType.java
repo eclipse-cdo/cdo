@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 /**
  * Implements the EMF UserType for an Enum in a dynamic model, for an integer field.
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class CDOENumIntegerType extends CDOENumStringType

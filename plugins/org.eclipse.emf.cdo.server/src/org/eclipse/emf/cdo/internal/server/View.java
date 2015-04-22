@@ -48,7 +48,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   private final int viewID;
 
   private final int sessionID; // Needed here so we can compute the hashCode even after session becomes null due to
-                               // deactivation!
+  // deactivation!
 
   private CDOBranchPoint branchPoint;
 
@@ -168,8 +168,8 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
   private List<CDORevision> getRevisions(List<CDOID> ids)
   {
-    return repository.getRevisionManager().getRevisions(ids, branchPoint, CDORevision.UNCHUNKED,
-        CDORevision.DEPTH_NONE, true);
+    return repository.getRevisionManager().getRevisions(ids, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
+        true);
   }
 
   public void setBranchPoint(CDOBranchPoint branchPoint)

@@ -207,10 +207,8 @@ public class CDOViewImpl extends AbstractCDOView
     long creationTimeStamp = session.getRepositoryInfo().getCreationTime();
     if (timeStamp != UNSPECIFIED_DATE && timeStamp < creationTimeStamp)
     {
-      throw new IllegalArgumentException(
-          MessageFormat
-              .format(
-                  "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format("timeStamp ({0}) < repository creation time ({1})", //$NON-NLS-1$
+          CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp)));
     }
 
     CDOBranchPoint oldBranchPoint = CDOBranchUtil.copyBranchPoint(getBranchPoint());
@@ -440,7 +438,8 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  private CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp, CDOLockState[] newLockStates)
+  private CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp,
+      CDOLockState[] newLockStates)
   {
     return CDOLockUtil.createLockChangeInfo(timestamp, this, getBranch(), op, type, newLockStates);
   }
@@ -853,9 +852,8 @@ public class CDOViewImpl extends AbstractCDOView
    * Must not by synchronized on the view!
    */
   @Deprecated
-  public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
+  public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
   {
     invalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, async, true);
   }
@@ -863,9 +861,9 @@ public class CDOViewImpl extends AbstractCDOView
   /*
    * Must not by synchronized on the view!
    */
-  public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime,
-      List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
-      Map<CDOID, InternalCDORevision> oldRevisions, boolean async, boolean clearResourcePathCache)
+  public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
+      boolean clearResourcePathCache)
   {
     if (async)
     {
@@ -2420,8 +2418,8 @@ public class CDOViewImpl extends AbstractCDOView
     /**
      * @author Eike Stepper
      */
-    private final class ChangeSubscriptionPoliciesEventImpl extends OptionsEvent implements
-        ChangeSubscriptionPoliciesEvent
+    private final class ChangeSubscriptionPoliciesEventImpl extends OptionsEvent
+        implements ChangeSubscriptionPoliciesEvent
     {
       private static final long serialVersionUID = 1L;
 
@@ -2520,8 +2518,8 @@ public class CDOViewImpl extends AbstractCDOView
     /**
      * @author Eike Stepper
      */
-    private final class RevisionPrefetchingPolicyEventImpl extends OptionsEvent implements
-        RevisionPrefetchingPolicyEvent
+    private final class RevisionPrefetchingPolicyEventImpl extends OptionsEvent
+        implements RevisionPrefetchingPolicyEvent
     {
       private static final long serialVersionUID = 1L;
 

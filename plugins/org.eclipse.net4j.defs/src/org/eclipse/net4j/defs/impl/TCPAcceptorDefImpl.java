@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <li>{@link org.eclipse.net4j.net4jdefs.impl.TCPAcceptorDefImpl#getTcpSelectorDef <em>Tcp Selector Def</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDef
@@ -43,7 +43,7 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
   /**
    * The default value of the '{@link #getHost() <em>Host</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getHost()
    * @generated
    * @ordered
@@ -62,7 +62,7 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
   /**
    * The default value of the '{@link #getPort() <em>Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getPort()
    * @generated
    * @ordered
@@ -125,7 +125,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     String oldHost = host;
     host = newHost;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__HOST, oldHost, host));
+    }
   }
 
   /**
@@ -146,7 +148,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     int oldPort = port;
     port = newPort;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__PORT, oldPort, port));
+    }
   }
 
   /**
@@ -162,8 +166,10 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
       if (tcpSelectorDef != oldTcpSelectorDef)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE,
-              Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF, oldTcpSelectorDef, tcpSelectorDef));
+        {
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF,
+              oldTcpSelectorDef, tcpSelectorDef));
+        }
       }
     }
     return tcpSelectorDef;
@@ -187,8 +193,10 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
     TCPSelectorDef oldTcpSelectorDef = tcpSelectorDef;
     tcpSelectorDef = newTcpSelectorDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF,
           oldTcpSelectorDef, tcpSelectorDef));
+    }
   }
 
   /**
@@ -206,7 +214,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
       return getPort();
     case Net4jDefsPackage.TCP_ACCEPTOR_DEF__TCP_SELECTOR_DEF:
       if (resolve)
+      {
         return getTcpSelectorDef();
+      }
       return basicGetTcpSelectorDef();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -283,7 +293,9 @@ public class TCPAcceptorDefImpl extends AcceptorDefImpl implements TCPAcceptorDe
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (host: ");

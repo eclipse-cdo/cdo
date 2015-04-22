@@ -39,9 +39,9 @@ public abstract class CDOPropertyHandler
     feature = tuplizer.getEClass().getEStructuralFeature(propertyName);
     if (getTracer().isEnabled())
     {
-      getTracer().trace(
-          "Created " + this.getClass().getName() + " for eClass/feature: " + tuplizer.getEClass().getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-              + propertyName);
+      getTracer()
+          .trace("Created " + this.getClass().getName() + " for eClass/feature: " + tuplizer.getEClass().getName() + "." //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+          + propertyName);
     }
 
     if (feature == null)

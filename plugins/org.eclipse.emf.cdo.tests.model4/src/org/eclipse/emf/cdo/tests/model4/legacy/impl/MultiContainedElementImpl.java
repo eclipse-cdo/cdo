@@ -40,7 +40,7 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -93,7 +93,10 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_CONTAINED_ELEMENT__NAME, oldName, name));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, model4Package.MULTI_CONTAINED_ELEMENT__NAME, oldName, name));
+    }
   }
 
   /**
@@ -103,7 +106,9 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
   public RefMultiContained getParent()
   {
     if (eContainerFeatureID() != model4Package.MULTI_CONTAINED_ELEMENT__PARENT)
+    {
       return null;
+    }
     return (RefMultiContained)eContainer();
   }
 
@@ -124,23 +129,33 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
   public void setParent(RefMultiContained newParent)
   {
     if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != model4Package.MULTI_CONTAINED_ELEMENT__PARENT && newParent != null))
+        || eContainerFeatureID() != model4Package.MULTI_CONTAINED_ELEMENT__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_MULTI_CONTAINED__ELEMENTS,
             RefMultiContained.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_CONTAINED_ELEMENT__PARENT, newParent,
           newParent));
+    }
   }
 
   /**
@@ -154,7 +169,9 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
     {
     case model4Package.MULTI_CONTAINED_ELEMENT__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((RefMultiContained)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -271,7 +288,9 @@ public class MultiContainedElementImpl extends EObjectImpl implements MultiConta
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

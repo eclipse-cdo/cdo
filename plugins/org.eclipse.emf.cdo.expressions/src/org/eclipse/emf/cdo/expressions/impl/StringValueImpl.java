@@ -80,7 +80,8 @@ public class StringValueImpl extends ValueImpl implements StringValue
    */
   public void setLiteral(String newLiteral)
   {
-    eDynamicSet(ExpressionsPackage.STRING_VALUE__LITERAL, ExpressionsPackage.Literals.STRING_VALUE__LITERAL, newLiteral);
+    eDynamicSet(ExpressionsPackage.STRING_VALUE__LITERAL, ExpressionsPackage.Literals.STRING_VALUE__LITERAL,
+        newLiteral);
   }
 
   /**

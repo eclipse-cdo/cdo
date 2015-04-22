@@ -30,7 +30,7 @@ public class DigestWriter extends FilterWriter
 
   /**
    * Creates a digest writer, using the specified writer and message digest.
-   * 
+   *
    * @param writer
    *          the writer.
    * @param digest
@@ -44,7 +44,7 @@ public class DigestWriter extends FilterWriter
 
   /**
    * Returns the message digest associated with this writer.
-   * 
+   *
    * @return the message digest associated with this writer.
    * @see #setMessageDigest(java.security.MessageDigest)
    */
@@ -55,7 +55,7 @@ public class DigestWriter extends FilterWriter
 
   /**
    * Associates the specified message digest with this writer.
-   * 
+   *
    * @param digest
    *          the message digest to be associated with this writer.
    * @see #getMessageDigest()
@@ -115,7 +115,7 @@ public class DigestWriter extends FilterWriter
   /**
    * Turns the digest function on or off. The default is on. When it is on, a call to one of the <code>write</code>
    * methods results in an update on the message digest. But when it is off, the message digest is not updated.
-   * 
+   *
    * @param on
    *          true to turn the digest function on, false to turn it off.
    */

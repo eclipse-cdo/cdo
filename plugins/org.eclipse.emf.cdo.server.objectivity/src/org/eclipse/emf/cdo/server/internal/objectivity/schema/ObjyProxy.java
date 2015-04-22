@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -61,7 +61,7 @@ public class ObjyProxy
           ObjyProxy.uriAttributeName, // Attribute name
           1, // # elements in fixed-size array
           "ooUtf8String" // name of embedded class
-      );
+          );
 
       // top_mod.propose_new_class(propClass);
       if (!inProcess)
@@ -80,8 +80,8 @@ public class ObjyProxy
   // factory.
   public static ObjyProxy createObject(ooId nearObject)
   {
-    Class_Object newClassObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyProxy.className)
-        .getASClass(), nearObject, false);
+    Class_Object newClassObject = Class_Object
+        .new_persistent_object(ObjySchema.getObjyClass(ObjyProxy.className).getASClass(), nearObject, false);
     ObjyProxy proxyObject = new ObjyProxy(newClassObject);
     return proxyObject;
   }

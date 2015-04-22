@@ -29,7 +29,7 @@ import java.util.Map;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Java Formatter</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class JavaFormatterImpl extends FormatterImpl implements JavaFormatter
@@ -54,7 +54,7 @@ public class JavaFormatterImpl extends FormatterImpl implements JavaFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected JavaFormatterImpl()
@@ -64,7 +64,7 @@ public class JavaFormatterImpl extends FormatterImpl implements JavaFormatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

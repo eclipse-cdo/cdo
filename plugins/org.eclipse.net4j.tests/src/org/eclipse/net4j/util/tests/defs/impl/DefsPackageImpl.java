@@ -24,14 +24,14 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass testDefEClass;
@@ -43,7 +43,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.net4j.util.tests.defs.DefsPackage#eNS_URI
    * @see #init()
@@ -56,7 +56,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -73,7 +73,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
    * <p>
    * Invocation of this method will not affect any packages that have already been initialized. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -87,8 +87,9 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
     }
 
     // Obtain or create and register package
-    DefsPackageImpl theDefsPackage = (DefsPackageImpl)(EPackage.Registry.INSTANCE.getEPackage(eNS_URI) instanceof DefsPackageImpl ? EPackage.Registry.INSTANCE
-        .getEPackage(eNS_URI) : new DefsPackageImpl());
+    DefsPackageImpl theDefsPackage = (DefsPackageImpl)(EPackage.Registry.INSTANCE
+        .getEPackage(eNS_URI) instanceof DefsPackageImpl ? EPackage.Registry.INSTANCE.getEPackage(eNS_URI)
+            : new DefsPackageImpl());
 
     isInited = true;
 
@@ -109,7 +110,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getTestDef()
@@ -119,7 +120,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getTestDef_References()
@@ -129,7 +130,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getTestDef_Attribute()
@@ -139,7 +140,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DefsFactory getDefsFactory()
@@ -149,7 +150,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -157,7 +158,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -176,7 +177,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -184,7 +185,7 @@ public class DefsPackageImpl extends EPackageImpl implements DefsPackage
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()

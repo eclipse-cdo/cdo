@@ -112,7 +112,6 @@ public class Bugzilla_449665_Test extends AbstractCDOTest
       }
 
       super.addAdapter(notifier);
-
     }
   }
 }

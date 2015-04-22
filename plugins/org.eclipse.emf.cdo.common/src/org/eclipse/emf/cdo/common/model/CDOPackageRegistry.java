@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * An EMF {@link Registry package registry} that is used by CDO {@link CDOCommonRepository repositories} and
  * {@link CDOCommonSession sessions}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -52,7 +52,7 @@ public interface CDOPackageRegistry extends EPackage.Registry
 
   /**
    * Returns all package units that are registered in this package registry.
-   * 
+   *
    * @since 3.0
    */
   public CDOPackageUnit[] getPackageUnits();

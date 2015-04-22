@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
  * It is often used in the context of
  * {@link CDORevisionManager#getRevisionByVersion(CDOID, CDOBranchVersion, int, boolean)
  * CDORevisionManager.getRevisionByVersion()}.
- * 
+ *
  * @see CDOBranch#getVersion(int)
  * @author Eike Stepper
  * @since 3.0

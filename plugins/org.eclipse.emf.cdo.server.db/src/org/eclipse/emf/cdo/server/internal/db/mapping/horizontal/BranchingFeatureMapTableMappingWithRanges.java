@@ -83,8 +83,8 @@ import java.util.Map;
  * @author Lothar Werzinger
  * @since 3.0
  */
-public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicListTableMapping implements
-    IListMappingDeltaSupport
+public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicListTableMapping
+    implements IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG,
       BranchingFeatureMapTableMappingWithRanges.class);
@@ -578,8 +578,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
 
               if (TRACER.isEnabled())
               {
-                TRACER.format(
-                    "Scheduling range {0}-{1} to be read from base revision", missingValueStartIndex, nextListIndex); //$NON-NLS-1$
+                TRACER.format("Scheduling range {0}-{1} to be read from base revision", missingValueStartIndex, //$NON-NLS-1$
+                    nextListIndex);
               }
 
               baseReader.addRangedChunk(missingValueStartIndex, nextListIndex);
@@ -701,9 +701,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
   {
     if (TRACER.isEnabled())
     {
-      TRACER
-          .format(
-              "Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), getFeature(), idx, revision, value); //$NON-NLS-1$
+      TRACER.format("Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), //$NON-NLS-1$
+          getFeature(), idx, revision, value);
     }
 
     addEntry(accessor, revision.getID(), revision.getBranch().getID(), revision.getVersion(), idx, value,
@@ -1264,13 +1263,12 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     }
   }
 
-  private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded,
-      int versionRemoved, int index, Object value, long timestamp)
+  private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded, int versionRemoved,
+      int index, Object value, long timestamp)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format(
-          "Adding historic value for feature {0}.{1} index {2} of {3}:{4}v{5}-v{6} : {7}", //$NON-NLS-1$
+      TRACER.format("Adding historic value for feature {0}.{1} index {2} of {3}:{4}v{5}-v{6} : {7}", //$NON-NLS-1$
           getContainingClass().getName(), getFeature().getName(), index, id, branchId, versionAdded, versionRemoved,
           value);
     }
@@ -1322,8 +1320,8 @@ public class BranchingFeatureMapTableMappingWithRanges extends AbstractBasicList
     }
   }
 
-  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion,
-      int index, long timestamp)
+  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int index,
+      long timestamp)
   {
     if (TRACER.isEnabled())
     {

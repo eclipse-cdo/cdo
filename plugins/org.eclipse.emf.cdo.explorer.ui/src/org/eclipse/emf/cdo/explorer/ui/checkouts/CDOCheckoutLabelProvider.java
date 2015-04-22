@@ -34,8 +34,8 @@ import org.eclipse.ui.navigator.ICommonLabelProvider;
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutLabelProvider extends LabelProvider implements ICommonLabelProvider, IColorProvider,
-    IStyledLabelProvider
+public class CDOCheckoutLabelProvider extends LabelProvider
+    implements ICommonLabelProvider, IColorProvider, IStyledLabelProvider
 {
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 

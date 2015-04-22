@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
@@ -66,6 +66,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
   /**
    * @generated
    */
+  @Override
   protected List getSemanticChildrenList()
   {
     View viewObject = (View)getHost().getModel();
@@ -82,6 +83,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
   /**
    * @generated
    */
+  @Override
   protected boolean shouldDeleteView(View view)
   {
     return true;
@@ -90,6 +92,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
   /**
    * @generated
    */
+  @Override
   protected boolean isOrphaned(Collection semanticChildren, final View view)
   {
     int visualID = AcoreVisualIDRegistry.getVisualID(view);
@@ -108,6 +111,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
   /**
    * @generated
    */
+  @Override
   protected Set getFeaturesToSynchronize()
   {
     if (myFeaturesToSynchronize == null)
@@ -122,6 +126,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
   /**
    * @generated
    */
+  @Override
   protected void refreshSemantic()
   {
     if (resolveSemanticElement() == null)
@@ -130,8 +135,8 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
     }
     LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
     // refreshSemanticChildren() alternative
-    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater.getACoreRoot_1000SemanticChildren((View)getHost()
-        .getModel());
+    List<AcoreNodeDescriptor> childDescriptors = AcoreDiagramUpdater
+        .getACoreRoot_1000SemanticChildren((View)getHost().getModel());
     ArrayList<EObject> semanticChildren = new ArrayList<EObject>(childDescriptors.size());
     for (Iterator<AcoreNodeDescriptor> it = childDescriptors.iterator(); it.hasNext();)
     {
@@ -158,8 +163,8 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
       AcoreNodeDescriptor next = it.next();
       String hint = AcoreVisualIDRegistry.getType(next.getVisualID());
       IAdaptable elementAdapter = new CanonicalElementAdapter(next.getModelElement(), hint);
-      viewDescriptors.add(new CreateViewRequest.ViewDescriptor(elementAdapter, Node.class, hint, ViewUtil.APPEND,
-          false, host().getDiagramPreferencesHint()));
+      viewDescriptors.add(new CreateViewRequest.ViewDescriptor(elementAdapter, Node.class, hint, ViewUtil.APPEND, false,
+          host().getDiagramPreferencesHint()));
     }
     //
     CreateViewRequest request = getCreateViewRequest(viewDescriptors);
@@ -223,8 +228,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
       {
         AcoreLinkDescriptor nextLinkDescriptor = linkDescriptorsIterator.next();
         if (diagramLinkObject == nextLinkDescriptor.getModelElement()
-            && diagramLinkSrc == nextLinkDescriptor.getSource()
-            && diagramLinkDst == nextLinkDescriptor.getDestination()
+            && diagramLinkSrc == nextLinkDescriptor.getSource() && diagramLinkDst == nextLinkDescriptor.getDestination()
             && diagramLinkVisualID == nextLinkDescriptor.getVisualID())
         {
           linksIterator.remove();
@@ -255,7 +259,8 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
       {
         result.addAll(AcoreDiagramUpdater.getACoreRoot_1000ContainedLinks(view));
       }
-      if (!domain2NotationMap.containsKey(view.getElement()) || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+      if (!domain2NotationMap.containsKey(view.getElement()) || view.getEAnnotation("Shortcut") == null) //$NON-NLS-1$
+      {
         domain2NotationMap.put(view.getElement(), view);
       }
       break;
@@ -266,7 +271,8 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
       {
         result.addAll(AcoreDiagramUpdater.getAInterface_2001ContainedLinks(view));
       }
-      if (!domain2NotationMap.containsKey(view.getElement()) || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+      if (!domain2NotationMap.containsKey(view.getElement()) || view.getEAnnotation("Shortcut") == null) //$NON-NLS-1$
+      {
         domain2NotationMap.put(view.getElement(), view);
       }
       break;
@@ -277,7 +283,8 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
       {
         result.addAll(AcoreDiagramUpdater.getAClass_2002ContainedLinks(view));
       }
-      if (!domain2NotationMap.containsKey(view.getElement()) || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
+      if (!domain2NotationMap.containsKey(view.getElement()) || view.getEAnnotation("Shortcut") == null) //$NON-NLS-1$
+      {
         domain2NotationMap.put(view.getElement(), view);
       }
       break;
@@ -338,7 +345,7 @@ public class ACoreRootCanonicalEditPolicy extends CanonicalEditPolicy
    */
   private EditPart getEditPart(EObject domainModelElement, Map<EObject, View> domain2NotationMap)
   {
-    View view = (View)domain2NotationMap.get(domainModelElement);
+    View view = domain2NotationMap.get(domainModelElement);
     if (view != null)
     {
       return (EditPart)getHost().getViewer().getEditPartRegistry().get(view);

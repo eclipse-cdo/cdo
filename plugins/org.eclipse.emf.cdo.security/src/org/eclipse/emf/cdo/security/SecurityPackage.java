@@ -2899,7 +2899,7 @@ public interface SecurityPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.LinkedFilterImpl <em>Linked Filter</em>}' class.
      * <!-- begin-user-doc -->
-    * @since 4.3
+     * @since 4.3
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.security.impl.LinkedFilterImpl
      * @see org.eclipse.emf.cdo.security.impl.SecurityPackageImpl#getLinkedFilter()
@@ -2910,7 +2910,7 @@ public interface SecurityPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Filter</b></em>' reference feature.
      * <!-- begin-user-doc -->
-    * @since 4.3
+     * @since 4.3
      * <!-- end-user-doc -->
      * @generated
      */

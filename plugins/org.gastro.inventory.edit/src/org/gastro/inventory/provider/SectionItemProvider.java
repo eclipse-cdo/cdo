@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -38,15 +38,15 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.gastro.inventory.Section} object. <!-- begin-user-doc --> <!--
  * end-user-doc -->
- * 
+ *
  * @generated
  */
 public class SectionItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public SectionItemProvider(AdapterFactory adapterFactory)
@@ -56,7 +56,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -74,32 +74,32 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * This adds a property descriptor for the Title feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addTitlePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Section_title_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Section_title_feature", "_UI_Section_type"),
-        InventoryPackage.Literals.SECTION__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-        null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Section_title_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Section_title_feature", "_UI_Section_type"),
+            InventoryPackage.Literals.SECTION__TITLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
    * This adds a property descriptor for the Text feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addTextPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Section_text_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Section_text_feature", "_UI_Section_type"),
-        InventoryPackage.Literals.SECTION__TEXT, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-        null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Section_text_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Section_text_feature", "_UI_Section_type"),
+            InventoryPackage.Literals.SECTION__TEXT, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -107,7 +107,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -123,7 +123,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -137,7 +137,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -148,7 +148,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * This returns Section.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -159,7 +159,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -170,7 +170,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -183,7 +183,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -207,7 +207,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -221,7 +221,7 @@ public class SectionItemProvider extends ItemProviderAdapter implements IEditing
 
   /**
    * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

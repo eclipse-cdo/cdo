@@ -16,7 +16,7 @@ import java.text.MessageFormat;
 
 /**
  * Encapsulates {@link #getID() ID} and {@link #getSize() size} of a {@link CDOLob large object}.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

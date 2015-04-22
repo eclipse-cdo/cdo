@@ -20,7 +20,7 @@ import com.objy.db.app.ooObj;
 
 /**
  * Originally EOOUtil TBD: verify if we really need this class...
- * 
+ *
  * @author ibrahim
  */
 public class TypeConvert

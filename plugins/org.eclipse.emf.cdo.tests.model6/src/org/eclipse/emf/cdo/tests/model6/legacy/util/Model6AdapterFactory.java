@@ -654,13 +654,13 @@ public class Model6AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-  	 * Creates a new adapter for the default case.
-  	 * <!-- begin-user-doc -->
-       * This default implementation returns null.
-       * <!-- end-user-doc -->
-  	 * @return the new adapter.
-  	 * @generated
-  	 */
+   * Creates a new adapter for the default case.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @generated
+   */
   public Adapter createEObjectAdapter()
   {
     return null;

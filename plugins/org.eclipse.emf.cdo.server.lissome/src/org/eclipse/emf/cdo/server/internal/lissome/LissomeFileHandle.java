@@ -70,8 +70,8 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class LissomeFileHandle extends DataInputOutputFile implements CDODataInput, CDODataOutput,
-    LissomeFile.RevisionProvider
+public class LissomeFileHandle extends DataInputOutputFile
+    implements CDODataInput, CDODataOutput, LissomeFile.RevisionProvider
 {
   private LissomeFile file;
 

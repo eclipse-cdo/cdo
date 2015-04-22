@@ -36,8 +36,8 @@ import java.util.List;
  * @generated
  * @since 1.0
  */
-public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter
+    implements IEditingDomainItemProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -75,13 +75,13 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
    */
   protected void addFragmentNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_DawnFragmentGenerator_fragmentName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnFragmentGenerator_fragmentName_feature",
-            "_UI_DawnFragmentGenerator_type"), DawngenmodelPackage.Literals.DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME,
-        true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_DawnFragmentGenerator_fragmentName_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_DawnFragmentGenerator_fragmentName_feature",
+                "_UI_DawnFragmentGenerator_type"),
+            DawngenmodelPackage.Literals.DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME, true, false, false,
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -92,14 +92,13 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
    */
   protected void addDawnEditorClassNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_DawnFragmentGenerator_dawnEditorClassName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnFragmentGenerator_dawnEditorClassName_feature",
-            "_UI_DawnFragmentGenerator_type"),
-        DawngenmodelPackage.Literals.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME, true, false, false,
-        ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_DawnFragmentGenerator_dawnEditorClassName_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_DawnFragmentGenerator_dawnEditorClassName_feature",
+                "_UI_DawnFragmentGenerator_type"),
+            DawngenmodelPackage.Literals.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME, true, false, false,
+            ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -109,13 +108,12 @@ public class DawnFragmentGeneratorItemProvider extends ItemProviderAdapter imple
    */
   protected void addDawnGeneratorPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_DawnFragmentGenerator_dawnGenerator_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnFragmentGenerator_dawnGenerator_feature",
-            "_UI_DawnFragmentGenerator_type"), DawngenmodelPackage.Literals.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR,
-        true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_DawnFragmentGenerator_dawnGenerator_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_DawnFragmentGenerator_dawnGenerator_feature",
+                "_UI_DawnFragmentGenerator_type"),
+            DawngenmodelPackage.Literals.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR, true, false, true, null, null, null));
   }
 
   /**

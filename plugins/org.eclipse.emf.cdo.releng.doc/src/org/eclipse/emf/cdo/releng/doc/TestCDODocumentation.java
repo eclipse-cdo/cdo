@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -30,8 +30,10 @@ public class TestCDODocumentation
     // add("-subpackages");
     // add(subpackages.toString());
 
-    // add("-sourcepath /develop/ws/cdo/plugins/org.eclipse.net4j.util.doc/src;/develop/ws/cdo/plugins/org.eclipse.net4j.db.doc/src;/develop/ws/cdo/plugins/org.eclipse.net4j.doc/src;/develop/ws/cdo/plugins/org.eclipse.emf.cdo.doc/src");
-    // add("-subpackages org.eclipse.net4j.util.doc:org.eclipse.emf.cdo.doc.programmers.connectors:org.eclipse.emf.cdo.doc.programmers.sessions:org.eclipse.emf.cdo.doc.reference:org.eclipse.emf.cdo.doc.reference.api:org.eclipse.emf.cdo.doc.online:org.eclipse.emf.cdo.doc:org.eclipse.emf.cdo.doc.programmers");
+    // add("-sourcepath
+    // /develop/ws/cdo/plugins/org.eclipse.net4j.util.doc/src;/develop/ws/cdo/plugins/org.eclipse.net4j.db.doc/src;/develop/ws/cdo/plugins/org.eclipse.net4j.doc/src;/develop/ws/cdo/plugins/org.eclipse.emf.cdo.doc/src");
+    // add("-subpackages
+    // org.eclipse.net4j.util.doc:org.eclipse.emf.cdo.doc.programmers.connectors:org.eclipse.emf.cdo.doc.programmers.sessions:org.eclipse.emf.cdo.doc.reference:org.eclipse.emf.cdo.doc.reference.api:org.eclipse.emf.cdo.doc.online:org.eclipse.emf.cdo.doc:org.eclipse.emf.cdo.doc.programmers");
 
     add("-doclet org.eclipse.emf.cdo.releng.doc.article.impl.ArticleDoclet");
     add("-docletpath /develop/ws/cdo/plugins/org.eclipse.emf.cdo.releng.doc/bin;/develop/bin/org.eclipse.emf.cdo.releng.doc.supplemental/bin;/develop/ws/cdo/_target/plugins/org.eclipse.emf.ecore_2.7.0.v20110605-0747.jar;/develop/ws/cdo/_target/plugins/org.eclipse.emf.common_2.7.0.v20110605-0747.jar");
@@ -49,8 +51,8 @@ public class TestCDODocumentation
     addJavaFiles("org.eclipse.emf.cdo.doc");
 
     String[] array = arguments.toArray(new String[arguments.size()]);
-    com.sun.tools.javadoc.Main
-        .execute(TestCDODocumentation.class.getSimpleName(), ArticleDoclet.class.getName(), array);
+    com.sun.tools.javadoc.Main.execute(TestCDODocumentation.class.getSimpleName(), ArticleDoclet.class.getName(),
+        array);
   }
 
   private static List<String> arguments = new ArrayList<String>();

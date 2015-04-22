@@ -344,8 +344,8 @@ public class RepositoryTest extends AbstractCDOTest
       {
         EClass eClass = revision.getEClass();
         EPackage ePackage = eClass.getEPackage();
-        assertNotSame("Revision has dynamic package: " + ePackage.getName(), EPackageImpl.class.getName(), ePackage
-            .getClass().getName());
+        assertNotSame("Revision has dynamic package: " + ePackage.getName(), EPackageImpl.class.getName(),
+            ePackage.getClass().getName());
 
         if (eClass == customerClass)
         {

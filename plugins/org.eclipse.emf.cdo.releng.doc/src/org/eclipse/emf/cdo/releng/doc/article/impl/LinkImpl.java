@@ -33,7 +33,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.LinkImpl#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class LinkImpl extends BodyElementImpl implements Link
@@ -41,7 +41,7 @@ public class LinkImpl extends BodyElementImpl implements Link
   /**
    * The cached value of the '{@link #getTarget() <em>Target</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTarget()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected LinkImpl()
@@ -66,7 +66,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -77,7 +77,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public LinkTarget getTarget()
@@ -87,7 +87,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setTarget(LinkTarget newTarget)
@@ -102,7 +102,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -118,7 +118,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -135,7 +135,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -152,7 +152,7 @@ public class LinkImpl extends BodyElementImpl implements Link
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

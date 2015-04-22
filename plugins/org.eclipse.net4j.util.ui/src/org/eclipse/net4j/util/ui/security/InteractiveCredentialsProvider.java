@@ -35,8 +35,7 @@ import java.text.MessageFormat;
  * @author Eike Stepper
  * @since 2.0
  */
-public class InteractiveCredentialsProvider implements IPasswordCredentialsProvider2,
-    IPasswordCredentialsUpdateProvider
+public class InteractiveCredentialsProvider implements IPasswordCredentialsProvider2, IPasswordCredentialsUpdateProvider
 {
   public InteractiveCredentialsProvider()
   {
@@ -134,12 +133,13 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
             update[0] = dialog.getCredentials();
             final String newPassword = new String(update[0].getNewPassword());
 
-            MessageDialog msg = new MessageDialog(shell,
-                Messages.getString("InteractiveCredentialsProvider.0"), null, MessageFormat.format( //$NON-NLS-1$
+            MessageDialog msg = new MessageDialog(shell, Messages.getString("InteractiveCredentialsProvider.0"), null, //$NON-NLS-1$
+                MessageFormat.format(
                     Messages.getString("InteractiveCredentialsProvider.1"), //$NON-NLS-1$
-                    userID, newPassword), MessageDialog.INFORMATION, new String[] {
-                    Messages.getString("InteractiveCredentialsProvider.2"), //$NON-NLS-1$
-                    IDialogConstants.OK_LABEL }, 0)
+                    userID, newPassword),
+                MessageDialog.INFORMATION, new String[] { Messages.getString("InteractiveCredentialsProvider.2"), //$NON-NLS-1$
+              IDialogConstants.OK_LABEL },
+                0)
             {
 
               @Override

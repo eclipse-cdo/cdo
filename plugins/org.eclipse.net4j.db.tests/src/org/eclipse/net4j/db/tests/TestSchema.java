@@ -31,22 +31,22 @@ public class TestSchema
   public static final IDBTable REPOSITORY = INSTANCE.addTable("cdo_repository");
 
   public static final IDBField REPOSITORY_NAME = //
-  REPOSITORY.addField("name", DBType.VARCHAR, 255);
+      REPOSITORY.addField("name", DBType.VARCHAR, 255);
 
   public static final IDBField REPOSITORY_UUID = //
-  REPOSITORY.addField("uuid", DBType.VARCHAR, 64);
+      REPOSITORY.addField("uuid", DBType.VARCHAR, 64);
 
   public static final IDBField REPOSITORY_STARTS = //
-  REPOSITORY.addField("starts", DBType.BIGINT);
+      REPOSITORY.addField("starts", DBType.BIGINT);
 
   public static final IDBField REPOSITORY_STARTED = //
-  REPOSITORY.addField("started", DBType.BIGINT);
+      REPOSITORY.addField("started", DBType.BIGINT);
 
   public static final IDBField REPOSITORY_STOPPED = //
-  REPOSITORY.addField("stopped", DBType.BIGINT);
+      REPOSITORY.addField("stopped", DBType.BIGINT);
 
   public static final IDBField REPOSITORY_NEXT_CDOID = //
-  REPOSITORY.addField("next_cdoid", DBType.BIGINT);
+      REPOSITORY.addField("next_cdoid", DBType.BIGINT);
 
   /**
    * DBTable cdo_packages
@@ -54,31 +54,31 @@ public class TestSchema
   public static final IDBTable PACKAGES = INSTANCE.addTable("cdo_packages");
 
   public static final IDBField PACKAGES_ID = //
-  PACKAGES.addField("id", DBType.INTEGER);
+      PACKAGES.addField("id", DBType.INTEGER);
 
   public static final IDBField PACKAGES_URI = //
-  PACKAGES.addField("uri", DBType.VARCHAR, 255);
+      PACKAGES.addField("uri", DBType.VARCHAR, 255);
 
   public static final IDBField PACKAGES_NAME = //
-  PACKAGES.addField("name", DBType.VARCHAR, 255);
+      PACKAGES.addField("name", DBType.VARCHAR, 255);
 
   public static final IDBField PACKAGES_ECORE = //
-  PACKAGES.addField("ecore", DBType.CLOB);
+      PACKAGES.addField("ecore", DBType.CLOB);
 
   public static final IDBField PACKAGES_DYNAMIC = //
-  PACKAGES.addField("dynamic", DBType.BOOLEAN);
+      PACKAGES.addField("dynamic", DBType.BOOLEAN);
 
   public static final IDBField PACKAGES_RANGE_LB = //
-  PACKAGES.addField("range_lb", DBType.BIGINT);
+      PACKAGES.addField("range_lb", DBType.BIGINT);
 
   public static final IDBField PACKAGES_RANGE_UB = //
-  PACKAGES.addField("range_ub", DBType.BIGINT);
+      PACKAGES.addField("range_ub", DBType.BIGINT);
 
   public static final IDBIndex INDEX_PACKAGES_PK = //
-  PACKAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGES_ID);
+      PACKAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGES_ID);
 
   public static final IDBIndex INDEX_PACKAGES_URI = //
-  PACKAGES.addIndex(IDBIndex.Type.UNIQUE, PACKAGES_URI);
+      PACKAGES.addIndex(IDBIndex.Type.UNIQUE, PACKAGES_URI);
 
   /**
    * DBTable cdo_classes
@@ -86,22 +86,22 @@ public class TestSchema
   public static final IDBTable CLASSES = INSTANCE.addTable("cdo_classes");
 
   public static final IDBField CLASSES_ID = //
-  CLASSES.addField("id", DBType.INTEGER);
+      CLASSES.addField("id", DBType.INTEGER);
 
   public static final IDBField CLASSES_PACKAGE = //
-  CLASSES.addField("package", DBType.INTEGER);
+      CLASSES.addField("package", DBType.INTEGER);
 
   public static final IDBField CLASSES_CLASSIFIER = //
-  CLASSES.addField("classifier", DBType.INTEGER);
+      CLASSES.addField("classifier", DBType.INTEGER);
 
   public static final IDBField CLASSES_NAME = //
-  CLASSES.addField("name", DBType.VARCHAR, 255);
+      CLASSES.addField("name", DBType.VARCHAR, 255);
 
   public static final IDBField CLASSES_ABSTRACT = //
-  CLASSES.addField("abstract", DBType.BOOLEAN);
+      CLASSES.addField("abstract", DBType.BOOLEAN);
 
   public static final IDBIndex INDEX_CLASSES_PK = //
-  CLASSES.addIndex(IDBIndex.Type.PRIMARY_KEY, CLASSES_ID);
+      CLASSES.addIndex(IDBIndex.Type.PRIMARY_KEY, CLASSES_ID);
 
   /**
    * DBTable cdo_supertypes
@@ -109,16 +109,16 @@ public class TestSchema
   public static final IDBTable SUPERTYPES = INSTANCE.addTable("cdo_supertypes");
 
   public static final IDBField SUPERTYPES_TYPE = //
-  SUPERTYPES.addField("type_id", DBType.INTEGER);
+      SUPERTYPES.addField("type_id", DBType.INTEGER);
 
   public static final IDBField SUPERTYPES_SUPERTYPE_PACKAGE = //
-  SUPERTYPES.addField("supertype_package", DBType.VARCHAR, 255);
+      SUPERTYPES.addField("supertype_package", DBType.VARCHAR, 255);
 
   public static final IDBField SUPERTYPES_SUPERTYPE_CLASSIFIER = //
-  SUPERTYPES.addField("supertype_classifier", DBType.INTEGER);
+      SUPERTYPES.addField("supertype_classifier", DBType.INTEGER);
 
   public static final IDBIndex INDEX_SUPERTYPES_PK = //
-  SUPERTYPES.addIndex(IDBIndex.Type.PRIMARY_KEY, SUPERTYPES_TYPE);
+      SUPERTYPES.addIndex(IDBIndex.Type.PRIMARY_KEY, SUPERTYPES_TYPE);
 
   /**
    * DBTable cdo_features
@@ -126,37 +126,37 @@ public class TestSchema
   public static final IDBTable FEATURES = INSTANCE.addTable("cdo_features");
 
   public static final IDBField FEATURES_ID = //
-  FEATURES.addField("id", DBType.INTEGER);
+      FEATURES.addField("id", DBType.INTEGER);
 
   public static final IDBField FEATURES_CLASS = //
-  FEATURES.addField("class", DBType.INTEGER);
+      FEATURES.addField("class", DBType.INTEGER);
 
   public static final IDBField FEATURES_FEATURE = //
-  FEATURES.addField("feature", DBType.INTEGER);
+      FEATURES.addField("feature", DBType.INTEGER);
 
   public static final IDBField FEATURES_NAME = //
-  FEATURES.addField("name", DBType.VARCHAR, 255);
+      FEATURES.addField("name", DBType.VARCHAR, 255);
 
   public static final IDBField FEATURES_TYPE = //
-  FEATURES.addField("type", DBType.INTEGER);
+      FEATURES.addField("type", DBType.INTEGER);
 
   public static final IDBField FEATURES_REFERENCE_PACKAGE = //
-  FEATURES.addField("reference_package", DBType.VARCHAR, 255);
+      FEATURES.addField("reference_package", DBType.VARCHAR, 255);
 
   public static final IDBField FEATURES_REFERENCE_CLASSIFIER = //
-  FEATURES.addField("reference_classifier", DBType.INTEGER);
+      FEATURES.addField("reference_classifier", DBType.INTEGER);
 
   public static final IDBField FEATURES_MANY = //
-  FEATURES.addField("many", DBType.BOOLEAN);
+      FEATURES.addField("many", DBType.BOOLEAN);
 
   public static final IDBField FEATURES_CONTAINMENT = //
-  FEATURES.addField("containment", DBType.BOOLEAN);
+      FEATURES.addField("containment", DBType.BOOLEAN);
 
   public static final IDBField FEATURES_INDEX = //
-  FEATURES.addField("idx", DBType.INTEGER);
+      FEATURES.addField("idx", DBType.INTEGER);
 
   public static final IDBIndex INDEX_FEATURES_PK = //
-  FEATURES.addIndex(IDBIndex.Type.PRIMARY_KEY, FEATURES_ID);
+      FEATURES.addIndex(IDBIndex.Type.PRIMARY_KEY, FEATURES_ID);
 
   /**
    * Name of object table

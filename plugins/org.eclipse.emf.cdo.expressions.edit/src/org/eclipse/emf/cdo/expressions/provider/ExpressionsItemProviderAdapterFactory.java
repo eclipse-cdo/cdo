@@ -50,8 +50,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFactory implements
-    ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
+public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -690,7 +690,7 @@ public class ExpressionsItemProviderAdapterFactory extends ExpressionsAdapterFac
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated

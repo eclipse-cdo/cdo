@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,7 +15,7 @@ import org.eclipse.net4j.internal.util.om.LegacyBundle;
 /**
  * Various static helper methods for dealing with {@link OMBundle bundles} if OSGi {@link OMPlatform#isOSGiRunning() is
  * not running}.
- * 
+ *
  * @author Eike Stepper
  */
 public final class LegacyUtil

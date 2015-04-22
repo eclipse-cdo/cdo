@@ -78,7 +78,7 @@ public class EclipseMonitor extends Monitor
 
   /**
    * A sub progress monitor that synchronizes all methods on the parent monitor instance.
-   * 
+   *
    * @author Eike Stepper
    * @since 3.0
    */

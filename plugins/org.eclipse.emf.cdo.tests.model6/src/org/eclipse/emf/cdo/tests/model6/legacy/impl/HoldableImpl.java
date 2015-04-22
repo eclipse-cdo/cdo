@@ -94,7 +94,9 @@ public abstract class HoldableImpl extends EObjectImpl implements Holdable
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.HOLDABLE__NAME, oldName, name));
+    }
   }
 
   /**
@@ -172,7 +174,9 @@ public abstract class HoldableImpl extends EObjectImpl implements Holdable
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

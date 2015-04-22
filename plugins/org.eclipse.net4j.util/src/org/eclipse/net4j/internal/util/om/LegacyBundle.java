@@ -333,7 +333,7 @@ public class LegacyBundle extends AbstractBundle
 
   /**
    * TODO Make configurable
-   * 
+   *
    * @see org.eclipse.emf.common.util.URI#isArchiveScheme(String)
    */
   private static boolean isArchiveProtocol(String scheme)

@@ -127,7 +127,7 @@ public class ObjyConnection
                 true, // boolean appendLogFiles,
                 logDirPath, // String logDirPath,
                 "MainLog.txt"// String mainLogFileName
-            );
+                );
           }
           if (TRACER_DEBUG.isEnabled())
           {
@@ -399,7 +399,7 @@ public class ObjyConnection
         try
         {
           objySession.terminate();
-          // TRACER_DEBUG.trace("ObjyConnection.cleanupSessionPool() --   end terminating session. " +
+          // TRACER_DEBUG.trace("ObjyConnection.cleanupSessionPool() -- end terminating session. " +
           // objySession.toString());
         }
         catch (ObjyRuntimeException ex)

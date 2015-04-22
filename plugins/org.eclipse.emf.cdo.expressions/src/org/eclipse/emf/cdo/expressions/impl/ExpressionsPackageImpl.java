@@ -243,7 +243,7 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link ExpressionsPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -261,8 +261,9 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     }
 
     // Obtain or create and register package
-    ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ExpressionsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new ExpressionsPackageImpl());
+    ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof ExpressionsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new ExpressionsPackageImpl());
 
     isInited = true;
 
@@ -872,7 +873,8 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     listConstructionEClass.getESuperTypes().add(getExpression());
 
     // Initialize classes, features, and operations; add parameters
-    initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(expressionEClass, Expression.class, "Expression", IS_ABSTRACT, IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
 
     EOperation op = initEOperation(getExpression__Evaluate__EvaluationContext(), ecorePackage.getEJavaObject(),
         "evaluate", 0, 1, IS_UNIQUE, IS_ORDERED);

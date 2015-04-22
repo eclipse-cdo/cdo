@@ -139,8 +139,8 @@ public abstract class NewWizard extends Wizard implements INewWizard
           {
             public void run()
             {
-              ErrorDialog.openError(getShell(), "Error", "An error occured while creating the " + title.toLowerCase()
-                  + ".", status);
+              ErrorDialog.openError(getShell(), "Error",
+                  "An error occured while creating the " + title.toLowerCase() + ".", status);
             }
           });
 

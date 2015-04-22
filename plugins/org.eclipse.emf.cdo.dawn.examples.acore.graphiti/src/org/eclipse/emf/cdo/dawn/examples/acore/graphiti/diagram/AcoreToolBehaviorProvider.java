@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.graphiti.diagram;
 
@@ -113,8 +113,8 @@ public class AcoreToolBehaviorProvider extends DefaultToolBehaviorProvider
   // {
   // // create a sub-menu for all custom features
   // ContextMenuEntry subMenu = new ContextMenuEntry(null, context);
-  //    subMenu.setText("Cu&stom"); //$NON-NLS-1$
-  //    subMenu.setDescription("Custom features submenu"); //$NON-NLS-1$
+  // subMenu.setText("Cu&stom"); //$NON-NLS-1$
+  // subMenu.setDescription("Custom features submenu"); //$NON-NLS-1$
   // // display sub-menu hierarchical or flat
   // subMenu.setSubmenu(true);
   //
@@ -147,11 +147,11 @@ public class AcoreToolBehaviorProvider extends DefaultToolBehaviorProvider
   // }
   //
   // // add new compartment at the end of the existing compartments
-  //    PaletteCompartmentEntry compartmentEntry = new PaletteCompartmentEntry("Stacked", null); //$NON-NLS-1$
+  // PaletteCompartmentEntry compartmentEntry = new PaletteCompartmentEntry("Stacked", null); //$NON-NLS-1$
   // ret.add(compartmentEntry);
   //
   // // add new stack entry to new compartment
-  //    StackEntry stackEntry = new StackEntry("EObject", "EObject", null); //$NON-NLS-1$ //$NON-NLS-2$
+  // StackEntry stackEntry = new StackEntry("EObject", "EObject", null); //$NON-NLS-1$ //$NON-NLS-2$
   // compartmentEntry.addToolEntry(stackEntry);
   //
   // // add all create-features to the new stack-entry
@@ -204,7 +204,7 @@ public class AcoreToolBehaviorProvider extends DefaultToolBehaviorProvider
   // if (name != null && name.length() > 0 && !(name.charAt(0) >= 'A' && name.charAt(0) <= 'Z'))
   // {
   // IDecorator imageRenderingDecorator = new ImageDecorator(IPlatformImageConstants.IMG_ECLIPSE_WARNING_TSK);
-  //        imageRenderingDecorator.setMessage("Name should start with upper case letter"); //$NON-NLS-1$
+  // imageRenderingDecorator.setMessage("Name should start with upper case letter"); //$NON-NLS-1$
   // return new IDecorator[] { imageRenderingDecorator };
   // }
   // }

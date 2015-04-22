@@ -105,8 +105,10 @@ public class HasNillableAttributeImpl extends EObjectImpl implements HasNillable
     boolean oldNillableESet = nillableESet;
     nillableESet = true;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.HAS_NILLABLE_ATTRIBUTE__NILLABLE,
-          oldNillable, nillable, !oldNillableESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.HAS_NILLABLE_ATTRIBUTE__NILLABLE, oldNillable,
+          nillable, !oldNillableESet));
+    }
   }
 
   /**
@@ -121,8 +123,10 @@ public class HasNillableAttributeImpl extends EObjectImpl implements HasNillable
     nillable = NILLABLE_EDEFAULT;
     nillableESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.HAS_NILLABLE_ATTRIBUTE__NILLABLE,
           oldNillable, NILLABLE_EDEFAULT, oldNillableESet));
+    }
   }
 
   /**
@@ -210,14 +214,20 @@ public class HasNillableAttributeImpl extends EObjectImpl implements HasNillable
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (nillable: ");
     if (nillableESet)
+    {
       result.append(nillable);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(')');
     return result.toString();
   }

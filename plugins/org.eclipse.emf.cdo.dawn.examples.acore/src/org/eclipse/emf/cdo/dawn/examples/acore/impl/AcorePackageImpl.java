@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.impl;
 
@@ -33,77 +33,77 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aClassEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aInterfaceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aCoreRootEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aAttributeEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aOperationEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aBasicClassEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aParameterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass aClassChildEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EEnum accessTypeEEnum = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EDataType accessTypeObjectEDataType = null;
@@ -115,7 +115,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#eNS_URI
    * @see #init()
@@ -128,7 +128,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -139,7 +139,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
    * This method is used to initialize {@link AcorePackage#eINSTANCE} when that field is accessed. Clients should not
    * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -148,11 +148,13 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
   public static AcorePackage init()
   {
     if (isInited)
+    {
       return (AcorePackage)EPackage.Registry.INSTANCE.getEPackage(AcorePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
-    AcorePackageImpl theAcorePackage = (AcorePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof AcorePackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new AcorePackageImpl());
+    AcorePackageImpl theAcorePackage = (AcorePackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof AcorePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new AcorePackageImpl());
 
     isInited = true;
 
@@ -172,7 +174,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getAClass()
@@ -182,7 +184,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getAClass_SubClasses()
@@ -192,7 +194,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getAClass_ImplementedInterfaces()
@@ -202,7 +204,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getAClass_Associations()
@@ -212,7 +214,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getAClass_Compositions()
@@ -222,7 +224,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getAClass_Aggregations()
@@ -232,7 +234,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getAInterface()
@@ -242,7 +244,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getACoreRoot()
@@ -252,7 +254,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getACoreRoot_Title()
@@ -262,7 +264,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getACoreRoot_Classes()
@@ -272,7 +274,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getACoreRoot_Interfaces()
@@ -282,7 +284,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getAAttribute()
@@ -292,7 +294,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getAOperation()
@@ -302,7 +304,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getAOperation_Parameters()
@@ -312,7 +314,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getABasicClass()
@@ -322,7 +324,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getABasicClass_Operations()
@@ -332,7 +334,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getABasicClass_Attributes()
@@ -342,7 +344,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getABasicClass_Name()
@@ -352,7 +354,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getAParameter()
@@ -362,7 +364,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getAParameter_Name()
@@ -372,7 +374,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getAParameter_Type()
@@ -382,7 +384,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getAClassChild()
@@ -392,7 +394,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getAClassChild_Name()
@@ -402,7 +404,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getAClassChild_Accessright()
@@ -412,7 +414,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getAClassChild_DataType()
@@ -422,7 +424,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EEnum getAccessType()
@@ -432,7 +434,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EDataType getAccessTypeObject()
@@ -442,7 +444,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AcoreFactory getAcoreFactory()
@@ -452,7 +454,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -460,13 +462,15 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -512,7 +516,7 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -520,13 +524,15 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -539,26 +545,26 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    aClassEClass.getESuperTypes().add(this.getABasicClass());
-    aInterfaceEClass.getESuperTypes().add(this.getABasicClass());
-    aAttributeEClass.getESuperTypes().add(this.getAClassChild());
-    aOperationEClass.getESuperTypes().add(this.getAClassChild());
+    aClassEClass.getESuperTypes().add(getABasicClass());
+    aInterfaceEClass.getESuperTypes().add(getABasicClass());
+    aAttributeEClass.getESuperTypes().add(getAClassChild());
+    aOperationEClass.getESuperTypes().add(getAClassChild());
 
     // Initialize classes and features; add operations and parameters
     initEClass(aClassEClass, AClass.class, "AClass", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAClass_SubClasses(), this.getAClass(), null, "subClasses", null, 0, -1, AClass.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getAClass_ImplementedInterfaces(), this.getAInterface(), null, "implementedInterfaces", null, 0, -1,
+    initEReference(getAClass_SubClasses(), getAClass(), null, "subClasses", null, 0, -1, AClass.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getAClass_ImplementedInterfaces(), getAInterface(), null, "implementedInterfaces", null, 0, -1,
         AClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAClass_Associations(), this.getAClass(), null, "associations", null, 0, -1, AClass.class,
+    initEReference(getAClass_Associations(), getAClass(), null, "associations", null, 0, -1, AClass.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getAClass_Compositions(), this.getAClass(), null, "compositions", null, 0, -1, AClass.class,
+    initEReference(getAClass_Compositions(), getAClass(), null, "compositions", null, 0, -1, AClass.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getAClass_Aggregations(), this.getAClass(), null, "aggregations", null, 0, -1, AClass.class,
+    initEReference(getAClass_Aggregations(), getAClass(), null, "aggregations", null, 0, -1, AClass.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -566,12 +572,12 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
         IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(aCoreRootEClass, ACoreRoot.class, "ACoreRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getACoreRoot_Title(), ecorePackage.getEString(), "title", null, 0, 1, ACoreRoot.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getACoreRoot_Classes(), this.getAClass(), null, "classes", null, 0, -1, ACoreRoot.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-    initEReference(getACoreRoot_Interfaces(), this.getAInterface(), null, "interfaces", null, 0, -1, ACoreRoot.class,
+    initEAttribute(getACoreRoot_Title(), ecorePackage.getEString(), "title", null, 0, 1, ACoreRoot.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getACoreRoot_Classes(), getAClass(), null, "classes", null, 0, -1, ACoreRoot.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
+        IS_ORDERED);
+    initEReference(getACoreRoot_Interfaces(), getAInterface(), null, "interfaces", null, 0, -1, ACoreRoot.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
@@ -580,35 +586,34 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
 
     initEClass(aOperationEClass, AOperation.class, "AOperation", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAOperation_Parameters(), this.getAParameter(), null, "parameters", null, 0, -1, AOperation.class,
+    initEReference(getAOperation_Parameters(), getAParameter(), null, "parameters", null, 0, -1, AOperation.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
 
     initEClass(aBasicClassEClass, ABasicClass.class, "ABasicClass", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getABasicClass_Operations(), this.getAOperation(), null, "operations", null, 0, -1,
-        ABasicClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getABasicClass_Attributes(), this.getAAttribute(), null, "attributes", null, 0, -1,
-        ABasicClass.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getABasicClass_Operations(), getAOperation(), null, "operations", null, 0, -1, ABasicClass.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getABasicClass_Attributes(), getAAttribute(), null, "attributes", null, 0, -1, ABasicClass.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEAttribute(getABasicClass_Name(), ecorePackage.getEString(), "name", null, 0, 1, ABasicClass.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(aParameterEClass, AParameter.class, "AParameter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, AParameter.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAParameter_Type(), ecorePackage.getEString(), "type", null, 0, 1, AParameter.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, AParameter.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAParameter_Type(), ecorePackage.getEString(), "type", null, 0, 1, AParameter.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(aClassChildEClass, AClassChild.class, "AClassChild", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAClassChild_Name(), ecorePackage.getEString(), "name", "", 0, 1, AClassChild.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAClassChild_Accessright(), this.getAccessType(), "accessright", "public", 0, 1,
-        AClassChild.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEAttribute(getAClassChild_Name(), ecorePackage.getEString(), "name", "", 0, 1, AClassChild.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAClassChild_Accessright(), getAccessType(), "accessright", "public", 0, 1, AClassChild.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAClassChild_DataType(), ecorePackage.getEString(), "dataType", null, 0, 1, AClassChild.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -634,15 +639,15 @@ public class AcorePackageImpl extends EPackageImpl implements AcorePackage
   /**
    * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void createExtendedMetaDataAnnotations()
   {
     String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
     addAnnotation(accessTypeEEnum, source, new String[] { "name", "AccessType" });
-    addAnnotation(accessTypeObjectEDataType, source, new String[] { "name", "AccessType:Object", "baseType",
-        "AccessType" });
+    addAnnotation(accessTypeObjectEDataType, source,
+        new String[] { "name", "AccessType:Object", "baseType", "AccessType" });
   }
 
 } // AcorePackageImpl

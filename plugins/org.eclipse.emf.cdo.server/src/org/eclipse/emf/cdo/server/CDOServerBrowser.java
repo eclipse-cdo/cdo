@@ -1229,7 +1229,8 @@ public class CDOServerBrowser extends Worker
       out.print("</table>\r\n");
     }
 
-    protected boolean showLob(PrintStream out, String type, byte[] id, long size, CDOServerBrowser browser, String param)
+    protected boolean showLob(PrintStream out, String type, byte[] id, long size, CDOServerBrowser browser,
+        String param)
     {
       String hex = HexUtil.bytesToHex(id);
       boolean selected = hex.equals(param);
@@ -1366,9 +1367,8 @@ public class CDOServerBrowser extends Worker
       for (CDOIDAndVersion key : commitInfo.getNewObjects())
       {
         CDORevision newObject = (CDORevision)key;
-        out.print("<li>"
-            + browser.href(newObject.toString(), RevisionsPage.FromStore.NAME, "revision",
-                CDORevisionUtil.formatRevisionKey(newObject)) + "<br>\r\n");
+        out.print("<li>" + browser.href(newObject.toString(), RevisionsPage.FromStore.NAME, "revision",
+            CDORevisionUtil.formatRevisionKey(newObject)) + "<br>\r\n");
       }
 
       out.print("</ul>\r\n");

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -29,7 +29,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.gastro.inventory.Restaurant#getStations <em>Stations</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getRestaurant()
  * @model
  * @extends CDOObject
@@ -43,7 +43,7 @@ public interface Restaurant extends CDOObject
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Name()
@@ -55,7 +55,7 @@ public interface Restaurant extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Restaurant#getName <em>Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -72,7 +72,7 @@ public interface Restaurant extends CDOObject
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Departments</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Departments()
    * @see org.gastro.inventory.Department#getRestaurant
@@ -90,7 +90,7 @@ public interface Restaurant extends CDOObject
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Menu Cards</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_MenuCards()
    * @see org.gastro.inventory.MenuCard#getRestaurant
@@ -108,7 +108,7 @@ public interface Restaurant extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Tables</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Tables()
    * @see org.gastro.inventory.Table#getRestaurant
@@ -125,7 +125,7 @@ public interface Restaurant extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Stations</em>' reference list.
    * @see org.gastro.inventory.InventoryPackage#getRestaurant_Stations()
    * @model transient="true" changeable="false" volatile="true" derived="true"

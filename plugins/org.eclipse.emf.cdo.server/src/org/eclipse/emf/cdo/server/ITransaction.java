@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
  * The server-side representation of a client {@link CDOTransaction transaction}.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

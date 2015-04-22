@@ -161,7 +161,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
       {
         org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability converted = //
-        org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
+            org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
 
         return connection.prepareStatement(sql, converted);
       }
@@ -554,8 +554,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     CDOID id = delta.getID();
     EClass eClass = getObjectType(id);
-    IClassMappingDeltaSupport mapping = (IClassMappingDeltaSupport)getStore().getMappingStrategy().getClassMapping(
-        eClass);
+    IClassMappingDeltaSupport mapping = (IClassMappingDeltaSupport)getStore().getMappingStrategy()
+        .getClassMapping(eClass);
     mapping.writeRevisionDelta(this, delta, created, monitor);
   }
 
@@ -1259,7 +1259,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       Connection connection = getConnection();
 
       Collection<InternalCDOPackageUnit> imported = //
-      metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+          metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
       packageUnits.addAll(imported);
 
       if (!packageUnits.isEmpty())

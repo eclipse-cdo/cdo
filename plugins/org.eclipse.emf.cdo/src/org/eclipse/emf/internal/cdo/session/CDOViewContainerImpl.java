@@ -40,7 +40,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOViewContainerImpl extends Container<CDOView> implements CDOViewContainer
+public abstract class CDOViewContainerImpl extends Container<CDOView>implements CDOViewContainer
 {
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 

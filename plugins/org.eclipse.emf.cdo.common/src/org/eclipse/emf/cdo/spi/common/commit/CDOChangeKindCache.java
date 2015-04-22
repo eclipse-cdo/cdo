@@ -26,7 +26,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 4.0
  */
-public class CDOChangeKindCache extends HashMap<CDOID, CDOChangeKind> implements CDOChangeKindProvider
+public class CDOChangeKindCache extends HashMap<CDOID, CDOChangeKind>implements CDOChangeKindProvider
 {
   private static final long serialVersionUID = 1L;
 

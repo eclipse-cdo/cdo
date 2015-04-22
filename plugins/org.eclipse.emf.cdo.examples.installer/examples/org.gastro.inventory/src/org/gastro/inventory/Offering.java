@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.CDOObject;
  * <li>{@link org.gastro.inventory.Offering#getSection <em>Section</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getOffering()
  * @model
  * @extends CDOObject
@@ -42,7 +42,7 @@ public interface Offering extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Product</em>' reference.
    * @see #setProduct(Product)
    * @see org.gastro.inventory.InventoryPackage#getOffering_Product()
@@ -54,7 +54,7 @@ public interface Offering extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Offering#getProduct <em>Product</em>}' reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Product</em>' reference.
    * @see #getProduct()
@@ -68,7 +68,7 @@ public interface Offering extends CDOObject
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.gastro.inventory.InventoryPackage#getOffering_Name()
@@ -80,7 +80,7 @@ public interface Offering extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Offering#getName <em>Name</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -95,7 +95,7 @@ public interface Offering extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Description</em>' attribute.
    * @see #setDescription(String)
    * @see org.gastro.inventory.InventoryPackage#getOffering_Description()
@@ -107,7 +107,7 @@ public interface Offering extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Offering#getDescription <em>Description</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Description</em>' attribute.
    * @see #getDescription()
@@ -121,7 +121,7 @@ public interface Offering extends CDOObject
    * If the meaning of the '<em>Price</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Price</em>' attribute.
    * @see #setPrice(float)
    * @see org.gastro.inventory.InventoryPackage#getOffering_Price()
@@ -133,7 +133,7 @@ public interface Offering extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Offering#getPrice <em>Price</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Price</em>' attribute.
    * @see #getPrice()
@@ -149,7 +149,7 @@ public interface Offering extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Section</em>' container reference.
    * @see #setSection(Section)
    * @see org.gastro.inventory.InventoryPackage#getOffering_Section()
@@ -162,7 +162,7 @@ public interface Offering extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Offering#getSection <em>Section</em>}' container reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Section</em>' container reference.
    * @see #getSection()

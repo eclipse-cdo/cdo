@@ -42,7 +42,7 @@ public class EchoClient
     try
     {
       // Start a connector that represents the client side of a physical connection
-      IConnector connector = Net4jUtil.getConnector(container, "tcp", "localhost:2036"); //$NON-NLS-1$ //$NON-NLS-2$ 
+      IConnector connector = Net4jUtil.getConnector(container, "tcp", "localhost:2036"); //$NON-NLS-1$ //$NON-NLS-2$
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
       EchoClientProtocol protocol = new EchoClientProtocol(connector);

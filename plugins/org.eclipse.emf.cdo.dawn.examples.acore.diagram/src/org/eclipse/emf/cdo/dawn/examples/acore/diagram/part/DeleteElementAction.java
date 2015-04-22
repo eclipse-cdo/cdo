@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -54,6 +54,7 @@ public class DeleteElementAction extends AbstractDeleteFromAction
   /**
    * @generated
    */
+  @Override
   public void init()
   {
     super.init();
@@ -69,6 +70,7 @@ public class DeleteElementAction extends AbstractDeleteFromAction
   /**
    * @generated
    */
+  @Override
   protected String getCommandLabel()
   {
     return DiagramUIMessages.DiagramEditor_Delete_from_Model;
@@ -77,6 +79,7 @@ public class DeleteElementAction extends AbstractDeleteFromAction
   /**
    * @generated
    */
+  @Override
   protected Command getCommand(Request request)
   {
     List operationSet = getOperationSet();

@@ -56,24 +56,24 @@ public final class DBFieldDelta extends DBDeltaWithPosition implements IDBFieldD
     Integer oldScale = oldField == null ? null : oldField.getScale();
     if (!ObjectUtil.equals(scale, oldScale))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(this, SCALE_PROPERTY, IDBPropertyDelta.Type.INTEGER, scale,
-          oldScale));
+      addPropertyDelta(
+          new DBPropertyDelta<Integer>(this, SCALE_PROPERTY, IDBPropertyDelta.Type.INTEGER, scale, oldScale));
     }
 
     Boolean notNull = field == null ? null : field.isNotNull();
     Boolean oldNotNull = oldField == null ? null : oldField.isNotNull();
     if (!ObjectUtil.equals(notNull, oldNotNull))
     {
-      addPropertyDelta(new DBPropertyDelta<Boolean>(this, NOT_NULL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, notNull,
-          oldNotNull));
+      addPropertyDelta(
+          new DBPropertyDelta<Boolean>(this, NOT_NULL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, notNull, oldNotNull));
     }
 
     Integer position = field == null ? null : field.getPosition();
     Integer oldPosition = oldField == null ? null : oldField.getPosition();
     if (!ObjectUtil.equals(position, oldPosition))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position,
-          oldPosition));
+      addPropertyDelta(
+          new DBPropertyDelta<Integer>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position, oldPosition));
     }
   }
 

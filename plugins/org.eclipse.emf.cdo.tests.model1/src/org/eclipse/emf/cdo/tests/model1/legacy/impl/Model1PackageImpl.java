@@ -163,8 +163,9 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     }
 
     // Obtain or create and register package
-    Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE.get(Model1Package.eNS_URI) instanceof Model1PackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new Model1PackageImpl());
+    Model1PackageImpl theModel1Package = (Model1PackageImpl)(EPackage.Registry.INSTANCE
+        .get(Model1Package.eNS_URI) instanceof Model1PackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new Model1PackageImpl());
 
     isInited = true;
 
@@ -777,8 +778,8 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     initEAttribute(getSalesOrder_Id(), ecorePackage.getEInt(), "id", null, 0, 1, SalesOrder.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSalesOrder_Customer(), getCustomer(), getCustomer_SalesOrders(), "customer", null, 1, 1,
-        SalesOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        SalesOrder.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(categoryEClass, Category.class, "Category", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCategory_Name(), ecorePackage.getEString(), "name", null, 0, 1, Category.class, !IS_TRANSIENT,
@@ -840,16 +841,12 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   protected void createTeneoAnnotations()
   {
     String source = "teneo.jpa";
-    addAnnotation(
-        this,
-        source,
-        new String[] {
-            "value",
-            "@hbGenericGenerators({@GenericGenerator(name=\"system-uuid\", strategy = \"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOUUIDHexGenerator\")})" });
+    addAnnotation(this, source, new String[] { "value",
+        "@hbGenericGenerators({@GenericGenerator(name=\"system-uuid\", strategy = \"org.eclipse.emf.cdo.server.internal.hibernate.tuplizer.CDOUUIDHexGenerator\")})" });
     addAnnotation(orderEClass, source, new String[] { "value", "@Entity(name=\"BaseOrder\")" });
     addAnnotation(getProduct1_Name(), source, new String[] { "value", "@Id" });
     addAnnotation(orderAddressEClass, source, new String[] { "value",
-        "@AssociationOverride(name=\"orderDetails\", joinColumns=@JoinColumn(name=\"orderdetails_orderaddressid\"))" });
+    "@AssociationOverride(name=\"orderDetails\", joinColumns=@JoinColumn(name=\"orderdetails_orderaddressid\"))" });
   }
 
 } // Model1PackageImpl

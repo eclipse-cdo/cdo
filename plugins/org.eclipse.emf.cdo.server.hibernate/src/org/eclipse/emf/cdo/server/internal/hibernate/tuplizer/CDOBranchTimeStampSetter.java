@@ -18,7 +18,7 @@ import org.hibernate.engine.spi.SessionFactoryImplementor;
 
 /**
  * Sets the time stamp information in the revision.
- * 
+ *
  * @see CDOHibernateBranchPointImpl
  * @author Martin Taal
  */

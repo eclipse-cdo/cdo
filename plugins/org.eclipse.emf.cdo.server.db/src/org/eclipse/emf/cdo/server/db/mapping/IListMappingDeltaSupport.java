@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
 /**
  * Interface to complement {@link IListMapping} in order to provide list delta processing support.
- * 
+ *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 2.0
@@ -27,7 +27,7 @@ public interface IListMappingDeltaSupport
 {
   /**
    * Process a set of CDOFeatureDeltas for a many-valued feature.
-   * 
+   *
    * @param accessor
    *          the accessor to use
    * @param id

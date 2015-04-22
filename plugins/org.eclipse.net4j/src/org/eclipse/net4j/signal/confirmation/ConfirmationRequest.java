@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
  * @author Christian W. Damus (CEA LIST)
- * 
+ *
  * @since 4.3
  */
 public class ConfirmationRequest extends RequestWithMonitoring<Confirmation>

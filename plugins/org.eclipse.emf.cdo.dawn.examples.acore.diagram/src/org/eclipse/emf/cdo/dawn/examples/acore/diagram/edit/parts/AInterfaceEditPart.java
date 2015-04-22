@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
@@ -79,6 +79,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void createDefaultEditPolicies()
   {
     installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
@@ -99,6 +100,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
     ConstrainedToolbarLayoutEditPolicy lep = new ConstrainedToolbarLayoutEditPolicy()
     {
 
+      @Override
       protected EditPolicy createChildEditPolicy(EditPart child)
       {
         if (child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE) == null)
@@ -187,6 +189,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void addChildVisual(EditPart childEditPart, int index)
   {
     if (addFixedChild(childEditPart))
@@ -199,6 +202,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void removeChildVisual(EditPart childEditPart)
   {
     if (removeFixedChild(childEditPart))
@@ -211,6 +215,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected IFigure getContentPaneFor(IGraphicalEditPart editPart)
   {
     if (editPart instanceof AInterfaceAAttributeInterfaceCompartmentEditPart)
@@ -236,9 +241,10 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * Creates figure for this edit part. Body of this method does not depend on settings in generation model so you may
    * safely remove <i>generated</i> tag and modify it.
-   * 
+   *
    * @generated
    */
+  @Override
   protected NodeFigure createNodeFigure()
   {
     NodeFigure figure = createNodePlate();
@@ -251,7 +257,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
 
   /**
    * Default implementation treats passed figure as content pane. Respects layout one may have set for generated figure.
-   * 
+   *
    * @param nodeShape
    *          instance of generated figure class
    * @generated
@@ -270,6 +276,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   public IFigure getContentPane()
   {
     if (contentPane != null)
@@ -282,6 +289,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setForegroundColor(Color color)
   {
     if (primaryShape != null)
@@ -293,6 +301,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setBackgroundColor(Color color)
   {
     if (primaryShape != null)
@@ -304,6 +313,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setLineWidth(int width)
   {
     if (primaryShape instanceof Shape)
@@ -315,6 +325,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setLineType(int style)
   {
     if (primaryShape instanceof Shape)
@@ -326,6 +337,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   public EditPart getPrimaryChildEditPart()
   {
     return getChildBySemanticHint(AcoreVisualIDRegistry.getType(AInterfaceNameEditPart.VISUAL_ID));
@@ -357,6 +369,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   public EditPart getTargetEditPart(Request request)
   {
     if (request instanceof CreateViewAndElementRequest)
@@ -366,13 +379,13 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
       IElementType type = (IElementType)adapter.getAdapter(IElementType.class);
       if (type == AcoreElementTypes.AAttribute_3001)
       {
-        return getChildBySemanticHint(AcoreVisualIDRegistry
-            .getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID));
+        return getChildBySemanticHint(
+            AcoreVisualIDRegistry.getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID));
       }
       if (type == AcoreElementTypes.AOperation_3002)
       {
-        return getChildBySemanticHint(AcoreVisualIDRegistry
-            .getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID));
+        return getChildBySemanticHint(
+            AcoreVisualIDRegistry.getType(AInterfaceAOperationInterfaceCompartmentEditPart.VISUAL_ID));
       }
     }
     return super.getTargetEditPart(request);
@@ -412,11 +425,11 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
       layoutThis.setSpacing(0);
       layoutThis.setVertical(true);
 
-      this.setLayoutManager(layoutThis);
+      setLayoutManager(layoutThis);
 
-      this.setCornerDimensions(new Dimension(getMapMode().DPtoLP(12), getMapMode().DPtoLP(12)));
-      this.setLineWidth(1);
-      this.setBackgroundColor(THIS_BACK);
+      setCornerDimensions(new Dimension(getMapMode().DPtoLP(12), getMapMode().DPtoLP(12)));
+      setLineWidth(1);
+      setBackgroundColor(THIS_BACK);
       createContents();
     }
 
@@ -427,7 +440,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
     {
 
       WrappingLabel aInterfaceTypeLabelFigure0 = new WrappingLabel();
-      aInterfaceTypeLabelFigure0.setText("«Interface»");
+      aInterfaceTypeLabelFigure0.setText("ï¿½Interfaceï¿½");
 
       this.add(aInterfaceTypeLabelFigure0);
 
@@ -458,6 +471,7 @@ public class AInterfaceEditPart extends ShapeNodeEditPart
     /**
      * @generated
      */
+    @Override
     protected boolean useLocalCoordinates()
     {
       return myUseLocalCoordinates;

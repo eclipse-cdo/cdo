@@ -51,7 +51,7 @@ public class AcoreDiagramTypeProvider extends AbstractDiagramTypeProvider
   public void init(Diagram diagram, IDiagramBehavior diagramEditor)
   {
     super.init(diagram, diagramEditor);
-    DawnGraphitiAcoreResourceUtil.wireDomainModel(diagram, diagram.eResource().getResourceSet(), getDiagramBehavior()
-        .getEditingDomain());
+    DawnGraphitiAcoreResourceUtil.wireDomainModel(diagram, diagram.eResource().getResourceSet(),
+        getDiagramBehavior().getEditingDomain());
   }
 }

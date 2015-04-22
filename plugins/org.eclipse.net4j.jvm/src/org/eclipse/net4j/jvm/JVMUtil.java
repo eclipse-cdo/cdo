@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * A utility class with static convenience methods.
- * 
+ *
  * @author Eike Stepper
  */
 public final class JVMUtil
@@ -38,7 +38,7 @@ public final class JVMUtil
 
   public static IJVMConnector getConnector(IManagedContainer container, String description)
   {
-    return (IJVMConnector)container
-        .getElement(JVMConnectorFactory.PRODUCT_GROUP, JVMConnectorFactory.TYPE, description);
+    return (IJVMConnector)container.getElement(JVMConnectorFactory.PRODUCT_GROUP, JVMConnectorFactory.TYPE,
+        description);
   }
 }

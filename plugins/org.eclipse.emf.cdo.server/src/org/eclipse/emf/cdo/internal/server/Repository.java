@@ -144,7 +144,7 @@ import java.util.concurrent.Semaphore;
  * @author Eike Stepper
  * @since 2.0
  */
-public class Repository extends Container<Object> implements InternalRepository
+public class Repository extends Container<Object>implements InternalRepository
 {
   private static final int UNCHUNKED = CDORevision.UNCHUNKED;
 
@@ -527,8 +527,8 @@ public class Repository extends Container<Object> implements InternalRepository
         {
           CDOBranchVersion targetBranchVersion = pointerInfo.getTargetBranchVersion();
           InternalCDORevision target = loadRevisionByVersion(id, targetBranchVersion, referenceChunk);
-          PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id, pointerInfo
-              .getAvailableBranchVersion().getBranch(), CDORevision.UNSPECIFIED_DATE, target);
+          PointerCDORevision pointer = new PointerCDORevision(target.getEClass(), id,
+              pointerInfo.getAvailableBranchVersion().getBranch(), CDORevision.UNSPECIFIED_DATE, target);
 
           info.setResult(target);
           info.setSynthetic(pointer);
@@ -1296,19 +1296,15 @@ public class Repository extends Container<Object> implements InternalRepository
     long creationTimeStamp = getCreationTime();
     if (timeStamp < creationTimeStamp)
     {
-      throw new IllegalArgumentException(
-          MessageFormat
-              .format(
-                  "timeStamp ({0}) < repository creation time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp))); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format("timeStamp ({0}) < repository creation time ({1})", //$NON-NLS-1$
+          CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp)));
     }
 
     long currentTimeStamp = getTimeStamp();
     if (timeStamp > currentTimeStamp)
     {
-      throw new IllegalArgumentException(
-          MessageFormat
-              .format(
-                  "timeStamp ({0}) > current time ({1})", CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(currentTimeStamp))); //$NON-NLS-1$
+      throw new IllegalArgumentException(MessageFormat.format("timeStamp ({0}) > current time ({1})", //$NON-NLS-1$
+          CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(currentTimeStamp)));
     }
   }
 
@@ -1778,8 +1774,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
         if (rev == null)
         {
-          throw new IllegalArgumentException(String.format("Object %s not found in branch %s (possibly detached)", id,
-              viewedBranch));
+          throw new IllegalArgumentException(
+              String.format("Object %s not found in branch %s (possibly detached)", id, viewedBranch));
         }
 
         if (!revKey.equals(rev))
@@ -2167,10 +2163,10 @@ public class Repository extends Container<Object> implements InternalRepository
       throw new IllegalStateException("Store can not handle client assigned IDs: " + store);
     }
 
-    store.setRevisionTemporality(supportingAudits ? IStore.RevisionTemporality.AUDITING
-        : IStore.RevisionTemporality.NONE);
-    store.setRevisionParallelism(supportingBranches ? IStore.RevisionParallelism.BRANCHING
-        : IStore.RevisionParallelism.NONE);
+    store.setRevisionTemporality(
+        supportingAudits ? IStore.RevisionTemporality.AUDITING : IStore.RevisionTemporality.NONE);
+    store.setRevisionParallelism(
+        supportingBranches ? IStore.RevisionParallelism.BRANCHING : IStore.RevisionParallelism.NONE);
     revisionManager.setSupportingAudits(supportingAudits);
     revisionManager.setSupportingBranches(supportingBranches);
 

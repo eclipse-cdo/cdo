@@ -36,13 +36,13 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Addressable} object. <!--
  * begin-user-doc -->
- * 
+ *
  * @since 4.0<!-- end-user-doc -->
  * @generated
  */
-public class AddressableItemProvider extends CDOItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    IItemColorProvider, IItemFontProvider
+public class AddressableItemProvider extends CDOItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+    IItemPropertySource, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -80,12 +80,12 @@ public class AddressableItemProvider extends CDOItemProviderAdapter implements I
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Addressable_name_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Addressable_name_feature", "_UI_Addressable_type"),
-        CompanyPackage.Literals.ADDRESSABLE__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Addressable_name_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Addressable_name_feature", "_UI_Addressable_type"),
+            CompanyPackage.Literals.ADDRESSABLE__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -95,12 +95,14 @@ public class AddressableItemProvider extends CDOItemProviderAdapter implements I
    */
   protected void addStreetPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Addressable_street_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Addressable_street_feature", "_UI_Addressable_type"),
-        CompanyPackage.Literals.ADDRESSABLE__STREET, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(
+            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_Addressable_street_feature"),
+                getString("_UI_PropertyDescriptor_description", "_UI_Addressable_street_feature",
+                    "_UI_Addressable_type"),
+                CompanyPackage.Literals.ADDRESSABLE__STREET, true, false, false,
+                ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -110,12 +112,12 @@ public class AddressableItemProvider extends CDOItemProviderAdapter implements I
    */
   protected void addCityPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Addressable_city_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Addressable_city_feature", "_UI_Addressable_type"),
-        CompanyPackage.Literals.ADDRESSABLE__CITY, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Addressable_city_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Addressable_city_feature", "_UI_Addressable_type"),
+            CompanyPackage.Literals.ADDRESSABLE__CITY, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -147,8 +149,8 @@ public class AddressableItemProvider extends CDOItemProviderAdapter implements I
   public String getText(Object object)
   {
     String label = ((Addressable)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Addressable_type") : getString("_UI_Addressable_type")
-        + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_Addressable_type")
+        : getString("_UI_Addressable_type") + " " + label;
   }
 
   /**

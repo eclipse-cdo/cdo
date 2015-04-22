@@ -134,7 +134,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
 
   ProbingSubMonitor(ProbingSubMonitor parent, RootInfo rootInfo, int totalWork, int availableToChildren, int flags,
       boolean full)
-  {
+      {
     super(rootInfo, totalWork, availableToChildren, flags | (full ? FULL_MODE : 0));
     this.parent = parent;
     totalTicks = totalWork;
@@ -146,7 +146,7 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
 
     key = COUNTER.incrementAndGet();
     MAP.put(key, new KeyedWeakReference(key, this));
-  }
+      }
 
   @Override
   SubMonitor createSubMonitor(RootInfo rootInfo, int totalWork, int availableToChildren, int flags)
@@ -500,8 +500,8 @@ public final class ProbingSubMonitor extends org.eclipse.net4j.util.om.monitor.S
 
     private static final int DEFAULT_COLUMNS = 3;
 
-    private static final boolean SMOOTH_BORDERS = "smooth".equalsIgnoreCase(System
-        .getProperty("submonitor.probing.borders"));
+    private static final boolean SMOOTH_BORDERS = "smooth"
+        .equalsIgnoreCase(System.getProperty("submonitor.probing.borders"));
 
     private static final Dumper DUMPER = SMOOTH_BORDERS ? Dumper.UTF8 : Dumper.ASCII;
 

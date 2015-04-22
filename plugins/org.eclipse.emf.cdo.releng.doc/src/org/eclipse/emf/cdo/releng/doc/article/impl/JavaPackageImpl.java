@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaPackageImpl#getPlugin <em>Plugin</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class JavaPackageImpl extends EObjectImpl implements JavaPackage
@@ -39,7 +39,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -48,7 +48,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -57,7 +57,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected JavaPackageImpl()
@@ -67,7 +67,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -78,7 +78,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -88,7 +88,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -103,7 +103,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Plugin getPlugin()
@@ -117,7 +117,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetPlugin(Plugin newPlugin, NotificationChain msgs)
@@ -128,13 +128,13 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setPlugin(Plugin newPlugin)
   {
-    if (newPlugin != eInternalContainer() || eContainerFeatureID() != ArticlePackage.JAVA_PACKAGE__PLUGIN
-        && newPlugin != null)
+    if (newPlugin != eInternalContainer()
+        || eContainerFeatureID() != ArticlePackage.JAVA_PACKAGE__PLUGIN && newPlugin != null)
     {
       if (EcoreUtil.isAncestor(this, newPlugin))
       {
@@ -163,7 +163,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -183,7 +183,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -199,7 +199,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -215,7 +215,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -233,7 +233,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -253,7 +253,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -273,7 +273,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -291,7 +291,7 @@ public class JavaPackageImpl extends EObjectImpl implements JavaPackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

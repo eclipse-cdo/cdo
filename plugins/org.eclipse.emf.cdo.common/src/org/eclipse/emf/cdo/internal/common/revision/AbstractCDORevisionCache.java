@@ -33,8 +33,8 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<InternalCDORevision> implements
-    InternalCDORevisionCache
+public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<InternalCDORevision>
+    implements InternalCDORevisionCache
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REVISION, AbstractCDORevisionCache.class);
 
@@ -66,8 +66,8 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
       CDOBranchManager actualBranchManager = branch.getBranchManager();
       if (actualBranchManager != branchManager)
       {
-        throw new IllegalArgumentException("Wrong branch manager: " + actualBranchManager + "; expected: "
-            + branchManager);
+        throw new IllegalArgumentException(
+            "Wrong branch manager: " + actualBranchManager + "; expected: " + branchManager);
       }
     }
   }
@@ -155,7 +155,7 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
   /**
    * @author Eike Stepper
    */
-  private static final class CacheSoftReference extends SoftReference<InternalCDORevision> implements CDORevisionKey
+  private static final class CacheSoftReference extends SoftReference<InternalCDORevision>implements CDORevisionKey
   {
     private CDOID id;
 
@@ -196,7 +196,7 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
   /**
    * @author Eike Stepper
    */
-  private static final class CacheStrongReference extends SoftReference<InternalCDORevision> implements CDORevisionKey
+  private static final class CacheStrongReference extends SoftReference<InternalCDORevision>implements CDORevisionKey
   {
     private CDOID id;
 

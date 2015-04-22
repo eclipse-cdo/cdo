@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -31,7 +31,7 @@ public enum ResourceMode implements Enumerator
 {
   /**
    * The '<em><b>GET</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #GET_VALUE
    * @generated NOT
    * @ordered
@@ -48,7 +48,7 @@ public enum ResourceMode implements Enumerator
 
   /**
    * The '<em><b>CREATE</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #CREATE_VALUE
    * @generated NOT
    * @ordered
@@ -64,7 +64,7 @@ public enum ResourceMode implements Enumerator
 
   /**
    * The '<em><b>GET OR CREATE</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #GET_OR_CREATE_VALUE
    * @generated NOT
    * @ordered

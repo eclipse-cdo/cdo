@@ -31,7 +31,7 @@ import com.sun.javadoc.Tag;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.CalloutImpl#getSnippet <em>Snippet</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class CalloutImpl extends BodyElementContainerImpl implements Callout
@@ -42,7 +42,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected CalloutImpl()
@@ -61,7 +61,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -72,7 +72,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Snippet getSnippet()
@@ -86,7 +86,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetSnippet(Snippet newSnippet, NotificationChain msgs)
@@ -97,13 +97,13 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setSnippet(Snippet newSnippet)
   {
-    if (newSnippet != eInternalContainer() || eContainerFeatureID() != ArticlePackage.CALLOUT__SNIPPET
-        && newSnippet != null)
+    if (newSnippet != eInternalContainer()
+        || eContainerFeatureID() != ArticlePackage.CALLOUT__SNIPPET && newSnippet != null)
     {
       if (EcoreUtil.isAncestor(this, newSnippet))
       {
@@ -132,7 +132,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -152,7 +152,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -168,7 +168,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -184,7 +184,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -200,7 +200,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -217,7 +217,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -234,7 +234,7 @@ public class CalloutImpl extends BodyElementContainerImpl implements Callout
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

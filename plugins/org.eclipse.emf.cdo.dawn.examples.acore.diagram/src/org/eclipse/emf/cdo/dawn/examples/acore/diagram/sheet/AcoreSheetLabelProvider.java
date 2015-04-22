@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.sheet;
 
@@ -75,7 +75,7 @@ public class AcoreSheetLabelProvider extends BaseLabelProvider implements ILabel
     }
     if (element instanceof IAdaptable)
     {
-      return (View)((IAdaptable)element).getAdapter(View.class);
+      return ((IAdaptable)element).getAdapter(View.class);
     }
     return null;
   }

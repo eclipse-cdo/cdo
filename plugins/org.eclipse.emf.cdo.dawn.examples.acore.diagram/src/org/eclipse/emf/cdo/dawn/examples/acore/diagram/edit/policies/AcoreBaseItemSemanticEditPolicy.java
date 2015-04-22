@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
@@ -57,7 +57,7 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
 
   /**
    * Extended request data key to hold editpart visual id.
-   * 
+   *
    * @generated
    */
   public static final String VISUAL_ID_KEY = "visual_id"; //$NON-NLS-1$
@@ -79,9 +79,10 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
    * Extended request data key to hold editpart visual id. Add visual id of edited editpart to extended data of the
    * request so command switch can decide what kind of diagram element is being edited. It is done in those cases when
    * it's not possible to deduce diagram element kind from domain element.
-   * 
+   *
    * @generated
    */
+  @Override
   public Command getCommand(Request request)
   {
     if (request instanceof ReconnectRequest)
@@ -98,7 +99,7 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
 
   /**
    * Returns visual id from request parameters.
-   * 
+   *
    * @generated
    */
   protected int getVisualID(IEditCommandRequest request)
@@ -110,6 +111,7 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
   /**
    * @generated
    */
+  @Override
   protected Command getSemanticCommand(IEditCommandRequest request)
   {
     IEditCommandRequest completedRequest = completeRequest(request);
@@ -318,7 +320,7 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
 
   /**
    * Returns editing domain from the host edit part.
-   * 
+   *
    * @generated
    */
   protected TransactionalEditingDomain getEditingDomain()
@@ -328,7 +330,7 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
 
   /**
    * Clean all shortcuts to the host element from the same diagram
-   * 
+   *
    * @generated
    */
   protected void addDestroyShortcutsCommand(ICompositeCommand cmd, View view)
@@ -337,7 +339,9 @@ public class AcoreBaseItemSemanticEditPolicy extends SemanticEditPolicy
     for (Iterator it = view.getDiagram().getChildren().iterator(); it.hasNext();)
     {
       View nextView = (View)it.next();
-      if (nextView.getEAnnotation("Shortcut") == null || !nextView.isSetElement() || nextView.getElement() != view.getElement()) { //$NON-NLS-1$
+      if (nextView.getEAnnotation("Shortcut") == null || !nextView.isSetElement() //$NON-NLS-1$
+          || nextView.getElement() != view.getElement())
+      {
         continue;
       }
       cmd.add(new DeleteCommand(getEditingDomain(), nextView));

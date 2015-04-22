@@ -47,7 +47,7 @@ public class CDOCommitDataImpl extends CDOChangeSetDataImpl implements CDOCommit
   {
     return MessageFormat.format(
         "CommitData[newPackageUnits={0}, newObjects={1}, changedObjects={2}, detachedObjects={3}]", //$NON-NLS-1$
-        commitData.getNewPackageUnits().size(), commitData.getNewObjects().size(), commitData.getChangedObjects()
-            .size(), commitData.getDetachedObjects().size());
+        commitData.getNewPackageUnits().size(), commitData.getNewObjects().size(),
+        commitData.getChangedObjects().size(), commitData.getDetachedObjects().size());
   }
 }

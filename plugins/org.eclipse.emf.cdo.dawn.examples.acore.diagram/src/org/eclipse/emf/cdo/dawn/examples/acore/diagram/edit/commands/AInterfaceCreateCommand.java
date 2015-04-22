@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands;
 
@@ -44,9 +44,10 @@ public class AInterfaceCreateCommand extends EditElementCommand
 
   /**
    * FIXME: replace with setElementToEdit()
-   * 
+   *
    * @generated
    */
+  @Override
   protected EObject getElementToEdit()
   {
     EObject container = ((CreateElementRequest)getRequest()).getContainer();
@@ -60,6 +61,7 @@ public class AInterfaceCreateCommand extends EditElementCommand
   /**
    * @generated
    */
+  @Override
   public boolean canExecute()
   {
     return true;
@@ -69,6 +71,7 @@ public class AInterfaceCreateCommand extends EditElementCommand
   /**
    * @generated
    */
+  @Override
   protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
   {
     AInterface newElement = AcoreFactory.eINSTANCE.createAInterface();
@@ -85,8 +88,7 @@ public class AInterfaceCreateCommand extends EditElementCommand
   /**
    * @generated
    */
-  protected void doConfigure(AInterface newElement, IProgressMonitor monitor, IAdaptable info)
-      throws ExecutionException
+  protected void doConfigure(AInterface newElement, IProgressMonitor monitor, IAdaptable info) throws ExecutionException
   {
     IElementType elementType = ((CreateElementRequest)getRequest()).getElementType();
     ConfigureRequest configureRequest = new ConfigureRequest(getEditingDomain(), newElement, elementType);

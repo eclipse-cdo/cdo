@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;
 
@@ -154,7 +154,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
       visualID = AcoreVisualIDRegistry.getVisualID(op.getSemanticHint());
       if (elementType != null)
       {
-        if (!AcoreElementTypes.isKnownElementType(elementType) || (!(elementType instanceof IHintedType)))
+        if (!AcoreElementTypes.isKnownElementType(elementType) || !(elementType instanceof IHintedType))
         {
           return false; // foreign element type
         }
@@ -184,7 +184,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
         case AAttribute2EditPart.VISUAL_ID:
         case AOperation2EditPart.VISUAL_ID:
           if (domainElement == null
-              || visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
+          || visualID != AcoreVisualIDRegistry.getNodeVisualID(op.getContainerView(), domainElement))
           {
             return false; // visual id in semantic hint should match visual id for domain element
           }
@@ -205,12 +205,12 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
   protected boolean provides(CreateEdgeViewOperation op)
   {
     IElementType elementType = getSemanticElementType(op.getSemanticAdapter());
-    if (!AcoreElementTypes.isKnownElementType(elementType) || (!(elementType instanceof IHintedType)))
+    if (!AcoreElementTypes.isKnownElementType(elementType) || !(elementType instanceof IHintedType))
     {
       return false; // foreign element type
     }
     String elementTypeHint = ((IHintedType)elementType).getSemanticHint();
-    if (elementTypeHint == null || (op.getSemanticHint() != null && !elementTypeHint.equals(op.getSemanticHint())))
+    if (elementTypeHint == null || op.getSemanticHint() != null && !elementTypeHint.equals(op.getSemanticHint()))
     {
       return false; // our hint is visual id and must be specified, and it should be the same as in element type
     }
@@ -314,8 +314,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializeFromPreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
-        .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
+        IPreferenceConstants.PREF_LINE_COLOR);
     ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
         FigureUtilities.RGBToInteger(lineRGB));
     FontStyle nodeFontStyle = (FontStyle)node.getStyle(NotationPackage.Literals.FONT_STYLE);
@@ -356,8 +356,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializeFromPreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
-        .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
+        IPreferenceConstants.PREF_LINE_COLOR);
     ViewUtil.setStructuralFeatureValue(node, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
         FigureUtilities.RGBToInteger(lineRGB));
     FontStyle nodeFontStyle = (FontStyle)node.getStyle(NotationPackage.Literals.FONT_STYLE);
@@ -456,8 +456,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
-        .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
+        IPreferenceConstants.PREF_LINE_COLOR);
     ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
         FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
@@ -500,8 +500,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
-        .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
+        IPreferenceConstants.PREF_LINE_COLOR);
     ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
         FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
@@ -544,8 +544,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
-        .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
+        IPreferenceConstants.PREF_LINE_COLOR);
     ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
         FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
@@ -588,8 +588,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
-        .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
+        IPreferenceConstants.PREF_LINE_COLOR);
     ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
         FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
@@ -632,8 +632,8 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     // initializePreferences
     final IPreferenceStore prefStore = (IPreferenceStore)preferencesHint.getPreferenceStore();
 
-    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter
-        .getColor(prefStore, IPreferenceConstants.PREF_LINE_COLOR);
+    org.eclipse.swt.graphics.RGB lineRGB = PreferenceConverter.getColor(prefStore,
+        IPreferenceConstants.PREF_LINE_COLOR);
     ViewUtil.setStructuralFeatureValue(edge, NotationPackage.eINSTANCE.getLineStyle_LineColor(),
         FigureUtilities.RGBToInteger(lineRGB));
     FontStyle edgeFontStyle = (FontStyle)edge.getStyle(NotationPackage.Literals.FONT_STYLE);
@@ -727,7 +727,7 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     {
       return null;
     }
-    EObject eObject = (EObject)semanticAdapter.getAdapter(EObject.class);
+    EObject eObject = semanticAdapter.getAdapter(EObject.class);
     if (eObject != null)
     {
       return EMFCoreUtil.resolve(TransactionUtil.getEditingDomain(eObject), eObject);
@@ -744,6 +744,6 @@ public class AcoreViewProvider extends AbstractProvider implements IViewProvider
     {
       return null;
     }
-    return (IElementType)semanticAdapter.getAdapter(IElementType.class);
+    return semanticAdapter.getAdapter(IElementType.class);
   }
 }

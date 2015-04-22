@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.security.NotAuthenticatedException;
 
 /**
  * @author Eike Stepper
- * 
+ *
  * @since 4.3
  */
 public class AuthenticationRequest extends RequestWithMonitoring<Response>

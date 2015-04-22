@@ -86,8 +86,8 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     if (ePackageURI == null || eClassName == null)
     {
       throw new IllegalArgumentException("The mapping for the persistentclass " + mappingInfo.getEntityName() //$NON-NLS-1$
-          + " is incorrect, there should be meta data tags for both epackage and " //$NON-NLS-1$
-          + "eclassname, one or both are missing."); //$NON-NLS-1$
+      + " is incorrect, there should be meta data tags for both epackage and " //$NON-NLS-1$
+      + "eclassname, one or both are missing."); //$NON-NLS-1$
     }
 
     if (TRACER.isEnabled())
@@ -135,7 +135,7 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
     if (eClass == null)
     {
       throw new IllegalArgumentException("The mapped class " + mappingInfo.getEntityName() //$NON-NLS-1$
-          + " does not have a eClass equivalent"); //$NON-NLS-1$
+      + " does not have a eClass equivalent"); //$NON-NLS-1$
     }
   }
 
@@ -305,14 +305,14 @@ public class CDORevisionTuplizer extends AbstractEntityTuplizer
       }
       else
 
-      if (feature instanceof EReference)
-      {
-        setter = new CDOReferenceSetter(this, mappedProperty.getName());
-      }
-      else
-      {
-        setter = new CDOPropertySetter(this, mappedProperty.getName());
-      }
+        if (feature instanceof EReference)
+        {
+          setter = new CDOReferenceSetter(this, mappedProperty.getName());
+        }
+        else
+        {
+          setter = new CDOPropertySetter(this, mappedProperty.getName());
+        }
     }
 
     HibernateStore hbStore = HibernateStore.getCurrentHibernateStore();

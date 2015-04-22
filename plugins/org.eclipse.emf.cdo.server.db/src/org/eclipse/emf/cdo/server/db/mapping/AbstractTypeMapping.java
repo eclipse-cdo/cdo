@@ -198,8 +198,8 @@ public abstract class AbstractTypeMapping implements ITypeMapping
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format(
-                "TypeMapping for {0}: read db.null - setting Revision.null, because of default", feature.getName()); //$NON-NLS-1$
+            TRACER.format("TypeMapping for {0}: read db.null - setting Revision.null, because of default", //$NON-NLS-1$
+                feature.getName());
           }
 
           value = null;
@@ -223,9 +223,8 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   public String toString()
   {
     Object mappedElement = field != null ? field : dbType;
-    return MessageFormat
-        .format(
-            "{0}[{1}.{2} --> {3}]", getClass().getSimpleName(), feature.getEContainingClass().getName(), feature.getName(), mappedElement); //$NON-NLS-1$
+    return MessageFormat.format("{0}[{1}.{2} --> {3}]", getClass().getSimpleName(), //$NON-NLS-1$
+        feature.getEContainingClass().getName(), feature.getName(), mappedElement);
   }
 
   protected Object getDefaultValue()

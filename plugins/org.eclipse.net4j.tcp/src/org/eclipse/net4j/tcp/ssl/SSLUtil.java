@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - initial API and implementation
  *    Caspar De Groot (No Magic Asia Ltd.) - initial API and implementation
@@ -40,7 +40,7 @@ import java.util.Enumeration;
 
 /**
  * A utility class with various static factory and convenience methods for SSL transport.
- * 
+ *
  * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  * @author Caspar De Groot (No Magic Asia Ltd.)
  * @since 4.0
@@ -112,8 +112,8 @@ public class SSLUtil
 
   public static synchronized ITCPConnector getConnector(IManagedContainer container, String description)
   {
-    return (ITCPConnector)container
-        .getElement(TCPConnectorFactory.PRODUCT_GROUP, SSLConnectorFactory.TYPE, description);
+    return (ITCPConnector)container.getElement(TCPConnectorFactory.PRODUCT_GROUP, SSLConnectorFactory.TYPE,
+        description);
   }
 
   public static synchronized SSLEngine createSSLEngine(boolean client, String host, int port) throws Exception

@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
 
 /**
  * TODO How does this differ from {@link CDORevisionSetter}? Both needed?
- * 
+ *
  * @author Martin Taal
  */
 public class CDOPropertySetter extends CDOPropertyHandler implements Setter
@@ -141,8 +141,8 @@ public class CDOPropertySetter extends CDOPropertyHandler implements Setter
     }
     else
     {
-      boolean overwriteNilOrNull = currentValue == CDORevisionData.NIL && newValue == null || currentValue == null
-          && newValue != null && newValue.equals(defaultValue);
+      boolean overwriteNilOrNull = currentValue == CDORevisionData.NIL && newValue == null
+          || currentValue == null && newValue != null && newValue.equals(defaultValue);
       if (!revision.isFrozen() && !overwriteNilOrNull)
       {
         revision.setValue(getEStructuralFeature(), newValue);

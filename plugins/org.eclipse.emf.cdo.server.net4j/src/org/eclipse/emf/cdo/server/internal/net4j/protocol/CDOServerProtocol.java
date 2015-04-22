@@ -41,7 +41,7 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 /**
  * @author Eike Stepper
  */
-public class CDOServerProtocol extends SignalProtocol<InternalSession> implements ISessionProtocol
+public class CDOServerProtocol extends SignalProtocol<InternalSession>implements ISessionProtocol
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 

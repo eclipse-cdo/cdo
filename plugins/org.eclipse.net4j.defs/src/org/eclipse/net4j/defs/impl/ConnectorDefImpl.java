@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -168,8 +168,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
     boolean oldUserIDESet = userIDESet;
     userIDESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.CONNECTOR_DEF__USER_ID, oldUserID, userID,
           !oldUserIDESet));
+    }
   }
 
   /**
@@ -183,8 +185,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
     userID = USER_ID_EDEFAULT;
     userIDESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.CONNECTOR_DEF__USER_ID, oldUserID,
           USER_ID_EDEFAULT, oldUserIDESet));
+    }
   }
 
   /**
@@ -209,8 +213,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
       if (bufferProvider != oldBufferProvider)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.CONNECTOR_DEF__BUFFER_PROVIDER,
               oldBufferProvider, bufferProvider));
+        }
       }
     }
     return bufferProvider;
@@ -234,8 +240,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
     BufferProviderDef oldBufferProvider = bufferProvider;
     bufferProvider = newBufferProvider;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.CONNECTOR_DEF__BUFFER_PROVIDER,
           oldBufferProvider, bufferProvider));
+    }
   }
 
   /**
@@ -251,8 +259,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
       if (executorService != oldExecutorService)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.CONNECTOR_DEF__EXECUTOR_SERVICE,
               oldExecutorService, executorService));
+        }
       }
     }
     return executorService;
@@ -276,8 +286,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
     ExecutorServiceDef oldExecutorService = executorService;
     executorService = newExecutorService;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.CONNECTOR_DEF__EXECUTOR_SERVICE,
           oldExecutorService, executorService));
+    }
   }
 
   /**
@@ -293,8 +305,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
       if (negotiator != oldNegotiator)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, Net4jDefsPackage.CONNECTOR_DEF__NEGOTIATOR,
               oldNegotiator, negotiator));
+        }
       }
     }
     return negotiator;
@@ -320,8 +334,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
     boolean oldNegotiatorESet = negotiatorESet;
     negotiatorESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.CONNECTOR_DEF__NEGOTIATOR, oldNegotiator,
           negotiator, !oldNegotiatorESet));
+    }
   }
 
   /**
@@ -335,8 +351,10 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
     negotiator = null;
     negotiatorESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.CONNECTOR_DEF__NEGOTIATOR,
-          oldNegotiator, null, oldNegotiatorESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.CONNECTOR_DEF__NEGOTIATOR, oldNegotiator,
+          null, oldNegotiatorESet));
+    }
   }
 
   /**
@@ -369,7 +387,9 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
   public void unsetClientProtocolProvider()
   {
     if (clientProtocolProvider != null)
+    {
       ((InternalEList.Unsettable<?>)clientProtocolProvider).unset();
+    }
   }
 
   /**
@@ -394,15 +414,21 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
       return getUserID();
     case Net4jDefsPackage.CONNECTOR_DEF__BUFFER_PROVIDER:
       if (resolve)
+      {
         return getBufferProvider();
+      }
       return basicGetBufferProvider();
     case Net4jDefsPackage.CONNECTOR_DEF__EXECUTOR_SERVICE:
       if (resolve)
+      {
         return getExecutorService();
+      }
       return basicGetExecutorService();
     case Net4jDefsPackage.CONNECTOR_DEF__NEGOTIATOR:
       if (resolve)
+      {
         return getNegotiator();
+      }
       return basicGetNegotiator();
     case Net4jDefsPackage.CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER:
       return getClientProtocolProvider();
@@ -499,14 +525,20 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userID: ");
     if (userIDESet)
+    {
       result.append(userID);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(')');
     return result.toString();
   }
@@ -519,7 +551,7 @@ public abstract class ConnectorDefImpl extends DefImpl implements ConnectorDef
    * <li>{@link INegotiator}</li>
    * <li>{@link IProtocolProvider}</li>
    * </ul>
-   * 
+   *
    * @param config
    *          the transport config
    * @ADDED

@@ -148,7 +148,7 @@ public class CDOUIDefsAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.net4j.util.defs.Def <em>Def</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.net4j.util.defs.Def
    * @generated

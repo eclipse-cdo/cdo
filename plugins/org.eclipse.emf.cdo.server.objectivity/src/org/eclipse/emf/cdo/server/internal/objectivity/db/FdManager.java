@@ -485,7 +485,7 @@ public class FdManager
 
   /**
    * TODO
-   * 
+   *
    * @param storeConfig
    */
   public void configure(Element storeConfig)

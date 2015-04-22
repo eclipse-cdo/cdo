@@ -620,26 +620,26 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     // Create roles
 
     Role allReaderRole = realm.addRole(Role.ALL_OBJECTS_READER);
-    allReaderRole.getPermissions().add(
-        SF.createFilterPermission(Access.READ, SF.createResourceFilter(".*", PatternStyle.REGEX)));
+    allReaderRole.getPermissions()
+        .add(SF.createFilterPermission(Access.READ, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
     Role allWriterRole = realm.addRole(Role.ALL_OBJECTS_WRITER);
-    allWriterRole.getPermissions().add(
-        SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(".*", PatternStyle.REGEX)));
+    allWriterRole.getPermissions()
+        .add(SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(".*", PatternStyle.REGEX)));
 
     Role treeReaderRole = realm.addRole(Role.RESOURCE_TREE_READER);
-    treeReaderRole.getPermissions().add(
-        SF.createFilterPermission(Access.READ, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
+    treeReaderRole.getPermissions()
+        .add(SF.createFilterPermission(Access.READ, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role treeWriterRole = realm.addRole(Role.RESOURCE_TREE_WRITER);
-    treeWriterRole.getPermissions().add(
-        SF.createFilterPermission(Access.WRITE, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
+    treeWriterRole.getPermissions()
+        .add(SF.createFilterPermission(Access.WRITE, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
     Role adminRole = realm.addRole(Role.ADMINISTRATION);
-    adminRole.getPermissions().add(
-        SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(realmPath, PatternStyle.EXACT, false)));
-    adminRole.getPermissions().add(
-        SF.createFilterPermission(Access.READ, SF.createResourceFilter(realmPath, PatternStyle.EXACT, true)));
+    adminRole.getPermissions()
+        .add(SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(realmPath, PatternStyle.EXACT, false)));
+    adminRole.getPermissions()
+        .add(SF.createFilterPermission(Access.READ, SF.createResourceFilter(realmPath, PatternStyle.EXACT, true)));
 
     // Create groups
 
@@ -1091,7 +1091,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
           if (permission != CDOPermission.WRITE)
           {
-            throw new SecurityException("User " + commitContext.getUserID() + " is not allowed to write to " + revision);
+            throw new SecurityException(
+                "User " + commitContext.getUserID() + " is not allowed to write to " + revision);
           }
 
           if (securityImpact != CommitNotificationInfo.IMPACT_REALM)
@@ -1180,7 +1181,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
    * A write-access handler that checks changes about to be committed to the security realm
    * against its well-formedness rules, and rejects the commit if there are any integrity
    * errors.
-   * 
+   *
    * @author Christian W. Damus (CEA LIST)
    */
   private final class RealmValidationHandler extends ObjectWriteAccessHandler

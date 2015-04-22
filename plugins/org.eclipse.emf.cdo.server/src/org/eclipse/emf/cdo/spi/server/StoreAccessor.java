@@ -174,8 +174,8 @@ public abstract class StoreAccessor extends StoreAccessorBase
   /**
    * @since 3.0
    */
-  protected abstract void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch,
-      long created, OMMonitor monitor);
+  protected abstract void writeRevisionDeltas(InternalCDORevisionDelta[] revisionDeltas, CDOBranch branch, long created,
+      OMMonitor monitor);
 
   /**
    * @since 3.0

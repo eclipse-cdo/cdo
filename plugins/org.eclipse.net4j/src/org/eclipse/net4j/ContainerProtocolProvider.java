@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,7 +20,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 /**
  * Base class for container-based {@link IProtocolProvider protocol providers} like {@link Client} or {@link Server}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */
@@ -56,7 +56,7 @@ public abstract class ContainerProtocolProvider implements IProtocolProvider
   /**
    * Container-based {@link IProtocolProvider protocol provider} for {@link ILocationAware.Location#CLIENT client}
    * protocols.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class Client extends ContainerProtocolProvider
@@ -70,7 +70,7 @@ public abstract class ContainerProtocolProvider implements IProtocolProvider
   /**
    * Container-based {@link IProtocolProvider protocol provider} for {@link ILocationAware.Location#SERVER server}
    * protocols.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class Server extends ContainerProtocolProvider

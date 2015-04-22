@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -28,7 +28,7 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -81,7 +81,9 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME, oldName, name));
+    }
   }
 
   /**
@@ -154,7 +156,9 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
@@ -186,4 +190,3 @@ public class JVMAcceptorDefImpl extends AcceptorDefImpl implements JVMAcceptorDe
     CheckUtil.checkState(eIsSet(Net4jDefsPackage.JVM_ACCEPTOR_DEF__NAME), "name not set!");
   }
 } // JVMAcceptorDefImpl
-

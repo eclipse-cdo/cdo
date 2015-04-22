@@ -249,8 +249,8 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.SNIPPET__FORMATTER, newFormatter,
-          newFormatter));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, ArticlePackage.SNIPPET__FORMATTER, newFormatter, newFormatter));
     }
   }
 
@@ -270,8 +270,8 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     case ArticlePackage.SNIPPET__FORMATTER:
       if (formatter != null)
       {
-        msgs = ((InternalEObject)formatter).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - ArticlePackage.SNIPPET__FORMATTER, null, msgs);
+        msgs = ((InternalEObject)formatter).eInverseRemove(this,
+            EOPPOSITE_FEATURE_BASE - ArticlePackage.SNIPPET__FORMATTER, null, msgs);
       }
       return basicSetFormatter((Formatter)otherEnd, msgs);
     }
@@ -546,7 +546,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     alt = alt.replaceAll("\"", "&quot;");
 
     return "<a name=\"" + name + nameSuffix + "\" href=\"#" + name + hrefSuffix + "\" alt=\"" + alt + "\" title=\""
-        + alt + "\">" + image + "</a>";
+    + alt + "\">" + image + "</a>";
   }
 
 } // SnippetImpl

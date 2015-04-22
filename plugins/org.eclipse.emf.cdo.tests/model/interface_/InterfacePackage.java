@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EPackage;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see interface_.InterfaceFactory
  * @model kind="package"
  * @generated
@@ -32,28 +32,28 @@ public interface InterfacePackage extends EPackage
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "interface";
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_URI = "uuid://interface";
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "interface";
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   InterfacePackage eINSTANCE = interface_.impl.InterfacePackageImpl.init();
@@ -61,7 +61,7 @@ public interface InterfacePackage extends EPackage
   /**
    * The meta object id for the '{@link interface_.IInterface <em>IInterface</em>}' class. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see interface_.IInterface
    * @see interface_.impl.InterfacePackageImpl#getIInterface()
    * @generated
@@ -70,7 +70,7 @@ public interface InterfacePackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Test</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -78,7 +78,7 @@ public interface InterfacePackage extends EPackage
 
   /**
    * The number of structural features of the '<em>IInterface</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -87,7 +87,7 @@ public interface InterfacePackage extends EPackage
   /**
    * Returns the meta object for class '{@link interface_.IInterface <em>IInterface</em>}'. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>IInterface</em>'.
    * @see interface_.IInterface
    * @generated
@@ -97,7 +97,7 @@ public interface InterfacePackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link interface_.IInterface#getTest <em>Test</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Test</em>'.
    * @see interface_.IInterface#getTest()
    * @see #getIInterface()
@@ -107,7 +107,7 @@ public interface InterfacePackage extends EPackage
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -122,7 +122,7 @@ public interface InterfacePackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -130,7 +130,7 @@ public interface InterfacePackage extends EPackage
     /**
      * The meta object literal for the '{@link interface_.IInterface <em>IInterface</em>}' class. <!-- begin-user-doc
      * --> <!-- end-user-doc -->
-     * 
+     *
      * @see interface_.IInterface
      * @see interface_.impl.InterfacePackageImpl#getIInterface()
      * @generated
@@ -140,7 +140,7 @@ public interface InterfacePackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Test</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute IINTERFACE__TEST = eINSTANCE.getIInterface_Test();

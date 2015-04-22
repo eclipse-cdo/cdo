@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
  * Bug 417483 - [Security] Issues in invalidation when missing write Permission.
  * <p>
  * Tests ensuring that the permissions are correctly computed, no matter what passive update mode is chosen.
- * 
+ *
  * @author Alex Lagarde
  */
 @CleanRepositoriesBefore(reason = "TEST_SECURITY_MANAGER")

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -27,7 +27,7 @@ public class Net4jDefsUtil
 {
   /**
    * Creates the factories protocol provider. The current implementation uses a {@link FactoriesProtocolProvider}.
-   * 
+   *
    * @param clientProtocolFactoryDef
    *          the client protocol factory definition
    * @return the protocol provider

@@ -24,7 +24,7 @@ import java.util.Map;
  * @since 4.2
  * @see CDOView
  */
-public class CDOViewRegistryImpl extends Container<Registration> implements CDOViewRegistry
+public class CDOViewRegistryImpl extends Container<Registration>implements CDOViewRegistry
 {
   public static final CDOViewRegistryImpl INSTANCE = new CDOViewRegistryImpl();
 

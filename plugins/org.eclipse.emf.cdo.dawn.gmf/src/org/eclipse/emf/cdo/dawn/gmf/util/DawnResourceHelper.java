@@ -4,14 +4,14 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
 package org.eclipse.emf.cdo.dawn.gmf.util;
 
 /**
- * 
+ *
  * @author Martin Fluegge
  */
 
@@ -235,7 +235,7 @@ public class DawnResourceHelper
 
   /**
    * returns the diagram from the resource if no diagram can be found it returns null.
-   * 
+   *
    * @param res
    * @return if it exists the diagram otherwise null
    */
@@ -253,7 +253,7 @@ public class DawnResourceHelper
 
   /**
    * compares two eObjects by there xmi-id whether the are equal or not
-   * 
+   *
    * @param oldNode
    * @param newNode
    * @return true if xmi-id equal, else otherwise
@@ -272,7 +272,7 @@ public class DawnResourceHelper
 
   /**
    * returns the same Object in the other resource. The Object is identified by the xmi ID
-   * 
+   *
    * @param e
    * @param resource
    * @return an object in the given resource with the same xmi Id
@@ -287,7 +287,7 @@ public class DawnResourceHelper
 
   /**
    * finds changed objects
-   * 
+   *
    * @param serverO
    * @param clientO
    * @return true if the obejcts are different
@@ -467,7 +467,7 @@ public class DawnResourceHelper
 
   /**
    * copies the XMI-id from oldElement to new Element
-   * 
+   *
    * @param newElement
    * @param oldElement
    */
@@ -478,7 +478,7 @@ public class DawnResourceHelper
 
   /**
    * sets the objects id in the old resource to the new resource
-   * 
+   *
    * @param v
    * @param oldResource
    */
@@ -489,7 +489,7 @@ public class DawnResourceHelper
 
   /**
    * creates a deep Copy and also copies xmi ids This method can be used if the copy should be insertet into newParent
-   * 
+   *
    * @param oldObject
    * @param newParent
    * @return the copy of the oldObject
@@ -538,7 +538,7 @@ public class DawnResourceHelper
 
   /**
    * This method provides deep copying of all childrens xmi ids from oldObject to newObject
-   * 
+   *
    * @param oldObject
    * @param newObject
    */
@@ -581,9 +581,9 @@ public class DawnResourceHelper
 
     if (!leftObject.eClass().equals(rightObject.eClass()))
     {
-      throw new EClassIncompatibleException(leftObject.eClass().getName() + "("
-          + DawnResourceHelper.getXmiId(leftObject) + ")" + "/" + rightObject.eClass().getName() + "("
-          + DawnResourceHelper.getXmiId(leftObject) + ")");
+      throw new EClassIncompatibleException(
+          leftObject.eClass().getName() + "(" + DawnResourceHelper.getXmiId(leftObject) + ")" + "/"
+              + rightObject.eClass().getName() + "(" + DawnResourceHelper.getXmiId(leftObject) + ")");
     }
 
     updateEAttributes(leftObject, rightObject);
@@ -593,12 +593,12 @@ public class DawnResourceHelper
     {
       EObject rightChild = (EObject)o;
       EObject leftChild = getSameEObjectFromOtherResource(rightChild, (XMLResource)leftObject.eResource());
-      if (leftChild != null)// child exists
+      if (leftChild != null) // child exists
       {
         updateEObject(leftChild, rightChild); // removes it
       }
       else
-      // child must be created
+        // child must be created
       {
         if (o instanceof View)
         {
@@ -708,7 +708,7 @@ public class DawnResourceHelper
           EObject leftCollectionChild = getSameEObjectFromOtherResource(rightCollectionChild,
               (XMLResource)leftParent.eResource());
 
-          if (leftCollectionChild == null)// create
+          if (leftCollectionChild == null) // create
           {
             leftCollectionChild = DawnResourceHelper.createCopy(rightCollectionChild);
             leftCollection.add(leftCollectionChild);
@@ -731,7 +731,7 @@ public class DawnResourceHelper
       }
     }
     else
-    // create
+      // create
     {
       if (rightReferenceObject != null)
       {
@@ -819,7 +819,7 @@ public class DawnResourceHelper
 
   /**
    * checks if an element with element's id exists in the give resource
-   * 
+   *
    * @param res
    * @param element
    * @return true is the object with the same xmi id as element is contained in the given resource
@@ -944,7 +944,7 @@ public class DawnResourceHelper
 
   /**********************
    * finds EditPart from a View
-   * 
+   *
    * @param view
    * @param dawnDiagramEditor
    * @return find an Editpart for a view with the same xmi id

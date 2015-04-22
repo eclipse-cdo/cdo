@@ -17,7 +17,7 @@ import org.eclipse.emf.teneo.hibernate.mapper.ManyAttributeMapper;
 
 /**
  * Extends the Teneo ManyAttributeMapper to force eager load of all primitive type lists.
- * 
+ *
  * @author Martin Taal
  * @since 3.0
  */

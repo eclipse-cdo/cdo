@@ -32,7 +32,8 @@ public class RepositoryTypeChangedEvent extends Event implements CDOCommonReposi
 
   private CDOCommonRepository.Type newType;
 
-  public RepositoryTypeChangedEvent(INotifier source, CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
+  public RepositoryTypeChangedEvent(INotifier source, CDOCommonRepository.Type oldType,
+      CDOCommonRepository.Type newType)
   {
     super(source);
     this.oldType = oldType;

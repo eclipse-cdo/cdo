@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -60,7 +60,7 @@ public interface BusinessDay extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.business.BusinessDay#getDate <em>Date</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Date</em>' attribute.
    * @see #getDate()
@@ -87,7 +87,7 @@ public interface BusinessDay extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.business.BusinessDay#getMenuCard <em>Menu Card</em>}' reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Menu Card</em>' reference.
    * @see #getMenuCard()
@@ -149,7 +149,7 @@ public interface BusinessDay extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.business.BusinessDay#isClosed <em>Closed</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Closed</em>' attribute.
    * @see #isClosed()

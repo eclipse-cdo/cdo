@@ -26,8 +26,8 @@ import org.eclipse.swt.widgets.Display;
 /**
  * @author Eike Stepper
  */
-public abstract class StructuredContentProvider<INPUT> extends ViewerSorter implements IStructuredContentProvider,
-    IListener
+public abstract class StructuredContentProvider<INPUT> extends ViewerSorter
+    implements IStructuredContentProvider, IListener
 {
   private StructuredViewer viewer;
 

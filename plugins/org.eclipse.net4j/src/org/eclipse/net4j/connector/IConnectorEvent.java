@@ -15,7 +15,7 @@ import org.eclipse.net4j.util.event.IEvent;
 
 /**
  * A generic {@link IEvent event} fired from a {@link IConnector connector}.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -24,7 +24,7 @@ public interface IConnectorEvent extends IEvent
 {
   /**
    * The {@link IConnector} that sent this event.
-   * 
+   *
    * @see IContainerEvent#getSource()
    * @since 3.0
    */

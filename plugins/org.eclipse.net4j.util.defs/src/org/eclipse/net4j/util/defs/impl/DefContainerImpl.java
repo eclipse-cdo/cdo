@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -44,7 +44,7 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
   /**
    * The cached value of the '{@link #getDefinitions() <em>Definitions</em>}' containment reference list. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDefinitions()
    * @generated
    * @ordered
@@ -54,7 +54,7 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
   /**
    * The cached value of the '{@link #getDefaultDefinition() <em>Default Definition</em>}' reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDefaultDefinition()
    * @generated
    * @ordered
@@ -106,8 +106,10 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
       if (defaultDefinition != oldDefaultDefinition)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION, oldDefaultDefinition, defaultDefinition));
+        }
       }
     }
     return defaultDefinition;
@@ -131,8 +133,10 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
     Def oldDefaultDefinition = defaultDefinition;
     defaultDefinition = newDefaultDefinition;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION,
           oldDefaultDefinition, defaultDefinition));
+    }
   }
 
   /**
@@ -163,7 +167,9 @@ public class DefContainerImpl extends EObjectImpl implements DefContainer
       return getDefinitions();
     case Net4jUtilDefsPackage.DEF_CONTAINER__DEFAULT_DEFINITION:
       if (resolve)
+      {
         return getDefaultDefinition();
+      }
       return basicGetDefaultDefinition();
     }
     return super.eGet(featureID, resolve, coreType);

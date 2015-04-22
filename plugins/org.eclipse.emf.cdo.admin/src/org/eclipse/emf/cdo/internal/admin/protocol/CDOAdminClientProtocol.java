@@ -29,8 +29,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientProtocol extends AuthenticatingSignalProtocol<CDOAdminClientImpl> implements
-    IConfirmationProvider.Provider
+public class CDOAdminClientProtocol extends AuthenticatingSignalProtocol<CDOAdminClientImpl>
+    implements IConfirmationProvider.Provider
 {
   public CDOAdminClientProtocol(CDOAdminClientImpl admin)
   {

@@ -71,51 +71,51 @@ import java.util.StringTokenizer;
 
 /**
  * This is a simple wizard for creating a new model file. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class AcoreModelWizard extends Wizard implements INewWizard
 {
   /**
    * The supported extensions for created files. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
-  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays
-      .asList(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameExtensions").split("\\s*,\\s*")));
+  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(
+      Arrays.asList(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameExtensions").split("\\s*,\\s*")));
 
   /**
    * A formatted list of supported file extensions, suitable for display. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS = AcoreEditorPlugin.INSTANCE.getString(
-      "_UI_AcoreEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+  public static final String FORMATTED_FILE_EXTENSIONS = AcoreEditorPlugin.INSTANCE
+      .getString("_UI_AcoreEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
 
   /**
    * This caches an instance of the model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AcorePackage acorePackage = AcorePackage.eINSTANCE;
 
   /**
    * This caches an instance of the model factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AcoreFactory acoreFactory = acorePackage.getAcoreFactory();
 
   /**
    * This is the file creation page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AcoreModelWizardNewFileCreationPage newFileCreationPage;
 
   /**
    * This is the initial object creation page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AcoreModelWizardInitialObjectCreationPage initialObjectCreationPage;
@@ -123,28 +123,28 @@ public class AcoreModelWizard extends Wizard implements INewWizard
   /**
    * Remember the selection during initialization for populating the default container. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IStructuredSelection selection;
 
   /**
    * Remember the workbench during initialization. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IWorkbench workbench;
 
   /**
    * Caches the names of the types that can be created as the root object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected List<String> initialObjectNames;
 
   /**
    * This just records the information. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void init(IWorkbench workbench, IStructuredSelection selection)
@@ -152,14 +152,14 @@ public class AcoreModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(AcoreEditorPlugin.INSTANCE
-        .getImage("full/wizban/NewAcore")));
+    setDefaultPageImageDescriptor(
+        ExtendedImageRegistry.INSTANCE.getImageDescriptor(AcoreEditorPlugin.INSTANCE.getImage("full/wizban/NewAcore")));
   }
 
   /**
    * Returns the names of the types that can be created as the root object. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   protected Collection<String> getInitialObjectNames()
@@ -185,7 +185,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
   /**
    * Create a new model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected EObject createInitialModel()
@@ -197,7 +197,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
   /**
    * Do the work after everything is specified. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -299,14 +299,14 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
   /**
    * This is the one page of the wizard. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public class AcoreModelWizardNewFileCreationPage extends WizardNewFileCreationPage
   {
     /**
      * Pass in the selection. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public AcoreModelWizardNewFileCreationPage(String pageId, IStructuredSelection selection)
@@ -316,7 +316,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * The framework calls this to see if the file is correct. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -338,7 +338,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public IFile getModelFile()
@@ -349,14 +349,14 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
   /**
    * This is the page where the type of object to create is selected. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public class AcoreModelWizardInitialObjectCreationPage extends WizardPage
   {
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected Combo initialObjectField;
@@ -368,14 +368,14 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected Combo encodingField;
 
     /**
      * Pass in the selection. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public AcoreModelWizardInitialObjectCreationPage(String pageId)
@@ -385,7 +385,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated NOT
      */
     public void createControl(Composite parent)
@@ -469,7 +469,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected ModifyListener validator = new ModifyListener()
@@ -482,7 +482,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected boolean validatePage()
@@ -492,7 +492,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     @Override
@@ -516,7 +516,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public String getInitialObjectName()
@@ -535,7 +535,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     public String getEncoding()
@@ -545,7 +545,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * Returns the label for the specified type name. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected String getLabel(String typeName)
@@ -563,7 +563,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     protected Collection<String> getEncodings()
@@ -583,7 +583,7 @@ public class AcoreModelWizard extends Wizard implements INewWizard
 
   /**
    * The framework calls this to create the contents of the wizard. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -594,8 +594,8 @@ public class AcoreModelWizard extends Wizard implements INewWizard
     newFileCreationPage = new AcoreModelWizardNewFileCreationPage("Whatever", selection);
     newFileCreationPage.setTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_label"));
     newFileCreationPage.setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_description"));
-    newFileCreationPage.setFileName(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameDefaultBase") + "."
-        + FILE_EXTENSIONS.get(0));
+    newFileCreationPage.setFileName(
+        AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.
@@ -638,14 +638,14 @@ public class AcoreModelWizard extends Wizard implements INewWizard
     }
     initialObjectCreationPage = new AcoreModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_label"));
-    initialObjectCreationPage.setDescription(AcoreEditorPlugin.INSTANCE
-        .getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage
+        .setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 
   /**
    * Get the file from the page. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public IFile getModelFile()

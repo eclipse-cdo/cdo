@@ -23,7 +23,7 @@ import java.util.Iterator;
 
 /**
  * A delegating base class for {@link IContainer containers}.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.exclude
  */
@@ -82,7 +82,7 @@ public abstract class AbstractDelegator<E> extends Notifier implements IContaine
 
   /**
    * A delegating {@link Iterator iterator}.
-   * 
+   *
    * @author Eike Stepper
    * @apiviz.exclude
    */

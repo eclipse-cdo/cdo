@@ -320,8 +320,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection()
-        .prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(),
+        ReuseProbability.MEDIUM);
 
     try
     {

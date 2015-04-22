@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -32,7 +32,7 @@ import java.net.URI;
  * <li>{@link org.eclipse.emf.cdo.defs.impl.EPackageDefImpl#getNsURI <em>Ns URI</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
@@ -40,7 +40,7 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   /**
    * The default value of the '{@link #getNsURI() <em>Ns URI</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getNsURI()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   /**
    * The cached value of the '{@link #getNsURI() <em>Ns URI</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getNsURI()
    * @generated
    * @ordered
@@ -94,7 +94,9 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
     String oldNsURI = nsURI;
     nsURI = newNsURI;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EPACKAGE_DEF__NS_URI, oldNsURI, nsURI));
+    }
   }
 
   /**
@@ -167,7 +169,9 @@ public abstract class EPackageDefImpl extends DefImpl implements EPackageDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (nsURI: ");

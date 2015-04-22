@@ -57,7 +57,7 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage
  * @generated
  */
@@ -65,14 +65,14 @@ public class ArticleSwitch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected static ArticlePackage modelPackage;
 
   /**
    * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ArticleSwitch()
@@ -86,7 +86,7 @@ public class ArticleSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -98,7 +98,7 @@ public class ArticleSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -118,7 +118,7 @@ public class ArticleSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -784,7 +784,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Documentation</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Documentation</em>'.
@@ -799,7 +799,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Context</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Context</em>'.
@@ -814,7 +814,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Category</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Category</em>'.
@@ -829,7 +829,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Article</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Article</em>'.
@@ -844,7 +844,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Chapter</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Chapter</em>'.
@@ -859,7 +859,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Snippet</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Snippet</em>'.
@@ -874,7 +874,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Diagram</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Diagram</em>'.
@@ -889,7 +889,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Factory</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Factory</em>'.
@@ -904,7 +904,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Java Element</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Java Element</em>'.
@@ -919,7 +919,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Structural Element</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Structural Element</em>'.
@@ -934,7 +934,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Link Target</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Link Target</em>'.
@@ -949,7 +949,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Callout</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Callout</em>'.
@@ -964,7 +964,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Embeddable Element</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Embeddable Element</em>'.
@@ -979,7 +979,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>External Target</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>External Target</em>'.
@@ -994,7 +994,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Identifiable</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Identifiable</em>'.
@@ -1009,7 +1009,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Body</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Body</em>'.
@@ -1025,7 +1025,7 @@ public class ArticleSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>Body Element Container</em>'. <!--
    * begin-user-doc --> This implementation returns null; returning a non-null result will terminate the switch. <!--
    * end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Body Element Container</em>'.
@@ -1040,7 +1040,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Body Element</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Body Element</em>'.
@@ -1055,7 +1055,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Text</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Text</em>'.
@@ -1070,7 +1070,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Link</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Link</em>'.
@@ -1085,7 +1085,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Embedding</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Embedding</em>'.
@@ -1100,7 +1100,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Source Code</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Source Code</em>'.
@@ -1115,7 +1115,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Plugin</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Plugin</em>'.
@@ -1130,7 +1130,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Java Package</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Java Package</em>'.
@@ -1145,7 +1145,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Javadoc</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Javadoc</em>'.
@@ -1160,7 +1160,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>External Article</em>'. <!-- begin-user-doc
    * --> This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>External Article</em>'.
@@ -1175,7 +1175,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Schemadoc</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Schemadoc</em>'.
@@ -1190,7 +1190,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Extension Point</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Extension Point</em>'.
@@ -1205,7 +1205,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Toc</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Toc</em>'.
@@ -1220,7 +1220,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Plugin Resource</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Plugin Resource</em>'.
@@ -1235,7 +1235,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Excel</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Excel</em>'.
@@ -1250,7 +1250,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Formatter</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Formatter</em>'.
@@ -1265,7 +1265,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Java Formatter</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Java Formatter</em>'.
@@ -1280,7 +1280,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Xml Formatter</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Xml Formatter</em>'.
@@ -1295,7 +1295,7 @@ public class ArticleSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Image</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Image</em>'.
@@ -1311,7 +1311,7 @@ public class ArticleSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.

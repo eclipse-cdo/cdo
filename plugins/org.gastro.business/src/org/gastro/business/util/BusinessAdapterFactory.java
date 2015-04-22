@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -129,7 +129,7 @@ public class BusinessAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.business.BusinessDay <em>Day</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.business.BusinessDay
    * @generated
@@ -143,7 +143,7 @@ public class BusinessAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.business.Order <em>Order</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.business.Order
    * @generated
@@ -157,7 +157,7 @@ public class BusinessAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.business.OrderDetail <em>Order Detail</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.business.OrderDetail
    * @generated
@@ -171,7 +171,7 @@ public class BusinessAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.business.Waiter <em>Waiter</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.business.Waiter
    * @generated

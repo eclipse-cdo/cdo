@@ -41,7 +41,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.legacy.model3.subpackage.SubpackagePackage#eNS_URI
    * @see #init()
@@ -60,7 +60,7 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link SubpackagePackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc
@@ -73,11 +73,14 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public static SubpackagePackage init()
   {
     if (isInited)
+    {
       return (SubpackagePackage)EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI);
+    }
 
     // Obtain or create and register package
-    SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SubpackagePackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new SubpackagePackageImpl());
+    SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof SubpackagePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new SubpackagePackageImpl());
 
     isInited = true;
 
@@ -86,8 +89,8 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
 
     // Obtain or create and register interdependencies
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE
-        .getEPackage(Model3Package.eNS_URI) instanceof Model3PackageImpl ? EPackage.Registry.INSTANCE
-        .getEPackage(Model3Package.eNS_URI) : Model3Package.eINSTANCE);
+        .getEPackage(Model3Package.eNS_URI) instanceof Model3PackageImpl
+            ? EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI) : Model3Package.eINSTANCE);
 
     // Create package meta-data objects
     theSubpackagePackage.createPackageContents();
@@ -147,7 +150,9 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -170,7 +175,9 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package

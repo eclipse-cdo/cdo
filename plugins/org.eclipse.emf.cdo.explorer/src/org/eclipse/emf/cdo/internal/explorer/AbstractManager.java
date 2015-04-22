@@ -32,8 +32,8 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractManager<T extends CDOExplorerElement> extends SetContainer<T> implements
-    CDOExplorerManager<T>
+public abstract class AbstractManager<T extends CDOExplorerElement> extends SetContainer<T>
+    implements CDOExplorerManager<T>
 {
   private final File folder;
 

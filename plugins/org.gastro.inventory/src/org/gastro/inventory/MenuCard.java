@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -27,7 +27,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.gastro.inventory.MenuCard#getSections <em>Sections</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getMenuCard()
  * @model
  * @extends CDOObject
@@ -41,7 +41,7 @@ public interface MenuCard extends CDOObject
    * If the meaning of the '<em>Title</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Title</em>' attribute.
    * @see #setTitle(String)
    * @see org.gastro.inventory.InventoryPackage#getMenuCard_Title()
@@ -53,7 +53,7 @@ public interface MenuCard extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.MenuCard#getTitle <em>Title</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Title</em>' attribute.
    * @see #getTitle()
@@ -69,7 +69,7 @@ public interface MenuCard extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Restaurant</em>' container reference.
    * @see #setRestaurant(Restaurant)
    * @see org.gastro.inventory.InventoryPackage#getMenuCard_Restaurant()
@@ -82,7 +82,7 @@ public interface MenuCard extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.MenuCard#getRestaurant <em>Restaurant</em>}' container
    * reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Restaurant</em>' container reference.
    * @see #getRestaurant()
@@ -99,7 +99,7 @@ public interface MenuCard extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Sections</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getMenuCard_Sections()
    * @see org.gastro.inventory.Section#getMenuCard

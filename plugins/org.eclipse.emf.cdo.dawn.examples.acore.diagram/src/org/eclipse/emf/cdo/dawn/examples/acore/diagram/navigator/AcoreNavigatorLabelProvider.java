@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
@@ -58,10 +58,10 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
    */
   static
   {
-    AcoreDiagramEditorPlugin.getInstance().getImageRegistry()
-        .put("Navigator?UnknownElement", ImageDescriptor.getMissingImageDescriptor()); //$NON-NLS-1$
-    AcoreDiagramEditorPlugin.getInstance().getImageRegistry()
-        .put("Navigator?ImageNotFound", ImageDescriptor.getMissingImageDescriptor()); //$NON-NLS-1$
+    AcoreDiagramEditorPlugin.getInstance().getImageRegistry().put("Navigator?UnknownElement", //$NON-NLS-1$
+        ImageDescriptor.getMissingImageDescriptor());
+    AcoreDiagramEditorPlugin.getInstance().getImageRegistry().put("Navigator?ImageNotFound", //$NON-NLS-1$
+        ImageDescriptor.getMissingImageDescriptor());
   }
 
   /**
@@ -81,6 +81,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   /**
    * @generated
    */
+  @Override
   public Image getImage(Object element)
   {
     if (element instanceof AcoreNavigatorGroup)
@@ -110,41 +111,42 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
     switch (AcoreVisualIDRegistry.getVisualID(view))
     {
     case AAttributeEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AAttribute", AcoreElementTypes.AAttribute_3001); //$NON-NLS-1$
+      return getImage("Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AAttribute", //$NON-NLS-1$
+          AcoreElementTypes.AAttribute_3001);
     case AOperation2EditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AOperation", AcoreElementTypes.AOperation_3004); //$NON-NLS-1$
+      return getImage("Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AOperation", //$NON-NLS-1$
+          AcoreElementTypes.AOperation_3004);
     case AClassSubClassesEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?subClasses", AcoreElementTypes.AClassSubClasses_4001); //$NON-NLS-1$
+      return getImage("Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?subClasses", //$NON-NLS-1$
+          AcoreElementTypes.AClassSubClasses_4001);
     case AClassCompositionsEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?compositions", AcoreElementTypes.AClassCompositions_4005); //$NON-NLS-1$
+      return getImage("Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?compositions", //$NON-NLS-1$
+          AcoreElementTypes.AClassCompositions_4005);
     case AInterfaceEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?TopLevelNode?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AInterface", AcoreElementTypes.AInterface_2001); //$NON-NLS-1$
+      return getImage("Navigator?TopLevelNode?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AInterface", //$NON-NLS-1$
+          AcoreElementTypes.AInterface_2001);
     case AClassAggregationsEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?aggregations", AcoreElementTypes.AClassAggregations_4004); //$NON-NLS-1$
+      return getImage("Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?aggregations", //$NON-NLS-1$
+          AcoreElementTypes.AClassAggregations_4004);
     case AClassImplementedInterfacesEditPart.VISUAL_ID:
       return getImage(
-          "Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?implementedInterfaces", AcoreElementTypes.AClassImplementedInterfaces_4002); //$NON-NLS-1$
+          "Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?implementedInterfaces", //$NON-NLS-1$
+          AcoreElementTypes.AClassImplementedInterfaces_4002);
     case AAttribute2EditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AAttribute", AcoreElementTypes.AAttribute_3003); //$NON-NLS-1$
+      return getImage("Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AAttribute", //$NON-NLS-1$
+          AcoreElementTypes.AAttribute_3003);
     case AClassEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?TopLevelNode?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass", AcoreElementTypes.AClass_2002); //$NON-NLS-1$
+      return getImage("Navigator?TopLevelNode?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass", //$NON-NLS-1$
+          AcoreElementTypes.AClass_2002);
     case ACoreRootEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Diagram?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?ACoreRoot", AcoreElementTypes.ACoreRoot_1000); //$NON-NLS-1$
+      return getImage("Navigator?Diagram?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?ACoreRoot", //$NON-NLS-1$
+          AcoreElementTypes.ACoreRoot_1000);
     case AClassAssociationsEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?associations", AcoreElementTypes.AClassAssociations_4003); //$NON-NLS-1$
+      return getImage("Navigator?Link?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AClass?associations", //$NON-NLS-1$
+          AcoreElementTypes.AClassAssociations_4003);
     case AOperationEditPart.VISUAL_ID:
-      return getImage(
-          "Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AOperation", AcoreElementTypes.AOperation_3002); //$NON-NLS-1$
+      return getImage("Navigator?Node?http://www.eclipse.org/emf/cdo/dawn/examples/2010/ACore?AOperation", //$NON-NLS-1$
+          AcoreElementTypes.AOperation_3002);
     }
     return getImage("Navigator?UnknownElement", null); //$NON-NLS-1$
   }
@@ -173,6 +175,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   /**
    * @generated
    */
+  @Override
   public String getText(Object element)
   {
     if (element instanceof AcoreNavigatorGroup)
@@ -240,7 +243,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AAttribute_3001,
         view.getElement() != null ? view.getElement() : view,
-        AcoreVisualIDRegistry.getType(AAttributeEditPart.VISUAL_ID));
+            AcoreVisualIDRegistry.getType(AAttributeEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -260,7 +263,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AOperation_3004,
         view.getElement() != null ? view.getElement() : view,
-        AcoreVisualIDRegistry.getType(AOperation2EditPart.VISUAL_ID));
+            AcoreVisualIDRegistry.getType(AOperation2EditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -296,7 +299,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AInterface_2001,
         view.getElement() != null ? view.getElement() : view,
-        AcoreVisualIDRegistry.getType(AInterfaceNameEditPart.VISUAL_ID));
+            AcoreVisualIDRegistry.getType(AInterfaceNameEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -332,7 +335,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AAttribute_3003,
         view.getElement() != null ? view.getElement() : view,
-        AcoreVisualIDRegistry.getType(AAttribute2EditPart.VISUAL_ID));
+            AcoreVisualIDRegistry.getType(AAttribute2EditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -352,7 +355,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AClass_2002,
         view.getElement() != null ? view.getElement() : view,
-        AcoreVisualIDRegistry.getType(AClassNameEditPart.VISUAL_ID));
+            AcoreVisualIDRegistry.getType(AClassNameEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -397,7 +400,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
   {
     IParser parser = AcoreParserProvider.getParser(AcoreElementTypes.AOperation_3002,
         view.getElement() != null ? view.getElement() : view,
-        AcoreVisualIDRegistry.getType(AOperationEditPart.VISUAL_ID));
+            AcoreVisualIDRegistry.getType(AOperationEditPart.VISUAL_ID));
     if (parser != null)
     {
       return parser.getPrintString(new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
@@ -415,7 +418,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
    */
   private String getUnknownElementText(View view)
   {
-    return "<UnknownElement Visual_ID = " + view.getType() + ">"; //$NON-NLS-1$  //$NON-NLS-2$
+    return "<UnknownElement Visual_ID = " + view.getType() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**
@@ -423,7 +426,7 @@ public class AcoreNavigatorLabelProvider extends LabelProvider implements ICommo
    */
   private String getUnresolvedDomainElementProxyText(View view)
   {
-    return "<Unresolved domain element Visual_ID = " + view.getType() + ">"; //$NON-NLS-1$  //$NON-NLS-2$
+    return "<Unresolved domain element Visual_ID = " + view.getType() + ">"; //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**

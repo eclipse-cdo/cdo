@@ -51,7 +51,7 @@ public interface Product extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Product#getName <em>Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -99,7 +99,7 @@ public interface Product extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Vat</em>' attribute.
    * @see org.eclipse.emf.cdo.examples.company.VAT
@@ -139,7 +139,7 @@ public interface Product extends EObject
    * <p>
    * If the meaning of the '<em>Price</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
-   * 
+   *
    * @since 4.0 <!-- end-user-doc -->
    * @return the value of the '<em>Price</em>' attribute.
    * @see #setPrice(float)
@@ -152,7 +152,7 @@ public interface Product extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.examples.company.Product#getPrice <em>Price</em>}' attribute.
    * <!-- begin-user-doc -->
-   * 
+   *
    * @since 4.0 <!-- end-user-doc -->
    * @param value the new value of the '<em>Price</em>' attribute.
    * @see #getPrice()

@@ -118,7 +118,7 @@ public class DawnSWTBotUtil
   public static List<SWTBotGefEditPart> getAllEditParts(SWTBotGefEditor editor)
   {
     List<SWTBotGefEditPart> editParts = editor.editParts(new AbstractMatcher<EditPart>()
-        {
+    {
       @Override
       protected boolean doMatch(Object item)
       {
@@ -128,7 +128,7 @@ public class DawnSWTBotUtil
       public void describeTo(Description description)
       {
       }
-        });
+    });
     return editParts;
   }
 
@@ -140,7 +140,7 @@ public class DawnSWTBotUtil
 
   public static List<SWTBotGefEditPart> getConnectionEditParts(SWTBotGefEditor editor, Class<? extends EditPart> clazz,
       List<SWTBotGefEditPart> editParts)
-      {
+  {
 
     List<SWTBotGefEditPart> ret = new ArrayList<SWTBotGefEditPart>();
     for (SWTBotGefEditPart editPart : editParts)
@@ -155,7 +155,7 @@ public class DawnSWTBotUtil
       }
     }
     return ret;
-      }
+  }
 
   static Object monitor = new Object();
 
@@ -165,7 +165,7 @@ public class DawnSWTBotUtil
   public static List<SWTBotGefEditPart> getAllConnections(final SWTBotGefEditor editor)
   {
     AbstractMatcher<EditPart> matcher = new AbstractMatcher<EditPart>()
-        {
+    {
       @Override
       protected boolean doMatch(Object item)
       {
@@ -175,16 +175,16 @@ public class DawnSWTBotUtil
       public void describeTo(Description description)
       {
       }
-        };
-        List<SWTBotGefEditPart> aClassEditParts = editor.editParts(matcher);
+    };
+    List<SWTBotGefEditPart> aClassEditParts = editor.editParts(matcher);
 
-        List<SWTBotGefEditPart> ret = new ArrayList<SWTBotGefEditPart>();
+    List<SWTBotGefEditPart> ret = new ArrayList<SWTBotGefEditPart>();
 
-        for (SWTBotGefEditPart editPart : aClassEditParts)
-        {
-          ret.addAll(editPart.sourceConnections());
-        }
-        return ret;
+    for (SWTBotGefEditPart editPart : aClassEditParts)
+    {
+      ret.addAll(editPart.sourceConnections());
+    }
+    return ret;
   }
 
   public static Node createNewNodeRemote(Diagram diagram, AClass newAClass, String type)
@@ -322,7 +322,7 @@ public class DawnSWTBotUtil
     }
 
     final MenuItem menuItem = UIThreadRunnable.syncExec(new WidgetResult<MenuItem>()
-        {
+    {
       public MenuItem run()
       {
         MenuItem menuItem = null;
@@ -339,7 +339,7 @@ public class DawnSWTBotUtil
 
         return menuItem;
       }
-        });
+    });
     if (menuItem == null)
     {
       throw new WidgetNotFoundException("Could not find menu: " + Arrays.asList(texts));

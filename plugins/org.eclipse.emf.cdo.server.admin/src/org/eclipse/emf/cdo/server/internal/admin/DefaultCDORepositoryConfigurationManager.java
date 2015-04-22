@@ -79,8 +79,8 @@ import java.util.Map;
  *
  * @author Christian W. Damus (CEA LIST)
  */
-public class DefaultCDORepositoryConfigurationManager extends Lifecycle implements
-    InternalCDORepositoryConfigurationManager, ContainerAware
+public class DefaultCDORepositoryConfigurationManager extends Lifecycle
+    implements InternalCDORepositoryConfigurationManager, ContainerAware
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG,
       DefaultCDORepositoryConfigurationManager.class);
@@ -344,8 +344,8 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
 
     IExtensionRegistry registry = Platform.getExtensionRegistry();
     @SuppressWarnings("restriction")
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(
-        org.eclipse.emf.cdo.internal.server.bundle.OM.BUNDLE_ID, IAppExtension.EXT_POINT);
+    IConfigurationElement[] elements = registry
+        .getConfigurationElementsFor(org.eclipse.emf.cdo.internal.server.bundle.OM.BUNDLE_ID, IAppExtension.EXT_POINT);
     for (final IConfigurationElement element : elements)
     {
       if ("appExtension".equals(element.getName())) //$NON-NLS-1$

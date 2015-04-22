@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -201,18 +201,19 @@ public class DawnAcoreDocumentProvider extends AcoreDocumentProvider
         else
         {
           String msg = e.getLocalizedMessage();
-          thrownExcp = new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, msg != null ? msg
-              : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
+          thrownExcp = new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+              msg != null ? msg : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
         }
         throw thrownExcp;
       }
     }
     else
     {
-      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, NLS.bind(
-          Messages.AcoreDocumentProvider_IncorrectInputError, new Object[] { element,
-              "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$ 
-          null));
+      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+          NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
+              new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
+                  "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
+              null));
     }
   }
 

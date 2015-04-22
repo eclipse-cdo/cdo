@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -76,6 +76,7 @@ public class AcoreDiagramEditorPlugin extends AbstractUIPlugin
   /**
    * @generated
    */
+  @Override
   public void start(BundleContext context) throws Exception
   {
     super.start(context);
@@ -87,6 +88,7 @@ public class AcoreDiagramEditorPlugin extends AbstractUIPlugin
   /**
    * @generated
    */
+  @Override
   public void stop(BundleContext context) throws Exception
   {
     adapterFactory.dispose();
@@ -146,7 +148,7 @@ public class AcoreDiagramEditorPlugin extends AbstractUIPlugin
 
   /**
    * Returns an image descriptor for the image file at the given plug-in relative path.
-   * 
+   *
    * @generated
    * @param path
    *          the path
@@ -160,7 +162,7 @@ public class AcoreDiagramEditorPlugin extends AbstractUIPlugin
   /**
    * Respects images residing in any plug-in. If path is relative, then this bundle is looked up for the image,
    * otherwise, for absolute path, first segment is taken as id of plug-in with image
-   * 
+   *
    * @generated
    * @param path
    *          the path to image, either absolute (with plug-in id as first segment), or relative for bundled images
@@ -171,8 +173,8 @@ public class AcoreDiagramEditorPlugin extends AbstractUIPlugin
     final IPath p = new Path(path);
     if (p.isAbsolute() && p.segmentCount() > 1)
     {
-      return AbstractUIPlugin.imageDescriptorFromPlugin(p.segment(0), p.removeFirstSegments(1).makeAbsolute()
-          .toString());
+      return AbstractUIPlugin.imageDescriptorFromPlugin(p.segment(0),
+          p.removeFirstSegments(1).makeAbsolute().toString());
     }
     else
     {
@@ -183,7 +185,7 @@ public class AcoreDiagramEditorPlugin extends AbstractUIPlugin
   /**
    * Returns an image for the image file at the given plug-in relative path. Client do not need to dispose this image.
    * Images will be disposed automatically.
-   * 
+   *
    * @generated
    * @param path
    *          the path
@@ -202,7 +204,7 @@ public class AcoreDiagramEditorPlugin extends AbstractUIPlugin
 
   /**
    * Returns string from plug-in's resource bundle
-   * 
+   *
    * @generated
    */
   public static String getString(String key)

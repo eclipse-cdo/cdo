@@ -13,7 +13,7 @@ package org.eclipse.net4j.util;
 /**
  * An unchecked exception that wraps a checked exception. Wrapping occurs conditionally in the static
  * {@link #wrap(Exception, String) wrap()} methods.
- * 
+ *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
  */

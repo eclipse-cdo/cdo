@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.tests.model6;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**

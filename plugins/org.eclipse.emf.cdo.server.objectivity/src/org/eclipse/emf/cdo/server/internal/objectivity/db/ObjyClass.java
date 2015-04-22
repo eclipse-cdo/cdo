@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Ibrahim Sallam - initial API and implementation
  */
@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 /**
  * Wrapper around the AS class to be able to cache attributes.
- * 
+ *
  * @author ibrahim
  */
 public class ObjyClass

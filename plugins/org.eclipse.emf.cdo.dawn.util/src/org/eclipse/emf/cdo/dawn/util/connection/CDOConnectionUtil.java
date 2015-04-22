@@ -96,8 +96,8 @@ public class CDOConnectionUtil
    */
   public CDOSession openSession()
   {
-    currentSession = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo", protocol
-        + "://" + host + "?repositoryName=" + repositoryName);
+    currentSession = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
+        protocol + "://" + host + "?repositoryName=" + repositoryName);
 
     return currentSession;
   }

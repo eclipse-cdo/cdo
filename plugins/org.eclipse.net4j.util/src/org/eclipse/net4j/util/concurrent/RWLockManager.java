@@ -29,7 +29,7 @@ import java.util.Set;
  * Support Multiple reads/no write and upgrade lock from read to write. Many context could request
  * {@link IRWLockManager.LockType#WRITE write} lock at the same time. It will privileges first context that has already
  * a {@link IRWLockManager.LockType#READ read} lock. If no one has any read lock, it's "first come first serve".
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @deprecated Use {@link RWOLockManager}
@@ -130,7 +130,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
 
   /**
    * Attempts to release for a given locktype, context and objects.
-   * 
+   *
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
    * @since 3.0
@@ -267,7 +267,7 @@ public class RWLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWLock
    * Attempts to release this lock.
    * <p>
    * If the number of context is now zero then the lock is made available for write lock attempts.
-   * 
+   *
    * @throws IllegalMonitorStateException
    *           Unlocking object not locked.
    */

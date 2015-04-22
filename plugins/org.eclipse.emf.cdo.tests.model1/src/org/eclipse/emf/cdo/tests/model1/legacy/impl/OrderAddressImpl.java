@@ -181,8 +181,8 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
    */
   public void setOrder(Order newOrder)
   {
-    if (newOrder != eInternalContainer() || eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER
-        && newOrder != null)
+    if (newOrder != eInternalContainer()
+        || eContainerFeatureID() != Model1Package.ORDER_ADDRESS__ORDER && newOrder != null)
     {
       if (EcoreUtil.isAncestor(this, newOrder))
       {
@@ -291,8 +291,8 @@ public class OrderAddressImpl extends AddressImpl implements OrderAddress
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, newProduct,
-          newProduct));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_ADDRESS__PRODUCT, newProduct, newProduct));
     }
   }
 

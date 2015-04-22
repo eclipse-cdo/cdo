@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -143,7 +143,7 @@ public interface Model5Factory extends EFactory
   /**
    * Returns a new object of class '<em>Child</em>'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Child</em>'.
    * @generated
    */

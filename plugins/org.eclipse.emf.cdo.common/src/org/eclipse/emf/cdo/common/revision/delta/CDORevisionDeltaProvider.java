@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
  * Provides consumers with the {@link CDORevisionDelta revision deltas} of {@link CDOID identifiable} CDO objects.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.uses {@link CDORevisionDelta} - - provides

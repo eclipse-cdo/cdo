@@ -47,7 +47,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 /**
  * See bug 201266
- * 
+ *
  * @author Simon McDuff
  */
 public class RevisionDeltaTest extends AbstractCDOTest
@@ -134,8 +134,8 @@ public class RevisionDeltaTest extends AbstractCDOTest
     transaction.close();
 
     CDOTransaction transaction2 = session.openTransaction();
-    SalesOrder salesOrder2 = (SalesOrder)CDOUtil.getEObject(transaction2.getObject(CDOUtil.getCDOObject(salesOrder)
-        .cdoID(), true));
+    SalesOrder salesOrder2 = (SalesOrder)CDOUtil
+        .getEObject(transaction2.getObject(CDOUtil.getCDOObject(salesOrder).cdoID(), true));
     CDORevision salesRevision = CDOUtil.getCDOObject(salesOrder2).cdoRevision();
     EStructuralFeature customerFeature = getModel1Package().getSalesOrder_Customer();
 

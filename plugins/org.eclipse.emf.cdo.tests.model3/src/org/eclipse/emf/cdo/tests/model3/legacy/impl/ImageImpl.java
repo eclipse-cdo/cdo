@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -37,7 +37,7 @@ public class ImageImpl extends EObjectImpl implements Image
   /**
    * The default value of the '{@link #getWidth() <em>Width</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getWidth()
    * @generated
    * @ordered
@@ -47,7 +47,7 @@ public class ImageImpl extends EObjectImpl implements Image
   /**
    * The cached value of the '{@link #getWidth() <em>Width</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getWidth()
    * @generated
    * @ordered
@@ -67,7 +67,7 @@ public class ImageImpl extends EObjectImpl implements Image
   /**
    * The cached value of the '{@link #getHeight() <em>Height</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getHeight()
    * @generated
    * @ordered
@@ -77,7 +77,7 @@ public class ImageImpl extends EObjectImpl implements Image
   /**
    * The default value of the '{@link #getData() <em>Data</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getData()
    * @generated
    * @ordered
@@ -130,7 +130,9 @@ public class ImageImpl extends EObjectImpl implements Image
     int oldWidth = width;
     width = newWidth;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.IMAGE__WIDTH, oldWidth, width));
+    }
   }
 
   /**
@@ -151,7 +153,9 @@ public class ImageImpl extends EObjectImpl implements Image
     int oldHeight = height;
     height = newHeight;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.IMAGE__HEIGHT, oldHeight, height));
+    }
   }
 
   /**
@@ -172,7 +176,9 @@ public class ImageImpl extends EObjectImpl implements Image
     CDOBlob oldData = data;
     data = newData;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.IMAGE__DATA, oldData, data));
+    }
   }
 
   /**
@@ -265,7 +271,9 @@ public class ImageImpl extends EObjectImpl implements Image
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (width: ");

@@ -35,7 +35,7 @@ public class ObjyPackageInfo extends ooObj
         "org.eclipse.emf.cdo.server.internal.objectivity.schema.ObjyPackageUnit", // name of related class
         "packageInfos", // inverse relationship field name
         Relationship.COPY_DELETE, Relationship.VERSION_DELETE, false, false, Relationship.INLINE_NONE); // none-inline
-                                                                                                        // association
+    // association
   }
 
   /**

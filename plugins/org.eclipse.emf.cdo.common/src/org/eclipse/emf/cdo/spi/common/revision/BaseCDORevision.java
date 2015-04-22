@@ -224,10 +224,9 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     if (TRACER.isEnabled())
     {
-      TRACER
-          .format(
-              "Reading revision: ID={0}, className={1}, version={2}, branchPoint={3}, revised={4}, resource={5}, container={6}, featureID={7}", //$NON-NLS-1$
-              id, getEClass().getName(), version, branchPoint, revised, resourceID, containerID, containingFeatureID);
+      TRACER.format(
+          "Reading revision: ID={0}, className={1}, version={2}, branchPoint={3}, revised={4}, resource={5}, container={6}, featureID={7}", //$NON-NLS-1$
+          id, getEClass().getName(), version, branchPoint, revised, resourceID, containerID, containingFeatureID);
     }
   }
 
@@ -364,10 +363,9 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     if (TRACER.isEnabled())
     {
-      TRACER
-          .format(
-              "Writing revision: ID={0}, className={1}, version={2}, branchPoint={3}, revised={4}, resource={5}, container={6}, featureID={7}", //$NON-NLS-1$
-              id, eClass.getName(), getVersion(), branchPoint, revised, resourceID, containerID, containingFeatureID);
+      TRACER.format(
+          "Writing revision: ID={0}, className={1}, version={2}, branchPoint={3}, revised={4}, resource={5}, container={6}, featureID={7}", //$NON-NLS-1$
+          id, eClass.getName(), getVersion(), branchPoint, revised, resourceID, containerID, containingFeatureID);
     }
 
     out.writeCDOClassifierRef(classRef);
@@ -586,7 +584,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     if (revised != UNSPECIFIED_DATE && revised < Math.max(0, created))
     {
       throw new IllegalArgumentException("revision=" + this + ", created=" + CDOCommonUtil.formatTimeStamp(created)
-          + ", revised=" + CDOCommonUtil.formatTimeStamp(revised));
+      + ", revised=" + CDOCommonUtil.formatTimeStamp(revised));
     }
 
     if (TRACER.isEnabled())
@@ -869,8 +867,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
     catch (ArrayIndexOutOfBoundsException ex)
     {
-      throw new IllegalArgumentException(MessageFormat.format(Messages.getString("AbstractCDORevision.20"), feature,
-          getClassInfo()), ex);
+      throw new IllegalArgumentException(
+          MessageFormat.format(Messages.getString("AbstractCDORevision.20"), feature, getClassInfo()), ex);
     }
   }
 

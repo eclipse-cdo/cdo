@@ -130,7 +130,8 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   public Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection)
   {
-    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE, new Monitor());
+    return readPackageUnits(connection, CDOBranchPoint.UNSPECIFIED_DATE, CDOBranchPoint.UNSPECIFIED_DATE,
+        new Monitor());
   }
 
   public final void writePackageUnits(Connection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)

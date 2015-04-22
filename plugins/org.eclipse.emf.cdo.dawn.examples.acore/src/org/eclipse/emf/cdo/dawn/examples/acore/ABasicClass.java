@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore;
 
@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getABasicClass()
  * @model
  * @extends CDOObject
@@ -41,7 +41,7 @@ public interface ABasicClass extends CDOObject
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Operations</em>' containment reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getABasicClass_Operations()
    * @model containment="true"
@@ -57,7 +57,7 @@ public interface ABasicClass extends CDOObject
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Attributes</em>' containment reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getABasicClass_Attributes()
    * @model containment="true"
@@ -71,7 +71,7 @@ public interface ABasicClass extends CDOObject
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getABasicClass_Name()
@@ -83,7 +83,7 @@ public interface ABasicClass extends CDOObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass#getName <em>Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()

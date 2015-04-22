@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.ObjectUtil;
  * <ul>
  * <li> {@link ValueEvent} after value changes.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @since 3.1
  * @apiviz.has {@link java.lang.Object} oneway - - value

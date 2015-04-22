@@ -69,8 +69,8 @@ public class ShortValueImpl extends ValueImpl implements ShortValue
   @Override
   public Short getLiteral()
   {
-    return (Short)eDynamicGet(ExpressionsPackage.SHORT_VALUE__LITERAL,
-        ExpressionsPackage.Literals.SHORT_VALUE__LITERAL, true, true);
+    return (Short)eDynamicGet(ExpressionsPackage.SHORT_VALUE__LITERAL, ExpressionsPackage.Literals.SHORT_VALUE__LITERAL,
+        true, true);
   }
 
   /**

@@ -109,8 +109,9 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
         "3 load revisions request should have been sent, 2 first for CDORevisions of CDOResourceFolders to get resource path and another in prefetch to load all CDORevisions of CDOResource",
         3, signalCounter.getCountFor(LoadRevisionsRequest.class));
     int expectedNbLockStateRequestCalls = (cdoLockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2;
-    assertEquals("As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled "
-        + expectedNbLockStateRequestCalls + " LockStateRequests should have been sent to the server",
+    assertEquals(
+        "As CDOLockState prefetch is " + (cdoLockStatePrefetchEnabled ? "" : "not ") + "enabled "
+            + expectedNbLockStateRequestCalls + " LockStateRequests should have been sent to the server",
         expectedNbLockStateRequestCalls, signalCounter.getCountFor(LockStateRequest.class));
 
     protocol.removeListener(signalCounter);
@@ -136,8 +137,6 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
       }
 
       super.addAdapter(notifier);
-
     }
   }
-
 }

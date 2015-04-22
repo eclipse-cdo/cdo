@@ -94,8 +94,10 @@ public class EmptyStringDefaultImpl extends EObjectImpl implements EmptyStringDe
     String oldAttribute = attribute;
     attribute = newAttribute;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.EMPTY_STRING_DEFAULT__ATTRIBUTE,
-          oldAttribute, attribute));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.EMPTY_STRING_DEFAULT__ATTRIBUTE, oldAttribute,
+          attribute));
+    }
   }
 
   /**
@@ -173,7 +175,9 @@ public class EmptyStringDefaultImpl extends EObjectImpl implements EmptyStringDe
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attribute: ");

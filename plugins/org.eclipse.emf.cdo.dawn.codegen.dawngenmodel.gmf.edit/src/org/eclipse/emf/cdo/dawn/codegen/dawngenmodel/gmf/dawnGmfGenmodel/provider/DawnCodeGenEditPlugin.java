@@ -46,8 +46,7 @@ public final class DawnCodeGenEditPlugin extends EMFPlugin
    */
   public DawnCodeGenEditPlugin()
   {
-    super(new ResourceLocator[] {
-        org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnCodeGenEditPlugin.INSTANCE,
+    super(new ResourceLocator[] { org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.provider.DawnCodeGenEditPlugin.INSTANCE,
         EcoreEditPlugin.INSTANCE, GenModelEditPlugin.INSTANCE, EditorPlugin.INSTANCE, });
   }
 

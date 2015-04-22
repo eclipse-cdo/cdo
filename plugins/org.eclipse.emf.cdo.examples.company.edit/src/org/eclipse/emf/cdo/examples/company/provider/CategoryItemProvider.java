@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -38,12 +38,12 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.examples.company.Category} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
-public class CategoryItemProvider extends CDOItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    IItemColorProvider, IItemFontProvider
+public class CategoryItemProvider extends CDOItemProviderAdapter
+    implements IEditingDomainItemProvider, IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider,
+    IItemPropertySource, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -79,12 +79,12 @@ public class CategoryItemProvider extends CDOItemProviderAdapter implements IEdi
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Category_name_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Category_name_feature", "_UI_Category_type"),
-        CompanyPackage.Literals.CATEGORY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-        null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Category_name_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_Category_name_feature", "_UI_Category_type"),
+            CompanyPackage.Literals.CATEGORY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -160,8 +160,8 @@ public class CategoryItemProvider extends CDOItemProviderAdapter implements IEdi
   public String getText(Object object)
   {
     String label = ((Category)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Category_type") : getString("_UI_Category_type") + " "
-        + label;
+    return label == null || label.length() == 0 ? getString("_UI_Category_type")
+        : getString("_UI_Category_type") + " " + label;
   }
 
   /**
@@ -199,11 +199,11 @@ public class CategoryItemProvider extends CDOItemProviderAdapter implements IEdi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.CATEGORY__CATEGORIES,
-        CompanyFactory.eINSTANCE.createCategory()));
+    newChildDescriptors.add(
+        createChildParameter(CompanyPackage.Literals.CATEGORY__CATEGORIES, CompanyFactory.eINSTANCE.createCategory()));
 
-    newChildDescriptors.add(createChildParameter(CompanyPackage.Literals.CATEGORY__PRODUCTS,
-        CompanyFactory.eINSTANCE.createProduct()));
+    newChildDescriptors.add(
+        createChildParameter(CompanyPackage.Literals.CATEGORY__PRODUCTS, CompanyFactory.eINSTANCE.createProduct()));
   }
 
   /**

@@ -11,8 +11,8 @@
 package org.eclipse.emf.cdo.server.internal.admin.catalog.impl;
 
 import org.eclipse.emf.cdo.common.lob.CDOClob;
-import org.eclipse.emf.cdo.server.internal.admin.catalog.RepositoryConfiguration;
 import org.eclipse.emf.cdo.server.internal.admin.catalog.CatalogPackage;
+import org.eclipse.emf.cdo.server.internal.admin.catalog.RepositoryConfiguration;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 

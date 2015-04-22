@@ -429,8 +429,8 @@ public final class EditorEditorAdvisor extends WorkbenchAdvisor
      */
     public void run(IAction action)
     {
-      LoadResourceAction.LoadResourceDialog loadResourceDialog = new LoadResourceAction.LoadResourceDialog(getWindow()
-          .getShell());
+      LoadResourceAction.LoadResourceDialog loadResourceDialog = new LoadResourceAction.LoadResourceDialog(
+          getWindow().getShell());
       if (Window.OK == loadResourceDialog.open())
       {
         for (URI uri : loadResourceDialog.getURIs())

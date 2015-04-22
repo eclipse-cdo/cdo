@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
  * <p>
  * Branch point ranges are usually created with {@link CDOBranchUtil#createRange(CDOBranchPoint, CDOBranchPoint)
  * CDOBranchUtil.createRange()} and often used in the context of {@link CDOChangeSet change sets}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

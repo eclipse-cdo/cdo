@@ -227,14 +227,14 @@ public class CDOCompare
     }
 
     @Override
-    protected Set<Match> matchPerId(Iterator<? extends EObject> leftEObjects,
-        Iterator<? extends EObject> rightEObjects, Iterator<? extends EObject> originEObjects,
-        List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID, List<EObject> originEObjectsNoID)
+    protected Set<Match> matchPerId(Iterator<? extends EObject> leftEObjects, Iterator<? extends EObject> rightEObjects,
+        Iterator<? extends EObject> originEObjects, List<EObject> leftEObjectsNoID, List<EObject> rightEObjectsNoID,
+        List<EObject> originEObjectsNoID)
     {
       if (GETPARENTEOBJECT_METHOD == null)
       {
-        return matchPerIdCompatibility(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID,
-            rightEObjectsNoID, originEObjectsNoID);
+        return matchPerIdCompatibility(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID,
+            originEObjectsNoID);
       }
 
       return super.matchPerId(leftEObjects, rightEObjects, originEObjects, leftEObjectsNoID, rightEObjectsNoID,

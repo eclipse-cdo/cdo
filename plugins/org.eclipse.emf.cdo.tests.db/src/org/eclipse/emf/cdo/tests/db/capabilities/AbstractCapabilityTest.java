@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 /**
  * This is a simple test case that can be used to analyze how a DBMS handles DML in the middle of a transaction.
- * 
+ *
  * @author Stefan Winkler
  */
 public abstract class AbstractCapabilityTest extends TestCase

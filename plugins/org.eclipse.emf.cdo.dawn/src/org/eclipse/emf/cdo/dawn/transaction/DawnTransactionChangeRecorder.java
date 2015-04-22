@@ -36,8 +36,8 @@ public class DawnTransactionChangeRecorder extends TransactionChangeRecorder
   @Override
   public void notifyChanged(Notification notification)
   {
-    if (!(notification.getOldValue() instanceof ResourceSet && notification.getNewValue() == null && notification
-        .getEventType() == Notification.SET))
+    if (!(notification.getOldValue() instanceof ResourceSet && notification.getNewValue() == null
+        && notification.getEventType() == Notification.SET))
     {
       if (!(notification instanceof CDODeltaNotification))
       {

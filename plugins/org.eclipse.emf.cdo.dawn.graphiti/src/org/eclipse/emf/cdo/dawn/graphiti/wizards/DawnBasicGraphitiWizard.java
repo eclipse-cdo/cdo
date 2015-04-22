@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -123,8 +123,8 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
     URI diagramResourceURI = dawnDiagramModelFilePage.getURI();
     URI domainModelResourceURI = dawnDomainModelFilePage.getURI();
 
-    Diagram diagram = Graphiti.getPeCreateService()
-        .createDiagram(diagramTypeId, diagramResourceURI.lastSegment(), true);
+    Diagram diagram = Graphiti.getPeCreateService().createDiagram(diagramTypeId, diagramResourceURI.lastSegment(),
+        true);
 
     String editorID = DawnGraphitiDiagramEditor.ID;
 
@@ -135,7 +135,8 @@ public class DawnBasicGraphitiWizard extends Wizard implements INewWizard
     Resource diagramResource = createDiagramResource(diagramResourceURI, diagram, editingDomain);
 
     String providerId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
-    DiagramEditorInput editorInput = new DawnGraphitiEditorInput(EcoreUtil.getURI(diagram), providerId, diagramResource);
+    DiagramEditorInput editorInput = new DawnGraphitiEditorInput(EcoreUtil.getURI(diagram), providerId,
+        diagramResource);
 
     try
     {

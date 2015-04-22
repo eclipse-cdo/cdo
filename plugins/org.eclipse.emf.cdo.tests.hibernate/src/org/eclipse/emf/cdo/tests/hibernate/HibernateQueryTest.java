@@ -37,7 +37,7 @@ import java.util.List;
 
 /**
  * Test different aspects of HQL querying using the CDO query api.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateQueryTest extends AbstractCDOTest
@@ -202,10 +202,8 @@ public class HibernateQueryTest extends AbstractCDOTest
           final int productIndex = Integer.parseInt(product.getName());
           // note the id is always used as the parameter
           // bug 282620
-          final CDOQuery orderQuery = transaction
-              .createQuery(
-                  "hql",
-                  "select so from SalesOrder so, OrderDetail od where so.customer=:customer and od in elements(so.orderDetails) and od.product=:product");
+          final CDOQuery orderQuery = transaction.createQuery("hql",
+              "select so from SalesOrder so, OrderDetail od where so.customer=:customer and od in elements(so.orderDetails) and od.product=:product");
           orderQuery.setParameter("customer", customer);
           orderQuery.setParameter("product", product);
           addCacheParameter(orderQuery);
@@ -459,8 +457,8 @@ public class HibernateQueryTest extends AbstractCDOTest
       customer.setStreet("Street " + i);
       resource.getContents().add(customer);
 
-      final List<Product1> customerProducts = products.subList(productCounter, productCounter
-          + NUM_OF_PRODUCTS_CUSTOMER);
+      final List<Product1> customerProducts = products.subList(productCounter,
+          productCounter + NUM_OF_PRODUCTS_CUSTOMER);
       for (int k = 0; k < NUM_OF_SALES_ORDERS; k++)
       {
         resource.getContents().add(createSalesOrder(i * 10 + k, customer, customerProducts));

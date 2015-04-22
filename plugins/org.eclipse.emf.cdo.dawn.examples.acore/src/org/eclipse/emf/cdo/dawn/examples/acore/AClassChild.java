@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore;
 
@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.CDOObject;
  * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild#getDataType <em>Data Type</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClassChild()
  * @model
  * @extends CDOObject
@@ -38,7 +38,7 @@ public interface AClassChild extends CDOObject
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClassChild_Name()
@@ -50,7 +50,7 @@ public interface AClassChild extends CDOObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild#getName <em>Name</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -67,7 +67,7 @@ public interface AClassChild extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Accessright</em>' attribute.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AccessType
    * @see #isSetAccessright()
@@ -82,7 +82,7 @@ public interface AClassChild extends CDOObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild#getAccessright
    * <em>Accessright</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Accessright</em>' attribute.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AccessType
@@ -96,7 +96,7 @@ public interface AClassChild extends CDOObject
   /**
    * Unsets the value of the '{@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild#getAccessright
    * <em>Accessright</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #isSetAccessright()
    * @see #getAccessright()
    * @see #setAccessright(AccessType)
@@ -107,7 +107,7 @@ public interface AClassChild extends CDOObject
   /**
    * Returns whether the value of the '{@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild#getAccessright
    * <em>Accessright</em>}' attribute is set. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return whether the value of the '<em>Accessright</em>' attribute is set.
    * @see #unsetAccessright()
    * @see #getAccessright()
@@ -123,7 +123,7 @@ public interface AClassChild extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Data Type</em>' attribute.
    * @see #setDataType(String)
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAClassChild_DataType()
@@ -135,7 +135,7 @@ public interface AClassChild extends CDOObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild#getDataType <em>Data Type</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Data Type</em>' attribute.
    * @see #getDataType()

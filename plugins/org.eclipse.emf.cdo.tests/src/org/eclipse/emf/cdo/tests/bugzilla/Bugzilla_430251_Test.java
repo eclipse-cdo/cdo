@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
  */
 public class Bugzilla_430251_Test extends AbstractCDOTest
 {
-
   /**
    * When the CDOTransaction is closed the ResourceSet should not reference it yet again,
    * because the CDOTransaction has a reference to the CDOSession which references the CDORevisionCache which can take many memory.
@@ -58,5 +57,4 @@ public class Bugzilla_430251_Test extends AbstractCDOTest
     }
     return cdoURIHandler;
   }
-
 }

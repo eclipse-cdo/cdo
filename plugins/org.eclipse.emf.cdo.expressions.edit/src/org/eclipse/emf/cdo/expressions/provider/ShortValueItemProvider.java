@@ -40,8 +40,8 @@ import java.util.List;
  * @generated
  */
 public class ShortValueItemProvider extends ValueItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -80,12 +80,14 @@ public class ShortValueItemProvider extends ValueItemProvider implements IEditin
    */
   protected void addLiteralPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_ShortValue_literal_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ShortValue_literal_feature", "_UI_ShortValue_type"),
-        ExpressionsPackage.Literals.SHORT_VALUE__LITERAL, true, false, false,
-        ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(
+            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_ShortValue_literal_feature"),
+                getString("_UI_PropertyDescriptor_description", "_UI_ShortValue_literal_feature",
+                    "_UI_ShortValue_type"),
+                ExpressionsPackage.Literals.SHORT_VALUE__LITERAL, true, false, false,
+                ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**

@@ -50,8 +50,8 @@ import java.util.List;
  *
  * @generated
  */
-public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory implements ComposeableAdapterFactory,
-    IChangeNotifier, IDisposable, IChildCreationExtender
+public class EresourceItemProviderAdapterFactory extends EresourceAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory.

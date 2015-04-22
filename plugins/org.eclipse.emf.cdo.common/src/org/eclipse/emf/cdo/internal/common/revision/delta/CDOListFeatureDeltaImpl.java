@@ -186,7 +186,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
         cachedSources = new ListTargetAdding[initialCapacity];
       }
       else
-      // i.e. unprocessedFeatureDeltas != null
+        // i.e. unprocessedFeatureDeltas != null
       {
         int requiredCapacity = 1 + cachedIndices[0] + unprocessedFeatureDeltas.size();
         if (cachedIndices.length < requiredCapacity)
@@ -606,8 +606,8 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   private static <T, U> T[] copyOf(U[] original, int newLength, Class<? extends T[]> newType)
   {
     @SuppressWarnings("unchecked")
-    T[] copy = (Object)newType == (Object)Object[].class ? (T[])new Object[newLength] : (T[])Array.newInstance(
-        newType.getComponentType(), newLength);
+    T[] copy = (Object)newType == (Object)Object[].class ? (T[])new Object[newLength]
+        : (T[])Array.newInstance(newType.getComponentType(), newLength);
     System.arraycopy(original, 0, copy, 0, Math.min(original.length, newLength));
     return copy;
   }

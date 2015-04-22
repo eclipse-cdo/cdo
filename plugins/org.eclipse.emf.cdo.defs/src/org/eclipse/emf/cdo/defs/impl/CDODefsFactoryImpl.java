@@ -259,8 +259,10 @@ public class CDODefsFactoryImpl extends EFactoryImpl implements CDODefsFactory
   {
     ResourceMode result = ResourceMode.get(initialValue);
     if (result == null)
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-          + eDataType.getName() + "'");
+    {
+      throw new IllegalArgumentException(
+          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    }
     return result;
   }
 

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -72,7 +72,7 @@ public interface model4Package extends EPackage
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -356,7 +356,7 @@ public interface model4Package extends EPackage
   /**
    * The number of structural features of the '<em>Multi Non Contained Unsettable Element</em>' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -374,7 +374,7 @@ public interface model4Package extends EPackage
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -506,7 +506,7 @@ public interface model4Package extends EPackage
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -612,7 +612,7 @@ public interface model4Package extends EPackage
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -659,7 +659,8 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_SINGLE_REF_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT_FEATURE_COUNT + 1;
+  int IMPL_SINGLE_REF_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.ISINGLE_REF_CONTAINED_ELEMENT_FEATURE_COUNT
+      + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefNonContainerImpl <em>Impl Single Ref Non Container</em>}' class.
@@ -710,16 +711,18 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__NAME = model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT + 0;
+  int IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT__NAME = model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT
+      + 0;
 
   /**
    * The number of structural features of the '<em>Impl Single Ref Non Contained Element</em>' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
-  int IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT + 1;
+  int IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.ISINGLE_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT
+      + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefNonContainerImpl <em>Impl Multi Ref Non Container</em>}' class.
@@ -770,7 +773,8 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__NAME = model4interfacesPackage.IMULTI_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT + 0;
+  int IMPL_MULTI_REF_NON_CONTAINED_ELEMENT__NAME = model4interfacesPackage.IMULTI_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT
+      + 0;
 
   /**
    * The number of structural features of the '<em>Impl Multi Ref Non Contained Element</em>' class.
@@ -779,7 +783,8 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_MULTI_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.IMULTI_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT + 1;
+  int IMPL_MULTI_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.IMULTI_REF_NON_CONTAINED_ELEMENT_FEATURE_COUNT
+      + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefContainerImpl <em>Impl Multi Ref Container</em>}' class.
@@ -840,7 +845,8 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_MULTI_REF_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.IMULTI_REF_CONTAINED_ELEMENT_FEATURE_COUNT + 1;
+  int IMPL_MULTI_REF_CONTAINED_ELEMENT_FEATURE_COUNT = model4interfacesPackage.IMULTI_REF_CONTAINED_ELEMENT_FEATURE_COUNT
+      + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.ImplSingleRefContainerNPLImpl <em>Impl Single Ref Container NPL</em>}' class.
@@ -854,7 +860,7 @@ public interface model4Package extends EPackage
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -893,7 +899,8 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_SINGLE_REF_NON_CONTAINER_NPL_FEATURE_COUNT = model4interfacesPackage.ISINGLE_REF_NON_CONTAINER_NPL_FEATURE_COUNT + 0;
+  int IMPL_SINGLE_REF_NON_CONTAINER_NPL_FEATURE_COUNT = model4interfacesPackage.ISINGLE_REF_NON_CONTAINER_NPL_FEATURE_COUNT
+      + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.ImplMultiRefContainerNPLImpl <em>Impl Multi Ref Container NPL</em>}' class.
@@ -946,7 +953,8 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_MULTI_REF_NON_CONTAINER_NPL_FEATURE_COUNT = model4interfacesPackage.IMULTI_REF_NON_CONTAINER_NPL_FEATURE_COUNT + 0;
+  int IMPL_MULTI_REF_NON_CONTAINER_NPL_FEATURE_COUNT = model4interfacesPackage.IMULTI_REF_NON_CONTAINER_NPL_FEATURE_COUNT
+      + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.ImplContainedElementNPLImpl <em>Impl Contained Element NPL</em>}' class.
@@ -972,7 +980,8 @@ public interface model4Package extends EPackage
    * @generated
    * @ordered
    */
-  int IMPL_CONTAINED_ELEMENT_NPL_FEATURE_COUNT = model4interfacesPackage.ICONTAINED_ELEMENT_NO_PARENT_LINK_FEATURE_COUNT + 1;
+  int IMPL_CONTAINED_ELEMENT_NPL_FEATURE_COUNT = model4interfacesPackage.ICONTAINED_ELEMENT_NO_PARENT_LINK_FEATURE_COUNT
+      + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model4.impl.GenRefMultiNUNonContainedImpl <em>Gen Ref Multi NU Non Contained</em>}' class.
@@ -1275,7 +1284,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedUnsettable#getElements()
    * @see #getRefMultiNonContainedUnsettable()
@@ -1296,7 +1305,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getName()
    * @see #getMultiNonContainedUnsettableElement()
@@ -1308,7 +1317,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.MultiNonContainedUnsettableElement#getParent()
    * @see #getMultiNonContainedUnsettableElement()
@@ -1389,7 +1398,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.RefMultiNonContainedNPL#getElements()
    * @see #getRefMultiNonContainedNPL()
@@ -1490,7 +1499,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiNonContained#getElements()
    * @see #getGenRefMultiNonContained()
@@ -1549,7 +1558,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.ImplSingleRefNonContainedElement#getName()
    * @see #getImplSingleRefNonContainedElement()
@@ -1579,7 +1588,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement#getName <em>Name</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Name</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.ImplMultiRefNonContainedElement#getName()
    * @see #getImplMultiRefNonContainedElement()
@@ -1674,7 +1683,7 @@ public interface model4Package extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4.GenRefMultiNUNonContained#getElements()
    * @see #getGenRefMultiNUNonContained()

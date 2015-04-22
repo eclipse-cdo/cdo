@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.CDOObject;
  * <li>{@link org.gastro.inventory.Ingredient#getQuantity <em>Quantity</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getIngredient()
  * @model
  * @extends CDOObject
@@ -41,7 +41,7 @@ public interface Ingredient extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Recipe</em>' container reference.
    * @see #setRecipe(Recipe)
    * @see org.gastro.inventory.InventoryPackage#getIngredient_Recipe()
@@ -54,7 +54,7 @@ public interface Ingredient extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Ingredient#getRecipe <em>Recipe</em>}' container reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Recipe</em>' container reference.
    * @see #getRecipe()
@@ -69,7 +69,7 @@ public interface Ingredient extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Product</em>' reference.
    * @see #setProduct(Product)
    * @see org.gastro.inventory.InventoryPackage#getIngredient_Product()
@@ -81,7 +81,7 @@ public interface Ingredient extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Ingredient#getProduct <em>Product</em>}' reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Product</em>' reference.
    * @see #getProduct()
@@ -96,7 +96,7 @@ public interface Ingredient extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Quantity</em>' attribute.
    * @see #setQuantity(int)
    * @see org.gastro.inventory.InventoryPackage#getIngredient_Quantity()
@@ -108,7 +108,7 @@ public interface Ingredient extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Ingredient#getQuantity <em>Quantity</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Quantity</em>' attribute.
    * @see #getQuantity()

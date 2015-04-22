@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 
 /**
  * With cdo packages are registered at runtime so if the package in the xml is not yet present then be lenient about it.
- * 
+ *
  * @author <a href="mtaal@elver.org">Martin Taal</a>
  * @since 3.0
  */

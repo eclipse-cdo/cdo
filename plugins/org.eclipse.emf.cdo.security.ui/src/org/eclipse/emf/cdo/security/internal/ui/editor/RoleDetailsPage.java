@@ -98,8 +98,9 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
       public Command createConfigureCommand(Object newObject)
       {
         ResourceFilter filter = SecurityFactory.eINSTANCE.createResourceFilter("/home/${user}", PatternStyle.TREE); //$NON-NLS-1$
-        Command result = CreateChildCommand.create(getEditingDomain(), newObject, new CommandParameter(newObject,
-            SecurityPackage.Literals.FILTER_PERMISSION__FILTERS, filter), Collections.singleton(newObject));
+        Command result = CreateChildCommand.create(getEditingDomain(), newObject,
+            new CommandParameter(newObject, SecurityPackage.Literals.FILTER_PERMISSION__FILTERS, filter),
+            Collections.singleton(newObject));
         result = result.chain(SetCommand.create(getEditingDomain(), newObject,
             SecurityPackage.Literals.PERMISSION__ACCESS, Access.WRITE));
         return result;
@@ -245,8 +246,8 @@ public class RoleDetailsPage extends AbstractDetailsPage<Role>
         case COL_PATH:
           if (!ObjectUtil.equals(filter.getPath(), value))
           {
-            execute(SetCommand
-                .create(getEditingDomain(), filter, SecurityPackage.Literals.RESOURCE_FILTER__PATH, value));
+            execute(
+                SetCommand.create(getEditingDomain(), filter, SecurityPackage.Literals.RESOURCE_FILTER__PATH, value));
             viewer.refresh(element);
           }
           break;

@@ -55,7 +55,7 @@ import org.eclipse.emf.ecore.EObject;
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model. <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage
  * @generated
  */
@@ -63,14 +63,14 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
 {
   /**
    * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected static ArticlePackage modelPackage;
 
   /**
    * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ArticleAdapterFactory()
@@ -85,7 +85,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Returns whether this factory is applicable for the type of the object. <!-- begin-user-doc --> This implementation
    * returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
    * end-user-doc -->
-   * 
+   *
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
@@ -105,7 +105,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
 
   /**
    * The switch that delegates to the <code>createXXX</code> methods. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ArticleSwitch<Adapter> modelSwitch = new ArticleSwitch<Adapter>()
@@ -329,7 +329,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param target
    *          the object to adapt.
    * @return the adapter for the <code>target</code>.
@@ -345,7 +345,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation
    * <em>Documentation</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation
    * @generated
@@ -359,7 +359,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Context
    * <em>Context</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Context
    * @generated
@@ -373,7 +373,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Category
    * <em>Category</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Category
    * @generated
@@ -387,7 +387,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Article
    * <em>Article</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Article
    * @generated
@@ -401,7 +401,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Chapter
    * <em>Chapter</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Chapter
    * @generated
@@ -415,7 +415,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Snippet
    * <em>Snippet</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Snippet
    * @generated
@@ -429,7 +429,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Diagram
    * <em>Diagram</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Diagram
    * @generated
@@ -443,7 +443,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Factory
    * <em>Factory</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Factory
    * @generated
@@ -457,7 +457,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaElement
    * <em>Java Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaElement
    * @generated
@@ -472,7 +472,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * <em>Structural Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement
    * @generated
@@ -486,7 +486,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget
    * <em>Link Target</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.LinkTarget
    * @generated
@@ -500,7 +500,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Callout
    * <em>Callout</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Callout
    * @generated
@@ -515,7 +515,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * <em>Embeddable Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement
    * @generated
@@ -529,7 +529,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalTarget
    * <em>External Target</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExternalTarget
    * @generated
@@ -543,7 +543,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Identifiable
    * <em>Identifiable</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Identifiable
    * @generated
@@ -557,7 +557,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Body <em>Body</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Body
    * @generated
@@ -572,7 +572,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * <em>Body Element Container</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can
    * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
    * end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer
    * @generated
@@ -586,7 +586,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.BodyElement
    * <em>Body Element</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement
    * @generated
@@ -600,7 +600,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Text <em>Text</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Text
    * @generated
@@ -614,7 +614,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Link <em>Link</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Link
    * @generated
@@ -628,7 +628,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Embedding
    * <em>Embedding</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Embedding
    * @generated
@@ -642,7 +642,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.SourceCode
    * <em>Source Code</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.SourceCode
    * @generated
@@ -656,7 +656,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin <em>Plugin</em>}
    * '. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful
    * to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Plugin
    * @generated
@@ -670,7 +670,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage
    * <em>Java Package</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage
    * @generated
@@ -684,7 +684,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Javadoc
    * <em>Javadoc</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Javadoc
    * @generated
@@ -698,7 +698,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
    * <em>External Article</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExternalArticle
    * @generated
@@ -712,7 +712,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Schemadoc
    * <em>Schemadoc</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Schemadoc
    * @generated
@@ -726,7 +726,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
    * <em>Extension Point</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint
    * @generated
@@ -740,7 +740,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Toc <em>Toc</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Toc
    * @generated
@@ -754,7 +754,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.PluginResource
    * <em>Plugin Resource</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.PluginResource
    * @generated
@@ -768,7 +768,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Excel <em>Excel</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Excel
    * @generated
@@ -782,7 +782,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Formatter
    * <em>Formatter</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore
    * cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Formatter
    * @generated
@@ -796,7 +796,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
    * <em>Java Formatter</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaFormatter
    * @generated
@@ -810,7 +810,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
    * <em>Xml Formatter</em>}'. <!-- begin-user-doc --> This default implementation returns null so that we can easily
    * ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.XmlFormatter
    * @generated
@@ -824,7 +824,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.releng.doc.article.Image <em>Image</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.eclipse.emf.cdo.releng.doc.article.Image
    * @generated
@@ -837,7 +837,7 @@ public class ArticleAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for the default case. <!-- begin-user-doc --> This default implementation returns null. <!--
    * end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @generated
    */

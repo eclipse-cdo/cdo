@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * Represents the physical data storage back-end of a CDO {@link IRepository repository}, such as a database or a file
  * system folder.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.landmark
  * @apiviz.has {@link IStore.ChangeFormat}
@@ -83,42 +83,42 @@ public interface IStore
 
   /**
    * Returns <code>true</code>if this store was activated for the first time, <code>false</code> otherwise.
-   * 
+   *
    * @since 4.0
    */
   public boolean isFirstStart();
 
   /**
    * Returns the store creation time.
-   * 
+   *
    * @since 2.0
    */
   public long getCreationTime();
 
   /**
    * Returns the id of the last branch that has been created in this store.
-   * 
+   *
    * @since 3.0
    */
   public int getLastBranchID();
 
   /**
    * Returns the id of the last local branch that has been created in this store.
-   * 
+   *
    * @since 3.0
    */
   public int getLastLocalBranchID();
 
   /**
    * Returns the time stamp of the last successful commit operation.
-   * 
+   *
    * @since 3.0
    */
   public long getLastCommitTime();
 
   /**
    * Returns the time stamp of the last successful commit operation to a non-local {@link CDOBranch branch}.
-   * 
+   *
    * @since 3.0
    */
   public long getLastNonLocalCommitTime();
@@ -126,7 +126,7 @@ public interface IStore
   /**
    * Returns a map filled with the property entries for the requested property <code>names</code> if names is not
    * <code>null</code> and not {@link Collection#isEmpty() empty}, all existing property entries otherwise.
-   * 
+   *
    * @since 4.0
    */
   public Map<String, String> getPersistentProperties(Set<String> names);
@@ -143,7 +143,7 @@ public interface IStore
 
   /**
    * Returns a reader that can be used to read from this store in the context of the given session.
-   * 
+   *
    * @param session
    *          The session that should be used as a context for read access or <code>null</code>. The store implementor
    *          is free to interpret and use the session in a manner suitable for him or ignore it at all. It is meant
@@ -160,7 +160,7 @@ public interface IStore
   /**
    * Returns a writer that can be used to write to this store in the context of the given view. The given view is always
    * marked as a transaction.
-   * 
+   *
    * @param transaction
    *          The view that must be used as a context for write access. The store implementor is free to interpret and
    *          use the view in a manner suitable for him or ignore it at all. It is meant only as a hint. Implementor can
@@ -179,7 +179,7 @@ public interface IStore
 
   /**
    * Enumerates the possible data formats a {@link IStore store} can accept for commit operations.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -198,7 +198,7 @@ public interface IStore
 
   /**
    * Enumerates the possible history recording options a {@link IStore store} can accept.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -217,7 +217,7 @@ public interface IStore
 
   /**
    * Enumerates the possible branching options a {@link IStore store} can accept.
-   * 
+   *
    * @author Eike Stepper
    * @since 2.0
    */
@@ -237,7 +237,7 @@ public interface IStore
   /**
    * A marker interface for {@link IStore stores} that can handle {@link CDOID IDs} assigned by a
    * {@link IDGenerationLocation#CLIENT client}, typically {@link ObjectType#UUID UUIDs}.
-   * 
+   *
    * @author Eike Stepper
    * @since 4.1
    * @apiviz.exclude

@@ -23,7 +23,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.LinkTarget#getTooltip <em>Tooltip</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLinkTarget()
  * @model abstract="true"
  * @generated
@@ -37,7 +37,7 @@ public interface LinkTarget extends Identifiable
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Default Label</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLinkTarget_DefaultLabel()
    * @model transient="true" changeable="false" volatile="true" derived="true"
@@ -51,7 +51,7 @@ public interface LinkTarget extends Identifiable
    * If the meaning of the '<em>Label</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Tooltip</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLinkTarget_Tooltip()
    * @model required="true" transient="true" changeable="false" volatile="true" derived="true"
@@ -61,7 +61,7 @@ public interface LinkTarget extends Identifiable
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @model required="true" sourceRequired="true"
    * @generated
    */

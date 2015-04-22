@@ -22,7 +22,7 @@ import java.io.PrintStream;
 /**
  * A {@link CDOCommitInfoHandler commit info handler} that synchronously writes {@link CDOCommitInfo commit infos} to a
  * text log.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */

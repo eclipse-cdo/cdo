@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -62,7 +62,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.Class1Impl <em>Class1</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.Class1Impl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getClass1()
    * @generated
@@ -129,7 +129,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl <em>Polygon</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.PolygonImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPolygon()
    * @generated
@@ -181,7 +181,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl <em>Node A</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.NodeAImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeA()
    * @generated
@@ -224,7 +224,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl <em>Node B</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.NodeBImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeB()
    * @generated
@@ -267,7 +267,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl <em>Node C</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeC()
    * @generated
@@ -310,7 +310,7 @@ public interface Model3Package extends EPackage
   /**
    * The feature id for the '<em><b>Opposite Nodes</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -327,7 +327,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.NodeDImpl <em>Node D</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.NodeDImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeD()
    * @generated
@@ -432,7 +432,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.ImageImpl <em>Image</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.ImageImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getImage()
    * @generated
@@ -474,7 +474,7 @@ public interface Model3Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.FileImpl <em>File</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model3.impl.FileImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getFile()
    * @generated
@@ -599,7 +599,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Class1 <em>Class1</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Class1</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.Class1
    * @generated
@@ -619,7 +619,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.MetaRef <em>Meta Ref</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Meta Ref</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.MetaRef
    * @generated
@@ -659,7 +659,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Polygon <em>Polygon</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Polygon</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.Polygon
    * @generated
@@ -699,7 +699,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeA <em>Node A</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Node A</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.NodeA
    * @generated
@@ -740,7 +740,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeB <em>Node B</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Node B</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.NodeB
    * @generated
@@ -781,7 +781,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeC <em>Node C</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Node C</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.NodeC
    * @generated
@@ -842,7 +842,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.NodeD <em>Node D</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Node D</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.NodeD
    * @generated
@@ -946,7 +946,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Image <em>Image</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Image</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.Image
    * @generated
@@ -986,7 +986,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.File <em>File</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>File</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.File
    * @generated
@@ -1077,7 +1077,7 @@ public interface Model3Package extends EPackage
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.tests.model3.Point <em>Point</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for data type '<em>Point</em>'.
    * @see org.eclipse.emf.cdo.tests.model3.Point
    * @model instanceClass="org.eclipse.emf.cdo.tests.model3.Point"

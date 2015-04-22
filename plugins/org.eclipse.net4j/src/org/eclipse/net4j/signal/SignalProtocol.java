@@ -52,8 +52,8 @@ import java.util.concurrent.ExecutorService;
  *
  * @author Eike Stepper
  */
-public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements
-    ISignalProtocol<INFRA_STRUCTURE>
+public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
+    implements ISignalProtocol<INFRA_STRUCTURE>
 {
   /**
    * @since 2.0

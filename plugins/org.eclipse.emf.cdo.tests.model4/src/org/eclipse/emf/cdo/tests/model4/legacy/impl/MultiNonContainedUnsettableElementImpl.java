@@ -39,7 +39,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -58,7 +58,7 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
   /**
    * The cached value of the '{@link #getParent() <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getParent()
    * @generated
    * @ordered
@@ -110,8 +110,10 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__NAME,
           oldName, name));
+    }
   }
 
   /**
@@ -127,8 +129,10 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
       if (parent != oldParent)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT, oldParent, parent));
+        }
       }
     }
     return parent;
@@ -158,9 +162,13 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT, oldParent, newParent, !oldParentESet);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -175,22 +183,30 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
     {
       NotificationChain msgs = null;
       if (parent != null)
+      {
         msgs = ((InternalEObject)parent).eInverseRemove(this,
             model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS, RefMultiNonContainedUnsettable.class, msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this,
             model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS, RefMultiNonContainedUnsettable.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else
     {
       boolean oldParentESet = parentESet;
       parentESet = true;
       if (eNotificationRequired())
+      {
         eNotify(new ENotificationImpl(this, Notification.SET,
             model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT, newParent, newParent, !oldParentESet));
+      }
     }
   }
 
@@ -209,9 +225,13 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
       ENotificationImpl notification = new ENotificationImpl(this, Notification.UNSET,
           model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT, oldParent, null, oldParentESet);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -229,15 +249,19 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
           RefMultiNonContainedUnsettable.class, msgs);
       msgs = basicUnsetParent(msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else
     {
       boolean oldParentESet = parentESet;
       parentESet = false;
       if (eNotificationRequired())
+      {
         eNotify(new ENotificationImpl(this, Notification.UNSET,
             model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT, null, null, oldParentESet));
+      }
     }
   }
 
@@ -261,8 +285,10 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
     {
     case model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT:
       if (parent != null)
+      {
         msgs = ((InternalEObject)parent).eInverseRemove(this,
             model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE__ELEMENTS, RefMultiNonContainedUnsettable.class, msgs);
+      }
       return basicSetParent((RefMultiNonContainedUnsettable)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -296,7 +322,9 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
       return getName();
     case model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT__PARENT:
       if (resolve)
+      {
         return getParent();
+      }
       return basicGetParent();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -365,7 +393,9 @@ public class MultiNonContainedUnsettableElementImpl extends EObjectImpl implemen
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

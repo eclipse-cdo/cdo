@@ -34,7 +34,6 @@ import java.util.Collections;
  */
 public class Bugzilla_464590_Test extends AbstractCDOTest
 {
-
   /**
    * Test {@link EObject#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)} with EMF proxies in XMIResource.
    */
@@ -82,5 +81,4 @@ public class Bugzilla_464590_Test extends AbstractCDOTest
       return false;
     }
   }
-
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -20,7 +20,7 @@ import java.util.Map;
 
 /**
  * Manages all persistent aspects of durable CDO views such as {@link CDOBranchPoint branch point} and acquired locks.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.uses {@link IDurableLockingManager.LockArea} - - manages
@@ -32,7 +32,7 @@ public interface IDurableLockingManager
 
   /**
    * Returns the {@link LockArea lock area} specified by the given durableLockingID, never <code>null</code>.
-   * 
+   *
    * @throws LockAreaNotFoundException
    *           if the given durableLockingID is unknown.
    */
@@ -45,7 +45,7 @@ public interface IDurableLockingManager
   /**
    * Encapsulates the persistable information about a single durable CDO view like {@link CDOBranchPoint branch point}
    * and acquired locks.
-   * 
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -69,14 +69,14 @@ public interface IDurableLockingManager
     /**
      * Returns <code>true</code> if this instance represents a lock area that is known to be missing (not present) on a
      * master server. (Relevant only in a replicating configuration.)
-     * 
+     *
      * @since 4.1
      */
     public boolean isMissing();
 
     /**
      * A call-back interface for <em>handling</em> {@link LockArea lock area} objects.
-     * 
+     *
      * @author Eike Stepper
      * @apiviz.uses {@link IDurableLockingManager.LockArea} - - handles
      */
@@ -89,7 +89,7 @@ public interface IDurableLockingManager
   /**
    * Thrown if a {@link LockArea lock area} is spcified that does not exist in a CDO {@link CDOCommonRepository
    * repository}.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class LockAreaNotFoundException extends IllegalStateException
@@ -118,7 +118,7 @@ public interface IDurableLockingManager
 
   /**
    * Exception occurs when attempting to create a durable {@link LockArea} that already exists.
-   * 
+   *
    * @author Caspar De Groot
    * @since 4.1
    */
@@ -142,7 +142,7 @@ public interface IDurableLockingManager
 
   /**
    * Enumerates the possible combinations of read and write locks on a single CDO object.
-   * 
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    */

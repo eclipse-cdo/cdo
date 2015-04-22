@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 @Requires(ModelConfig.CAPABILITY_LEGACY)
 public class Bugzilla_439843_Test extends AbstractCDOTest
 {
-
   public void testLegacyOpposite_Multiple() throws Exception
   {
     CDOSession session = openSession();

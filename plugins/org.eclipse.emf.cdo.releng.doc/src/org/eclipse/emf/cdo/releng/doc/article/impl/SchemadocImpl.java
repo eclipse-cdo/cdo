@@ -28,14 +28,14 @@ import java.io.IOException;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Schemadoc</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class SchemadocImpl extends CategoryImpl implements Schemadoc
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected SchemadocImpl()
@@ -50,7 +50,7 @@ public class SchemadocImpl extends CategoryImpl implements Schemadoc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

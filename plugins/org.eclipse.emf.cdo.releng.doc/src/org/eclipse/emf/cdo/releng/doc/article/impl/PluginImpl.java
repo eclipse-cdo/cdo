@@ -38,7 +38,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.PluginImpl#getExtensionPoints <em>Extension Points</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class PluginImpl extends EObjectImpl implements Plugin
@@ -46,7 +46,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -55,7 +55,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -65,7 +65,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
   /**
    * The cached value of the '{@link #getPackages() <em>Packages</em>}' containment reference list. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getPackages()
    * @generated
    * @ordered
@@ -75,7 +75,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
   /**
    * The default value of the '{@link #getLabel() <em>Label</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getLabel()
    * @generated
    * @ordered
@@ -85,7 +85,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
   /**
    * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getLabel()
    * @generated
    * @ordered
@@ -95,7 +95,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
   /**
    * The cached value of the '{@link #getExtensionPoints() <em>Extension Points</em>}' containment reference list. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getExtensionPoints()
    * @generated
    * @ordered
@@ -104,7 +104,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected PluginImpl()
@@ -114,7 +114,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -125,7 +125,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -135,7 +135,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -150,7 +150,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<JavaPackage> getPackages()
@@ -165,7 +165,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getLabel()
@@ -175,7 +175,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setLabel(String newLabel)
@@ -190,7 +190,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<ExtensionPoint> getExtensionPoints()
@@ -205,7 +205,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -224,7 +224,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -242,7 +242,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -264,7 +264,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -293,7 +293,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -319,7 +319,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -341,7 +341,7 @@ public class PluginImpl extends EObjectImpl implements Plugin
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

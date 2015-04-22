@@ -91,8 +91,8 @@ public class OCLQueryHandler implements IQueryHandler
    */
   public static final String IMPLICIT_ROOT_CLASS_PARAMETER = "cdoImplicitRootClass";
 
-  private static final Set<String> SERVER_QUERY_PARAMETERS = Collections.unmodifiableSet(new java.util.HashSet<String>(
-      Arrays.asList(LAZY_EXTENTS_PARAMETER, IMPLICIT_ROOT_CLASS_PARAMETER)));
+  private static final Set<String> SERVER_QUERY_PARAMETERS = Collections.unmodifiableSet(
+      new java.util.HashSet<String>(Arrays.asList(LAZY_EXTENTS_PARAMETER, IMPLICIT_ROOT_CLASS_PARAMETER)));
 
   private static final EcoreFactory FACTORY = EcoreFactory.eINSTANCE;
 
@@ -219,7 +219,7 @@ public class OCLQueryHandler implements IQueryHandler
    */
   protected Query<EClassifier, EClass, EObject> createQuery(CDOView view, CDOQueryInfo info,
       ContextParameter contextParameter, OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl)
-      throws ParserException, DiagnosticException
+          throws ParserException, DiagnosticException
   {
     Map<String, Object> parameters = new HashMap<String, Object>(info.getParameters());
     initEnvironment(ocl.getEnvironment(), view.getSession().getPackageRegistry(), parameters);

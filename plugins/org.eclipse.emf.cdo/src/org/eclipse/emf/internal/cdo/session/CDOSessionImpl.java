@@ -1611,8 +1611,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     /**
      * @author Eike Stepper
      */
-    private final class GeneratedPackageEmulationEventImpl extends OptionsEvent implements
-        GeneratedPackageEmulationEvent
+    private final class GeneratedPackageEmulationEventImpl extends OptionsEvent
+        implements GeneratedPackageEmulationEvent
     {
       private static final long serialVersionUID = 1L;
 
@@ -1794,10 +1794,10 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
       if (DEBUG)
       {
-        IOUtil.OUT().println(
-            CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] " + commitInfo.getPreviousTimeStamp() % 10000
-                + " --> " + commitInfo.getTimeStamp() % 10000 + "    reorderQueue=" + reorderQueue
-                + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
+        IOUtil.OUT()
+            .println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] "
+                + commitInfo.getPreviousTimeStamp() % 10000 + " --> " + commitInfo.getTimeStamp() % 10000
+                + "    reorderQueue=" + reorderQueue + "    unfinishedLocalCommits=" + unfinishedLocalCommits);
       }
 
       scheduleInvalidations();

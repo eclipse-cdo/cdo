@@ -17,7 +17,7 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * A {@link MoveableList moveable} {@link EList}.
- * 
+ *
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.
@@ -29,7 +29,7 @@ public interface CDOList extends MoveableList<Object>, EList<Object>
   /**
    * Returns the element at position index of this list and optionally resolves proxies (see CDOElementProxy).
    * <p>
-   * 
+   *
    * @param index
    *          The position of the element to return from this list.
    * @param resolve

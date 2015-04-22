@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -91,7 +91,7 @@ public class AcoreInitDiagramFileAction implements IObjectActionDelegate
     try
     {
       Resource resource = resourceSet.getResource(domainModelURI, true);
-      diagramRoot = (EObject)resource.getContents().get(0);
+      diagramRoot = resource.getContents().get(0);
     }
     catch (WrappedException ex)
     {

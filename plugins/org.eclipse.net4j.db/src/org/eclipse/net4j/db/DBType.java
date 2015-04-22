@@ -844,8 +844,8 @@ public enum DBType
   /**
    * @since 4.1
    */
-  public abstract Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull)
-      throws SQLException, IOException;
+  public abstract Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column,
+      boolean canBeNull) throws SQLException, IOException;
 
   /**
    * @since 3.0

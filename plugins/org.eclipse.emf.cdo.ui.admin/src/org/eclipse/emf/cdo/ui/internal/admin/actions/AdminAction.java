@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    Christian W. Damus (CEA LIST) - bug 418454 
+ *    Christian W. Damus (CEA LIST) - bug 418454
  */
 package org.eclipse.emf.cdo.ui.internal.admin.actions;
 
@@ -25,7 +25,7 @@ import java.text.MessageFormat;
 
 /**
  * @param <T> the type of the target element of the action in the CDO Administration View
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public abstract class AdminAction<T> extends LongRunningAction

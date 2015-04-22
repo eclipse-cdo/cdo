@@ -101,7 +101,7 @@ public class ProjectCreationHelper
 
   /**
    * adds all jar files in this folder to the build path. Searches only on level 1
-   * 
+   *
    * @param folder
    *          the folder which contains the jar files
    * @param javaProject
@@ -180,7 +180,7 @@ public class ProjectCreationHelper
 
   /**
    * Creates a JavaProject prom the given project
-   * 
+   *
    * @param project
    * @return the created JavaProject
    */
@@ -227,7 +227,7 @@ public class ProjectCreationHelper
   private void clearSourcePath(IJavaProject javaProject) throws JavaModelException
   {
     javaProject.setRawClasspath(new IClasspathEntry[] {}, new NullProgressMonitor()); // clean classpath, means remove
-                                                                                      // Project root from classpath
+    // Project root from classpath
   }
 
   /**
@@ -303,8 +303,8 @@ public class ProjectCreationHelper
    * @throws CoreException
    * @throws JavaModelException
    */
-  private void createOutputFolder(String path, IProject project, IJavaProject javaProject) throws CoreException,
-      JavaModelException
+  private void createOutputFolder(String path, IProject project, IJavaProject javaProject)
+      throws CoreException, JavaModelException
   {
     try
     {
@@ -398,8 +398,8 @@ public class ProjectCreationHelper
   {
   }
 
-  public static void refreshProject(IResource resource, IProgressMonitor monitor) throws InvocationTargetException,
-      InterruptedException
+  public static void refreshProject(IResource resource, IProgressMonitor monitor)
+      throws InvocationTargetException, InterruptedException
   {
     IRunnableWithProgress op = new WorkspaceModifyOperation(null)
     {

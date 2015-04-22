@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -69,7 +69,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
    * <li>getLockingHandler()</li>
    * </ul>
    * If one of these methods returns null the specific handler will not be registered and activated.
-   * 
+   *
    * @see #getBasicHandler()
    * @see #getLockingHandler()
    * @since 2.0
@@ -107,7 +107,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
   /**
    * Subclasses must implement this method to deliver a IDawnListener that implements the behavior for Session
    * invalidations. If the method returns null, the handler will not be registered.
-   * 
+   *
    * @since 2.0
    */
   protected abstract BasicDawnListener getBasicHandler();
@@ -115,7 +115,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
   /**
    * Subclasses must implement this method to deliver a IDawnListener that implements the behavior for remote locking
    * notifications. If the method returns null, the handler will not be registered.
-   * 
+   *
    * @since 2.0
    */
   protected abstract BasicDawnListener getLockingHandler();
@@ -123,7 +123,7 @@ public abstract class DawnAbstractEditorSupport implements IDawnEditorSupport
   /**
    * Subclasses must implement this method to deliver a CDOTransactionHandlerBase that implements the behavior for
    * remote changes notifications. If the method returns null, the handler will not be registered.
-   * 
+   *
    * @since 2.0
    */
   protected abstract CDOTransactionHandlerBase getTransactionHandler();

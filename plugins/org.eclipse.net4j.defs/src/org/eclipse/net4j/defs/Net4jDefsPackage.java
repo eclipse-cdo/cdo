@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -114,7 +114,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Connector Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -242,7 +242,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.net4j.defs.impl.AcceptorDefImpl <em>Acceptor Def</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.net4j.defs.impl.AcceptorDefImpl
    * @see org.eclipse.net4j.defs.impl.Net4jDefsPackageImpl#getAcceptorDef()
    * @generated
@@ -285,7 +285,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>Acceptor Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -634,7 +634,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.ConnectorDef <em>Connector Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Connector Def</em>'.
    * @see org.eclipse.net4j.defs.ConnectorDef
    * @generated
@@ -685,7 +685,7 @@ public interface Net4jDefsPackage extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.net4j.defs.ConnectorDef#getClientProtocolProvider <em>Client Protocol Provider</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Client Protocol Provider</em>'.
    * @see org.eclipse.net4j.defs.ConnectorDef#getClientProtocolProvider()
    * @see #getConnectorDef()
@@ -705,7 +705,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.TCPConnectorDef <em>TCP Connector Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>TCP Connector Def</em>'.
    * @see org.eclipse.net4j.defs.TCPConnectorDef
    * @generated
@@ -745,7 +745,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.AcceptorDef <em>Acceptor Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Acceptor Def</em>'.
    * @see org.eclipse.net4j.defs.AcceptorDef
    * @generated
@@ -786,7 +786,7 @@ public interface Net4jDefsPackage extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.net4j.defs.AcceptorDef#getServerProtocolProvider <em>Server Protocol Provider</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Server Protocol Provider</em>'.
    * @see org.eclipse.net4j.defs.AcceptorDef#getServerProtocolProvider()
    * @see #getAcceptorDef()
@@ -797,7 +797,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.TCPAcceptorDef <em>TCP Acceptor Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>TCP Acceptor Def</em>'.
    * @see org.eclipse.net4j.defs.TCPAcceptorDef
    * @generated
@@ -837,7 +837,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.JVMAcceptorDef <em>JVM Acceptor Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>JVM Acceptor Def</em>'.
    * @see org.eclipse.net4j.defs.JVMAcceptorDef
    * @generated
@@ -857,7 +857,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.JVMConnectorDef <em>JVM Connector Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>JVM Connector Def</em>'.
    * @see org.eclipse.net4j.defs.JVMConnectorDef
    * @generated
@@ -896,7 +896,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.TCPSelectorDef <em>TCP Selector Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>TCP Selector Def</em>'.
    * @see org.eclipse.net4j.defs.TCPSelectorDef
    * @generated
@@ -924,7 +924,7 @@ public interface Net4jDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.defs.BufferPoolDef <em>Buffer Pool Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Buffer Pool Def</em>'.
    * @see org.eclipse.net4j.defs.BufferPoolDef
    * @generated
@@ -1005,7 +1005,7 @@ public interface Net4jDefsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Client Protocol Provider</b></em>' reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference CONNECTOR_DEF__CLIENT_PROTOCOL_PROVIDER = eINSTANCE.getConnectorDef_ClientProtocolProvider();
@@ -1088,7 +1088,7 @@ public interface Net4jDefsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Server Protocol Provider</b></em>' reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference ACCEPTOR_DEF__SERVER_PROTOCOL_PROVIDER = eINSTANCE.getAcceptorDef_ServerProtocolProvider();

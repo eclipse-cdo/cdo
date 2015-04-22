@@ -231,8 +231,8 @@ abstract class CDOAdditionalOperation extends AdapterImpl
         List<? extends TypedElement<EClassifier>> args)
     {
       // The result type of the type-filtered variant is a collection of the filter type
-      EClassifier elementType = args.isEmpty() ? getEnv().getOCLStandardLibrary().getOclAny() : ((TypeType)args.get(0)
-          .getType()).getReferredType();
+      EClassifier elementType = args.isEmpty() ? getEnv().getOCLStandardLibrary().getOclAny()
+          : ((TypeType)args.get(0).getType()).getReferredType();
       return collectionType(CollectionKind.COLLECTION_LITERAL, elementType);
     }
   }

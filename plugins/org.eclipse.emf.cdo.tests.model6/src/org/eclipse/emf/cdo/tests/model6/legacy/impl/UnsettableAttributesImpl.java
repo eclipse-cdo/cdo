@@ -759,8 +759,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrBigDecimalESet = attrBigDecimalESet;
     attrBigDecimalESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL,
           oldAttrBigDecimal, attrBigDecimal, !oldAttrBigDecimalESet));
+    }
   }
 
   /**
@@ -775,8 +777,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrBigDecimal = ATTR_BIG_DECIMAL_EDEFAULT;
     attrBigDecimalESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BIG_DECIMAL,
           oldAttrBigDecimal, ATTR_BIG_DECIMAL_EDEFAULT, oldAttrBigDecimalESet));
+    }
   }
 
   /**
@@ -811,8 +815,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrBigIntegerESet = attrBigIntegerESet;
     attrBigIntegerESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER,
           oldAttrBigInteger, attrBigInteger, !oldAttrBigIntegerESet));
+    }
   }
 
   /**
@@ -827,8 +833,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrBigInteger = ATTR_BIG_INTEGER_EDEFAULT;
     attrBigIntegerESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BIG_INTEGER,
           oldAttrBigInteger, ATTR_BIG_INTEGER_EDEFAULT, oldAttrBigIntegerESet));
+    }
   }
 
   /**
@@ -863,8 +871,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrBooleanESet = attrBooleanESet;
     attrBooleanESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN,
           oldAttrBoolean, attrBoolean, !oldAttrBooleanESet));
+    }
   }
 
   /**
@@ -879,8 +889,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrBoolean = ATTR_BOOLEAN_EDEFAULT;
     attrBooleanESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN,
           oldAttrBoolean, ATTR_BOOLEAN_EDEFAULT, oldAttrBooleanESet));
+    }
   }
 
   /**
@@ -915,8 +927,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrBooleanObjectESet = attrBooleanObjectESet;
     attrBooleanObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT,
           oldAttrBooleanObject, attrBooleanObject, !oldAttrBooleanObjectESet));
+    }
   }
 
   /**
@@ -931,8 +945,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrBooleanObject = ATTR_BOOLEAN_OBJECT_EDEFAULT;
     attrBooleanObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BOOLEAN_OBJECT,
           oldAttrBooleanObject, ATTR_BOOLEAN_OBJECT_EDEFAULT, oldAttrBooleanObjectESet));
+    }
   }
 
   /**
@@ -967,8 +983,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrByteESet = attrByteESet;
     attrByteESet = true;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BYTE,
-          oldAttrByte, attrByte, !oldAttrByteESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BYTE, oldAttrByte,
+          attrByte, !oldAttrByteESet));
+    }
   }
 
   /**
@@ -983,8 +1001,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrByte = ATTR_BYTE_EDEFAULT;
     attrByteESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BYTE,
           oldAttrByte, ATTR_BYTE_EDEFAULT, oldAttrByteESet));
+    }
   }
 
   /**
@@ -1019,8 +1039,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrByteArrayESet = attrByteArrayESet;
     attrByteArrayESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY,
           oldAttrByteArray, attrByteArray, !oldAttrByteArrayESet));
+    }
   }
 
   /**
@@ -1035,8 +1057,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrByteArray = ATTR_BYTE_ARRAY_EDEFAULT;
     attrByteArrayESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_ARRAY,
           oldAttrByteArray, ATTR_BYTE_ARRAY_EDEFAULT, oldAttrByteArrayESet));
+    }
   }
 
   /**
@@ -1071,8 +1095,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrByteObjectESet = attrByteObjectESet;
     attrByteObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT,
           oldAttrByteObject, attrByteObject, !oldAttrByteObjectESet));
+    }
   }
 
   /**
@@ -1087,8 +1113,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrByteObject = ATTR_BYTE_OBJECT_EDEFAULT;
     attrByteObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_BYTE_OBJECT,
           oldAttrByteObject, ATTR_BYTE_OBJECT_EDEFAULT, oldAttrByteObjectESet));
+    }
   }
 
   /**
@@ -1123,8 +1151,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrCharESet = attrCharESet;
     attrCharESet = true;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_CHAR,
-          oldAttrChar, attrChar, !oldAttrCharESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_CHAR, oldAttrChar,
+          attrChar, !oldAttrCharESet));
+    }
   }
 
   /**
@@ -1139,8 +1169,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrChar = ATTR_CHAR_EDEFAULT;
     attrCharESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_CHAR,
           oldAttrChar, ATTR_CHAR_EDEFAULT, oldAttrCharESet));
+    }
   }
 
   /**
@@ -1175,8 +1207,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrCharacterObjectESet = attrCharacterObjectESet;
     attrCharacterObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT,
           oldAttrCharacterObject, attrCharacterObject, !oldAttrCharacterObjectESet));
+    }
   }
 
   /**
@@ -1191,9 +1225,11 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrCharacterObject = ATTR_CHARACTER_OBJECT_EDEFAULT;
     attrCharacterObjectESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET,
-          Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT, oldAttrCharacterObject,
-          ATTR_CHARACTER_OBJECT_EDEFAULT, oldAttrCharacterObjectESet));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_CHARACTER_OBJECT,
+              oldAttrCharacterObject, ATTR_CHARACTER_OBJECT_EDEFAULT, oldAttrCharacterObjectESet));
+    }
   }
 
   /**
@@ -1228,8 +1264,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrDateESet = attrDateESet;
     attrDateESet = true;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_DATE,
-          oldAttrDate, attrDate, !oldAttrDateESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_DATE, oldAttrDate,
+          attrDate, !oldAttrDateESet));
+    }
   }
 
   /**
@@ -1244,8 +1282,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrDate = ATTR_DATE_EDEFAULT;
     attrDateESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_DATE,
           oldAttrDate, ATTR_DATE_EDEFAULT, oldAttrDateESet));
+    }
   }
 
   /**
@@ -1280,8 +1320,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrDoubleESet = attrDoubleESet;
     attrDoubleESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE,
           oldAttrDouble, attrDouble, !oldAttrDoubleESet));
+    }
   }
 
   /**
@@ -1296,8 +1338,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrDouble = ATTR_DOUBLE_EDEFAULT;
     attrDoubleESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE,
           oldAttrDouble, ATTR_DOUBLE_EDEFAULT, oldAttrDoubleESet));
+    }
   }
 
   /**
@@ -1332,8 +1376,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrDoubleObjectESet = attrDoubleObjectESet;
     attrDoubleObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT,
           oldAttrDoubleObject, attrDoubleObject, !oldAttrDoubleObjectESet));
+    }
   }
 
   /**
@@ -1348,8 +1394,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrDoubleObject = ATTR_DOUBLE_OBJECT_EDEFAULT;
     attrDoubleObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_DOUBLE_OBJECT,
           oldAttrDoubleObject, ATTR_DOUBLE_OBJECT_EDEFAULT, oldAttrDoubleObjectESet));
+    }
   }
 
   /**
@@ -1384,8 +1432,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrFloatESet = attrFloatESet;
     attrFloatESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT,
           oldAttrFloat, attrFloat, !oldAttrFloatESet));
+    }
   }
 
   /**
@@ -1400,8 +1450,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrFloat = ATTR_FLOAT_EDEFAULT;
     attrFloatESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT,
           oldAttrFloat, ATTR_FLOAT_EDEFAULT, oldAttrFloatESet));
+    }
   }
 
   /**
@@ -1436,8 +1488,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrFloatObjectESet = attrFloatObjectESet;
     attrFloatObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT,
           oldAttrFloatObject, attrFloatObject, !oldAttrFloatObjectESet));
+    }
   }
 
   /**
@@ -1452,8 +1506,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrFloatObject = ATTR_FLOAT_OBJECT_EDEFAULT;
     attrFloatObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_FLOAT_OBJECT,
           oldAttrFloatObject, ATTR_FLOAT_OBJECT_EDEFAULT, oldAttrFloatObjectESet));
+    }
   }
 
   /**
@@ -1488,8 +1544,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrIntESet = attrIntESet;
     attrIntESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_INT, oldAttrInt,
           attrInt, !oldAttrIntESet));
+    }
   }
 
   /**
@@ -1504,8 +1562,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrInt = ATTR_INT_EDEFAULT;
     attrIntESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_INT,
-          oldAttrInt, ATTR_INT_EDEFAULT, oldAttrIntESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_INT, oldAttrInt,
+          ATTR_INT_EDEFAULT, oldAttrIntESet));
+    }
   }
 
   /**
@@ -1540,8 +1600,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrIntegerObjectESet = attrIntegerObjectESet;
     attrIntegerObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT,
           oldAttrIntegerObject, attrIntegerObject, !oldAttrIntegerObjectESet));
+    }
   }
 
   /**
@@ -1556,8 +1618,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrIntegerObject = ATTR_INTEGER_OBJECT_EDEFAULT;
     attrIntegerObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_INTEGER_OBJECT,
           oldAttrIntegerObject, ATTR_INTEGER_OBJECT_EDEFAULT, oldAttrIntegerObjectESet));
+    }
   }
 
   /**
@@ -1592,8 +1656,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrJavaClassESet = attrJavaClassESet;
     attrJavaClassESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS,
           oldAttrJavaClass, attrJavaClass, !oldAttrJavaClassESet));
+    }
   }
 
   /**
@@ -1608,8 +1674,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrJavaClass = null;
     attrJavaClassESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_CLASS,
           oldAttrJavaClass, null, oldAttrJavaClassESet));
+    }
   }
 
   /**
@@ -1644,8 +1712,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrJavaObjectESet = attrJavaObjectESet;
     attrJavaObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT,
           oldAttrJavaObject, attrJavaObject, !oldAttrJavaObjectESet));
+    }
   }
 
   /**
@@ -1660,8 +1730,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrJavaObject = ATTR_JAVA_OBJECT_EDEFAULT;
     attrJavaObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT,
           oldAttrJavaObject, ATTR_JAVA_OBJECT_EDEFAULT, oldAttrJavaObjectESet));
+    }
   }
 
   /**
@@ -1696,8 +1768,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrLongESet = attrLongESet;
     attrLongESet = true;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_LONG,
-          oldAttrLong, attrLong, !oldAttrLongESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_LONG, oldAttrLong,
+          attrLong, !oldAttrLongESet));
+    }
   }
 
   /**
@@ -1712,8 +1786,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrLong = ATTR_LONG_EDEFAULT;
     attrLongESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_LONG,
           oldAttrLong, ATTR_LONG_EDEFAULT, oldAttrLongESet));
+    }
   }
 
   /**
@@ -1748,8 +1824,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrLongObjectESet = attrLongObjectESet;
     attrLongObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT,
           oldAttrLongObject, attrLongObject, !oldAttrLongObjectESet));
+    }
   }
 
   /**
@@ -1764,8 +1842,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrLongObject = ATTR_LONG_OBJECT_EDEFAULT;
     attrLongObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_LONG_OBJECT,
           oldAttrLongObject, ATTR_LONG_OBJECT_EDEFAULT, oldAttrLongObjectESet));
+    }
   }
 
   /**
@@ -1800,8 +1880,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrShortESet = attrShortESet;
     attrShortESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_SHORT,
           oldAttrShort, attrShort, !oldAttrShortESet));
+    }
   }
 
   /**
@@ -1816,8 +1898,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrShort = ATTR_SHORT_EDEFAULT;
     attrShortESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_SHORT,
           oldAttrShort, ATTR_SHORT_EDEFAULT, oldAttrShortESet));
+    }
   }
 
   /**
@@ -1852,8 +1936,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrShortObjectESet = attrShortObjectESet;
     attrShortObjectESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT,
           oldAttrShortObject, attrShortObject, !oldAttrShortObjectESet));
+    }
   }
 
   /**
@@ -1868,8 +1954,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrShortObject = ATTR_SHORT_OBJECT_EDEFAULT;
     attrShortObjectESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_SHORT_OBJECT,
           oldAttrShortObject, ATTR_SHORT_OBJECT_EDEFAULT, oldAttrShortObjectESet));
+    }
   }
 
   /**
@@ -1904,8 +1992,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     boolean oldAttrStringESet = attrStringESet;
     attrStringESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_STRING,
           oldAttrString, attrString, !oldAttrStringESet));
+    }
   }
 
   /**
@@ -1920,8 +2010,10 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
     attrString = ATTR_STRING_EDEFAULT;
     attrStringESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model6Package.UNSETTABLE_ATTRIBUTES__ATTR_STRING,
           oldAttrString, ATTR_STRING_EDEFAULT, oldAttrStringESet));
+    }
   }
 
   /**
@@ -2229,124 +2321,218 @@ public class UnsettableAttributesImpl extends EObjectImpl implements UnsettableA
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (attrBigDecimal: ");
     if (attrBigDecimalESet)
+    {
       result.append(attrBigDecimal);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrBigInteger: ");
     if (attrBigIntegerESet)
+    {
       result.append(attrBigInteger);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrBoolean: ");
     if (attrBooleanESet)
+    {
       result.append(attrBoolean);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrBooleanObject: ");
     if (attrBooleanObjectESet)
+    {
       result.append(attrBooleanObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrByte: ");
     if (attrByteESet)
+    {
       result.append(attrByte);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrByteArray: ");
     if (attrByteArrayESet)
+    {
       result.append(attrByteArray);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrByteObject: ");
     if (attrByteObjectESet)
+    {
       result.append(attrByteObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrChar: ");
     if (attrCharESet)
+    {
       result.append(attrChar);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrCharacterObject: ");
     if (attrCharacterObjectESet)
+    {
       result.append(attrCharacterObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrDate: ");
     if (attrDateESet)
+    {
       result.append(attrDate);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrDouble: ");
     if (attrDoubleESet)
+    {
       result.append(attrDouble);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrDoubleObject: ");
     if (attrDoubleObjectESet)
+    {
       result.append(attrDoubleObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrFloat: ");
     if (attrFloatESet)
+    {
       result.append(attrFloat);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrFloatObject: ");
     if (attrFloatObjectESet)
+    {
       result.append(attrFloatObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrInt: ");
     if (attrIntESet)
+    {
       result.append(attrInt);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrIntegerObject: ");
     if (attrIntegerObjectESet)
+    {
       result.append(attrIntegerObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrJavaClass: ");
     if (attrJavaClassESet)
+    {
       result.append(attrJavaClass);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrJavaObject: ");
     if (attrJavaObjectESet)
+    {
       result.append(attrJavaObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrLong: ");
     if (attrLongESet)
+    {
       result.append(attrLong);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrLongObject: ");
     if (attrLongObjectESet)
+    {
       result.append(attrLongObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrShort: ");
     if (attrShortESet)
+    {
       result.append(attrShort);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrShortObject: ");
     if (attrShortObjectESet)
+    {
       result.append(attrShortObject);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", attrString: ");
     if (attrStringESet)
+    {
       result.append(attrString);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(')');
     return result.toString();
   }

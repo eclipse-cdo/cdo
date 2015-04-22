@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.event.IListener;
 /**
  * A {@link IListener listener} that dispatches lifecycle {@link ILifecycleEvent events} to methods that can be
  * overridden by extenders.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.exclude
  */

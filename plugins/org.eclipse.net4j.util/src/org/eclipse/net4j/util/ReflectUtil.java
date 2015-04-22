@@ -232,7 +232,7 @@ public final class ReflectUtil
 
   /**
    * Prints the stack trace of the current thread to {@link System#err}.
-   * 
+   *
    * @since 3.4
    */
   public static void printStackTrace()
@@ -387,7 +387,7 @@ public final class ReflectUtil
 
   public static Object instantiate(Map<Object, Object> properties, String namespace, String classKey,
       ClassLoader classLoader) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
-      IllegalArgumentException, InvocationTargetException
+          IllegalArgumentException, InvocationTargetException
   {
     if (namespace != null)
     {

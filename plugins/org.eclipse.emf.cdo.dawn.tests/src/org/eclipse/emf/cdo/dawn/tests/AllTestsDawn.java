@@ -25,7 +25,7 @@ import junit.framework.TestSuite;
 
 /**
  * This test suite should be executed as plain JUnit test.
- * 
+ *
  * @author Martin Fluegge
  */
 public class AllTestsDawn extends AllTests

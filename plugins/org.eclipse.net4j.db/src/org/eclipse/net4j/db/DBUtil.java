@@ -59,8 +59,8 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static final int MAX_BATCH_SIZE = Integer.parseInt(OMPlatform.INSTANCE.getProperty(
-      "org.eclipse.net4j.db.MAX_BATCH_SIZE", "2000"));
+  public static final int MAX_BATCH_SIZE = Integer
+      .parseInt(OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.db.MAX_BATCH_SIZE", "2000"));
 
   /**
    * A system property to enable noisy close, i.e. exception catch in close methods are thrown as {@link DBException} exception.
@@ -69,8 +69,8 @@ public final class DBUtil
    */
   public static final String PROP_ENABLE_NOISY_CLOSE = "org.eclipse.net4j.db.close.noisy";
 
-  private static final boolean isNoisyCloseEnabled = Boolean.valueOf(OMPlatform.INSTANCE.getProperty(
-      PROP_ENABLE_NOISY_CLOSE, Boolean.FALSE.toString()));
+  private static final boolean isNoisyCloseEnabled = Boolean
+      .valueOf(OMPlatform.INSTANCE.getProperty(PROP_ENABLE_NOISY_CLOSE, Boolean.FALSE.toString()));
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
@@ -188,7 +188,8 @@ public final class DBUtil
   /**
    * @since 4.2
    */
-  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName)
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider,
+      String schemaName)
   {
     return openDatabase(adapter, connectionProvider, schemaName, false);
   }

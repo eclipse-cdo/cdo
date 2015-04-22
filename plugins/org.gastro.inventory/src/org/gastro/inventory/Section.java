@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.gastro.inventory.Section#getText <em>Text</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getSection()
  * @model
  * @extends CDOObject
@@ -44,7 +44,7 @@ public interface Section extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Menu Card</em>' container reference.
    * @see #setMenuCard(MenuCard)
    * @see org.gastro.inventory.InventoryPackage#getSection_MenuCard()
@@ -57,7 +57,7 @@ public interface Section extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Section#getMenuCard <em>Menu Card</em>}' container reference.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Menu Card</em>' container reference.
    * @see #getMenuCard()
@@ -74,7 +74,7 @@ public interface Section extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Offerings</em>' containment reference list.
    * @see org.gastro.inventory.InventoryPackage#getSection_Offerings()
    * @see org.gastro.inventory.Offering#getSection
@@ -89,7 +89,7 @@ public interface Section extends CDOObject
    * If the meaning of the '<em>Title</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Title</em>' attribute.
    * @see #setTitle(String)
    * @see org.gastro.inventory.InventoryPackage#getSection_Title()
@@ -101,7 +101,7 @@ public interface Section extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Section#getTitle <em>Title</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Title</em>' attribute.
    * @see #getTitle()
@@ -115,7 +115,7 @@ public interface Section extends CDOObject
    * If the meaning of the '<em>Text</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Text</em>' attribute.
    * @see #setText(String)
    * @see org.gastro.inventory.InventoryPackage#getSection_Text()
@@ -127,7 +127,7 @@ public interface Section extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Section#getText <em>Text</em>}' attribute. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Text</em>' attribute.
    * @see #getText()

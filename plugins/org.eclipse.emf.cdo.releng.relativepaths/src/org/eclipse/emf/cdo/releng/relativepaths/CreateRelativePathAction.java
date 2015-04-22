@@ -70,8 +70,8 @@ public class CreateRelativePathAction implements IObjectActionDelegate
       String link = createLink(source, target);
 
       copyToClipboard(shell.getDisplay(), link);
-      MessageDialog.openInformation(shell, TITLE, "The following relative path has been copied to the clipboard:\n"
-          + link);
+      MessageDialog.openInformation(shell, TITLE,
+          "The following relative path has been copied to the clipboard:\n" + link);
     }
   }
 

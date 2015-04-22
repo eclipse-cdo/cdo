@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -93,8 +93,10 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
       if (userManager != oldUserManager)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER, oldUserManager, userManager));
+        }
       }
     }
     return userManager;
@@ -118,8 +120,10 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
     UserManagerDef oldUserManager = userManager;
     userManager = newUserManager;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER, oldUserManager, userManager));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER,
+          oldUserManager, userManager));
+    }
   }
 
   /**
@@ -135,8 +139,10 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
       if (randomizer != oldRandomizer)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER, oldRandomizer, randomizer));
+        }
       }
     }
     return randomizer;
@@ -160,8 +166,10 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
     RandomizerDef oldRandomizer = randomizer;
     randomizer = newRandomizer;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER,
           oldRandomizer, randomizer));
+    }
   }
 
   /**
@@ -175,11 +183,15 @@ public class ChallengeNegotiatorDefImpl extends NegotiatorDefImpl implements Cha
     {
     case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__USER_MANAGER:
       if (resolve)
+      {
         return getUserManager();
+      }
       return basicGetUserManager();
     case Net4jUtilDefsPackage.CHALLENGE_NEGOTIATOR_DEF__RANDOMIZER:
       if (resolve)
+      {
         return getRandomizer();
+      }
       return basicGetRandomizer();
     }
     return super.eGet(featureID, resolve, coreType);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.container;
 
 /**
  * Describes the addition or removal of a single element from a {@link IContainer container}.
- * 
+ *
  * @author Eike Stepper
  */
 public interface IContainerDelta<E>
@@ -23,7 +23,7 @@ public interface IContainerDelta<E>
 
   /**
    * Enumerates the possible {@link IContainerDelta container delta} kinds {@link #ADDED} or {@link #REMOVED}.
-   * 
+   *
    * @author Eike Stepper
    * @apiviz.exclude
    */

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore;
 
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * <!-- begin-user-doc --> A representation of the literals of the enumeration '<em><b>Access Type</b></em>', and
  * utility methods for working with them. <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getAccessType()
  * @model extendedMetaData="name='AccessType'"
  * @generated
@@ -29,7 +29,7 @@ public enum AccessType implements Enumerator
 {
   /**
    * The '<em><b>PUBLIC</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #PUBLIC_VALUE
    * @generated
    * @ordered
@@ -38,7 +38,7 @@ public enum AccessType implements Enumerator
 
   /**
    * The '<em><b>PRIVATE</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #PRIVATE_VALUE
    * @generated
    * @ordered
@@ -47,7 +47,7 @@ public enum AccessType implements Enumerator
 
   /**
    * The '<em><b>PROECTED</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #PROECTED_VALUE
    * @generated
    * @ordered
@@ -56,7 +56,7 @@ public enum AccessType implements Enumerator
 
   /**
    * The '<em><b>PACKAGE</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #PACKAGE_VALUE
    * @generated
    * @ordered
@@ -70,7 +70,7 @@ public enum AccessType implements Enumerator
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #PUBLIC
    * @model literal="public"
    * @generated
@@ -85,7 +85,7 @@ public enum AccessType implements Enumerator
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #PRIVATE
    * @model literal="private"
    * @generated
@@ -100,7 +100,7 @@ public enum AccessType implements Enumerator
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #PROECTED
    * @model literal="protected"
    * @generated
@@ -115,7 +115,7 @@ public enum AccessType implements Enumerator
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #PACKAGE
    * @model literal="package"
    * @generated
@@ -125,7 +125,7 @@ public enum AccessType implements Enumerator
 
   /**
    * An array of all the '<em><b>Access Type</b></em>' enumerators. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static final AccessType[] VALUES_ARRAY = new AccessType[] { PUBLIC, PRIVATE, PROECTED, PACKAGE, };
@@ -133,7 +133,7 @@ public enum AccessType implements Enumerator
   /**
    * A public read-only list of all the '<em><b>Access Type</b></em>' enumerators. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static final List<AccessType> VALUES = Collections.unmodifiableList(Arrays.asList(VALUES_ARRAY));
@@ -141,7 +141,7 @@ public enum AccessType implements Enumerator
   /**
    * Returns the '<em><b>Access Type</b></em>' literal with the specified literal value. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static AccessType get(String literal)
@@ -160,7 +160,7 @@ public enum AccessType implements Enumerator
   /**
    * Returns the '<em><b>Access Type</b></em>' literal with the specified name. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static AccessType getByName(String name)
@@ -179,7 +179,7 @@ public enum AccessType implements Enumerator
   /**
    * Returns the '<em><b>Access Type</b></em>' literal with the specified integer value. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static AccessType get(int value)
@@ -200,28 +200,28 @@ public enum AccessType implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private final int value;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private final String name;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private final String literal;
 
   /**
    * Only this class can construct instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private AccessType(int value, String name, String literal)
@@ -233,7 +233,7 @@ public enum AccessType implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getValue()
@@ -243,7 +243,7 @@ public enum AccessType implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -253,7 +253,7 @@ public enum AccessType implements Enumerator
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getLiteral()
@@ -264,7 +264,7 @@ public enum AccessType implements Enumerator
   /**
    * Returns the literal value of the enumerator, which is its string representation. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.impl;
 
@@ -32,14 +32,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static AcoreFactory init()
@@ -62,7 +62,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AcoreFactoryImpl()
@@ -72,7 +72,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -81,21 +81,21 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
     switch (eClass.getClassifierID())
     {
     case AcorePackage.ACLASS:
-      return (EObject)createAClass();
+      return createAClass();
     case AcorePackage.AINTERFACE:
-      return (EObject)createAInterface();
+      return createAInterface();
     case AcorePackage.ACORE_ROOT:
-      return (EObject)createACoreRoot();
+      return createACoreRoot();
     case AcorePackage.AATTRIBUTE:
-      return (EObject)createAAttribute();
+      return createAAttribute();
     case AcorePackage.AOPERATION:
-      return (EObject)createAOperation();
+      return createAOperation();
     case AcorePackage.ABASIC_CLASS:
-      return (EObject)createABasicClass();
+      return createABasicClass();
     case AcorePackage.APARAMETER:
-      return (EObject)createAParameter();
+      return createAParameter();
     case AcorePackage.ACLASS_CHILD:
-      return (EObject)createAClassChild();
+      return createAClassChild();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -103,7 +103,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -122,7 +122,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -141,7 +141,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AClass createAClass()
@@ -152,7 +152,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AInterface createAInterface()
@@ -163,7 +163,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ACoreRoot createACoreRoot()
@@ -174,7 +174,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AAttribute createAAttribute()
@@ -185,7 +185,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AOperation createAOperation()
@@ -196,7 +196,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ABasicClass createABasicClass()
@@ -207,7 +207,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AParameter createAParameter()
@@ -218,7 +218,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AClassChild createAClassChild()
@@ -229,21 +229,23 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AccessType createAccessTypeFromString(EDataType eDataType, String initialValue)
   {
     AccessType result = AccessType.get(initialValue);
     if (result == null)
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-          + eDataType.getName() + "'");
+    {
+      throw new IllegalArgumentException(
+          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    }
     return result;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String convertAccessTypeToString(EDataType eDataType, Object instanceValue)
@@ -253,7 +255,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AccessType createAccessTypeObjectFromString(EDataType eDataType, String initialValue)
@@ -263,7 +265,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String convertAccessTypeObjectToString(EDataType eDataType, Object instanceValue)
@@ -273,7 +275,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AcorePackage getAcorePackage()
@@ -283,7 +285,7 @@ public class AcoreFactoryImpl extends EFactoryImpl implements AcoreFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

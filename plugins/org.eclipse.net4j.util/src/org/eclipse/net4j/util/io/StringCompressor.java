@@ -60,7 +60,7 @@ public class StringCompressor implements StringIO
 
   /**
    * Creates a StringCompressor instance.
-   * 
+   *
    * @param client
    *          Must be different on both sides of the stream.
    */

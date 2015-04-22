@@ -16,7 +16,7 @@ import org.eclipse.emf.teneo.hibernate.annotations.HbEDataTypeAnnotator;
 
 /**
  * Makes sure that the default type is a String.
- * 
+ *
  * @author Martin Taal
  * @since 3.0
  */

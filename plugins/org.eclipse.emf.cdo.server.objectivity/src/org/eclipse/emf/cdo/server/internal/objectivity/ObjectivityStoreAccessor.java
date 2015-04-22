@@ -234,8 +234,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace("Detaching id " + id + " - OID: " + objyObject.ooId().getStoreString() + " verions: "
-          + version + " in Branch: " + branch.getID() + " and timeStamp: " + timeStamp);
+      TRACER_DEBUG.trace("Detaching id " + id + " - OID: " + objyObject.ooId().getStoreString() + " verions: " + version
+          + " in Branch: " + branch.getID() + " and timeStamp: " + timeStamp);
     }
 
     if (getStore().isRequiredToSupportAudits())
@@ -291,7 +291,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       if (TRACER_DEBUG.isEnabled())
       {
         TRACER_DEBUG
-            .trace("getObjySession() - context's transaction: " + (cdoTrx == null ? "null" : cdoTrx.toString()));
+        .trace("getObjySession() - context's transaction: " + (cdoTrx == null ? "null" : cdoTrx.toString()));
       }
       if (cdoTrx != null)
       {
@@ -469,8 +469,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.trace(" writeRevisionDeltas: " + revisionDeltas.length + " - time: " + (System.nanoTime() - start)
-          / 1000000.0);
+      TRACER_DEBUG.trace(
+          " writeRevisionDeltas: " + revisionDeltas.length + " - time: " + (System.nanoTime() - start) / 1000000.0);
     }
   }
 
@@ -512,11 +512,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
   // }
   // // System.out.println(">>>IS: Delta Writing: " + delta.getID() + " - oid: " + objyObject.ooId().getStoreString());
   // // System.out.println("\t - old version : " + delta.getVersion());
-  // // System.out.println("\t - created     : " + created);
+  // // System.out.println("\t - created : " + created);
   // // System.out.println("\t - delta.branch: " + delta.getBranch().toString());
-  // // System.out.println("\t - branch      : " + branch.toString());
-  // // System.out.println("\t - branch TS   : " + branch.getPoint(created).getTimeStamp());
-  // // System.out.println("\t - delta       : " + delta.toString());
+  // // System.out.println("\t - branch : " + branch.toString());
+  // // System.out.println("\t - branch TS : " + branch.getPoint(created).getTimeStamp());
+  // // System.out.println("\t - delta : " + delta.toString());
   // // for debugging...
   //
   // if (objyOriginalRevision.getVersion() != deltaVersion)
@@ -596,8 +596,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     int newVersion = CDOBranchVersion.FIRST_VERSION;
 
     ObjyObject objyObject = getObject(delta.getID());
-    TRACER_DEBUG.format("writingRevisionDelta getting Object: {0}, v:{1} - BranchId:{2}", objyObject.ooId()
-        .getStoreString(), deltaVersion, delta.getBranch().getID());
+    TRACER_DEBUG.format("writingRevisionDelta getting Object: {0}, v:{1} - BranchId:{2}",
+        objyObject.ooId().getStoreString(), deltaVersion, delta.getBranch().getID());
     ObjyObject objyOriginalRevision = objyObject.getRevisionByVersion(deltaVersion, delta.getBranch().getID(),
         objySession.getObjectManager());
 
@@ -616,11 +616,11 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
     // System.out.println(">>>IS: Delta Writing: " + delta.getID() + " - oid: " + objyObject.ooId().getStoreString());
     // System.out.println("\t - old version : " + delta.getVersion());
-    // System.out.println("\t - created     : " + created);
+    // System.out.println("\t - created : " + created);
     // System.out.println("\t - delta.branch: " + delta.getBranch().toString());
-    // System.out.println("\t - branch      : " + branch.toString());
-    // System.out.println("\t - branch TS   : " + branch.getPoint(created).getTimeStamp());
-    // System.out.println("\t - delta       : " + delta.toString());
+    // System.out.println("\t - branch : " + branch.toString());
+    // System.out.println("\t - branch TS : " + branch.getPoint(created).getTimeStamp());
+    // System.out.println("\t - delta : " + delta.toString());
     // for debugging...
 
     if (objyOriginalRevision.getVersion() != deltaVersion)
@@ -634,9 +634,9 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
 
       ObjyObject objyObjectCopy = objySession.getObjectManager().copyRevision(this, objyOriginalRevision);
-      TRACER_DEBUG.format("  created new object:{0} by copying object:{1} - v:{2} - newBranch:{3}", objyObjectCopy
-          .ooId().getStoreString(), objyOriginalRevision.ooId().getStoreString(), objyOriginalRevision.getVersion(),
-          branch.getID());
+      TRACER_DEBUG.format("  created new object:{0} by copying object:{1} - v:{2} - newBranch:{3}",
+          objyObjectCopy.ooId().getStoreString(), objyOriginalRevision.ooId().getStoreString(),
+          objyOriginalRevision.getVersion(), branch.getID());
 
       // // newObjyRevision = objySession.getObjectManager().copyRevision(this, objyRevision);
       // // objyRevision.setRevisedBranchId(branch.getID();
@@ -741,10 +741,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     if (TRACER_DEBUG.isEnabled())
     {
       TRACER_DEBUG
-          .trace(" writeRevisions: " + revisions.length + " - time: " + (System.nanoTime() - start) / 1000000.0);
-      // TRACER_DEBUG.trace("   getObjectTime: " + ObjyObjectManager.getObjectTime / 1000000.0);
-      // TRACER_DEBUG.trace("   updateObjectTime: " + ObjyObjectManager.updateObjectTime / 1000000.0);
-      // TRACER_DEBUG.trace("   resourceCheckAndUpdateTime: " + ObjyObjectManager.resourceCheckAndUpdateTime /
+      .trace(" writeRevisions: " + revisions.length + " - time: " + (System.nanoTime() - start) / 1000000.0);
+      // TRACER_DEBUG.trace(" getObjectTime: " + ObjyObjectManager.getObjectTime / 1000000.0);
+      // TRACER_DEBUG.trace(" updateObjectTime: " + ObjyObjectManager.updateObjectTime / 1000000.0);
+      // TRACER_DEBUG.trace(" resourceCheckAndUpdateTime: " + ObjyObjectManager.resourceCheckAndUpdateTime /
       // 1000000.0);
       // ObjyObjectManager.getObjectTime = 0;
       // ObjyObjectManager.updateObjectTime = 0;
@@ -794,21 +794,21 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       }
 
       // System.out.println(">>>IS: Writing: " + revision.getID() + " - oid: " + objyObject.ooId().getStoreString());
-      // System.out.println("\t - version    : " + revision.getVersion());
-      // System.out.println("\t - timestamp  : " + revision.getTimeStamp());
-      // System.out.println("\t - revised    : " + revision.getRevised());
+      // System.out.println("\t - version : " + revision.getVersion());
+      // System.out.println("\t - timestamp : " + revision.getTimeStamp());
+      // System.out.println("\t - revised : " + revision.getRevised());
       // System.out.println("\t - resourceId : " + revision.getResourceID());
       // System.out.println("\t - containerId: " + revision.getContainerID());
-      // System.out.println("\t - branch     : " + revision.getBranch().toString());
-      // System.out.println("\t - revision   : " + revision.toString());
+      // System.out.println("\t - branch : " + revision.getBranch().toString());
+      // System.out.println("\t - revision : " + revision.toString());
 
       ObjyObject newObjyRevision = objyObject;
 
       if (revision.getVersion() > CDOBranchVersion.FIRST_VERSION) // we're updating other versions...
       {
         // TRACER_DEBUG.format("...Updating other revisions using writeRevision()...");
-        ObjyObject oldObjyRevision = objyObject.getRevisionByVersion(revision.getVersion() - 1, revision.getBranch()
-            .getID(), objySession.getObjectManager());
+        ObjyObject oldObjyRevision = objyObject.getRevisionByVersion(revision.getVersion() - 1,
+            revision.getBranch().getID(), objySession.getObjectManager());
 
         if (oldObjyRevision == null)
         {
@@ -831,8 +831,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       if (getStore().isRequiredToSupportBranches())
       {
         // add the newObjyRevision to the proper branch.
-        ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName()).getBranch(
-            revision.getBranch().getID());
+        ObjyBranch objyBranch = objySession.getBranchManager(getRepositoryName())
+            .getBranch(revision.getBranch().getID());
         ooObj anObj = ooObj.create_ooObj(newObjyRevision.ooId());
         try
         {
@@ -1016,8 +1016,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG.format("queryResources() for : " + (pathPrefix == null ? "NULL" : pathPrefix) + " - exactMatch: "
-          + exactMatch);
+      TRACER_DEBUG.format(
+          "queryResources() for : " + (pathPrefix == null ? "NULL" : pathPrefix) + " - exactMatch: " + exactMatch);
     }
     ObjyResourceList resourceList = objySession.getResourceList(getRepositoryName());
     int size = resourceList.size();
@@ -1070,8 +1070,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
         String resourceName = ObjyResourceList.getResourceName(resourceRevision);
         CDOID resourceID = OBJYCDOIDUtil.getCDOID(resource.ooId());
-        if (exactMatch && pathPrefix != null && pathPrefix.equals(resourceName) || pathPrefix == null
-            && resourceName == null)
+        if (exactMatch && pathPrefix != null && pathPrefix.equals(resourceName)
+            || pathPrefix == null && resourceName == null)
         {
           if (!context.addResource(resourceID))
           {
@@ -1253,7 +1253,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
     // else
     // {
-    //      TRACER_DEBUG.format("RR - objyObject is ID:" + id + ", :" + objyObject.ooId().getStoreString()); //$NON-NLS-1$
+    // TRACER_DEBUG.format("RR - objyObject is ID:" + id + ", :" + objyObject.ooId().getStoreString()); //$NON-NLS-1$
     // }
 
     InternalCDORevision revision = createRevision(objyObject, id);
@@ -1269,9 +1269,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
             objySession.getObjectManager());
         if (objyRevision == null)
         {
-          TRACER_DEBUG
-              .format(
-                  "RR - branches ID:{0}, OB:{1}, BPB:{2}, BPTS:{3}", id, objyObject.getBranchId(), branchPoint.getBranch().getID(), branchPoint.getTimeStamp()); //$NON-NLS-1$
+          TRACER_DEBUG.format("RR - branches ID:{0}, OB:{1}, BPB:{2}, BPTS:{3}", id, objyObject.getBranchId(), //$NON-NLS-1$
+              branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
         }
       }
       catch (RuntimeException ex)
@@ -1287,9 +1286,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
             objySession.getObjectManager());
         if (objyRevision == null)
         {
-          TRACER_DEBUG
-              .format(
-                  "RR - audit ID:{0}, OB:{1}, BPB:{2}, BPTS:{3}", id, objyObject.getBranchId(), branchPoint.getBranch().getID(), branchPoint.getTimeStamp()); //$NON-NLS-1$
+          TRACER_DEBUG.format("RR - audit ID:{0}, OB:{1}, BPB:{2}, BPTS:{3}", id, objyObject.getBranchId(), //$NON-NLS-1$
+              branchPoint.getBranch().getID(), branchPoint.getTimeStamp());
         }
       }
       catch (RuntimeException ex)
@@ -1313,8 +1311,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       if (TRACER_DEBUG.isEnabled())
       {
-        TRACER_DEBUG
-            .format("RR - ...revision for: {0} - OID: {1} is detached.", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+        TRACER_DEBUG.format("RR - ...revision for: {0} - OID: {1} is detached.", id, //$NON-NLS-1$
+            objyObject.ooId().getStoreString());
       }
       EClass eClass = ObjySchema.getEClass(getStore(), objyObject.objyClass());
       return new DetachedCDORevision(eClass, id, branchPoint.getBranch(), -objyRevision.getVersion(),
@@ -1326,8 +1324,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG
-          .format("RR - Fetching revision details for: {0} - OID:{1}", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
+      TRACER_DEBUG.format("RR - Fetching revision details for: {0} - OID:{1}", id, //$NON-NLS-1$
+          objyRevision.ooId().getStoreString());
     }
 
     boolean ok = objyRevision.fetch(this, revision, listChunk);
@@ -1370,7 +1368,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     }
 
     // {
-    //      TRACER_DEBUG.format("RRBV - objyObject 4 ID: " + id + ", :" + objyObject.ooId().getStoreString()); //$NON-NLS-1$
+    // TRACER_DEBUG.format("RRBV - objyObject 4 ID: " + id + ", :" + objyObject.ooId().getStoreString()); //$NON-NLS-1$
     // }
 
     ObjyObject objyRevision = null;
@@ -1381,9 +1379,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // objyRevision = objyObject.getRevisionByVersion(branchVersion.getVersion());
     if (TRACER_DEBUG.isEnabled())
     {
-      TRACER_DEBUG
-          .format(
-              "Reading revision by version {0} for: {1} - OID: {2}", branchVersion.getVersion(), id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+      TRACER_DEBUG.format("Reading revision by version {0} for: {1} - OID: {2}", branchVersion.getVersion(), id, //$NON-NLS-1$
+          objyObject.ooId().getStoreString());
     }
 
     // }
@@ -1394,7 +1391,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     // if (TRACER_DEBUG.isEnabled())
     // {
     // TRACER_DEBUG.format(
-    //            "(None-Audit) Reading revision by version for: {0} - OID: {1}", id, objyObject.ooId().getStoreString()); //$NON-NLS-1$
+    // "(None-Audit) Reading revision by version for: {0} - OID: {1}", id, objyObject.ooId().getStoreString());
+    // //$NON-NLS-1$
     // }
     // }
 
@@ -1428,7 +1426,7 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     // if (!ok)
     // {
-    //      TRACER_DEBUG.format("RRBV - Fetch rev failed 4: {0}, :", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
+    // TRACER_DEBUG.format("RRBV - Fetch rev failed 4: {0}, :", id, objyRevision.ooId().getStoreString()); //$NON-NLS-1$
     // }
 
     readRevisionTime += System.nanoTime() - __start;
@@ -1508,8 +1506,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
           }
           catch (com.objy.db.ObjyRuntimeException ex)
           {
-            System.out.println(">>>>IS: Exception<<<< Session: " + objySession + " open status: "
-                + objySession.isOpen());
+            System.out
+                .println(">>>>IS: Exception<<<< Session: " + objySession + " open status: " + objySession.isOpen());
             ex.printStackTrace();
           }
           monitor.worked();
@@ -1524,8 +1522,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
     {
       TRACER_DEBUG.trace(" addIDMappings for " + commitContext.getNewObjects().length + " - time: "
           + (System.nanoTime() - __start) / 1000000.0);
-      TRACER_DEBUG.trace("  createObjects : " + ObjyObject.createObjectCount + " - time: "
-          + ObjyObject.createObjectTime / 1000000.0);
+      TRACER_DEBUG.trace(
+          "  createObjects : " + ObjyObject.createObjectCount + " - time: " + ObjyObject.createObjectTime / 1000000.0);
       ObjyObject.createObjectTime = 0;
       ObjyObject.createObjectCount = 0;
     }
@@ -1689,9 +1687,8 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
 
     for (ObjyBranch objyBranch : branches)
     {
-      InternalCDOBranch branch = branchManager
-          .getBranch(objyBranch.getBranchId(), new BranchInfo(objyBranch.getBranchName(), objyBranch.getBaseBranchId(),
-              objyBranch.getBaseBranchTimeStamp()));
+      InternalCDOBranch branch = branchManager.getBranch(objyBranch.getBranchId(), new BranchInfo(
+          objyBranch.getBranchName(), objyBranch.getBaseBranchId(), objyBranch.getBaseBranchTimeStamp()));
       branchHandler.handleBranch(branch);
       count++;
     }
@@ -1775,10 +1772,10 @@ public class ObjectivityStoreAccessor extends StoreAccessor implements IObjectiv
       }
     }
 
-    CDOBranchVersion branchVersion = branchManager.getBranch((int)objyObject.getBranchId()).getVersion(
-        Math.abs(objyObject.getVersion()));
-    InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(
-        OBJYCDOIDUtil.getCDOID(objyObject.ooId()), branchVersion, CDORevision.UNCHUNKED, true);
+    CDOBranchVersion branchVersion = branchManager.getBranch((int)objyObject.getBranchId())
+        .getVersion(Math.abs(objyObject.getVersion()));
+    InternalCDORevision revision = (InternalCDORevision)revisionManager
+        .getRevisionByVersion(OBJYCDOIDUtil.getCDOID(objyObject.ooId()), branchVersion, CDORevision.UNCHUNKED, true);
 
     return handler.handleRevision(revision);
   }

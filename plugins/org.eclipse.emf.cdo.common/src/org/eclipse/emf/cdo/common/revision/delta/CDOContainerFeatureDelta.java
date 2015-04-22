@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EReference;
 /**
  * A {@link CDOFeatureDelta feature delta} that represents a modification of the {@link EObject#eContainer() eContainer}
  * feature.
- * 
+ *
  * @author Simon McDuff
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

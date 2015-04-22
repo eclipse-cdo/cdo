@@ -27,7 +27,7 @@ import java.util.Set;
  * ContainsAll with detached objects
  * <p>
  * See bug
- * 
+ *
  * @author Stefan Schedl
  */
 public class Bugzilla_354395_Test extends AbstractCDOTest

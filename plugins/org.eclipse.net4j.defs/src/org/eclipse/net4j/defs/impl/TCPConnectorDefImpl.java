@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -35,7 +35,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <li>{@link org.eclipse.net4j.net4jdefs.impl.TCPConnectorDefImpl#getPort <em>Port</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnectorDef
@@ -53,7 +53,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   /**
    * The default value of the '{@link #getHost() <em>Host</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getHost()
    * @generated
    * @ordered
@@ -72,7 +72,7 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   /**
    * The default value of the '{@link #getPort() <em>Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getPort()
    * @generated
    * @ordered
@@ -128,8 +128,10 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
       if (tcpSelectorDef != oldTcpSelectorDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF, oldTcpSelectorDef, tcpSelectorDef));
+        }
       }
     }
     return tcpSelectorDef;
@@ -153,8 +155,10 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     TCPSelectorDef oldTcpSelectorDef = tcpSelectorDef;
     tcpSelectorDef = newTcpSelectorDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF,
           oldTcpSelectorDef, tcpSelectorDef));
+    }
   }
 
   /**
@@ -175,13 +179,15 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     String oldHost = host;
     host = newHost;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST, oldHost, host));
+    }
   }
 
   /**
    * <!-- begin-user-doc -->gets the <b>port</b> of this connector. If the port was not set, the
    * {@link ITCPConnector#DEFAULT_PORT} is returned<!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public int getPort()
@@ -215,8 +221,10 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     boolean oldPortESet = portESet;
     portESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT, oldPort, port,
           !oldPortESet));
+    }
   }
 
   /**
@@ -230,8 +238,10 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     port = PORT_EDEFAULT;
     portESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Net4jDefsPackage.TCP_CONNECTOR_DEF__PORT, oldPort,
           PORT_EDEFAULT, oldPortESet));
+    }
   }
 
   /**
@@ -254,7 +264,9 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
     {
     case Net4jDefsPackage.TCP_CONNECTOR_DEF__TCP_SELECTOR_DEF:
       if (resolve)
+      {
         return getTcpSelectorDef();
+      }
       return basicGetTcpSelectorDef();
     case Net4jDefsPackage.TCP_CONNECTOR_DEF__HOST:
       return getHost();
@@ -335,16 +347,22 @@ public class TCPConnectorDefImpl extends ConnectorDefImpl implements TCPConnecto
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (host: ");
     result.append(host);
     result.append(", port: ");
     if (portESet)
+    {
       result.append(port);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(')');
     return result.toString();
   }

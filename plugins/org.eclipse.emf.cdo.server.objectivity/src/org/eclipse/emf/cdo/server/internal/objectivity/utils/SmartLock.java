@@ -118,7 +118,7 @@ public class SmartLock
    * This should replace ooObj.activate. We do not need to call super.activate because we implemented the code in
    * ooObj.activate in here. This safeActivate will refresh container in case of errors. >> ... Msg: objref member: test
    * with oid: #26-387-1-2 not found or accessible
-   * 
+   *
    * @param object
    * @param fcweEx
    */

@@ -977,7 +977,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
-    public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex, int serverIndex)
+    public Object resolveElementProxy(CDORevision revision, EStructuralFeature feature, int accessIndex,
+        int serverIndex)
     {
       throw new UnsupportedOperationException();
     }

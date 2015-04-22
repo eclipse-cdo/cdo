@@ -341,8 +341,8 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
     {
       if (rev.getTimeStamp() != timeStamp)
       {
-        throw new IllegalArgumentException("Invalid revision time stamp: "
-            + CDOCommonUtil.formatTimeStamp(rev.getTimeStamp()));
+        throw new IllegalArgumentException(
+            "Invalid revision time stamp: " + CDOCommonUtil.formatTimeStamp(rev.getTimeStamp()));
       }
 
       if (rev instanceof DetachedCDORevision)

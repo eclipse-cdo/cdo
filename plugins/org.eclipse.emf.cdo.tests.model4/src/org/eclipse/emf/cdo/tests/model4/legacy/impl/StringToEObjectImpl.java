@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model4.impl.StringToEObjectImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<String, EObject>
@@ -38,7 +38,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -48,7 +48,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -102,7 +102,9 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.STRING_TO_EOBJECT__KEY, oldKey, key));
+    }
   }
 
   /**
@@ -123,7 +125,9 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
     EObject oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.STRING_TO_EOBJECT__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -206,7 +210,9 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
@@ -230,7 +236,7 @@ public class StringToEObjectImpl extends EObjectImpl implements BasicEMap.Entry<
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

@@ -33,7 +33,7 @@ import java.util.LinkedList;
 /**
  * @author Eike Stepper
  */
-public final class DBDatabase extends SetContainer<IDBConnection> implements IDBDatabase
+public final class DBDatabase extends SetContainer<IDBConnection>implements IDBDatabase
 {
   private DBAdapter adapter;
 

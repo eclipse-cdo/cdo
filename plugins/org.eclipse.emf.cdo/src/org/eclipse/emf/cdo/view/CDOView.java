@@ -94,7 +94,7 @@ import java.util.Set;
  * @apiviz.uses {@link CDOViewTargetChangedEvent} - - fires
  */
 public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.Provider<CDOObject, CDOObjectHistory>,
-IContainer<CDOResourceNode>
+    IContainer<CDOResourceNode>
 {
   /**
    * Returns the {@link CDOSession session} this view was opened by.

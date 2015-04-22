@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -176,8 +176,8 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
-      IOException
+  protected void doConnect(ExtendedDataInputStream in, ExtendedDataOutputStream out)
+      throws ServletException, IOException
   {
     try
     {
@@ -198,8 +198,8 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doDisconnect(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
-      IOException
+  protected void doDisconnect(ExtendedDataInputStream in, ExtendedDataOutputStream out)
+      throws ServletException, IOException
   {
     try
     {
@@ -217,8 +217,8 @@ public class Net4jTransportServlet extends HttpServlet implements INet4jTranspor
     }
   }
 
-  protected void doOperations(ExtendedDataInputStream in, ExtendedDataOutputStream out) throws ServletException,
-      IOException
+  protected void doOperations(ExtendedDataInputStream in, ExtendedDataOutputStream out)
+      throws ServletException, IOException
   {
     String connectorID = in.readString();
     if (TRACER.isEnabled())

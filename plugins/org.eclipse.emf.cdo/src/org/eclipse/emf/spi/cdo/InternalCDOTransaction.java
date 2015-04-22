@@ -138,9 +138,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *             {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)}
    */
   @Deprecated
-  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
-      CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider,
-      CDOBranchPoint source);
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData,
+      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, CDOBranchPoint source);
 
   /**
    * @param source
@@ -151,7 +150,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    */
   public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
       CDORevisionProvider targetProvider, CDOBranchPoint source, boolean keepVersions)
-      throws ChangeSetOutdatedException;
+          throws ChangeSetOutdatedException;
 
   /**
    * @since 4.0

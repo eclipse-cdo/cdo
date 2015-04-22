@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -75,14 +75,16 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected ElementInfo createElementInfo(Object element) throws CoreException
   {
     if (false == element instanceof FileEditorInput && false == element instanceof URIEditorInput)
     {
-      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, NLS.bind(
-          Messages.AcoreDocumentProvider_IncorrectInputError, new Object[] { element,
-              "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$ 
-          null));
+      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+          NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
+              new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
+                  "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
+              null));
     }
     IEditorInput editorInput = (IEditorInput)element;
     IDiagramDocument document = (IDiagramDocument)createDocument(editorInput);
@@ -96,14 +98,16 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected IDocument createDocument(Object element) throws CoreException
   {
     if (false == element instanceof FileEditorInput && false == element instanceof URIEditorInput)
     {
-      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, NLS.bind(
-          Messages.AcoreDocumentProvider_IncorrectInputError, new Object[] { element,
-              "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$ 
-          null));
+      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+          NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
+              new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
+                  "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
+              null));
     }
     IDocument document = createEmptyDocument();
     setDocumentContent(document, (IEditorInput)element);
@@ -114,7 +118,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * Sets up the given document as it would be provided for the given element. The content of the document is not
    * changed. This default implementation is empty. Subclasses may reimplement.
-   * 
+   *
    * @param element
    *          the blue-print element
    * @param document
@@ -154,6 +158,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected IDocument createEmptyDocument()
   {
     DiagramDocument document = new DiagramDocument();
@@ -253,7 +258,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           EObject rootElement = resource.getEObject(uri.fragment());
           if (rootElement instanceof Diagram)
           {
-            document.setContent((Diagram)rootElement);
+            document.setContent(rootElement);
             return;
           }
         }
@@ -264,7 +269,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
             Object rootElement = it.next();
             if (rootElement instanceof Diagram)
             {
-              document.setContent((Diagram)rootElement);
+              document.setContent(rootElement);
               return;
             }
           }
@@ -281,24 +286,26 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         else
         {
           String msg = e.getLocalizedMessage();
-          thrownExcp = new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, msg != null ? msg
-              : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
+          thrownExcp = new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+              msg != null ? msg : Messages.AcoreDocumentProvider_DiagramLoadingError, e));
         }
         throw thrownExcp;
       }
     }
     else
     {
-      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, NLS.bind(
-          Messages.AcoreDocumentProvider_IncorrectInputError, new Object[] { element,
-              "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$ 
-          null));
+      throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+          NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
+              new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
+                  "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
+              null));
     }
   }
 
   /**
    * @generated
    */
+  @Override
   public long getModificationStamp(Object element)
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -312,6 +319,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   public boolean isDeleted(Object element)
   {
     IDiagramDocument document = getDiagramDocument(element);
@@ -338,6 +346,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected void disposeElementInfo(Object element, ElementInfo info)
   {
     if (info instanceof ResourceSetInfo)
@@ -351,6 +360,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected void doValidateState(Object element, Object computationContext) throws CoreException
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -366,7 +376,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           files2Validate.add(file);
         }
       }
-      ResourcesPlugin.getWorkspace().validateEdit((IFile[])files2Validate.toArray(new IFile[files2Validate.size()]),
+      ResourcesPlugin.getWorkspace().validateEdit(files2Validate.toArray(new IFile[files2Validate.size()]),
           computationContext);
     }
 
@@ -376,6 +386,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   public boolean isReadOnly(Object element)
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -402,6 +413,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   public boolean isModifiable(Object element)
   {
     if (!isStateValidated(element))
@@ -460,6 +472,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected void doUpdateStateCache(Object element) throws CoreException
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -473,6 +486,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   public boolean isSynchronized(Object element)
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -486,6 +500,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected ISchedulingRule getResetRule(Object element)
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -501,7 +516,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           rules.add(ResourcesPlugin.getWorkspace().getRuleFactory().modifyRule(file));
         }
       }
-      return new MultiRule((ISchedulingRule[])rules.toArray(new ISchedulingRule[rules.size()]));
+      return new MultiRule(rules.toArray(new ISchedulingRule[rules.size()]));
     }
     return null;
   }
@@ -509,6 +524,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected ISchedulingRule getSaveRule(Object element)
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -524,7 +540,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           rules.add(computeSchedulingRule(file));
         }
       }
-      return new MultiRule((ISchedulingRule[])rules.toArray(new ISchedulingRule[rules.size()]));
+      return new MultiRule(rules.toArray(new ISchedulingRule[rules.size()]));
     }
     return null;
   }
@@ -532,6 +548,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected ISchedulingRule getSynchronizeRule(Object element)
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -547,7 +564,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           rules.add(ResourcesPlugin.getWorkspace().getRuleFactory().refreshRule(file));
         }
       }
-      return new MultiRule((ISchedulingRule[])rules.toArray(new ISchedulingRule[rules.size()]));
+      return new MultiRule(rules.toArray(new ISchedulingRule[rules.size()]));
     }
     return null;
   }
@@ -555,6 +572,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected ISchedulingRule getValidateStateRule(Object element)
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -570,8 +588,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           files.add(file);
         }
       }
-      return ResourcesPlugin.getWorkspace().getRuleFactory()
-          .validateEditRule((IFile[])files.toArray(new IFile[files.size()]));
+      return ResourcesPlugin.getWorkspace().getRuleFactory().validateEditRule(files.toArray(new IFile[files.size()]));
     }
     return null;
   }
@@ -582,7 +599,9 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   private ISchedulingRule computeSchedulingRule(IResource toCreateOrModify)
   {
     if (toCreateOrModify.exists())
+    {
       return ResourcesPlugin.getWorkspace().getRuleFactory().modifyRule(toCreateOrModify);
+    }
 
     IResource parent = toCreateOrModify;
     do
@@ -601,6 +620,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected void doSynchronize(Object element, IProgressMonitor monitor) throws CoreException
   {
     ResourceSetInfo info = getResourceSetInfo(element);
@@ -619,6 +639,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected void doSaveDocument(IProgressMonitor monitor, Object element, IDocument document, boolean overwrite)
       throws CoreException
   {
@@ -685,29 +706,30 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
       else
       {
         fireElementStateChangeFailed(element);
-        throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0, NLS.bind(
-            Messages.AcoreDocumentProvider_IncorrectInputError, new Object[] { element,
-                "org.eclipse.ui.part.FileEditorInput", "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$ //$NON-NLS-2$ 
-            null));
+        throw new CoreException(new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+            NLS.bind(Messages.AcoreDocumentProvider_IncorrectInputError,
+                new Object[] { element, "org.eclipse.ui.part.FileEditorInput", //$NON-NLS-1$
+                    "org.eclipse.emf.common.ui.URIEditorInput" }), //$NON-NLS-1$
+                null));
       }
       if (false == document instanceof IDiagramDocument)
       {
         fireElementStateChangeFailed(element);
         throw new CoreException(
-            new Status(
-                IStatus.ERROR,
-                AcoreDiagramEditorPlugin.ID,
-                0,
-                "Incorrect document used: " + document + " instead of org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument", null)); //$NON-NLS-1$ //$NON-NLS-2$
+            new Status(IStatus.ERROR, AcoreDiagramEditorPlugin.ID, 0,
+                "Incorrect document used: " + document //$NON-NLS-1$
+                    + " instead of org.eclipse.gmf.runtime.diagram.ui.resources.editor.document.IDiagramDocument", //$NON-NLS-1$
+                null));
       }
       IDiagramDocument diagramDocument = (IDiagramDocument)document;
       final Resource newResource = diagramDocument.getEditingDomain().getResourceSet().createResource(newResoruceURI);
-      final Diagram diagramCopy = (Diagram)EcoreUtil.copy(diagramDocument.getDiagram());
+      final Diagram diagramCopy = EcoreUtil.copy(diagramDocument.getDiagram());
       try
       {
-        new AbstractTransactionalCommand(diagramDocument.getEditingDomain(), NLS.bind(
-            Messages.AcoreDocumentProvider_SaveAsOperation, diagramCopy.getName()), affectedFiles)
+        new AbstractTransactionalCommand(diagramDocument.getEditingDomain(),
+            NLS.bind(Messages.AcoreDocumentProvider_SaveAsOperation, diagramCopy.getName()), affectedFiles)
         {
+          @Override
           protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info)
               throws ExecutionException
           {
@@ -813,6 +835,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
   /**
    * @generated
    */
+  @Override
   protected IRunnableContext getOperationRunner(IProgressMonitor monitor)
   {
     return null;
@@ -1056,7 +1079,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         {
           if (ResourceSetInfo.this.fCanBeSaved)
           {
-            ResourceSetInfo.this.setUnSynchronized(resource);
+            setUnSynchronized(resource);
             return true;
           }
         }
@@ -1079,7 +1102,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         {
           if (ResourceSetInfo.this.fCanBeSaved)
           {
-            ResourceSetInfo.this.setUnSynchronized(resource);
+            setUnSynchronized(resource);
             return true;
           }
         }
@@ -1087,7 +1110,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         {
           public void run()
           {
-            fireElementDeleted(ResourceSetInfo.this.getEditorInput());
+            fireElementDeleted(getEditorInput());
           }
         });
         return true;
@@ -1102,7 +1125,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
         {
           if (ResourceSetInfo.this.fCanBeSaved)
           {
-            ResourceSetInfo.this.setUnSynchronized(resource);
+            setUnSynchronized(resource);
             return true;
           }
         }
@@ -1112,7 +1135,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           {
             public void run()
             {
-              handleElementMoved(ResourceSetInfo.this.getEditorInput(), newURI);
+              handleElementMoved(getEditorInput(), newURI);
             }
           });
         }
@@ -1157,6 +1180,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
     /**
      * @generated
      */
+    @Override
     public void notifyChanged(Notification notification)
     {
       if (notification.getNotifier() instanceof ResourceSet)
@@ -1171,7 +1195,7 @@ public class AcoreDocumentProvider extends AbstractDocumentProvider implements I
           if (resource.isLoaded())
           {
             boolean modified = false;
-            for (Iterator/* <org.eclipse.emf.ecore.resource.Resource> */it = myInfo.getLoadedResourcesIterator(); it
+            for (Iterator /* <org.eclipse.emf.ecore.resource.Resource> */it = myInfo.getLoadedResourcesIterator(); it
                 .hasNext() && !modified;)
             {
               Resource nextResource = (Resource)it.next();

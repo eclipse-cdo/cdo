@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 
 /**
  * Bug 321699 - CDOViewImpl.getObject(CDOID, boolean) can return wrong object for temporary IDs.
- * 
+ *
  * @author Caspar De Groot
  */
 public class Bugzilla_321699_Test extends AbstractCDOTest

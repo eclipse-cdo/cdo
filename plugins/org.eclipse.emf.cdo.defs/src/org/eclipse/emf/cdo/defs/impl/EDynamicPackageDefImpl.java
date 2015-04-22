@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -91,8 +91,10 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
     String oldResourceURI = resourceURI;
     resourceURI = newResourceURI;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.EDYNAMIC_PACKAGE_DEF__RESOURCE_URI,
           oldResourceURI, resourceURI));
+    }
   }
 
   /**
@@ -165,7 +167,9 @@ public class EDynamicPackageDefImpl extends EPackageDefImpl implements EDynamicP
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (resourceURI: ");

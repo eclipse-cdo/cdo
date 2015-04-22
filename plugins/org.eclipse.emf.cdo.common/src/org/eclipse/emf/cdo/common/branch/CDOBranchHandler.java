@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.common.branch;
 
 /**
  * A call-back interface that indicates the ability to <i>handle</i> branches that are passed from other entities.
- * 
+ *
  * @see CDOBranchManager#getBranches(int, int, CDOBranchHandler)
  * @author Eike Stepper
  * @since 3.0

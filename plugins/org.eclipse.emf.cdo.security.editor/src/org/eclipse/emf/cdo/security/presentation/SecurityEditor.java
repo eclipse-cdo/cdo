@@ -126,8 +126,8 @@ import java.util.Map;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SecurityEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-    IMenuListener, IViewerProvider, IGotoMarker
+public class SecurityEditor extends MultiPageEditorPart
+    implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider, IGotoMarker
 {
   /**
    * This keeps track of the editing domain that is used to track all changes to the model.
@@ -420,11 +420,11 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
           {
             if (delta.getResource().getType() == IResource.FILE)
             {
-              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED
-                  && delta.getFlags() != IResourceDelta.MARKERS)
+              if (delta.getKind() == IResourceDelta.REMOVED
+                  || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet.getResource(
-                    URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+                Resource resource = resourceSet
+                    .getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -1022,8 +1022,8 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-      selectionViewer.setLabelProvider(new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory,
-          selectionViewer));
+      selectionViewer
+          .setLabelProvider(new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory, selectionViewer));
       selectionViewer.setInput(editingDomain.getResourceSet());
       selectionViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
 
@@ -1181,8 +1181,8 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
           // Set up the tree viewer.
           //
           contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-          contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory,
-              contentOutlineViewer));
+          contentOutlineViewer.setLabelProvider(
+              new AdapterFactoryLabelProvider.FontAndColorProvider(adapterFactory, contentOutlineViewer));
           contentOutlineViewer.setInput(editingDomain.getResourceSet());
 
           // Make sure our popups work.
@@ -1193,8 +1193,8 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources()
-                .get(0)), true);
+            contentOutlineViewer
+                .setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
           }
         }
 
@@ -1447,9 +1447,9 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
     editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
-    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
-        .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-    doSave(progressMonitor);
+    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
+        ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
+        doSave(progressMonitor);
   }
 
   /**
@@ -1552,8 +1552,8 @@ public class SecurityEditor extends MultiPageEditorPart implements IEditingDomai
    */
   public void setStatusLineManager(ISelection selection)
   {
-    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ? contentOutlineStatusLineManager
-        : getActionBars().getStatusLineManager();
+    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer
+        ? contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
 
     if (statusLineManager != null)
     {

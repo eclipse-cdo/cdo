@@ -177,7 +177,7 @@ public class ObjyScope
 
   /**
    * TODO - verify need.
-   * 
+   *
    * @return
    */
   private ooContObj createNewContainer(String name)

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -71,7 +71,7 @@ public interface model4interfacesPackage extends EPackage
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -289,7 +289,7 @@ public interface model4interfacesPackage extends EPackage
   /**
    * The number of structural features of the '<em>INamed Element</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -325,7 +325,7 @@ public interface model4interfacesPackage extends EPackage
   /**
    * The feature id for the '<em><b>Element</b></em>' containment reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -432,7 +432,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainer#getElement()
    * @see #getISingleRefContainer()
@@ -453,7 +453,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement#getParent()
    * @see #getISingleRefContainedElement()
@@ -474,7 +474,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainer#getElement()
    * @see #getISingleRefNonContainer()
@@ -495,7 +495,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainedElement#getParent()
    * @see #getISingleRefNonContainedElement()
@@ -516,7 +516,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainer#getElements()
    * @see #getIMultiRefContainer()
@@ -537,7 +537,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the container reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainedElement#getParent()
    * @see #getIMultiRefContainedElement()
@@ -558,7 +558,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainer#getElements()
    * @see #getIMultiRefNonContainer()
@@ -579,7 +579,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement#getParent <em>Parent</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainedElement#getParent()
    * @see #getIMultiRefNonContainedElement()
@@ -628,7 +628,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainerNPL#getElement()
    * @see #getISingleRefContainerNPL()
@@ -649,7 +649,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the reference '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL#getElement <em>Element</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Element</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefNonContainerNPL#getElement()
    * @see #getISingleRefNonContainerNPL()
@@ -670,7 +670,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the containment reference list '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefContainerNPL#getElements()
    * @see #getIMultiRefContainerNPL()
@@ -691,7 +691,7 @@ public interface model4interfacesPackage extends EPackage
    * Returns the meta object for the reference list '
    * {@link org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL#getElements <em>Elements</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Elements</em>'.
    * @see org.eclipse.emf.cdo.tests.model4interfaces.IMultiRefNonContainerNPL#getElements()
    * @see #getIMultiRefNonContainerNPL()

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -76,8 +76,8 @@ public class AcoreNewDiagramFileWizard extends Wizard
     myFileCreationPage = new WizardNewFileCreationPage(Messages.AcoreNewDiagramFileWizard_CreationPageName,
         StructuredSelection.EMPTY);
     myFileCreationPage.setTitle(Messages.AcoreNewDiagramFileWizard_CreationPageTitle);
-    myFileCreationPage.setDescription(NLS.bind(Messages.AcoreNewDiagramFileWizard_CreationPageDescription,
-        ACoreRootEditPart.MODEL_ID));
+    myFileCreationPage.setDescription(
+        NLS.bind(Messages.AcoreNewDiagramFileWizard_CreationPageDescription, ACoreRootEditPart.MODEL_ID));
     IPath filePath;
     String fileName = URI.decode(domainModelURI.trimFileExtension().lastSegment());
     if (domainModelURI.isPlatformResource())
@@ -108,6 +108,7 @@ public class AcoreNewDiagramFileWizard extends Wizard
   /**
    * @generated
    */
+  @Override
   public void addPages()
   {
     addPage(myFileCreationPage);
@@ -117,6 +118,7 @@ public class AcoreNewDiagramFileWizard extends Wizard
   /**
    * @generated
    */
+  @Override
   public boolean performFinish()
   {
     List affectedFiles = new LinkedList();
@@ -130,6 +132,7 @@ public class AcoreNewDiagramFileWizard extends Wizard
         Messages.AcoreNewDiagramFileWizard_InitDiagramCommand, affectedFiles)
     {
 
+      @Override
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
       {
         int diagramVID = AcoreVisualIDRegistry.getDiagramVisualID(diagramRootElementSelectionPage.getModelElement());
@@ -181,6 +184,7 @@ public class AcoreNewDiagramFileWizard extends Wizard
     /**
      * @generated
      */
+    @Override
     protected String getSelectionTitle()
     {
       return Messages.AcoreNewDiagramFileWizard_RootSelectionPageSelectionTitle;
@@ -189,6 +193,7 @@ public class AcoreNewDiagramFileWizard extends Wizard
     /**
      * @generated
      */
+    @Override
     protected boolean validatePage()
     {
       if (selectedModelElement == null)
@@ -196,8 +201,8 @@ public class AcoreNewDiagramFileWizard extends Wizard
         setErrorMessage(Messages.AcoreNewDiagramFileWizard_RootSelectionPageNoSelectionMessage);
         return false;
       }
-      boolean result = ViewService.getInstance().provides(
-          new CreateDiagramViewOperation(new EObjectAdapter(selectedModelElement), ACoreRootEditPart.MODEL_ID,
+      boolean result = ViewService.getInstance()
+          .provides(new CreateDiagramViewOperation(new EObjectAdapter(selectedModelElement), ACoreRootEditPart.MODEL_ID,
               AcoreDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT));
       setErrorMessage(result ? null : Messages.AcoreNewDiagramFileWizard_RootSelectionPageInvalidSelectionMessage);
       return result;

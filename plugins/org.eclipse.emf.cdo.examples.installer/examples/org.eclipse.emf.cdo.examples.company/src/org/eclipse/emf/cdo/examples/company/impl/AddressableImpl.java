@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Addressable</b></em>'.
- * 
+ *
  * @since 4.0 <!-- end-user-doc -->
  * <p>
  * The following features are implemented:

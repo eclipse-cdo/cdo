@@ -25,25 +25,25 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * This test suite should be executed as SWTBot test.
- * 
+ *
  * @author Martin Fluegge
  * @formatter:off
  */
 @Deprecated
 @RunWith(Suite.class)
-@SuiteClasses({ 
+@SuiteClasses({
   DawnPreferencesTest.class,
-  DawnCreationWizardSWTBotTest.class, 
-  SimpleDiagramTest.class, 
+  DawnCreationWizardSWTBotTest.class,
+  SimpleDiagramTest.class,
   MultipleResourcesTest.class,
   // MultipleResourcesDeletionTest.class,  //excluded because of ui freeze
   DawnProjectExplorerTest.class,
   ConflictTest.class,
   RollbackTest.class,
-  Bugzilla_321024_Test.class 
-   })
-   
-   
+  Bugzilla_321024_Test.class
+})
+
+
 public class AllTestsDawnUISWTBotGMF
 {
 }

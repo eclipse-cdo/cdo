@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -18,7 +18,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  * A {@link IFactory factory} that delegates to an {@link IExtensionRegistry extension registry} contribution.
  * <p>
  * Example contribution:
- * 
+ *
  * <pre>
  *    &lt;extension
  *          point="org.eclipse.net4j.util.factories">
@@ -28,7 +28,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  *             type="daemon"/>
  *    &lt;/extension>
  * </pre>
- * 
+ *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
  * @apiviz.exclude

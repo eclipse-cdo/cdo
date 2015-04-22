@@ -32,7 +32,7 @@ import java.util.Map;
 
 /**
  * NOTE: this testcase does not pass currently for CDO.
- * 
+ *
  * @author Simon McDuff
  * @Author Martin Taal
  */
@@ -122,7 +122,8 @@ public class AuditFeatureMapTest extends AbstractCDOTest
     }
   }
 
-  private void addToResultMap(long timeStamp, Map<Long, Map<EStructuralFeature, Class<?>>> result, FeatureMap featureMap)
+  private void addToResultMap(long timeStamp, Map<Long, Map<EStructuralFeature, Class<?>>> result,
+      FeatureMap featureMap)
   {
     final Map<EStructuralFeature, Class<?>> entryResult = new HashMap<EStructuralFeature, Class<?>>();
     result.put(timeStamp, entryResult);

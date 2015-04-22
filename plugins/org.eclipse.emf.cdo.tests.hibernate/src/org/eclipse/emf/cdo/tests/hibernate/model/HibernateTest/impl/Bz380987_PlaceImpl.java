@@ -113,7 +113,9 @@ public class Bz380987_PlaceImpl extends EObjectImpl implements Bz380987_Place
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ380987_PLACE__NAME, oldName, name));
+    }
   }
 
   /**
@@ -251,7 +253,9 @@ public class Bz380987_PlaceImpl extends EObjectImpl implements Bz380987_Place
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

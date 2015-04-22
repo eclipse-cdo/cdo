@@ -26,7 +26,7 @@ import java.io.InputStreamReader;
 
 /**
  * Reads the hibernate mapping file from one or more resource locations and adds them to the configuration.
- * 
+ *
  * @author Martin Taal
  */
 public class FileHibernateMappingProvider extends HibernateMappingProvider

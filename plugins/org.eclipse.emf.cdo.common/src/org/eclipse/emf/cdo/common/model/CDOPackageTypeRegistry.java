@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * A {@link #INSTANCE singleton} registry for the {@link Type package unit types} of EMF {@link EPackage packages}.
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  * @apiviz.exclude
@@ -215,7 +215,7 @@ public final class CDOPackageTypeRegistry
 
   /**
    * A common marker interface for CDO (native) objects.
-   * 
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.

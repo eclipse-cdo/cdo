@@ -263,12 +263,12 @@ public interface Model6Factory extends EFactory, org.eclipse.emf.cdo.tests.model
   CanReferenceLegacy createCanReferenceLegacy();
 
   /**
-  	 * Returns the package supported by this factory.
-  	 * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-  	 * @return the package supported by this factory.
-  	 * @generated
-  	 */
+   * Returns the package supported by this factory.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the package supported by this factory.
+   * @generated
+   */
   Model6Package getModel6Package();
 
 } // Model6Factory

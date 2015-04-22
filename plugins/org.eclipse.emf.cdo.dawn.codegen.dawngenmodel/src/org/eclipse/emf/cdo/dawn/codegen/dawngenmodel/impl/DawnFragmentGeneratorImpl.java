@@ -208,8 +208,8 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
     dawnGenerator = newDawnGenerator;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR, oldDawnGenerator, dawnGenerator));
+      eNotify(new ENotificationImpl(this, Notification.SET, DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR,
+          oldDawnGenerator, dawnGenerator));
     }
   }
 
@@ -296,8 +296,8 @@ public class DawnFragmentGeneratorImpl extends EObjectImpl implements DawnFragme
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__FRAGMENT_NAME:
       return FRAGMENT_NAME_EDEFAULT == null ? fragmentName != null : !FRAGMENT_NAME_EDEFAULT.equals(fragmentName);
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_EDITOR_CLASS_NAME:
-      return DAWN_EDITOR_CLASS_NAME_EDEFAULT == null ? dawnEditorClassName != null : !DAWN_EDITOR_CLASS_NAME_EDEFAULT
-          .equals(dawnEditorClassName);
+      return DAWN_EDITOR_CLASS_NAME_EDEFAULT == null ? dawnEditorClassName != null
+          : !DAWN_EDITOR_CLASS_NAME_EDEFAULT.equals(dawnEditorClassName);
     case DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR__DAWN_GENERATOR:
       return dawnGenerator != null;
     }

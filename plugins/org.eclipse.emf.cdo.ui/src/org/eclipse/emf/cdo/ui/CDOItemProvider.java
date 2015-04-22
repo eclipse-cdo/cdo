@@ -668,8 +668,8 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
             NewTopLevelResourceNodeAction.Type.FOLDER));
         manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
             NewTopLevelResourceNodeAction.Type.MODEL));
-        manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
-            NewTopLevelResourceNodeAction.Type.TEXT));
+        manager.add(
+            new NewTopLevelResourceNodeAction(this, page, view, rootResource, NewTopLevelResourceNodeAction.Type.TEXT));
         manager.add(new NewTopLevelResourceNodeAction(this, page, view, rootResource,
             NewTopLevelResourceNodeAction.Type.BINARY));
       }

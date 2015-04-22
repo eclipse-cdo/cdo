@@ -49,8 +49,8 @@ import java.util.Collection;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ExpressionsActionBarContributor extends EditingDomainActionBarContributor implements
-    ISelectionChangedListener
+public class ExpressionsActionBarContributor extends EditingDomainActionBarContributor
+    implements ISelectionChangedListener
 {
   /**
    * This keeps track of the active editor.

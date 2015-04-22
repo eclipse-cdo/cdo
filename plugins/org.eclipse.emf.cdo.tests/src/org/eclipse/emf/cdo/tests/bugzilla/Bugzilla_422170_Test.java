@@ -85,8 +85,8 @@ public class Bugzilla_422170_Test extends AbstractCDOTest
         User user2 = realm.addUser(USER_2_CREDENTIALS);
         user2.setDefaultAccessOverride(Access.READ);
         Role user2Role = realm.addRole("user2Role");
-        filterPermission = SecurityFactory.eINSTANCE.createFilterPermission(Access.WRITE, SecurityFactory.eINSTANCE
-            .createOrFilter(SecurityFactory.eINSTANCE.createPackageFilter(getModel1Package()),
+        filterPermission = SecurityFactory.eINSTANCE.createFilterPermission(Access.WRITE,
+            SecurityFactory.eINSTANCE.createOrFilter(SecurityFactory.eINSTANCE.createPackageFilter(getModel1Package()),
                 SecurityFactory.eINSTANCE.createPackageFilter(EresourcePackage.eINSTANCE),
                 SecurityFactory.eINSTANCE.createResourceFilter(getResourcePath(SHARED_RESOURCE_NAME)),
                 SecurityFactory.eINSTANCE.createResourceFilter(getResourcePath(RENAMED_SHARED_RESOURCE_NAME))));

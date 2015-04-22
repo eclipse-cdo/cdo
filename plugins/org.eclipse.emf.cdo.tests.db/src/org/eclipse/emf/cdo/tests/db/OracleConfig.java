@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import oracle.jdbc.pool.OracleDataSource;
-
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
@@ -27,6 +25,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Map;
+
+import oracle.jdbc.pool.OracleDataSource;
 
 /**
  * @author Simon McDuff

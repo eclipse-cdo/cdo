@@ -409,7 +409,8 @@ public class CommitIntegrityCheck
         if (refTarget != null)
         {
           boolean hasPersistentOpposite = classInfo.hasPersistentOpposite(reference);
-          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite, msgFrag);
+          checkBidiRefTargetOrNewNonBidiTargetIncluded(referencer, reference, refTarget, hasPersistentOpposite,
+              msgFrag);
         }
       }
     }

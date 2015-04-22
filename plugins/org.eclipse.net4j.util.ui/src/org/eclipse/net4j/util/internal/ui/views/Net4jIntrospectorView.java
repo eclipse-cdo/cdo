@@ -63,8 +63,8 @@ import java.util.Stack;
 /**
  * @author Eike Stepper
  */
-public class Net4jIntrospectorView extends ViewPart implements IPartListener, ISelectionListener, IDoubleClickListener,
-    IListener
+public class Net4jIntrospectorView extends ViewPart
+    implements IPartListener, ISelectionListener, IDoubleClickListener, IListener
 {
   public static final String VIEW_ID = "org.eclipse.net4j.util.Net4jIntrospectorView"; //$NON-NLS-1$
 
@@ -416,8 +416,9 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   private void createObjectColmuns()
   {
     Table table = objectViewer.getTable();
-    String[] columnNames = {
-        Messages.getString("Net4jIntrospectorView_4"), Messages.getString("Net4jIntrospectorView_5"), Messages.getString("Net4jIntrospectorView_6"), Messages.getString("Net4jIntrospectorView_7") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_4"), //$NON-NLS-1$
+        Messages.getString("Net4jIntrospectorView_5"), Messages.getString("Net4jIntrospectorView_6"), //$NON-NLS-1$ //$NON-NLS-2$
+        Messages.getString("Net4jIntrospectorView_7") }; //$NON-NLS-1$
     int[] columnWidths = { 200, 400, 300, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -425,8 +426,8 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   private void createMapColmuns()
   {
     Table table = mapViewer.getTable();
-    String[] columnNames = {
-        Messages.getString("Net4jIntrospectorView_8"), Messages.getString("Net4jIntrospectorView_9"), Messages.getString("Net4jIntrospectorView_10") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_8"), //$NON-NLS-1$
+        Messages.getString("Net4jIntrospectorView_9"), Messages.getString("Net4jIntrospectorView_10") }; //$NON-NLS-1$ //$NON-NLS-2$
     int[] columnWidths = { 200, 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -434,8 +435,8 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   private void createIterableColmuns()
   {
     Table table = iterableViewer.getTable();
-    String[] columnNames = {
-        Messages.getString("Net4jIntrospectorView_11"), Messages.getString("Net4jIntrospectorView_12") }; //$NON-NLS-1$ //$NON-NLS-2$
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_11"), //$NON-NLS-1$
+        Messages.getString("Net4jIntrospectorView_12") }; //$NON-NLS-1$
     int[] columnWidths = { 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }
@@ -443,8 +444,8 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   private void createArrayColmuns()
   {
     Table table = arrayViewer.getTable();
-    String[] columnNames = {
-        Messages.getString("Net4jIntrospectorView_13"), Messages.getString("Net4jIntrospectorView_14"), Messages.getString("Net4jIntrospectorView_15") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    String[] columnNames = { Messages.getString("Net4jIntrospectorView_13"), //$NON-NLS-1$
+        Messages.getString("Net4jIntrospectorView_14"), Messages.getString("Net4jIntrospectorView_15") }; //$NON-NLS-1$ //$NON-NLS-2$
     int[] columnWidths = { 50, 400, 300 };
     createColumns(table, columnNames, columnWidths);
   }

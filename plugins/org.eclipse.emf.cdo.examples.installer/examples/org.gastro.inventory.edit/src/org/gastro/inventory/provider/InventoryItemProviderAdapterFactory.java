@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -38,16 +38,16 @@ import java.util.Collection;
  * factory convert EMF adapter notifications into calls to {@link #fireNotifyChanged fireNotifyChanged}. The adapters
  * also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
-public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory implements ComposeableAdapterFactory,
-    IChangeNotifier, IDisposable
+public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ComposedAdapterFactory parentAdapterFactory;
@@ -55,7 +55,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -63,14 +63,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
    * This constructs an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public InventoryItemProviderAdapterFactory()
@@ -85,14 +85,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Stock} instances. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected StockItemProvider stockItemProvider;
 
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Stock}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -109,7 +109,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.StockProduct} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected StockProductItemProvider stockProductItemProvider;
@@ -117,7 +117,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This creates an adapter for a {@link org.gastro.inventory.StockProduct}. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -134,14 +134,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Recipe} instances. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected RecipeItemProvider recipeItemProvider;
 
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Recipe}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -158,7 +158,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Ingredient} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IngredientItemProvider ingredientItemProvider;
@@ -166,7 +166,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Ingredient}. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -183,14 +183,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.MenuCard} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected MenuCardItemProvider menuCardItemProvider;
 
   /**
    * This creates an adapter for a {@link org.gastro.inventory.MenuCard}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -207,7 +207,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Restaurant} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected RestaurantItemProvider restaurantItemProvider;
@@ -215,7 +215,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Restaurant}. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -232,7 +232,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Department} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DepartmentItemProvider departmentItemProvider;
@@ -240,7 +240,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Department}. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -257,14 +257,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Offering} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected OfferingItemProvider offeringItemProvider;
 
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Offering}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -281,14 +281,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Table} instances. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected TableItemProvider tableItemProvider;
 
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Table}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -305,14 +305,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Employee} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected EmployeeItemProvider employeeItemProvider;
 
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Employee}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -329,14 +329,14 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.inventory.Section} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected SectionItemProvider sectionItemProvider;
 
   /**
    * This creates an adapter for a {@link org.gastro.inventory.Section}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -352,7 +352,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
 
   /**
    * This returns the root adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ComposeableAdapterFactory getRootAdapterFactory()
@@ -362,7 +362,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
 
   /**
    * This sets the composed adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
@@ -372,7 +372,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -384,7 +384,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This implementation substitutes the factory itself as the key for the adapter. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -395,7 +395,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -404,7 +404,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -415,7 +415,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
 
   /**
    * This adds a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void addListener(INotifyChangedListener notifyChangedListener)
@@ -425,7 +425,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
 
   /**
    * This removes a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void removeListener(INotifyChangedListener notifyChangedListener)
@@ -436,7 +436,7 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
   /**
    * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void fireNotifyChanged(Notification notification)
@@ -451,33 +451,55 @@ public class InventoryItemProviderAdapterFactory extends InventoryAdapterFactory
 
   /**
    * This disposes all of the item providers created by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void dispose()
   {
     if (stockItemProvider != null)
+    {
       stockItemProvider.dispose();
+    }
     if (stockProductItemProvider != null)
+    {
       stockProductItemProvider.dispose();
+    }
     if (recipeItemProvider != null)
+    {
       recipeItemProvider.dispose();
+    }
     if (ingredientItemProvider != null)
+    {
       ingredientItemProvider.dispose();
+    }
     if (menuCardItemProvider != null)
+    {
       menuCardItemProvider.dispose();
+    }
     if (restaurantItemProvider != null)
+    {
       restaurantItemProvider.dispose();
+    }
     if (departmentItemProvider != null)
+    {
       departmentItemProvider.dispose();
+    }
     if (offeringItemProvider != null)
+    {
       offeringItemProvider.dispose();
+    }
     if (tableItemProvider != null)
+    {
       tableItemProvider.dispose();
+    }
     if (employeeItemProvider != null)
+    {
       employeeItemProvider.dispose();
+    }
     if (sectionItemProvider != null)
+    {
       sectionItemProvider.dispose();
+    }
   }
 
 }

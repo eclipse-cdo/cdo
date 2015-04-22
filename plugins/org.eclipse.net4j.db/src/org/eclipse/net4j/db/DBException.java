@@ -17,7 +17,7 @@ import java.sql.SQLException;
 /**
  * A {@link RuntimeException runtime exception} thrown to indicate problems with a database, frequently used to wrap
  * checked {@link SQLException SQL exceptions}.
- * 
+ *
  * @author Eike Stepper
  */
 public class DBException extends RuntimeException

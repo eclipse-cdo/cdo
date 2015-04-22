@@ -11,8 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import oracle.jdbc.pool.OracleDataSource;
-
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -42,6 +40,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.sql.Connection;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import oracle.jdbc.pool.OracleDataSource;
 
 /**
  * @author Stefan Winkler

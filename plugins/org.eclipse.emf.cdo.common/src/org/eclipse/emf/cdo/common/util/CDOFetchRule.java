@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * Represents a subset of the {@link EStructuralFeature features} of a {@link EClass class}.
- * 
+ *
  * @author Simon McDuff
  * @since 3.0
  */

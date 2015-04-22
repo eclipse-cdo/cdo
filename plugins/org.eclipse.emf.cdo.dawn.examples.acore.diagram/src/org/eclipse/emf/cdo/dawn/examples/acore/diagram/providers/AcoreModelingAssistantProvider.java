@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;
 
@@ -48,9 +48,10 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public List getTypesForPopupBar(IAdaptable host)
   {
-    IGraphicalEditPart editPart = (IGraphicalEditPart)host.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart editPart = host.getAdapter(IGraphicalEditPart.class);
     if (editPart instanceof ACoreRootEditPart)
     {
       ArrayList<IElementType> types = new ArrayList<IElementType>(2);
@@ -78,9 +79,10 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public List getRelTypesOnSource(IAdaptable source)
   {
-    IGraphicalEditPart sourceEditPart = (IGraphicalEditPart)source.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart sourceEditPart = source.getAdapter(IGraphicalEditPart.class);
     if (sourceEditPart instanceof AClassEditPart)
     {
       return ((AClassEditPart)sourceEditPart).getMARelTypesOnSource();
@@ -91,9 +93,10 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public List getRelTypesOnTarget(IAdaptable target)
   {
-    IGraphicalEditPart targetEditPart = (IGraphicalEditPart)target.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart targetEditPart = target.getAdapter(IGraphicalEditPart.class);
     if (targetEditPart instanceof AInterfaceEditPart)
     {
       return ((AInterfaceEditPart)targetEditPart).getMARelTypesOnTarget();
@@ -108,10 +111,11 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public List getRelTypesOnSourceAndTarget(IAdaptable source, IAdaptable target)
   {
-    IGraphicalEditPart sourceEditPart = (IGraphicalEditPart)source.getAdapter(IGraphicalEditPart.class);
-    IGraphicalEditPart targetEditPart = (IGraphicalEditPart)target.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart sourceEditPart = source.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart targetEditPart = target.getAdapter(IGraphicalEditPart.class);
     if (sourceEditPart instanceof AClassEditPart)
     {
       return ((AClassEditPart)sourceEditPart).getMARelTypesOnSourceAndTarget(targetEditPart);
@@ -122,9 +126,10 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public List getTypesForSource(IAdaptable target, IElementType relationshipType)
   {
-    IGraphicalEditPart targetEditPart = (IGraphicalEditPart)target.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart targetEditPart = target.getAdapter(IGraphicalEditPart.class);
     if (targetEditPart instanceof AInterfaceEditPart)
     {
       return ((AInterfaceEditPart)targetEditPart).getMATypesForSource(relationshipType);
@@ -139,9 +144,10 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public List getTypesForTarget(IAdaptable source, IElementType relationshipType)
   {
-    IGraphicalEditPart sourceEditPart = (IGraphicalEditPart)source.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart sourceEditPart = source.getAdapter(IGraphicalEditPart.class);
     if (sourceEditPart instanceof AClassEditPart)
     {
       return ((AClassEditPart)sourceEditPart).getMATypesForTarget(relationshipType);
@@ -152,6 +158,7 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public EObject selectExistingElementForSource(IAdaptable target, IElementType relationshipType)
   {
     return selectExistingElement(target, getTypesForSource(target, relationshipType));
@@ -160,6 +167,7 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   /**
    * @generated
    */
+  @Override
   public EObject selectExistingElementForTarget(IAdaptable source, IElementType relationshipType)
   {
     return selectExistingElement(source, getTypesForTarget(source, relationshipType));
@@ -174,7 +182,7 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
     {
       return null;
     }
-    IGraphicalEditPart editPart = (IGraphicalEditPart)host.getAdapter(IGraphicalEditPart.class);
+    IGraphicalEditPart editPart = host.getAdapter(IGraphicalEditPart.class);
     if (editPart == null)
     {
       return null;
@@ -193,7 +201,7 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
     {
       return null;
     }
-    return selectElement((EObject[])elements.toArray(new EObject[elements.size()]));
+    return selectElement(elements.toArray(new EObject[elements.size()]));
   }
 
   /**
@@ -211,8 +219,8 @@ public class AcoreModelingAssistantProvider extends ModelingAssistantProvider
   protected EObject selectElement(EObject[] elements)
   {
     Shell shell = Display.getCurrent().getActiveShell();
-    ILabelProvider labelProvider = new AdapterFactoryLabelProvider(AcoreDiagramEditorPlugin.getInstance()
-        .getItemProvidersAdapterFactory());
+    ILabelProvider labelProvider = new AdapterFactoryLabelProvider(
+        AcoreDiagramEditorPlugin.getInstance().getItemProvidersAdapterFactory());
     ElementListSelectionDialog dialog = new ElementListSelectionDialog(shell, labelProvider);
     dialog.setMessage(Messages.AcoreModelingAssistantProviderMessage);
     dialog.setTitle(Messages.AcoreModelingAssistantProviderTitle);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -104,7 +104,7 @@ public interface Model5Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.ManagerImpl <em>Manager</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model5.impl.ManagerImpl
    * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getManager()
    * @generated
@@ -122,7 +122,7 @@ public interface Model5Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.DoctorImpl <em>Doctor</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model5.impl.DoctorImpl
    * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getDoctor()
    * @generated
@@ -436,7 +436,7 @@ public interface Model5Package extends EPackage
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -445,7 +445,7 @@ public interface Model5Package extends EPackage
   /**
    * The feature id for the '<em><b>Favourite</b></em>' reference.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -463,7 +463,7 @@ public interface Model5Package extends EPackage
   /**
    * The number of structural features of the '<em>Parent</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -472,7 +472,7 @@ public interface Model5Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.impl.ChildImpl <em>Child</em>}' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model5.impl.ChildImpl
    * @see org.eclipse.emf.cdo.tests.model5.impl.Model5PackageImpl#getChild()
    * @generated
@@ -482,7 +482,7 @@ public interface Model5Package extends EPackage
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -491,7 +491,7 @@ public interface Model5Package extends EPackage
   /**
    * The feature id for the '<em><b>Preferred By</b></em>' reference.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -509,7 +509,7 @@ public interface Model5Package extends EPackage
   /**
    * The number of structural features of the '<em>Child</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -565,7 +565,7 @@ public interface Model5Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Manager <em>Manager</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Manager</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Manager
    * @generated
@@ -575,7 +575,7 @@ public interface Model5Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Doctor <em>Doctor</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Doctor</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Doctor
    * @generated
@@ -789,7 +789,7 @@ public interface Model5Package extends EPackage
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model5.Parent#getChildren <em>Children</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Parent#getChildren()
    * @see #getParent()
@@ -800,7 +800,7 @@ public interface Model5Package extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Parent#getFavourite <em>Favourite</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Favourite</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Parent#getFavourite()
    * @see #getParent()
@@ -822,7 +822,7 @@ public interface Model5Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Child <em>Child</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Child</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Child
    * @generated
@@ -832,7 +832,7 @@ public interface Model5Package extends EPackage
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getParent <em>Parent</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Child#getParent()
    * @see #getChild()
@@ -843,7 +843,7 @@ public interface Model5Package extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy <em>Preferred By</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Preferred By</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy()
    * @see #getChild()

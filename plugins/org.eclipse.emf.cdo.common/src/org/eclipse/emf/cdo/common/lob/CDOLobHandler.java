@@ -16,7 +16,7 @@ import java.io.Writer;
 
 /**
  * A callback interface for handling large objects.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.uses {@link CDOLob} - - handles

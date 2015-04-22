@@ -81,8 +81,8 @@ public class NormalRepositoryView extends AbstractView<IRepository>
   protected void initializeToolBar(IToolBarManager toolbarManager)
   {
     super.initializeToolBar(toolbarManager);
-    toolbarManager.add(new Action("Browser", ExampleResourceManager.getPluginImageDescriptor(Application.PLUGIN_ID,
-        "icons/Browser.gif"))
+    toolbarManager.add(new Action("Browser",
+        ExampleResourceManager.getPluginImageDescriptor(Application.PLUGIN_ID, "icons/Browser.gif"))
     {
       @Override
       public void run()
@@ -95,7 +95,7 @@ public class NormalRepositoryView extends AbstractView<IRepository>
           try
           {
             PlatformUI.getWorkbench().getBrowserSupport().getExternalBrowser()
-                .openURL(new URL("http://localhost:" + port));
+            .openURL(new URL("http://localhost:" + port));
           }
           catch (Exception ex)
           {

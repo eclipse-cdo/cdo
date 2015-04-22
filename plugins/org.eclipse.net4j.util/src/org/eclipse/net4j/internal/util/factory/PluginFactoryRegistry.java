@@ -103,8 +103,8 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
       return;
     }
 
-    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(
-        NAMESPACE, EXT_POINT);
+    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE,
+        EXT_POINT);
     for (org.eclipse.core.runtime.IConfigurationElement element : elements)
     {
       registerFactory(new FactoryDescriptor(element));
@@ -137,6 +137,6 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
     }
 
     extensionRegistry
-        .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
+    .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
   }
 }

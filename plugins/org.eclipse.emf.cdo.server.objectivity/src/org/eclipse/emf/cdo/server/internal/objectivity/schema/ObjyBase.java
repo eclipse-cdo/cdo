@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Simon McDuff - initial API and implementation
  *    Ibrahim Sallam - code refactoring for CDO 3.0
@@ -27,7 +27,7 @@ import com.objy.as.app.ooBaseType;
 /**
  * EMF Classes in Objectivity are enhanced with this base class. This class is use for the revision data as a base for
  * other classes created.
- * 
+ *
  * @author ibrahim
  */
 public class ObjyBase
@@ -93,7 +93,7 @@ public class ObjyBase
           ObjyBase.ATT_CONTAINER_FEATUERID, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       propClass.add_ref_attribute(com.objy.as.app.d_Module.LAST, // Access kind
           d_Access_Kind.d_PUBLIC, // Access kind
@@ -111,25 +111,25 @@ public class ObjyBase
           ObjyBase.ATT_VERSION, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           ObjyBase.ATT_BRANCHID, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           ObjyBase.ATT_CREATION_TIME, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT64 // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       propClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           ObjyBase.ATT_REVISED_TIME, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT64 // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       if (!inProcess)
       {

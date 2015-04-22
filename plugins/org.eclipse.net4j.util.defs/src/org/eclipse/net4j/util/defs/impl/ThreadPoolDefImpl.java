@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -25,7 +25,7 @@ import java.util.concurrent.ThreadFactory;
  * -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadPoolDef
@@ -55,7 +55,7 @@ public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadP
   /**
    * Gets a executor service instance. The current implementation does not reuse an instance created in a former call
    * TODO: reuse instances
-   * 
+   *
    * @return the instance
    */
   @Override

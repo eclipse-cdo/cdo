@@ -28,8 +28,8 @@ public class CreateSemanticResourceRecordingCommand extends RecordingCommand
 
   private final String resourcePath;
 
-  public CreateSemanticResourceRecordingCommand(TransactionalEditingDomain editingDomain,
-      CDOTransaction cdoTransaction, String resourcePath)
+  public CreateSemanticResourceRecordingCommand(TransactionalEditingDomain editingDomain, CDOTransaction cdoTransaction,
+      String resourcePath)
   {
     super(editingDomain);
     this.cdoTransaction = cdoTransaction;

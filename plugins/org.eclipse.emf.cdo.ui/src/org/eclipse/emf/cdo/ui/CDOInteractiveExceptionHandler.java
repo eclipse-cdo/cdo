@@ -152,9 +152,10 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
     {
       getShell().setText(TITLE);
 
-      String attemptsStr = attempt == 1 ? Messages.getString("CDOInteractiveExceptionHandler.1") : Messages.getString("CDOInteractiveExceptionHandler.2"); //$NON-NLS-1$ //$NON-NLS-2$
-      setTitle(MessageFormat.format(
-          Messages.getString("CDOInteractiveExceptionHandler.3"), session, attempt, attemptsStr));//$NON-NLS-1$
+      String attemptsStr = attempt == 1 ? Messages.getString("CDOInteractiveExceptionHandler.1") //$NON-NLS-1$
+          : Messages.getString("CDOInteractiveExceptionHandler.2"); //$NON-NLS-1$
+      setTitle(
+          MessageFormat.format(Messages.getString("CDOInteractiveExceptionHandler.3"), session, attempt, attemptsStr));//$NON-NLS-1$
       setTitleImage(SharedIcons.getImage(SharedIcons.WIZBAN_PROTOCOL_PROBLEM));
 
       GridLayout layout = UIUtil.createGridLayout(1);

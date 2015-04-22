@@ -128,7 +128,9 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A
     String oldDbId = dbId;
     dbId = newDbId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_A__DB_ID, oldDbId, dbId));
+    }
   }
 
   /**
@@ -251,7 +253,9 @@ public class Bz398057AImpl extends EObjectImpl implements Bz398057A
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (dbId: ");

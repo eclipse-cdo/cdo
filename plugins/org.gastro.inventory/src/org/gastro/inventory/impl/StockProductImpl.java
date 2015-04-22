@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -31,14 +31,14 @@ import org.gastro.inventory.StockProduct;
  * <li>{@link org.gastro.inventory.impl.StockProductImpl#getOrderLimit <em>Order Limit</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class StockProductImpl extends ProductImpl implements StockProduct
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected StockProductImpl()
@@ -48,7 +48,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -59,7 +59,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Stock getStock()
@@ -69,7 +69,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setStock(Stock newStock)
@@ -79,7 +79,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -90,7 +90,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setCost(float newCost)
@@ -100,7 +100,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getAvailable()
@@ -110,7 +110,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setAvailable(int newAvailable)
@@ -120,7 +120,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getOrderLimit()
@@ -130,7 +130,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setOrderLimit(int newOrderLimit)
@@ -140,7 +140,7 @@ public class StockProductImpl extends ProductImpl implements StockProduct
 
   /**
    * TODO Should be modeled as derived EReference!
-   * 
+   *
    * @ADDED
    */
   public Department getDepartment()

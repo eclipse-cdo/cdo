@@ -43,11 +43,11 @@ import java.util.List;
  * factory convert EMF adapter notifications into calls to {@link #fireNotifyChanged fireNotifyChanged}. The adapters
  * also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
-public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory implements ComposeableAdapterFactory,
-    IChangeNotifier, IDisposable, IChildCreationExtender
+public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -76,7 +76,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -268,7 +268,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.examples.company.Order} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected OrderItemProvider orderItemProvider;
@@ -366,7 +366,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -439,30 +439,48 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory imp
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void dispose()
   {
     if (companyItemProvider != null)
+    {
       companyItemProvider.dispose();
+    }
     if (supplierItemProvider != null)
+    {
       supplierItemProvider.dispose();
+    }
     if (customerItemProvider != null)
+    {
       customerItemProvider.dispose();
+    }
     if (orderItemProvider != null)
+    {
       orderItemProvider.dispose();
+    }
     if (orderDetailItemProvider != null)
+    {
       orderDetailItemProvider.dispose();
+    }
     if (purchaseOrderItemProvider != null)
+    {
       purchaseOrderItemProvider.dispose();
+    }
     if (salesOrderItemProvider != null)
+    {
       salesOrderItemProvider.dispose();
+    }
     if (categoryItemProvider != null)
+    {
       categoryItemProvider.dispose();
+    }
     if (productItemProvider != null)
+    {
       productItemProvider.dispose();
+    }
   }
 
 }

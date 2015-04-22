@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -43,7 +43,7 @@ public class AcorePaletteFactory
 
   /**
    * Creates "Node" palette tool group
-   * 
+   *
    * @generated
    */
   private PaletteContainer createNode1Group()
@@ -59,7 +59,7 @@ public class AcorePaletteFactory
 
   /**
    * Creates "Connections" palette tool group
-   * 
+   *
    * @generated
    */
   private PaletteContainer createConnections2Group()
@@ -231,6 +231,7 @@ public class AcorePaletteFactory
     /**
      * @generated
      */
+    @Override
     public Tool createTool()
     {
       Tool tool = new UnspecifiedTypeCreationTool(elementTypes);
@@ -262,6 +263,7 @@ public class AcorePaletteFactory
     /**
      * @generated
      */
+    @Override
     public Tool createTool()
     {
       Tool tool = new UnspecifiedTypeConnectionTool(relationshipTypes);

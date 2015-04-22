@@ -64,5 +64,4 @@ public class Bugzilla_459104_Test extends AbstractCDOTest
 
     protocol.removeListener(signalCounter);
   }
-
 }

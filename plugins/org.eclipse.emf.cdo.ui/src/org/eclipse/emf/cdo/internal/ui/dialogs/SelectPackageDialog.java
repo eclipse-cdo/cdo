@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Victor Roldan Betancort - maintenance
@@ -54,7 +54,8 @@ public class SelectPackageDialog extends BaseDialog<CheckboxTableViewer>
 
   public SelectPackageDialog(Shell shell, String title, String message, Set<String> excludedURIs)
   {
-    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message, OM.Activator.INSTANCE.getDialogSettings());
+    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, title, message,
+        OM.Activator.INSTANCE.getDialogSettings());
     this.excludedURIs = excludedURIs;
   }
 

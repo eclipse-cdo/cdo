@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.provider;
 
@@ -36,16 +36,16 @@ import java.util.Collection;
  * factory convert EMF adapter notifications into calls to {@link #fireNotifyChanged fireNotifyChanged}. The adapters
  * also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
-public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory implements ComposeableAdapterFactory,
-    IChangeNotifier, IDisposable
+public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ComposedAdapterFactory parentAdapterFactory;
@@ -53,7 +53,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IChangeNotifier changeNotifier = new ChangeNotifier();
@@ -61,14 +61,14 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
    * This constructs an instance. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AcoreItemProviderAdapterFactory()
@@ -83,7 +83,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.AClass} instances.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AClassItemProvider aClassItemProvider;
@@ -91,7 +91,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AClass}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -108,7 +108,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.AInterface}
    * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AInterfaceItemProvider aInterfaceItemProvider;
@@ -116,7 +116,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AInterface}. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -133,7 +133,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot}
    * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ACoreRootItemProvider aCoreRootItemProvider;
@@ -141,7 +141,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot}. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -158,7 +158,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.AAttribute}
    * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AAttributeItemProvider aAttributeItemProvider;
@@ -166,7 +166,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AAttribute}. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -183,7 +183,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.AOperation}
    * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AOperationItemProvider aOperationItemProvider;
@@ -191,7 +191,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AOperation}. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -208,7 +208,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass}
    * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ABasicClassItemProvider aBasicClassItemProvider;
@@ -216,7 +216,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass}. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -233,7 +233,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.AParameter}
    * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AParameterItemProvider aParameterItemProvider;
@@ -241,7 +241,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AParameter}. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -258,7 +258,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild}
    * instances. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected AClassChildItemProvider aClassChildItemProvider;
@@ -266,7 +266,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This creates an adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.AClassChild}. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -282,7 +282,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
 
   /**
    * This returns the root adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ComposeableAdapterFactory getRootAdapterFactory()
@@ -292,7 +292,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
 
   /**
    * This sets the composed adapter factory that contains this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setParentAdapterFactory(ComposedAdapterFactory parentAdapterFactory)
@@ -302,7 +302,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -314,7 +314,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This implementation substitutes the factory itself as the key for the adapter. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -325,7 +325,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -334,7 +334,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -345,7 +345,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
 
   /**
    * This adds a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void addListener(INotifyChangedListener notifyChangedListener)
@@ -355,7 +355,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
 
   /**
    * This removes a listener. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void removeListener(INotifyChangedListener notifyChangedListener)
@@ -366,7 +366,7 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
   /**
    * This delegates to {@link #changeNotifier} and to {@link #parentAdapterFactory}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void fireNotifyChanged(Notification notification)
@@ -381,27 +381,43 @@ public class AcoreItemProviderAdapterFactory extends AcoreAdapterFactory impleme
 
   /**
    * This disposes all of the item providers created by this factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void dispose()
   {
     if (aClassItemProvider != null)
+    {
       aClassItemProvider.dispose();
+    }
     if (aInterfaceItemProvider != null)
+    {
       aInterfaceItemProvider.dispose();
+    }
     if (aCoreRootItemProvider != null)
+    {
       aCoreRootItemProvider.dispose();
+    }
     if (aAttributeItemProvider != null)
+    {
       aAttributeItemProvider.dispose();
+    }
     if (aOperationItemProvider != null)
+    {
       aOperationItemProvider.dispose();
+    }
     if (aBasicClassItemProvider != null)
+    {
       aBasicClassItemProvider.dispose();
+    }
     if (aParameterItemProvider != null)
+    {
       aParameterItemProvider.dispose();
+    }
     if (aClassChildItemProvider != null)
+    {
       aClassChildItemProvider.dispose();
+    }
   }
 
 }

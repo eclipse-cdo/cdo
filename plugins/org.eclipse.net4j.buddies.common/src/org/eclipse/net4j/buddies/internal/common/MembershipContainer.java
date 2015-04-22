@@ -69,7 +69,8 @@ public class MembershipContainer extends Lifecycle implements IMembershipContain
       IListener[] listeners = getListeners();
       if (listeners != null)
       {
-        fireEvent(new SingleDeltaContainerEvent<IMembership>(this, membership, IContainerDelta.Kind.REMOVED), listeners);
+        fireEvent(new SingleDeltaContainerEvent<IMembership>(this, membership, IContainerDelta.Kind.REMOVED),
+            listeners);
       }
     }
 

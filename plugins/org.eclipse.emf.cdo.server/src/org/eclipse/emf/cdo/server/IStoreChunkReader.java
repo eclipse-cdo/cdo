@@ -22,7 +22,7 @@ import java.util.List;
  * Reads {@link Chunk chunks} of
  * {@link org.eclipse.emf.cdo.session.CDOSession.Options#setCollectionLoadingPolicy(CDOCollectionLoadingPolicy)
  * partially loaded} lists from a physical data storage backend.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.uses {@link IStoreChunkReader.Chunk} - - reads
  */
@@ -55,7 +55,7 @@ public interface IStoreChunkReader
   /**
    * Represents a {@link List#subList(int, int) sublist} of consecutive elements that are subject to <i>partial
    * collection loading</i>.
-   * 
+   *
    * @author Eike Stepper
    */
   public static class Chunk

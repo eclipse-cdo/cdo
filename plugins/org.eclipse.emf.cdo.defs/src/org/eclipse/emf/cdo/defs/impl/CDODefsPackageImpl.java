@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -128,7 +128,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.defs.CDODefsPackage#eNS_URI
    * @see #init()
@@ -147,7 +147,7 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link CDODefsPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -160,11 +160,14 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
   public static CDODefsPackage init()
   {
     if (isInited)
+    {
       return (CDODefsPackage)EPackage.Registry.INSTANCE.getEPackage(CDODefsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
-    CDODefsPackageImpl theCDODefsPackage = (CDODefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof CDODefsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new CDODefsPackageImpl());
+    CDODefsPackageImpl theCDODefsPackage = (CDODefsPackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof CDODefsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new CDODefsPackageImpl());
 
     isInited = true;
 
@@ -434,7 +437,9 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -493,7 +498,9 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -513,24 +520,24 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
     // Add supertypes to classes
     cdoViewDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    cdoTransactionDefEClass.getESuperTypes().add(this.getCDOViewDef());
-    cdoAuditDefEClass.getESuperTypes().add(this.getCDOViewDef());
+    cdoTransactionDefEClass.getESuperTypes().add(getCDOViewDef());
+    cdoAuditDefEClass.getESuperTypes().add(getCDOViewDef());
     cdoSessionDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
     cdoPackageRegistryDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    cdoEagerPackageRegistryDefEClass.getESuperTypes().add(this.getCDOPackageRegistryDef());
-    cdoLazyPackageRegistryDefEClass.getESuperTypes().add(this.getCDOPackageRegistryDef());
+    cdoEagerPackageRegistryDefEClass.getESuperTypes().add(getCDOPackageRegistryDef());
+    cdoLazyPackageRegistryDefEClass.getESuperTypes().add(getCDOPackageRegistryDef());
     ePackageDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    eDynamicPackageDefEClass.getESuperTypes().add(this.getEPackageDef());
-    eGlobalPackageDefEClass.getESuperTypes().add(this.getEPackageDef());
+    eDynamicPackageDefEClass.getESuperTypes().add(getEPackageDef());
+    eGlobalPackageDefEClass.getESuperTypes().add(getEPackageDef());
     cdoClientProtocolFactoryDefEClass.getESuperTypes().add(theNet4jDefsPackage.getClientProtocolFactoryDef());
     cdoResourceDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
 
     // Initialize classes and features; add operations and parameters
     initEClass(cdoViewDefEClass, CDOViewDef.class, "CDOViewDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOViewDef_CdoSessionDef(), this.getCDOSessionDef(), null, "cdoSessionDef", null, 1, 1,
-        CDOViewDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCDOViewDef_CdoSessionDef(), getCDOSessionDef(), null, "cdoSessionDef", null, 1, 1,
+        CDOViewDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(cdoTransactionDefEClass, CDOTransactionDef.class, "CDOTransactionDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
@@ -548,16 +555,16 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
     initEAttribute(getCDOSessionDef_RepositoryName(), ecorePackage.getEString(), "repositoryName", null, 1, 1,
         CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE,
         !IS_DERIVED, !IS_ORDERED);
-    initEReference(getCDOSessionDef_CdoPackageRegistryDef(), this.getCDOPackageRegistryDef(), null,
-        "cdoPackageRegistryDef", null, 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOSessionDef_LegacySupportEnabled(), ecorePackage.getEBoolean(), "legacySupportEnabled",
-        "false", 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCDOSessionDef_CdoPackageRegistryDef(), getCDOPackageRegistryDef(), null, "cdoPackageRegistryDef",
+        null, 1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCDOSessionDef_LegacySupportEnabled(), ecorePackage.getEBoolean(), "legacySupportEnabled", "false",
+        1, 1, CDOSessionDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(cdoPackageRegistryDefEClass, CDOPackageRegistryDef.class, "CDOPackageRegistryDef", !IS_ABSTRACT,
         !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOPackageRegistryDef_Packages(), this.getEPackageDef(), null, "packages", null, 0, -1,
+    initEReference(getCDOPackageRegistryDef_Packages(), getEPackageDef(), null, "packages", null, 0, -1,
         CDOPackageRegistryDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -586,10 +593,10 @@ public class CDODefsPackageImpl extends EPackageImpl implements CDODefsPackage
 
     initEClass(cdoResourceDefEClass, CDOResourceDef.class, "CDOResourceDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCDOResourceDef_CdoTransaction(), this.getCDOTransactionDef(), null, "cdoTransaction", null, 1, 1,
+    initEReference(getCDOResourceDef_CdoTransaction(), getCDOTransactionDef(), null, "cdoTransaction", null, 1, 1,
         CDOResourceDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getCDOResourceDef_ResourceMode(), this.getResourceMode(), "resourceMode", "null", 1, 1,
+    initEAttribute(getCDOResourceDef_ResourceMode(), getResourceMode(), "resourceMode", "null", 1, 1,
         CDOResourceDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCDOResourceDef_Path(), ecorePackage.getEString(), "path", null, 1, 1, CDOResourceDef.class,

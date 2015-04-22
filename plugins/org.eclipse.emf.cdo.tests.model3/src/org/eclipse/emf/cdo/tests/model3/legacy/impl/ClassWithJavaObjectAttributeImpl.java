@@ -94,8 +94,10 @@ public class ClassWithJavaObjectAttributeImpl extends EObjectImpl implements Cla
     Object oldJavaObject = javaObject;
     javaObject = newJavaObject;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET,
-          Model3Package.CLASS_WITH_JAVA_OBJECT_ATTRIBUTE__JAVA_OBJECT, oldJavaObject, javaObject));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.CLASS_WITH_JAVA_OBJECT_ATTRIBUTE__JAVA_OBJECT,
+          oldJavaObject, javaObject));
+    }
   }
 
   /**
@@ -173,7 +175,9 @@ public class ClassWithJavaObjectAttributeImpl extends EObjectImpl implements Cla
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (javaObject: ");

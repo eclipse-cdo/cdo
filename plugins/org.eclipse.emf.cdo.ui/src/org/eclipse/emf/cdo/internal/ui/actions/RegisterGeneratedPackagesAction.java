@@ -47,10 +47,9 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
   protected List<EPackage> getEPackages(IWorkbenchPage page, CDOSession session)
   {
     Shell shell = page.getWorkbenchWindow().getShell();
-    SelectPackageDialog dialog = new SelectPackageDialog(shell,
-        Messages.getString("RegisterGeneratedPackagesAction.2"), //$NON-NLS-1$
+    SelectPackageDialog dialog = new SelectPackageDialog(shell, Messages.getString("RegisterGeneratedPackagesAction.2"), //$NON-NLS-1$
         Messages.getString("RegisterGeneratedPackagesAction.3"), session.getPackageRegistry() //$NON-NLS-1$
-            .keySet());
+        .keySet());
 
     if (dialog.open() == SelectPackageDialog.OK)
     {
@@ -87,8 +86,8 @@ public class RegisterGeneratedPackagesAction extends RegisterPackagesAction
         return ""; //$NON-NLS-1$
       }
 
-      return registry.containsKey(uri) ? null : MessageFormat.format(
-          Messages.getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
+      return registry.containsKey(uri) ? null
+          : MessageFormat.format(Messages.getString("RegisterGeneratedPackagesAction.5"), uri); //$NON-NLS-1$
     }
   }
 }

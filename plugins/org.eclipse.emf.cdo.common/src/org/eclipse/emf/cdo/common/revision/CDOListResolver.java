@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * A strategy that specifies which list elememts must be present (loaded) in a {@link CDOID} list of a
  * {@link CDORevision revision} when a certain list index is accessed. Implementations of this interface can control the
  * exact characteristics of a certain <em>partial collection loading</em> strategy.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.uses {@link CDOList} - - resolves

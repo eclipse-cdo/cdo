@@ -57,7 +57,7 @@ public class DawnGenModelPlugin extends Plugin
 
   /**
    * Returns the shared instance
-   * 
+   *
    * @return the shared instance
    */
   public static DawnGenModelPlugin getDefault()

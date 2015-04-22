@@ -368,14 +368,14 @@ public class DurableLockingManager extends Lifecycle
 
     sqlInsertLockArea = "INSERT INTO " + LOCK_AREAS + "(" + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + ","
         + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + ") VALUES (?, ?, ?, ?, ?)";
-    sqlSelectLockArea = "SELECT " + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME
-        + "," + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
+    sqlSelectLockArea = "SELECT " + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + ","
+        + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
     sqlSelectAllLockAreas = "SELECT " + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + ","
         + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS;
     sqlSelectLockAreas = sqlSelectAllLockAreas + " WHERE " + LOCK_AREAS_USER_ID + " LIKE ?";
     sqlDeleteLockArea = "DELETE FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
-    sqlDeleteLockAreas = "DELETE FROM " + LOCK_AREAS + " WHERE EXISTS (SELECT * FROM " + LOCKS + " WHERE " + LOCKS
-        + "." + LOCKS_AREA_ID + "=" + LOCK_AREAS + "." + LOCK_AREAS_ID + ")";
+    sqlDeleteLockAreas = "DELETE FROM " + LOCK_AREAS + " WHERE EXISTS (SELECT * FROM " + LOCKS + " WHERE " + LOCKS + "."
+        + LOCKS_AREA_ID + "=" + LOCK_AREAS + "." + LOCK_AREAS_ID + ")";
 
     // Locks
     locksTable = database.getSchema().getTable(LOCKS);
@@ -395,8 +395,8 @@ public class DurableLockingManager extends Lifecycle
       });
     }
 
-    sqlSelectLocks = "SELECT " + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE "
-        + LOCKS_AREA_ID + "=?";
+    sqlSelectLocks = "SELECT " + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID
+        + "=?";
     sqlSelectLock = "SELECT " + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND "
         + LOCKS_OBJECT_ID + "=?";
     sqlInsertLock = "INSERT INTO " + LOCKS + "(" + LOCKS_AREA_ID + "," + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE

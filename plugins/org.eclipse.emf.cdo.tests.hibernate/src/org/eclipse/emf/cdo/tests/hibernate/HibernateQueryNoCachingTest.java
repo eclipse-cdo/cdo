@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.view.CDOQuery;
 
 /**
  * Test HQL queries with server side caching of query list to off.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateQueryNoCachingTest extends HibernateQueryTest

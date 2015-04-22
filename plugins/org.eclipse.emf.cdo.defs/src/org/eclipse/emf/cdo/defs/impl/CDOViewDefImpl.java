@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -81,8 +81,10 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
       if (cdoSessionDef != oldCdoSessionDef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF,
               oldCdoSessionDef, cdoSessionDef));
+        }
       }
     }
     return cdoSessionDef;
@@ -106,8 +108,10 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
     CDOSessionDef oldCdoSessionDef = cdoSessionDef;
     cdoSessionDef = newCdoSessionDef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF,
           oldCdoSessionDef, cdoSessionDef));
+    }
   }
 
   /**
@@ -121,7 +125,9 @@ public class CDOViewDefImpl extends DefImpl implements CDOViewDef
     {
     case CDODefsPackage.CDO_VIEW_DEF__CDO_SESSION_DEF:
       if (resolve)
+      {
         return getCdoSessionDef();
+      }
       return basicGetCdoSessionDef();
     }
     return super.eGet(featureID, resolve, coreType);

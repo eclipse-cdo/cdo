@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.common.util;
 
 /**
  * Provides the consumer with a long-valued time stamp.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */

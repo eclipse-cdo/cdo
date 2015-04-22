@@ -174,8 +174,8 @@ public abstract class GenerateDawnGenModelAction implements IObjectActionDelegat
   protected ResourceSet createResourceSet()
   {
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put(dawngenmodelFileExtension, new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(dawngenmodelFileExtension,
+        new XMIResourceFactoryImpl());
     return resourceSet;
   }
 

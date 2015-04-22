@@ -428,9 +428,9 @@ public class SecurityValidator extends EObjectValidator
         // Detected a cycle
         if (diagnostics != null)
         {
-          diagnostics.add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0,
-              "_UI_Group_acyclicInheritance_diagnostic", //$NON-NLS-1$
-              new Object[] { group.getId() }, new Object[] { group }, context));
+          diagnostics
+              .add(createDiagnostic(Diagnostic.ERROR, DIAGNOSTIC_SOURCE, 0, "_UI_Group_acyclicInheritance_diagnostic", //$NON-NLS-1$
+                  new Object[] { group.getId() }, new Object[] { group }, context));
         }
 
         return false;

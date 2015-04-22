@@ -202,10 +202,12 @@ public final class EMFUtil
   {
     List<String> uriFragmentPath = new ArrayList<String>();
     Resource resource;
-    for (InternalEObject container = internalEObject.eInternalContainer(); (resource = internalEObject
-        .eDirectResource()) == null && container != null; container = internalEObject.eInternalContainer())
+    for (InternalEObject container = internalEObject
+        .eInternalContainer(); (resource = internalEObject.eDirectResource()) == null
+            && container != null; container = internalEObject.eInternalContainer())
     {
-      String segment = getPositionalURIFragmentSegment(container, internalEObject.eContainingFeature(), internalEObject);
+      String segment = getPositionalURIFragmentSegment(container, internalEObject.eContainingFeature(),
+          internalEObject);
       uriFragmentPath.add(segment);
       internalEObject = container;
     }

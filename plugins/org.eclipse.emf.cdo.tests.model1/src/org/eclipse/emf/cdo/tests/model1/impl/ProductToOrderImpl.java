@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.cdo.tests.model1.impl.ProductToOrderImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry<Product1, SalesOrder>
@@ -116,7 +116,7 @@ public class ProductToOrderImpl extends CDOObjectImpl implements BasicEMap.Entry
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

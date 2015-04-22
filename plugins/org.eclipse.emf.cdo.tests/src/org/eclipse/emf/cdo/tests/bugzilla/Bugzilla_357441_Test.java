@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
  * [DB] Range-based list mappings can be very slow.
  * <p>
  * See bug 357441
- * 
+ *
  * @author Eike Stepper
  * @since 4.1
  */

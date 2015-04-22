@@ -31,7 +31,7 @@ import java.util.Set;
 
 /**
  * Various static helper methods for dealing with {@link CDOWorkspace workspaces}.
- * 
+ *
  * @author Eike Stepper
  */
 public final class CDOWorkspaceUtil
@@ -112,7 +112,7 @@ public final class CDOWorkspaceUtil
 
   /**
    * Returns a new configuration that can be used to checkout a new {@link CDOWorkspace} or open an existing one.
-   * 
+   *
    * @since 4.1
    */
   public static CDOWorkspaceConfiguration createWorkspaceConfiguration()

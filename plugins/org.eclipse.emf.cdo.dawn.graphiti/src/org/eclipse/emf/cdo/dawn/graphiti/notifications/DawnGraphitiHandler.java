@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -72,8 +72,8 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
 
     EObject element = CDOUtil.getEObject(cdoObject); // either semantic object or notational
 
-    List<PictogramElement> pictgramElements = DawnGraphitiUtil.getPictgramElements(((DiagramEditor)editor)
-        .getDiagramTypeProvider().getDiagram(), element);
+    List<PictogramElement> pictgramElements = DawnGraphitiUtil
+        .getPictgramElements(((DiagramEditor)editor).getDiagramTypeProvider().getDiagram(), element);
 
     GraphicalViewer graphicalViewer = ((DiagramEditor)editor).getGraphicalViewer();
 
@@ -207,7 +207,7 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
     // {
     // if (TRACER.isEnabled())
     // {
-    //        TRACER.format("Updating DiagramEditPart {0} ", ((DiagramEditor)editor).getDiagramEditPart()); //$NON-NLS-1$
+    // TRACER.format("Updating DiagramEditPart {0} ", ((DiagramEditor)editor).getDiagramEditPart()); //$NON-NLS-1$
     // }
     // DawnDiagramUpdater.refreshEditPart(((DiagramEditor)editor).getDiagramEditPart(), (DiagramDocumentEditor)editor);
     // }

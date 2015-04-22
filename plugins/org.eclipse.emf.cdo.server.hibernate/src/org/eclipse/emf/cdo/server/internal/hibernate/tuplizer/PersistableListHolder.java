@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Keeps mappings from object/feature combinations to a hibernate persistable list. This works because the write action
  * is done in one thread.
- * 
+ *
  * @author Martin Taal
  */
 public class PersistableListHolder

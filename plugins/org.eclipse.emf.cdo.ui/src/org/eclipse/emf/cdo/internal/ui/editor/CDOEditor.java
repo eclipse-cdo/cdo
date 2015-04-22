@@ -179,8 +179,8 @@ import java.util.Map;
  * @author Eike Stepper
  * @generated
  */
-public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-    IMenuListener, IViewerProvider
+public class CDOEditor extends MultiPageEditorPart
+    implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider
 {
   /**
    * The filters for file extensions supported by the editor.
@@ -1101,16 +1101,16 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception == null ? (Object)resource
-          : exception });
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0,
+          getString("_UI_CreateModelError_message", resource.getURI()),
+          new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
     else if (exception != null)
     {
-      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0, getString(
-          "_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
+      return new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.ui", 0,
+          getString("_UI_CreateModelError_message", resource.getURI()), new Object[] { exception });
     }
     else
     {
@@ -2098,8 +2098,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   public void setStatusLineManager(ISelection selection)
   {
-    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ? contentOutlineStatusLineManager
-        : getActionBars().getStatusLineManager();
+    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer
+        ? contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
 
     if (statusLineManager != null)
     {
@@ -2184,8 +2184,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         if (!features.isEmpty())
         {
           final IWorkbenchPage page = getSite().getPage();
-          menuManager.insertBefore(
-              "edit", new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$ //$NON-NLS-2$
+          menuManager.insertBefore("edit", //$NON-NLS-1$
+              new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$
               {
                 protected EReference feature;
 
@@ -2599,8 +2599,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       final MenuManager submenuManager = new MenuManager(nsURI, imageDescriptor, nsURI);
       submenuManager.setRemoveAllWhenShown(true);
       submenuManager.add(new Action(Messages.getString("CDOEditor.27")) //$NON-NLS-1$
-          {
-          });
+      {
+      });
 
       submenuManager.addMenuListener(new IMenuListener()
       {
@@ -2669,8 +2669,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     protected CreateRootAction(EObject object)
     {
-      super(getEditorSite().getPage(), object.eClass().getName(), ExtendedImageRegistry.getInstance()
-          .getImageDescriptor(getLabelImage(adapterFactory, object)));
+      super(getEditorSite().getPage(), object.eClass().getName(),
+          ExtendedImageRegistry.getInstance().getImageDescriptor(getLabelImage(adapterFactory, object)));
       this.object = object;
     }
 

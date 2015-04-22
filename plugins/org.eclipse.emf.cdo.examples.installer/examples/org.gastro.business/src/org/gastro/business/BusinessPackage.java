@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -65,7 +65,7 @@ public interface BusinessPackage extends EPackage
   /**
    * The meta object id for the '{@link org.gastro.business.impl.BusinessDayImpl <em>Day</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.gastro.business.impl.BusinessDayImpl
    * @see org.gastro.business.impl.BusinessPackageImpl#getBusinessDay()
    * @generated
@@ -177,7 +177,7 @@ public interface BusinessPackage extends EPackage
   /**
    * The meta object id for the '{@link org.gastro.business.impl.OrderDetailImpl <em>Order Detail</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.gastro.business.impl.OrderDetailImpl
    * @see org.gastro.business.impl.BusinessPackageImpl#getOrderDetail()
    * @generated
@@ -227,7 +227,7 @@ public interface BusinessPackage extends EPackage
   /**
    * The number of structural features of the '<em>Order Detail</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -315,7 +315,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.BusinessDay#getDate <em>Date</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Date</em>'.
    * @see org.gastro.business.BusinessDay#getDate()
    * @see #getBusinessDay()
@@ -356,7 +356,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.BusinessDay#isClosed <em>Closed</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Closed</em>'.
    * @see org.gastro.business.BusinessDay#isClosed()
    * @see #getBusinessDay()
@@ -387,7 +387,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.gastro.business.Order#getTable <em>Table</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Table</em>'.
    * @see org.gastro.business.Order#getTable()
    * @see #getOrder()
@@ -408,7 +408,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.Order#getNumber <em>Number</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Number</em>'.
    * @see org.gastro.business.Order#getNumber()
    * @see #getOrder()
@@ -419,7 +419,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.gastro.business.OrderDetail <em>Order Detail</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Order Detail</em>'.
    * @see org.gastro.business.OrderDetail
    * @generated
@@ -459,7 +459,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.OrderDetail#getState <em>State</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>State</em>'.
    * @see org.gastro.business.OrderDetail#getState()
    * @see #getOrderDetail()
@@ -470,7 +470,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.OrderDetail#getPrice <em>Price</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Price</em>'.
    * @see org.gastro.business.OrderDetail#getPrice()
    * @see #getOrderDetail()
@@ -501,7 +501,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the reference list '{@link org.gastro.business.Waiter#getTables <em>Tables</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>Tables</em>'.
    * @see org.gastro.business.Waiter#getTables()
    * @see #getWaiter()
@@ -512,7 +512,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the reference '{@link org.gastro.business.Waiter#getEmployee <em>Employee</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference '<em>Employee</em>'.
    * @see org.gastro.business.Waiter#getEmployee()
    * @see #getWaiter()
@@ -523,7 +523,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.Waiter#getFrom <em>From</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>From</em>'.
    * @see org.gastro.business.Waiter#getFrom()
    * @see #getWaiter()
@@ -534,7 +534,7 @@ public interface BusinessPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.gastro.business.Waiter#getUntil <em>Until</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Until</em>'.
    * @see org.gastro.business.Waiter#getUntil()
    * @see #getWaiter()
@@ -576,7 +576,7 @@ public interface BusinessPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.business.impl.BusinessDayImpl <em>Day</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.gastro.business.impl.BusinessDayImpl
      * @see org.gastro.business.impl.BusinessPackageImpl#getBusinessDay()
      * @generated
@@ -626,7 +626,7 @@ public interface BusinessPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.business.impl.OrderImpl <em>Order</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.gastro.business.impl.OrderImpl
      * @see org.gastro.business.impl.BusinessPackageImpl#getOrder()
      * @generated
@@ -652,7 +652,7 @@ public interface BusinessPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Order Details</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference ORDER__ORDER_DETAILS = eINSTANCE.getOrder_OrderDetails();
@@ -717,7 +717,7 @@ public interface BusinessPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.business.impl.WaiterImpl <em>Waiter</em>}' class. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.gastro.business.impl.WaiterImpl
      * @see org.gastro.business.impl.BusinessPackageImpl#getWaiter()
      * @generated
@@ -767,7 +767,7 @@ public interface BusinessPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.gastro.business.OrderState <em>Order State</em>}' enum. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.gastro.business.OrderState
      * @see org.gastro.business.impl.BusinessPackageImpl#getOrderState()
      * @generated

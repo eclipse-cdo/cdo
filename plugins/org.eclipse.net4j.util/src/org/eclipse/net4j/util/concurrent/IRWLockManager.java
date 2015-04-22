@@ -16,7 +16,7 @@ import java.util.Collection;
  * Support Multiple reads/no write and upgrade lock from read to write. Many context could request
  * {@link LockType#WRITE write} lock at the same time. It will privileges first context that has already a
  * {@link LockType#READ read} lock. If no one has any read lock, it's "first come first serve".
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -33,7 +33,7 @@ public interface IRWLockManager<OBJECT, CONTEXT>
 
   /**
    * Attempts to release for a given locktype, context and objects.
-   * 
+   *
    * @throws IllegalMonitorStateException
    *           Unlocking objects without lock.
    */

@@ -67,13 +67,12 @@ public class DawnEMFGeneratorItemProvider extends DawnFragmentGeneratorItemProvi
    */
   protected void addEmfGenModelPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_DawnEMFGenerator_emfGenModel_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DawnEMFGenerator_emfGenModel_feature",
-            "_UI_DawnEMFGenerator_type"), DawnEmfGenmodelPackage.Literals.DAWN_EMF_GENERATOR__EMF_GEN_MODEL, true,
-        false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_DawnEMFGenerator_emfGenModel_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_DawnEMFGenerator_emfGenModel_feature",
+                "_UI_DawnEMFGenerator_type"),
+            DawnEmfGenmodelPackage.Literals.DAWN_EMF_GENERATOR__EMF_GEN_MODEL, true, false, true, null, null, null));
   }
 
   /**

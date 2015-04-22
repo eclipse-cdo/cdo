@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExtensionPointImpl#getPlugin <em>Plugin</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
@@ -40,7 +40,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -49,7 +49,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -58,7 +58,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ExtensionPointImpl()
@@ -68,7 +68,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -79,7 +79,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -89,7 +89,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -104,7 +104,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Plugin getPlugin()
@@ -118,7 +118,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetPlugin(Plugin newPlugin, NotificationChain msgs)
@@ -129,13 +129,13 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setPlugin(Plugin newPlugin)
   {
-    if (newPlugin != eInternalContainer() || eContainerFeatureID() != ArticlePackage.EXTENSION_POINT__PLUGIN
-        && newPlugin != null)
+    if (newPlugin != eInternalContainer()
+        || eContainerFeatureID() != ArticlePackage.EXTENSION_POINT__PLUGIN && newPlugin != null)
     {
       if (EcoreUtil.isAncestor(this, newPlugin))
       {
@@ -159,14 +159,14 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.EXTENSION_POINT__PLUGIN, newPlugin,
-          newPlugin));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, ArticlePackage.EXTENSION_POINT__PLUGIN, newPlugin, newPlugin));
     }
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -186,7 +186,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -202,7 +202,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -218,7 +218,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -236,7 +236,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -256,7 +256,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -276,7 +276,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -294,7 +294,7 @@ public class ExtensionPointImpl extends EObjectImpl implements ExtensionPoint
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

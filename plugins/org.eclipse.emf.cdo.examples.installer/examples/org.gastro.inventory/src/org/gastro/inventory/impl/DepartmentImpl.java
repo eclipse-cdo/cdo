@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -34,14 +34,14 @@ import org.gastro.inventory.Stock;
  * <li>{@link org.gastro.inventory.impl.DepartmentImpl#getStocks <em>Stocks</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class DepartmentImpl extends StationImpl implements Department
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected DepartmentImpl()
@@ -51,7 +51,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -62,7 +62,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -73,7 +73,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Restaurant getRestaurant()
@@ -83,7 +83,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setRestaurant(Restaurant newRestaurant)
@@ -93,7 +93,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -104,7 +104,7 @@ public class DepartmentImpl extends StationImpl implements Department
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")

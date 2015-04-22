@@ -95,8 +95,8 @@ public class DynamicProfileTest extends AbstractCDOTest
     // verify that using the UML API to access the applied stereotype works as usual
     assertEquals("Stereotype doesn't appear to be applied.", true, aClass.isStereotypeApplied(conceptStereotype));
     assertEquals("Wrong stereotype EClass.",
-        transaction.getResourceSet().getPackageRegistry().getEPackage(MY_PROFILE_URI).getEClassifier(S_CONCEPT), aClass
-            .getStereotypeApplication(conceptStereotype).eClass());
+        transaction.getResourceSet().getPackageRegistry().getEPackage(MY_PROFILE_URI).getEClassifier(S_CONCEPT),
+        aClass.getStereotypeApplication(conceptStereotype).eClass());
   }
 
   public void testInstancesOfLocalDynamicUMLProfile() throws Exception

@@ -81,17 +81,16 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
    *
    * @generated
    */
-  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays
-      .asList(DawnGenModelEditorPlugin.INSTANCE.getString("_UI_DawnEmfGenmodelEditorFilenameExtensions").split(
-          "\\s*,\\s*")));
+  public static final List<String> FILE_EXTENSIONS = Collections.unmodifiableList(Arrays.asList(
+      DawnGenModelEditorPlugin.INSTANCE.getString("_UI_DawnEmfGenmodelEditorFilenameExtensions").split("\\s*,\\s*")));
 
   /**
    * A formatted list of supported file extensions, suitable for display. <!-- begin-user-doc --> <!-- end-user-doc -->
    *
    * @generated
    */
-  public static final String FORMATTED_FILE_EXTENSIONS = DawnGenModelEditorPlugin.INSTANCE.getString(
-      "_UI_DawnEmfGenmodelEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
+  public static final String FORMATTED_FILE_EXTENSIONS = DawnGenModelEditorPlugin.INSTANCE
+      .getString("_UI_DawnEmfGenmodelEditorFilenameExtensions").replaceAll("\\s*,\\s*", ", ");
 
   /**
    * This caches an instance of the model package. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -153,8 +152,8 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(DawnGenModelEditorPlugin.INSTANCE.getString("_UI_Wizard_label"));
-    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE.getImageDescriptor(DawnGenModelEditorPlugin.INSTANCE
-        .getImage("full/wizban/NewDawnEmfGenmodel")));
+    setDefaultPageImageDescriptor(ExtendedImageRegistry.INSTANCE
+        .getImageDescriptor(DawnGenModelEditorPlugin.INSTANCE.getImage("full/wizban/NewDawnEmfGenmodel")));
   }
 
   /**
@@ -587,10 +586,11 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
     //
     newFileCreationPage = new DawnEmfGenmodelModelWizardNewFileCreationPage("Whatever", selection);
     newFileCreationPage.setTitle(DawnGenModelEditorPlugin.INSTANCE.getString("_UI_DawnEmfGenmodelModelWizard_label"));
-    newFileCreationPage.setDescription(DawnGenModelEditorPlugin.INSTANCE
-        .getString("_UI_DawnEmfGenmodelModelWizard_description"));
-    newFileCreationPage.setFileName(DawnGenModelEditorPlugin.INSTANCE
-        .getString("_UI_DawnEmfGenmodelEditorFilenameDefaultBase") + "." + FILE_EXTENSIONS.get(0));
+    newFileCreationPage
+        .setDescription(DawnGenModelEditorPlugin.INSTANCE.getString("_UI_DawnEmfGenmodelModelWizard_description"));
+    newFileCreationPage
+        .setFileName(DawnGenModelEditorPlugin.INSTANCE.getString("_UI_DawnEmfGenmodelEditorFilenameDefaultBase") + "."
+            + FILE_EXTENSIONS.get(0));
     addPage(newFileCreationPage);
 
     // Try and get the resource selection to determine a current directory for the file dialog.
@@ -633,10 +633,10 @@ public class DawnEmfGenmodelModelWizard extends Wizard implements INewWizard
       }
     }
     initialObjectCreationPage = new DawnEmfGenmodelModelWizardInitialObjectCreationPage("Whatever2");
-    initialObjectCreationPage.setTitle(DawnGenModelEditorPlugin.INSTANCE
-        .getString("_UI_DawnEmfGenmodelModelWizard_label"));
-    initialObjectCreationPage.setDescription(DawnGenModelEditorPlugin.INSTANCE
-        .getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage
+        .setTitle(DawnGenModelEditorPlugin.INSTANCE.getString("_UI_DawnEmfGenmodelModelWizard_label"));
+    initialObjectCreationPage
+        .setDescription(DawnGenModelEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 

@@ -107,8 +107,8 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       {
         if (repositoryUUID != null)
         {
-          throw new IllegalArgumentException(MessageFormat.format(
-              Messages.getString("CDOViewSetImpl.0"), repositoryUUID)); //$NON-NLS-1$
+          throw new IllegalArgumentException(
+              MessageFormat.format(Messages.getString("CDOViewSetImpl.0"), repositoryUUID)); //$NON-NLS-1$
         }
 
         if (mapOfViews.size() == 1)

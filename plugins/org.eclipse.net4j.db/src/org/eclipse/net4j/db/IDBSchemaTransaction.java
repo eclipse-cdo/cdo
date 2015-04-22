@@ -27,7 +27,7 @@ import org.eclipse.net4j.util.collection.Closeable;
 public interface IDBSchemaTransaction extends Closeable
 {
   public static final Policy DEFAULT_ENSURE_SCHEMA_POLICY = //
-  new IDBDeltaVisitor.Filter.Policy().allow(DeltaType.SCHEMA, ChangeKind.CHANGE).allow(ChangeKind.ADD).freeze();
+      new IDBDeltaVisitor.Filter.Policy().allow(DeltaType.SCHEMA, ChangeKind.CHANGE).allow(ChangeKind.ADD).freeze();
 
   public IDBDatabase getDatabase();
 

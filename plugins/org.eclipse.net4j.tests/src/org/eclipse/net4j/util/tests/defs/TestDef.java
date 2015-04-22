@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -24,7 +24,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.net4j.util.tests.defs.TestDef#getAttribute <em>Attribute</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.net4j.util.tests.defs.TestDefsPackage#getTestDef()
  * @model
  * @generated
@@ -39,7 +39,7 @@ public interface TestDef extends Def
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>References</em>' reference list.
    * @see org.eclipse.net4j.util.tests.defs.TestDefsPackage#getTestDef_References()
    * @model
@@ -54,7 +54,7 @@ public interface TestDef extends Def
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Attribute</em>' attribute.
    * @see #setAttribute(String)
    * @see org.eclipse.net4j.util.tests.defs.TestDefsPackage#getTestDef_Attribute()
@@ -66,7 +66,7 @@ public interface TestDef extends Def
   /**
    * Sets the value of the '{@link org.eclipse.net4j.util.tests.defs.TestDef#getAttribute <em>Attribute</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Attribute</em>' attribute.
    * @see #getAttribute()

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.sheet;
 
@@ -57,7 +57,7 @@ public class AcorePropertySection extends AdvancedPropertySection implements IPr
     }
     if (object instanceof IAdaptable)
     {
-      return (IPropertySource)((IAdaptable)object).getAdapter(IPropertySource.class);
+      return ((IAdaptable)object).getAdapter(IPropertySource.class);
     }
     return null;
   }
@@ -65,6 +65,7 @@ public class AcorePropertySection extends AdvancedPropertySection implements IPr
   /**
    * @generated
    */
+  @Override
   protected IPropertySourceProvider getPropertySourceProvider()
   {
     return this;
@@ -72,7 +73,7 @@ public class AcorePropertySection extends AdvancedPropertySection implements IPr
 
   /**
    * Modify/unwrap selection.
-   * 
+   *
    * @generated
    */
   protected Object transformSelection(Object selected)
@@ -89,7 +90,7 @@ public class AcorePropertySection extends AdvancedPropertySection implements IPr
     }
     if (selected instanceof IAdaptable)
     {
-      View view = (View)((IAdaptable)selected).getAdapter(View.class);
+      View view = ((IAdaptable)selected).getAdapter(View.class);
       if (view != null)
       {
         return view.getElement();
@@ -101,6 +102,7 @@ public class AcorePropertySection extends AdvancedPropertySection implements IPr
   /**
    * @generated
    */
+  @Override
   public void setInput(IWorkbenchPart part, ISelection selection)
   {
     if (selection.isEmpty() || false == selection instanceof StructuredSelection)
@@ -108,7 +110,7 @@ public class AcorePropertySection extends AdvancedPropertySection implements IPr
       super.setInput(part, selection);
       return;
     }
-    final StructuredSelection structuredSelection = ((StructuredSelection)selection);
+    final StructuredSelection structuredSelection = (StructuredSelection)selection;
     ArrayList transformedSelection = new ArrayList(structuredSelection.size());
     for (Iterator it = structuredSelection.iterator(); it.hasNext();)
     {

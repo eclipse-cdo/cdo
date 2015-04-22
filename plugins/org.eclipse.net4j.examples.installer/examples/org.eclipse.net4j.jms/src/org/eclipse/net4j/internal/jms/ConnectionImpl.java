@@ -44,7 +44,7 @@ import javax.jms.Topic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ConnectionImpl extends Container<Session> implements Connection
+public class ConnectionImpl extends Container<Session>implements Connection
 {
   private String connectorType;
 

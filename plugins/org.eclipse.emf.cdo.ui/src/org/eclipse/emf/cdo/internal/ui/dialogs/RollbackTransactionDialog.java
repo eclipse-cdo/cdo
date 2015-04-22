@@ -77,12 +77,12 @@ public class RollbackTransactionDialog extends TitleAreaDialog
     StringBuilder builder = new StringBuilder();
     builder.append(Messages.getString("RollbackTransactionDialog.0")); //$NON-NLS-1$
 
-    append(builder, transaction.getNewObjects().size(),
-        Messages.getString("RollbackTransactionDialog.4"), Messages.getString("RollbackTransactionDialog.5")); //$NON-NLS-1$ //$NON-NLS-2$
-    append(builder, transaction.getDirtyObjects().size(),
-        Messages.getString("RollbackTransactionDialog.6"), Messages.getString("RollbackTransactionDialog.7")); //$NON-NLS-1$ //$NON-NLS-2$
-    append(builder, transaction.getDetachedObjects().size(),
-        Messages.getString("RollbackTransactionDialog.8"), Messages.getString("RollbackTransactionDialog.9")); //$NON-NLS-1$ //$NON-NLS-2$
+    append(builder, transaction.getNewObjects().size(), Messages.getString("RollbackTransactionDialog.4"), //$NON-NLS-1$
+        Messages.getString("RollbackTransactionDialog.5")); //$NON-NLS-1$
+    append(builder, transaction.getDirtyObjects().size(), Messages.getString("RollbackTransactionDialog.6"), //$NON-NLS-1$
+        Messages.getString("RollbackTransactionDialog.7")); //$NON-NLS-1$
+    append(builder, transaction.getDetachedObjects().size(), Messages.getString("RollbackTransactionDialog.8"), //$NON-NLS-1$
+        Messages.getString("RollbackTransactionDialog.9")); //$NON-NLS-1$
 
     builder.append("\n\n"); //$NON-NLS-1$
     builder.append(Messages.getString("RollbackTransactionDialog.11")); //$NON-NLS-1$

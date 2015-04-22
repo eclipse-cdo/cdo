@@ -28,7 +28,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> implements CDOAdminClientManager
+public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient>implements CDOAdminClientManager
 {
   private final IManagedContainer container;
 

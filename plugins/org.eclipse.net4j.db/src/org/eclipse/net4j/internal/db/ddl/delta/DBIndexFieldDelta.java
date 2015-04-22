@@ -40,8 +40,8 @@ public final class DBIndexFieldDelta extends DBDeltaWithPosition implements IDBI
     Integer oldPosition = oldIndexField == null ? null : oldIndexField.getPosition();
     if (!ObjectUtil.equals(position, oldPosition))
     {
-      addPropertyDelta(new DBPropertyDelta<Integer>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position,
-          oldPosition));
+      addPropertyDelta(
+          new DBPropertyDelta<Integer>(this, POSITION_PROPERTY, IDBPropertyDelta.Type.INTEGER, position, oldPosition));
     }
   }
 
@@ -77,8 +77,8 @@ public final class DBIndexFieldDelta extends DBDeltaWithPosition implements IDBI
   @Override
   public String toString()
   {
-    return MessageFormat.format("DBIndexFieldDelta[name={0}, kind={1}, propertyDeltas={2}]", getName(),
-        getChangeKind(), getPropertyDeltas().values());
+    return MessageFormat.format("DBIndexFieldDelta[name={0}, kind={1}, propertyDeltas={2}]", getName(), getChangeKind(),
+        getPropertyDeltas().values());
   }
 
   @Override

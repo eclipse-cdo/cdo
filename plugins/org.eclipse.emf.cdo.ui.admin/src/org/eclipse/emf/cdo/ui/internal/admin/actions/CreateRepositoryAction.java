@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -33,8 +33,8 @@ public class CreateRepositoryAction extends AdminAction<CDOAdminClient>
 
   public CreateRepositoryAction(CDOAdminClient admin)
   {
-    super(Messages.CreateRepositoryAction_0, Messages.CreateRepositoryAction_1, OM
-        .getImageDescriptor("icons/full/ctool16/create_repo.gif"), admin); //$NON-NLS-1$
+    super(Messages.CreateRepositoryAction_0, Messages.CreateRepositoryAction_1,
+        OM.getImageDescriptor("icons/full/ctool16/create_repo.gif"), admin); //$NON-NLS-1$
   }
 
   @Override

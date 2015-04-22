@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -52,7 +52,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #isNotUnsettableBoolean() <em>Not Unsettable Boolean</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #isNotUnsettableBoolean()
    * @generated
    * @ordered
@@ -62,7 +62,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #isNotUnsettableBoolean() <em>Not Unsettable Boolean</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #isNotUnsettableBoolean()
    * @generated
    * @ordered
@@ -72,7 +72,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableByte() <em>Not Unsettable Byte</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableByte()
    * @generated
    * @ordered
@@ -82,7 +82,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #getNotUnsettableByte() <em>Not Unsettable Byte</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableByte()
    * @generated
    * @ordered
@@ -92,7 +92,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableChar() <em>Not Unsettable Char</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableChar()
    * @generated
    * @ordered
@@ -102,7 +102,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #getNotUnsettableChar() <em>Not Unsettable Char</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableChar()
    * @generated
    * @ordered
@@ -112,18 +112,18 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableDate() <em>Not Unsettable Date</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableDate()
    * @generated
    * @ordered
    */
-  protected static final Date NOT_UNSETTABLE_DATE_EDEFAULT = (Date)EcoreFactory.eINSTANCE.createFromString(
-      EcorePackage.eINSTANCE.getEDate(), "1979-03-15T07:12:59");
+  protected static final Date NOT_UNSETTABLE_DATE_EDEFAULT = (Date)EcoreFactory.eINSTANCE
+      .createFromString(EcorePackage.eINSTANCE.getEDate(), "1979-03-15T07:12:59");
 
   /**
    * The cached value of the '{@link #getNotUnsettableDate() <em>Not Unsettable Date</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableDate()
    * @generated
    * @ordered
@@ -133,7 +133,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableDouble() <em>Not Unsettable Double</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableDouble()
    * @generated
    * @ordered
@@ -143,7 +143,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #getNotUnsettableDouble() <em>Not Unsettable Double</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableDouble()
    * @generated
    * @ordered
@@ -153,7 +153,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableFloat() <em>Not Unsettable Float</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableFloat()
    * @generated
    * @ordered
@@ -163,7 +163,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #getNotUnsettableFloat() <em>Not Unsettable Float</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableFloat()
    * @generated
    * @ordered
@@ -173,7 +173,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableInt() <em>Not Unsettable Int</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableInt()
    * @generated
    * @ordered
@@ -193,7 +193,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableLong() <em>Not Unsettable Long</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableLong()
    * @generated
    * @ordered
@@ -203,7 +203,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #getNotUnsettableLong() <em>Not Unsettable Long</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableLong()
    * @generated
    * @ordered
@@ -213,7 +213,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableShort() <em>Not Unsettable Short</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableShort()
    * @generated
    * @ordered
@@ -223,7 +223,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #getNotUnsettableShort() <em>Not Unsettable Short</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableShort()
    * @generated
    * @ordered
@@ -233,7 +233,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableString() <em>Not Unsettable String</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableString()
    * @generated
    * @ordered
@@ -243,7 +243,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The cached value of the '{@link #getNotUnsettableString() <em>Not Unsettable String</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableString()
    * @generated
    * @ordered
@@ -253,7 +253,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   /**
    * The default value of the '{@link #getNotUnsettableVAT() <em>Not Unsettable VAT</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getNotUnsettableVAT()
    * @generated
    * @ordered
@@ -307,9 +307,11 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     boolean oldNotUnsettableBoolean = notUnsettableBoolean;
     notUnsettableBoolean = newNotUnsettableBoolean;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BOOLEAN, oldNotUnsettableBoolean,
           notUnsettableBoolean));
+    }
   }
 
   /**
@@ -330,8 +332,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     byte oldNotUnsettableByte = notUnsettableByte;
     notUnsettableByte = newNotUnsettableByte;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_BYTE, oldNotUnsettableByte, notUnsettableByte));
+    }
   }
 
   /**
@@ -352,8 +356,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     char oldNotUnsettableChar = notUnsettableChar;
     notUnsettableChar = newNotUnsettableChar;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR, oldNotUnsettableChar, notUnsettableChar));
+    }
   }
 
   /**
@@ -374,8 +380,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     Date oldNotUnsettableDate = notUnsettableDate;
     notUnsettableDate = newNotUnsettableDate;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE, oldNotUnsettableDate, notUnsettableDate));
+    }
   }
 
   /**
@@ -396,8 +404,11 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     double oldNotUnsettableDouble = notUnsettableDouble;
     notUnsettableDouble = newNotUnsettableDouble;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE, oldNotUnsettableDouble, notUnsettableDouble));
+          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE, oldNotUnsettableDouble,
+          notUnsettableDouble));
+    }
   }
 
   /**
@@ -418,8 +429,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     float oldNotUnsettableFloat = notUnsettableFloat;
     notUnsettableFloat = newNotUnsettableFloat;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT, oldNotUnsettableFloat, notUnsettableFloat));
+    }
   }
 
   /**
@@ -440,8 +453,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     int oldNotUnsettableInt = notUnsettableInt;
     notUnsettableInt = newNotUnsettableInt;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_INT, oldNotUnsettableInt, notUnsettableInt));
+    }
   }
 
   /**
@@ -462,8 +477,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     long oldNotUnsettableLong = notUnsettableLong;
     notUnsettableLong = newNotUnsettableLong;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_LONG, oldNotUnsettableLong, notUnsettableLong));
+    }
   }
 
   /**
@@ -484,8 +501,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     short oldNotUnsettableShort = notUnsettableShort;
     notUnsettableShort = newNotUnsettableShort;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT, oldNotUnsettableShort, notUnsettableShort));
+    }
   }
 
   /**
@@ -506,8 +525,11 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     String oldNotUnsettableString = notUnsettableString;
     notUnsettableString = newNotUnsettableString;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
-          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING, oldNotUnsettableString, notUnsettableString));
+          Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING, oldNotUnsettableString,
+          notUnsettableString));
+    }
   }
 
   /**
@@ -528,8 +550,10 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     VAT oldNotUnsettableVAT = notUnsettableVAT;
     notUnsettableVAT = newNotUnsettableVAT == null ? NOT_UNSETTABLE_VAT_EDEFAULT : newNotUnsettableVAT;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT, oldNotUnsettableVAT, notUnsettableVAT));
+    }
   }
 
   /**
@@ -675,8 +699,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_CHAR:
       return notUnsettableChar != NOT_UNSETTABLE_CHAR_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE:
-      return NOT_UNSETTABLE_DATE_EDEFAULT == null ? notUnsettableDate != null : !NOT_UNSETTABLE_DATE_EDEFAULT
-          .equals(notUnsettableDate);
+      return NOT_UNSETTABLE_DATE_EDEFAULT == null ? notUnsettableDate != null
+          : !NOT_UNSETTABLE_DATE_EDEFAULT.equals(notUnsettableDate);
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE:
       return notUnsettableDouble != NOT_UNSETTABLE_DOUBLE_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT:
@@ -688,8 +712,8 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_SHORT:
       return notUnsettableShort != NOT_UNSETTABLE_SHORT_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING:
-      return NOT_UNSETTABLE_STRING_EDEFAULT == null ? notUnsettableString != null : !NOT_UNSETTABLE_STRING_EDEFAULT
-          .equals(notUnsettableString);
+      return NOT_UNSETTABLE_STRING_EDEFAULT == null ? notUnsettableString != null
+          : !NOT_UNSETTABLE_STRING_EDEFAULT.equals(notUnsettableString);
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT:
       return notUnsettableVAT != NOT_UNSETTABLE_VAT_EDEFAULT;
     }
@@ -704,7 +728,9 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (notUnsettableBoolean: ");

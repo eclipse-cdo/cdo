@@ -80,19 +80,19 @@ public abstract class NumericTypeMapper extends BasicTypeMapper implements ISing
         getAttributeName(feature), // Attribute name
         1, // # elements in fixed-size array
         getObjyBaseType() // Default value
-        );
+    );
 
     proposedClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
         getNullAttributeName(feature), // Attribute name
         1, // # elements in fixed-size array
         ooBaseType.ooBOOLEAN // Default value
-        );
+    );
     return false;
   }
 
   /**
    * TODO - this is a simple change to the attribute, make it handle more complex cases.
-   * 
+   *
    * @param proposedooClass
    * @param feature
    */

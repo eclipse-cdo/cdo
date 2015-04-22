@@ -71,13 +71,14 @@ public class DawnCodeGenGMFFragmentTest extends AbstractDawnTest
     assertEquals(true, new File(diagramFolder + "/providers/DawnAcoreEditPartProvider.java").exists());
     assertEquals(true, new File(diagramFolder + "/providers/DawnAcoreEditPolicyProvider.java").exists());
 
-    basicCompare(new File(new URI(DawnTestPlatform.instance.getBundlePathForClass(DawnAcoreDiagramEditor.class)
-        + ".dawn/src/")), new File(outputFolder + "/src"));
+    basicCompare(
+        new File(new URI(DawnTestPlatform.instance.getBundlePathForClass(DawnAcoreDiagramEditor.class) + ".dawn/src/")),
+        new File(outputFolder + "/src"));
   }
 
   /**
    * check whether the generated folder contains the same files as the reference editor
-   * 
+   *
    * @throws IOException
    */
   private void basicCompare(File reference, File expected) throws IOException
@@ -156,7 +157,8 @@ public class DawnCodeGenGMFFragmentTest extends AbstractDawnTest
     {
       if (line.contains("AcoreDiagramEditorPlugin.getInstance().logInfo") || line.equals("") || line.startsWith("*")
           || line.equals("import org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorPlugin;")
-          | line.startsWith("/*") || line.startsWith("//") || line.contains("@"))
+              | line.startsWith("/*")
+          || line.startsWith("//") || line.contains("@"))
       {
         return false;
       }

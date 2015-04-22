@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -34,14 +34,14 @@ import org.gastro.inventory.Section;
  * <li>{@link org.gastro.inventory.impl.OfferingImpl#getSection <em>Section</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class OfferingImpl extends CDOObjectImpl implements Offering
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected OfferingImpl()
@@ -51,7 +51,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -62,7 +62,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -73,7 +73,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Product getProduct()
@@ -83,7 +83,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setProduct(Product newProduct)
@@ -93,7 +93,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -103,7 +103,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -113,7 +113,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getDescription()
@@ -123,7 +123,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDescription(String newDescription)
@@ -133,7 +133,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public float getPrice()
@@ -143,7 +143,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setPrice(float newPrice)
@@ -153,7 +153,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Section getSection()
@@ -163,7 +163,7 @@ public class OfferingImpl extends CDOObjectImpl implements Offering
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setSection(Section newSection)

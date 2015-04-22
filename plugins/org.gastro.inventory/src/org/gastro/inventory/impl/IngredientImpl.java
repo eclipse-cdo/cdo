@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -32,14 +32,14 @@ import org.gastro.inventory.Recipe;
  * <li>{@link org.gastro.inventory.impl.IngredientImpl#getQuantity <em>Quantity</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class IngredientImpl extends CDOObjectImpl implements Ingredient
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected IngredientImpl()
@@ -49,7 +49,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -60,7 +60,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -71,7 +71,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Recipe getRecipe()
@@ -81,7 +81,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setRecipe(Recipe newRecipe)
@@ -91,7 +91,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Product getProduct()
@@ -101,7 +101,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setProduct(Product newProduct)
@@ -111,7 +111,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public int getQuantity()
@@ -121,7 +121,7 @@ public class IngredientImpl extends CDOObjectImpl implements Ingredient
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setQuantity(int newQuantity)

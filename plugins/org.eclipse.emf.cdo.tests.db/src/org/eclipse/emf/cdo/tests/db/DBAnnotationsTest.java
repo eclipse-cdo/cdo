@@ -35,7 +35,7 @@ import java.sql.ResultSet;
 
 /**
  * Test different DB annotations.
- * 
+ *
  * @author Kai Schlamp
  */
 // XXX PSQL fails, too - need to investigate

@@ -24,7 +24,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getEmbeddableElement()
  * @model abstract="true"
  * @generated
@@ -40,7 +40,7 @@ public interface EmbeddableElement extends Identifiable
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Documentation</em>' container reference.
    * @see #setDocumentation(Documentation)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getEmbeddableElement_Documentation()
@@ -53,7 +53,7 @@ public interface EmbeddableElement extends Identifiable
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDocumentation
    * <em>Documentation</em>}' container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Documentation</em>' container reference.
    * @see #getDocumentation()
@@ -67,7 +67,7 @@ public interface EmbeddableElement extends Identifiable
    * If the meaning of the '<em>Doc</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Doc</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getEmbeddableElement_Doc()
    * @model dataType="org.eclipse.emf.cdo.releng.doc.article.Doc" required="true" transient="true" changeable="false"

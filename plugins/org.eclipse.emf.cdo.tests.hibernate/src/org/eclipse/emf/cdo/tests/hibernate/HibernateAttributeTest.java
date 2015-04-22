@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.tests.AttributeTest;
 
 /**
  * Disable some tests which won't work with hibernate (persisting java classes and java objects).
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateAttributeTest extends AttributeTest

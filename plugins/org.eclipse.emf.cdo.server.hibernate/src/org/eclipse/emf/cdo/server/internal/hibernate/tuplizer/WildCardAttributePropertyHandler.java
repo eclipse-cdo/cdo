@@ -26,7 +26,7 @@ import java.util.Map;
  * Implements the getter/setter for a wild card EAttribute property. This type of property is used in a feature map
  * created for wild cards. This class implements both the getter, setter and propertyaccessor interfaces. When the
  * getGetter and getSetter methods are called it returns itself.
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class WildCardAttributePropertyHandler extends FeatureMapEntryPropertyHandler

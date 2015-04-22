@@ -509,9 +509,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Deprecated
-  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(
-      CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider,
-      CDOBranchPoint source)
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData,
+      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, CDOBranchPoint source)
   {
     throw new UnsupportedOperationException();
   }
@@ -1254,8 +1253,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return info;
   }
 
-  private synchronized CDOCommitInfo commitSynced(IProgressMonitor progressMonitor) throws DanglingIntegrityException,
-      CommitException
+  private synchronized CDOCommitInfo commitSynced(IProgressMonitor progressMonitor)
+      throws DanglingIntegrityException, CommitException
   {
     Object token = null;
 
@@ -2040,7 +2039,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     InternalCDOSavepoint newSavepoint = createSavepoint(null);
     copyUncommitted(lastSavepoint.getAllNewObjects(), commitContext.getNewObjects(), newSavepoint.getNewObjects());
-    copyUncommitted(lastSavepoint.getAllDirtyObjects(), commitContext.getDirtyObjects(), newSavepoint.getDirtyObjects());
+    copyUncommitted(lastSavepoint.getAllDirtyObjects(), commitContext.getDirtyObjects(),
+        newSavepoint.getDirtyObjects());
     copyUncommitted(lastSavepoint.getAllRevisionDeltas(), commitContext.getRevisionDeltas(),
         newSavepoint.getRevisionDeltas2());
     copyUncommitted(lastSavepoint.getAllDetachedObjects(), commitContext.getDetachedObjects(),
@@ -2131,8 +2131,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return savepoints.toArray(new CDOSavepoint[savepoints.size()]);
   }
 
-  public synchronized CDOSavepoint[] importChanges(InputStream stream, boolean reconstructSavepoints)
-      throws IOException
+  public synchronized CDOSavepoint[] importChanges(InputStream stream, boolean reconstructSavepoints) throws IOException
   {
     List<CDOSavepoint> savepoints = new ArrayList<CDOSavepoint>();
     if (stream.available() > 0)
@@ -2478,7 +2477,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = //
-    super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
+        super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
 
     if (!allChangedObjects.isEmpty())
     {
@@ -2812,7 +2811,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
 
     InternalCDORevision result = //
-    revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+        revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
 
     if (result != null)
     {

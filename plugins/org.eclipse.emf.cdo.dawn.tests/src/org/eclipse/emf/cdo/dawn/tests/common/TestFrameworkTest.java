@@ -26,7 +26,7 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 
 /**
  * This test tests the test framework itself.
- * 
+ *
  * @author Martin Fluegge
  */
 public class TestFrameworkTest extends AbstractDawnTest
@@ -43,8 +43,8 @@ public class TestFrameworkTest extends AbstractDawnTest
     CDOResource semanticResource = transaction.getResource("/simple.acore");
 
     assertInstanceOf(CDOResource.class, semanticResource);
-    DawnWrapperResource notationalResource = (DawnWrapperResource)resourceSet.getResource(
-        URI.createURI("dawn://repo1/simple.acore_diagram"), true);// container.getNotationalResource();
+    DawnWrapperResource notationalResource = (DawnWrapperResource)resourceSet
+        .getResource(URI.createURI("dawn://repo1/simple.acore_diagram"), true);// container.getNotationalResource();
     assertInstanceOf(DawnWrapperResource.class, notationalResource);
     ACoreRoot acoreRoot = (ACoreRoot)semanticResource.getContents().get(0);
 

@@ -161,8 +161,8 @@ public final class CDONet4jUtil
    */
   public static CDONet4jSession getNet4jSession(IManagedContainer container, String description)
   {
-    return (CDONet4jSession)container
-        .getElement(CDOSessionFactory.PRODUCT_GROUP, Net4jSessionFactory.TYPE, description);
+    return (CDONet4jSession)container.getElement(CDOSessionFactory.PRODUCT_GROUP, Net4jSessionFactory.TYPE,
+        description);
   }
 
   /**

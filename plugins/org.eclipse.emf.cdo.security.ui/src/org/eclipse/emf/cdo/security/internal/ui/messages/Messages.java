@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -14,7 +14,7 @@ import org.eclipse.osgi.util.NLS;
 
 /**
  * Localized messages bundle.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  */
 public class Messages extends NLS
@@ -112,6 +112,7 @@ public class Messages extends NLS
   public static String UserDetailsPage_9;
 
   public static String UsersSection_0;
+
   static
   {
     // Initialize resource bundle

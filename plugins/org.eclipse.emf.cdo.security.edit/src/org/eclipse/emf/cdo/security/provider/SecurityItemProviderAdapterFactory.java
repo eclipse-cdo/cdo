@@ -50,8 +50,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory implements ComposeableAdapterFactory,
-    IChangeNotifier, IDisposable, IChildCreationExtender
+public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -636,7 +636,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -714,7 +714,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -722,41 +722,77 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory i
   public void dispose()
   {
     if (realmItemProvider != null)
+    {
       realmItemProvider.dispose();
+    }
     if (directoryItemProvider != null)
+    {
       directoryItemProvider.dispose();
+    }
     if (roleItemProvider != null)
+    {
       roleItemProvider.dispose();
+    }
     if (groupItemProvider != null)
+    {
       groupItemProvider.dispose();
+    }
     if (userItemProvider != null)
+    {
       userItemProvider.dispose();
+    }
     if (userPasswordItemProvider != null)
+    {
       userPasswordItemProvider.dispose();
+    }
     if (classPermissionItemProvider != null)
+    {
       classPermissionItemProvider.dispose();
+    }
     if (packagePermissionItemProvider != null)
+    {
       packagePermissionItemProvider.dispose();
+    }
     if (resourcePermissionItemProvider != null)
+    {
       resourcePermissionItemProvider.dispose();
+    }
     if (filterPermissionItemProvider != null)
+    {
       filterPermissionItemProvider.dispose();
+    }
     if (linkedFilterItemProvider != null)
+    {
       linkedFilterItemProvider.dispose();
+    }
     if (packageFilterItemProvider != null)
+    {
       packageFilterItemProvider.dispose();
+    }
     if (classFilterItemProvider != null)
+    {
       classFilterItemProvider.dispose();
+    }
     if (resourceFilterItemProvider != null)
+    {
       resourceFilterItemProvider.dispose();
+    }
     if (expressionFilterItemProvider != null)
+    {
       expressionFilterItemProvider.dispose();
+    }
     if (notFilterItemProvider != null)
+    {
       notFilterItemProvider.dispose();
+    }
     if (andFilterItemProvider != null)
+    {
       andFilterItemProvider.dispose();
+    }
     if (orFilterItemProvider != null)
+    {
       orFilterItemProvider.dispose();
+    }
   }
 
 }

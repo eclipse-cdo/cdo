@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -102,7 +102,7 @@ public interface Unsettable2WithDefault extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Unsettable Byte</em>' attribute.
    * @see #isSetUnsettableByte()
    * @see #unsetUnsettableByte()
@@ -357,7 +357,7 @@ public interface Unsettable2WithDefault extends EObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Unsettable Int</em>' attribute.
    * @see #isSetUnsettableInt()
    * @see #unsetUnsettableInt()
@@ -408,7 +408,7 @@ public interface Unsettable2WithDefault extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Unsettable Long</em>' attribute.
    * @see #isSetUnsettableLong()
    * @see #unsetUnsettableLong()
@@ -459,7 +459,7 @@ public interface Unsettable2WithDefault extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Unsettable Short</em>' attribute.
    * @see #isSetUnsettableShort()
    * @see #unsetUnsettableShort()

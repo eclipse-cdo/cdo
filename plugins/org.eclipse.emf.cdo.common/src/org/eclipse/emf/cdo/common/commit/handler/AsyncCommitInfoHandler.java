@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.concurrent.QueueWorker;
  * @author Eike Stepper
  * @since 4.0
  */
-public class AsyncCommitInfoHandler extends QueueWorker<CDOCommitInfo> implements CDOCommitInfoHandler
+public class AsyncCommitInfoHandler extends QueueWorker<CDOCommitInfo>implements CDOCommitInfoHandler
 {
   private CDOCommitInfoHandler delegate;
 

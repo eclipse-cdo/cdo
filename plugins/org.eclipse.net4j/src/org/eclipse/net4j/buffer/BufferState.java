@@ -24,7 +24,7 @@ import java.nio.channels.SocketChannel;
  * HREF="BufferState.html#WRITING"> <AREA SHAPE="RECT" COORDS="533,112,681,140" HREF="BufferState.html#READING_HEADER">
  * <AREA SHAPE="RECT" COORDS="533,271,680,295" HREF="BufferState.html#READING_BODY"> <AREA SHAPE="RECT"
  * COORDS="532,428,682,451" HREF="BufferState.html#GETTING"> </MAP>
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  */
@@ -96,14 +96,14 @@ public enum BufferState
 
   /**
    * Indicates that the {@link IBuffer} is owned by its {@link IBufferProvider}.
-   * 
+   *
    * @since 3.0
    */
   RELEASED,
 
   /**
    * Indicates that the {@link IBuffer} can not be used anymore.
-   * 
+   *
    * @since 3.0
    */
   DISPOSED

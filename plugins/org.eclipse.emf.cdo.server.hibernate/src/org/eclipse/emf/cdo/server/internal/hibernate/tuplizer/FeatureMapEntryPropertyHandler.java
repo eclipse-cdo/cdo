@@ -35,7 +35,7 @@ import java.util.Map;
  * Implements the Hibernate accessor for mapped feature map properties. The owner object is always an instance of the
  * {@link CDOFeatureMapEntry}. Returns null if the mapped property has a different name then the current feature of the
  * owner (the CDOFeatureMapEntry), calls {@link CDOFeatureMapEntry#getValue()} in all other cases.
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class FeatureMapEntryPropertyHandler implements PropertyAccessor, Getter, Setter

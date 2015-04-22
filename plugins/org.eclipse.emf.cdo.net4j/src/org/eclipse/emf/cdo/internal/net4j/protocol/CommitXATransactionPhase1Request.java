@@ -27,7 +27,7 @@ import java.io.IOException;
  * <p>
  * It needs to fill id mappings for objects immediately to be use by other {@link CDOTransaction} involve in that
  * commit.
- * 
+ *
  * @author Simon McDuff
  */
 public class CommitXATransactionPhase1Request extends CommitXATransactionRequest

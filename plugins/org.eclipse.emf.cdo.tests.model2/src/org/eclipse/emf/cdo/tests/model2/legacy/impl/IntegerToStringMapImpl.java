@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -40,7 +40,7 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -50,7 +50,7 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -114,7 +114,9 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
     Integer oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.INTEGER_TO_STRING_MAP__KEY, oldKey, key));
+    }
   }
 
   /**
@@ -135,7 +137,10 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
     String oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.INTEGER_TO_STRING_MAP__VALUE, oldValue, value));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model2Package.INTEGER_TO_STRING_MAP__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -218,7 +223,9 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
@@ -244,7 +251,7 @@ public class IntegerToStringMapImpl extends EObjectImpl implements BasicEMap.Ent
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

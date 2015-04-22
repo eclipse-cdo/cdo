@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -29,7 +29,7 @@ import java.util.List;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- * 
+ *
  * @see org.gastro.business.BusinessPackage
  * @generated
  */
@@ -37,14 +37,14 @@ public class BusinessSwitch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected static BusinessPackage modelPackage;
 
   /**
    * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public BusinessSwitch()
@@ -58,7 +58,7 @@ public class BusinessSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -70,7 +70,7 @@ public class BusinessSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -90,7 +90,7 @@ public class BusinessSwitch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -146,7 +146,7 @@ public class BusinessSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Day</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Day</em>'.
@@ -161,7 +161,7 @@ public class BusinessSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Order</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order</em>'.
@@ -176,7 +176,7 @@ public class BusinessSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Order Detail</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Order Detail</em>'.
@@ -191,7 +191,7 @@ public class BusinessSwitch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>Waiter</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Waiter</em>'.
@@ -207,7 +207,7 @@ public class BusinessSwitch<T>
    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.

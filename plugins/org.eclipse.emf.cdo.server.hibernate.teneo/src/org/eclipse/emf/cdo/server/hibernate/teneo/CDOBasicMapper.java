@@ -19,7 +19,7 @@ import org.eclipse.emf.teneo.simpledom.Element;
 
 /**
  * Extends enum mapping with parameters for epackage and eclass. This will be solved in the next build of Teneo.
- * 
+ *
  * @author <a href="mtaal@elver.org">Martin Taal</a>
  * @since 3.0
  */

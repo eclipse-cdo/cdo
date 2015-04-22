@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
  * Interface which complements {@link IClassMapping} with methods to facilitate revision delta support.
- * 
+ *
  * @see IMappingStrategy#hasDeltaSupport()
  * @author Eike Stepper
  * @author Stefan Winkler
@@ -28,7 +28,7 @@ public interface IClassMappingDeltaSupport
 {
   /**
    * Write a revision delta.
-   * 
+   *
    * @param accessor
    *          the accessor to use.
    * @param delta

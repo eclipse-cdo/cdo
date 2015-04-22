@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
@@ -38,7 +38,8 @@ public class AcoreNavigatorItem extends AcoreAbstractNavigatorItem
         if (adaptableObject instanceof org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem
             && (adapterType == View.class || adapterType == EObject.class))
         {
-          return ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)adaptableObject).getView();
+          return ((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)adaptableObject)
+              .getView();
         }
         return null;
       }
@@ -89,13 +90,13 @@ public class AcoreNavigatorItem extends AcoreAbstractNavigatorItem
   /**
    * @generated
    */
+  @Override
   public boolean equals(Object obj)
   {
     if (obj instanceof org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)
     {
-      return EcoreUtil.getURI(getView()).equals(
-          EcoreUtil.getURI(((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)obj)
-              .getView()));
+      return EcoreUtil.getURI(getView()).equals(EcoreUtil
+          .getURI(((org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator.AcoreNavigatorItem)obj).getView()));
     }
     return super.equals(obj);
   }
@@ -103,6 +104,7 @@ public class AcoreNavigatorItem extends AcoreAbstractNavigatorItem
   /**
    * @generated
    */
+  @Override
   public int hashCode()
   {
     return EcoreUtil.getURI(getView()).hashCode();

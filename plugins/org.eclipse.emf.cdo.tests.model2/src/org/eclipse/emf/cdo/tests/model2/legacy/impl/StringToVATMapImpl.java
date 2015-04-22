@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.StringToVATMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<String, VAT>
@@ -41,7 +41,7 @@ public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<S
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -51,7 +51,7 @@ public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<S
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -115,7 +115,9 @@ public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<S
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_VAT_MAP__KEY, oldKey, key));
+    }
   }
 
   /**
@@ -136,7 +138,9 @@ public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<S
     VAT oldValue = value;
     value = newValue == null ? VALUE_EDEFAULT : newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_VAT_MAP__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -219,7 +223,9 @@ public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<S
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
@@ -245,7 +251,7 @@ public class StringToVATMapImpl extends EObjectImpl implements BasicEMap.Entry<S
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

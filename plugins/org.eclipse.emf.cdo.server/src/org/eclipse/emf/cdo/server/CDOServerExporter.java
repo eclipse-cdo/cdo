@@ -377,7 +377,7 @@ public abstract class CDOServerExporter<OUT>
    *
    * @author Eike Stepper
    */
-  public static class XML extends CDOServerExporter<XMLOutput> implements XMLConstants
+  public static class XML extends CDOServerExporter<XMLOutput>implements XMLConstants
   {
     public XML(IRepository repository)
     {

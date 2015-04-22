@@ -122,7 +122,7 @@ public class ElementWizardAction extends LongRunningAction
         public void run()
         {
           MessageDialog.openError(shell, title, "An error occured: " + ex.getMessage()
-              + "\n\nThe error log may contain more information about the problem.");
+          + "\n\nThe error log may contain more information about the problem.");
         }
       });
     }

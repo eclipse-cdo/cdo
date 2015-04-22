@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class SessionProperties extends Properties<CDOSession> implements CDOCommonRepository
+public class SessionProperties extends Properties<CDOSession>implements CDOCommonRepository
 {
   public static final IProperties<CDOSession> INSTANCE = new SessionProperties();
 
@@ -45,7 +45,7 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
   {
     super(CDOSession.class);
 
-    add(new Property<CDOSession>("open", Messages.getString("SessionPropertyTester_34"),//
+    add(new Property<CDOSession>("open", Messages.getString("SessionPropertyTester_34"), //
         Messages.getString("SessionPropertyTester_35"), //$NON-NLS-1$
         CATEGORY_SESSION)
     {
@@ -56,7 +56,7 @@ public class SessionProperties extends Properties<CDOSession> implements CDOComm
       }
     });
 
-    add(new Property<CDOSession>("sessionID", Messages.getString("SessionPropertyTester_0"),//
+    add(new Property<CDOSession>("sessionID", Messages.getString("SessionPropertyTester_0"), //
         Messages.getString("SessionPropertyTester_3"), //$NON-NLS-1$
         CATEGORY_SESSION)
     {

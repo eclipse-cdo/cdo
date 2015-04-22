@@ -13,12 +13,11 @@ package org.eclipse.emf.cdo.tests.model6.impl;
 import org.eclipse.emf.cdo.tests.model6.CanReferenceLegacy;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-
-import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 /**
  * <!-- begin-user-doc -->

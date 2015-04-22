@@ -22,7 +22,7 @@ import junit.framework.TestCase;
 
 /**
  * See bug 201593
- * 
+ *
  * @author Simon McDuff
  */
 public class NonCDOResourceTest extends TestCase

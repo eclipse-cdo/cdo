@@ -19,24 +19,24 @@ import org.eclipse.emf.ecore.EClass;
 
 import com.sun.javadoc.Tag;
 
-import de.escnet.ExcelTable;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import de.escnet.ExcelTable;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Excel</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class ExcelImpl extends BodyElementImpl implements Excel
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ExcelImpl()
@@ -51,7 +51,7 @@ public class ExcelImpl extends BodyElementImpl implements Excel
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

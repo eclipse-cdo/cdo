@@ -42,8 +42,8 @@ import java.util.List;
  * @generated
  */
 public class ClassFilterItemProvider extends PermissionFilterItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -83,13 +83,12 @@ public class ClassFilterItemProvider extends PermissionFilterItemProvider implem
    */
   protected void addApplicableClassPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_ClassFilter_applicableClass_feature"), //$NON-NLS-1$
-        getString(
-            "_UI_PropertyDescriptor_description", "_UI_ClassFilter_applicableClass_feature", "_UI_ClassFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.CLASS_FILTER__APPLICABLE_CLASS, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ClassFilter_applicableClass_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ClassFilter_applicableClass_feature", //$NON-NLS-1$ //$NON-NLS-2$
+                "_UI_ClassFilter_type"), //$NON-NLS-1$
+            SecurityPackage.Literals.CLASS_FILTER__APPLICABLE_CLASS, true, false, true, null, null, null));
   }
 
   /**
@@ -100,13 +99,12 @@ public class ClassFilterItemProvider extends PermissionFilterItemProvider implem
    */
   protected void addSubTypesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_ClassFilter_subTypes_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ClassFilter_subTypes_feature", "_UI_ClassFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.CLASS_FILTER__SUB_TYPES, true, false, false,
-        ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ClassFilter_subTypes_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ClassFilter_subTypes_feature", "_UI_ClassFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.CLASS_FILTER__SUB_TYPES, true, false, false,
+            ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**

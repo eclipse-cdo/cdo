@@ -14,7 +14,7 @@ import java.lang.reflect.Array;
 
 /**
  * Various static helper methods.
- * 
+ *
  * @author Eike Stepper
  * @since 3.4
  */

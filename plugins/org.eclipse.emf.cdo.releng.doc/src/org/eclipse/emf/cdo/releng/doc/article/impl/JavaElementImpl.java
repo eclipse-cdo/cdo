@@ -34,7 +34,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.JavaElementImpl#getClassFile <em>Class File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class JavaElementImpl extends LinkTargetImpl implements JavaElement
@@ -42,7 +42,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   /**
    * The default value of the '{@link #getClassFile() <em>Class File</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getClassFile()
    * @generated
    * @ordered
@@ -52,7 +52,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
   /**
    * The cached value of the '{@link #getClassFile() <em>Class File</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getClassFile()
    * @generated
    * @ordered
@@ -65,7 +65,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected JavaElementImpl()
@@ -84,7 +84,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -95,7 +95,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public File getClassFile()
@@ -105,7 +105,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -121,7 +121,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -137,7 +137,7 @@ public class JavaElementImpl extends LinkTargetImpl implements JavaElement
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

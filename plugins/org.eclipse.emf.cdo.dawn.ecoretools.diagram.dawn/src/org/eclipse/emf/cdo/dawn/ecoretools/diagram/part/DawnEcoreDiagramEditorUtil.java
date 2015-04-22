@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -70,7 +70,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
 
   /**
    * Runs the wizard in a dialog.
-   * 
+   *
    * @generated
    */
   public static void runWizard(Shell shell, Wizard wizard, String settingsKey)
@@ -172,7 +172,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
 
   /**
    * Create a new instance of domain element associated with canvas. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static EObject createInitialModel()
@@ -182,7 +182,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
 
   /**
    * Store model element in the resource. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static void attachModelToResource(EObject model, Resource resource)
@@ -198,7 +198,8 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
     final Resource diagramResource = editingDomain.getResourceSet().createResource(diagramURI);
     final EObject model = domainElement;
     final String diagramName = diagramURI.lastSegment();
-    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain, "", Collections.EMPTY_LIST) { //$NON-NLS-1$
+    AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain, "", Collections.EMPTY_LIST) //$NON-NLS-1$
+    {
 
       @Override
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
@@ -221,8 +222,8 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
           {
             InitializeAndLayoutDiagramCommand initializeAndLayoutDiagram = new InitializeAndLayoutDiagramCommand(
                 editingDomain, (Diagram)diagramResource.getContents().get(0), false);
-            OperationHistoryFactory.getOperationHistory().execute(initializeAndLayoutDiagram,
-                new NullProgressMonitor(), null);
+            OperationHistoryFactory.getOperationHistory().execute(initializeAndLayoutDiagram, new NullProgressMonitor(),
+                null);
             diagramResource.save(EcoreDiagramEditorUtil.getSaveOptions());
           }
 

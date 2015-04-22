@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -65,7 +65,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
 
   /**
    * Runs the wizard in a dialog.
-   * 
+   *
    * @generated
    */
   public static void runWizard(Shell shell, Wizard wizard, String settingsKey)
@@ -167,7 +167,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
 
   /**
    * Create a new instance of domain element associated with canvas. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static EObject createInitialModel()
@@ -177,7 +177,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
 
   /**
    * Store model element in the resource. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static void attachModelToResource(EObject model, Resource resource)

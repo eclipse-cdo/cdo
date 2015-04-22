@@ -20,7 +20,7 @@ import java.io.File;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Image#getFile <em>File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getImage()
  * @model
  * @generated
@@ -33,7 +33,7 @@ public interface Image extends BodyElement
    * If the meaning of the '<em>File</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>File</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getImage_File()
    * @model dataType="org.eclipse.emf.cdo.releng.doc.article.File" required="true" transient="true" changeable="false"

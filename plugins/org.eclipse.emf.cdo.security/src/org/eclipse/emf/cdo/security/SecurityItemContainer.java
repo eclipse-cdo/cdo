@@ -13,9 +13,9 @@ package org.eclipse.emf.cdo.security;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 /**
- * A {@link SecurityItemProvider security item provider} that {@link SecurityItem items} 
+ * A {@link SecurityItemProvider security item provider} that {@link SecurityItem items}
  * such as {@link User users} or {@link Role roles} can be added to or removed from.
- * 
+ *
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @author Eike Stepper

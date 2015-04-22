@@ -621,7 +621,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    */
   private final class PrepareTransition implements
-      ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<InternalCDOTransaction, List<InternalCDOObject>>>
+  ITransition<CDOState, CDOEvent, InternalCDOObject, Pair<InternalCDOTransaction, List<InternalCDOObject>>>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
         Pair<InternalCDOTransaction, List<InternalCDOObject>> transactionAndContents)
@@ -735,7 +735,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Caspar De Groot
    */
   private final class ReattachTransition
-      implements ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
+  implements ITransition<CDOState, CDOEvent, InternalCDOObject, InternalCDOTransaction>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
@@ -835,7 +835,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    */
   private static final class DetachTransition
-      implements ITransition<CDOState, CDOEvent, InternalCDOObject, List<InternalCDOObject>>
+  implements ITransition<CDOState, CDOEvent, InternalCDOObject, List<InternalCDOObject>>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
         List<InternalCDOObject> objectsToDetach)
@@ -865,7 +865,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    */
   final private class CommitTransition
-      implements ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
+  implements ITransition<CDOState, CDOEvent, InternalCDOObject, CommitTransactionResult>
   {
     public CommitTransition(boolean useDeltas)
     {
@@ -925,7 +925,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    * @author Eike Stepper
    */
   private static abstract class AbstractWriteTransition
-      implements ITransition<CDOState, CDOEvent, InternalCDOObject, FeatureDeltaAndResult>
+  implements ITransition<CDOState, CDOEvent, InternalCDOObject, FeatureDeltaAndResult>
   {
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event,
         FeatureDeltaAndResult featureDeltaAndResult)

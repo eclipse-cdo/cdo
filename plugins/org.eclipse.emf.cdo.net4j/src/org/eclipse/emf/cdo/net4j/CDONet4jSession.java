@@ -20,7 +20,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
  * A Net4j-specific CDO {@link CDOSession session}.
- * 
+ *
  * @since 4.1
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -37,7 +37,7 @@ public interface CDONet4jSession extends org.eclipse.emf.cdo.session.CDOSession
 
   /**
    * Encapsulates a set of notifying {@link CDONet4jSession session} configuration options.
-   * 
+   *
    * @since 4.1
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.

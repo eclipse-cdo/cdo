@@ -740,8 +740,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
       SyntheticCDORevision[] synthetics = { null };
       InternalCDORevisionManager revisionManager = localSession.getRevisionManager();
-      revisionManager
-          .getRevision(id, localSessionHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+      revisionManager.getRevision(id, localSessionHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true,
+          synthetics);
 
       int max = synthetics[0].getVersion();
       EClass eClass = synthetics[0].getEClass();

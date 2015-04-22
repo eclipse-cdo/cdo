@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -28,14 +28,14 @@ import org.gastro.inventory.Product;
  * <li>{@link org.gastro.inventory.impl.ProductImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class ProductImpl extends CDOObjectImpl implements Product
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ProductImpl()
@@ -45,7 +45,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -56,7 +56,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -67,7 +67,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -77,7 +77,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -87,7 +87,7 @@ public abstract class ProductImpl extends CDOObjectImpl implements Product
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public abstract float getCost();

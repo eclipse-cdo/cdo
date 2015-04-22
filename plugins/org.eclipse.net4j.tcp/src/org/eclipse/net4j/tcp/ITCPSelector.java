@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -22,7 +22,7 @@ import java.nio.channels.SocketChannel;
  * Encapsulates a Java {@link Selector socket selector} and orchestrates a number of {@link ITCPActiveSelectorListener
  * active} and {@link ITCPPassiveSelectorListener passive} consumers, usually {@link IConnector connectors} and
  * {@link IAcceptor acceptors} that compete for the socket selector's I/O time.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

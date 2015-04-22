@@ -28,7 +28,7 @@ import java.io.File;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Context#getRoot <em>Root</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getContext()
  * @model
  * @generated
@@ -42,7 +42,7 @@ public interface Context extends EObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Base Folder</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getContext_BaseFolder()
    * @model dataType="org.eclipse.emf.cdo.releng.doc.article.File" required="true" changeable="false"
@@ -57,7 +57,7 @@ public interface Context extends EObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Project</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getContext_Project()
    * @model required="true" changeable="false"
@@ -74,7 +74,7 @@ public interface Context extends EObject
    * of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Documentations</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getContext_Documentations()
    * @see org.eclipse.emf.cdo.releng.doc.article.Documentation#getContext
@@ -89,7 +89,7 @@ public interface Context extends EObject
    * If the meaning of the '<em>Root</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Root</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getContext_Root()
    * @model dataType="org.eclipse.emf.cdo.releng.doc.article.RootDoc" required="true" transient="true"

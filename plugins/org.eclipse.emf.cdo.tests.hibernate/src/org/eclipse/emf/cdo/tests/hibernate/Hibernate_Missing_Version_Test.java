@@ -71,7 +71,7 @@ public class Hibernate_Missing_Version_Test extends AbstractCDOTest
     {
       CDOTransaction transaction = session.openTransaction();
       Customer customer = lastCustomer; // transaction.getObject(lastCustomer);//
-                                        // (Customer)resource.getContents().get(0);
+      // (Customer)resource.getContents().get(0);
       customer.setName("Peter");
       assertEquals(2, CDOUtil.getCDOObject(customer).cdoRevision().getVersion());
       transaction.commit();

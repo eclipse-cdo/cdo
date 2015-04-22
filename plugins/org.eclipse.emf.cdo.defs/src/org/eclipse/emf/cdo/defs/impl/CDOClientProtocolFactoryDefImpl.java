@@ -27,8 +27,7 @@ import org.eclipse.emf.ecore.EClass;
  *
  * @generated
  */
-public class CDOClientProtocolFactoryDefImpl extends ClientProtocolFactoryDefImpl implements
-    CDOClientProtocolFactoryDef
+public class CDOClientProtocolFactoryDefImpl extends ClientProtocolFactoryDefImpl implements CDOClientProtocolFactoryDef
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -39,7 +39,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -58,7 +58,7 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
   /**
    * The cached value of the '{@link #getParent() <em>Parent</em>}' reference. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getParent()
    * @generated
    * @ordered
@@ -102,8 +102,10 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_ELEMENT__NAME, oldName,
           name));
+    }
   }
 
   /**
@@ -119,8 +121,10 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
       if (parent != oldParent)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT,
               oldParent, parent));
+        }
       }
     }
     return parent;
@@ -148,9 +152,13 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT, oldParent, newParent);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -165,18 +173,26 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
     {
       NotificationChain msgs = null;
       if (parent != null)
+      {
         msgs = ((InternalEObject)parent).eInverseRemove(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS,
             RefMultiNonContained.class, msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS,
             RefMultiNonContained.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT,
           newParent, newParent));
+    }
   }
 
   /**
@@ -190,8 +206,10 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
     {
     case model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT:
       if (parent != null)
+      {
         msgs = ((InternalEObject)parent).eInverseRemove(this, model4Package.REF_MULTI_NON_CONTAINED__ELEMENTS,
             RefMultiNonContained.class, msgs);
+      }
       return basicSetParent((RefMultiNonContained)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -225,7 +243,9 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
       return getName();
     case model4Package.MULTI_NON_CONTAINED_ELEMENT__PARENT:
       if (resolve)
+      {
         return getParent();
+      }
       return basicGetParent();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -294,7 +314,9 @@ public class MultiNonContainedElementImpl extends EObjectImpl implements MultiNo
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

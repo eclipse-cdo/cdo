@@ -141,7 +141,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     if (tracerEnabled)
     {
       TRACER.trace("<-- " + HexUtil.formatByte(result) //$NON-NLS-1$
-          + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
+      + (result >= 32 ? " " + Character.toString((char)result) : "")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (!byteBuffer.hasRemaining())

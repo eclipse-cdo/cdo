@@ -68,7 +68,7 @@ import java.util.Set;
  * @author Simon McDuff
  * @since 3.0
  */
-public class LockingManager extends RWOLockManager<Object, IView> implements InternalLockManager
+public class LockingManager extends RWOLockManager<Object, IView>implements InternalLockManager
 {
   private InternalRepository repository;
 
@@ -185,8 +185,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Deprecated
-  public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock, long timeout)
-      throws InterruptedException
+  public void lock(boolean explicit, LockType type, IView view, Collection<? extends Object> objectsToLock,
+      long timeout) throws InterruptedException
   {
     lock2(explicit, type, view, objectsToLock, false, timeout);
   }

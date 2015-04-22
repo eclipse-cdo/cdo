@@ -313,8 +313,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(), getFeature()
-          .getName(), revision.getID(), revision.getVersion());
+      TRACER.format("Reading list values for feature {0}.{1} of {2}v{3}", getContainingClass().getName(),
+          getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
     String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
@@ -477,9 +477,8 @@ public abstract class AbstractFeatureMapTableMapping extends AbstractBasicListTa
   {
     if (TRACER.isEnabled())
     {
-      TRACER
-          .format(
-              "Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), getFeature(), idx, revision, value); //$NON-NLS-1$
+      TRACER.format("Writing value for feature {0}.{1} index {2} of {3} : {4}", getContainingClass().getName(), //$NON-NLS-1$
+          getFeature(), idx, revision, value);
     }
 
     FeatureMap.Entry entry = (FeatureMap.Entry)value;

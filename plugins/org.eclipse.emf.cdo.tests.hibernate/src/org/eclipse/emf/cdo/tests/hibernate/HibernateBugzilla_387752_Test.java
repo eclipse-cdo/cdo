@@ -25,7 +25,7 @@ import org.eclipse.emf.teneo.PersistenceOptions;
 
 /**
  * Read external reference annotation.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateBugzilla_387752_Test extends AbstractCDOTest

@@ -129,7 +129,8 @@ public class GenerateExampleBuilders
 
     Pattern pattern = Pattern.compile(
         "(\\s*<buildCommand>.*?</buildCommand>)*(\\s*<buildCommand>.*?<value>&lt;project&gt;/\\.externalToolBuilders/"
-            + targetProject.getName().replace(".", "\\.") + "\\.launch</value>.*?</buildCommand>)", Pattern.DOTALL);
+            + targetProject.getName().replace(".", "\\.") + "\\.launch</value>.*?</buildCommand>)",
+        Pattern.DOTALL);
     Matcher matcher = pattern.matcher(description);
     if (matcher.find())
     {

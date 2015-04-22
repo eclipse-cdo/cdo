@@ -43,8 +43,8 @@ import java.util.List;
  * @generated
  */
 public class AnnotationItemProvider extends ModelElementItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -81,13 +81,12 @@ public class AnnotationItemProvider extends ModelElementItemProvider implements 
    */
   protected void addSourcePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_Annotation_source_feature"), //$NON-NLS-1$
-        getString("_UI_Annotation_source_description"), //$NON-NLS-1$
-        EtypesPackage.Literals.ANNOTATION__SOURCE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Annotation_source_feature"), //$NON-NLS-1$
+            getString("_UI_Annotation_source_description"), //$NON-NLS-1$
+            EtypesPackage.Literals.ANNOTATION__SOURCE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -97,11 +96,11 @@ public class AnnotationItemProvider extends ModelElementItemProvider implements 
    */
   protected void addReferencesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Annotation_references_feature"), //$NON-NLS-1$
-        getString("_UI_Annotation_references_description"), //$NON-NLS-1$
-        EtypesPackage.Literals.ANNOTATION__REFERENCES, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Annotation_references_feature"), //$NON-NLS-1$
+            getString("_UI_Annotation_references_description"), //$NON-NLS-1$
+            EtypesPackage.Literals.ANNOTATION__REFERENCES, true, false, true, null, null, null));
   }
 
   /**

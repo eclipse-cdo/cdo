@@ -90,14 +90,13 @@ public class DawnCodeGenerationTest extends AbstractDawnUITest<SWTWorkbenchBot>
         DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/edit/parts/DawnAcoreEditPartFactory.java"));
     assertEquals(true,
         DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/edit/parts/DawnACoreRootEditPart.java"));
-    assertEquals(
-        true,
-        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder
-            + "/edit/policies/DawnACoreRootCanonicalEditPolicy.java"));
+    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment,
+        diagramFolder + "/edit/policies/DawnACoreRootCanonicalEditPolicy.java"));
 
     assertEquals(true,
         DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreCreationWizard.java"));
-    assertEquals(true, DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDiagramEditor.java"));
+    assertEquals(true,
+        DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDiagramEditor.java"));
     assertEquals(true,
         DawnCodeGenerationTestUtil.exists(fragment, diagramFolder + "/part/DawnAcoreDiagramEditorUtil.java"));
     assertEquals(true,

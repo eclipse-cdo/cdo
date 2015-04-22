@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.navigator;
 
@@ -94,6 +94,9 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
     myEditingDomain = (AdapterFactoryEditingDomain)editingDomain;
     myEditingDomain.setResourceToReadOnlyMap(new HashMap()
     {
+      private static final long serialVersionUID = 1L;
+
+      @Override
       public Object get(Object key)
       {
         if (!containsKey(key))
@@ -322,8 +325,8 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
     {
       LinkedList<AcoreAbstractNavigatorItem> result = new LinkedList<AcoreAbstractNavigatorItem>();
       AcoreNavigatorGroup incominglinks = new AcoreNavigatorGroup(
-          Messages.NavigatorGroupName_AInterface_2001_incominglinks,
-          "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+          Messages.NavigatorGroupName_AInterface_2001_incominglinks, "icons/incomingLinksNavigatorGroup.gif", //$NON-NLS-1$
+          parentElement);
       Collection<View> connectedViews;
       connectedViews = getChildrenByType(Collections.singleton(view),
           AcoreVisualIDRegistry.getType(AInterfaceAAttributeInterfaceCompartmentEditPart.VISUAL_ID));
@@ -372,11 +375,11 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
     {
       LinkedList<AcoreAbstractNavigatorItem> result = new LinkedList<AcoreAbstractNavigatorItem>();
       AcoreNavigatorGroup target = new AcoreNavigatorGroup(
-          Messages.NavigatorGroupName_AClassImplementedInterfaces_4002_target,
-          "icons/linkTargetNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+          Messages.NavigatorGroupName_AClassImplementedInterfaces_4002_target, "icons/linkTargetNavigatorGroup.gif", //$NON-NLS-1$
+          parentElement);
       AcoreNavigatorGroup source = new AcoreNavigatorGroup(
-          Messages.NavigatorGroupName_AClassImplementedInterfaces_4002_source,
-          "icons/linkSourceNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+          Messages.NavigatorGroupName_AClassImplementedInterfaces_4002_source, "icons/linkSourceNavigatorGroup.gif", //$NON-NLS-1$
+          parentElement);
       Collection<View> connectedViews;
       connectedViews = getLinksTargetByType(Collections.singleton(view),
           AcoreVisualIDRegistry.getType(AInterfaceEditPart.VISUAL_ID));
@@ -398,10 +401,10 @@ public class AcoreNavigatorContentProvider implements ICommonContentProvider
     case AClassEditPart.VISUAL_ID:
     {
       LinkedList<AcoreAbstractNavigatorItem> result = new LinkedList<AcoreAbstractNavigatorItem>();
-      AcoreNavigatorGroup incominglinks = new AcoreNavigatorGroup(
-          Messages.NavigatorGroupName_AClass_2002_incominglinks, "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
-      AcoreNavigatorGroup outgoinglinks = new AcoreNavigatorGroup(
-          Messages.NavigatorGroupName_AClass_2002_outgoinglinks, "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+      AcoreNavigatorGroup incominglinks = new AcoreNavigatorGroup(Messages.NavigatorGroupName_AClass_2002_incominglinks,
+          "icons/incomingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
+      AcoreNavigatorGroup outgoinglinks = new AcoreNavigatorGroup(Messages.NavigatorGroupName_AClass_2002_outgoinglinks,
+          "icons/outgoingLinksNavigatorGroup.gif", parentElement); //$NON-NLS-1$
       Collection<View> connectedViews;
       connectedViews = getChildrenByType(Collections.singleton(view),
           AcoreVisualIDRegistry.getType(AClassAAttributeCompartmentEditPart.VISUAL_ID));

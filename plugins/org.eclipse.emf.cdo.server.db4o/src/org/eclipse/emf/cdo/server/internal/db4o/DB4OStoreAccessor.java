@@ -115,8 +115,8 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
-    DB4OPackageUnit db4OPackageUnit = getPrimitivePackageUnitMap().get(
-        packageUnit.getTopLevelPackageInfo().getPackageURI());
+    DB4OPackageUnit db4OPackageUnit = getPrimitivePackageUnitMap()
+        .get(packageUnit.getTopLevelPackageInfo().getPackageURI());
     return EMFUtil.getAllPackages(db4OPackageUnit.getEPackage());
   }
 
@@ -198,8 +198,8 @@ public class DB4OStoreAccessor extends LongIDStoreAccessor implements Raw, Durab
     final boolean exactMatch = context.exactMatch();
     // RootResource may not be initialized, as there may be queries during IStore activation
     CDOID rootResourceID = getStore().getRepository().getRootResourceID();
-    final Object rootResourceLongID = rootResourceID != null ? DB4ORevision.getDB4OID(getStore().getRepository()
-        .getRootResourceID()) : null;
+    final Object rootResourceLongID = rootResourceID != null
+        ? DB4ORevision.getDB4OID(getStore().getRepository().getRootResourceID()) : null;
 
     ObjectSet<DB4ORevision> revisionObjectSet = getObjectContainer().query(new Predicate<DB4ORevision>()
     {

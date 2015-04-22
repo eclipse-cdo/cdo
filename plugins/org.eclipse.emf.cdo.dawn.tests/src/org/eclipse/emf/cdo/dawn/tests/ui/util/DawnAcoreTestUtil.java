@@ -89,7 +89,8 @@ public class DawnAcoreTestUtil
     return openNewAcoreGMFEditor(diagramResourceName, diagramResourceName.replace("_diagram", ""), bot);
   }
 
-  public static SWTBotGefEditor openNewAcoreGMFEditor(String diagramResourceName, String semanticResource, SWTGefBot bot)
+  public static SWTBotGefEditor openNewAcoreGMFEditor(String diagramResourceName, String semanticResource,
+      SWTGefBot bot)
   {
     bot.menu("File").menu("New").menu("Other...").click();
 
@@ -132,7 +133,7 @@ public class DawnAcoreTestUtil
         try
         {
           PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActivePart().getSite().getPage()
-              .openEditor(editorInput, editorID);
+          .openEditor(editorInput, editorID);
         }
         catch (PartInitException ex)
         {
@@ -302,8 +303,8 @@ public class DawnAcoreTestUtil
 
       IFigure figure = e.getFigure();
       Color color = ((LineBorder)figure.getBorder()).getColor();
-      return !(color.equals(DawnColorConstants.COLOR_LOCKED_REMOTELY) && color
-          .equals(DawnColorConstants.COLOR_LOCKED_LOCALLY));
+      return !(color.equals(DawnColorConstants.COLOR_LOCKED_REMOTELY)
+          && color.equals(DawnColorConstants.COLOR_LOCKED_LOCALLY));
     }
     return false;
   }

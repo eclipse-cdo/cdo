@@ -902,8 +902,8 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     };
 
-    return CDOCommitInfoUtil.createCommitData(newPackageUnitsCollection, newObjectsCollection,
-        changedObjectsCollection, detachedObjectsCollection);
+    return CDOCommitInfoUtil.createCommitData(newPackageUnitsCollection, newObjectsCollection, changedObjectsCollection,
+        detachedObjectsCollection);
   }
 
   protected void adjustForCommit()
@@ -1019,8 +1019,8 @@ public class TransactionCommitContext implements InternalCommitContext
             CDORevision revision = transaction.getRevision(id);
             if (revision == null || revision instanceof DetachedCDORevision)
             {
-              throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY, "Attempt by "
-                  + transaction + " to introduce a stale reference");
+              throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY,
+                  "Attempt by " + transaction + " to introduce a stale reference");
             }
           }
         }
@@ -1154,8 +1154,8 @@ public class TransactionCommitContext implements InternalCommitContext
     if (oldRevision == null)
     {
       // If the object is logically locked (see lockObjects) but has a wrong (newer) version, someone else modified it
-      throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT, "Attempt by " + transaction
-          + " to modify historical revision: " + delta);
+      throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT,
+          "Attempt by " + transaction + " to modify historical revision: " + delta);
     }
 
     // Make sure all chunks are loaded
@@ -1198,8 +1198,8 @@ public class TransactionCommitContext implements InternalCommitContext
         InternalCDORevision revision = dirtyObjects[i];
         if (!isTheRootReachable(revision, objectsThatReachTheRoot, new HashSet<CDOID>()))
         {
-          throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE, "Attempt by "
-              + transaction + " to introduce a containment cycle");
+          throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE,
+              "Attempt by " + transaction + " to introduce a containment cycle");
         }
       }
     }
@@ -1244,8 +1244,8 @@ public class TransactionCommitContext implements InternalCommitContext
       xRefs = context.getXRefs(accessor);
       if (!xRefs.isEmpty())
       {
-        throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY, "Attempt by "
-            + transaction + " to introduce a stale reference");
+        throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY,
+            "Attempt by " + transaction + " to introduce a stale reference");
       }
     }
   }

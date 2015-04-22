@@ -132,8 +132,9 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
    */
   public MEMStore(int listLimit)
   {
-    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(RevisionTemporality.NONE,
-        RevisionTemporality.AUDITING), set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
+    super(TYPE, set(ChangeFormat.REVISION, ChangeFormat.DELTA),
+        set(RevisionTemporality.NONE, RevisionTemporality.AUDITING),
+        set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
     setRevisionTemporality(RevisionTemporality.AUDITING);
     setRevisionParallelism(RevisionParallelism.BRANCHING);
     this.listLimit = listLimit;

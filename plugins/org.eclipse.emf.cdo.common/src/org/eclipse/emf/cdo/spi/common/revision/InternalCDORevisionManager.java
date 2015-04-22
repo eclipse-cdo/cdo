@@ -108,8 +108,8 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
     /**
      * @since 4.3
      */
-    public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp,
-        boolean exactTime, CDORevisionHandler handler);
+    public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime,
+        CDORevisionHandler handler);
   }
 
   /**

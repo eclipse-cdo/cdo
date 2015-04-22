@@ -112,8 +112,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       {
         if (eNotificationRequired())
         {
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PURCHASE_ORDER__SUPPLIER,
-              oldSupplier, supplier));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.PURCHASE_ORDER__SUPPLIER, oldSupplier,
+              supplier));
         }
       }
     }
@@ -164,13 +164,13 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
       NotificationChain msgs = null;
       if (supplier != null)
       {
-        msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
-            Supplier.class, msgs);
+        msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS, Supplier.class,
+            msgs);
       }
       if (newSupplier != null)
       {
-        msgs = ((InternalEObject)newSupplier).eInverseAdd(this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
-            Supplier.class, msgs);
+        msgs = ((InternalEObject)newSupplier).eInverseAdd(this, Model1Package.SUPPLIER__PURCHASE_ORDERS, Supplier.class,
+            msgs);
       }
       msgs = basicSetSupplier(newSupplier, msgs);
       if (msgs != null)
@@ -197,8 +197,8 @@ public class PurchaseOrderImpl extends OrderImpl implements PurchaseOrder
     case Model1Package.PURCHASE_ORDER__SUPPLIER:
       if (supplier != null)
       {
-        msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS,
-            Supplier.class, msgs);
+        msgs = ((InternalEObject)supplier).eInverseRemove(this, Model1Package.SUPPLIER__PURCHASE_ORDERS, Supplier.class,
+            msgs);
       }
       return basicSetSupplier((Supplier)otherEnd, msgs);
     }

@@ -165,7 +165,8 @@ public class Bugzilla_349804_Test extends AbstractCDOTest
       throw new IllegalArgumentException("Fail on purpose");
     }
 
-    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
+    public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext,
+        OMMonitor monitor)
     {
       // Do nothing
     }

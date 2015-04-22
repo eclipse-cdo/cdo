@@ -30,7 +30,7 @@ import junit.framework.TestCase;
 /**
  * This class contains code to connect to a CDO server in a standalone manner . So the junit test is not running inside
  * an OSGI container.
- * 
+ *
  * @author Martin Taal
  */
 public class BaseTest extends TestCase

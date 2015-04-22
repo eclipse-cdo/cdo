@@ -37,7 +37,7 @@ import com.objy.db.util.ooTreeListX;
 /***
  * OoResouceList is a specialized ooArrayListId, where all elements are of type Resourc(Node|Folder). The class will
  * allow adding, validating and removing resources From the list.
- * 
+ *
  * @author ibrahim
  */
 public class ObjyResourceList
@@ -165,7 +165,8 @@ public class ObjyResourceList
   // CDOID existingID = storeAccessor.readResourceID(folderID, name, revision.getBranch().getHead());
   // if (existingID != CDOID.NULL && !existingID.equals(revision.getID()))
   // {
-  //      throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$ //$NON-NLS-2$
+  // throw new IllegalStateException("Duplicate resource or folder: " + name + " in folder " + folderID); //$NON-NLS-1$
+  // //$NON-NLS-2$
   // }
   // }
 
@@ -240,8 +241,8 @@ public class ObjyResourceList
 
   public static ObjyObject create(ooId nearOid)
   {
-    Class_Object classObject = Class_Object.new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className)
-        .getASClass(), nearOid, false);
+    Class_Object classObject = Class_Object
+        .new_persistent_object(ObjySchema.getObjyClass(ObjyResourceList.className).getASClass(), nearOid, false);
     // ObjyObjectManager.newInternalObjCount++;
     // Class_Position position = classObject.position_in_class(ObjyResourceList.Attribute_arrayName);
     // Class_Object arrayClassObject = Class_Object.new_persistent_object(

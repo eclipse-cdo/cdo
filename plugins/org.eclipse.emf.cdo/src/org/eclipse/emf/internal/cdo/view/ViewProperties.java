@@ -57,13 +57,13 @@ public class ViewProperties extends Properties<CDOView>
     });
 
     add(new Property<CDOView>("branchName") //$NON-NLS-1$
-    {
+        {
       @Override
       protected Object eval(CDOView view)
       {
         return view.getBranch().getName();
       }
-    });
+        });
 
     add(new Property<CDOView>("branch", //$NON-NLS-1$
         "Branch", "The branch of this view.", CATEGORY_VIEW)
@@ -95,8 +95,7 @@ public class ViewProperties extends Properties<CDOView>
       }
     });
 
-    add(new Property<CDOView>(
-        "rootResourcePermission", //$NON-NLS-1$
+    add(new Property<CDOView>("rootResourcePermission", //$NON-NLS-1$
         "Root Resource Permission", "The permission the current user has for the root resource of this view.",
         CATEGORY_VIEW)
     {
@@ -167,13 +166,13 @@ public class ViewProperties extends Properties<CDOView>
     });
 
     add(new Property<CDOView>("historical") //$NON-NLS-1$
-    {
+        {
       @Override
       protected Object eval(CDOView view)
       {
         return view.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
       }
-    });
+        });
   }
 
   public static void main(String[] args)

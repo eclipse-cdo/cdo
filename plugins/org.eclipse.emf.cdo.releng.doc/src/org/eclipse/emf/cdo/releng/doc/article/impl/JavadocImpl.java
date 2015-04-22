@@ -30,7 +30,7 @@ import java.io.IOException;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Javadoc</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class JavadocImpl extends CategoryImpl implements Javadoc
@@ -39,7 +39,7 @@ public class JavadocImpl extends CategoryImpl implements Javadoc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected JavadocImpl()
@@ -54,7 +54,7 @@ public class JavadocImpl extends CategoryImpl implements Javadoc
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

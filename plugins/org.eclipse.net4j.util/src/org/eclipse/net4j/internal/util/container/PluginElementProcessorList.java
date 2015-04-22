@@ -211,8 +211,8 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
       return;
     }
 
-    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(
-        NAMESPACE, EXT_POINT);
+    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE,
+        EXT_POINT);
     for (org.eclipse.core.runtime.IConfigurationElement element : elements)
     {
       IElementProcessor processor = (IElementProcessor)element.createExecutableExtension(ATTR_CLASS);
@@ -246,6 +246,6 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
     }
 
     extensionRegistry
-        .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
+    .removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
   }
 }

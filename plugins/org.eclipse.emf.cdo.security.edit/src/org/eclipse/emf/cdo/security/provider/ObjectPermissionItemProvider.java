@@ -39,8 +39,8 @@ import java.util.List;
  */
 @Deprecated
 public class ObjectPermissionItemProvider extends PermissionItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -92,7 +92,8 @@ public class ObjectPermissionItemProvider extends PermissionItemProvider impleme
   {
     Access labelValue = ((ObjectPermission)object).getAccess();
     String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_ObjectPermission_type") : //$NON-NLS-1$
+    return label == null || label.length() == 0 ? getString("_UI_ObjectPermission_type") //$NON-NLS-1$
+        :
         getString("_UI_ObjectPermission_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
   }
 

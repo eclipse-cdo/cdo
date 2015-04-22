@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -41,7 +41,7 @@ public class TCPSelectorDefImpl extends DefImpl implements TCPSelectorDef
 
   /**
    * Creates and returns a {@link TCPSelector}.
-   * 
+   *
    * @return a new tcp selector instance
    * @generated NOT
    */

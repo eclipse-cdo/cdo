@@ -552,8 +552,8 @@ public abstract class AbstractOMTest extends TestCase
   {
     if (!Arrays.deepEquals(expected, actual))
     {
-      throw new AssertionFailedError("expected:" + Arrays.deepToString(expected) + " but was:"
-          + Arrays.deepToString(actual));
+      throw new AssertionFailedError(
+          "expected:" + Arrays.deepToString(expected) + " but was:" + Arrays.deepToString(actual));
     }
   }
 

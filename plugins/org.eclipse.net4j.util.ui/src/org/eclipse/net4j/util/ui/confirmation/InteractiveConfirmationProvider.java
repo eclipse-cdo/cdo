@@ -23,7 +23,7 @@ import java.util.Set;
 
 /**
  * @author Christian W. Damus (CEA LIST)
- * 
+ *
  * @since 3.4
  */
 public class InteractiveConfirmationProvider implements IConfirmationProvider
@@ -67,7 +67,7 @@ public class InteractiveConfirmationProvider implements IConfirmationProvider
 
   /**
    * @author Christian W. Damus (CEA LIST)
-   * 
+   *
    * @since 3.4
    */
   public static class Factory extends IConfirmationProvider.Factory

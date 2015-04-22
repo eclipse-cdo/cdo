@@ -17,7 +17,7 @@ import java.io.Reader;
  * on the XML configurations of dynamically-managed repositories.  These may be instantiated multiple
  * times, will only be given repository configurations (not Net4j acceptors etc.) and are stopped if and
  * when their associated repositories are deleted.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  * @since 4.3
  */

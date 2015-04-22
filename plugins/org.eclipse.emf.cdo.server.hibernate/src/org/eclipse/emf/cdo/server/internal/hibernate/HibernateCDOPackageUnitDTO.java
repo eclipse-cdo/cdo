@@ -29,7 +29,7 @@ import java.sql.Blob;
 
 /**
  * A DTO for convenience of storing a CDOPackageUnit in the db.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateCDOPackageUnitDTO

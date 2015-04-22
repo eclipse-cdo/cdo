@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - initial API and implementation
  *    Caspar De Groot (No Magic Asia Ltd.) - initial API and implementation
@@ -28,7 +28,7 @@ import java.nio.channels.SocketChannel;
 /**
  * All source code same as org.eclipse.internal.net4j.buffer.Buffer except adding SSLEngineManager to constructor and
  * overriding startGetting and write method in order to attach the SSL functional.
- * 
+ *
  * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  * @author Caspar De Groot (No Magic Asia Ltd.)
  * @since 4.0

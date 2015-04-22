@@ -37,7 +37,7 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 4.2
  */
-public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CDOCommitHistory
+public class CDOCommitHistoryImpl extends Container<CDOCommitInfo>implements CDOCommitHistory
 {
   private final TriggerLoadElement triggerLoadElement = new TriggerLoadElementImpl();
 
@@ -529,7 +529,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   /**
    * @author Eike Stepper
    */
-  public static final class Empty extends Container<CDOCommitInfo> implements CDOCommitHistory
+  public static final class Empty extends Container<CDOCommitInfo>implements CDOCommitHistory
   {
     private static final CDOCommitInfo[] NO_ELEMENTS = {};
 

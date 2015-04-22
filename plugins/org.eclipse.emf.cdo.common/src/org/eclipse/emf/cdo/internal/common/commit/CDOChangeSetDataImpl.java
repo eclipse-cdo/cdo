@@ -212,9 +212,8 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
   @Override
   public String toString()
   {
-    return MessageFormat
-        .format(
-            "ChangeSetData[newObjects={0}, changedObjects={1}, detachedObjects={2}]", newObjects.size(), changedObjects.size(), detachedObjects.size()); //$NON-NLS-1$
+    return MessageFormat.format("ChangeSetData[newObjects={0}, changedObjects={1}, detachedObjects={2}]", //$NON-NLS-1$
+        newObjects.size(), changedObjects.size(), detachedObjects.size());
   }
 
   public static String format(CDOChangeSetData changeSetData)

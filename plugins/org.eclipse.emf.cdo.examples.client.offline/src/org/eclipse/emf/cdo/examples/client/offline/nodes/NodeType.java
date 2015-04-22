@@ -85,7 +85,7 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public abstract class NodeType extends SetContainer<Node> implements IElement
+public abstract class NodeType extends SetContainer<Node>implements IElement
 {
   public static final String TYPE_PROPERTY = "Type";
 
@@ -228,8 +228,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     String browserPort = node.getSetting(BROWSER_PROPERTY);
     if (browserPort != null && browserPort.length() != 0)
     {
-      CDOServerBrowser browser = (CDOServerBrowser)IPluginContainer.INSTANCE.getElement(
-          "org.eclipse.emf.cdo.server.browsers", "default", browserPort);
+      CDOServerBrowser browser = (CDOServerBrowser)IPluginContainer.INSTANCE
+          .getElement("org.eclipse.emf.cdo.server.browsers", "default", browserPort);
       node.setObject(CDOServerBrowser.class, browser);
     }
   }
@@ -545,8 +545,8 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super.start(node);
 
-      final CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions",
-          "cdo", "jvm://example?repositoryName=" + REPOSITORY_NAME);
+      final CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
+          "jvm://example?repositoryName=" + REPOSITORY_NAME);
       session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
 
       node.setObject(CDOSession.class, session);

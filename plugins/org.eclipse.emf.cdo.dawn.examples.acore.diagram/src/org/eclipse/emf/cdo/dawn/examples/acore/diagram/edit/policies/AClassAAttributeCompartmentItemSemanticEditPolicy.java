@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
@@ -34,6 +34,7 @@ public class AClassAAttributeCompartmentItemSemanticEditPolicy extends AcoreBase
   /**
    * @generated
    */
+  @Override
   protected Command getCreateCommand(CreateElementRequest req)
   {
     if (AcoreElementTypes.AAttribute_3003 == req.getElementType())

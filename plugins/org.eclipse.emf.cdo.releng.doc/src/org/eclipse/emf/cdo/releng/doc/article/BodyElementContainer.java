@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.BodyElementContainer#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElementContainer()
  * @model abstract="true"
  * @generated
@@ -39,7 +39,7 @@ public interface BodyElementContainer extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Elements</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getBodyElementContainer_Elements()
    * @see org.eclipse.emf.cdo.releng.doc.article.BodyElement#getContainer

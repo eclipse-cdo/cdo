@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
@@ -104,6 +104,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void createDefaultEditPolicies()
   {
     super.createDefaultEditPolicies();
@@ -112,6 +113,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
     installEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE, new NonResizableEditPolicy()
     {
 
+      @Override
       protected List createSelectionHandles()
       {
         List handles = new ArrayList();
@@ -120,11 +122,13 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
         return handles;
       }
 
+      @Override
       public Command getCommand(Request request)
       {
         return null;
       }
 
+      @Override
       public boolean understandsRequest(Request request)
       {
         return false;
@@ -207,6 +211,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected List getModelChildren()
   {
     return Collections.EMPTY_LIST;
@@ -215,6 +220,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   public IGraphicalEditPart getChildBySemanticHint(String semanticHint)
   {
     return null;
@@ -426,6 +432,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void performDirectEditRequest(Request request)
   {
     final Request theRequest = request;
@@ -438,13 +445,14 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
         {
           if (isActive() && isEditable())
           {
-            if (theRequest.getExtendedData().get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character)
+            if (theRequest.getExtendedData()
+                .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR) instanceof Character)
             {
-              Character initialChar = (Character)theRequest.getExtendedData().get(
-                  RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
+              Character initialChar = (Character)theRequest.getExtendedData()
+                  .get(RequestConstants.REQ_DIRECTEDIT_EXTENDEDDATA_INITIAL_CHAR);
               performDirectEdit(initialChar.charValue());
             }
-            else if ((theRequest instanceof DirectEditRequest) && (getEditText().equals(getLabelText())))
+            else if (theRequest instanceof DirectEditRequest && getEditText().equals(getLabelText()))
             {
               DirectEditRequest editRequest = (DirectEditRequest)theRequest;
               performDirectEdit(editRequest.getLocation());
@@ -466,6 +474,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void refreshVisuals()
   {
     super.refreshVisuals();
@@ -522,13 +531,14 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void refreshFont()
   {
     FontStyle style = (FontStyle)getFontStyleOwnerView().getStyle(NotationPackage.eINSTANCE.getFontStyle());
     if (style != null)
     {
-      FontData fontData = new FontData(style.getFontName(), style.getFontHeight(), (style.isBold() ? SWT.BOLD
-          : SWT.NORMAL) | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
+      FontData fontData = new FontData(style.getFontName(), style.getFontHeight(),
+          (style.isBold() ? SWT.BOLD : SWT.NORMAL) | (style.isItalic() ? SWT.ITALIC : SWT.NORMAL));
       setFont(fontData);
     }
   }
@@ -536,6 +546,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void setFontColor(Color color)
   {
     getFigure().setForegroundColor(color);
@@ -544,6 +555,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void addSemanticListeners()
   {
     if (getParser() instanceof ISemanticParser)
@@ -564,6 +576,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void removeSemanticListeners()
   {
     if (parserElements != null)
@@ -582,6 +595,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected AccessibleEditPart getAccessibleEditPart()
   {
     if (accessibleEP == null)
@@ -589,6 +603,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
       accessibleEP = new AccessibleGraphicalEditPart()
       {
 
+        @Override
         public void getName(AccessibleEvent e)
         {
           e.result = getLabelTextHelper(getFigure());
@@ -609,6 +624,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void addNotationalListeners()
   {
     super.addNotationalListeners();
@@ -618,6 +634,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void removeNotationalListeners()
   {
     super.removeNotationalListeners();
@@ -627,6 +644,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected void handleNotificationEvent(Notification event)
   {
     Object feature = event.getFeature();
@@ -676,6 +694,7 @@ public class AClassNameEditPart extends CompartmentEditPart implements ITextAwar
   /**
    * @generated
    */
+  @Override
   protected IFigure createFigure()
   {
     // Parent should assign one using setLabel() method

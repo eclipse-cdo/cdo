@@ -368,8 +368,8 @@ public class ManageSecurityHandler extends LongRunningHandler
       IManagedContainer container = IPluginContainer.INSTANCE;
       String productGroup = CredentialsProviderFactory.PRODUCT_GROUP;
       String factoryType = "interactive"; //$NON-NLS-1$
-      IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(
-          productGroup, factoryType, null);
+      IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container
+          .getElement(productGroup, factoryType, null);
 
       if (credentialsProvider == null)
       {

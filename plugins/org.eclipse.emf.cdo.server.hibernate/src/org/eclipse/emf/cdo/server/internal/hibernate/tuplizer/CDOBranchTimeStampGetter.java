@@ -17,7 +17,7 @@ import org.hibernate.HibernateException;
 
 /**
  * Gets the time stamp value to store in the database.
- * 
+ *
  * @see CDOHibernateBranchPointImpl
  * @author Martin Taal
  */

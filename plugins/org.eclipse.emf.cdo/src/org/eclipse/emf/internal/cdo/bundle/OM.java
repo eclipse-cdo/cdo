@@ -56,20 +56,20 @@ public abstract class OM
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
   public static final OMPreference<String> PREF_REPOSITORY_NAME = //
-  PREFS.initString("PREF_REPOSITORY_NAME"); //$NON-NLS-1$
+      PREFS.initString("PREF_REPOSITORY_NAME"); //$NON-NLS-1$
 
   public static final OMPreference<String> PREF_USER_NAME = //
-  PREFS.initString("PREF_USER_NAME"); //$NON-NLS-1$
+      PREFS.initString("PREF_USER_NAME"); //$NON-NLS-1$
 
   public static final OMPreference<String> PREF_CONNECTOR_DESCRIPTION = //
-  PREFS.initString("PREF_CONNECTOR_DESCRIPTION"); //$NON-NLS-1$
+      PREFS.initString("PREF_CONNECTOR_DESCRIPTION"); //$NON-NLS-1$
 
   public static final OMPreference<Integer> PREF_COLLECTION_LOADING_CHUNK_SIZE = //
-  PREFS.init("PREF_COLLECTION_LOADING_CHUNK_SIZE", CDORevision.UNCHUNKED); //$NON-NLS-1$
+      PREFS.init("PREF_COLLECTION_LOADING_CHUNK_SIZE", CDORevision.UNCHUNKED); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_ENABLE_INVALIDATION_NOTIFICATION = //
-  PREFS.init("PREF_ENABLE_INVALIDATION_NOTIFICATION", false); //$NON-NLS-1$
+      PREFS.init("PREF_ENABLE_INVALIDATION_NOTIFICATION", false); //$NON-NLS-1$
 
   public static final OMPreference<Integer> PREF_REVISION_LOADING_CHUNK_SIZE = //
-  PREFS.init("PREF_REVISION_LOADING_CHUNK_SIZE", CDOView.Options.NO_REVISION_PREFETCHING); //$NON-NLS-1$
+      PREFS.init("PREF_REVISION_LOADING_CHUNK_SIZE", CDOView.Options.NO_REVISION_PREFETCHING); //$NON-NLS-1$
 }

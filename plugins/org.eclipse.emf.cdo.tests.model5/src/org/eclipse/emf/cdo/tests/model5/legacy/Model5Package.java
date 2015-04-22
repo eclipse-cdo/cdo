@@ -435,7 +435,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The feature id for the '<em><b>Children</b></em>' containment reference list.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -444,7 +444,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The feature id for the '<em><b>Favourite</b></em>' reference.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -462,7 +462,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The number of structural features of the '<em>Parent</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -471,7 +471,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl <em>Child</em>}' class.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl
    * @see org.eclipse.emf.cdo.tests.model5.legacy.impl.Model5PackageImpl#getChild()
    * @generated
@@ -481,7 +481,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The feature id for the '<em><b>Parent</b></em>' container reference.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -490,7 +490,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The feature id for the '<em><b>Preferred By</b></em>' reference.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -508,7 +508,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * The number of structural features of the '<em>Child</em>' class.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
@@ -820,7 +820,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.tests.model5.Parent#getChildren <em>Children</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Children</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Parent#getChildren()
    * @see #getParent()
@@ -831,7 +831,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Parent#getFavourite <em>Favourite</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Favourite</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Parent#getFavourite()
    * @see #getParent()
@@ -853,7 +853,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model5.Child <em>Child</em>}'.
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for class '<em>Child</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Child
    * @generated
@@ -863,7 +863,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getParent <em>Parent</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the container reference '<em>Parent</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Child#getParent()
    * @see #getChild()
@@ -874,7 +874,7 @@ public interface Model5Package extends EPackage, org.eclipse.emf.cdo.tests.model
   /**
    * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy <em>Preferred By</em>}'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Preferred By</em>'.
    * @see org.eclipse.emf.cdo.tests.model5.Child#getPreferredBy()
    * @see #getChild()

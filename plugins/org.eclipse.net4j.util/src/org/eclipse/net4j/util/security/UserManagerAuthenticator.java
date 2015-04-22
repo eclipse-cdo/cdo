@@ -117,8 +117,8 @@ public class UserManagerAuthenticator extends Lifecycle implements IAuthenticato
       byte[] cryptedTokenClient = SecurityUtil.encrypt(randomToken, password, encryptionAlgorithmName,
           encryptionSaltBytes, encryptionIterationCount);
 
-      byte[] cryptedTokenServer = userManager.encrypt(userID, randomToken, encryptionAlgorithmName,
-          encryptionSaltBytes, encryptionIterationCount);
+      byte[] cryptedTokenServer = userManager.encrypt(userID, randomToken, encryptionAlgorithmName, encryptionSaltBytes,
+          encryptionIterationCount);
 
       if (!Arrays.equals(cryptedTokenClient, cryptedTokenServer))
       {

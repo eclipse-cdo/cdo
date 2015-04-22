@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
  * EOpposite reference is not removed
  * <p>
  * See bug 251263
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_251263_Test extends AbstractCDOTest

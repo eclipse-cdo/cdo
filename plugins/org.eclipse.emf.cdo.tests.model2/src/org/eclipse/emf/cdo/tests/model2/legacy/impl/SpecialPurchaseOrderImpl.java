@@ -59,7 +59,7 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   /**
    * The cached value of the '{@link #getShippingAddress() <em>Shipping Address</em>}' containment reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getShippingAddress()
    * @generated
    * @ordered
@@ -103,8 +103,10 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
     String oldDiscountCode = discountCode;
     discountCode = newDiscountCode;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.SPECIAL_PURCHASE_ORDER__DISCOUNT_CODE,
           oldDiscountCode, discountCode));
+    }
   }
 
   /**
@@ -129,9 +131,13 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, oldShippingAddress, newShippingAddress);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -146,18 +152,26 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
     {
       NotificationChain msgs = null;
       if (shippingAddress != null)
-        msgs = ((InternalEObject)shippingAddress).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null, msgs);
+      {
+        msgs = ((InternalEObject)shippingAddress).eInverseRemove(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null, msgs);
+      }
       if (newShippingAddress != null)
-        msgs = ((InternalEObject)newShippingAddress).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null, msgs);
+      {
+        msgs = ((InternalEObject)newShippingAddress).eInverseAdd(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS, null, msgs);
+      }
       msgs = basicSetShippingAddress(newShippingAddress, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.SPECIAL_PURCHASE_ORDER__SHIPPING_ADDRESS,
           newShippingAddress, newShippingAddress));
+    }
   }
 
   /**
@@ -255,7 +269,9 @@ public class SpecialPurchaseOrderImpl extends PurchaseOrderImpl implements Speci
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (discountCode: ");

@@ -11,8 +11,6 @@
  */
 package org.eclipse.net4j.db.oracle;
 
-import oracle.jdbc.pool.OracleDataSource;
-
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
@@ -30,6 +28,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import oracle.jdbc.pool.OracleDataSource;
 
 public class OracleAdapter extends DBAdapter
 {

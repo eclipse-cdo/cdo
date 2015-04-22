@@ -280,7 +280,7 @@ public class SSLEngineManager
 
   /**
    * Write the contents of {@link #packetSendBuf} to the given {@link SocketChannel}
-   * 
+   *
    * @return the number of bytes actually written
    */
   public int handleWrite(SocketChannel socketChannel) throws IOException
@@ -310,7 +310,7 @@ public class SSLEngineManager
 
   /**
    * Read the contents from the given {@link SocketChannel} to {@link #packetSendBuf}
-   * 
+   *
    * @return the number of bytes actually read
    */
   public int handleRead(SocketChannel socketChannel) throws IOException
@@ -463,7 +463,7 @@ public class SSLEngineManager
 
   /**
    * A separate class for better monitor debugging.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class ReadLock
@@ -472,7 +472,7 @@ public class SSLEngineManager
 
   /**
    * A separate class for better monitor debugging.
-   * 
+   *
    * @author Eike Stepper
    */
   private static final class WriteLock

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -102,7 +102,7 @@ public interface MapHolder extends EObject
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>String To Address Containment Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToAddressContainmentMap()
    * @model mapType=
@@ -120,7 +120,7 @@ public interface MapHolder extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>String To Address Reference Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToAddressReferenceMap()
    * @model mapType=
@@ -138,7 +138,7 @@ public interface MapHolder extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>EObject To EObject Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_EObjectToEObjectMap()
    * @model mapType=
@@ -156,7 +156,7 @@ public interface MapHolder extends EObject
    * of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>EObject To EObject Key Contained Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_EObjectToEObjectKeyContainedMap()
    * @model mapType=
@@ -174,7 +174,7 @@ public interface MapHolder extends EObject
    * of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>EObject To EObject Both Contained Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_EObjectToEObjectBothContainedMap()
    * @model mapType=
@@ -192,7 +192,7 @@ public interface MapHolder extends EObject
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>EObject To EObject Value Contained Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_EObjectToEObjectValueContainedMap()
    * @model mapType=

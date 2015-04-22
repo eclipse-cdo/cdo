@@ -26,7 +26,7 @@ import java.io.PrintWriter;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Factory</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class FactoryImpl extends EmbeddableElementImpl implements Factory
@@ -35,7 +35,7 @@ public class FactoryImpl extends EmbeddableElementImpl implements Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected FactoryImpl()
@@ -52,7 +52,7 @@ public class FactoryImpl extends EmbeddableElementImpl implements Factory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

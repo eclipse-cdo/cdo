@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getExtensionPoints <em>Extension Points</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getPlugin()
  * @model
  * @generated
@@ -37,7 +37,7 @@ public interface Plugin extends EObject
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getPlugin_Name()
@@ -49,7 +49,7 @@ public interface Plugin extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getName <em>Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -66,7 +66,7 @@ public interface Plugin extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Packages</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getPlugin_Packages()
    * @see org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getPlugin
@@ -81,7 +81,7 @@ public interface Plugin extends EObject
    * If the meaning of the '<em>Label</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Label</em>' attribute.
    * @see #setLabel(String)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getPlugin_Label()
@@ -93,7 +93,7 @@ public interface Plugin extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Plugin#getLabel <em>Label</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Label</em>' attribute.
    * @see #getLabel()
@@ -110,7 +110,7 @@ public interface Plugin extends EObject
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Extension Points</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getPlugin_ExtensionPoints()
    * @see org.eclipse.emf.cdo.releng.doc.article.ExtensionPoint#getPlugin

@@ -275,11 +275,11 @@ public class DawnGeneratorImpl extends EObjectImpl implements DawnGenerator
     case DawngenmodelPackage.DAWN_GENERATOR__CONFLICT_COLOR:
       return CONFLICT_COLOR_EDEFAULT == null ? conflictColor != null : !CONFLICT_COLOR_EDEFAULT.equals(conflictColor);
     case DawngenmodelPackage.DAWN_GENERATOR__LOCAL_LOCK_COLOR:
-      return LOCAL_LOCK_COLOR_EDEFAULT == null ? localLockColor != null : !LOCAL_LOCK_COLOR_EDEFAULT
-          .equals(localLockColor);
+      return LOCAL_LOCK_COLOR_EDEFAULT == null ? localLockColor != null
+          : !LOCAL_LOCK_COLOR_EDEFAULT.equals(localLockColor);
     case DawngenmodelPackage.DAWN_GENERATOR__REMOTE_LOCK_COLOR:
-      return REMOTE_LOCK_COLOR_EDEFAULT == null ? remoteLockColor != null : !REMOTE_LOCK_COLOR_EDEFAULT
-          .equals(remoteLockColor);
+      return REMOTE_LOCK_COLOR_EDEFAULT == null ? remoteLockColor != null
+          : !REMOTE_LOCK_COLOR_EDEFAULT.equals(remoteLockColor);
     }
     return super.eIsSet(featureID);
   }

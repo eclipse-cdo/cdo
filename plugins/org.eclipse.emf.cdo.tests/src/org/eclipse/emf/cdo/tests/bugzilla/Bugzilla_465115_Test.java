@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
  */
 public class Bugzilla_465115_Test extends AbstractCDOTest
 {
-
   private static final String RESOURCE_NAME = "test1.model1";
 
   /**
@@ -46,5 +45,4 @@ public class Bugzilla_465115_Test extends AbstractCDOTest
     assertEquals(1, viewSet.getViews().length);
     assertEquals(transaction1, viewSet.getViews()[0]);
   }
-
 }

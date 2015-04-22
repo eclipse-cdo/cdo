@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * Test different aspects of HQL querying using the CDO query api.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateMultiValuedOfAttributeTest extends MultiValuedOfAttributeTest
@@ -30,7 +30,7 @@ public class HibernateMultiValuedOfAttributeTest extends MultiValuedOfAttributeT
     list.add(10);
     list.add(13);
     list.add(20);
-    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInteger(), getModel5Package()
-        .getGenListOfInteger_Elements());
+    testMultiValuedIOfAttribute(list, getModel5Package().getGenListOfInteger(),
+        getModel5Package().getGenListOfInteger_Elements());
   }
 }

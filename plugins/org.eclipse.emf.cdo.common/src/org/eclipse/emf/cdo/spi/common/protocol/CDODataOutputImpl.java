@@ -532,8 +532,8 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       type = CDOModelUtil.getPrimitiveType(value.getClass());
       if (type == null)
       {
-        throw new IllegalArgumentException(MessageFormat.format(
-            Messages.getString("CDODataOutputImpl.6"), value.getClass())); //$NON-NLS-1$
+        throw new IllegalArgumentException(
+            MessageFormat.format(Messages.getString("CDODataOutputImpl.6"), value.getClass())); //$NON-NLS-1$
       }
     }
 

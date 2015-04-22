@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA) - bug 399641: container-aware factories
@@ -19,11 +19,11 @@ import org.eclipse.net4j.util.container.IManagedContainerFactory;
  * <p>
  * If a factory is registered in an {@link IManagedContainer}, the {@link IManagedContainerFactory} extension interface
  * injects that container into the factory for it to reach back into to obtain dependencies.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.landmark
  * @apiviz.has {@link IFactoryKey}
- * 
+ *
  * @see IManagedContainerFactory
  */
 public interface IFactory

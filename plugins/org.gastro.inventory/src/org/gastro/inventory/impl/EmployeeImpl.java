@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -30,14 +30,14 @@ import org.gastro.inventory.InventoryPackage;
  * <li>{@link org.gastro.inventory.impl.EmployeeImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class EmployeeImpl extends CDOObjectImpl implements Employee
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected EmployeeImpl()
@@ -47,7 +47,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -58,7 +58,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -69,7 +69,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Department getDepartment()
@@ -79,7 +79,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDepartment(Department newDepartment)
@@ -89,7 +89,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -99,7 +99,7 @@ public class EmployeeImpl extends CDOObjectImpl implements Employee
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)

@@ -30,14 +30,14 @@ import java.io.IOException;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.ExternalArticleImpl#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 {
   /**
    * The default value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUrl()
    * @generated
    * @ordered
@@ -46,7 +46,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 
   /**
    * The cached value of the '{@link #getUrl() <em>Url</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getUrl()
    * @generated
    * @ordered
@@ -55,7 +55,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ExternalArticleImpl()
@@ -71,7 +71,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -82,7 +82,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getUrl()
@@ -92,7 +92,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -108,7 +108,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -124,7 +124,7 @@ public class ExternalArticleImpl extends ArticleImpl implements ExternalArticle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

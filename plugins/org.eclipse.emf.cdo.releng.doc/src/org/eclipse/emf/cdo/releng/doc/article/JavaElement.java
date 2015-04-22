@@ -20,7 +20,7 @@ import java.io.File;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.JavaElement#getClassFile <em>Class File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getJavaElement()
  * @model
  * @generated
@@ -35,7 +35,7 @@ public interface JavaElement extends LinkTarget
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Class File</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getJavaElement_ClassFile()
    * @model dataType="org.eclipse.emf.cdo.releng.doc.article.File" changeable="false"

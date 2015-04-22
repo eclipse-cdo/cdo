@@ -350,8 +350,8 @@ public class Bugzilla_319836_Test extends AbstractCDOTest
         sb.append(spacer).append("Delta revision(s):\n");
         for (InternalCDORevisionDelta item : dirtyObjects)
         {
-          String m = MessageFormat.format("{0}@{1}:{2}v{3}", item.getEClass().getName(), item.getID(), item.getBranch()
-              .getID(), item.getVersion());
+          String m = MessageFormat.format("{0}@{1}:{2}v{3}", item.getEClass().getName(), item.getID(),
+              item.getBranch().getID(), item.getVersion());
           sb.append(spacer).append(spacer).append(m).append("\n");
           // Feature deltas.
           for (CDOFeatureDelta delta : item.getFeatureDeltas())

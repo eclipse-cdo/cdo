@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -23,7 +23,7 @@ import java.io.InputStream;
  * <b>Note:</b> The only difference to {@link java.io.FilterInputStream} is that <code>DelegatingInputStream</code> does
  * <b>not</b> override {@link #read(byte[])} or {@link #read(byte[], int, int)} but rather exposes the original
  * implementations of <code>InputStream</code> which call {@link #read()} instead of their delegate counterparts.
- * 
+ *
  * @author Eike Stepper
  */
 public class DelegatingInputStream extends InputStream
@@ -36,7 +36,7 @@ public class DelegatingInputStream extends InputStream
   /**
    * Creates a <code>DelegatingInputStream</code> by assigning the argument <code>in</code> to the field
    * <code>this.in</code> so as to remember it for later use.
-   * 
+   *
    * @param in
    *          the underlying input stream, or <code>null</code> if this instance is to be created without an underlying
    *          stream.
@@ -58,7 +58,7 @@ public class DelegatingInputStream extends InputStream
    * detected, or an exception is thrown.
    * <p>
    * This method simply performs <code>in.read()</code> and returns the result.
-   * 
+   *
    * @return the next byte of data, or <code>-1</code> if the end of the stream is reached.
    * @exception IOException
    *              if an I/O error occurs.
@@ -76,7 +76,7 @@ public class DelegatingInputStream extends InputStream
    * of bytes skipped is returned.
    * <p>
    * This method simply performs <code>in.skip(n)</code>.
-   * 
+   *
    * @param n
    *          the number of bytes to be skipped.
    * @return the actual number of bytes skipped.
@@ -93,7 +93,7 @@ public class DelegatingInputStream extends InputStream
    * Returns the number of bytes that can be read from this input stream without blocking.
    * <p>
    * This method simply performs <code>in.available()</code> and returns the result.
-   * 
+   *
    * @return the number of bytes that can be read from the input stream without blocking.
    * @exception IOException
    *              if an I/O error occurs.
@@ -108,7 +108,7 @@ public class DelegatingInputStream extends InputStream
   /**
    * Closes this input stream and releases any system resources associated with the stream. This method simply performs
    * <code>in.close()</code>.
-   * 
+   *
    * @exception IOException
    *              if an I/O error occurs.
    * @see DelegatingInputStream#in
@@ -127,7 +127,7 @@ public class DelegatingInputStream extends InputStream
    * position gets invalidated.
    * <p>
    * This method simply performs <code>in.mark(readlimit)</code>.
-   * 
+   *
    * @param readlimit
    *          the maximum limit of bytes that can be read before the mark position becomes invalid.
    * @see DelegatingInputStream#in
@@ -149,7 +149,7 @@ public class DelegatingInputStream extends InputStream
    * stream. Often this is most easily done by invoking some general parser. If the stream is of the type handled by the
    * parse, it just chugs along happily. If the stream is not of that type, the parser should toss an exception when it
    * fails. If this happens within readlimit bytes, it allows the outer code to reset the stream and try another parser.
-   * 
+   *
    * @exception IOException
    *              if the stream has not been marked or if the mark has been invalidated.
    * @see DelegatingInputStream#in
@@ -164,7 +164,7 @@ public class DelegatingInputStream extends InputStream
   /**
    * Tests if this input stream supports the <code>mark</code> and <code>reset</code> methods. This method simply
    * performs <code>in.markSupported()</code>.
-   * 
+   *
    * @return <code>true</code> if this stream type supports the <code>mark</code> and <code>reset</code> method;
    *         <code>false</code> otherwise.
    * @see DelegatingInputStream#in

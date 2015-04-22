@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <li>{@link org.eclipse.net4j.defs.impl.HTTPConnectorDefImpl#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnectorDef
@@ -90,7 +90,9 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
     String oldUrl = url;
     url = newUrl;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.HTTP_CONNECTOR_DEF__URL, oldUrl, url));
+    }
   }
 
   /**
@@ -163,7 +165,9 @@ public class HTTPConnectorDefImpl extends ConnectorDefImpl implements HTTPConnec
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (url: ");

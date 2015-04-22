@@ -26,7 +26,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author Eike Stepper
  */
-public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> implements ConcurrentMap<K, V>
+public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V>implements ConcurrentMap<K, V>
 {
   public ReferenceValueMap()
   {

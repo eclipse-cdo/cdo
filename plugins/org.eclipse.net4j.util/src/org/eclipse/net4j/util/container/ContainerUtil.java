@@ -21,7 +21,7 @@ import org.eclipse.net4j.util.security.RandomizerFactory;
 
 /**
  * Various static helper methods for dealing with {@link IContainer containers}.
- * 
+ *
  * @author Eike Stepper
  */
 public final class ContainerUtil
@@ -113,7 +113,7 @@ public final class ContainerUtil
   /**
    * Creates a new managed container that discovers factory and element processor
    * registrations in plug-in extensions.
-   * 
+   *
    * @since 3.3
    */
   public static IManagedContainer createPluginContainer()

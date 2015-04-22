@@ -81,8 +81,8 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements
-    IListMappingDeltaSupport
+public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping
+    implements IListMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
 
@@ -118,7 +118,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
   private String sqlClearList;
 
-  public BranchingListTableMappingWithRanges(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
+  public BranchingListTableMappingWithRanges(IMappingStrategy mappingStrategy, EClass eClass,
+      EStructuralFeature feature)
   {
     super(mappingStrategy, eClass, feature);
     initTable();
@@ -497,8 +498,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
               if (TRACER.isEnabled())
               {
-                TRACER.format(
-                    "Scheduling range {0}-{1} to be read from base revision", missingValueStartIndex, nextListIndex); //$NON-NLS-1$
+                TRACER.format("Scheduling range {0}-{1} to be read from base revision", missingValueStartIndex, //$NON-NLS-1$
+                    nextListIndex);
               }
 
               baseReader.addRangedChunk(missingValueStartIndex, nextListIndex);
@@ -549,9 +550,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
           if (TRACER.isEnabled())
           {
-            TRACER
-                .format(
-                    "Scheduling range {0}-{1} to be read from base revision", missingValueStartIndex, chunk.getStartIndex() + chunk.size()); //$NON-NLS-1$
+            TRACER.format("Scheduling range {0}-{1} to be read from base revision", missingValueStartIndex, //$NON-NLS-1$
+                chunk.getStartIndex() + chunk.size());
           }
 
           baseReader.addRangedChunk(missingValueStartIndex, chunk.getStartIndex() + chunk.size());
@@ -647,7 +647,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    *          the id of the revision from which to remove all items
    * @param lastIndex
    */
-  public void clearList(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int lastIndex)
+  public void clearList(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion,
+      int lastIndex)
   {
     // check for each index if the value exists in the current branch
     for (int i = 0; i <= lastIndex; i++)
@@ -985,7 +986,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
             }
 
             break;
-          // no entry for current revision there.
+            // no entry for current revision there.
           case 0:
             Object value = getValue(accessor, id, branchId, index, false);
 
@@ -1157,13 +1158,12 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
-  private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded,
-      int versionRemoved, int index, Object value)
+  private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded, int versionRemoved,
+      int index, Object value)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format(
-          "Adding historic value for feature {0}.{1} index {2} of {3}:{4}v{5}-v{6} : {7}", //$NON-NLS-1$
+      TRACER.format("Adding historic value for feature {0}.{1} index {2} of {3}:{4}v{5}-v{6} : {7}", //$NON-NLS-1$
           getContainingClass().getName(), getFeature().getName(), index, id, branchId, versionAdded, versionRemoved,
           value);
     }

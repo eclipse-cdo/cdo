@@ -211,8 +211,8 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
       {
         IWorkbench workbench = PlatformUI.getWorkbench();
 
-        IViewDescriptor viewDescriptor = workbench.getViewRegistry().find(
-            CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
+        IViewDescriptor viewDescriptor = workbench.getViewRegistry()
+            .find(CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
         if (viewDescriptor != null)
         {
           IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();

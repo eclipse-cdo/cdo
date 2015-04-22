@@ -304,8 +304,10 @@ public class HibernateTestFactoryImpl extends EFactoryImpl implements HibernateT
   {
     Bz387752_Enum result = Bz387752_Enum.get(initialValue);
     if (result == null)
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '"
-          + eDataType.getName() + "'");
+    {
+      throw new IllegalArgumentException(
+          "The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    }
     return result;
   }
 

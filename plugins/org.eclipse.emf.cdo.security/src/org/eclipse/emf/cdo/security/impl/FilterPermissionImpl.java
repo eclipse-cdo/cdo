@@ -73,7 +73,8 @@ public class FilterPermissionImpl extends PermissionImpl implements FilterPermis
     return (EList<PermissionFilter>)eGet(SecurityPackage.Literals.FILTER_PERMISSION__FILTERS, true);
   }
 
-  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
+  public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider,
+      CDOBranchPoint securityContext)
   {
     if (TRACER.isEnabled())
     {

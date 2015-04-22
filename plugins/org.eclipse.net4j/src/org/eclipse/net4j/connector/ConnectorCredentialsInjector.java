@@ -20,23 +20,23 @@ import org.eclipse.net4j.util.security.SecurityUtil;
  * Injects a configurable response negotiator into selected client connectors.
  * <p>
  * An example:
- * 
+ *
  * <pre>
  * IManagedContainer container = IPluginContainer.INSTANCE;
- * 
+ *
  * String connectorDescription = &quot;localhost:2036&quot;;
  * String userID = &quot;name&quot;;
  * String password = &quot;secret&quot;;
- * 
+ *
  * IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(userID, password);
- * 
+ *
  * container.addPostProcessor(new ConnectorCredentialsInjector(connectorDescription, credentialsProvider));
  * IConnector connector = (IConnector)container.getElement(&quot;org.eclipse.net4j.connectors&quot;, &quot;tcp&quot;, connectorDescription);
- * 
+ *
  * IChannel channel = connector.openChannel();
  * // ...
  * </pre>
- * 
+ *
  * @author Eike Stepper
  * @since 2.0
  */

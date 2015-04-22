@@ -34,8 +34,8 @@ import org.eclipse.ui.PlatformUI;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPUT> implements ITreeContentProvider,
-    ILabelProvider, IColorProvider, IFontProvider, IStyledLabelProvider
+public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPUT>
+    implements ITreeContentProvider, ILabelProvider, IColorProvider, IFontProvider, IStyledLabelProvider
 {
   public static final Object[] NO_ELEMENTS = {};
 

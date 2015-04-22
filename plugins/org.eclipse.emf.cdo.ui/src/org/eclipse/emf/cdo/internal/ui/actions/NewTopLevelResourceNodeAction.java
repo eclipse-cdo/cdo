@@ -143,17 +143,17 @@ public class NewTopLevelResourceNodeAction extends AbstractViewAction
    */
   public static enum Type
   {
-    FOLDER(Messages.getString("Title.Folder"), Messages.getString("Tooltip.Folder"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE_FOLDER)),
+    FOLDER(Messages.getString("Title.Folder"), Messages.getString("Tooltip.Folder"),
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE_FOLDER)),
 
-    MODEL(Messages.getString("Title.Model"), Messages.getString("Tooltip.Model"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE)),
+        MODEL(Messages.getString("Title.Model"), Messages.getString("Tooltip.Model"),
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_RESOURCE)),
 
-    TEXT(Messages.getString("Title.Text"), Messages.getString("Tooltip.Text"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_TEXT_RESOURCE)),
+            TEXT(Messages.getString("Title.Text"), Messages.getString("Tooltip.Text"),
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_TEXT_RESOURCE)),
 
-    BINARY(Messages.getString("Title.Binary"), Messages.getString("Tooltip.Binary"), SharedIcons
-        .getDescriptor(SharedIcons.ETOOL_NEW_BINARY_RESOURCE));
+                BINARY(Messages.getString("Title.Binary"), Messages.getString("Tooltip.Binary"),
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_NEW_BINARY_RESOURCE));
 
     private String title;
 

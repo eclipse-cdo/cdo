@@ -37,8 +37,8 @@ import java.util.Set;
  * @author Eike Stepper
  */
 @SuppressWarnings("deprecation")
-public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImpl implements
-    org.eclipse.emf.cdo.net4j.CDOSessionConfiguration
+public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImpl
+    implements org.eclipse.emf.cdo.net4j.CDOSessionConfiguration
 {
   private String repositoryName;
 

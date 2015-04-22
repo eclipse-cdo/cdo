@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
@@ -22,7 +22,7 @@ import org.eclipse.ui.IEditorInput;
  * <p>
  * For related operations, see
  * {@link org.eclipse.emf.cdo.ui.CDOEditorUtil#createCDOEditorInput(CDOView, String, boolean) CDOEditorUtil}
- * 
+ *
  * @author Victor Roldan Betancort
  * @since 2.0
  * @see org.eclipse.ui.IEditorInput

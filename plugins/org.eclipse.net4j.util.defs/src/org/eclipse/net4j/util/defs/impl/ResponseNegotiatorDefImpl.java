@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -39,7 +39,7 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
   /**
    * The cached value of the '{@link #getCredentialsProvider() <em>Credentials Provider</em>}' reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getCredentialsProvider()
    * @generated
    * @ordered
@@ -78,9 +78,11 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
       if (credentialsProvider != oldCredentialsProvider)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider,
               credentialsProvider));
+        }
       }
     }
     return credentialsProvider;
@@ -104,9 +106,11 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
     CredentialsProviderDef oldCredentialsProvider = credentialsProvider;
     credentialsProvider = newCredentialsProvider;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET,
           Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER, oldCredentialsProvider,
           credentialsProvider));
+    }
   }
 
   /**
@@ -120,7 +124,9 @@ public class ResponseNegotiatorDefImpl extends NegotiatorDefImpl implements Resp
     {
     case Net4jUtilDefsPackage.RESPONSE_NEGOTIATOR_DEF__CREDENTIALS_PROVIDER:
       if (resolve)
+      {
         return getCredentialsProvider();
+      }
       return basicGetCredentialsProvider();
     }
     return super.eGet(featureID, resolve, coreType);

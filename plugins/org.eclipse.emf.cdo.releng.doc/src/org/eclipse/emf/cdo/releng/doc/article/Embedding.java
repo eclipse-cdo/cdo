@@ -18,7 +18,7 @@ package org.eclipse.emf.cdo.releng.doc.article;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Embedding#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getEmbedding()
  * @model
  * @generated
@@ -32,7 +32,7 @@ public interface Embedding extends BodyElement
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Element</em>' reference.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getEmbedding_Element()
    * @model resolveProxies="false" required="true" changeable="false"

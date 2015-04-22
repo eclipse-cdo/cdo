@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -129,7 +129,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass childEClass = null;
@@ -153,7 +153,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.tests.model5.Model5Package#eNS_URI
    * @see #init()
@@ -172,7 +172,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link Model5Package#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -185,11 +185,13 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public static Model5Package init()
   {
     if (isInited)
+    {
       return (Model5Package)EPackage.Registry.INSTANCE.getEPackage(Model5Package.eNS_URI);
+    }
 
     // Obtain or create and register package
-    Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new Model5PackageImpl());
+    Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model5PackageImpl());
 
     isInited = true;
 
@@ -453,7 +455,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getParent_Children()
@@ -463,7 +465,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getParent_Favourite()
@@ -483,7 +485,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getChild()
@@ -493,7 +495,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getChild_Parent()
@@ -503,7 +505,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getChild_PreferredBy()
@@ -572,7 +574,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -647,7 +651,9 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -664,10 +670,10 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     // Initialize classes and features; add operations and parameters
     initEClass(testFeatureMapEClass, TestFeatureMap.class, "TestFeatureMap", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTestFeatureMap_Managers(), this.getManager(), null, "managers", null, 0, -1,
-        TestFeatureMap.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTestFeatureMap_Doctors(), this.getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class,
+    initEReference(getTestFeatureMap_Managers(), getManager(), null, "managers", null, 0, -1, TestFeatureMap.class,
+        IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getTestFeatureMap_Doctors(), getDoctor(), null, "doctors", null, 0, -1, TestFeatureMap.class,
         IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTestFeatureMap_People(), ecorePackage.getEFeatureMapEntry(), "people", null, 0, -1,
@@ -736,27 +742,26 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
     initEClass(genListOfIntArrayEClass, GenListOfIntArray.class, "GenListOfIntArray", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getGenListOfIntArray_Elements(), this.getIntArray(), "elements", null, 0, -1,
-        GenListOfIntArray.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getGenListOfIntArray_Elements(), getIntArray(), "elements", null, 0, -1, GenListOfIntArray.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(parentEClass, Parent.class, "Parent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getParent_Children(), this.getChild(), this.getChild_Parent(), "children", null, 0, -1,
-        Parent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getParent_Favourite(), this.getChild(), this.getChild_PreferredBy(), "favourite", null, 0, 1,
-        Parent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParent_Children(), getChild(), getChild_Parent(), "children", null, 0, -1, Parent.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
+    initEReference(getParent_Favourite(), getChild(), getChild_PreferredBy(), "favourite", null, 0, 1, Parent.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEAttribute(getParent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parent.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(childEClass, Child.class, "Child", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getChild_Parent(), this.getParent(), this.getParent_Children(), "parent", null, 0, 1, Child.class,
+    initEReference(getChild_Parent(), getParent(), getParent_Children(), "parent", null, 0, 1, Child.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
         !IS_DERIVED, IS_ORDERED);
-    initEReference(getChild_PreferredBy(), this.getParent(), this.getParent_Favourite(), "preferredBy", null, 0, 1,
-        Child.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE,
-        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getChild_PreferredBy(), getParent(), getParent_Favourite(), "preferredBy", null, 0, 1, Child.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
     initEAttribute(getChild_Name(), ecorePackage.getEString(), "name", null, 0, 1, Child.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

@@ -21,7 +21,7 @@ import java.io.Serializable;
 
 /**
  * Instantiates {@link CDOFeatureMapEntry}.
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 

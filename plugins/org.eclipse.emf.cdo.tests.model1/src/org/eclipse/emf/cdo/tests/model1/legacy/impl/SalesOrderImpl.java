@@ -186,8 +186,8 @@ public class SalesOrderImpl extends OrderImpl implements SalesOrder
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.SALES_ORDER__CUSTOMER, newCustomer,
-          newCustomer));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model1Package.SALES_ORDER__CUSTOMER, newCustomer, newCustomer));
     }
   }
 

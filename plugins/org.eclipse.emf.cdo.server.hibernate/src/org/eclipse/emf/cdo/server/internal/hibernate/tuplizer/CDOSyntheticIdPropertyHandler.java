@@ -34,7 +34,7 @@ import java.util.Map;
 
 /**
  * Is only used for synthetic id's.
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class CDOSyntheticIdPropertyHandler implements Getter, Setter, PropertyAccessor

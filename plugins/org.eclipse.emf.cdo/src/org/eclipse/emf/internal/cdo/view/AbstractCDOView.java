@@ -131,8 +131,8 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOObject, CDOObjectHistory> implements
-    InternalCDOView
+public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOObject, CDOObjectHistory>
+    implements InternalCDOView
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, AbstractCDOView.class);
 
@@ -1165,8 +1165,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     {
       if (!view.getSession().getRepositoryInfo().getUUID().equals(getSession().getRepositoryInfo().getUUID()))
       {
-        throw new IllegalArgumentException(MessageFormat.format(
-            Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$
+        throw new IllegalArgumentException(
+            MessageFormat.format(Messages.getString("CDOViewImpl.11"), objectFromDifferentView)); //$NON-NLS-1$
       }
 
       CDOID id = object.cdoID();
@@ -1398,8 +1398,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
       else
       {
-        InternalCDOObject object = (InternalCDOObject)EcoreUtil.getAdapter(
-            ((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
+        InternalCDOObject object = (InternalCDOObject)EcoreUtil
+            .getAdapter(((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
         if (object != null)
         {
           CDOID id = getID(object, onlyPersistedID);
@@ -2111,8 +2111,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       switch (eventType)
       {
       case Notification.ADD:
-        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this,
-            (CDOResourceNode)msg.getNewValue(), IContainerDelta.Kind.ADDED);
+        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getNewValue(),
+            IContainerDelta.Kind.ADDED);
         break;
 
       case Notification.ADD_MANY:
@@ -2120,8 +2120,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         break;
 
       case Notification.REMOVE:
-        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this,
-            (CDOResourceNode)msg.getOldValue(), IContainerDelta.Kind.REMOVED);
+        event = new SingleDeltaContainerEvent<CDOResourceNode>(AbstractCDOView.this, (CDOResourceNode)msg.getOldValue(),
+            IContainerDelta.Kind.REMOVED);
         break;
 
       case Notification.REMOVE_MANY:

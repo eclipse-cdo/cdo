@@ -23,11 +23,11 @@ import org.eclipse.internal.net4j.bundle.OM;
 
 /**
  * @author Christian W. Damus (CEA LIST)
- * 
+ *
  * @since 4.3
  */
-public class ConfirmationIndication<PROTOCOL extends SignalProtocol<?> & IConfirmationProvider.Provider> extends
-    IndicationWithMonitoring
+public class ConfirmationIndication<PROTOCOL extends SignalProtocol<?> & IConfirmationProvider.Provider>
+    extends IndicationWithMonitoring
 {
   private ConfirmationPrompt prompt;
 

@@ -27,7 +27,7 @@ import java.text.MessageFormat;
  * <ul>
  * <li> {@link StateChangedEvent} after state changes of a <i>subject</i>.
  * </ul>
- * 
+ *
  * @author Eike Stepper
  * @apiviz.landmark
  * @apiviz.has {@link ITransition} oneway - - matrix
@@ -236,7 +236,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   /**
    * A {@link ITransition transition} that does nothing.
-   * 
+   *
    * @author Eike Stepper
    * @deprecated Use {@link FiniteStateMachine#IGNORE}
    * @apiviz.exclude
@@ -258,7 +258,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   /**
    * A {@link ITransition transition} that throws an {@link IllegalStateException}.
-   * 
+   *
    * @author Eike Stepper
    * @deprecated Use {@link FiniteStateMachine#FAIL}
    * @apiviz.exclude
@@ -280,7 +280,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   /**
    * A {@link ITransition transition} that does nothing.
-   * 
+   *
    * @author Eike Stepper
    * @apiviz.exclude
    */
@@ -300,7 +300,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   /**
    * A {@link ITransition transition} that throws an {@link IllegalStateException}.
-   * 
+   *
    * @author Eike Stepper
    * @apiviz.exclude
    */
@@ -320,7 +320,7 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
 
   /**
    * A {@link ITransition transition} that changes the {@link #getTargetState() state} of a <i>subject</i>.
-   * 
+   *
    * @author Eike Stepper
    */
   public class ChangeStateTransition implements ITransition<STATE, EVENT, SUBJECT, Object>

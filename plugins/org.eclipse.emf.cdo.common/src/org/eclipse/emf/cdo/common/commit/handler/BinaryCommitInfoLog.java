@@ -27,7 +27,7 @@ import java.io.OutputStream;
 /**
  * A {@link CDOCommitInfoHandler commit info handler} that synchronously writes {@link CDOCommitInfo commit infos} to a
  * binary log.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */

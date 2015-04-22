@@ -18,7 +18,7 @@ package org.eclipse.emf.cdo.releng.doc.article;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Chapter#getArticle <em>Article</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getChapter()
  * @model
  * @generated
@@ -33,7 +33,7 @@ public interface Chapter extends Body
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Article</em>' reference.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getChapter_Article()
    * @model resolveProxies="false" required="true" transient="true" changeable="false" volatile="true" derived="true"

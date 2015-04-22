@@ -58,7 +58,7 @@ public class CDOSessionsViewTest extends AbstractCDOUITest<SWTWorkbenchBot>
 
     // activeView.toolbarButton(OpenSessionDialog.TITLE).click();
     activeView.toolbarButton(org.eclipse.emf.cdo.internal.ui.messages.Messages.getString("OpenSessionAction.0"))
-        .click();
+    .click();
 
     SWTBotShell openSessionDialog = getBot().shell("Open Session");
     openSessionDialog.activate();

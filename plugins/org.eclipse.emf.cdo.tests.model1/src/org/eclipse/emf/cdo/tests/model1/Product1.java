@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -51,7 +51,7 @@ public interface Product1 extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Product1#getName <em>Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -98,7 +98,7 @@ public interface Product1 extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Product1#getVat <em>Vat</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Vat</em>' attribute.
    * @see org.eclipse.emf.cdo.tests.model1.VAT

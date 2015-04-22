@@ -35,7 +35,7 @@ import java.util.Properties;
 
 /**
  * Implements the EMF UserType for an Enum
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class CDOENumStringType implements UserType, ParameterizedType

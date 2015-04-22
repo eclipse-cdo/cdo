@@ -16,7 +16,7 @@ import java.sql.Clob;
 
 /**
  * Object used to store clob and lob.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateStoreLob

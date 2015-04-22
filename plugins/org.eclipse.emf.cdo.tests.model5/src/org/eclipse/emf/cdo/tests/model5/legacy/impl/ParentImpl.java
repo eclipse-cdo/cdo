@@ -77,7 +77,7 @@ public class ParentImpl extends EObjectImpl implements Parent
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @see #getName()
    * @generated
    * @ordered
@@ -86,7 +86,7 @@ public class ParentImpl extends EObjectImpl implements Parent
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   protected ParentImpl()
@@ -204,7 +204,8 @@ public class ParentImpl extends EObjectImpl implements Parent
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE, newFavourite, newFavourite));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model5Package.PARENT__FAVOURITE, newFavourite, newFavourite));
     }
   }
 
@@ -226,7 +227,7 @@ public class ParentImpl extends EObjectImpl implements Parent
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setNameGen(String newName)
@@ -247,7 +248,7 @@ public class ParentImpl extends EObjectImpl implements Parent
 
   /**
    * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -380,7 +381,7 @@ public class ParentImpl extends EObjectImpl implements Parent
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

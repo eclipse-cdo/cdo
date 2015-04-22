@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -21,14 +21,14 @@ import interface_.InterfacePackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class InterfacePackageImpl extends EPackageImpl implements InterfacePackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass iInterfaceEClass = null;
@@ -40,7 +40,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see interface_.InterfacePackage#eNS_URI
    * @see #init()
@@ -53,7 +53,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -64,7 +64,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
    * This method is used to initialize {@link InterfacePackage#eINSTANCE} when that field is accessed. Clients should
    * not invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc
    * --> <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -78,8 +78,9 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
     }
 
     // Obtain or create and register package
-    InterfacePackageImpl theInterfacePackage = (InterfacePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof InterfacePackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new InterfacePackageImpl());
+    InterfacePackageImpl theInterfacePackage = (InterfacePackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof InterfacePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new InterfacePackageImpl());
 
     isInited = true;
 
@@ -99,7 +100,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getIInterface()
@@ -109,7 +110,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getIInterface_Test()
@@ -119,7 +120,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public InterfaceFactory getInterfaceFactory()
@@ -129,7 +130,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -137,7 +138,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -155,7 +156,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -163,7 +164,7 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()
@@ -186,9 +187,10 @@ public class InterfacePackageImpl extends EPackageImpl implements InterfacePacka
     // Add supertypes to classes
 
     // Initialize classes and features; add operations and parameters
-    initEClass(iInterfaceEClass, IInterface.class, "IInterface", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIInterface_Test(), ecorePackage.getEString(), "test", null, 0, 1, IInterface.class,
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(iInterfaceEClass, IInterface.class, "IInterface", IS_ABSTRACT, IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIInterface_Test(), ecorePackage.getEString(), "test", null, 0, 1, IInterface.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

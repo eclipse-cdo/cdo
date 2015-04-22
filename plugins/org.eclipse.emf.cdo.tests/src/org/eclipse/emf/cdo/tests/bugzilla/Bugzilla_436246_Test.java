@@ -94,7 +94,8 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
-    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY, true);
+    testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, NB_CATEGORY,
+        true);
 
     currentBranch = currentBranch.getBranch(B1_BRANCH_NAME);
     testCDORevisionFetchWithChangesOnAllBranches(session, currentBranch, signalCounter, companyCDOID, 2 * NB_CATEGORY,
@@ -286,7 +287,5 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     {
       return CDOUtil.createCollectionLoadingPolicy(Integer.MAX_VALUE, Integer.MAX_VALUE);
     }
-
   }
-
 }

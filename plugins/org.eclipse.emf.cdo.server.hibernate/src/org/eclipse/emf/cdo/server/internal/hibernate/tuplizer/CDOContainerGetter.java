@@ -18,7 +18,7 @@ import org.hibernate.HibernateException;
 
 /**
  * gets the container information as a String (to-be-stored in the db) from the CDORevision.
- * 
+ *
  * @see ContainerInfoConverter
  * @author Martin Taal
  */

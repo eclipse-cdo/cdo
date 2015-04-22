@@ -45,7 +45,7 @@ import java.util.Properties;
 
 /**
  * Uses the ecore string in the ePackages of the store to generate a mapping.
- * 
+ *
  * @author Martin Taal
  * @author Eike Stepper
  * @since 3.0
@@ -104,8 +104,8 @@ public class TeneoHibernateMappingProvider extends HibernateMappingProvider
     properties.putAll(storeProperties);
     properties.putAll(mappingProviderProperties);
 
-    PackageRegistryProvider.getInstance().setThreadPackageRegistry(
-        getHibernateStore().getRepository().getPackageRegistry());
+    PackageRegistryProvider.getInstance()
+        .setThreadPackageRegistry(getHibernateStore().getRepository().getPackageRegistry());
 
     // translate the list of EPackages to an array
     boolean hasXMLTypePackage = false;

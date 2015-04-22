@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.session.CDOSessionEvent;
 /**
  * A {@link CDOSessionEvent session event} fired from {@link RecoveringCDOSessionConfiguration recovering session} when
  * recovery has started or finished.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
@@ -28,7 +28,7 @@ public interface CDOSessionRecoveryEvent extends CDOSessionEvent
 
   /**
    * Enumerates the possible types of {@link CDOSessionRecoveryEvent session recovery events}.
-   * 
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    */

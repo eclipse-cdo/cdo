@@ -61,8 +61,8 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 2.0
  */
-public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping implements IClassMappingAuditSupport,
-    IClassMappingDeltaSupport
+public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
+    implements IClassMappingAuditSupport, IClassMappingDeltaSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
@@ -324,8 +324,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping 
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection()
-        .prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(),
+        ReuseProbability.MEDIUM);
 
     try
     {

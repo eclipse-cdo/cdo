@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -63,7 +63,7 @@ public interface Model1Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.AddressImpl <em>Address</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model1.impl.AddressImpl
    * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getAddress()
    * @generated
@@ -132,7 +132,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Address <em>Address</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Address</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.Address
    * @generated
@@ -181,7 +181,7 @@ public interface Model1Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl <em>Company</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model1.impl.CompanyImpl
    * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getCompany()
    * @generated
@@ -292,7 +292,7 @@ public interface Model1Package extends EPackage
   /**
    * The feature id for the '<em><b>Purchase Orders</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -374,7 +374,7 @@ public interface Model1Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.OrderImpl <em>Order</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model1.impl.OrderImpl
    * @see org.eclipse.emf.cdo.tests.model1.impl.Model1PackageImpl#getOrder()
    * @generated
@@ -425,7 +425,7 @@ public interface Model1Package extends EPackage
   /**
    * The number of structural features of the '<em>Order Detail</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -459,7 +459,7 @@ public interface Model1Package extends EPackage
   /**
    * The number of structural features of the '<em>Purchase Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -502,7 +502,7 @@ public interface Model1Package extends EPackage
   /**
    * The number of structural features of the '<em>Sales Order</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -562,7 +562,7 @@ public interface Model1Package extends EPackage
   /**
    * The feature id for the '<em><b>Order Details</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -678,7 +678,7 @@ public interface Model1Package extends EPackage
   /**
    * The number of structural features of the '<em>Order Address</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -731,7 +731,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Supplier <em>Supplier</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Supplier</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.Supplier
    * @generated
@@ -892,7 +892,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Category <em>Category</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Category</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.Category
    * @generated
@@ -934,7 +934,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Product1 <em>Product1</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Product1</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.Product1
    * @generated
@@ -995,7 +995,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Company <em>Company</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Company</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.Company
    * @generated
@@ -1060,7 +1060,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Customer <em>Customer</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Customer</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.Customer
    * @generated
@@ -1090,7 +1090,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Order <em>Order</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Order</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.Order
    * @generated
@@ -1111,7 +1111,7 @@ public interface Model1Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.SalesOrder <em>Sales Order</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Sales Order</em>'.
    * @see org.eclipse.emf.cdo.tests.model1.SalesOrder
    * @generated

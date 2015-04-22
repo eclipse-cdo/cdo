@@ -42,8 +42,8 @@ import java.util.List;
  * @generated
  */
 public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -80,12 +80,10 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
   protected void addContentsPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(
-            ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_CDOBinaryResource_contents_feature"), //$NON-NLS-1$
-            getString(
-                "_UI_PropertyDescriptor_description", "_UI_CDOBinaryResource_contents_feature", "_UI_CDOBinaryResource_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(), getString("_UI_CDOBinaryResource_contents_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_CDOBinaryResource_contents_feature", //$NON-NLS-1$ //$NON-NLS-2$
+                "_UI_CDOBinaryResource_type"), //$NON-NLS-1$
             EresourcePackage.Literals.CDO_BINARY_RESOURCE__CONTENTS, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
@@ -121,7 +119,8 @@ public class CDOBinaryResourceItemProvider extends CDOFileResourceItemProvider i
   public String getText(Object object)
   {
     String label = ((CDOBinaryResource)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_CDOBinaryResource_type") : //$NON-NLS-1$
+    return label == null || label.length() == 0 ? getString("_UI_CDOBinaryResource_type") //$NON-NLS-1$
+        :
         label;
   }
 

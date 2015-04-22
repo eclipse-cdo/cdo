@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -49,7 +49,7 @@ import java.nio.channels.SocketChannel;
  * ultricies dictum, mi sem feugiat purus, ac aliquam metus purus sed leo. Sed a viverra metus.
  * <p>
  * <b>Table of Contents</b> {@toc}
- * 
+ *
  * @author Eike Stepper
  */
 public class CreatingTransportConnections
@@ -65,7 +65,7 @@ public class CreatingTransportConnections
    * <li><b>HTTP</b> to connect to an {@link IHTTPAcceptor} that is made available by a servlet.
    * </ul>
    * Continue with {@link SetConnectionTimeout}.
-   * 
+   *
    * @see SetBufferCapacity
    */
   public class SelectTransportType
@@ -172,7 +172,7 @@ class Snippets
     {
     }
 
-    public void multiplexChannel(InternalChannel /* callout */channel)
+    public void multiplexChannel(InternalChannel /* callout */ channel)
     {
     }
 
@@ -184,8 +184,7 @@ class Snippets
     }
 
     @Override
-    protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol)
-        throws ChannelException
+    protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
     {
     }
     // snap

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -196,22 +196,22 @@ public abstract class SortedFileMap<K extends Comparable<K>, V> implements Close
     while (low <= high)
     {
       long mid = low + high >> 1;
-      randomAccessFile.seek(getPosition(mid));
-      Comparable<K> midVal = readKey(input);
-      int cmp = midVal.compareTo(key);
+    randomAccessFile.seek(getPosition(mid));
+    Comparable<K> midVal = readKey(input);
+    int cmp = midVal.compareTo(key);
 
-      if (cmp < 0)
-      {
-        low = mid + 1;
-      }
-      else if (cmp > 0)
-      {
-        high = mid - 1;
-      }
-      else
-      {
-        return mid; // key found
-      }
+    if (cmp < 0)
+    {
+      low = mid + 1;
+    }
+    else if (cmp > 0)
+    {
+      high = mid - 1;
+    }
+    else
+    {
+      return mid; // key found
+    }
     }
 
     return -(low + 1); // key not found.

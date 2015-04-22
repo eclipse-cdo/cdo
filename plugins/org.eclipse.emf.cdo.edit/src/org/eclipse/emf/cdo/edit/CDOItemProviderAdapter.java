@@ -124,9 +124,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addIDDescriptor(Object object)
   {
@@ -134,9 +134,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addVersionDescriptor(Object object)
   {
@@ -144,9 +144,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addStateDescriptor(Object object)
   {
@@ -154,9 +154,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addViewDescriptor(Object object)
   {
@@ -164,9 +164,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addContainerDescriptor(Object object)
   {
@@ -174,9 +174,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addDirectResourceDescriptor(Object object)
   {
@@ -184,9 +184,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addReadLockedDescriptor(Object object)
   {
@@ -194,9 +194,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addWriteLockedDescriptor(Object object)
   {
@@ -204,9 +204,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 4.3
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 4.3
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addWriteOptionDescriptor(Object object)
   {
@@ -214,9 +214,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addAdaptersDescriptor(Object object)
   {
@@ -224,9 +224,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addChangeSubscriptionPoliciesDescriptor(Object object)
   {
@@ -234,9 +234,9 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   protected void addURIDescriptor(Object object)
   {
@@ -437,60 +437,60 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * Adds the {@link CDOID} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link CDOID} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class IDDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the version of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the version of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class VersionDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the {@link CDOState state} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link CDOState state} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class StateDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the associate {@link CDOView view} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the associate {@link CDOView view} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class ViewDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the {@link EObject#eContainer() eContainer} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link EObject#eContainer() eContainer} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class ContainerDescriptor extends CDOPropertyDescriptor
   {
@@ -500,84 +500,84 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   }
 
   /**
-  * Adds the {@link InternalEObject#eDirectResource() direct resource} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link InternalEObject#eDirectResource() direct resource} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class DirectResourceDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the {@link CDOLock read lock} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link CDOLock read lock} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class ReadLockedDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the {@link CDOLock write lock} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link CDOLock write lock} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class WriteLockedDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the {@link CDOLock write option} of a {@link CDOObject} to the Properties view.
-  *
-  * @author Eike Stepper
-  * @since 4.3
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link CDOLock write option} of a {@link CDOObject} to the Properties view.
+   *
+   * @author Eike Stepper
+   * @since 4.3
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class WriteOptionDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the {@link EObject#eAdapters() eAdapters} list of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the {@link EObject#eAdapters() eAdapters} list of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class AdaptersDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the change subscription policies list of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the change subscription policies list of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class ChangeSubscriptionPoliciesDescriptor extends CDOPropertyDescriptor
   {
   }
 
   /**
-  * Adds the URI of a {@link CDOObject} to the Properties view.
-  *
-  * @author Victor Roldan Betancort
-  * @since 2.0
-  * @deprecated as of 4.4 not used any more.
-  */
+   * Adds the URI of a {@link CDOObject} to the Properties view.
+   *
+   * @author Victor Roldan Betancort
+   * @since 2.0
+   * @deprecated as of 4.4 not used any more.
+   */
   @Deprecated
   public static class URIDescriptor extends CDOPropertyDescriptor
   {

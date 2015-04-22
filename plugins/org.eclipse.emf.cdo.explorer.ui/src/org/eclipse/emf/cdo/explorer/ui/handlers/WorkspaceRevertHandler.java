@@ -96,9 +96,9 @@ public class WorkspaceRevertHandler extends AbstractBaseHandler<OfflineCDOChecko
         String plural = size == 1 ? "" : "s";
         String message = size == 1 ? "is 1" : "are " + size;
 
-        if (!MessageDialog.openQuestion(shell, "Uncommitted Transaction" + plural, "There " + message
-            + " uncommitted transaction" + plural + ".\n\n" + "Are you sure you want to rollback the transaction"
-            + plural + ", too?"))
+        if (!MessageDialog.openQuestion(shell, "Uncommitted Transaction" + plural,
+            "There " + message + " uncommitted transaction" + plural + ".\n\n"
+                + "Are you sure you want to rollback the transaction" + plural + ", too?"))
         {
           cancel();
           return;

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -51,7 +51,8 @@ public abstract class SecurityManagerCommand extends CDOCommand.WithRepository
   {
     public AddUser()
     {
-      super("adduser", "adds a user to the security realm of a repository", parameter("username"), optional("password"));
+      super("adduser", "adds a user to the security realm of a repository", parameter("username"),
+          optional("password"));
     }
 
     @Override

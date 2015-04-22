@@ -40,7 +40,7 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   /**
    * The cached value of the '{@link #getElements() <em>Elements</em>}' map. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getElements()
    * @generated
    * @ordered
@@ -74,8 +74,8 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
   {
     if (elements == null)
     {
-      elements = new EcoreEMap<String, EObject>(model4Package.eINSTANCE.getStringToEObject(),
-          StringToEObjectImpl.class, this, model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS);
+      elements = new EcoreEMap<String, EObject>(model4Package.eINSTANCE.getStringToEObject(), StringToEObjectImpl.class,
+          this, model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS);
     }
     return elements;
   }
@@ -106,9 +106,13 @@ public class GenRefMapNonContainedImpl extends EObjectImpl implements GenRefMapN
     {
     case model4Package.GEN_REF_MAP_NON_CONTAINED__ELEMENTS:
       if (coreType)
+      {
         return getElements();
+      }
       else
+      {
         return getElements().map();
+      }
     }
     return super.eGet(featureID, resolve, coreType);
   }

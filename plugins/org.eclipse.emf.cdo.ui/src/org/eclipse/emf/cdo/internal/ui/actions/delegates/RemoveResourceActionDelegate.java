@@ -73,7 +73,7 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
         Messages.getString("RemoveResourceAction_2"), nodes.size()))) //$NON-NLS-1$
     {
       Job job = new Job(Messages.getString("RemoveResourceAction_3")) //$NON-NLS-1$
-      {
+          {
         @Override
         protected IStatus run(IProgressMonitor monitor)
         {
@@ -114,8 +114,8 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
             }
             catch (Exception ex)
             {
-              OM.LOG.error(MessageFormat.format(
-                  Messages.getString("RemoveResourceAction_4"), this.getClass().getName().toString()), ex); //$NON-NLS-1$
+              OM.LOG.error(MessageFormat.format(Messages.getString("RemoveResourceAction_4"), //$NON-NLS-1$
+                  this.getClass().getName().toString()), ex);
             }
             finally
             {
@@ -124,12 +124,13 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
           }
 
           // UIUtil.setStatusBarMessage(
-          //              MessageFormat.format(Messages.getString("RemoveResourceAction_5"), nodes.size()), getDeleteIcon()); //$NON-NLS-1$
+          // MessageFormat.format(Messages.getString("RemoveResourceAction_5"), nodes.size()), getDeleteIcon());
+          // //$NON-NLS-1$
           return Status.OK_STATUS;
         }
-      };
+          };
 
-      job.schedule();
+          job.schedule();
     }
   }
 }

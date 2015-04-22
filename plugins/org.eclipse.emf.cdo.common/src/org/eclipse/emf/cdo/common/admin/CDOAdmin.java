@@ -31,7 +31,7 @@ public interface CDOAdmin extends IContainer<CDOAdminRepository>, Closeable
 {
   /**
    * The default admin-handler type, which is guaranteed to exist on the server.
-   * 
+   *
    * @since 4.3
    */
   public static final String DEFAULT_TYPE = "default"; //$NON-NLS-1$
@@ -40,7 +40,7 @@ public interface CDOAdmin extends IContainer<CDOAdminRepository>, Closeable
    * The name of the boolean property that indicates whether to configure the
    * default security manager in a repository to be
    * {@linkplain #createRepository(String, String, Map) created}.
-   * 
+   *
    * @since 4.3
    */
   public static final String PROPERTY_SECURITY_MANAGER = "configureSecurityManager"; //$NON-NLS-1$
@@ -49,7 +49,7 @@ public interface CDOAdmin extends IContainer<CDOAdminRepository>, Closeable
    * The name of the boolean property that indicates whether to configure the
    * default {@linkplain #PROPERTY_SECURITY_MANAGER security manager} with
    * support for user home folders.
-   * 
+   *
    * @since 4.3
    */
   public static final String PROPERTY_SECURITY_HOME_FOLDERS = "configureSecurityHomeFolders"; //$NON-NLS-1$
@@ -58,7 +58,7 @@ public interface CDOAdmin extends IContainer<CDOAdminRepository>, Closeable
    * The name of the property that provides the XML configuration string for
    * the store of a repository to be
    * {@linkplain #createRepository(String, String, Map) created}.
-   * 
+   *
    * @since 4.3
    */
   public static final String PROPERTY_STORE_XML_CONFIG = "storeXMLConfig"; //$NON-NLS-1$

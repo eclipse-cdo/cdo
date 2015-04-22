@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -37,7 +37,7 @@ import org.eclipse.gmf.runtime.notation.View;
 /**
  * This registry is used to determine which type of visual object should be created for the corresponding Diagram, Node,
  * ChildNode or Link represented by a domain model object.
- * 
+ *
  * @generated
  */
 public class AcoreVisualIDRegistry
@@ -78,7 +78,7 @@ public class AcoreVisualIDRegistry
       EAnnotation annotation = view.getEAnnotation("Shortcut"); //$NON-NLS-1$
       if (annotation != null)
       {
-        return (String)annotation.getDetails().get("modelID"); //$NON-NLS-1$
+        return annotation.getDetails().get("modelID"); //$NON-NLS-1$
       }
       view = (View)view.eContainer();
     }
@@ -311,7 +311,7 @@ public class AcoreVisualIDRegistry
 
   /**
    * User can change implementation of this method to handle some specific situations not covered by default logic.
-   * 
+   *
    * @generated
    */
   private static boolean isDiagram(ACoreRoot element)

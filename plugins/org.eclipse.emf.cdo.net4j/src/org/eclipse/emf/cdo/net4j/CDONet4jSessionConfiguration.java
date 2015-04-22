@@ -20,7 +20,7 @@ import org.eclipse.net4j.util.io.IStreamWrapper;
 
 /**
  * Configures and opens new Net4j-specific CDO {@link CDOSession sessions}.
- * 
+ *
  * @since 4.1
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -59,7 +59,7 @@ public interface CDONet4jSessionConfiguration extends org.eclipse.emf.cdo.sessio
 
   /**
    * A special package registry can be set <b>before</b> the session is opened and can not be changed thereafter.
-   * 
+   *
    * @see CDONet4jSession#getPackageRegistry()
    */
   public void setPackageRegistry(CDOPackageRegistry packageRegistry);

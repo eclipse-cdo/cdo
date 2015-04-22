@@ -55,8 +55,8 @@ public class CDOLabelDecorator implements ILabelDecorator
 
   public static final String NO_DECORATION = DECORATION_PROPOSALS[0];
 
-  private static final String[] DECORATION_ARGS = {
-      "{0}", "{1}", "{2}", "{3,date} {3,time,HH:mm:ss:SSS}", "{4,date} {4,time,HH:mm:ss:SSS}" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
+  private static final String[] DECORATION_ARGS = { "{0}", "{1}", "{2}", "{3,date} {3,time,HH:mm:ss:SSS}", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+      "{4,date} {4,time,HH:mm:ss:SSS}" }; //$NON-NLS-1$
 
   public static final String DECORATOR_ID = "org.eclipse.emf.cdo.ui.CDOLabelDecorator"; //$NON-NLS-1$
 
@@ -213,7 +213,7 @@ public class CDOLabelDecorator implements ILabelDecorator
         }
       }
     }
-  
+
     // Use default
     return image;
   }

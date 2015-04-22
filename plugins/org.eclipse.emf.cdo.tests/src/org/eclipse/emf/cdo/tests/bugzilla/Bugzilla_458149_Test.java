@@ -43,9 +43,8 @@ public class Bugzilla_458149_Test extends AbstractCDOTest
     getRepository();
     ResourceSet resourceSet = new ResourceSetImpl();
 
-    URI sharedResourceURI = URI.createURI(
-        CDONet4jUtil.PROTOCOL_TCP + "://localhost/" + RepositoryConfig.REPOSITORY_NAME
-            + getResourcePath("/sharedResource")).appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
+    URI sharedResourceURI = URI.createURI(CDONet4jUtil.PROTOCOL_TCP + "://localhost/" + RepositoryConfig.REPOSITORY_NAME
+        + getResourcePath("/sharedResource")).appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
     Resource sharedResource = resourceSet.createResource(sharedResourceURI);
     sharedResource.save(Collections.emptyMap());
     assertEquals(sharedResourceURI, sharedResource.getURI());
@@ -75,5 +74,4 @@ public class Bugzilla_458149_Test extends AbstractCDOTest
     resourceSet.getResources().remove(localResource);
     assertEquals(localResourceURI, localResource.getURI());
   }
-
 }

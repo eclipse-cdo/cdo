@@ -48,8 +48,8 @@ public class ImportResourceAction extends AbstractViewAction
 
   public ImportResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE + INTERACTIVE,
-        Messages.getString("ImportResourceAction.2"), SharedIcons.getDescriptor(SharedIcons.ETOOL_IMPORT), view); //$NON-NLS-1$
+    super(page, TITLE + INTERACTIVE, Messages.getString("ImportResourceAction.2"), //$NON-NLS-1$
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_IMPORT), view);
     setId(ID);
   }
 

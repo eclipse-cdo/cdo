@@ -26,7 +26,7 @@ import java.util.Map;
 
 /**
  * This registry provides the DawnElementStylizer implementation for a given object.
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.appearance.DawnElementStylizer
  * @author Martin Fluegge
  * @since 2.0
@@ -103,8 +103,8 @@ public class DawnElementStylizerRegistry
   {
     try
     {
-      IConfigurationElement[] config = Platform.getExtensionRegistry().getConfigurationElementsFor(
-          DAWN_STYLIZER_FACTORY_EXTENSION_POINT_ID);
+      IConfigurationElement[] config = Platform.getExtensionRegistry()
+          .getConfigurationElementsFor(DAWN_STYLIZER_FACTORY_EXTENSION_POINT_ID);
       for (IConfigurationElement e : config)
       {
         String factoryClassName = e.getAttribute(ATTRIIBUTE_FACTORY);

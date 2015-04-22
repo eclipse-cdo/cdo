@@ -81,8 +81,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader3, RevisionLoader2,
-    CommitInfoLoader
+public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader3, RevisionLoader2, CommitInfoLoader
 {
   public RepositoryTimeResult getRepositoryTime();
 
@@ -734,8 +733,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     @Override
     public String toString()
     {
-      return MessageFormat.format(
-          "RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]", //$NON-NLS-1$
+      return MessageFormat.format("RepositoryTime[requested={0}, indicated={1}, responded={2}, confirmed={3}]", //$NON-NLS-1$
           CDOCommonUtil.formatTimeStamp(requested), CDOCommonUtil.formatTimeStamp(indicated),
           CDOCommonUtil.formatTimeStamp(responded), CDOCommonUtil.formatTimeStamp(confirmed));
     }

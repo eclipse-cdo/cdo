@@ -106,7 +106,8 @@ public interface DawnGmfGenmodelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 0;
+  int DAWN_GMF_GENERATOR__DAWN_DOCUMENT_PROVIDER_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT
+      + 0;
 
   /**
    * The feature id for the '<em><b>Dawn Editor Util Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
@@ -124,7 +125,8 @@ public interface DawnGmfGenmodelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 2;
+  int DAWN_GMF_GENERATOR__DAWN_CREATION_WIZARD_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT
+      + 2;
 
   /**
    * The feature id for the '<em><b>Dawn Canonical Editing Policy Class Name</b></em>' attribute. <!-- begin-user-doc
@@ -133,7 +135,8 @@ public interface DawnGmfGenmodelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 3;
+  int DAWN_GMF_GENERATOR__DAWN_CANONICAL_EDITING_POLICY_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT
+      + 3;
 
   /**
    * The feature id for the '<em><b>Dawn Diagram Edit Part Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
@@ -142,7 +145,8 @@ public interface DawnGmfGenmodelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 4;
+  int DAWN_GMF_GENERATOR__DAWN_DIAGRAM_EDIT_PART_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT
+      + 4;
 
   /**
    * The feature id for the '<em><b>Dawn Edit Part Factory Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
@@ -151,7 +155,8 @@ public interface DawnGmfGenmodelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 5;
+  int DAWN_GMF_GENERATOR__DAWN_EDIT_PART_FACTORY_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT
+      + 5;
 
   /**
    * The feature id for the '<em><b>Dawn Edit Part Provider Class Name</b></em>' attribute. <!-- begin-user-doc --> <!--
@@ -160,7 +165,8 @@ public interface DawnGmfGenmodelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 6;
+  int DAWN_GMF_GENERATOR__DAWN_EDIT_PART_PROVIDER_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT
+      + 6;
 
   /**
    * The feature id for the '<em><b>Dawn Edit Policy Provider Class Name</b></em>' attribute. <!-- begin-user-doc -->
@@ -169,7 +175,8 @@ public interface DawnGmfGenmodelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT + 7;
+  int DAWN_GMF_GENERATOR__DAWN_EDIT_POLICY_PROVIDER_CLASS_NAME = DawngenmodelPackage.DAWN_FRAGMENT_GENERATOR_FEATURE_COUNT
+      + 7;
 
   /**
    * The feature id for the '<em><b>GMF Gen Editor Generator</b></em>' reference. <!-- begin-user-doc --> <!--

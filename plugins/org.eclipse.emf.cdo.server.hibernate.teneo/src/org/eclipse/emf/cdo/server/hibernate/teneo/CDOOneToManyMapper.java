@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * Prevent delete-orphan.
- * 
+ *
  * @author <a href="mtaal@elver.org">Martin Taal</a>
  * @since 4.2
  */

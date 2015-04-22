@@ -38,10 +38,9 @@ public abstract class NewResourceNodeActionDelegate extends TransactionalBackgro
   @Override
   protected CDOObject preRun(CDOObject object)
   {
-    InputDialog dialog = new InputDialog(
-        getTargetPart().getSite().getShell(),
-        getText(),
-        Messages.getString("NewResourceNodeAction_0"), null, new ResourceNodeNameInputValidator((CDOResourceNode)object)); //$NON-NLS-1$
+    InputDialog dialog = new InputDialog(getTargetPart().getSite().getShell(), getText(),
+        Messages.getString("NewResourceNodeAction_0"), null, //$NON-NLS-1$
+        new ResourceNodeNameInputValidator((CDOResourceNode)object));
     if (dialog.open() == Dialog.OK)
     {
       setNewResourceNode(createNewResourceNode());

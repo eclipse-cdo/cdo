@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -23,14 +23,14 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static DefsFactory init()
@@ -53,7 +53,7 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DefsFactoryImpl()
@@ -63,7 +63,7 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -80,7 +80,7 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public TestDef createTestDef()
@@ -91,7 +91,7 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public DefsPackage getDefsPackage()
@@ -101,7 +101,7 @@ public class DefsFactoryImpl extends EFactoryImpl implements DefsFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

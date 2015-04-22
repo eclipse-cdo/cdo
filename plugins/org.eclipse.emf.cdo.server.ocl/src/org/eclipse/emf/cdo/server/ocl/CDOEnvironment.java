@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -33,7 +33,7 @@ import java.util.List;
 
 /**
  * CDO-specific Ecore environment implementation.  It adds operations that assist in building efficient OCL queries.
- * 
+ *
  * @author Christian W. Damus
  * @since 4.2
  */
@@ -171,8 +171,8 @@ class CDOEnvironment extends EcoreEnvironment
   /**
    * @author Christian W. Damus
    */
-  private static class DelegatingCachedTypeChecker extends DelegatingTypeChecker implements
-      TypeChecker.Cached<EClassifier, EOperation, EStructuralFeature>
+  private static class DelegatingCachedTypeChecker extends DelegatingTypeChecker
+      implements TypeChecker.Cached<EClassifier, EOperation, EStructuralFeature>
   {
     private final TypeChecker.Cached<EClassifier, EOperation, EStructuralFeature> delegate;
 

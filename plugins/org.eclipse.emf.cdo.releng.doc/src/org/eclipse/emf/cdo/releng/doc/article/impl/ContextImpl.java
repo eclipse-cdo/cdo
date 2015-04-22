@@ -48,7 +48,7 @@ import java.util.Map;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.ContextImpl#getRoot <em>Root</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ContextImpl extends EObjectImpl implements Context
@@ -56,7 +56,7 @@ public class ContextImpl extends EObjectImpl implements Context
   /**
    * The default value of the '{@link #getBaseFolder() <em>Base Folder</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getBaseFolder()
    * @generated
    * @ordered
@@ -66,7 +66,7 @@ public class ContextImpl extends EObjectImpl implements Context
   /**
    * The cached value of the '{@link #getBaseFolder() <em>Base Folder</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getBaseFolder()
    * @generated
    * @ordered
@@ -76,7 +76,7 @@ public class ContextImpl extends EObjectImpl implements Context
   /**
    * The default value of the '{@link #getProject() <em>Project</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getProject()
    * @generated
    * @ordered
@@ -86,7 +86,7 @@ public class ContextImpl extends EObjectImpl implements Context
   /**
    * The cached value of the '{@link #getProject() <em>Project</em>}' attribute. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getProject()
    * @generated
    * @ordered
@@ -96,7 +96,7 @@ public class ContextImpl extends EObjectImpl implements Context
   /**
    * The cached value of the '{@link #getDocumentations() <em>Documentations</em>}' containment reference list. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getDocumentations()
    * @generated
    * @ordered
@@ -106,7 +106,7 @@ public class ContextImpl extends EObjectImpl implements Context
   /**
    * The default value of the '{@link #getRoot() <em>Root</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getRoot()
    * @generated
    * @ordered
@@ -121,7 +121,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ContextImpl()
@@ -177,7 +177,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -188,7 +188,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public File getBaseFolder()
@@ -198,7 +198,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getProject()
@@ -208,7 +208,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EList<Documentation> getDocumentations()
@@ -223,7 +223,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public RootDoc getRoot()
@@ -233,7 +233,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -250,7 +250,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -266,7 +266,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -288,7 +288,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -307,7 +307,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -324,7 +324,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -346,7 +346,7 @@ public class ContextImpl extends EObjectImpl implements Context
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

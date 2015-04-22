@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 /**
  * Override {@link XATransactionTest} to do mapping of external references.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateXATransactionTest extends XATransactionTest

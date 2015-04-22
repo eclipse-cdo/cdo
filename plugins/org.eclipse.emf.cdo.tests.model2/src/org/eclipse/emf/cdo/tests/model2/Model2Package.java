@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -141,7 +141,7 @@ public interface Model2Package extends EPackage
   /**
    * The number of structural features of the '<em>Task Container</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -150,7 +150,7 @@ public interface Model2Package extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model2.impl.TaskImpl <em>Task</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.model2.impl.TaskImpl
    * @see org.eclipse.emf.cdo.tests.model2.impl.Model2PackageImpl#getTask()
    * @generated
@@ -202,7 +202,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -291,7 +291,7 @@ public interface Model2Package extends EPackage
   /**
    * The number of structural features of the '<em>Unsettable1</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -309,7 +309,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Unsettable Boolean</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -510,7 +510,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -519,7 +519,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -528,7 +528,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -537,7 +537,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -546,7 +546,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -555,7 +555,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -564,7 +564,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -573,7 +573,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -582,7 +582,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -591,7 +591,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -600,7 +600,7 @@ public interface Model2Package extends EPackage
   /**
    * The number of structural features of the '<em>Not Unsettable</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -627,7 +627,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Byte</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -636,7 +636,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Char</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -645,7 +645,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Date</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -654,7 +654,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Double</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -663,7 +663,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Float</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -672,7 +672,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Int</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -681,7 +681,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Long</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -690,7 +690,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable Short</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -699,7 +699,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable String</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -708,7 +708,7 @@ public interface Model2Package extends EPackage
   /**
    * The feature id for the '<em><b>Not Unsettable VAT</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1083,7 +1083,7 @@ public interface Model2Package extends EPackage
   /**
    * The number of structural features of the '<em>EObject To EObject Both Contained Map</em>' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1117,7 +1117,7 @@ public interface Model2Package extends EPackage
   /**
    * The number of structural features of the '<em>EObject To EObject Value Contained Map</em>' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -1162,7 +1162,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getDiscountCode <em>Discount Code</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Discount Code</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getDiscountCode()
    * @see #getSpecialPurchaseOrder()
@@ -1174,7 +1174,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the containment reference '
    * {@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress <em>Shipping Address</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Shipping Address</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress()
    * @see #getSpecialPurchaseOrder()
@@ -1205,7 +1205,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Task <em>Task</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Task</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Task
    * @generated
@@ -1245,7 +1245,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.Unsettable1 <em>Unsettable1</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Unsettable1</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable1
    * @generated
@@ -1385,7 +1385,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableByte <em>Unsettable Byte</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Byte</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableByte()
    * @see #getUnsettable2WithDefault()
@@ -1397,7 +1397,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableChar <em>Unsettable Char</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Char</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableChar()
    * @see #getUnsettable2WithDefault()
@@ -1409,7 +1409,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDate <em>Unsettable Date</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Date</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableDate()
    * @see #getUnsettable2WithDefault()
@@ -1431,7 +1431,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableFloat <em>Unsettable Float</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Float</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableFloat()
    * @see #getUnsettable2WithDefault()
@@ -1443,7 +1443,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableInt <em>Unsettable Int</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Int</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableInt()
    * @see #getUnsettable2WithDefault()
@@ -1455,7 +1455,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableLong <em>Unsettable Long</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Long</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableLong()
    * @see #getUnsettable2WithDefault()
@@ -1467,7 +1467,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableShort <em>Unsettable Short</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable Short</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableShort()
    * @see #getUnsettable2WithDefault()
@@ -1489,7 +1489,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableVAT <em>Unsettable VAT</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Unsettable VAT</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.Unsettable2WithDefault#getUnsettableVAT()
    * @see #getUnsettable2WithDefault()
@@ -1510,7 +1510,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrBefore <em>Attr Before</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attr Before</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrBefore()
    * @see #getPersistentContainment()
@@ -1533,7 +1533,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrAfter <em>Attr After</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attr After</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.PersistentContainment#getAttrAfter()
    * @see #getPersistentContainment()
@@ -1554,7 +1554,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.TransientContainer#getAttrBefore <em>Attr Before</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attr Before</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.TransientContainer#getAttrBefore()
    * @see #getTransientContainer()
@@ -1606,7 +1606,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableByte <em>Not Unsettable Byte</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Byte</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableByte()
    * @see #getNotUnsettable()
@@ -1618,7 +1618,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableChar <em>Not Unsettable Char</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Char</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableChar()
    * @see #getNotUnsettable()
@@ -1630,7 +1630,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDate <em>Not Unsettable Date</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Date</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDate()
    * @see #getNotUnsettable()
@@ -1642,7 +1642,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDouble <em>Not Unsettable Double</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Double</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableDouble()
    * @see #getNotUnsettable()
@@ -1654,7 +1654,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableFloat <em>Not Unsettable Float</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Float</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableFloat()
    * @see #getNotUnsettable()
@@ -1666,7 +1666,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableInt <em>Not Unsettable Int</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Int</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableInt()
    * @see #getNotUnsettable()
@@ -1678,7 +1678,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableLong <em>Not Unsettable Long</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Long</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableLong()
    * @see #getNotUnsettable()
@@ -1690,7 +1690,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableShort <em>Not Unsettable Short</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable Short</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableShort()
    * @see #getNotUnsettable()
@@ -1702,7 +1702,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableString <em>Not Unsettable String</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable String</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableString()
    * @see #getNotUnsettable()
@@ -1714,7 +1714,7 @@ public interface Model2Package extends EPackage
    * Returns the meta object for the attribute '
    * {@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableVAT <em>Not Unsettable VAT</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Not Unsettable VAT</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableVAT()
    * @see #getNotUnsettable()
@@ -1844,7 +1844,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model2.MapHolder <em>Map Holder</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Map Holder</em>'.
    * @see org.eclipse.emf.cdo.tests.model2.MapHolder
    * @generated
@@ -2046,7 +2046,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Address Containment Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>String To Address Containment Map</em>'.
    * @see java.util.Map.Entry
    * @model keyDataType="org.eclipse.emf.ecore.EString" valueType="org.eclipse.emf.cdo.tests.model1.Address"
@@ -2069,7 +2069,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Value</em>'.
    * @see java.util.Map.Entry
    * @see #getStringToAddressContainmentMap()
@@ -2080,7 +2080,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Address Reference Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>String To Address Reference Map</em>'.
    * @see java.util.Map.Entry
    * @model keyDataType="org.eclipse.emf.ecore.EString" valueType="org.eclipse.emf.cdo.tests.model1.Address"
@@ -2113,7 +2113,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>EObject To EObject Map</em>'.
    * @see java.util.Map.Entry
    * @model keyType="org.eclipse.emf.ecore.EObject" valueType="org.eclipse.emf.ecore.EObject"
@@ -2146,7 +2146,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for class '{@link java.util.Map.Entry <em>EObject To EObject Key Contained Map</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>EObject To EObject Key Contained Map</em>'.
    * @see java.util.Map.Entry
    * @model keyType="org.eclipse.emf.ecore.EObject" keyContainment="true" valueType="org.eclipse.emf.ecore.EObject"
@@ -2157,7 +2157,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Key</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Key</em>'.
    * @see java.util.Map.Entry
    * @see #getEObjectToEObjectKeyContainedMap()
@@ -2190,7 +2190,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Key</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Key</em>'.
    * @see java.util.Map.Entry
    * @see #getEObjectToEObjectBothContainedMap()
@@ -2201,7 +2201,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Value</em>'.
    * @see java.util.Map.Entry
    * @see #getEObjectToEObjectBothContainedMap()
@@ -2234,7 +2234,7 @@ public interface Model2Package extends EPackage
   /**
    * Returns the meta object for the containment reference '{@link java.util.Map.Entry <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the containment reference '<em>Value</em>'.
    * @see java.util.Map.Entry
    * @see #getEObjectToEObjectValueContainedMap()

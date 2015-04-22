@@ -64,280 +64,280 @@ import java.io.File;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass documentationEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass contextEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass categoryEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass articleEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass chapterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass snippetEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass diagramEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass factoryEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass javaElementEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass structuralElementEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass linkTargetEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass calloutEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass embeddableElementEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass externalTargetEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass identifiableEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass bodyEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass bodyElementContainerEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass bodyElementEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass textEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass linkEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass embeddingEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass sourceCodeEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass pluginEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass javaPackageEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass javadocEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass externalArticleEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass schemadocEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass extensionPointEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass tocEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass pluginResourceEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass excelEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass formatterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass javaFormatterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass xmlFormatterEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EClass imageEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EDataType rootDocEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EDataType fileEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EDataType docEDataType = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private EDataType tagEDataType = null;
@@ -349,7 +349,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#eNS_URI
    * @see #init()
@@ -362,7 +362,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static boolean isInited = false;
@@ -373,7 +373,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
    * This method is used to initialize {@link ArticlePackage#eINSTANCE} when that field is accessed. Clients should not
    * invoke it directly. Instead, they should simply access that field to obtain the package. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * 
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
@@ -387,8 +387,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     }
 
     // Obtain or create and register package
-    ArticlePackageImpl theArticlePackage = (ArticlePackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ArticlePackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new ArticlePackageImpl());
+    ArticlePackageImpl theArticlePackage = (ArticlePackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof ArticlePackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new ArticlePackageImpl());
 
     isInited = true;
 
@@ -408,7 +409,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getDocumentation()
@@ -418,7 +419,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getDocumentation_Context()
@@ -428,7 +429,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getDocumentation_EmbeddableElements()
@@ -438,7 +439,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getDocumentation_Dependencies()
@@ -448,7 +449,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getDocumentation_Project()
@@ -458,7 +459,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getDocumentation_Plugins()
@@ -468,7 +469,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getContext()
@@ -478,7 +479,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getContext_BaseFolder()
@@ -488,7 +489,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getContext_Project()
@@ -498,7 +499,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getContext_Documentations()
@@ -508,7 +509,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getContext_Root()
@@ -518,7 +519,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getCategory()
@@ -528,7 +529,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getArticle()
@@ -538,7 +539,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getChapter()
@@ -548,7 +549,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getChapter_Article()
@@ -558,7 +559,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getSnippet()
@@ -568,7 +569,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getSnippet_Callouts()
@@ -578,7 +579,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getSnippet_Formatter()
@@ -588,7 +589,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getDiagram()
@@ -598,7 +599,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getFactory()
@@ -608,7 +609,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getJavaElement()
@@ -618,7 +619,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getJavaElement_ClassFile()
@@ -628,7 +629,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getStructuralElement()
@@ -638,7 +639,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getStructuralElement_Children()
@@ -648,7 +649,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getStructuralElement_Parent()
@@ -658,7 +659,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getStructuralElement_Title()
@@ -668,7 +669,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getStructuralElement_Documentation()
@@ -678,7 +679,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getStructuralElement_Doc()
@@ -688,7 +689,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getLinkTarget()
@@ -698,7 +699,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getLinkTarget_DefaultLabel()
@@ -708,7 +709,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getLinkTarget_Tooltip()
@@ -718,7 +719,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getCallout()
@@ -728,7 +729,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getCallout_Snippet()
@@ -738,7 +739,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getEmbeddableElement()
@@ -748,7 +749,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getEmbeddableElement_Documentation()
@@ -758,7 +759,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getEmbeddableElement_Doc()
@@ -768,7 +769,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getExternalTarget()
@@ -778,7 +779,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getExternalTarget_Url()
@@ -788,7 +789,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getIdentifiable()
@@ -798,7 +799,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getIdentifiable_Id()
@@ -808,7 +809,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getBody()
@@ -818,7 +819,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getBody_Category()
@@ -828,7 +829,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getBodyElementContainer()
@@ -838,7 +839,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getBodyElementContainer_Elements()
@@ -848,7 +849,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getBodyElement()
@@ -858,7 +859,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getBodyElement_Container()
@@ -868,7 +869,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getBodyElement_Tag()
@@ -878,7 +879,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getText()
@@ -888,7 +889,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getLink()
@@ -898,7 +899,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getLink_Target()
@@ -908,7 +909,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getEmbedding()
@@ -918,7 +919,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getEmbedding_Element()
@@ -928,7 +929,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getSourceCode()
@@ -938,7 +939,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getPlugin()
@@ -948,7 +949,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getPlugin_Name()
@@ -958,7 +959,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getPlugin_Packages()
@@ -968,7 +969,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getPlugin_Label()
@@ -978,7 +979,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getPlugin_ExtensionPoints()
@@ -988,7 +989,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getJavaPackage()
@@ -998,7 +999,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getJavaPackage_Name()
@@ -1008,7 +1009,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getJavaPackage_Plugin()
@@ -1018,7 +1019,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getJavadoc()
@@ -1028,7 +1029,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getExternalArticle()
@@ -1038,7 +1039,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getExternalArticle_Url()
@@ -1048,7 +1049,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getSchemadoc()
@@ -1058,7 +1059,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getExtensionPoint()
@@ -1068,7 +1069,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getExtensionPoint_Name()
@@ -1078,7 +1079,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getExtensionPoint_Plugin()
@@ -1088,7 +1089,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getToc()
@@ -1098,7 +1099,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getToc_Levels()
@@ -1108,7 +1109,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getPluginResource()
@@ -1118,7 +1119,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getExcel()
@@ -1128,7 +1129,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getFormatter()
@@ -1138,7 +1139,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EReference getFormatter_Snippet()
@@ -1148,7 +1149,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getJavaFormatter()
@@ -1158,7 +1159,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getXmlFormatter()
@@ -1168,7 +1169,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getXmlFormatter_File()
@@ -1178,7 +1179,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EClass getImage()
@@ -1188,7 +1189,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EAttribute getImage_File()
@@ -1198,7 +1199,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EDataType getRootDoc()
@@ -1208,7 +1209,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EDataType getFile()
@@ -1218,7 +1219,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EDataType getDoc()
@@ -1228,7 +1229,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EDataType getTag()
@@ -1238,7 +1239,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ArticleFactory getArticleFactory()
@@ -1248,7 +1249,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isCreated = false;
@@ -1256,7 +1257,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   /**
    * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its
    * first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void createPackageContents()
@@ -1391,7 +1392,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private boolean isInitialized = false;
@@ -1399,7 +1400,7 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
   /**
    * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any
    * invocation but its first. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void initializePackageContents()
@@ -1470,8 +1471,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEClass(contextEClass, Context.class, "Context", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getContext_BaseFolder(), getFile(), "baseFolder", null, 1, 1, Context.class, !IS_TRANSIENT,
         !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getContext_Project(), ecorePackage.getEString(), "project", null, 1, 1, Context.class,
-        !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getContext_Project(), ecorePackage.getEString(), "project", null, 1, 1, Context.class, !IS_TRANSIENT,
+        !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getContext_Documentations(), getDocumentation(), getDocumentation_Context(), "documentations", null,
         1, -1, Context.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1540,8 +1541,8 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEClass(embeddableElementEClass, EmbeddableElement.class, "EmbeddableElement", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEmbeddableElement_Documentation(), getDocumentation(), getDocumentation_EmbeddableElements(),
-        "documentation", null, 1, 1, EmbeddableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        "documentation", null, 1, 1, EmbeddableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEmbeddableElement_Doc(), getDoc(), "doc", null, 1, 1, EmbeddableElement.class, IS_TRANSIENT,
         IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1636,9 +1637,9 @@ public class ArticlePackageImpl extends EPackageImpl implements ArticlePackage
     initEClass(excelEClass, Excel.class, "Excel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(formatterEClass, Formatter.class, "Formatter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFormatter_Snippet(), getSnippet(), getSnippet_Formatter(), "snippet", null, 1, 1,
-        Formatter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES,
-        !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFormatter_Snippet(), getSnippet(), getSnippet_Formatter(), "snippet", null, 1, 1, Formatter.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
+        !IS_DERIVED, IS_ORDERED);
 
     initEClass(javaFormatterEClass, JavaFormatter.class, "JavaFormatter", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);

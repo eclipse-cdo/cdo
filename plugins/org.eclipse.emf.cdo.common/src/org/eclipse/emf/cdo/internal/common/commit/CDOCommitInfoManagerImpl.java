@@ -32,8 +32,8 @@ import java.util.WeakHashMap;
 /**
  * @author Andre Dietisheim
  */
-public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory> implements
-    InternalCDOCommitInfoManager
+public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBranch, CDOCommitHistory>
+    implements InternalCDOCommitInfoManager
 {
   private final Map<CDOCommitInfo, WeakReference<CDOCommitInfo>> cache;
 

@@ -24,7 +24,7 @@ import java.util.concurrent.TimeoutException;
  * Make timeouts in read-access requests configurable
  * <p>
  * See bug 241464
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_241464_Test extends AbstractCDOTest

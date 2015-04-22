@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <li>{@link org.eclipse.net4j.net4jdefs.impl.JVMConnectorDefImpl#getName <em>Name</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnectorDef
@@ -38,7 +38,7 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -91,7 +91,9 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jDefsPackage.JVM_CONNECTOR_DEF__NAME, oldName, name));
+    }
   }
 
   /**
@@ -164,7 +166,9 @@ public class JVMConnectorDefImpl extends ConnectorDefImpl implements JVMConnecto
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

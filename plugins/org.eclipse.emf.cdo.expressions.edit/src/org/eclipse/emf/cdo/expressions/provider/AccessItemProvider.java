@@ -43,8 +43,8 @@ import java.util.List;
  * @generated
  */
 public class AccessItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -177,17 +177,17 @@ public class AccessItemProvider extends ItemProviderAdapter implements IEditingD
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createBooleanValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createByteValue()));
+    newChildDescriptors.add(
+        createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME, ExpressionsFactory.eINSTANCE.createByteValue()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createShortValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createIntValue()));
+    newChildDescriptors.add(
+        createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME, ExpressionsFactory.eINSTANCE.createIntValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createLongValue()));
+    newChildDescriptors.add(
+        createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME, ExpressionsFactory.eINSTANCE.createLongValue()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createFloatValue()));
@@ -195,8 +195,8 @@ public class AccessItemProvider extends ItemProviderAdapter implements IEditingD
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createDoubleValue()));
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
-        ExpressionsFactory.eINSTANCE.createCharValue()));
+    newChildDescriptors.add(
+        createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME, ExpressionsFactory.eINSTANCE.createCharValue()));
 
     newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.ACCESS__NAME,
         ExpressionsFactory.eINSTANCE.createStringValue()));

@@ -26,14 +26,14 @@ import java.io.PrintWriter;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Text</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class TextImpl extends BodyElementImpl implements Text
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected TextImpl()
@@ -48,7 +48,7 @@ public class TextImpl extends BodyElementImpl implements Text
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

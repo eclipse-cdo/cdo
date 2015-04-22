@@ -22,7 +22,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * Based on the implementation from org.eclipse.emf.cdo.ui.shared.SharedIcons. TODO clarify with Eike whether we could
  * provide a better extensibility.
- * 
+ *
  * @author Martin Fluegge
  * @since 2.0
  */

@@ -18,7 +18,7 @@ package org.eclipse.emf.cdo.releng.doc.article;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Link#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLink()
  * @model
  * @generated
@@ -31,7 +31,7 @@ public interface Link extends BodyElement
    * If the meaning of the '<em>Target</em>' reference isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Target</em>' reference.
    * @see #setTarget(LinkTarget)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getLink_Target()
@@ -43,7 +43,7 @@ public interface Link extends BodyElement
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Link#getTarget <em>Target</em>}' reference.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Target</em>' reference.
    * @see #getTarget()

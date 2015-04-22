@@ -94,8 +94,9 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class CDOWatchListView extends ViewPart implements ISelectionProvider
 {
-  private static final String[] columnNames = {
-      Messages.getString("CDOWatchListView.0"), Messages.getString("CDOWatchListView.1"), Messages.getString("CDOWatchListView.2"), Messages.getString("CDOWatchListView.3") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+  private static final String[] columnNames = { Messages.getString("CDOWatchListView.0"), //$NON-NLS-1$
+      Messages.getString("CDOWatchListView.1"), Messages.getString("CDOWatchListView.2"), //$NON-NLS-1$ //$NON-NLS-2$
+      Messages.getString("CDOWatchListView.3") }; //$NON-NLS-1$
 
   private static final int[] columnWidths = { 110, 280, 170, 230 };
 
@@ -181,15 +182,15 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     resetNotificationAction = new ResetNotificationAction();
     resetNotificationAction.setText(Messages.getString("CDOWatchListView.8")); //$NON-NLS-1$
     resetNotificationAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-    resetNotificationAction.setDisabledImageDescriptor(platformImages
-        .getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
+    resetNotificationAction
+        .setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
     resetNotificationAction.setToolTipText(Messages.getString("CDOWatchListView.9")); //$NON-NLS-1$
 
     resetAllNotificationAction = new ResetAllNotificationAction();
     resetAllNotificationAction.setText(Messages.getString("CDOWatchListView.10")); //$NON-NLS-1$
     resetAllNotificationAction.setImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO));
-    resetAllNotificationAction.setDisabledImageDescriptor(platformImages
-        .getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
+    resetAllNotificationAction
+        .setDisabledImageDescriptor(platformImages.getImageDescriptor(ISharedImages.IMG_TOOL_UNDO_DISABLED));
     resetAllNotificationAction.setToolTipText(Messages.getString("CDOWatchListView.11")); //$NON-NLS-1$
   }
 
@@ -398,7 +399,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private final class CDOObjectContainer extends Container<CDOObject> implements IContainer.Modifiable<CDOObject>
+  private final class CDOObjectContainer extends Container<CDOObject>implements IContainer.Modifiable<CDOObject>
   {
     private Set<CDOObject> watchedObjects = new HashSet<CDOObject>();
 
@@ -762,13 +763,16 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
   /**
    * @author Victor Roldan Betancort
    */
-  private final class CDOSubscriptionViewLabelProvider extends LabelProvider implements ITableLabelProvider,
-      IColorProvider
+  private final class CDOSubscriptionViewLabelProvider extends LabelProvider
+      implements ITableLabelProvider, IColorProvider
   {
     private final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_YELLOW);
 
-    private final String[] eventTypes = {
-        Messages.getString("CDOWatchListView.12"), Messages.getString("CDOWatchListView.25"), Messages.getString("CDOWatchListView.26"), Messages.getString("CDOWatchListView.27"), Messages.getString("CDOWatchListView.28"), Messages.getString("CDOWatchListView.29"), Messages.getString("CDOWatchListView.30"), Messages.getString("CDOWatchListView.31"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$
+    private final String[] eventTypes = { Messages.getString("CDOWatchListView.12"), //$NON-NLS-1$
+        Messages.getString("CDOWatchListView.25"), Messages.getString("CDOWatchListView.26"), //$NON-NLS-1$ //$NON-NLS-2$
+        Messages.getString("CDOWatchListView.27"), Messages.getString("CDOWatchListView.28"), //$NON-NLS-1$ //$NON-NLS-2$
+        Messages.getString("CDOWatchListView.29"), Messages.getString("CDOWatchListView.30"), //$NON-NLS-1$ //$NON-NLS-2$
+        Messages.getString("CDOWatchListView.31"), //$NON-NLS-1$
         Messages.getString("CDOWatchListView.32"), Messages.getString("CDOWatchListView.33") }; //$NON-NLS-1$ //$NON-NLS-2$
 
     private AdapterFactory adapterFactory;

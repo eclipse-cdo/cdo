@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -110,7 +110,9 @@ public class UserImpl extends EObjectImpl implements User
     String oldUserID = userID;
     userID = newUserID;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.USER__USER_ID, oldUserID, userID));
+    }
   }
 
   /**
@@ -131,7 +133,10 @@ public class UserImpl extends EObjectImpl implements User
     String oldPassword = password;
     password = newPassword;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.USER__PASSWORD, oldPassword, password));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Net4jUtilDefsPackage.USER__PASSWORD, oldPassword, password));
+    }
   }
 
   /**
@@ -214,7 +219,9 @@ public class UserImpl extends EObjectImpl implements User
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (userID: ");

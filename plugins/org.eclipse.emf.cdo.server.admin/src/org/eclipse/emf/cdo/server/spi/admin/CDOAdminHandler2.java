@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA LIST) - initial API and implementation
  */
@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.server.IRepository;
  * An optional extension of the {@link CDOAdminHandler} interface that provides
  * additional queries and control functions, such as determination of whether
  * deletion of a particular repository is feasible even to attempt.
- * 
+ *
  * @author Christian W. Damus (CEA LIST)
  * @since 4.2
  */
@@ -31,7 +31,7 @@ public interface CDOAdminHandler2 extends CDOAdminHandler
 
   /**
    * Authenticates the user as a server administrator, if applicable.
-   * 
+   *
    * @throws SecurityException if authentication is required and fails
    */
   public void authenticateAdministrator() throws SecurityException;

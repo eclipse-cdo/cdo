@@ -71,7 +71,7 @@ public class Bugzilla_262875_Test extends AbstractOMTest
   /**
    * Tests if a buffer underflow exception occurs if the data sent in a request exactly matches the capacity of a
    * buffer.
-   * 
+   *
    * @throws Exception
    *           the exception
    */

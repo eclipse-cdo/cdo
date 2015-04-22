@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -100,9 +100,13 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, oldKey, newKey);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -117,18 +121,26 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
     {
       NotificationChain msgs = null;
       if (key != null)
-        msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
+      {
+        msgs = ((InternalEObject)key).eInverseRemove(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
+      }
       if (newKey != null)
-        msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
+      {
+        msgs = ((InternalEObject)newKey).eInverseAdd(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY, null, msgs);
+      }
       msgs = basicSetTypedKey(newKey, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__KEY,
           newKey, newKey));
+    }
   }
 
   /**
@@ -153,9 +165,13 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, oldValue, newValue);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -170,18 +186,26 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
     {
       NotificationChain msgs = null;
       if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
+      {
+        msgs = ((InternalEObject)value).eInverseRemove(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
+      }
       if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
+      {
+        msgs = ((InternalEObject)newValue).eInverseAdd(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE, null, msgs);
+      }
       msgs = basicSetTypedValue(newValue, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP__VALUE,
           newValue, newValue));
+    }
   }
 
   /**
@@ -288,7 +312,7 @@ public class EObjectToEObjectBothContainedMapImpl extends EObjectImpl implements
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

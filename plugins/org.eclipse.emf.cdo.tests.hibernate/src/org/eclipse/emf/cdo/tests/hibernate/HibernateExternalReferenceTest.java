@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 
 /**
  * Test {@link ExternalReferenceTest}, disables some testcases which will never work anyway.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateExternalReferenceTest extends ExternalReferenceTest

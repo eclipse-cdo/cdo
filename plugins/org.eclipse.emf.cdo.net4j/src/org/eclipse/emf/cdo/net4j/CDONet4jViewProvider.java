@@ -186,8 +186,8 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
       try
       {
-        credentialsProvider = (IPasswordCredentialsProvider)getContainer().getElement(
-            "org.eclipse.net4j.util.credentialsProviders", "password", resource);
+        credentialsProvider = (IPasswordCredentialsProvider)getContainer()
+            .getElement("org.eclipse.net4j.util.credentialsProviders", "password", resource);
       }
       catch (FactoryNotFoundException ex)
       {

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.commands;
 
@@ -65,6 +65,7 @@ public class AClassCompositionsReorientCommand extends EditElementCommand
   /**
    * @generated
    */
+  @Override
   public boolean canExecute()
   {
     if (false == referenceOwner instanceof AClass)
@@ -111,6 +112,7 @@ public class AClassCompositionsReorientCommand extends EditElementCommand
   /**
    * @generated
    */
+  @Override
   protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
   {
     if (!canExecute())

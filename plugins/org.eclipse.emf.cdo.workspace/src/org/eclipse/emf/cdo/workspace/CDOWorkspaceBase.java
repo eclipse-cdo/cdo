@@ -20,7 +20,7 @@ import java.util.Set;
  * {@link CDOWorkspaceConfiguration#checkout() checkout} operation or any subsequent
  * {@link CDOWorkspace#update(org.eclipse.emf.cdo.transaction.CDOMerger) update} and
  * {@link CDOWorkspace#replace(String, long) replace} operations.
- * 
+ *
  * @author Eike Stepper
  */
 public interface CDOWorkspaceBase extends CDORevisionProvider

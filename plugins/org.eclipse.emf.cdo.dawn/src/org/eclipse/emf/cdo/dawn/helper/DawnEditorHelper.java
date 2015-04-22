@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -19,14 +19,14 @@ import org.eclipse.ui.PlatformUI;
 
 /**
  * TODO move this one to the dawn.util bundle
- * 
+ *
  * @author Martin Fluegge
  */
 public class DawnEditorHelper
 {
   /**
    * Delivers the active shell from the current display.
-   * 
+   *
    * @return the active shell on the current display
    */
   public static Shell getActiveShell()
@@ -37,7 +37,7 @@ public class DawnEditorHelper
 
   /**
    * This method returns the active editor from the active workbench page
-   * 
+   *
    * @return the active editor from the active workbench page or null if there is none
    */
   public static IEditorPart getActiveEditor()
@@ -58,7 +58,7 @@ public class DawnEditorHelper
   /**
    * This method tries to retrieve a Display. First it tries to get the current display. If this fails it will return
    * the default display.
-   * 
+   *
    * @return the current display, if not null. If the current Display is null then the default Display.
    * @since 2.0
    */

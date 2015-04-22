@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -42,7 +42,7 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -52,7 +52,7 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -106,8 +106,10 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__KEY, oldKey,
           key));
+    }
   }
 
   /**
@@ -123,8 +125,10 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
       if (value != oldValue)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE, oldValue, value));
+        }
       }
     }
     return value;
@@ -148,8 +152,10 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
     Address oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE,
           oldValue, value));
+    }
   }
 
   /**
@@ -165,7 +171,9 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
       return getTypedKey();
     case Model2Package.STRING_TO_ADDRESS_REFERENCE_MAP__VALUE:
       if (resolve)
+      {
         return getTypedValue();
+      }
       return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -234,7 +242,9 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
@@ -258,7 +268,7 @@ public class StringToAddressReferenceMapImpl extends EObjectImpl implements Basi
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

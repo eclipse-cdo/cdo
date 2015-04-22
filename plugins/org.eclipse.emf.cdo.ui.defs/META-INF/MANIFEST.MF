@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.ui.defs;singleton:=true
-Bundle-Version: 4.0.300.qualifier
+Bundle-Version: 4.0.400.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.eclipse.emf.cdo.ui.defs;version="4.0.300",
- org.eclipse.emf.cdo.ui.defs.impl;version="4.0.300",
- org.eclipse.emf.cdo.ui.defs.util;version="4.0.300"
+Export-Package: org.eclipse.emf.cdo.ui.defs;version="4.0.400",
+ org.eclipse.emf.cdo.ui.defs.impl;version="4.0.400",
+ org.eclipse.emf.cdo.ui.defs.util;version="4.0.400"
 Require-Bundle: org.eclipse.emf.cdo.defs;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.ui;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy

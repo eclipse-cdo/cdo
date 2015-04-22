@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -35,6 +35,6 @@ public class DawnCreateNewDiagramResourceWizardPage extends DawnCreateNewResourc
   {
     // TODO check why the dawn resource must be connected this way
     return URI.createURI("dawn://" + PreferenceConstants.getRepositoryName() + "/" + chooserComposite.getResourcePath()
-        + "/" + chooserComposite.getResourceName());
+    + "/" + chooserComposite.getResourceName());
   }
 }

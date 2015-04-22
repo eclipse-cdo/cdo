@@ -30,7 +30,7 @@ import org.eclipse.emf.teneo.simpledom.Element;
 
 /**
  * Mapping context for CDO. It provides cdo classes as propertyhandler etc.
- * 
+ *
  * @author <a href="mtaal@elver.org">Martin Taal</a>
  * @since 3.0
  */

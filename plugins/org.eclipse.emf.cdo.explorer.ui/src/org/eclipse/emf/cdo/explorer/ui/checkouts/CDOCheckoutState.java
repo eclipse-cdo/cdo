@@ -212,8 +212,8 @@ public final class CDOCheckoutState
   /**
    * @author Eike Stepper
    */
-  public static final class LabelProvider extends AdapterFactoryLabelProvider implements IColorProvider,
-      IStyledLabelProvider
+  public static final class LabelProvider extends AdapterFactoryLabelProvider
+      implements IColorProvider, IStyledLabelProvider
   {
     private final ResourceManager resourceManager;
 

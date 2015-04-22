@@ -61,8 +61,8 @@ public class TransportConfigurator
     return container;
   }
 
-  public IAcceptor[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException,
-      CoreException
+  public IAcceptor[] configure(File configFile)
+      throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     if (TRACER.isEnabled())
     {

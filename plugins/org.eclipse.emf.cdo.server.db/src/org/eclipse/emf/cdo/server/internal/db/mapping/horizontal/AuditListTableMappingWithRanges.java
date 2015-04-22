@@ -334,8 +334,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
       if (TRACER.isEnabled())
       {
-        TRACER.format(
-            "Reading {4} list values done for feature {0}.{1} of {2}v{3}", //$NON-NLS-1$
+        TRACER.format("Reading {4} list values done for feature {0}.{1} of {2}v{3}", //$NON-NLS-1$
             getContainingClass().getName(), getFeature().getName(), revision.getID(), revision.getVersion(),
             list.size());
       }
@@ -423,8 +422,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       if (TRACER.isEnabled())
       {
         TRACER.format("Reading list chunk values done for feature() {0}.{1} of {2}v{3}", //$NON-NLS-1$
-            getContainingClass().getName(), getFeature().getName(), chunkReader.getRevision().getID(), chunkReader
-                .getRevision().getVersion());
+            getContainingClass().getName(), getFeature().getName(), chunkReader.getRevision().getID(),
+            chunkReader.getRevision().getVersion());
       }
     }
     catch (SQLException ex)
@@ -458,11 +457,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   {
     if (TRACER.isEnabled())
     {
-      TRACER
-          .format(
-              "Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", //$NON-NLS-1$
-              getContainingClass().getName(), getFeature().getName(), index, revision.getID(), revision.getVersion(),
-              value);
+      TRACER.format("Writing value for feature {0}.{1} index {2} of {3}v{4} : {5}", //$NON-NLS-1$
+          getContainingClass().getName(), getFeature().getName(), index, revision.getID(), revision.getVersion(),
+          value);
     }
 
     addEntry(accessor, revision.getID(), revision.getVersion(), index, value);
@@ -526,8 +523,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     CDOBranch main = getMappingStrategy().getStore().getRepository().getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager()
-        .getRevision(id, main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    CDORevision revision = getMappingStrategy().getStore().getRepository().getRevisionManager().getRevision(id,
+        main.getHead(), /* chunksize = */0, CDORevision.DEPTH_NONE, true);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);

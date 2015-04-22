@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -62,10 +62,10 @@ public abstract class AbstractFragmentCreator implements Creator
 
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put(GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
+    .put(GenerateDawnGenModelAction.dawngenmodelFileExtension, new XMIResourceFactoryImpl());
 
-    Resource dawnGenModelResource = resourceSet.getResource(
-        URI.createURI(dawnGenModelFile.getRawLocationURI().toString()), true);
+    Resource dawnGenModelResource = resourceSet
+        .getResource(URI.createURI(dawnGenModelFile.getRawLocationURI().toString()), true);
 
     DawnFragmentGenerator dawnFragmentGenerator = (DawnFragmentGenerator)dawnGenModelResource.getContents().get(0);
     // DawnGenerator dawnGenerator = dawnFragmentGenerator.getDawnGenerator();

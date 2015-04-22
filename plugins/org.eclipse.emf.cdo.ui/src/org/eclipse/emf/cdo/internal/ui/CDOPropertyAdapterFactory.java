@@ -115,8 +115,8 @@ public class CDOPropertyAdapterFactory extends AbstractPropertyAdapterFactory
           {
             adapterFactory = CDOEditor.createAdapterFactory(false);
 
-            IItemPropertySource propertySource = (IItemPropertySource)adapterFactory.adapt(
-                cdoObject.cdoInternalInstance(), IItemPropertySource.class);
+            IItemPropertySource propertySource = (IItemPropertySource)adapterFactory
+                .adapt(cdoObject.cdoInternalInstance(), IItemPropertySource.class);
             if (propertySource != null)
             {
               List<IItemPropertyDescriptor> propertyDescriptors = propertySource.getPropertyDescriptors(cdoObject);

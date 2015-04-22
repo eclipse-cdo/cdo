@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -29,7 +29,7 @@ import java.util.Date;
  * <li>{@link org.eclipse.emf.cdo.tests.model5.impl.GenListOfDateImpl#getElements <em>Elements</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class GenListOfDateImpl extends CDOObjectImpl implements GenListOfDate

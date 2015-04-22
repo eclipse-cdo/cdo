@@ -50,7 +50,7 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   /**
    * The default value of the '{@link #isUnsettableBoolean() <em>Unsettable Boolean</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #isUnsettableBoolean()
    * @generated
    * @ordered
@@ -139,8 +139,8 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
    * @generated
    * @ordered
    */
-  protected static final Date UNSETTABLE_DATE_EDEFAULT = (Date)EcoreFactory.eINSTANCE.createFromString(
-      EcorePackage.eINSTANCE.getEDate(), "2009-12-21T15:12:59");
+  protected static final Date UNSETTABLE_DATE_EDEFAULT = (Date)EcoreFactory.eINSTANCE
+      .createFromString(EcorePackage.eINSTANCE.getEDate(), "2009-12-21T15:12:59");
 
   /**
    * The cached value of the '{@link #getUnsettableDate() <em>Unsettable Date</em>}' attribute.
@@ -395,8 +395,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableBooleanESet = unsettableBooleanESet;
     unsettableBooleanESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN,
           oldUnsettableBoolean, unsettableBoolean, !oldUnsettableBooleanESet));
+    }
   }
 
   /**
@@ -410,9 +412,11 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableBoolean = UNSETTABLE_BOOLEAN_EDEFAULT;
     unsettableBooleanESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET,
-          Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN, oldUnsettableBoolean,
-          UNSETTABLE_BOOLEAN_EDEFAULT, oldUnsettableBooleanESet));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BOOLEAN,
+              oldUnsettableBoolean, UNSETTABLE_BOOLEAN_EDEFAULT, oldUnsettableBooleanESet));
+    }
   }
 
   /**
@@ -444,8 +448,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableByteESet = unsettableByteESet;
     unsettableByteESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE,
           oldUnsettableByte, unsettableByte, !oldUnsettableByteESet));
+    }
   }
 
   /**
@@ -459,8 +465,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableByte = UNSETTABLE_BYTE_EDEFAULT;
     unsettableByteESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_BYTE,
           oldUnsettableByte, UNSETTABLE_BYTE_EDEFAULT, oldUnsettableByteESet));
+    }
   }
 
   /**
@@ -492,8 +500,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableCharESet = unsettableCharESet;
     unsettableCharESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR,
           oldUnsettableChar, unsettableChar, !oldUnsettableCharESet));
+    }
   }
 
   /**
@@ -507,8 +517,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableChar = UNSETTABLE_CHAR_EDEFAULT;
     unsettableCharESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_CHAR,
           oldUnsettableChar, UNSETTABLE_CHAR_EDEFAULT, oldUnsettableCharESet));
+    }
   }
 
   /**
@@ -540,8 +552,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableDateESet = unsettableDateESet;
     unsettableDateESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE,
           oldUnsettableDate, unsettableDate, !oldUnsettableDateESet));
+    }
   }
 
   /**
@@ -555,8 +569,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableDate = UNSETTABLE_DATE_EDEFAULT;
     unsettableDateESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DATE,
           oldUnsettableDate, UNSETTABLE_DATE_EDEFAULT, oldUnsettableDateESet));
+    }
   }
 
   /**
@@ -588,8 +604,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableDoubleESet = unsettableDoubleESet;
     unsettableDoubleESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE,
           oldUnsettableDouble, unsettableDouble, !oldUnsettableDoubleESet));
+    }
   }
 
   /**
@@ -603,9 +621,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableDouble = UNSETTABLE_DOUBLE_EDEFAULT;
     unsettableDoubleESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET,
-          Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE, oldUnsettableDouble, UNSETTABLE_DOUBLE_EDEFAULT,
-          oldUnsettableDoubleESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_DOUBLE,
+          oldUnsettableDouble, UNSETTABLE_DOUBLE_EDEFAULT, oldUnsettableDoubleESet));
+    }
   }
 
   /**
@@ -637,8 +656,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableFloatESet = unsettableFloatESet;
     unsettableFloatESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT,
           oldUnsettableFloat, unsettableFloat, !oldUnsettableFloatESet));
+    }
   }
 
   /**
@@ -652,8 +673,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableFloat = UNSETTABLE_FLOAT_EDEFAULT;
     unsettableFloatESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_FLOAT,
           oldUnsettableFloat, UNSETTABLE_FLOAT_EDEFAULT, oldUnsettableFloatESet));
+    }
   }
 
   /**
@@ -685,8 +708,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableIntESet = unsettableIntESet;
     unsettableIntESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT,
           oldUnsettableInt, unsettableInt, !oldUnsettableIntESet));
+    }
   }
 
   /**
@@ -700,8 +725,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableInt = UNSETTABLE_INT_EDEFAULT;
     unsettableIntESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_INT,
           oldUnsettableInt, UNSETTABLE_INT_EDEFAULT, oldUnsettableIntESet));
+    }
   }
 
   /**
@@ -733,8 +760,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableLongESet = unsettableLongESet;
     unsettableLongESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG,
           oldUnsettableLong, unsettableLong, !oldUnsettableLongESet));
+    }
   }
 
   /**
@@ -748,8 +777,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableLong = UNSETTABLE_LONG_EDEFAULT;
     unsettableLongESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_LONG,
           oldUnsettableLong, UNSETTABLE_LONG_EDEFAULT, oldUnsettableLongESet));
+    }
   }
 
   /**
@@ -781,8 +812,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableShortESet = unsettableShortESet;
     unsettableShortESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT,
           oldUnsettableShort, unsettableShort, !oldUnsettableShortESet));
+    }
   }
 
   /**
@@ -796,8 +829,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableShort = UNSETTABLE_SHORT_EDEFAULT;
     unsettableShortESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_SHORT,
           oldUnsettableShort, UNSETTABLE_SHORT_EDEFAULT, oldUnsettableShortESet));
+    }
   }
 
   /**
@@ -829,8 +864,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableStringESet = unsettableStringESet;
     unsettableStringESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING,
           oldUnsettableString, unsettableString, !oldUnsettableStringESet));
+    }
   }
 
   /**
@@ -844,9 +881,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableString = UNSETTABLE_STRING_EDEFAULT;
     unsettableStringESet = false;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.UNSET,
-          Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING, oldUnsettableString, UNSETTABLE_STRING_EDEFAULT,
-          oldUnsettableStringESet));
+    {
+      eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_STRING,
+          oldUnsettableString, UNSETTABLE_STRING_EDEFAULT, oldUnsettableStringESet));
+    }
   }
 
   /**
@@ -878,8 +916,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     boolean oldUnsettableVATESet = unsettableVATESet;
     unsettableVATESet = true;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT,
           oldUnsettableVAT, unsettableVAT, !oldUnsettableVATESet));
+    }
   }
 
   /**
@@ -893,8 +933,10 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
     unsettableVAT = UNSETTABLE_VAT_EDEFAULT;
     unsettableVATESet = false;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.UNSET, Model2Package.UNSETTABLE2_WITH_DEFAULT__UNSETTABLE_VAT,
           oldUnsettableVAT, UNSETTABLE_VAT_EDEFAULT, oldUnsettableVATESet));
+    }
   }
 
   /**
@@ -1076,64 +1118,110 @@ public class Unsettable2WithDefaultImpl extends EObjectImpl implements Unsettabl
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (unsettableBoolean: ");
     if (unsettableBooleanESet)
+    {
       result.append(unsettableBoolean);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableByte: ");
     if (unsettableByteESet)
+    {
       result.append(unsettableByte);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableChar: ");
     if (unsettableCharESet)
+    {
       result.append(unsettableChar);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableDate: ");
     if (unsettableDateESet)
+    {
       result.append(unsettableDate);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableDouble: ");
     if (unsettableDoubleESet)
+    {
       result.append(unsettableDouble);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableFloat: ");
     if (unsettableFloatESet)
+    {
       result.append(unsettableFloat);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableInt: ");
     if (unsettableIntESet)
+    {
       result.append(unsettableInt);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableLong: ");
     if (unsettableLongESet)
+    {
       result.append(unsettableLong);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableShort: ");
     if (unsettableShortESet)
+    {
       result.append(unsettableShort);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableString: ");
     if (unsettableStringESet)
+    {
       result.append(unsettableString);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(", unsettableVAT: ");
     if (unsettableVATESet)
+    {
       result.append(unsettableVAT);
+    }
     else
+    {
       result.append("<unset>");
+    }
     result.append(')');
     return result.toString();
   }

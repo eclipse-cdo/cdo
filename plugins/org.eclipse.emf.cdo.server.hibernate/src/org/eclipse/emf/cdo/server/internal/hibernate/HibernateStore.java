@@ -96,8 +96,8 @@ public class HibernateStore extends Store implements IHibernateStore
 
   public static final String ID_TYPE_EANNOTATION_KEY = "id_type";
 
-  public static final Set<ObjectType> OBJECT_ID_TYPES = new HashSet<ObjectType>(Arrays.asList(
-      CDOID.ObjectType.STRING_WITH_CLASSIFIER, CDOID.ObjectType.LONG_WITH_CLASSIFIER));
+  public static final Set<ObjectType> OBJECT_ID_TYPES = new HashSet<ObjectType>(
+      Arrays.asList(CDOID.ObjectType.STRING_WITH_CLASSIFIER, CDOID.ObjectType.LONG_WITH_CLASSIFIER));
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HibernateStore.class);
 
@@ -201,7 +201,7 @@ public class HibernateStore extends Store implements IHibernateStore
   }
 
   /**
-   * Returns all model epackages, so no audit epackages or system 
+   * Returns all model epackages, so no audit epackages or system
    * epackages.
    */
   public List<EPackage> getModelEPackages()
@@ -240,7 +240,7 @@ public class HibernateStore extends Store implements IHibernateStore
     if (entityName == null)
     {
       throw new IllegalArgumentException("EClass " + eClass.getName() //$NON-NLS-1$
-          + " does not have an entity name, has it been mapped to Hibernate?"); //$NON-NLS-1$
+      + " does not have an entity name, has it been mapped to Hibernate?"); //$NON-NLS-1$
     }
 
     return entityName;
@@ -848,10 +848,10 @@ public class HibernateStore extends Store implements IHibernateStore
 
         if (HibernateThreadContext.isCommitContextSet())
         {
-          AuditProcessHandler.setCurrentUserName(HibernateThreadContext.getCommitContext().getCommitContext()
-              .getUserID());
-          AuditProcessHandler.setCurrentComment(HibernateThreadContext.getCommitContext().getCommitContext()
-              .getCommitComment());
+          AuditProcessHandler
+              .setCurrentUserName(HibernateThreadContext.getCommitContext().getCommitContext().getUserID());
+          AuditProcessHandler
+              .setCurrentComment(HibernateThreadContext.getCommitContext().getCommitContext().getCommitComment());
         }
         super.doAuditWorkInSession(session, auditWorks);
       }

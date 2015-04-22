@@ -18,7 +18,7 @@ package org.eclipse.net4j.util.event;
  * to receive and handle.
  * <p>
  * Implementors may want to extend {@link Notifier} instead of implementing this interface directly.
- * 
+ *
  * @author Eike Stepper
  * @apiviz.landmark
  * @apiviz.owns {@link IListener} - - listeners
@@ -41,7 +41,7 @@ public interface INotifier
 
   /**
    * Returns <code>true</code> if one or more listeners are registered with this notifier, <code>false</code> otherwise.
-   * 
+   *
    * @since 3.0
    */
   public boolean hasListeners();
@@ -50,7 +50,7 @@ public interface INotifier
    * Returns the listeners that are registered with this notifier.
    * <p>
    * Depending on the implementation duplicate listeners may be contained in the returned array.
-   * 
+   *
    * @since 3.0
    */
   public IListener[] getListeners();

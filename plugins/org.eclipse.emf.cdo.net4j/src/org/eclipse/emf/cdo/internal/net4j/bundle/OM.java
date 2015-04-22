@@ -22,7 +22,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
@@ -46,10 +46,10 @@ public abstract class OM
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
   public static final OMPreference<Integer> PREF_COMMIT_MONITOR_PROGRESS_SECONDS = //
-  PREFS.init("PREF_COMMIT_MONITOR_PROGRESS_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_PROGRESS_SECONDS); //$NON-NLS-1$
+      PREFS.init("PREF_COMMIT_MONITOR_PROGRESS_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_PROGRESS_SECONDS); //$NON-NLS-1$
 
   public static final OMPreference<Integer> PREF_COMMIT_MONITOR_TIMEOUT_SECONDS = //
-  PREFS.init("PREF_COMMIT_MONITOR_TIMEOUT_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS); //$NON-NLS-1$
+      PREFS.init("PREF_COMMIT_MONITOR_TIMEOUT_SECONDS", CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS); //$NON-NLS-1$
 
   /**
    * @author Eike Stepper

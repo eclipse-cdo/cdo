@@ -233,8 +233,8 @@ public class HibernateQueryHandler implements IQueryHandler
     final InternalCDORevisionManager cdoRevisionManager = hibernateStoreAccessor.getStore().getRepository()
         .getRevisionManager();
 
-    final CDOBranchVersion cdoBranchVersion = new CDOBranchVersionImpl(hibernateStoreAccessor.getStore()
-        .getMainBranchHead().getBranch(), internalCDORevision.getVersion() - 1);
+    final CDOBranchVersion cdoBranchVersion = new CDOBranchVersionImpl(
+        hibernateStoreAccessor.getStore().getMainBranchHead().getBranch(), internalCDORevision.getVersion() - 1);
     if (cdoRevisionManager.containsRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion))
     {
       return cdoRevisionManager.getRevisionByVersion(internalCDORevision.getID(), cdoBranchVersion, -1, true);

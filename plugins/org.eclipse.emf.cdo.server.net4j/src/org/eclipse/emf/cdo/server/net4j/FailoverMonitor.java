@@ -243,8 +243,8 @@ public class FailoverMonitor extends Container<AgentProtocol>
    *
    * @author Eike Stepper
    */
-  public static abstract class AbstractServerProtocolFactory extends ServerProtocolFactory implements
-      FailoverMonitor.Provider
+  public static abstract class AbstractServerProtocolFactory extends ServerProtocolFactory
+      implements FailoverMonitor.Provider
   {
     private IManagedContainer container;
 

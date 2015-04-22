@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -43,7 +43,7 @@ import java.util.List;
  * @generated
  */
 public class BusinessDayItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -81,12 +81,12 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addDatePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_BusinessDay_date_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_date_feature", "_UI_BusinessDay_type"),
-        BusinessPackage.Literals.BUSINESS_DAY__DATE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_BusinessDay_date_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_date_feature", "_UI_BusinessDay_type"),
+            BusinessPackage.Literals.BUSINESS_DAY__DATE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -96,11 +96,11 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addMenuCardPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_BusinessDay_menuCard_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_menuCard_feature", "_UI_BusinessDay_type"),
-        BusinessPackage.Literals.BUSINESS_DAY__MENU_CARD, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_BusinessDay_menuCard_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_menuCard_feature", "_UI_BusinessDay_type"),
+            BusinessPackage.Literals.BUSINESS_DAY__MENU_CARD, true, false, true, null, null, null));
   }
 
   /**
@@ -110,12 +110,14 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
    */
   protected void addClosedPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_BusinessDay_closed_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_closed_feature", "_UI_BusinessDay_type"),
-        BusinessPackage.Literals.BUSINESS_DAY__CLOSED, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-        null, null));
+    itemPropertyDescriptors
+        .add(
+            createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+                getResourceLocator(), getString("_UI_BusinessDay_closed_feature"),
+                getString("_UI_PropertyDescriptor_description", "_UI_BusinessDay_closed_feature",
+                    "_UI_BusinessDay_type"),
+                BusinessPackage.Literals.BUSINESS_DAY__CLOSED, true, false, false,
+                ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -184,7 +186,7 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -231,11 +233,11 @@ public class BusinessDayItemProvider extends ItemProviderAdapter implements IEdi
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(BusinessPackage.Literals.BUSINESS_DAY__ORDERS,
-        BusinessFactory.eINSTANCE.createOrder()));
+    newChildDescriptors.add(
+        createChildParameter(BusinessPackage.Literals.BUSINESS_DAY__ORDERS, BusinessFactory.eINSTANCE.createOrder()));
 
-    newChildDescriptors.add(createChildParameter(BusinessPackage.Literals.BUSINESS_DAY__WAITERS,
-        BusinessFactory.eINSTANCE.createWaiter()));
+    newChildDescriptors.add(
+        createChildParameter(BusinessPackage.Literals.BUSINESS_DAY__WAITERS, BusinessFactory.eINSTANCE.createWaiter()));
   }
 
   /**

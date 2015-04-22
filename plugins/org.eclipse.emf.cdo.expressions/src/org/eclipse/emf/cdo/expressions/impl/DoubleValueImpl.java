@@ -80,7 +80,8 @@ public class DoubleValueImpl extends ValueImpl implements DoubleValue
    */
   public void setLiteral(double newLiteral)
   {
-    eDynamicSet(ExpressionsPackage.DOUBLE_VALUE__LITERAL, ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL, newLiteral);
+    eDynamicSet(ExpressionsPackage.DOUBLE_VALUE__LITERAL, ExpressionsPackage.Literals.DOUBLE_VALUE__LITERAL,
+        newLiteral);
   }
 
   /**

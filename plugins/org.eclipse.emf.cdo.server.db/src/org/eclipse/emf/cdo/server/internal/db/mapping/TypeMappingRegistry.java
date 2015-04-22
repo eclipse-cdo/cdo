@@ -306,8 +306,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       if (descriptor == null)
       {
         EClassifier type = getEType(feature);
-        throw new IllegalStateException(MessageFormat.format(Messages.getString("TypeMappingRegistry.1"), feature
-            .getEContainingClass().getName() + "." + feature.getName(),
+        throw new IllegalStateException(MessageFormat.format(Messages.getString("TypeMappingRegistry.1"),
+            feature.getEContainingClass().getName() + "." + feature.getName(),
             type.getEPackage().getName() + "." + type.getName(), dbType.getKeyword()));
       }
 
@@ -359,8 +359,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
       dbType = DBType.getTypeByKeyword(typeKeyword);
       if (dbType == null)
       {
-        throw new IllegalArgumentException("Unsupported columnType (" + typeKeyword + ") annotation of feature "
-            + feature.getName());
+        throw new IllegalArgumentException(
+            "Unsupported columnType (" + typeKeyword + ") annotation of feature " + feature.getName());
       }
     }
     else
@@ -391,8 +391,8 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     try
     {
-      columnTypeModifier = (ColumnTypeModifier)IPluginContainer.INSTANCE.getElement(
-          ColumnTypeModifier.Factory.PRODUCT_GROUP, factoryType, null);
+      columnTypeModifier = (ColumnTypeModifier)IPluginContainer.INSTANCE
+          .getElement(ColumnTypeModifier.Factory.PRODUCT_GROUP, factoryType, null);
     }
     catch (FactoryNotFoundException ex)
     {
@@ -515,7 +515,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
               registerFactoryType(factoryType);
             }
             else
-            // delta.getKind() == Kind.REMOVED
+              // delta.getKind() == Kind.REMOVED
             {
               // XXX Runtime removal of typeMappingFactories removal of type mappings is currently not supported.
               OM.LOG.warn(Messages.getString("TypeMappingRegistry.3"));

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - initial API and implementation
  */
@@ -36,7 +36,7 @@ import java.io.FileOutputStream;
 
 /**
  * Need to change to this class in plugin.xml
- * 
+ *
  * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  * @since 4.0
  */

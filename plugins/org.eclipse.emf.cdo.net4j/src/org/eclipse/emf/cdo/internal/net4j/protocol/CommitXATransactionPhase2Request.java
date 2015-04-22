@@ -81,17 +81,17 @@ public class CommitXATransactionPhase2Request extends CommitXATransactionRequest
       InternalCDOXACommitContext commitContext = context.getTransactionManager().getCommitContext(entry.getValue());
       if (commitContext == null)
       {
-        throw new IllegalStateException(MessageFormat.format(
-            Messages.getString("CommitTransactionPhase2Request.1"), entry //$NON-NLS-1$
-                .getValue()));
+        throw new IllegalStateException(
+            MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.1"), entry //$NON-NLS-1$
+            .getValue()));
       }
 
       CDOID newID = commitContext.getResult().getIDMappings().get(oldCDOID);
       if (newID == null)
       {
-        throw new IllegalStateException(MessageFormat.format(
-            Messages.getString("CommitTransactionPhase2Request.2"), oldCDOID //$NON-NLS-1$
-                .toURIFragment()));
+        throw new IllegalStateException(
+            MessageFormat.format(Messages.getString("CommitTransactionPhase2Request.2"), oldCDOID //$NON-NLS-1$
+            .toURIFragment()));
       }
 
       CDOID newIDExternal = CDOURIUtil.convertExternalCDOID(oldURIExternal, newID);

@@ -67,5 +67,4 @@ public class Bugzilla_430794_Test extends AbstractCDOTest
 
     commitAndSync(transactionOfUser2, transactionOfUser1);
   }
-
 }

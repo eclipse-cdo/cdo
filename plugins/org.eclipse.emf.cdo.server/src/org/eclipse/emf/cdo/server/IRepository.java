@@ -259,9 +259,9 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * An exception that a {@link WriteAccessHandler} may throw to indicate that a
      * {@linkplain WriteAccessHandler#handleTransactionBeforeCommitting(ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, OMMonitor) transaction commit}
      * was rejected because one or more semantic validation checks reported errors.
-     * 
+     *
      * @author Christian W. Damus (CEA LIST)
-     * 
+     *
      * @since 4.3
      */
     public static final class TransactionValidationException extends RuntimeException

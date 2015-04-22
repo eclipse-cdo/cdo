@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -34,14 +34,14 @@ import org.gastro.inventory.Section;
  * <li>{@link org.gastro.inventory.impl.SectionImpl#getText <em>Text</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class SectionImpl extends CDOObjectImpl implements Section
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected SectionImpl()
@@ -51,7 +51,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -62,7 +62,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -73,7 +73,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MenuCard getMenuCard()
@@ -83,7 +83,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setMenuCard(MenuCard newMenuCard)
@@ -93,7 +93,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -104,7 +104,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getTitle()
@@ -114,7 +114,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setTitle(String newTitle)
@@ -124,7 +124,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getText()
@@ -134,7 +134,7 @@ public class SectionImpl extends CDOObjectImpl implements Section
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setText(String newText)

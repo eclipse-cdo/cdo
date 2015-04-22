@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.helpers;
 
@@ -42,6 +42,7 @@ public class AcoreBaseEditHelper extends AbstractEditHelper
   /**
    * @generated
    */
+  @Override
   protected IEditHelperAdvice[] getEditHelperAdvice(IEditCommandRequest req)
   {
     if (req.getParameter(CONTEXT_ELEMENT_TYPE) instanceof IElementType)
@@ -55,6 +56,7 @@ public class AcoreBaseEditHelper extends AbstractEditHelper
   /**
    * @generated
    */
+  @Override
   protected ICommand getInsteadCommand(IEditCommandRequest req)
   {
     ICommand epCommand = (ICommand)req.getParameter(EDIT_POLICY_COMMAND);
@@ -77,6 +79,7 @@ public class AcoreBaseEditHelper extends AbstractEditHelper
   /**
    * @generated
    */
+  @Override
   protected ICommand getCreateCommand(CreateElementRequest req)
   {
     return null;
@@ -85,6 +88,7 @@ public class AcoreBaseEditHelper extends AbstractEditHelper
   /**
    * @generated
    */
+  @Override
   protected ICommand getCreateRelationshipCommand(CreateRelationshipRequest req)
   {
     return null;
@@ -93,6 +97,7 @@ public class AcoreBaseEditHelper extends AbstractEditHelper
   /**
    * @generated
    */
+  @Override
   protected ICommand getDestroyElementCommand(DestroyElementRequest req)
   {
     return null;
@@ -101,6 +106,7 @@ public class AcoreBaseEditHelper extends AbstractEditHelper
   /**
    * @generated
    */
+  @Override
   protected ICommand getDestroyReferenceCommand(DestroyReferenceRequest req)
   {
     return null;

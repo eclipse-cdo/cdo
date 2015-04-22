@@ -49,20 +49,20 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
         }
       }, //
 
-      new ProgressDistributable.Default<InternalCommitContext>()
+  new ProgressDistributable.Default<InternalCommitContext>()
+  {
+    public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+    {
+      if (commitContext.getRollbackMessage() == null)
       {
-        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
-        {
-          if (commitContext.getRollbackMessage() == null)
-          {
-            commitContext.commit(monitor.fork());
-          }
-          else
-          {
-            monitor.worked();
-          }
-        }
-      });
+        commitContext.commit(monitor.fork());
+      }
+      else
+      {
+        monitor.worked();
+      }
+    }
+  });
 
   public InternalTransaction getTransaction();
 

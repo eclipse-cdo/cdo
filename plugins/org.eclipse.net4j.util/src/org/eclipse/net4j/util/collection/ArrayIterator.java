@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 
 /**
  * An object that iterates over the elements of an array
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */
@@ -61,7 +61,7 @@ public class ArrayIterator<T> implements Iterator<T>
 
   /**
    * Unsupported.
-   * 
+   *
    * @throws UnsupportedOperationException
    *           always
    */

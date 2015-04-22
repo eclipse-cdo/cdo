@@ -32,14 +32,14 @@ import com.sun.javadoc.Doc;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.FormatterImpl#getSnippet <em>Snippet</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public abstract class FormatterImpl extends EObjectImpl implements Formatter
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected FormatterImpl()
@@ -49,7 +49,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -60,7 +60,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Snippet getSnippet()
@@ -85,7 +85,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public NotificationChain basicSetSnippet(Snippet newSnippet, NotificationChain msgs)
@@ -96,13 +96,13 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setSnippet(Snippet newSnippet)
   {
-    if (newSnippet != eInternalContainer() || eContainerFeatureID() != ArticlePackage.FORMATTER__SNIPPET
-        && newSnippet != null)
+    if (newSnippet != eInternalContainer()
+        || eContainerFeatureID() != ArticlePackage.FORMATTER__SNIPPET && newSnippet != null)
     {
       if (EcoreUtil.isAncestor(this, newSnippet))
       {
@@ -131,7 +131,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -151,7 +151,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -167,7 +167,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -183,7 +183,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -199,7 +199,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -216,7 +216,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -233,7 +233,7 @@ public abstract class FormatterImpl extends EObjectImpl implements Formatter
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

@@ -35,8 +35,8 @@ public class Bugzilla_395999_Test extends AbstractCDOTest
 
     try
     {
-      URI uri = URI.createURI(getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1")
-          + "?transactional=true");
+      URI uri = URI.createURI(
+          getURIPrefix() + "/" + getRepository().getName() + getResourcePath("/res1") + "?transactional=true");
 
       ResourceSet resourceSet = new ResourceSetImpl();
       Resource resource = resourceSet.createResource(uri);

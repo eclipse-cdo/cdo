@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -38,11 +38,11 @@ import java.util.Collection;
  * factory convert EMF adapter notifications into calls to {@link #fireNotifyChanged fireNotifyChanged}. The adapters
  * also support Eclipse property sheets. Note that most of the adapters are shared among multiple instances. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
-public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory implements ComposeableAdapterFactory,
-    IChangeNotifier, IDisposable
+public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -63,7 +63,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected Collection<Object> supportedTypes = new ArrayList<Object>();
@@ -85,7 +85,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.business.BusinessDay} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected BusinessDayItemProvider businessDayItemProvider;
@@ -93,7 +93,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   /**
    * This creates an adapter for a {@link org.gastro.business.BusinessDay}. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -134,7 +134,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   /**
    * This keeps track of the one adapter used for all {@link org.gastro.business.OrderDetail} instances. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected OrderDetailItemProvider orderDetailItemProvider;
@@ -142,7 +142,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   /**
    * This creates an adapter for a {@link org.gastro.business.OrderDetail}. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -232,7 +232,7 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
+      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
       {
         return adapter;
       }
@@ -278,20 +278,28 @@ public class BusinessItemProviderAdapterFactory extends BusinessAdapterFactory i
   }
 
   /**
-   * This disposes all of the item providers created by this factory. 
+   * This disposes all of the item providers created by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void dispose()
   {
     if (businessDayItemProvider != null)
+    {
       businessDayItemProvider.dispose();
+    }
     if (orderItemProvider != null)
+    {
       orderItemProvider.dispose();
+    }
     if (orderDetailItemProvider != null)
+    {
       orderDetailItemProvider.dispose();
+    }
     if (waiterItemProvider != null)
+    {
       waiterItemProvider.dispose();
+    }
   }
 
 }

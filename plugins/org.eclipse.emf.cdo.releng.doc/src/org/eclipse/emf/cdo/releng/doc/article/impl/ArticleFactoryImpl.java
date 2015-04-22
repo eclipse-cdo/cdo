@@ -51,14 +51,14 @@ import java.io.File;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static ArticleFactory init()
@@ -81,7 +81,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ArticleFactoryImpl()
@@ -91,7 +91,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -160,7 +160,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -177,7 +177,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -194,7 +194,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Documentation createDocumentation()
@@ -205,7 +205,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Context createContext()
@@ -216,7 +216,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Category createCategory()
@@ -227,7 +227,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Article createArticle()
@@ -238,7 +238,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Chapter createChapter()
@@ -249,7 +249,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Snippet createSnippet()
@@ -260,7 +260,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Diagram createDiagram()
@@ -271,7 +271,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Factory createFactory()
@@ -282,7 +282,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public JavaElement createJavaElement()
@@ -293,7 +293,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Callout createCallout()
@@ -304,7 +304,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ExternalTarget createExternalTarget()
@@ -315,7 +315,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Text createText()
@@ -326,7 +326,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Link createLink()
@@ -337,7 +337,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Embedding createEmbedding()
@@ -348,7 +348,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public SourceCode createSourceCode()
@@ -359,7 +359,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Plugin createPlugin()
@@ -370,7 +370,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public JavaPackage createJavaPackage()
@@ -381,7 +381,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Javadoc createJavadoc()
@@ -392,7 +392,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ExternalArticle createExternalArticle()
@@ -403,7 +403,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Schemadoc createSchemadoc()
@@ -414,7 +414,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ExtensionPoint createExtensionPoint()
@@ -425,7 +425,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Toc createToc()
@@ -436,7 +436,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public PluginResource createPluginResource()
@@ -447,7 +447,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Excel createExcel()
@@ -458,7 +458,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public JavaFormatter createJavaFormatter()
@@ -469,7 +469,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public XmlFormatter createXmlFormatter()
@@ -480,7 +480,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Image createImage()
@@ -491,7 +491,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public File createFileFromString(EDataType eDataType, String initialValue)
@@ -501,7 +501,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String convertFileToString(EDataType eDataType, Object instanceValue)
@@ -511,7 +511,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ArticlePackage getArticlePackage()
@@ -521,7 +521,7 @@ public class ArticleFactoryImpl extends EFactoryImpl implements ArticleFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

@@ -26,7 +26,7 @@ import org.eclipse.net4j.util.security.INegotiator;
  * HREF="../util/lifecycle/ILifecycle.html#isActive()"> <AREA SHAPE="POLYGON"
  * COORDS="429,10,428,262,597,263,597,30,483,29,483,10,428,11" HREF="../util/lifecycle/ILifecycle.html#isActive()">
  * </MAP>
- * 
+ *
  * @see IConnector#getState()
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -40,7 +40,7 @@ public enum ConnectorState
    * A connector is <code>DISCONNECTED</code> if and only if it is not
    * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. A transition to {@link #CONNECTING}
    * can be triggered by calling {@link IConnector#connect(long)} or {@link IConnector#connectAsync()}.
-   * 
+   *
    * @see IConnector#getState()
    * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */
@@ -53,7 +53,7 @@ public enum ConnectorState
    * A connector can only be <code>CONNECTING</code> if it is
    * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. As soon as the underlying physical
    * connection is successfully established the state of the connector automatically transitions to {@link #NEGOTIATING}.
-   * 
+   *
    * @see IConnector#getState()
    * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */
@@ -71,7 +71,7 @@ public enum ConnectorState
    * Negotiators can implement arbitrary handshake protocols, challenge-response sequences or other authentication
    * procedures. They can also be used to initially setup connection encryption if the connector implementation is not
    * able to do so.
-   * 
+   *
    * @see IConnector#getState()
    * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */
@@ -84,7 +84,7 @@ public enum ConnectorState
    * A connector can only be <code>CONNECTED</code> if it is
    * {@link org.eclipse.net4j.util.lifecycle.LifecycleUtil#isActive(Object) active}. A transition to
    * {@link #DISCONNECTED} can be triggered by calling {@link IConnector#close()}.
-   * 
+   *
    * @see IConnector#getState()
    * @see org.eclipse.net4j.util.lifecycle.ILifecycle#isActive()
    */

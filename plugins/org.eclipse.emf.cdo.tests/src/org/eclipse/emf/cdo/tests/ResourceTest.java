@@ -326,12 +326,12 @@ public class ResourceTest extends AbstractCDOTest
     assertEquals(cdoRootResource.cdoID(), cdoRootResource.cdoRevision().data().getResourceID());
     assertEquals(true, transaction.getResourceSet().getResources().contains(resource));
     assertEquals(false, transaction.getResourceSet().getResources().contains(transaction.getRootResource()));// Bug
-                                                                                                             // 346636
+    // 346636
 
     transaction.getRootResource().getContents().remove(resource);
     assertEquals(false, transaction.getResourceSet().getResources().contains(resource));
     assertEquals(false, transaction.getResourceSet().getResources().contains(transaction.getRootResource()));// Bug
-                                                                                                             // 346636
+    // 346636
   }
 
   public void testCreateNestedResource_FromResourceSet() throws Exception
@@ -434,8 +434,8 @@ public class ResourceTest extends AbstractCDOTest
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(
-          CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
+      CDOResource resource = (CDOResource)transaction.getResourceSet()
+          .getResource(CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
       assertNotNull(resource);
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());
@@ -1757,8 +1757,8 @@ public class ResourceTest extends AbstractCDOTest
       CDOID idAfterChangePathOrder = CDOUtil.getCDOObject(order).cdoID();
       assertEquals(idBeforeChangePathOrder, idAfterChangePathOrder);
 
-      Resource resourceRenamed = transaction.getResourceSet().getResource(
-          CDOURIUtil.createResourceURI(session, newPath), false);
+      Resource resourceRenamed = transaction.getResourceSet()
+          .getResource(CDOURIUtil.createResourceURI(session, newPath), false);
 
       assertEquals(resource, resourceRenamed);
       assertClean(resource, transaction);

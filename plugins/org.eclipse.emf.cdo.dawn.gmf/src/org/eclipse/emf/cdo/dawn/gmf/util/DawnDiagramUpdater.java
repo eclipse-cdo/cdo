@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  *     Christian W. Damus (CEA) - bug 399733: tolerate UML CacheAdapter
@@ -347,7 +347,7 @@ public class DawnDiagramUpdater
    * <p>
    * In our scenario the Edges will be wrongly connected to the diagram itself, which makes the CanonicalEditingPolicy
    * to remove and restore the edge. Long, short story, we must 'touch' the elements here to have the element set.
-   * 
+   *
    * @param diagram
    */
   public static void initializeElement(Diagram diagram)

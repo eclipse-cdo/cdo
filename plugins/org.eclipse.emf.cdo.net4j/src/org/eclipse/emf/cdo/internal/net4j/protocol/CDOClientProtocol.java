@@ -82,7 +82,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl> implements CDOSessionProtocol
+public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl>implements CDOSessionProtocol
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDOClientProtocol.class);
 
@@ -209,7 +209,8 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
       Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)
   {
-    return send(new RefreshSessionRequest(this, lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates));
+    return send(
+        new RefreshSessionRequest(this, lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates));
   }
 
   public void openView(int viewID, boolean readOnly, CDOBranchPoint branchPoint)

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -24,7 +24,7 @@ package org.gastro.inventory;
  * <li>{@link org.gastro.inventory.StockProduct#getOrderLimit <em>Order Limit</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getStockProduct()
  * @model
  * @generated
@@ -39,7 +39,7 @@ public interface StockProduct extends Product
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Stock</em>' container reference.
    * @see #setStock(Stock)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_Stock()
@@ -52,7 +52,7 @@ public interface StockProduct extends Product
   /**
    * Sets the value of the '{@link org.gastro.inventory.StockProduct#getStock <em>Stock</em>}' container reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Stock</em>' container reference.
    * @see #getStock()
@@ -66,7 +66,7 @@ public interface StockProduct extends Product
    * If the meaning of the '<em>Cost</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Cost</em>' attribute.
    * @see #setCost(float)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_Cost()
@@ -78,7 +78,7 @@ public interface StockProduct extends Product
   /**
    * Sets the value of the '{@link org.gastro.inventory.StockProduct#getCost <em>Cost</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Cost</em>' attribute.
    * @see #getCost()
@@ -93,7 +93,7 @@ public interface StockProduct extends Product
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Available</em>' attribute.
    * @see #setAvailable(int)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_Available()
@@ -105,7 +105,7 @@ public interface StockProduct extends Product
   /**
    * Sets the value of the '{@link org.gastro.inventory.StockProduct#getAvailable <em>Available</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Available</em>' attribute.
    * @see #getAvailable()
@@ -120,7 +120,7 @@ public interface StockProduct extends Product
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Order Limit</em>' attribute.
    * @see #setOrderLimit(int)
    * @see org.gastro.inventory.InventoryPackage#getStockProduct_OrderLimit()
@@ -132,7 +132,7 @@ public interface StockProduct extends Product
   /**
    * Sets the value of the '{@link org.gastro.inventory.StockProduct#getOrderLimit <em>Order Limit</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Order Limit</em>' attribute.
    * @see #getOrderLimit()

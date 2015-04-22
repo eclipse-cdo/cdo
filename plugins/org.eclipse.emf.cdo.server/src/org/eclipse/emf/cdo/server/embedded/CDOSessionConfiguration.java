@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 
 /**
  * Deprecated, not yet supported.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

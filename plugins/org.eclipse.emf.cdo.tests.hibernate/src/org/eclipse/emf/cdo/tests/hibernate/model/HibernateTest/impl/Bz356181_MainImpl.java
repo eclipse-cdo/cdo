@@ -140,8 +140,10 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     String oldTransient = transient_;
     transient_ = newTransient;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT,
-          oldTransient, transient_));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT, oldTransient,
+          transient_));
+    }
   }
 
   /**
@@ -164,8 +166,10 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     String oldNonTransient = nonTransient;
     nonTransient = newNonTransient;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__NON_TRANSIENT,
           oldNonTransient, nonTransient));
+    }
   }
 
   /**
@@ -182,8 +186,10 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
       if (transientRef != oldTransientRef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_REF,
               oldTransientRef, transientRef));
+        }
       }
     }
     return transientRef;
@@ -209,8 +215,10 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     Bz356181_Transient oldTransientRef = transientRef;
     transientRef = newTransientRef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_REF,
           oldTransientRef, transientRef));
+    }
   }
 
   /**
@@ -227,8 +235,10 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
       if (transientOtherRef != oldTransientOtherRef)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               HibernateTestPackage.BZ356181_MAIN__TRANSIENT_OTHER_REF, oldTransientOtherRef, transientOtherRef));
+        }
       }
     }
     return transientOtherRef;
@@ -254,8 +264,10 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
     Bz356181_NonTransient oldTransientOtherRef = transientOtherRef;
     transientOtherRef = newTransientOtherRef;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ356181_MAIN__TRANSIENT_OTHER_REF,
           oldTransientOtherRef, transientOtherRef));
+    }
   }
 
   /**
@@ -274,11 +286,15 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
       return getNonTransient();
     case HibernateTestPackage.BZ356181_MAIN__TRANSIENT_REF:
       if (resolve)
+      {
         return getTransientRef();
+      }
       return basicGetTransientRef();
     case HibernateTestPackage.BZ356181_MAIN__TRANSIENT_OTHER_REF:
       if (resolve)
+      {
         return getTransientOtherRef();
+      }
       return basicGetTransientOtherRef();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -367,7 +383,9 @@ public class Bz356181_MainImpl extends EObjectImpl implements Bz356181_Main
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (transient: ");

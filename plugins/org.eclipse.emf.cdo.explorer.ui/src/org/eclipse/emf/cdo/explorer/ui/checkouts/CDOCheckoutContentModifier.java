@@ -154,8 +154,8 @@ public interface CDOCheckoutContentModifier
           String type = key.getType();
           if (deltaKind == IContainerDelta.Kind.ADDED)
           {
-            CDOCheckoutContentModifier modifier = (CDOCheckoutContentModifier)IPluginContainer.INSTANCE.getElement(
-                Factory.PRODUCT_GROUP, type, null);
+            CDOCheckoutContentModifier modifier = (CDOCheckoutContentModifier)IPluginContainer.INSTANCE
+                .getElement(Factory.PRODUCT_GROUP, type, null);
 
             synchronized (modifiers)
             {

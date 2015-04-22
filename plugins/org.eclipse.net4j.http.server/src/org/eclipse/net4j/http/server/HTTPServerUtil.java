@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -16,7 +16,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * A utility class with static convenience methods.
- * 
+ *
  * @author Eike Stepper
  */
 public final class HTTPServerUtil
@@ -33,7 +33,7 @@ public final class HTTPServerUtil
 
   public static IHTTPAcceptor getAcceptor(IManagedContainer container, String description)
   {
-    return (IHTTPAcceptor)container
-        .getElement(HTTPAcceptorFactory.PRODUCT_GROUP, HTTPAcceptorFactory.TYPE, description);
+    return (IHTTPAcceptor)container.getElement(HTTPAcceptorFactory.PRODUCT_GROUP, HTTPAcceptorFactory.TYPE,
+        description);
   }
 }

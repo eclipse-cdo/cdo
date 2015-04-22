@@ -31,7 +31,7 @@ import java.util.List;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement()
  * @model abstract="true"
  * @generated
@@ -48,7 +48,7 @@ public interface StructuralElement extends LinkTarget
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Children</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_Children()
    * @see org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getParent
@@ -66,7 +66,7 @@ public interface StructuralElement extends LinkTarget
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Parent</em>' container reference.
    * @see #setParent(StructuralElement)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_Parent()
@@ -79,7 +79,7 @@ public interface StructuralElement extends LinkTarget
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.StructuralElement#getParent <em>Parent</em>}'
    * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Parent</em>' container reference.
    * @see #getParent()
@@ -93,7 +93,7 @@ public interface StructuralElement extends LinkTarget
    * If the meaning of the '<em>Title</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Title</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_Title()
    * @model required="true" changeable="false"
@@ -108,7 +108,7 @@ public interface StructuralElement extends LinkTarget
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Documentation</em>' reference.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_Documentation()
    * @model resolveProxies="false" required="true" transient="true" changeable="false" volatile="true" derived="true"
@@ -122,7 +122,7 @@ public interface StructuralElement extends LinkTarget
    * If the meaning of the '<em>Doc</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Doc</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getStructuralElement_Doc()
    * @model dataType="org.eclipse.emf.cdo.releng.doc.article.Doc" required="true" transient="true" changeable="false"

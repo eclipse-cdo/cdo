@@ -307,7 +307,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public Child createChild()

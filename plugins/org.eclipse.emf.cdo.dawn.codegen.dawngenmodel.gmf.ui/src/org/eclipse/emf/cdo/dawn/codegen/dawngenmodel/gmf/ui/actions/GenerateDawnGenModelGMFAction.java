@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -45,22 +45,22 @@ public class GenerateDawnGenModelGMFAction extends GenerateDawnGenModelAction
 
     dawnGMFGenerator.setDawnEditorClassName(dawnEditorClassName);
     dawnGMFGenerator.setFragmentName(editorGenerator.getPlugin().getID() + ".dawn");
-    dawnGMFGenerator.setDawnCanonicalEditingPolicyClassName(generalPrefix
-        + editorGenerator.getDiagram().getCanonicalEditPolicyClassName());
-    dawnGMFGenerator.setDawnCreationWizardClassName(generalPrefix
-        + editorGenerator.getDiagram().getCreationWizardClassName());
-    dawnGMFGenerator.setDawnDiagramEditPartClassName(generalPrefix
-        + editorGenerator.getDiagram().getEditPartClassName());
-    dawnGMFGenerator.setDawnDocumentProviderClassName(generalPrefix
-        + editorGenerator.getDiagram().getDocumentProviderClassName());
-    dawnGMFGenerator.setDawnEditorUtilClassName(generalPrefix
-        + editorGenerator.getDiagram().getDiagramEditorUtilClassName());
-    dawnGMFGenerator.setDawnEditPartFactoryClassName(generalPrefix
-        + editorGenerator.getDiagram().getEditPartFactoryClassName());
-    dawnGMFGenerator.setDawnEditPartProviderClassName(generalPrefix
-        + editorGenerator.getDiagram().getEditPartProviderClassName());
-    dawnGMFGenerator.setDawnEditPolicyProviderClassName(generalPrefix
-        + editorGenerator.getDiagram().getEditPartProviderClassName().replace("EditPart", "EditPolicy"));
+    dawnGMFGenerator.setDawnCanonicalEditingPolicyClassName(
+        generalPrefix + editorGenerator.getDiagram().getCanonicalEditPolicyClassName());
+    dawnGMFGenerator
+        .setDawnCreationWizardClassName(generalPrefix + editorGenerator.getDiagram().getCreationWizardClassName());
+    dawnGMFGenerator
+        .setDawnDiagramEditPartClassName(generalPrefix + editorGenerator.getDiagram().getEditPartClassName());
+    dawnGMFGenerator
+        .setDawnDocumentProviderClassName(generalPrefix + editorGenerator.getDiagram().getDocumentProviderClassName());
+    dawnGMFGenerator
+        .setDawnEditorUtilClassName(generalPrefix + editorGenerator.getDiagram().getDiagramEditorUtilClassName());
+    dawnGMFGenerator
+        .setDawnEditPartFactoryClassName(generalPrefix + editorGenerator.getDiagram().getEditPartFactoryClassName());
+    dawnGMFGenerator
+        .setDawnEditPartProviderClassName(generalPrefix + editorGenerator.getDiagram().getEditPartProviderClassName());
+    dawnGMFGenerator.setDawnEditPolicyProviderClassName(
+        generalPrefix + editorGenerator.getDiagram().getEditPartProviderClassName().replace("EditPart", "EditPolicy"));
 
     dawnGMFGenerator.setGMFGenEditorGenerator(editorGenerator);
     return dawnGMFGenerator;

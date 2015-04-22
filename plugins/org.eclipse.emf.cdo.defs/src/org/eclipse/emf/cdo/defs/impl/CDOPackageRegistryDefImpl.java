@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -51,7 +51,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @generated
    */
   protected CDOPackageRegistryDefImpl()
@@ -61,7 +61,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @return the e class
    * @generated
    */
@@ -73,7 +73,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @return the packages
    * @generated
    */
@@ -89,7 +89,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @param otherEnd
    *          the other end
    * @param featureID
@@ -112,7 +112,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @param featureID
    *          the feature id
    * @param resolve
@@ -135,7 +135,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @param featureID
    *          the feature id
    * @param newValue
@@ -158,7 +158,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @param featureID
    *          the feature id
    * @generated
@@ -177,7 +177,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @param featureID
    *          the feature id
    * @return true, if e is set
@@ -196,7 +196,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * Creates the instance.
-   * 
+   *
    * @return the CDO package registry
    */
   @Override
@@ -209,7 +209,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * Adds the packages.
-   * 
+   *
    * @param packageRegistry
    *          the package registry
    * @return the e package. registry
@@ -225,7 +225,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * Adds the given {@link EPackage} within the supplied <tt>definition<tt> to the given <tt>CDOPackageRegistry<tt> .
-   * 
+   *
    * @param ePackageDef
    *          the ePackage definition
    * @param packageRegistry
@@ -239,7 +239,7 @@ public class CDOPackageRegistryDefImpl extends DefImpl implements CDOPackageRegi
 
   /**
    * Adds the given {@link EPackage} within the supplied <tt>definition<tt> to the given <tt>CDOPackageRegistry<tt> .
-   * 
+   *
    * @param ePackageDef
    *          the ePackage definition
    * @param packageRegistry

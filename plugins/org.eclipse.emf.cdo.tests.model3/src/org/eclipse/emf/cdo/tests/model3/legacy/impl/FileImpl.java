@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -36,7 +36,7 @@ public class FileImpl extends EObjectImpl implements File
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -55,7 +55,7 @@ public class FileImpl extends EObjectImpl implements File
   /**
    * The default value of the '{@link #getData() <em>Data</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getData()
    * @generated
    * @ordered
@@ -108,7 +108,9 @@ public class FileImpl extends EObjectImpl implements File
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.FILE__NAME, oldName, name));
+    }
   }
 
   /**
@@ -129,7 +131,9 @@ public class FileImpl extends EObjectImpl implements File
     CDOClob oldData = data;
     data = newData;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.FILE__DATA, oldData, data));
+    }
   }
 
   /**
@@ -212,7 +216,9 @@ public class FileImpl extends EObjectImpl implements File
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

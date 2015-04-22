@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.Platform;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
@@ -68,7 +68,7 @@ public abstract class OM
         if ("dbAdapter".equals(element.getName())) //$NON-NLS-1$
         {
           DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name")) //$NON-NLS-1$
-          {
+              {
             @Override
             public IDBAdapter createDBAdapter()
             {
@@ -82,9 +82,9 @@ public abstract class OM
                 return null;
               }
             }
-          };
+              };
 
-          DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
+              DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
         }
       }
     }

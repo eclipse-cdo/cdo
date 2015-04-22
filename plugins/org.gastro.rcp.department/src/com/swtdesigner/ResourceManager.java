@@ -27,7 +27,7 @@ import java.util.Map;
  * <p>
  * Copyright (c) 2003 - 2007, Instantiations, Inc. <br>
  * All Rights Reserved
- * 
+ *
  * @author scheglov_ke
  * @author Dan Rubel
  */
@@ -39,11 +39,11 @@ public class ResourceManager extends SWTResourceManager
   // Image
   //
   // //////////////////////////////////////////////////////////////////////////
-  private static Map/* <ImageDescriptor,Image> */m_descriptorImageMap = new HashMap();
+  private static Map/* <ImageDescriptor,Image> */ m_descriptorImageMap = new HashMap();
 
   /**
    * Returns an {@link ImageDescriptor} stored in the file at the specified path relative to the specified class.
-   * 
+   *
    * @param clazz
    *          the {@link Class} relative to which to find the image descriptor.
    * @param path
@@ -57,7 +57,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link ImageDescriptor} stored in the file at the specified path.
-   * 
+   *
    * @param path
    *          the path to the image file.
    * @return the {@link ImageDescriptor} stored in the file at the specified path.
@@ -76,7 +76,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link Image} based on the specified {@link ImageDescriptor}.
-   * 
+   *
    * @param descriptor
    *          the {@link ImageDescriptor} for the {@link Image}.
    * @return the {@link Image} based on the specified {@link ImageDescriptor}.
@@ -101,11 +101,11 @@ public class ResourceManager extends SWTResourceManager
   /**
    * Maps images to decorated images.
    */
-  private static Map[]/* <Image,Map<Image,Image>> */m_decoratedImageMap = new Map[LAST_CORNER_KEY];
+  private static Map[]/* <Image,Map<Image,Image>> */ m_decoratedImageMap = new Map[LAST_CORNER_KEY];
 
   /**
    * Returns an {@link Image} composed of a base image decorated by another image.
-   * 
+   *
    * @param baseImage
    *          the base {@link Image} that should be decorated.
    * @param decorator
@@ -119,7 +119,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link Image} composed of a base image decorated by another image.
-   * 
+   *
    * @param baseImage
    *          the base {@link Image} that should be decorated.
    * @param decorator
@@ -251,7 +251,7 @@ public class ResourceManager extends SWTResourceManager
   /**
    * Maps URL to images.
    */
-  private static Map/* <URL,Image> */m_URLImageMap = new HashMap();
+  private static Map/* <URL,Image> */ m_URLImageMap = new HashMap();
 
   /**
    * Provider for plugin resources, used by WindowBuilder at design time.
@@ -268,7 +268,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link Image} based on a plugin and file path.
-   * 
+   *
    * @param plugin
    *          the plugin {@link Object} containing the image
    * @param name
@@ -297,7 +297,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link Image} based on a {@link Bundle} and resource entry path.
-   * 
+   *
    * @param symbolicName
    *          the symbolic name of the {@link Bundle}.
    * @param path
@@ -366,7 +366,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link ImageDescriptor} based on a plugin and file path.
-   * 
+   *
    * @param plugin
    *          the plugin {@link Object} containing the image.
    * @param name
@@ -399,7 +399,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link ImageDescriptor} based on a {@link Bundle} and resource entry path.
-   * 
+   *
    * @param symbolicName
    *          the symbolic name of the {@link Bundle}.
    * @param path
@@ -450,7 +450,7 @@ public class ResourceManager extends SWTResourceManager
 
   /**
    * Returns an {@link URL} based on a plugin and file path.
-   * 
+   *
    * @param plugin
    *          the plugin {@link Object} containing the file path.
    * @param name

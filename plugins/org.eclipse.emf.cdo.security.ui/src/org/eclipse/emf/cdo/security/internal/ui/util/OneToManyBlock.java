@@ -312,12 +312,12 @@ public class OneToManyBlock
             available.removeAll(value);
             SecurityUIUtil.applySupportedElementFilter(available, itemType);
 
-            String label = NLS.bind(Messages.OneToManyBlock_3, SecurityEditPlugin.INSTANCE.getString(String.format(
-                "_UI_%s_%s_feature", reference.getEContainingClass().getName(), reference.getName()))); //$NON-NLS-1$
+            String label = NLS.bind(Messages.OneToManyBlock_3, SecurityEditPlugin.INSTANCE.getString(
+                String.format("_UI_%s_%s_feature", reference.getEContainingClass().getName(), reference.getName()))); //$NON-NLS-1$
 
-            FeatureEditorDialog dlg = new FeatureEditorDialog(viewer.getControl().getShell(), new TableLabelProvider(
-                adapterFactory), input.getValue(), reference.getEContainingClass(), Collections.EMPTY_LIST, label,
-                available, false, true, true);
+            FeatureEditorDialog dlg = new FeatureEditorDialog(viewer.getControl().getShell(),
+                new TableLabelProvider(adapterFactory), input.getValue(), reference.getEContainingClass(),
+                Collections.EMPTY_LIST, label, available, false, true, true);
 
             if (dlg.open() == Window.OK && !dlg.getResult().isEmpty())
             {
@@ -335,7 +335,7 @@ public class OneToManyBlock
 
     final SelectionListenerAction<EObject> removeAction = new SelectionListenerAction<EObject>(
         Messages.OneToManyBlock_2, SharedIcons.getDescriptor("etool16/delete.gif")) //$NON-NLS-1$
-        {
+    {
       @Override
       public void run()
       {
@@ -368,23 +368,23 @@ public class OneToManyBlock
       {
         return EObject.class;
       }
-        };
+    };
 
-        removeButton.addSelectionListener(new SelectionAdapter()
+    removeButton.addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        if (removeAction.isEnabled())
         {
-          @Override
-          public void widgetSelected(SelectionEvent e)
-          {
-            if (removeAction.isEnabled())
-            {
-              removeAction.run();
-            }
-          }
-        });
+          removeAction.run();
+        }
+      }
+    });
 
-        viewer.addSelectionChangedListener(removeAction);
+    viewer.addSelectionChangedListener(removeAction);
 
-        new ActionBarsHelper(editorActionBars).addGlobalAction(ActionFactory.DELETE.getId(), removeAction).install(viewer);
+    new ActionBarsHelper(editorActionBars).addGlobalAction(ActionFactory.DELETE.getId(), removeAction).install(viewer);
   }
 
   public void setInput(IObservableValue input)
@@ -404,8 +404,8 @@ public class OneToManyBlock
       value.dispose();
     }
 
-    value = EMFEditObservables.observeDetailList(context.getValidationRealm(), domain, input, getConfiguration()
-        .getModelReference());
+    value = EMFEditObservables.observeDetailList(context.getValidationRealm(), domain, input,
+        getConfiguration().getModelReference());
 
     if (viewer != null)
     {
@@ -479,64 +479,64 @@ public class OneToManyBlock
   {
     viewer.addDropSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY,
         new Transfer[] { LocalSelectionTransfer.getTransfer() }, new DropTargetAdapter()
-    {
-      @Override
-      public void dragEnter(DropTargetEvent event)
-      {
-        if (!canDrop(event))
         {
-          // Reject this drop
-          event.detail = DND.DROP_NONE;
-        }
-        else if ((event.operations | DND.DROP_COPY) != 0)
-        {
-          event.detail = DND.DROP_COPY;
-        }
-      }
-
-      private boolean canDrop(DropTargetEvent event)
-      {
-        boolean result = false;
-
-        if (LocalSelectionTransfer.getTransfer().isSupportedType(event.currentDataType))
-        {
-          result = canPresentAll(LocalSelectionTransfer.getTransfer().getSelection());
-        }
-
-        return result;
-      }
-
-      @Override
-      public void dropAccept(DropTargetEvent event)
-      {
-        if (!canDrop(event))
-        {
-          // Reject this drop
-          event.detail = DND.DROP_NONE;
-        }
-        else if ((event.operations | DND.DROP_COPY) != 0)
-        {
-          event.detail = DND.DROP_COPY;
-        }
-      }
-
-      @Override
-      public void drop(DropTargetEvent event)
-      {
-        if (canDrop(event))
-        {
-          IStructuredSelection selection = (IStructuredSelection)LocalSelectionTransfer.getTransfer()
-              .getSelection();
-          Command command = AddCommand.create(domain, input.getValue(), getConfiguration().getModelReference(),
-              selection.toList());
-          if (execute(command))
+          @Override
+          public void dragEnter(DropTargetEvent event)
           {
-            viewer.setSelection(selection);
-            viewer.getControl().setFocus();
+            if (!canDrop(event))
+            {
+              // Reject this drop
+              event.detail = DND.DROP_NONE;
+            }
+            else if ((event.operations | DND.DROP_COPY) != 0)
+            {
+              event.detail = DND.DROP_COPY;
+            }
           }
-        }
-      }
-    });
+
+          private boolean canDrop(DropTargetEvent event)
+          {
+            boolean result = false;
+
+            if (LocalSelectionTransfer.getTransfer().isSupportedType(event.currentDataType))
+            {
+              result = canPresentAll(LocalSelectionTransfer.getTransfer().getSelection());
+            }
+
+            return result;
+          }
+
+          @Override
+          public void dropAccept(DropTargetEvent event)
+          {
+            if (!canDrop(event))
+            {
+              // Reject this drop
+              event.detail = DND.DROP_NONE;
+            }
+            else if ((event.operations | DND.DROP_COPY) != 0)
+            {
+              event.detail = DND.DROP_COPY;
+            }
+          }
+
+          @Override
+          public void drop(DropTargetEvent event)
+          {
+            if (canDrop(event))
+            {
+              IStructuredSelection selection = (IStructuredSelection)LocalSelectionTransfer.getTransfer()
+                  .getSelection();
+              Command command = AddCommand.create(domain, input.getValue(), getConfiguration().getModelReference(),
+                  selection.toList());
+              if (execute(command))
+              {
+                viewer.setSelection(selection);
+                viewer.getControl().setFocus();
+              }
+            }
+          }
+        });
   }
 
   protected void hookUnsupportedModelContentValidation(IObservableList observableList)
@@ -565,8 +565,8 @@ public class OneToManyBlock
     {
       if (!supportedContentFilter.select(element))
       {
-        configuration.getManagedForm().getMessageManager()
-        .addMessage(this, Messages.TableSection_3, null, IStatus.WARNING, viewer.getControl());
+        configuration.getManagedForm().getMessageManager().addMessage(this, Messages.TableSection_3, null,
+            IStatus.WARNING, viewer.getControl());
         return;
       }
     }
@@ -607,8 +607,8 @@ public class OneToManyBlock
 
     public OneToManyConfiguration(IManagedForm managedForm, EReference reference)
     {
-      this(managedForm, reference, reference.getEReferenceType(), SecurityUIUtil.getSupportedElementFilter(reference
-          .getEReferenceType()));
+      this(managedForm, reference, reference.getEReferenceType(),
+          SecurityUIUtil.getSupportedElementFilter(reference.getEReferenceType()));
     }
 
     public OneToManyConfiguration(IManagedForm managedForm, EReference reference, EClass itemType)

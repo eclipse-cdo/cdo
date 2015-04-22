@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * This class wrapper CDOResource and combines it with a XMLResource to avoid problems with all frameworks which are
  * internally using an XMLResource
- * 
+ *
  * @author Martin Fluegge
  */
 public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrapperResource

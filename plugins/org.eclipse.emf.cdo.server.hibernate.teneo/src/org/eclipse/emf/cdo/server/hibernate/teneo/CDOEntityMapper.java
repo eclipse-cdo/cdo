@@ -23,7 +23,7 @@ import java.util.List;
 
 /**
  * Adds mapping for econtainer and eresource.
- * 
+ *
  * @author <a href="mtaal@elver.org">Martin Taal</a>
  * @since 3.0
  */

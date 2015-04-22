@@ -311,8 +311,8 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       List<? extends CDORevision> primaryLoadedRevisions //
       = getResultsAndSynthetics(infosToLoad.toArray(new RevisionInfo[0]), null);
 
-      if (primaryLoadedRevisions != null && !primaryLoadedRevisions.isEmpty() || additionalLoadedRevisions != null
-          && !additionalLoadedRevisions.isEmpty())
+      if (primaryLoadedRevisions != null && !primaryLoadedRevisions.isEmpty()
+          || additionalLoadedRevisions != null && !additionalLoadedRevisions.isEmpty())
       {
         if (primaryLoadedRevisions == null)
         {
@@ -428,7 +428,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       List<InternalCDORevision> additionalRevisions = null;
 
       List<RevisionInfo> additionalRevisionInfos = //
-      revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+          revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
 
       if (additionalRevisionInfos != null)
       {

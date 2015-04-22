@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * TODO How does this differ from {@link CDORevisionSetter}? Both needed?
- * 
+ *
  * @author Martin Taal
  */
 public class CDOPropertyGetter extends CDOPropertyHandler implements Getter

@@ -137,7 +137,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
   /**
    * @author Simon McDuff
    */
-  private class QueryResultList extends AbstractList<T> implements EList<T>
+  private class QueryResultList extends AbstractList<T>implements EList<T>
   {
     private List<Object> objects;
 

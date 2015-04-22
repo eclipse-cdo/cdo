@@ -36,7 +36,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> implements IAuthenticationProtocol
+public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer>implements IAuthenticationProtocol
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 
@@ -122,8 +122,8 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
   public Confirmation sendConfirmationRequest(String subject, String message, Confirmation suggestion,
       Confirmation acceptable, Confirmation... more) throws Exception
   {
-    return new ConfirmationRequest(this, CDOAdminProtocolConstants.SIGNAL_CONFIRMATION, new ConfirmationPrompt(subject,
-        message, suggestion, acceptable, more)).send(negotiationTimeout);
+    return new ConfirmationRequest(this, CDOAdminProtocolConstants.SIGNAL_CONFIRMATION,
+        new ConfirmationPrompt(subject, message, suggestion, acceptable, more)).send(negotiationTimeout);
   }
 
   @Override

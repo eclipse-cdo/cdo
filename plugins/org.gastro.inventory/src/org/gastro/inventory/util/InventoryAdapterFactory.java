@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -36,7 +36,7 @@ import org.gastro.inventory.Table;
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model. <!-- end-user-doc -->
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage
  * @generated
  */
@@ -44,14 +44,14 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
 {
   /**
    * The cached model package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected static InventoryPackage modelPackage;
 
   /**
    * Creates an instance of the adapter factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public InventoryAdapterFactory()
@@ -66,7 +66,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Returns whether this factory is applicable for the type of the object. <!-- begin-user-doc --> This implementation
    * returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
    * end-user-doc -->
-   * 
+   *
    * @return whether this factory is applicable for the type of the object.
    * @generated
    */
@@ -86,7 +86,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
 
   /**
    * The switch that delegates to the <code>createXXX</code> methods. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected InventorySwitch<Adapter> modelSwitch = new InventorySwitch<Adapter>()
@@ -178,7 +178,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
 
   /**
    * Creates an adapter for the <code>target</code>. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param target
    *          the object to adapt.
    * @return the adapter for the <code>target</code>.
@@ -194,7 +194,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Stock <em>Stock</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Stock
    * @generated
@@ -208,7 +208,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Product <em>Product</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Product
    * @generated
@@ -222,7 +222,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.StockProduct <em>Stock Product</em>}'.
    * <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.StockProduct
    * @generated
@@ -236,7 +236,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Recipe <em>Recipe</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Recipe
    * @generated
@@ -250,7 +250,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Ingredient <em>Ingredient</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Ingredient
    * @generated
@@ -264,7 +264,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.MenuCard <em>Menu Card</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.MenuCard
    * @generated
@@ -278,7 +278,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Restaurant <em>Restaurant</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Restaurant
    * @generated
@@ -292,7 +292,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Department <em>Department</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Department
    * @generated
@@ -306,7 +306,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Offering <em>Offering</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Offering
    * @generated
@@ -320,7 +320,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Table <em>Table</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Table
    * @generated
@@ -334,7 +334,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Employee <em>Employee</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Employee
    * @generated
@@ -348,7 +348,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Station <em>Station</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Station
    * @generated
@@ -362,7 +362,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
    * Creates a new adapter for an object of class '{@link org.gastro.inventory.Section <em>Section</em>}'. <!--
    * begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
    * ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @see org.gastro.inventory.Section
    * @generated
@@ -375,7 +375,7 @@ public class InventoryAdapterFactory extends AdapterFactoryImpl
   /**
    * Creates a new adapter for the default case. <!-- begin-user-doc --> This default implementation returns null. <!--
    * end-user-doc -->
-   * 
+   *
    * @return the new adapter.
    * @generated
    */

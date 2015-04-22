@@ -103,7 +103,9 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, MangoPackage.MANGO_VALUE_LIST__NAME, oldName, name));
+    }
   }
 
   /**
@@ -201,7 +203,9 @@ public class MangoValueListImpl extends EObjectImpl implements MangoValueList
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

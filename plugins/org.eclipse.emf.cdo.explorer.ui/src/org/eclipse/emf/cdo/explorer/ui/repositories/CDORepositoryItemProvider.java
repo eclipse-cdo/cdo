@@ -45,7 +45,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<Object>> implements ITableLabelProvider
+public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<Object>>implements ITableLabelProvider
 {
   public static final Image REPOSITORY_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_REPO);
 

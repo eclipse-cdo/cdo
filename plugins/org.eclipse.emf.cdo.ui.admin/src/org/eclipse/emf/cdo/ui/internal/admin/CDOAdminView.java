@@ -199,8 +199,8 @@ public class CDOAdminView extends ContainerView
 
       addConnectionAction.setText(Messages.CDOAdminView_2);
       addConnectionAction.setToolTipText(Messages.CDOAdminView_3);
-      addConnectionAction.setImageDescriptor(org.eclipse.net4j.ui.shared.SharedIcons
-          .getDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.ETOOL_ADD));
+      addConnectionAction.setImageDescriptor(
+          org.eclipse.net4j.ui.shared.SharedIcons.getDescriptor(org.eclipse.net4j.ui.shared.SharedIcons.ETOOL_ADD));
     }
 
     manager.add(addConnectionAction);
@@ -262,13 +262,13 @@ public class CDOAdminView extends ContainerView
   /**
    * @author Eike Stepper
    */
-  public class OpenSessionAction extends AdminAction<CDOAdminClientRepository> implements
-      CDOAdminClientRepository.SessionConfigurator
+  public class OpenSessionAction extends AdminAction<CDOAdminClientRepository>
+      implements CDOAdminClientRepository.SessionConfigurator
   {
     public OpenSessionAction(CDOAdminClientRepository repository)
     {
-      super(Messages.CDOAdminView_4, Messages.CDOAdminView_5,
-          SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_SESSION), repository);
+      super(Messages.CDOAdminView_4, Messages.CDOAdminView_5, SharedIcons.getDescriptor(SharedIcons.ETOOL_OPEN_SESSION),
+          repository);
     }
 
     public CDOAdminClientRepository getRepository()

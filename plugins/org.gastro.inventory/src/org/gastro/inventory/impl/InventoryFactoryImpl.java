@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -35,14 +35,14 @@ import org.gastro.inventory.Table;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFactory
 {
   /**
    * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public static InventoryFactory init()
@@ -65,7 +65,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public InventoryFactoryImpl()
@@ -75,7 +75,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -84,27 +84,27 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
     switch (eClass.getClassifierID())
     {
     case InventoryPackage.STOCK:
-      return (EObject)createStock();
+      return createStock();
     case InventoryPackage.STOCK_PRODUCT:
-      return (EObject)createStockProduct();
+      return createStockProduct();
     case InventoryPackage.RECIPE:
-      return (EObject)createRecipe();
+      return createRecipe();
     case InventoryPackage.INGREDIENT:
-      return (EObject)createIngredient();
+      return createIngredient();
     case InventoryPackage.MENU_CARD:
-      return (EObject)createMenuCard();
+      return createMenuCard();
     case InventoryPackage.RESTAURANT:
-      return (EObject)createRestaurant();
+      return createRestaurant();
     case InventoryPackage.DEPARTMENT:
-      return (EObject)createDepartment();
+      return createDepartment();
     case InventoryPackage.OFFERING:
-      return (EObject)createOffering();
+      return createOffering();
     case InventoryPackage.TABLE:
-      return (EObject)createTable();
+      return createTable();
     case InventoryPackage.EMPLOYEE:
-      return (EObject)createEmployee();
+      return createEmployee();
     case InventoryPackage.SECTION:
-      return (EObject)createSection();
+      return createSection();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -112,7 +112,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Stock createStock()
@@ -123,7 +123,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public StockProduct createStockProduct()
@@ -134,7 +134,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Recipe createRecipe()
@@ -145,7 +145,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Ingredient createIngredient()
@@ -156,7 +156,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public MenuCard createMenuCard()
@@ -167,7 +167,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Restaurant createRestaurant()
@@ -178,7 +178,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Department createDepartment()
@@ -189,7 +189,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Offering createOffering()
@@ -200,7 +200,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Table createTable()
@@ -211,7 +211,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Employee createEmployee()
@@ -222,7 +222,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Section createSection()
@@ -233,7 +233,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public InventoryPackage getInventoryPackage()
@@ -243,7 +243,7 @@ public class InventoryFactoryImpl extends EFactoryImpl implements InventoryFacto
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @deprecated
    * @generated
    */

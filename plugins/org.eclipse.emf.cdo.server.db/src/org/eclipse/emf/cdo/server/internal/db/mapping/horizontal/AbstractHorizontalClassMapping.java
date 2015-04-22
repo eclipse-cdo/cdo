@@ -627,8 +627,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchManager
-              .getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id,
+              branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
 
           if (!handler.handleRevision(revision))
           {

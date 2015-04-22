@@ -126,8 +126,8 @@ public class LocalCDORepository extends CDORepositoryImpl
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + folder);
 
-    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(getVersioningMode()
-        .isSupportingAudits(), getVersioningMode().isSupportingBranches(), false);
+    IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(
+        getVersioningMode().isSupportingAudits(), getVersioningMode().isSupportingBranches(), false);
     mappingStrategy.setProperties(getMappingStrategyProperties());
 
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");

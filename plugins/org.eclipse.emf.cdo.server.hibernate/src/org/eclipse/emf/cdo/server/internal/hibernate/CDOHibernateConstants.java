@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 /**
  * Maintains constants used in the CDO-Hibernate integration.
- * 
+ *
  * @author Martin Taal
  */
 public class CDOHibernateConstants

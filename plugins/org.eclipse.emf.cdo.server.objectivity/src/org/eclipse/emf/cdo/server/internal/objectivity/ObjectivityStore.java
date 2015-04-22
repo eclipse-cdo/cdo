@@ -90,9 +90,9 @@ public class ObjectivityStore extends Store implements IObjectivityStore
     // RevisionTemporality.NONE, RevisionTemporality.AUDITING),
     // set(RevisionParallelism.NONE));
     // setRevisionTemporality(RevisionTemporality.AUDITING);
-    super(TYPE, LongIDStore.OBJECT_ID_TYPES, set(ChangeFormat.REVISION, ChangeFormat.DELTA), set(
-        RevisionTemporality.NONE, RevisionTemporality.AUDITING), set(RevisionParallelism.NONE,
-        RevisionParallelism.BRANCHING));
+    super(TYPE, LongIDStore.OBJECT_ID_TYPES, set(ChangeFormat.REVISION, ChangeFormat.DELTA),
+        set(RevisionTemporality.NONE, RevisionTemporality.AUDITING),
+        set(RevisionParallelism.NONE, RevisionParallelism.BRANCHING));
     storeConfig = config;
   }
 

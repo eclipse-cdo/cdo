@@ -27,7 +27,7 @@ import org.hibernate.tuple.component.AbstractComponentTuplizer;
 
 /**
  * Tuplizer for feature map entries. These types are mapped using the dynamic capabilities of Hibernate.
- * 
+ *
  * @see CDOFeatureMapEntry
  * @see FeatureMapEntryPropertyHandler
  * @see FeatureMapEntryFeatureURIPropertyHandler

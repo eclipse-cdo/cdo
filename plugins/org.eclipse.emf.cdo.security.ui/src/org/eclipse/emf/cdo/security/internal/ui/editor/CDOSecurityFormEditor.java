@@ -108,8 +108,8 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
       }
       catch (CommitException e)
       {
-        StatusAdapter status = new StatusAdapter(new Status(IStatus.ERROR, OM.BUNDLE_ID,
-            Messages.CDOSecurityFormEditor_0, e));
+        StatusAdapter status = new StatusAdapter(
+            new Status(IStatus.ERROR, OM.BUNDLE_ID, Messages.CDOSecurityFormEditor_0, e));
         status.setProperty(IStatusAdapterConstants.TITLE_PROPERTY, Messages.CDOSecurityFormEditor_1);
         status.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System.currentTimeMillis());
         StatusManager.getManager().handle(status, StatusManager.SHOW);

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.net4j.util.defs.UserManagerDef#getUser <em>User</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.net4j.util.defs.Net4jUtilDefsPackage#getUserManagerDef()
  * @model
  * @generated

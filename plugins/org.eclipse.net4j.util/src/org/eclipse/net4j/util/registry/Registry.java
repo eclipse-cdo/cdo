@@ -24,7 +24,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implements IRegistry<K, V>
+public abstract class Registry<K, V> extends Container<Map.Entry<K, V>>implements IRegistry<K, V>
 {
   private boolean autoCommit;
 

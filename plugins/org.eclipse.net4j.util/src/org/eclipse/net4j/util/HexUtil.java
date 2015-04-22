@@ -16,12 +16,13 @@ import java.io.IOException;
 
 /**
  * Provides static methods that convert to and from hexadecimal string formats.
- * 
+ *
  * @author Eike Stepper
  */
 public final class HexUtil
 {
-  public static final char DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', };
+  public static final char DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
+      'f', };
 
   private HexUtil()
   {
@@ -29,7 +30,7 @@ public final class HexUtil
 
   /**
    * Converts a byte array into a string of lower case hex chars.
-   * 
+   *
    * @param bs
    *          A byte array
    * @param off
@@ -106,7 +107,7 @@ public final class HexUtil
 
   /**
    * Converts a String of hex characters into an array of bytes.
-   * 
+   *
    * @param s
    *          A string of hex characters (upper case or lower) of even length.
    * @param out

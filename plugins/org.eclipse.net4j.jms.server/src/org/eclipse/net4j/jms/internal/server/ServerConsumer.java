@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -40,7 +40,8 @@ public class ServerConsumer implements IServerConsumer
 
   private ConcurrentMap<String, MessageImpl> messages = new ConcurrentHashMap<String, MessageImpl>();
 
-  public ServerConsumer(long id, ServerDestination destination, String messageSelector, boolean noLocal, boolean durable)
+  public ServerConsumer(long id, ServerDestination destination, String messageSelector, boolean noLocal,
+      boolean durable)
   {
     this.id = id;
     this.destination = destination;

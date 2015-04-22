@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.properties;
 
 /**
  * Contains a list of {@link Property properties}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.2
  */

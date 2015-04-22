@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.util;
 
@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.util.Switch;
  * {@link #doSwitch(EObject) doSwitch(object)} to invoke the <code>caseXXX</code> method for each class of the model,
  * starting with the actual class of the object and proceeding up the inheritance hierarchy until a non-null result is
  * returned, which is the result of the switch. <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage
  * @generated
  */
@@ -38,14 +38,14 @@ public class AcoreSwitch<T> extends Switch<T>
 {
   /**
    * The cached model package <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected static AcorePackage modelPackage;
 
   /**
    * Creates an instance of the switch. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public AcoreSwitch()
@@ -58,7 +58,7 @@ public class AcoreSwitch<T> extends Switch<T>
 
   /**
    * Checks whether this is a switch for the given package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @parameter ePackage the package in question.
    * @return whether this is a switch for the given package.
    * @generated
@@ -72,7 +72,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
@@ -86,9 +86,13 @@ public class AcoreSwitch<T> extends Switch<T>
       AClass aClass = (AClass)theEObject;
       T result = caseAClass(aClass);
       if (result == null)
+      {
         result = caseABasicClass(aClass);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case AcorePackage.AINTERFACE:
@@ -96,9 +100,13 @@ public class AcoreSwitch<T> extends Switch<T>
       AInterface aInterface = (AInterface)theEObject;
       T result = caseAInterface(aInterface);
       if (result == null)
+      {
         result = caseABasicClass(aInterface);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case AcorePackage.ACORE_ROOT:
@@ -106,7 +114,9 @@ public class AcoreSwitch<T> extends Switch<T>
       ACoreRoot aCoreRoot = (ACoreRoot)theEObject;
       T result = caseACoreRoot(aCoreRoot);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case AcorePackage.AATTRIBUTE:
@@ -114,9 +124,13 @@ public class AcoreSwitch<T> extends Switch<T>
       AAttribute aAttribute = (AAttribute)theEObject;
       T result = caseAAttribute(aAttribute);
       if (result == null)
+      {
         result = caseAClassChild(aAttribute);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case AcorePackage.AOPERATION:
@@ -124,9 +138,13 @@ public class AcoreSwitch<T> extends Switch<T>
       AOperation aOperation = (AOperation)theEObject;
       T result = caseAOperation(aOperation);
       if (result == null)
+      {
         result = caseAClassChild(aOperation);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case AcorePackage.ABASIC_CLASS:
@@ -134,7 +152,9 @@ public class AcoreSwitch<T> extends Switch<T>
       ABasicClass aBasicClass = (ABasicClass)theEObject;
       T result = caseABasicClass(aBasicClass);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case AcorePackage.APARAMETER:
@@ -142,7 +162,9 @@ public class AcoreSwitch<T> extends Switch<T>
       AParameter aParameter = (AParameter)theEObject;
       T result = caseAParameter(aParameter);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case AcorePackage.ACLASS_CHILD:
@@ -150,7 +172,9 @@ public class AcoreSwitch<T> extends Switch<T>
       AClassChild aClassChild = (AClassChild)theEObject;
       T result = caseAClassChild(aClassChild);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -161,7 +185,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>AClass</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AClass</em>'.
@@ -176,7 +200,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>AInterface</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AInterface</em>'.
@@ -191,7 +215,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>ACore Root</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ACore Root</em>'.
@@ -206,7 +230,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>AAttribute</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AAttribute</em>'.
@@ -221,7 +245,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>AOperation</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AOperation</em>'.
@@ -236,7 +260,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>ABasic Class</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>ABasic Class</em>'.
@@ -251,7 +275,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>AParameter</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AParameter</em>'.
@@ -266,7 +290,7 @@ public class AcoreSwitch<T> extends Switch<T>
   /**
    * Returns the result of interpreting the object as an instance of '<em>AClass Child</em>'. <!-- begin-user-doc -->
    * This implementation returns null; returning a non-null result will terminate the switch. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>AClass Child</em>'.
@@ -282,7 +306,7 @@ public class AcoreSwitch<T> extends Switch<T>
    * Returns the result of interpreting the object as an instance of '<em>EObject</em>'. <!-- begin-user-doc --> This
    * implementation returns null; returning a non-null result will terminate the switch, but this is the last case
    * anyway. <!-- end-user-doc -->
-   * 
+   *
    * @param object
    *          the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>EObject</em>'.

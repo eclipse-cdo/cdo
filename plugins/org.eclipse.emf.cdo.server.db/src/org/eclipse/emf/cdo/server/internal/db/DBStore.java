@@ -641,8 +641,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     LifecycleUtil.activate(mappingStrategy);
 
     setRevisionTemporality(mappingStrategy.hasAuditSupport() ? RevisionTemporality.AUDITING : RevisionTemporality.NONE);
-    setRevisionParallelism(mappingStrategy.hasBranchingSupport() ? RevisionParallelism.BRANCHING
-        : RevisionParallelism.NONE);
+    setRevisionParallelism(
+        mappingStrategy.hasBranchingSupport() ? RevisionParallelism.BRANCHING : RevisionParallelism.NONE);
 
     if (schemaVersion == FIRST_START)
     {
@@ -796,15 +796,13 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
       if (storeIDs)
       {
-        OM.LOG
-            .info(MessageFormat.format(
-                Messages.getString("DBStore.10"), name, lastObjectID, nextLocalObjectID, getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
+        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), name, lastObjectID, nextLocalObjectID, //$NON-NLS-1$
+            getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime()));
       }
       else
       {
-        OM.LOG
-            .info(MessageFormat.format(
-                Messages.getString("DBStore.10b"), name, getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime())); //$NON-NLS-1$
+        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10b"), name, getLastBranchID(), //$NON-NLS-1$
+            getLastCommitTime(), getLastNonLocalCommitTime()));
       }
     }
     catch (SQLException e)
@@ -963,7 +961,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   };
 
   private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
-      LOB_SIZE_MIGRATION, NO_MIGRATION_NEEDED };
+    LOB_SIZE_MIGRATION, NO_MIGRATION_NEEDED };
 
   static
   {

@@ -684,8 +684,8 @@ public class PackageRegistryTest extends AbstractCDOTest
 
     Map<EClass, List<EClass>> subTypes = registry.getSubTypes();
 
-    assertSubtypes((EClass)p1.getEClassifier("RootClass"), subTypes,
-        Arrays.asList("Child1", "Child4", "SubChild", "SubChild3", "Child5", "Child6", "SubChild2", "Child7", "Child8"));
+    assertSubtypes((EClass)p1.getEClassifier("RootClass"), subTypes, Arrays.asList("Child1", "Child4", "SubChild",
+        "SubChild3", "Child5", "Child6", "SubChild2", "Child7", "Child8"));
     assertSubtypes((EClass)p1.getEClassifier("RootAbstractClass"), subTypes,
         Arrays.asList("Child2", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2", "Child8"));
     assertSubtypes((EClass)p1.getEClassifier("RootInterface"), subTypes,
@@ -718,8 +718,8 @@ public class PackageRegistryTest extends AbstractCDOTest
     registry.putEPackage(p2);
     subTypes = registry.getSubTypes();
 
-    assertSubtypes((EClass)p1.getEClassifier("RootClass"), subTypes,
-        Arrays.asList("Child1", "Child4", "SubChild", "SubChild3", "Child5", "Child6", "SubChild2", "Child7", "Child8"));
+    assertSubtypes((EClass)p1.getEClassifier("RootClass"), subTypes, Arrays.asList("Child1", "Child4", "SubChild",
+        "SubChild3", "Child5", "Child6", "SubChild2", "Child7", "Child8"));
     assertSubtypes((EClass)p1.getEClassifier("RootAbstractClass"), subTypes,
         Arrays.asList("Child2", "Child4", "SubChild", "SubChild3", "Child6", "SubChild2", "Child8"));
     assertSubtypes((EClass)p1.getEClassifier("RootInterface"), subTypes,

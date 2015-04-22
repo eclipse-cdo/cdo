@@ -37,29 +37,29 @@ public enum PatternStyle implements Enumerator
    * @ordered
    */
   EXACT(0, "EXACT", "EXACT"), /**
-                              * The '<em><b>TREE</b></em>' literal object.
-                              * <!-- begin-user-doc -->
-                              * <!-- end-user-doc -->
-                              * @see #TREE_VALUE
-                              * @generated
-                              * @ordered
-                              */
+   * The '<em><b>TREE</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #TREE_VALUE
+   * @generated
+   * @ordered
+   */
   TREE(1, "TREE", "TREE"), /**
-                           * The '<em><b>ANT</b></em>' literal object.
-                           * <!-- begin-user-doc -->
-                              * <!-- end-user-doc -->
-                           * @see #ANT_VALUE
-                           * @generated
-                           * @ordered
-                           */
+   * The '<em><b>ANT</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #ANT_VALUE
+   * @generated
+   * @ordered
+   */
   ANT(2, "ANT", "ANT"), /**
-                        * The '<em><b>REGEX</b></em>' literal object.
-                        * <!-- begin-user-doc -->
-                                                     * <!-- end-user-doc -->
-                        * @see #REGEX_VALUE
-                        * @generated
-                        * @ordered
-                        */
+   * The '<em><b>REGEX</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #REGEX_VALUE
+   * @generated
+   * @ordered
+   */
   REGEX(3, "REGEX", "REGEX"); //$NON-NLS-1$ //$NON-NLS-2$
 
   /**

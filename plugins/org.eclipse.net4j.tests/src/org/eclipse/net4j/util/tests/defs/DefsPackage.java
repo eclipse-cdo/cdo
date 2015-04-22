@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * 
+ *
  * @see org.eclipse.net4j.util.tests.defs.DefsFactory
  * @model kind="package"
  * @generated
@@ -36,28 +36,28 @@ public interface DefsPackage extends EPackage
 {
   /**
    * The package name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNAME = "defs"; //$NON-NLS-1$
 
   /**
    * The package namespace URI. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_URI = "http://www.eclipse.org/NET4J/defs/tests/1.0.0"; //$NON-NLS-1$
 
   /**
    * The package namespace name. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   String eNS_PREFIX = "net4j.defs.tests"; //$NON-NLS-1$
 
   /**
    * The singleton instance of the package. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   DefsPackage eINSTANCE = org.eclipse.net4j.util.tests.defs.impl.DefsPackageImpl.init();
@@ -65,7 +65,7 @@ public interface DefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl <em>Test Def</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.net4j.util.tests.defs.impl.TestDefImpl
    * @see org.eclipse.net4j.util.tests.defs.impl.DefsPackageImpl#getTestDef()
    * @generated
@@ -74,7 +74,7 @@ public interface DefsPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>References</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -82,7 +82,7 @@ public interface DefsPackage extends EPackage
 
   /**
    * The feature id for the '<em><b>Attribute</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -90,7 +90,7 @@ public interface DefsPackage extends EPackage
 
   /**
    * The number of structural features of the '<em>Test Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -99,7 +99,7 @@ public interface DefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.net4j.util.tests.defs.TestDef <em>Test Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Test Def</em>'.
    * @see org.eclipse.net4j.util.tests.defs.TestDef
    * @generated
@@ -109,7 +109,7 @@ public interface DefsPackage extends EPackage
   /**
    * Returns the meta object for the reference list '{@link org.eclipse.net4j.util.tests.defs.TestDef#getReferences
    * <em>References</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the reference list '<em>References</em>'.
    * @see org.eclipse.net4j.util.tests.defs.TestDef#getReferences()
    * @see #getTestDef()
@@ -120,7 +120,7 @@ public interface DefsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.net4j.util.tests.defs.TestDef#getAttribute
    * <em>Attribute</em>}'. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for the attribute '<em>Attribute</em>'.
    * @see org.eclipse.net4j.util.tests.defs.TestDef#getAttribute()
    * @see #getTestDef()
@@ -130,7 +130,7 @@ public interface DefsPackage extends EPackage
 
   /**
    * Returns the factory that creates the instances of the model. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the factory that creates the instances of the model.
    * @generated
    */
@@ -145,7 +145,7 @@ public interface DefsPackage extends EPackage
    * <li>and each data type</li>
    * </ul>
    * <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   interface Literals
@@ -153,7 +153,7 @@ public interface DefsPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.net4j.util.tests.defs.impl.TestDefImpl <em>Test Def</em>}'
      * class. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.net4j.util.tests.defs.impl.TestDefImpl
      * @see org.eclipse.net4j.util.tests.defs.impl.DefsPackageImpl#getTestDef()
      * @generated
@@ -163,7 +163,7 @@ public interface DefsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>References</b></em>' reference list feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference TEST_DEF__REFERENCES = eINSTANCE.getTestDef_References();
@@ -171,7 +171,7 @@ public interface DefsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Attribute</b></em>' attribute feature. <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
+     *
      * @generated
      */
     EAttribute TEST_DEF__ATTRIBUTE = eINSTANCE.getTestDef_Attribute();

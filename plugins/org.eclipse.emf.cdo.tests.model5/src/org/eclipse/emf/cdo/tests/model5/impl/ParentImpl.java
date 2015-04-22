@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Christian W. Damus (CEA) - initial API and implementation
  */
@@ -102,7 +102,7 @@ public class ParentImpl extends CDOObjectImpl implements Parent
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public String getName()
@@ -112,7 +112,7 @@ public class ParentImpl extends CDOObjectImpl implements Parent
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public void setNameGen(String newName)

@@ -38,8 +38,8 @@ import java.util.List;
  * @generated
  */
 public class CDOFileResourceItemProvider extends CDOResourceLeafItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -98,7 +98,8 @@ public class CDOFileResourceItemProvider extends CDOResourceLeafItemProvider imp
   public String getText(Object object)
   {
     String label = ((CDOFileResource<?>)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_CDOFileResource_type") : //$NON-NLS-1$
+    return label == null || label.length() == 0 ? getString("_UI_CDOFileResource_type") //$NON-NLS-1$
+        :
         label;
   }
 

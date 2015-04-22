@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.server.internal.hibernate;
 
 /**
  * Is used to store and retrieve properties in the database.
- * 
+ *
  * @author Martin Taal
  */
 public class SystemProperty

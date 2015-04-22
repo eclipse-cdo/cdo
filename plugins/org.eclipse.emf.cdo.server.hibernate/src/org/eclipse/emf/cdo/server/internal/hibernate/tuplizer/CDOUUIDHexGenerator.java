@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * An example of overriding the standard UUID generator of Hibernate to prevent it overwriting an already existing id in
  * an object.
- * 
+ *
  * @author mtaal
  */
 

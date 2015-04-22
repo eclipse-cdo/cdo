@@ -382,8 +382,8 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   private void move1down(IDBStoreAccessor accessor, CDOID id, int index, int upperIndex)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(
-        upperIndex == UNBOUNDED_MOVE ? sqlMoveDown : sqlMoveDownWithLimit, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection()
+        .prepareStatement(upperIndex == UNBOUNDED_MOVE ? sqlMoveDown : sqlMoveDownWithLimit, ReuseProbability.HIGH);
 
     try
     {
@@ -413,8 +413,8 @@ public class NonAuditFeatureMapTableMapping extends AbstractFeatureMapTableMappi
   private void move1up(IDBStoreAccessor accessor, CDOID id, int index, int upperIndex)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(
-        upperIndex == UNBOUNDED_MOVE ? sqlMoveUp : sqlMoveUpWithLimit, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection()
+        .prepareStatement(upperIndex == UNBOUNDED_MOVE ? sqlMoveUp : sqlMoveUpWithLimit, ReuseProbability.HIGH);
 
     try
     {

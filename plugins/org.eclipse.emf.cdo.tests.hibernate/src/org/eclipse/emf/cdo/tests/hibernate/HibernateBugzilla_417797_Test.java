@@ -26,7 +26,7 @@ import org.hibernate.cache.ehcache.EhCacheRegionFactory;
 import org.hibernate.cfg.Environment;
 
 /**
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateBugzilla_417797_Test extends AbstractCDOTest

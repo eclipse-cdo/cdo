@@ -89,8 +89,8 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
  * @apiviz.exclude .*\.CDOTransactionContainer
  * @apiviz.exclude .*\.CDOUpdatable
  */
-public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransactionContainer,
-    IPasswordCredentialsProvider.Provider
+public interface CDOSession
+    extends CDOCommonSession, CDOUpdatable, CDOTransactionContainer, IPasswordCredentialsProvider.Provider
 {
   /**
    * Returns an instance of {@link CDORepositoryInfo} that describes the model repository this {@link CDOSession

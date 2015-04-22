@@ -88,7 +88,9 @@ public class Class1Impl extends EObjectImpl implements Class1
   public void unsetClass2()
   {
     if (class2 != null)
+    {
       ((InternalEList.Unsettable<?>)class2).unset();
+    }
   }
 
   /**

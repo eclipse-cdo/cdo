@@ -69,8 +69,8 @@ public class FloatValueImpl extends ValueImpl implements FloatValue
   @Override
   public Float getLiteral()
   {
-    return (Float)eDynamicGet(ExpressionsPackage.FLOAT_VALUE__LITERAL,
-        ExpressionsPackage.Literals.FLOAT_VALUE__LITERAL, true, true);
+    return (Float)eDynamicGet(ExpressionsPackage.FLOAT_VALUE__LITERAL, ExpressionsPackage.Literals.FLOAT_VALUE__LITERAL,
+        true, true);
   }
 
   /**

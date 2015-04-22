@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.parts;
 
@@ -77,6 +77,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void createDefaultEditPolicies()
   {
     installEditPolicy(EditPolicyRoles.CREATION_ROLE, new CreationEditPolicy());
@@ -97,6 +98,7 @@ public class AClassEditPart extends ShapeNodeEditPart
     ConstrainedToolbarLayoutEditPolicy lep = new ConstrainedToolbarLayoutEditPolicy()
     {
 
+      @Override
       protected EditPolicy createChildEditPolicy(EditPart child)
       {
         if (child.getEditPolicy(EditPolicy.PRIMARY_DRAG_ROLE) == null)
@@ -185,6 +187,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void addChildVisual(EditPart childEditPart, int index)
   {
     if (addFixedChild(childEditPart))
@@ -197,6 +200,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void removeChildVisual(EditPart childEditPart)
   {
     if (removeFixedChild(childEditPart))
@@ -209,6 +213,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected IFigure getContentPaneFor(IGraphicalEditPart editPart)
   {
     if (editPart instanceof AClassAAttributeCompartmentEditPart)
@@ -234,9 +239,10 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * Creates figure for this edit part. Body of this method does not depend on settings in generation model so you may
    * safely remove <i>generated</i> tag and modify it.
-   * 
+   *
    * @generated
    */
+  @Override
   protected NodeFigure createNodeFigure()
   {
     NodeFigure figure = createNodePlate();
@@ -249,7 +255,7 @@ public class AClassEditPart extends ShapeNodeEditPart
 
   /**
    * Default implementation treats passed figure as content pane. Respects layout one may have set for generated figure.
-   * 
+   *
    * @param nodeShape
    *          instance of generated figure class
    * @generated
@@ -268,6 +274,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   public IFigure getContentPane()
   {
     if (contentPane != null)
@@ -280,6 +287,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setForegroundColor(Color color)
   {
     if (primaryShape != null)
@@ -291,6 +299,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setBackgroundColor(Color color)
   {
     if (primaryShape != null)
@@ -302,6 +311,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setLineWidth(int width)
   {
     if (primaryShape instanceof Shape)
@@ -313,6 +323,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   protected void setLineType(int style)
   {
     if (primaryShape instanceof Shape)
@@ -324,6 +335,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   public EditPart getPrimaryChildEditPart()
   {
     return getChildBySemanticHint(AcoreVisualIDRegistry.getType(AClassNameEditPart.VISUAL_ID));
@@ -442,6 +454,7 @@ public class AClassEditPart extends ShapeNodeEditPart
   /**
    * @generated
    */
+  @Override
   public EditPart getTargetEditPart(Request request)
   {
     if (request instanceof CreateViewAndElementRequest)
@@ -455,7 +468,8 @@ public class AClassEditPart extends ShapeNodeEditPart
       }
       if (type == AcoreElementTypes.AOperation_3004)
       {
-        return getChildBySemanticHint(AcoreVisualIDRegistry.getType(AClassAOperationClassCompartmentEditPart.VISUAL_ID));
+        return getChildBySemanticHint(
+            AcoreVisualIDRegistry.getType(AClassAOperationClassCompartmentEditPart.VISUAL_ID));
       }
     }
     return super.getTargetEditPart(request);
@@ -495,10 +509,10 @@ public class AClassEditPart extends ShapeNodeEditPart
       layoutThis.setSpacing(0);
       layoutThis.setVertical(true);
 
-      this.setLayoutManager(layoutThis);
+      setLayoutManager(layoutThis);
 
-      this.setLineWidth(1);
-      this.setBackgroundColor(THIS_BACK);
+      setLineWidth(1);
+      setBackgroundColor(THIS_BACK);
       createContents();
     }
 
@@ -535,6 +549,7 @@ public class AClassEditPart extends ShapeNodeEditPart
     /**
      * @generated
      */
+    @Override
     protected boolean useLocalCoordinates()
     {
       return myUseLocalCoordinates;

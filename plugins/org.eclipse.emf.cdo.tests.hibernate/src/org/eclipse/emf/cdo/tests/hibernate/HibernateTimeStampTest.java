@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
  * Simple test to check that the timestamp is indeed stored. https://bugs.eclipse.org/bugs/show_bug.cgi?id=361792
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateTimeStampTest extends AbstractCDOTest

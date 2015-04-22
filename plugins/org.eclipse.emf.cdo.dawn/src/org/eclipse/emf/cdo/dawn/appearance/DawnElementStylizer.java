@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -18,7 +18,7 @@ import org.eclipse.swt.graphics.Image;
 /**
  * This interface is used do influence the appearance of an UI element by a certain state. Implementations allow to
  * change the appearance for the adapted types of editors.
- * 
+ *
  * @author Martin Fluegge
  * @since 2.0
  */

@@ -121,7 +121,8 @@ public class SupplierImpl extends AddressImpl implements Supplier
     preferred = newPreferred;
     if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.SUPPLIER__PREFERRED, oldPreferred, preferred));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model1Package.SUPPLIER__PREFERRED, oldPreferred, preferred));
     }
   }
 

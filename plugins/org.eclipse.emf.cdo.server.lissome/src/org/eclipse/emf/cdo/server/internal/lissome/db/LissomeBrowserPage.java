@@ -115,8 +115,8 @@ public class LissomeBrowserPage extends AbstractPage
     try
     {
       String order = browser.getParam("order");
-      executeQuery(browser, pout, connection, "SELECT * FROM " + table
-          + (order == null ? "" : " ORDER BY " + order + " " + browser.getParam("direction")));
+      executeQuery(browser, pout, connection,
+          "SELECT * FROM " + table + (order == null ? "" : " ORDER BY " + order + " " + browser.getParam("direction")));
     }
     catch (Exception ex)
     {

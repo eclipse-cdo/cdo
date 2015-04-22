@@ -26,7 +26,8 @@ public class CDOHibernateBranchPointImpl extends CDOBranchPointImpl
 
   public CDOHibernateBranchPointImpl(long timeStamp)
   {
-    super(HibernateThreadContext.getCurrentStoreAccessor().getStore().getRepository().getBranchManager()
-        .getMainBranch(), timeStamp);
+    super(
+        HibernateThreadContext.getCurrentStoreAccessor().getStore().getRepository().getBranchManager().getMainBranch(),
+        timeStamp);
   }
 }

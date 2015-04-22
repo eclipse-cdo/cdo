@@ -183,12 +183,12 @@ public class TaskModel
         logicalTask.getVersionTasks().add(versionTask);
 
         Activator.getDefault().getLog()
-            .log(new Status(IStatus.INFO, Activator.PLUGIN_ID, "Version " + version + " added to task " + logicalTask));
+        .log(new Status(IStatus.INFO, Activator.PLUGIN_ID, "Version " + version + " added to task " + logicalTask));
       }
       catch (Exception ex)
       {
         Activator.getDefault().getLog()
-            .log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Processing task " + task.getTaskId() + " failed", ex));
+        .log(new Status(IStatus.ERROR, Activator.PLUGIN_ID, "Processing task " + task.getTaskId() + " failed", ex));
         ex.printStackTrace();
 
         // Cleanup

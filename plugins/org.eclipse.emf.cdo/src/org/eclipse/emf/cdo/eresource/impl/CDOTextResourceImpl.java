@@ -33,7 +33,7 @@ import java.io.Reader;
  *
  * @generated
  */
-public class CDOTextResourceImpl extends CDOFileResourceImpl<Reader> implements CDOTextResource
+public class CDOTextResourceImpl extends CDOFileResourceImpl<Reader>implements CDOTextResource
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

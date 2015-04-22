@@ -108,7 +108,9 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
   public Bz398057A getRefToClassA()
   {
     if (eContainerFeatureID() != HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A)
+    {
       return null;
+    }
     return (Bz398057A)eContainer();
   }
 
@@ -131,23 +133,33 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
   public void setRefToClassA(Bz398057A newRefToClassA)
   {
     if (newRefToClassA != eInternalContainer()
-        || (eContainerFeatureID() != HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A && newRefToClassA != null))
+        || eContainerFeatureID() != HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A && newRefToClassA != null)
     {
       if (EcoreUtil.isAncestor(this, newRefToClassA))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newRefToClassA != null)
+      {
         msgs = ((InternalEObject)newRefToClassA).eInverseAdd(this, HibernateTestPackage.BZ398057_A__LIST_OF_B,
             Bz398057A.class, msgs);
+      }
       msgs = basicSetRefToClassA(newRefToClassA, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A,
           newRefToClassA, newRefToClassA));
+    }
   }
 
   /**
@@ -170,7 +182,9 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
     double oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_B__VALUE, oldValue, value));
+    }
   }
 
   /**
@@ -193,7 +207,9 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
     String oldDbId = dbId;
     dbId = newDbId;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_B__DB_ID, oldDbId, dbId));
+    }
   }
 
   /**
@@ -208,7 +224,9 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
     {
     case HibernateTestPackage.BZ398057_B__REF_TO_CLASS_A:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetRefToClassA((Bz398057A)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -342,7 +360,9 @@ public class Bz398057BImpl extends EObjectImpl implements Bz398057B
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (value: ");

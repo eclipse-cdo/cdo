@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -95,7 +95,7 @@ public interface MangoPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.mango.impl.MangoValueImpl <em>Value</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.tests.mango.impl.MangoValueImpl
    * @see org.eclipse.emf.cdo.tests.mango.impl.MangoPackageImpl#getMangoValue()
    * @generated
@@ -192,7 +192,7 @@ public interface MangoPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.mango.MangoValue <em>Value</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Value</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.MangoValue
    * @generated
@@ -212,7 +212,7 @@ public interface MangoPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.mango.MangoParameter <em>Parameter</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Parameter</em>'.
    * @see org.eclipse.emf.cdo.tests.mango.MangoParameter
    * @generated

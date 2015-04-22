@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -22,7 +22,7 @@ package org.eclipse.net4j.defs;
  * <li>{@link org.eclipse.net4j.defs.TCPConnectorDef#getPort <em>Port</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.net4j.defs.Net4jDefsPackage#getTCPConnectorDef()
  * @model
  * @generated
@@ -72,7 +72,7 @@ public interface TCPConnectorDef extends ConnectorDef
   /**
    * Sets the value of the '{@link org.eclipse.net4j.defs.TCPConnectorDef#getHost <em>Host</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Host</em>' attribute.
    * @see #getHost()
@@ -100,7 +100,7 @@ public interface TCPConnectorDef extends ConnectorDef
   /**
    * Sets the value of the '{@link org.eclipse.net4j.defs.TCPConnectorDef#getPort <em>Port</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Port</em>' attribute.
    * @see #isSetPort()
@@ -113,7 +113,7 @@ public interface TCPConnectorDef extends ConnectorDef
   /**
    * Unsets the value of the '{@link org.eclipse.net4j.defs.TCPConnectorDef#getPort <em>Port</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #isSetPort()
    * @see #getPort()
    * @see #setPort(int)

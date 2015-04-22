@@ -214,8 +214,8 @@ public abstract class DelegatingConnection implements Connection
     return delegate.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
   }
 
-  public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency, int resultSetHoldability)
-      throws SQLException
+  public CallableStatement prepareCall(String sql, int resultSetType, int resultSetConcurrency,
+      int resultSetHoldability) throws SQLException
   {
     return delegate.prepareCall(sql, resultSetType, resultSetConcurrency, resultSetHoldability);
   }

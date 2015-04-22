@@ -105,7 +105,9 @@ public class SubpackageSwitch<T>
       Class2 class2 = (Class2)theEObject;
       T result = caseClass2(class2);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

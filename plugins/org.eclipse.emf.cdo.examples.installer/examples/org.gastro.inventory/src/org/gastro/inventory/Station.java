@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.CDOObject;
  * <li>{@link org.gastro.inventory.Station#getStationID <em>Station ID</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.gastro.inventory.InventoryPackage#getStation()
  * @model abstract="true"
  * @extends CDOObject
@@ -38,7 +38,7 @@ public interface Station extends CDOObject
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Station ID</em>' attribute.
    * @see #setStationID(String)
    * @see org.gastro.inventory.InventoryPackage#getStation_StationID()
@@ -50,7 +50,7 @@ public interface Station extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.inventory.Station#getStationID <em>Station ID</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Station ID</em>' attribute.
    * @see #getStationID()

@@ -34,24 +34,24 @@ import org.eclipse.net4j.util.security.IUserAware;
  * <p>
  * An example for opening a channel on an {@link IConnector} and sending an {@link IBuffer}:
  * <p>
- * 
+ *
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  * // Open a channel
  * IChannel channel = connector.openChannel();
  * short channelID = channel.getIndex();
- * 
+ *
  * // Fill a buffer
  * Buffer buffer = bufferProvider.getBuffer();
  * ByteBuffer byteBuffer = buffer.startPutting(channelID);
  * byteBuffer.putDouble(15.47);
- * 
+ *
  * // Let the channel send the buffer without blocking
  * channel.sendBuffer(buffer);
  * </pre>
  * <p>
  * An example for receiving {@link IBuffer}s from channels on an {@link IConnector}:
  * <p>
- * 
+ *
  * <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  * // Create a receive handler
  * final IBufferHandler receiveHandler = new IBufferHandler()
@@ -63,7 +63,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  *     buffer.release();
  *   }
  * };
- * 
+ *
  * // Set the receive handler to all new channels
  * connector.addListener(new ContainerEventAdapter()
  * {
@@ -74,7 +74,7 @@ import org.eclipse.net4j.util.security.IUserAware;
  *   }
  * });
  * </pre>
- * 
+ *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
@@ -84,7 +84,7 @@ public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, IN
   /**
    * Returns the ID of this channel. The ID is unique at any time among all channels of the associated
    * {@link IChannelMultiplexer multiplexer}.
-   * 
+   *
    * @since 2.0
    */
   public short getID();
@@ -92,7 +92,7 @@ public interface IChannel extends ILocationAware, IUserAware, IBufferHandler, IN
   /**
    * Returns the multiplexer this channel is associated with. This channel multiplexer can be used, for example, to open
    * additional channels that will be multiplexed through the same transport medium.
-   * 
+   *
    * @since 2.0
    */
   public IChannelMultiplexer getMultiplexer();

@@ -20,7 +20,7 @@ import java.io.File;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter#getFile <em>File</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getXmlFormatter()
  * @model
  * @generated
@@ -34,7 +34,7 @@ public interface XmlFormatter extends Formatter
    * If the meaning of the '<em>File</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>File</em>' attribute.
    * @see #setFile(File)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getXmlFormatter_File()
@@ -46,7 +46,7 @@ public interface XmlFormatter extends Formatter
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.XmlFormatter#getFile <em>File</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>File</em>' attribute.
    * @see #getFile()

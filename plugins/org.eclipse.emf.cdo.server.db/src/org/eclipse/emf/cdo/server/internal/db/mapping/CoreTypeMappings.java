@@ -62,8 +62,8 @@ public class CoreTypeMappings
    */
   public static class TMEnum extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Enum",
-        EcorePackage.eINSTANCE.getEEnum(), DBType.INTEGER));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Enum", EcorePackage.eINSTANCE.getEEnum(), DBType.INTEGER));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -117,14 +117,14 @@ public class CoreTypeMappings
    */
   public static class TMString extends AbstractTypeMapping
   {
-    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".StringVarchar", EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR));
+    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".StringVarchar", EcorePackage.eINSTANCE.getEString(), DBType.VARCHAR));
 
-    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".StringLongVarchar", EcorePackage.eINSTANCE.getEString(), DBType.LONGVARCHAR));
+    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".StringLongVarchar", EcorePackage.eINSTANCE.getEString(), DBType.LONGVARCHAR));
 
-    public static final Factory FACTORY_CLOB = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".StringClob",
-        EcorePackage.eINSTANCE.getEString(), DBType.CLOB));
+    public static final Factory FACTORY_CLOB = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".StringClob", EcorePackage.eINSTANCE.getEString(), DBType.CLOB));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -155,11 +155,11 @@ public class CoreTypeMappings
    */
   public static class TMBlob extends AbstractTypeMapping
   {
-    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".BlobStream", EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR));
+    public static final Factory FACTORY_VARCHAR = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".BlobStream", EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR));
 
-    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".BlobStreamLongVarchar", EtypesPackage.eINSTANCE.getBlob(), DBType.LONGVARCHAR));
+    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".BlobStreamLongVarchar", EtypesPackage.eINSTANCE.getBlob(), DBType.LONGVARCHAR));
 
     @Override
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
@@ -207,11 +207,11 @@ public class CoreTypeMappings
    */
   public static class TMClob extends AbstractTypeMapping
   {
-    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".ClobStream", EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR));
+    public static final Factory FACTORY_VARCHAR = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".ClobStream", EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR));
 
-    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".ClobStreamLongVarchar", EtypesPackage.eINSTANCE.getClob(), DBType.LONGVARCHAR));
+    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".ClobStreamLongVarchar", EtypesPackage.eINSTANCE.getClob(), DBType.LONGVARCHAR));
 
     @Override
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
@@ -259,11 +259,11 @@ public class CoreTypeMappings
    */
   public static class TMShort extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Short",
-        EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Short", EcorePackage.eINSTANCE.getEShort(), DBType.SMALLINT));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".ShortObject", EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".ShortObject", EcorePackage.eINSTANCE.getEShortObject(), DBType.SMALLINT));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -344,11 +344,11 @@ public class CoreTypeMappings
    */
   public static class TMLong extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Long",
-        EcorePackage.eINSTANCE.getELong(), DBType.BIGINT));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Long", EcorePackage.eINSTANCE.getELong(), DBType.BIGINT));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(
-        ID_PREFIX + ".LongObject", EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".LongObject",
+        EcorePackage.eINSTANCE.getELongObject(), DBType.BIGINT));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -379,11 +379,11 @@ public class CoreTypeMappings
    */
   public static class TMInteger extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Integer",
-        EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Integer", EcorePackage.eINSTANCE.getEInt(), DBType.INTEGER));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".IntegerObject", EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".IntegerObject", EcorePackage.eINSTANCE.getEIntegerObject(), DBType.INTEGER));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -414,11 +414,11 @@ public class CoreTypeMappings
    */
   public static class TMFloat extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Float",
-        EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Float", EcorePackage.eINSTANCE.getEFloat(), DBType.FLOAT));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".FloatObject", EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".FloatObject", EcorePackage.eINSTANCE.getEFloatObject(), DBType.FLOAT));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -449,11 +449,11 @@ public class CoreTypeMappings
    */
   public static class TMDouble extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Double",
-        EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Double", EcorePackage.eINSTANCE.getEDouble(), DBType.DOUBLE));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".DoubleObject", EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".DoubleObject", EcorePackage.eINSTANCE.getEDoubleObject(), DBType.DOUBLE));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -522,8 +522,8 @@ public class CoreTypeMappings
    */
   public static class TMDate2Date extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Date",
-        EcorePackage.eINSTANCE.getEDate(), DBType.DATE));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Date", EcorePackage.eINSTANCE.getEDate(), DBType.DATE));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -554,8 +554,8 @@ public class CoreTypeMappings
    */
   public static class TMDate2Time extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Time",
-        EcorePackage.eINSTANCE.getEDate(), DBType.TIME));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Time", EcorePackage.eINSTANCE.getEDate(), DBType.TIME));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -586,11 +586,11 @@ public class CoreTypeMappings
    */
   public static class TMCharacter extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Character",
-        EcorePackage.eINSTANCE.getEChar(), DBType.CHAR));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Character", EcorePackage.eINSTANCE.getEChar(), DBType.CHAR));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".CharacterObject", EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".CharacterObject", EcorePackage.eINSTANCE.getECharacterObject(), DBType.CHAR));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -639,11 +639,11 @@ public class CoreTypeMappings
    */
   public static class TMCharacter2Integer extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(
-        ID_PREFIX + ".Character2Integer", EcorePackage.eINSTANCE.getEChar(), DBType.INTEGER));
+    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Character2Integer",
+        EcorePackage.eINSTANCE.getEChar(), DBType.INTEGER));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".CharacterObject2Integer", EcorePackage.eINSTANCE.getECharacterObject(), DBType.INTEGER));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(
+        ID_PREFIX + ".CharacterObject2Integer", EcorePackage.eINSTANCE.getECharacterObject(), DBType.INTEGER));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -686,11 +686,11 @@ public class CoreTypeMappings
    */
   public static class TMByte extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Byte",
-        EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Byte", EcorePackage.eINSTANCE.getEByte(), DBType.SMALLINT));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(
-        ID_PREFIX + ".ByteObject", EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".ByteObject",
+        EcorePackage.eINSTANCE.getEByteObject(), DBType.SMALLINT));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -753,8 +753,8 @@ public class CoreTypeMappings
    */
   public static class TMBytesVarbinary extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".ByteArrayVarbinary", EcorePackage.eINSTANCE.getEByteArray(), DBType.VARBINARY));
+    public static final Factory FACTORY = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".ByteArrayVarbinary", EcorePackage.eINSTANCE.getEByteArray(), DBType.VARBINARY));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -785,17 +785,17 @@ public class CoreTypeMappings
    */
   public static class TMBoolean extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".Boolean",
-        EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN));
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".Boolean", EcorePackage.eINSTANCE.getEBoolean(), DBType.BOOLEAN));
 
-    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".BooleanObject", EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN));
+    public static final Factory FACTORY_OBJECT = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".BooleanObject", EcorePackage.eINSTANCE.getEBooleanObject(), DBType.BOOLEAN));
 
-    public static final Factory FACTORY_SMALLINT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".Boolean_SMALLINT", EcorePackage.eINSTANCE.getEBoolean(), DBType.SMALLINT));
+    public static final Factory FACTORY_SMALLINT = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".Boolean_SMALLINT", EcorePackage.eINSTANCE.getEBoolean(), DBType.SMALLINT));
 
-    public static final Factory FACTORY_OBJECT_SMALLINT = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".BooleanObject_SMALLINT", EcorePackage.eINSTANCE.getEBooleanObject(), DBType.SMALLINT));
+    public static final Factory FACTORY_OBJECT_SMALLINT = new Factory(TypeMappingUtil.createDescriptor(
+        ID_PREFIX + ".BooleanObject_SMALLINT", EcorePackage.eINSTANCE.getEBooleanObject(), DBType.SMALLINT));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -829,8 +829,8 @@ public class CoreTypeMappings
     public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".BigInteger",
         EcorePackage.eINSTANCE.getEBigInteger(), DBType.VARCHAR));
 
-    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".BigIntegerLongVarChar", EcorePackage.eINSTANCE.getEBigInteger(), DBType.LONGVARCHAR));
+    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(
+        ID_PREFIX + ".BigIntegerLongVarChar", EcorePackage.eINSTANCE.getEBigInteger(), DBType.LONGVARCHAR));
 
     @Override
     protected Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -877,8 +877,8 @@ public class CoreTypeMappings
     public static final Factory FACTORY = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".BigDecimal",
         EcorePackage.eINSTANCE.getEBigDecimal(), DBType.VARCHAR));
 
-    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".BigDecimalLongVarchar", EcorePackage.eINSTANCE.getEBigDecimal(), DBType.LONGVARCHAR));
+    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(
+        ID_PREFIX + ".BigDecimalLongVarchar", EcorePackage.eINSTANCE.getEBigDecimal(), DBType.LONGVARCHAR));
 
     @Override
     protected Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -922,8 +922,8 @@ public class CoreTypeMappings
    */
   public static class TMJavaClass extends AbstractTypeMapping
   {
-    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".JavaClassVarchar", EcorePackage.eINSTANCE.getEJavaClass(), DBType.VARCHAR));
+    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".JavaClassVarchar", EcorePackage.eINSTANCE.getEJavaClass(), DBType.VARCHAR));
 
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
@@ -986,11 +986,11 @@ public class CoreTypeMappings
    */
   public static class TMCustom extends AbstractTypeMapping
   {
-    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".CustomVarchar", EcorePackage.eINSTANCE.getEDataType(), DBType.VARCHAR));
+    public static final Factory FACTORY_VARCHAR = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".CustomVarchar", EcorePackage.eINSTANCE.getEDataType(), DBType.VARCHAR));
 
-    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX
-        + ".CustomLongVarchar", EcorePackage.eINSTANCE.getEDataType(), DBType.LONGVARCHAR));
+    public static final Factory FACTORY_LONG_VARCHAR = new Factory(TypeMappingUtil
+        .createDescriptor(ID_PREFIX + ".CustomLongVarchar", EcorePackage.eINSTANCE.getEDataType(), DBType.LONGVARCHAR));
 
     public static final Factory FACTORY_CLOB = new Factory(TypeMappingUtil.createDescriptor(ID_PREFIX + ".CustomClob",
         EcorePackage.eINSTANCE.getEDataType(), DBType.CLOB));

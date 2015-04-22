@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -48,7 +48,7 @@ public interface Address extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getName <em>Name</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -74,7 +74,7 @@ public interface Address extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Street</em>' attribute.
    * @see #getStreet()
@@ -100,7 +100,7 @@ public interface Address extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Address#getCity <em>City</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>City</em>' attribute.
    * @see #getCity()

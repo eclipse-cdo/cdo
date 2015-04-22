@@ -412,8 +412,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
    */
   public void setContext(Context newContext)
   {
-    if (newContext != eInternalContainer() || eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT
-        && newContext != null)
+    if (newContext != eInternalContainer()
+        || eContainerFeatureID() != ArticlePackage.DOCUMENTATION__CONTEXT && newContext != null)
     {
       if (EcoreUtil.isAncestor(this, newContext))
       {
@@ -437,8 +437,8 @@ public class DocumentationImpl extends StructuralElementImpl implements Document
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, ArticlePackage.DOCUMENTATION__CONTEXT, newContext,
-          newContext));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, ArticlePackage.DOCUMENTATION__CONTEXT, newContext, newContext));
     }
   }
 

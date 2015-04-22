@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -100,9 +100,13 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, oldKey, newKey);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -117,18 +121,26 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
     {
       NotificationChain msgs = null;
       if (key != null)
-        msgs = ((InternalEObject)key).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+      {
+        msgs = ((InternalEObject)key).eInverseRemove(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+      }
       if (newKey != null)
-        msgs = ((InternalEObject)newKey).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+      {
+        msgs = ((InternalEObject)newKey).eInverseAdd(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY, null, msgs);
+      }
       msgs = basicSetTypedKey(newKey, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__KEY,
           newKey, newKey));
+    }
   }
 
   /**
@@ -144,8 +156,10 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
       if (value != oldValue)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE,
               Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE, oldValue, value));
+        }
       }
     }
     return value;
@@ -169,8 +183,10 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
     EObject oldValue = value;
     value = newValue;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE,
           oldValue, value));
+    }
   }
 
   /**
@@ -201,7 +217,9 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
       return getTypedKey();
     case Model2Package.EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP__VALUE:
       if (resolve)
+      {
         return getTypedValue();
+      }
       return basicGetTypedValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -277,7 +295,7 @@ public class EObjectToEObjectKeyContainedMapImpl extends EObjectImpl implements 
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -78,6 +78,7 @@ public class AcoreLinkDescriptor extends AcoreNodeDescriptor
     final IElementType elementTypeCopy = elementType;
     mySemanticAdapter = new EObjectAdapter(linkElement)
     {
+      @Override
       public Object getAdapter(Class adapter)
       {
         if (IElementType.class.equals(adapter))

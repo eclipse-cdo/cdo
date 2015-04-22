@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 /**
  * Interface which complements {@link IClassMapping} with methods to facilitate audit support.
- * 
+ *
  * @see IMappingStrategy#hasAuditSupport()
  * @author Eike Stepper
  * @author Stefan Winkler
@@ -27,7 +27,7 @@ public interface IClassMappingAuditSupport
   /**
    * Read a specific version of a revision. If this method returns <code>true</code> it is guaranteed that
    * <code>revision.getVersion() == version</code>
-   * 
+   *
    * @param storeAccessor
    *          the accessor to use.
    * @param revision

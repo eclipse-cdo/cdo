@@ -19,9 +19,9 @@ import org.hibernate.Session;
 
 /**
  * The Hibernate store accessor works with Hibernate {@link Session} instances
- * to persist changes in the database, it obtains the {@link Session} from the 
+ * to persist changes in the database, it obtains the {@link Session} from the
  * {@link IHibernateStore}.
- * 
+ *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

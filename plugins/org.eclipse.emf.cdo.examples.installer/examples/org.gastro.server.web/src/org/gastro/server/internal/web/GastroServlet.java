@@ -33,8 +33,6 @@ import org.gastro.business.BusinessDay;
 import org.gastro.inventory.MenuCard;
 import org.gastro.server.GastroServer;
 
-import templates.MenuCardTemplate;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -47,6 +45,8 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
+
+import templates.MenuCardTemplate;
 
 /**
  * @author Eike Stepper

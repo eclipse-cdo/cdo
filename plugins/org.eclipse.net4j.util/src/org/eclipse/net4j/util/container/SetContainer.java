@@ -29,7 +29,7 @@ import java.util.Set;
  * @see IContainerSet
  * @see IContainerSortedSet
  */
-public class SetContainer<E> extends Container<E> implements IContainer.Modifiable<E>, IContainer.Persistable<E>
+public class SetContainer<E> extends Container<E>implements IContainer.Modifiable<E>, IContainer.Persistable<E>
 {
   private final Class<E> componentType;
 

@@ -76,8 +76,8 @@ public class CDOImporter extends ModelImporter
 
       for (Resource resource : ecoreResourceSet.getResources())
       {
-        getEPackages().addAll(
-            EcoreUtil.<EPackage> getObjectsByType(resource.getContents(), EcorePackage.Literals.EPACKAGE));
+        getEPackages()
+            .addAll(EcoreUtil.<EPackage> getObjectsByType(resource.getContents(), EcorePackage.Literals.EPACKAGE));
       }
 
       BasicDiagnostic diagnosticChain = new BasicDiagnostic(ConverterPlugin.ID, ConverterUtil.ACTION_MESSAGE_NONE,

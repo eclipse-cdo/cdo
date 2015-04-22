@@ -319,8 +319,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   /**
    * @author Eike Stepper
    */
-  protected class OptionsImpl extends org.eclipse.emf.internal.cdo.session.CDOSessionImpl.OptionsImpl implements
-      org.eclipse.emf.cdo.net4j.CDOSession.Options
+  protected class OptionsImpl extends org.eclipse.emf.internal.cdo.session.CDOSessionImpl.OptionsImpl
+      implements org.eclipse.emf.cdo.net4j.CDOSession.Options
   {
     private int commitTimeout = CommitTransactionRequest.DEFAULT_MONITOR_TIMEOUT_SECONDS;
 

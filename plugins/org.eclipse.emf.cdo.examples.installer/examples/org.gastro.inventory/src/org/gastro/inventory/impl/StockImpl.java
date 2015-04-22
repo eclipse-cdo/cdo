@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -33,14 +33,14 @@ import org.gastro.inventory.StockProduct;
  * <li>{@link org.gastro.inventory.impl.StockImpl#getDepartment <em>Department</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class StockImpl extends CDOObjectImpl implements Stock
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected StockImpl()
@@ -50,7 +50,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -61,7 +61,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -72,7 +72,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -83,7 +83,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public String getName()
@@ -93,7 +93,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setName(String newName)
@@ -103,7 +103,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public Department getDepartment()
@@ -113,7 +113,7 @@ public class StockImpl extends CDOObjectImpl implements Stock
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setDepartment(Department newDepartment)

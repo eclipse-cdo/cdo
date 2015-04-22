@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -23,7 +23,7 @@ import java.util.Set;
  * As an individual lock is always owned by view, which in turn is owned by a session, the methods on this interface
  * return instances of {@link CDOLockOwner} which carry that information.
  * <p>
- * 
+ *
  * @author Caspar De Groot
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
@@ -39,7 +39,7 @@ public interface CDOLockState
   /**
    * Gets a unique identifier for the object that is locked; typically a {@link CDOID} or a {@link CDOIDAndBranch},
    * depending on whether branching support is enabled or not
-   * 
+   *
    * @return the identifier
    */
   public Object getLockedObject();

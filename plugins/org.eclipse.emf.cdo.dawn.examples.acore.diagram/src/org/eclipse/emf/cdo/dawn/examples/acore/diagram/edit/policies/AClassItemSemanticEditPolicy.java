@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
@@ -68,6 +68,7 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
   /**
    * @generated
    */
+  @Override
   protected Command getDestroyElementCommand(DestroyElementRequest req)
   {
     View view = (View)getHost().getModel();
@@ -187,8 +188,9 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
           switch (AcoreVisualIDRegistry.getVisualID(cnode))
           {
           case AAttribute2EditPart.VISUAL_ID:
-            cmd.add(new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
-                                                                                                                          // true
+            cmd.add(
+                new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
+                                                                                                                      // true
             // don't need explicit deletion of cnode as parent's view deletion would clean child views as well
             // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
             break;
@@ -202,8 +204,9 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
           switch (AcoreVisualIDRegistry.getVisualID(cnode))
           {
           case AOperation2EditPart.VISUAL_ID:
-            cmd.add(new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
-                                                                                                                          // true
+            cmd.add(
+                new DestroyElementCommand(new DestroyElementRequest(getEditingDomain(), cnode.getElement(), false))); // directlyOwned:
+                                                                                                                      // true
             // don't need explicit deletion of cnode as parent's view deletion would clean child views as well
             // cmd.add(new org.eclipse.gmf.runtime.diagram.core.commands.DeleteCommand(getEditingDomain(), cnode));
             break;
@@ -217,6 +220,7 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
   /**
    * @generated
    */
+  @Override
   protected Command getCreateRelationshipCommand(CreateRelationshipRequest req)
   {
     Command command = req.getTarget() == null ? getStartCreateRelationshipCommand(req)
@@ -283,9 +287,10 @@ public class AClassItemSemanticEditPolicy extends AcoreBaseItemSemanticEditPolic
   /**
    * Returns command to reorient EReference based link. New link target or source should be the domain model element
    * associated with this node.
-   * 
+   *
    * @generated
    */
+  @Override
   protected Command getReorientReferenceRelationshipCommand(ReorientReferenceRelationshipRequest req)
   {
     switch (getVisualID(req))

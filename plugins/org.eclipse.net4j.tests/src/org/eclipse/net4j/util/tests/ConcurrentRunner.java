@@ -20,7 +20,7 @@ import java.util.concurrent.Future;
 /**
  * A class that implements a concurrent execution environment for runnables. It waits until all runnables submitted for
  * execution are terminated and returns the first throwable that occurs
- * 
+ *
  * @author Andre Dietisheim
  */
 public class ConcurrentRunner
@@ -28,7 +28,7 @@ public class ConcurrentRunner
   /**
    * Executes Runnables in concurrent manner. The first Throwable thrown by those runnables is thrown back to the
    * caller.
-   * 
+   *
    * @param runnables
    *          the runnables to execute
    * @param maxThreads
@@ -47,7 +47,7 @@ public class ConcurrentRunner
 
   /**
    * Executes the runnables. The runnables are wrapped in Callables when they're submitted to the thread pool.
-   * 
+   *
    * @param loops
    *          the loops
    * @param threadPool
@@ -73,7 +73,7 @@ public class ConcurrentRunner
 
   /**
    * Throw a throwable if it occured while executing the runnables
-   * 
+   *
    * @param futures
    *          the futures
    * @param threadPool
@@ -108,7 +108,7 @@ public class ConcurrentRunner
 
     /**
      * Instantiates a new concurrent test case.
-     * 
+     *
      * @param runnable
      *          the runnable
      */
@@ -119,7 +119,7 @@ public class ConcurrentRunner
 
     /**
      * Call.
-     * 
+     *
      * @return the throwable
      * @throws Exception
      *           the exception

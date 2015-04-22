@@ -65,7 +65,7 @@ import java.util.Set;
  * @author Eike Stepper
  */
 public class LissomeStore extends Store implements ILissomeStore, CDOAllRevisionsProvider, IDBConnectionProvider,
-    NoRawAccess, NoLargeObjects, NoQueryXRefs, NoChangeSets, NoDurableLocking
+NoRawAccess, NoLargeObjects, NoQueryXRefs, NoChangeSets, NoDurableLocking
 {
   public static final String TYPE = "lissome"; //$NON-NLS-1$
 

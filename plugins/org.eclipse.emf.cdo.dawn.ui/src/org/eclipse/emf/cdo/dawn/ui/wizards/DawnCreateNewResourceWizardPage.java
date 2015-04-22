@@ -46,7 +46,7 @@ public class DawnCreateNewResourceWizardPage extends WizardPage
 
   private final CDOView view;
 
-  //private String resourceNamePrefix = "default"; //$NON-NLS-1$
+  // private String resourceNamePrefix = "default"; //$NON-NLS-1$
 
   private boolean createAutomaticResourceName;
 

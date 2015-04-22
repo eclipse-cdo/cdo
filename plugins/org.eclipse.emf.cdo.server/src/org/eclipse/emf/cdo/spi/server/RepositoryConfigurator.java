@@ -97,8 +97,8 @@ public class RepositoryConfigurator
     return storeFactories;
   }
 
-  public IRepository[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException,
-      CoreException
+  public IRepository[] configure(File configFile)
+      throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     if (TRACER.isEnabled())
     {
@@ -111,8 +111,8 @@ public class RepositoryConfigurator
   /**
    * @since 4.3
    */
-  public IRepository[] configure(Reader configReader) throws ParserConfigurationException, SAXException, IOException,
-      CoreException
+  public IRepository[] configure(Reader configReader)
+      throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     if (TRACER.isEnabled())
     {
@@ -125,8 +125,8 @@ public class RepositoryConfigurator
   /**
    * @since 4.3
    */
-  protected IRepository[] configure(Document document) throws ParserConfigurationException, SAXException, IOException,
-      CoreException
+  protected IRepository[] configure(Document document)
+      throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     List<IRepository> repositories = new ArrayList<IRepository>();
     NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$

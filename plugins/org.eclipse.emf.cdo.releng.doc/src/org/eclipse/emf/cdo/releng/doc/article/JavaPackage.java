@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getPlugin <em>Plugin</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getJavaPackage()
  * @model
  * @generated
@@ -34,7 +34,7 @@ public interface JavaPackage extends EObject
    * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getJavaPackage_Name()
@@ -46,7 +46,7 @@ public interface JavaPackage extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -62,7 +62,7 @@ public interface JavaPackage extends EObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Plugin</em>' container reference.
    * @see #setPlugin(Plugin)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getJavaPackage_Plugin()
@@ -75,7 +75,7 @@ public interface JavaPackage extends EObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.JavaPackage#getPlugin <em>Plugin</em>}'
    * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Plugin</em>' container reference.
    * @see #getPlugin()

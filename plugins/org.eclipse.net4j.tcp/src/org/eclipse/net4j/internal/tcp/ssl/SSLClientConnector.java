@@ -22,7 +22,7 @@ import java.text.MessageFormat;
 
 /**
  * SSLClientConnector responses to be connector on client side and it handles about connecting to the server connector.
- * 
+ *
  * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  * @author Caspar De Groot (No Magic Asia Ltd.)
  * @since 4.0

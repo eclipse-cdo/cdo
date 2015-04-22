@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -14,9 +14,9 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.emf.ecore.EClass;
 
+import interface_.IInterface;
 import reference.Reference;
 import reference.ReferencePackage;
-import interface_.IInterface;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Reference</b></em>'. <!-- end-user-doc -->
@@ -26,14 +26,14 @@ import interface_.IInterface;
  * <li>{@link reference.impl.ReferenceImpl#getRef <em>Ref</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ReferenceImpl extends CDOObjectImpl implements Reference
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ReferenceImpl()
@@ -43,7 +43,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -54,7 +54,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -65,7 +65,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public IInterface getRef()
@@ -75,7 +75,7 @@ public class ReferenceImpl extends CDOObjectImpl implements Reference
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public void setRef(IInterface newRef)

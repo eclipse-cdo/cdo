@@ -777,7 +777,7 @@ public class UnsettableAttributesImpl extends CDOObjectImpl implements Unsettabl
    */
   public Object getAttrJavaObject()
   {
-    return (Object)eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT, true);
+    return eGet(Model6Package.Literals.UNSETTABLE_ATTRIBUTES__ATTR_JAVA_OBJECT, true);
   }
 
   /**

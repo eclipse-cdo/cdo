@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * Wrapper for the AS schema code with caching of the wrapped classes. This class need to be reseted by the
  * ObjectivityStore doDeactivate().
- * 
+ *
  * @author ibrahim
  */
 public class ObjySchema
@@ -152,7 +152,7 @@ public class ObjySchema
 
   /**
    * Originally in EProposedManager
-   * 
+   *
    * @param ePackage
    */
   static public void registerEPackage(EPackage ePackage)

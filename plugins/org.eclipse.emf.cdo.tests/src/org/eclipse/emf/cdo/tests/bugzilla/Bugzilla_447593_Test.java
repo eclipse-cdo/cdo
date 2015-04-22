@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class Bugzilla_447593_Test extends AbstractCDOTest
 {
-
   public void testTwiceCDOTransactionSetBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -64,5 +63,4 @@ public class Bugzilla_447593_Test extends AbstractCDOTest
     resource.getContents().add(getModel1Factory().createCategory());
     transaction.commit();
   }
-
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -206,7 +206,7 @@ public class CollaborationsView extends SessionManagerView
     private StartFacilityAction(IBuddyCollaboration collaboration, String type, ImageDescriptor descriptor)
     {
       super(MessageFormat.format(Messages.getString("CollaborationsView_2"), StringUtil.cap(type)), AS_RADIO_BUTTON); //$NON-NLS-1$
-      setToolTipText(MessageFormat.format(Messages.getString("CollaborationsView_3"), type)); //$NON-NLS-1$ 
+      setToolTipText(MessageFormat.format(Messages.getString("CollaborationsView_3"), type)); //$NON-NLS-1$
       setImageDescriptor(descriptor);
       this.collaboration = collaboration;
       this.type = type;

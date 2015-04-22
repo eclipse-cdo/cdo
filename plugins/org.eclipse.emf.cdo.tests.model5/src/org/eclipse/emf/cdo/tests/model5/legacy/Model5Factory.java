@@ -170,7 +170,7 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
   /**
    * Returns a new object of class '<em>Child</em>'.
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @return a new object of class '<em>Child</em>'.
    * @generated
    */

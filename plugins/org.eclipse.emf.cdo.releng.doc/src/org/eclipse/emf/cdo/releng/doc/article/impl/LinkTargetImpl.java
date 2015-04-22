@@ -152,8 +152,8 @@ public abstract class LinkTargetImpl extends EObjectImpl implements LinkTarget
     case ArticlePackage.LINK_TARGET__ID:
       return ID_EDEFAULT == null ? getId() != null : !ID_EDEFAULT.equals(getId());
     case ArticlePackage.LINK_TARGET__DEFAULT_LABEL:
-      return DEFAULT_LABEL_EDEFAULT == null ? getDefaultLabel() != null : !DEFAULT_LABEL_EDEFAULT
-          .equals(getDefaultLabel());
+      return DEFAULT_LABEL_EDEFAULT == null ? getDefaultLabel() != null
+          : !DEFAULT_LABEL_EDEFAULT.equals(getDefaultLabel());
     case ArticlePackage.LINK_TARGET__TOOLTIP:
       return TOOLTIP_EDEFAULT == null ? getTooltip() != null : !TOOLTIP_EDEFAULT.equals(getTooltip());
     }

@@ -15,9 +15,9 @@ import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.internal.ui.CDOLobEditorInput;
-import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -40,8 +40,8 @@ public final class OpenResourceEditorAction extends ResourceNodeAction
 
   public OpenResourceEditorAction(IWorkbenchPage page, CDOResourceLeaf resource)
   {
-    super(page, resource instanceof CDOResource ? TITLE : FILE_TITLE, resource instanceof CDOResource ? TOOL_TIP
-        : FILE_TOOL_TIP, null, resource);
+    super(page, resource instanceof CDOResource ? TITLE : FILE_TITLE,
+        resource instanceof CDOResource ? TOOL_TIP : FILE_TOOL_TIP, null, resource);
   }
 
   @Override

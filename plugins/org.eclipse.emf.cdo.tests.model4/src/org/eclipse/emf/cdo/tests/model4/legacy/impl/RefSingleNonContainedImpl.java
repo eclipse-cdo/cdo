@@ -77,8 +77,10 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
       if (element != oldElement)
       {
         if (eNotificationRequired())
+        {
           eNotify(new ENotificationImpl(this, Notification.RESOLVE, model4Package.REF_SINGLE_NON_CONTAINED__ELEMENT,
               oldElement, element));
+        }
       }
     }
     return element;
@@ -106,9 +108,13 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           model4Package.REF_SINGLE_NON_CONTAINED__ELEMENT, oldElement, newElement);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -123,18 +129,26 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
     {
       NotificationChain msgs = null;
       if (element != null)
+      {
         msgs = ((InternalEObject)element).eInverseRemove(this, model4Package.SINGLE_NON_CONTAINED_ELEMENT__PARENT,
             SingleNonContainedElement.class, msgs);
+      }
       if (newElement != null)
+      {
         msgs = ((InternalEObject)newElement).eInverseAdd(this, model4Package.SINGLE_NON_CONTAINED_ELEMENT__PARENT,
             SingleNonContainedElement.class, msgs);
+      }
       msgs = basicSetElement(newElement, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_NON_CONTAINED__ELEMENT,
-          newElement, newElement));
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, model4Package.REF_SINGLE_NON_CONTAINED__ELEMENT, newElement,
+          newElement));
+    }
   }
 
   /**
@@ -148,8 +162,10 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
     {
     case model4Package.REF_SINGLE_NON_CONTAINED__ELEMENT:
       if (element != null)
+      {
         msgs = ((InternalEObject)element).eInverseRemove(this, model4Package.SINGLE_NON_CONTAINED_ELEMENT__PARENT,
             SingleNonContainedElement.class, msgs);
+      }
       return basicSetElement((SingleNonContainedElement)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -181,7 +197,9 @@ public class RefSingleNonContainedImpl extends EObjectImpl implements RefSingleN
     {
     case model4Package.REF_SINGLE_NON_CONTAINED__ELEMENT:
       if (resolve)
+      {
         return getElement();
+      }
       return basicGetElement();
     }
     return super.eGet(featureID, resolve, coreType);

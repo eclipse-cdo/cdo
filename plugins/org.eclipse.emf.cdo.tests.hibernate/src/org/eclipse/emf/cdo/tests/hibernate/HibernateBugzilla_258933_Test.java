@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_258933_Test;
  * CDORevisionImpl.eIsSet() works incorrectly
  * <p>
  * See bug 258933
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateBugzilla_258933_Test extends Bugzilla_258933_Test

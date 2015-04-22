@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -110,13 +110,15 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
     this.workbench = workbench;
     this.selection = selection;
     setWindowTitle(Messages.AcoreCreationWizardTitle);
-    setDefaultPageImageDescriptor(AcoreDiagramEditorPlugin.getBundledImageDescriptor("icons/wizban/NewAcoreWizard.gif")); //$NON-NLS-1$
+    setDefaultPageImageDescriptor(
+        AcoreDiagramEditorPlugin.getBundledImageDescriptor("icons/wizban/NewAcoreWizard.gif")); //$NON-NLS-1$
     setNeedsProgressMonitor(true);
   }
 
   /**
    * @generated
    */
+  @Override
   public void addPages()
   {
     diagramModelFilePage = new AcoreCreationWizardPage("DiagramModelFile", getSelection(), "acore_diagram"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -124,8 +126,10 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
     diagramModelFilePage.setDescription(Messages.AcoreCreationWizard_DiagramModelFilePageDescription);
     addPage(diagramModelFilePage);
 
-    domainModelFilePage = new AcoreCreationWizardPage("DomainModelFile", getSelection(), "acore") { //$NON-NLS-1$ //$NON-NLS-2$
+    domainModelFilePage = new AcoreCreationWizardPage("DomainModelFile", getSelection(), "acore") //$NON-NLS-1$ //$NON-NLS-2$
+    {
 
+      @Override
       public void setVisible(boolean visible)
       {
         if (visible)
@@ -145,11 +149,13 @@ public class AcoreCreationWizard extends Wizard implements INewWizard
   /**
    * @generated
    */
+  @Override
   public boolean performFinish()
   {
     IRunnableWithProgress op = new WorkspaceModifyOperation(null)
     {
 
+      @Override
       protected void execute(IProgressMonitor monitor) throws CoreException, InterruptedException
       {
         diagram = AcoreDiagramEditorUtil.createDiagram(diagramModelFilePage.getURI(), domainModelFilePage.getURI(),

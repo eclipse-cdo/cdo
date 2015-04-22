@@ -26,8 +26,8 @@ import java.util.WeakHashMap;
  * @author Eike Stepper
  * @since 4.2
  */
-public abstract class CDOCommitHistoryProviderImpl<KEY, HISTORY extends CDOCommitHistory> extends Lifecycle implements
-    CDOCommitHistory.Provider<KEY, HISTORY>
+public abstract class CDOCommitHistoryProviderImpl<KEY, HISTORY extends CDOCommitHistory> extends Lifecycle
+    implements CDOCommitHistory.Provider<KEY, HISTORY>
 {
   private Map<CDOCommitHistory, KEY> histories = new WeakHashMap<CDOCommitHistory, KEY>();
 

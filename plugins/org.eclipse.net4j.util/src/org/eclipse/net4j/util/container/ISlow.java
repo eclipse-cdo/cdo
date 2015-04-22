@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.container;
 
 /**
  * A marker interface to indicate that some method calls may be slow.
- * 
+ *
  * @author Eike Stepper
  * @since 3.1
  * @apiviz.exclude

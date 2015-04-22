@@ -34,7 +34,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Acceptor extends Container<IConnector> implements InternalAcceptor
+public abstract class Acceptor extends Container<IConnector>implements InternalAcceptor
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_ACCEPTOR, Acceptor.class);
 

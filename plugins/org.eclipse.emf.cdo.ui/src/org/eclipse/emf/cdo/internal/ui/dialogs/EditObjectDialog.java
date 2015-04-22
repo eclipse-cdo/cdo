@@ -69,8 +69,8 @@ public class EditObjectDialog extends TitleAreaDialog
 
     try
     {
-      ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE.createViewModelContext(
-          ViewProviderHelper.getView(eObject, null), eObject, new DefaultReferenceService());
+      ViewModelContext viewModelContext = ViewModelContextFactory.INSTANCE
+          .createViewModelContext(ViewProviderHelper.getView(eObject, null), eObject, new DefaultReferenceService());
 
       ECPSWTViewRenderer.INSTANCE.render(container, viewModelContext);
     }

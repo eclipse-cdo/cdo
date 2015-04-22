@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 
 /**
  * Generic provider for the kinds of changes that have been applied to objects.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @apiviz.uses {@link CDOChangeKind} - - provides

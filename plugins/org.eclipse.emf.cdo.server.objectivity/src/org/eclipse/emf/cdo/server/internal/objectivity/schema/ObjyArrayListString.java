@@ -87,13 +87,13 @@ public class ObjyArrayListString
           embeddedAttributeName, // Attribute name
           1, // # elements in fixed-size array
           "ooUtf8String" // Type of numeric data
-      ); // Default value
+          ); // Default value
 
       embeddedClass.add_basic_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           embeddedAttributeNull, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooBOOLEAN // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       // top_mod.propose_new_class(embeddedClass);
 
@@ -107,7 +107,7 @@ public class ObjyArrayListString
           ObjyArrayListString.FixedElementsName, // Attribute name
           ObjyArrayListString.FixedElementsSize, // # elements in fixed-size array
           embeddedClassName // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       // top_mod.propose_new_class(fixedArrayClass);
 
@@ -120,7 +120,7 @@ public class ObjyArrayListString
           ObjyArrayList.sizeName, // Attribute name
           1, // # elements in fixed-size array
           ooBaseType.ooINT32 // Type of numeric data
-          ); // Default value
+      ); // Default value
 
       StringArrayClass.add_varray_attribute(com.objy.as.app.d_Module.LAST, d_Access_Kind.d_PUBLIC, // Access kind
           ObjyArrayList.arrayName, // Attribute name
@@ -179,7 +179,7 @@ public class ObjyArrayListString
     Class_Object chunkObject = getVArray().get_class_obj(chunkItem);
     // String_Value value = chunkObject.nget_string(FixedElementsName, chunkIndex);
     Class_Object embeddedElement = chunkObject.nget_class_obj(FixedElementsName, chunkIndex); // TODO - I don't like
-                                                                                              // using magic numbers!!!
+    // using magic numbers!!!
     String_Value value = embeddedElement.nget_string(embeddedAttributeName);
     Numeric_Value isNull = embeddedElement.get_numeric(1);
     return isNull == ITypeMapper.numericTrue ? null : value.toString();

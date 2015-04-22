@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -125,7 +125,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
    * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also
    * performs initialization of the package, or returns the registered package, if one already exists. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.net4j.defs.Net4jDefsPackage#eNS_URI
    * @see #init()
@@ -144,7 +144,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link Net4jDefsPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc
@@ -157,11 +157,14 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
   public static Net4jDefsPackage init()
   {
     if (isInited)
+    {
       return (Net4jDefsPackage)EPackage.Registry.INSTANCE.getEPackage(Net4jDefsPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
-    Net4jDefsPackageImpl theNet4jDefsPackage = (Net4jDefsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Net4jDefsPackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new Net4jDefsPackageImpl());
+    Net4jDefsPackageImpl theNet4jDefsPackage = (Net4jDefsPackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof Net4jDefsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI)
+            : new Net4jDefsPackageImpl());
 
     isInited = true;
 
@@ -485,7 +488,9 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -549,7 +554,9 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -567,17 +574,17 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
     // Add supertypes to classes
     connectorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    clientProtocolFactoryDefEClass.getESuperTypes().add(this.getProtocolProviderDef());
-    tcpConnectorDefEClass.getESuperTypes().add(this.getConnectorDef());
+    clientProtocolFactoryDefEClass.getESuperTypes().add(getProtocolProviderDef());
+    tcpConnectorDefEClass.getESuperTypes().add(getConnectorDef());
     acceptorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    tcpAcceptorDefEClass.getESuperTypes().add(this.getAcceptorDef());
-    jvmAcceptorDefEClass.getESuperTypes().add(this.getAcceptorDef());
-    jvmConnectorDefEClass.getESuperTypes().add(this.getConnectorDef());
-    httpConnectorDefEClass.getESuperTypes().add(this.getConnectorDef());
+    tcpAcceptorDefEClass.getESuperTypes().add(getAcceptorDef());
+    jvmAcceptorDefEClass.getESuperTypes().add(getAcceptorDef());
+    jvmConnectorDefEClass.getESuperTypes().add(getConnectorDef());
+    httpConnectorDefEClass.getESuperTypes().add(getConnectorDef());
     tcpSelectorDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    serverProtocolFactoryDefEClass.getESuperTypes().add(this.getProtocolProviderDef());
+    serverProtocolFactoryDefEClass.getESuperTypes().add(getProtocolProviderDef());
     bufferProviderDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
-    bufferPoolDefEClass.getESuperTypes().add(this.getBufferProviderDef());
+    bufferPoolDefEClass.getESuperTypes().add(getBufferProviderDef());
     protocolProviderDefEClass.getESuperTypes().add(theNet4jUtilDefsPackage.getDef());
 
     // Initialize classes and features; add operations and parameters
@@ -585,7 +592,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
         IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConnectorDef_UserID(), ecorePackage.getEString(), "userID", null, 0, 1, ConnectorDef.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConnectorDef_BufferProvider(), this.getBufferProviderDef(), null, "bufferProvider", null, 1, 1,
+    initEReference(getConnectorDef_BufferProvider(), getBufferProviderDef(), null, "bufferProvider", null, 1, 1,
         ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConnectorDef_ExecutorService(), theNet4jUtilDefsPackage.getExecutorServiceDef(), null,
@@ -594,7 +601,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
     initEReference(getConnectorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null,
         0, 1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConnectorDef_ClientProtocolProvider(), this.getClientProtocolFactoryDef(), null,
+    initEReference(getConnectorDef_ClientProtocolProvider(), getClientProtocolFactoryDef(), null,
         "clientProtocolProvider", null, 1, -1, ConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -603,7 +610,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
     initEClass(tcpConnectorDefEClass, TCPConnectorDef.class, "TCPConnectorDef", !IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTCPConnectorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 0, 1,
+    initEReference(getTCPConnectorDef_TcpSelectorDef(), getTCPSelectorDef(), null, "tcpSelectorDef", null, 0, 1,
         TCPConnectorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTCPConnectorDef_Host(), ecorePackage.getEString(), "host", null, 1, 1, TCPConnectorDef.class,
@@ -613,16 +620,16 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
 
     initEClass(acceptorDefEClass, AcceptorDef.class, "AcceptorDef", IS_ABSTRACT, !IS_INTERFACE,
         IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAcceptorDef_BufferProvider(), this.getBufferPoolDef(), null, "bufferProvider", null, 0, 1,
+    initEReference(getAcceptorDef_BufferProvider(), getBufferPoolDef(), null, "bufferProvider", null, 0, 1,
         AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAcceptorDef_ExecutorService(), theNet4jUtilDefsPackage.getThreadPoolDef(), null,
         "executorService", null, 0, 1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAcceptorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null,
-        0, 1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
+    initEReference(getAcceptorDef_Negotiator(), theNet4jUtilDefsPackage.getNegotiatorDef(), null, "negotiator", null, 0,
+        1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAcceptorDef_ServerProtocolProvider(), this.getServerProtocolFactoryDef(), null,
+    initEReference(getAcceptorDef_ServerProtocolProvider(), getServerProtocolFactoryDef(), null,
         "serverProtocolProvider", null, 1, -1, AcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_COMPOSITE, IS_RESOLVE_PROXIES, IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -632,7 +639,7 @@ public class Net4jDefsPackageImpl extends EPackageImpl implements Net4jDefsPacka
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTCPAcceptorDef_Port(), ecorePackage.getEInt(), "port", null, 1, 1, TCPAcceptorDef.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTCPAcceptorDef_TcpSelectorDef(), this.getTCPSelectorDef(), null, "tcpSelectorDef", null, 1, 1,
+    initEReference(getTCPAcceptorDef_TcpSelectorDef(), getTCPSelectorDef(), null, "tcpSelectorDef", null, 1, 1,
         TCPAcceptorDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES,
         !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

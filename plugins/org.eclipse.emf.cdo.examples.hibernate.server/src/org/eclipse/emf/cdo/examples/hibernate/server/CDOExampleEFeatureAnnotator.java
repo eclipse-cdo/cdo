@@ -19,7 +19,7 @@ import org.eclipse.emf.teneo.annotations.pamodel.PAnnotatedEStructuralFeature;
 /**
  * An example of providing an extension for Teneo Mapping. See <a
  * href="http://wiki.eclipse.org/Teneo/Hibernate/Extensions">here</a> for more information on Teneo extensions.
- * 
+ *
  * @author Martin Taal
  */
 public class CDOExampleEFeatureAnnotator extends CDOEFeatureAnnotator

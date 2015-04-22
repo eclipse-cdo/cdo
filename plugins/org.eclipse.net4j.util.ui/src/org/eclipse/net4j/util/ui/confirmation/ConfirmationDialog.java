@@ -33,8 +33,8 @@ public class ConfirmationDialog extends MessageDialog
   public ConfirmationDialog(Shell shell, String title, String message, Set<Confirmation> acceptableResponses,
       Confirmation suggestedResponse)
   {
-    this(shell, title, message, getButtonLabels(inOrder(acceptableResponses)), inOrder(acceptableResponses).indexOf(
-        suggestedResponse));
+    this(shell, title, message, getButtonLabels(inOrder(acceptableResponses)),
+        inOrder(acceptableResponses).indexOf(suggestedResponse));
   }
 
   private ConfirmationDialog(Shell shell, String title, String message, String[] buttonLabels, int defaultIndex)

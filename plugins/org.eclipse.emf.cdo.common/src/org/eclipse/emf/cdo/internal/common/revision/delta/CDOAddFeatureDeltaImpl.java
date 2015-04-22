@@ -28,8 +28,8 @@ import java.io.IOException;
 /**
  * @author Simon McDuff
  */
-public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl implements CDOAddFeatureDelta,
-    ListIndexAffecting, ListTargetAdding
+public class CDOAddFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl
+    implements CDOAddFeatureDelta, ListIndexAffecting, ListTargetAdding
 {
   public CDOAddFeatureDeltaImpl(EStructuralFeature feature, int index, Object value)
   {

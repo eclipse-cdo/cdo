@@ -47,8 +47,8 @@ public class ExportResourceAction extends AbstractViewAction
 
   public ExportResourceAction(IWorkbenchPage page, CDOView view)
   {
-    super(page, TITLE + INTERACTIVE,
-        Messages.getString("ExportResourceAction.2"), SharedIcons.getDescriptor(SharedIcons.ETOOL_EXPORT), view); //$NON-NLS-1$
+    super(page, TITLE + INTERACTIVE, Messages.getString("ExportResourceAction.2"), //$NON-NLS-1$
+        SharedIcons.getDescriptor(SharedIcons.ETOOL_EXPORT), view);
     setId(ID);
   }
 
@@ -95,8 +95,8 @@ public class ExportResourceAction extends AbstractViewAction
   {
     // Target Resource
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+        new XMIResourceFactoryImpl());
     Resource resource = resourceSet.createResource(sourceURI);
 
     Collection<EObject> copiedRoots = EcoreUtil.copyAll(sourceContents);

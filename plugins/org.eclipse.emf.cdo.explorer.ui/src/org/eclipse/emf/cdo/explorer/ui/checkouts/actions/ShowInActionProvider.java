@@ -106,7 +106,8 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     return fillMenu(page, viewer, subMenu, selectedElement);
   }
 
-  public static boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Object selectedElement)
+  public static boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu,
+      Object selectedElement)
   {
     boolean filled = false;
 

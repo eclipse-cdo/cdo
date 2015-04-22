@@ -21,8 +21,8 @@ import org.eclipse.emf.cdo.view.CDOView;
  * 280102: CDOView.getRootResource() throws exception on an empty repository
  * <p>
  * See https://bugs.eclipse.org/280102
- * 
- * @author Víctor Roldan Betancort
+ *
+ * @author Vï¿½ctor Roldan Betancort
  */
 public class Bugzilla_280102_Test extends AbstractCDOTest
 {

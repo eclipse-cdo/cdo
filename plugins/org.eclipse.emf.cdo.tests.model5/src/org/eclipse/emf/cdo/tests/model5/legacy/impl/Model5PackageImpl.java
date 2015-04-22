@@ -135,7 +135,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private EClass childEClass = null;
@@ -190,8 +190,8 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     }
 
     // Obtain or create and register package
-    Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE
-        .get(eNS_URI) : new Model5PackageImpl());
+    Model5PackageImpl theModel5Package = (Model5PackageImpl)(EPackage.Registry.INSTANCE
+        .get(eNS_URI) instanceof Model5PackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new Model5PackageImpl());
 
     isInited = true;
 
@@ -473,7 +473,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getParent_Children()
@@ -483,7 +483,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getParent_Favourite()
@@ -503,7 +503,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-    	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EClass getChild()
@@ -513,7 +513,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getChild_Parent()
@@ -523,7 +523,7 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
 
   /**
    * <!-- begin-user-doc -->
-  	 * <!-- end-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   public EReference getChild_PreferredBy()

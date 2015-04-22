@@ -489,9 +489,9 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
     for (Object o : qry.list())
     {
       final TeneoAuditCommitInfo teneoCommitInfo = (TeneoAuditCommitInfo)o;
-      final CDOCommitInfo cdoCommitInfo = commitInfoManager.createCommitInfo(getStore().getRepository()
-          .getBranchManager().getMainBranch(), teneoCommitInfo.getCommitTime(), teneoCommitInfo.getCommitTime() - 1,
-          teneoCommitInfo.getUser(), teneoCommitInfo.getComment(), null);
+      final CDOCommitInfo cdoCommitInfo = commitInfoManager.createCommitInfo(
+          getStore().getRepository().getBranchManager().getMainBranch(), teneoCommitInfo.getCommitTime(),
+          teneoCommitInfo.getCommitTime() - 1, teneoCommitInfo.getUser(), teneoCommitInfo.getComment(), null);
       handler.handleCommitInfo(cdoCommitInfo);
     }
   }
@@ -677,14 +677,14 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
         }
 
         final String revisionName = (String)value;
-        final boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil
-            .equals(revisionName, name) : revisionName.startsWith(name);
+        final boolean match = exactMatch || revisionName == null || name == null ? ObjectUtil.equals(revisionName, name)
+            : revisionName.startsWith(name);
 
-        if (match && !context.addResource(HibernateUtil.getInstance().getCDOID(revision)))
-        {
-          // No more results allowed
-          break;
-        }
+            if (match && !context.addResource(HibernateUtil.getInstance().getCDOID(revision)))
+            {
+              // No more results allowed
+              break;
+            }
       }
     }
   }
@@ -769,11 +769,11 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       return true;
     }
     else
-    // not mapped
-    if (null != eref.getEAnnotation(TENEO_UNMAPPED_SOURCE))
-    {
-      return false;
-    }
+      // not mapped
+      if (null != eref.getEAnnotation(TENEO_UNMAPPED_SOURCE))
+      {
+        return false;
+      }
 
     // not computed yet
     for (String propName : session.getSessionFactory().getClassMetadata(entityName).getPropertyNames())
@@ -937,7 +937,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
           {
             if (cdoRevision.getVersion() != revision.getVersion())
             {
-              throw new IllegalStateException("Revision " + cdoRevision + " was already updated by another transaction");
+              throw new IllegalStateException(
+                  "Revision " + cdoRevision + " was already updated by another transaction");
             }
             existingRevisions.put(revision.getID(), cdoRevision);
           }
@@ -1080,7 +1081,7 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       final CDORevision container = HibernateUtil.getInstance().getCDORevision((CDOID)revision.getContainerID());
       final String entityName = getStore().getEntityName(revision.getEClass());
       final CDOID id = revision.getID();
-      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY //$NON-NLS-1$  //$NON-NLS-2$
+      final String hqlUpdate = "update " + entityName + " set " + CDOHibernateConstants.CONTAINER_PROPERTY //$NON-NLS-1$ //$NON-NLS-2$
           + " = :containerInfo where " + getStore().getIdentifierPropertyName(entityName) + " = :id"; //$NON-NLS-1$ //$NON-NLS-2$
       final Query qry = session.createQuery(hqlUpdate);
       qry.setParameter("containerInfo", ContainerInfoConverter.getInstance().convertContainerRelationToString(revision, //$NON-NLS-1$
@@ -1088,7 +1089,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        //        OM.LOG.error("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        // OM.LOG.error("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$
+        // //$NON-NLS-2$
         throw new IllegalStateException("Not able to update container columns of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }
@@ -1108,7 +1110,8 @@ public class HibernateStoreAccessor extends StoreAccessor implements IHibernateS
       qry.setParameter("id", HibernateUtil.getInstance().getIdValue(id)); //$NON-NLS-1$
       if (qry.executeUpdate() != 1)
       {
-        //        OM.LOG.error("Not able to update resource ids of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
+        // OM.LOG.error("Not able to update resource ids of " + entityName + " with id " + id); //$NON-NLS-1$
+        // //$NON-NLS-2$
         throw new IllegalStateException("Not able to update resource ids of " + entityName + " with id " + id); //$NON-NLS-1$ //$NON-NLS-2$
       }
     }

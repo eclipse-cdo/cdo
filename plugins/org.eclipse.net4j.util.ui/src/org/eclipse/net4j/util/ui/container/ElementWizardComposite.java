@@ -331,7 +331,8 @@ public abstract class ElementWizardComposite extends Composite implements IListe
     /**
      * @since 3.2
      */
-    public WithCombo(Composite parent, int style, String productGroup, String label, ValidationContext validationContext)
+    public WithCombo(Composite parent, int style, String productGroup, String label,
+        ValidationContext validationContext)
     {
       super(parent, style, productGroup, label, validationContext);
     }

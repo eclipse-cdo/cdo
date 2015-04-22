@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
- *    
+ *
  *  Initial Publication:
  *    Eclipse Magazin - http://www.eclipse-magazin.de
  */
@@ -59,7 +59,7 @@ public interface OrderDetail extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.business.OrderDetail#getOrder <em>Order</em>}' container reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Order</em>' container reference.
    * @see #getOrder()
@@ -86,7 +86,7 @@ public interface OrderDetail extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.business.OrderDetail#getOffering <em>Offering</em>}' reference. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Offering</em>' reference.
    * @see #getOffering()
@@ -113,7 +113,7 @@ public interface OrderDetail extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.business.OrderDetail#getQuantity <em>Quantity</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Quantity</em>' attribute.
    * @see #getQuantity()
@@ -141,7 +141,7 @@ public interface OrderDetail extends CDOObject
   /**
    * Sets the value of the '{@link org.gastro.business.OrderDetail#getState <em>State</em>}' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>State</em>' attribute.
    * @see org.gastro.business.OrderState

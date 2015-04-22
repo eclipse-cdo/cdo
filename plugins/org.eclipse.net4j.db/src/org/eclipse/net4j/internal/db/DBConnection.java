@@ -158,8 +158,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
   }
 
   @Override
-  public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency)
-      throws SQLException
+  public PreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency) throws SQLException
   {
     return prepareStatement(sql, resultSetType, resultSetConcurrency, ReuseProbability.LOW);
   }

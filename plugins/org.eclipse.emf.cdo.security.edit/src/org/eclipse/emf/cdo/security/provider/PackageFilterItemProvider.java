@@ -39,8 +39,8 @@ import java.util.List;
  * @generated
  */
 public class PackageFilterItemProvider extends PermissionFilterItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -80,11 +80,10 @@ public class PackageFilterItemProvider extends PermissionFilterItemProvider impl
   protected void addApplicablePackagePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-            getResourceLocator(),
-            getString("_UI_PackageFilter_applicablePackage_feature"), //$NON-NLS-1$
-            getString(
-                "_UI_PropertyDescriptor_description", "_UI_PackageFilter_applicablePackage_feature", "_UI_PackageFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+        getResourceLocator(), getString("_UI_PackageFilter_applicablePackage_feature"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_PackageFilter_applicablePackage_feature", //$NON-NLS-1$ //$NON-NLS-2$
+                "_UI_PackageFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.PACKAGE_FILTER__APPLICABLE_PACKAGE, true, false, true, null, null, null));
   }
 

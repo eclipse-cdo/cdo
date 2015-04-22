@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Needed by org.eclipse.mylyn.internal.team.ui.preferences.workaround.MylynTeamPreferencePage.
  * <p>
  * TODO Ask platform guys to open this API
- * 
+ *
  * @since 3.2
  */
 public class RegExContentProposalProvider implements IContentProposalProvider
@@ -103,7 +103,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Creates a new Proposal Computer.
-     * 
+     *
      * @param contents
      *          the contents of the subject control
      * @param position
@@ -134,7 +134,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Computes applicable proposals for the find field.
-     * 
+     *
      * @return the proposals
      */
     public IContentProposal[] computeFindProposals()
@@ -224,14 +224,14 @@ public class RegExContentProposalProvider implements IContentProposalProvider
         addBracketProposal("(?>)", 3, RegExMessages.displayString_atomicCap, RegExMessages.additionalInfo_atomicCap); //$NON-NLS-1$
 
         // lookaraound
-        addBracketProposal(
-            "(?=)", 3, RegExMessages.displayString_posLookahead, RegExMessages.additionalInfo_posLookahead); //$NON-NLS-1$
-        addBracketProposal(
-            "(?!)", 3, RegExMessages.displayString_negLookahead, RegExMessages.additionalInfo_negLookahead); //$NON-NLS-1$
-        addBracketProposal(
-            "(?<=)", 4, RegExMessages.displayString_posLookbehind, RegExMessages.additionalInfo_posLookbehind); //$NON-NLS-1$
-        addBracketProposal(
-            "(?<!)", 4, RegExMessages.displayString_negLookbehind, RegExMessages.additionalInfo_negLookbehind); //$NON-NLS-1$
+        addBracketProposal("(?=)", 3, RegExMessages.displayString_posLookahead, //$NON-NLS-1$
+            RegExMessages.additionalInfo_posLookahead);
+        addBracketProposal("(?!)", 3, RegExMessages.displayString_negLookahead, //$NON-NLS-1$
+            RegExMessages.additionalInfo_negLookahead);
+        addBracketProposal("(?<=)", 4, RegExMessages.displayString_posLookbehind, //$NON-NLS-1$
+            RegExMessages.additionalInfo_posLookbehind);
+        addBracketProposal("(?<!)", 4, RegExMessages.displayString_negLookbehind, //$NON-NLS-1$
+            RegExMessages.additionalInfo_negLookbehind);
 
         // greedy quantifiers
         addBracketProposal("?", 1, RegExMessages.displayString_quest, RegExMessages.additionalInfo_quest); //$NON-NLS-1$
@@ -267,7 +267,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Computes applicable proposals for the replace field.
-     * 
+     *
      * @return the proposals
      */
     public IContentProposal[] computeReplaceProposals()
@@ -287,7 +287,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Adds a proposal.
-     * 
+     *
      * @param proposal
      *          the string to be inserted
      * @param displayString
@@ -302,7 +302,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Adds a proposal.
-     * 
+     *
      * @param proposal
      *          the string to be inserted
      * @param cursorPosition
@@ -319,7 +319,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Adds a proposal to the priority proposals list.
-     * 
+     *
      * @param proposal
      *          the string to be inserted
      * @param displayString
@@ -334,7 +334,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Adds a proposal. Ensures that existing pre- and postfixes are not duplicated.
-     * 
+     *
      * @param proposal
      *          the string to be inserted
      * @param cursorPosition
@@ -347,7 +347,8 @@ public class RegExContentProposalProvider implements IContentProposalProvider
     private void addBracketProposal(String proposal, int cursorPosition, String displayString, String additionalInfo)
     {
       String prolog = fExpression.substring(0, fDocumentOffset);
-      if (!fIsEscape && prolog.endsWith("\\") && proposal.startsWith("\\")) { //$NON-NLS-1$//$NON-NLS-2$
+      if (!fIsEscape && prolog.endsWith("\\") && proposal.startsWith("\\")) //$NON-NLS-1$//$NON-NLS-2$
+      {
         fProposals.add(new Proposal(proposal, displayString, additionalInfo, cursorPosition));
         return;
       }
@@ -360,13 +361,13 @@ public class RegExContentProposalProvider implements IContentProposalProvider
           String epilog = fExpression.substring(fDocumentOffset);
           if (epilog.startsWith(postfix))
           {
-            fPriorityProposals.add(new Proposal(proposal.substring(i, cursorPosition), displayString, additionalInfo,
-                cursorPosition - i));
+            fPriorityProposals.add(
+                new Proposal(proposal.substring(i, cursorPosition), displayString, additionalInfo, cursorPosition - i));
           }
           else
           {
-            fPriorityProposals.add(new Proposal(proposal.substring(i), displayString, additionalInfo, cursorPosition
-                - i));
+            fPriorityProposals
+                .add(new Proposal(proposal.substring(i), displayString, additionalInfo, cursorPosition - i));
           }
           return;
         }
@@ -376,7 +377,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
     /**
      * Adds a proposal that starts with a backslash. Ensures that the backslash is not repeated if already typed.
-     * 
+     *
      * @param proposal
      *          the string to be inserted
      * @param displayString
@@ -390,7 +391,8 @@ public class RegExContentProposalProvider implements IContentProposalProvider
       int position = proposal.length();
       // If the string already contains the backslash, do not include in
       // the proposal
-      if (prolog.endsWith("\\")) { //$NON-NLS-1$
+      if (prolog.endsWith("\\")) //$NON-NLS-1$
+      {
         position--;
         proposal = proposal.substring(1);
       }
@@ -414,7 +416,7 @@ public class RegExContentProposalProvider implements IContentProposalProvider
 
   /**
    * Creates a new completion proposal provider.
-   * 
+   *
    * @param isFind
    *          <code>true</code> if the provider is used for the 'find' field <code>false</code> if the provider is used
    *          for the 'reaplce' field

@@ -20,7 +20,7 @@ import java.text.MessageFormat;
 /**
  * SSLServerConnector responses to be connector on server side and it handles about registration from the
  * SSLClientConnector.
- * 
+ *
  * @author Teerawat Chaiyakijpichet (No Magic Asia Ltd.)
  * @author Caspar De Groot (No Magic Asia Ltd.)
  * @since 4.0

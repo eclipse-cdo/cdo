@@ -147,21 +147,21 @@ public class PackageRegistryDialog extends TitleAreaDialog
     });
 
     createButton(parent, -1, Messages.getString("PackageRegistryDialog.7"), false) //$NON-NLS-1$
-        .addSelectionListener(new SelectionAdapter()
+    .addSelectionListener(new SelectionAdapter()
+    {
+      @Override
+      public void widgetSelected(SelectionEvent e)
+      {
+        new RegisterFilesystemPackagesAction(page, session)
         {
           @Override
-          public void widgetSelected(SelectionEvent e)
+          protected void postRegistration(List<EPackage> ePackages)
           {
-            new RegisterFilesystemPackagesAction(page, session)
-            {
-              @Override
-              protected void postRegistration(List<EPackage> ePackages)
-              {
-                refreshViewer();
-              }
-            }.run();
+            refreshViewer();
           }
-        });
+        }.run();
+      }
+    });
 
     CustomizeableComposite.customize(parent, IPluginContainer.INSTANCE, PRODUCT_GROUP, this);
 

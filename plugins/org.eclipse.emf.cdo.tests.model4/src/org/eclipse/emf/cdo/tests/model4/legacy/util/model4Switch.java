@@ -153,7 +153,9 @@ public class model4Switch<T>
       RefSingleContained refSingleContained = (RefSingleContained)theEObject;
       T result = caseRefSingleContained(refSingleContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.SINGLE_CONTAINED_ELEMENT:
@@ -161,7 +163,9 @@ public class model4Switch<T>
       SingleContainedElement singleContainedElement = (SingleContainedElement)theEObject;
       T result = caseSingleContainedElement(singleContainedElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_SINGLE_NON_CONTAINED:
@@ -169,7 +173,9 @@ public class model4Switch<T>
       RefSingleNonContained refSingleNonContained = (RefSingleNonContained)theEObject;
       T result = caseRefSingleNonContained(refSingleNonContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.SINGLE_NON_CONTAINED_ELEMENT:
@@ -177,7 +183,9 @@ public class model4Switch<T>
       SingleNonContainedElement singleNonContainedElement = (SingleNonContainedElement)theEObject;
       T result = caseSingleNonContainedElement(singleNonContainedElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_CONTAINED:
@@ -185,7 +193,9 @@ public class model4Switch<T>
       RefMultiContained refMultiContained = (RefMultiContained)theEObject;
       T result = caseRefMultiContained(refMultiContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.MULTI_CONTAINED_ELEMENT:
@@ -193,7 +203,9 @@ public class model4Switch<T>
       MultiContainedElement multiContainedElement = (MultiContainedElement)theEObject;
       T result = caseMultiContainedElement(multiContainedElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_NON_CONTAINED:
@@ -201,7 +213,9 @@ public class model4Switch<T>
       RefMultiNonContained refMultiNonContained = (RefMultiNonContained)theEObject;
       T result = caseRefMultiNonContained(refMultiNonContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.MULTI_NON_CONTAINED_ELEMENT:
@@ -209,7 +223,9 @@ public class model4Switch<T>
       MultiNonContainedElement multiNonContainedElement = (MultiNonContainedElement)theEObject;
       T result = caseMultiNonContainedElement(multiNonContainedElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_NON_CONTAINED_UNSETTABLE:
@@ -217,7 +233,9 @@ public class model4Switch<T>
       RefMultiNonContainedUnsettable refMultiNonContainedUnsettable = (RefMultiNonContainedUnsettable)theEObject;
       T result = caseRefMultiNonContainedUnsettable(refMultiNonContainedUnsettable);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.MULTI_NON_CONTAINED_UNSETTABLE_ELEMENT:
@@ -225,7 +243,9 @@ public class model4Switch<T>
       MultiNonContainedUnsettableElement multiNonContainedUnsettableElement = (MultiNonContainedUnsettableElement)theEObject;
       T result = caseMultiNonContainedUnsettableElement(multiNonContainedUnsettableElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_SINGLE_CONTAINED_NPL:
@@ -233,7 +253,9 @@ public class model4Switch<T>
       RefSingleContainedNPL refSingleContainedNPL = (RefSingleContainedNPL)theEObject;
       T result = caseRefSingleContainedNPL(refSingleContainedNPL);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_SINGLE_NON_CONTAINED_NPL:
@@ -241,7 +263,9 @@ public class model4Switch<T>
       RefSingleNonContainedNPL refSingleNonContainedNPL = (RefSingleNonContainedNPL)theEObject;
       T result = caseRefSingleNonContainedNPL(refSingleNonContainedNPL);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_CONTAINED_NPL:
@@ -249,7 +273,9 @@ public class model4Switch<T>
       RefMultiContainedNPL refMultiContainedNPL = (RefMultiContainedNPL)theEObject;
       T result = caseRefMultiContainedNPL(refMultiContainedNPL);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.REF_MULTI_NON_CONTAINED_NPL:
@@ -257,7 +283,9 @@ public class model4Switch<T>
       RefMultiNonContainedNPL refMultiNonContainedNPL = (RefMultiNonContainedNPL)theEObject;
       T result = caseRefMultiNonContainedNPL(refMultiNonContainedNPL);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.CONTAINED_ELEMENT_NO_OPPOSITE:
@@ -265,7 +293,9 @@ public class model4Switch<T>
       ContainedElementNoOpposite containedElementNoOpposite = (ContainedElementNoOpposite)theEObject;
       T result = caseContainedElementNoOpposite(containedElementNoOpposite);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_SINGLE_CONTAINED:
@@ -273,7 +303,9 @@ public class model4Switch<T>
       GenRefSingleContained genRefSingleContained = (GenRefSingleContained)theEObject;
       T result = caseGenRefSingleContained(genRefSingleContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_SINGLE_NON_CONTAINED:
@@ -281,7 +313,9 @@ public class model4Switch<T>
       GenRefSingleNonContained genRefSingleNonContained = (GenRefSingleNonContained)theEObject;
       T result = caseGenRefSingleNonContained(genRefSingleNonContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_MULTI_CONTAINED:
@@ -289,7 +323,9 @@ public class model4Switch<T>
       GenRefMultiContained genRefMultiContained = (GenRefMultiContained)theEObject;
       T result = caseGenRefMultiContained(genRefMultiContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_MULTI_NON_CONTAINED:
@@ -297,7 +333,9 @@ public class model4Switch<T>
       GenRefMultiNonContained genRefMultiNonContained = (GenRefMultiNonContained)theEObject;
       T result = caseGenRefMultiNonContained(genRefMultiNonContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_CONTAINER:
@@ -305,9 +343,13 @@ public class model4Switch<T>
       ImplSingleRefContainer implSingleRefContainer = (ImplSingleRefContainer)theEObject;
       T result = caseImplSingleRefContainer(implSingleRefContainer);
       if (result == null)
+      {
         result = caseISingleRefContainer(implSingleRefContainer);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_CONTAINED_ELEMENT:
@@ -315,9 +357,13 @@ public class model4Switch<T>
       ImplSingleRefContainedElement implSingleRefContainedElement = (ImplSingleRefContainedElement)theEObject;
       T result = caseImplSingleRefContainedElement(implSingleRefContainedElement);
       if (result == null)
+      {
         result = caseISingleRefContainedElement(implSingleRefContainedElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER:
@@ -325,9 +371,13 @@ public class model4Switch<T>
       ImplSingleRefNonContainer implSingleRefNonContainer = (ImplSingleRefNonContainer)theEObject;
       T result = caseImplSingleRefNonContainer(implSingleRefNonContainer);
       if (result == null)
+      {
         result = caseISingleRefNonContainer(implSingleRefNonContainer);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINED_ELEMENT:
@@ -335,9 +385,13 @@ public class model4Switch<T>
       ImplSingleRefNonContainedElement implSingleRefNonContainedElement = (ImplSingleRefNonContainedElement)theEObject;
       T result = caseImplSingleRefNonContainedElement(implSingleRefNonContainedElement);
       if (result == null)
+      {
         result = caseISingleRefNonContainedElement(implSingleRefNonContainedElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_NON_CONTAINER:
@@ -345,9 +399,13 @@ public class model4Switch<T>
       ImplMultiRefNonContainer implMultiRefNonContainer = (ImplMultiRefNonContainer)theEObject;
       T result = caseImplMultiRefNonContainer(implMultiRefNonContainer);
       if (result == null)
+      {
         result = caseIMultiRefNonContainer(implMultiRefNonContainer);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_NON_CONTAINED_ELEMENT:
@@ -355,9 +413,13 @@ public class model4Switch<T>
       ImplMultiRefNonContainedElement implMultiRefNonContainedElement = (ImplMultiRefNonContainedElement)theEObject;
       T result = caseImplMultiRefNonContainedElement(implMultiRefNonContainedElement);
       if (result == null)
+      {
         result = caseIMultiRefNonContainedElement(implMultiRefNonContainedElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_CONTAINER:
@@ -365,9 +427,13 @@ public class model4Switch<T>
       ImplMultiRefContainer implMultiRefContainer = (ImplMultiRefContainer)theEObject;
       T result = caseImplMultiRefContainer(implMultiRefContainer);
       if (result == null)
+      {
         result = caseIMultiRefContainer(implMultiRefContainer);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_CONTAINED_ELEMENT:
@@ -375,9 +441,13 @@ public class model4Switch<T>
       ImplMultiRefContainedElement implMultiRefContainedElement = (ImplMultiRefContainedElement)theEObject;
       T result = caseImplMultiRefContainedElement(implMultiRefContainedElement);
       if (result == null)
+      {
         result = caseIMultiRefContainedElement(implMultiRefContainedElement);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_CONTAINER_NPL:
@@ -385,9 +455,13 @@ public class model4Switch<T>
       ImplSingleRefContainerNPL implSingleRefContainerNPL = (ImplSingleRefContainerNPL)theEObject;
       T result = caseImplSingleRefContainerNPL(implSingleRefContainerNPL);
       if (result == null)
+      {
         result = caseISingleRefContainerNPL(implSingleRefContainerNPL);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_SINGLE_REF_NON_CONTAINER_NPL:
@@ -395,9 +469,13 @@ public class model4Switch<T>
       ImplSingleRefNonContainerNPL implSingleRefNonContainerNPL = (ImplSingleRefNonContainerNPL)theEObject;
       T result = caseImplSingleRefNonContainerNPL(implSingleRefNonContainerNPL);
       if (result == null)
+      {
         result = caseISingleRefNonContainerNPL(implSingleRefNonContainerNPL);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_CONTAINER_NPL:
@@ -405,9 +483,13 @@ public class model4Switch<T>
       ImplMultiRefContainerNPL implMultiRefContainerNPL = (ImplMultiRefContainerNPL)theEObject;
       T result = caseImplMultiRefContainerNPL(implMultiRefContainerNPL);
       if (result == null)
+      {
         result = caseIMultiRefContainerNPL(implMultiRefContainerNPL);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_MULTI_REF_NON_CONTAINER_NPL:
@@ -415,9 +497,13 @@ public class model4Switch<T>
       ImplMultiRefNonContainerNPL implMultiRefNonContainerNPL = (ImplMultiRefNonContainerNPL)theEObject;
       T result = caseImplMultiRefNonContainerNPL(implMultiRefNonContainerNPL);
       if (result == null)
+      {
         result = caseIMultiRefNonContainerNPL(implMultiRefNonContainerNPL);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.IMPL_CONTAINED_ELEMENT_NPL:
@@ -425,11 +511,17 @@ public class model4Switch<T>
       ImplContainedElementNPL implContainedElementNPL = (ImplContainedElementNPL)theEObject;
       T result = caseImplContainedElementNPL(implContainedElementNPL);
       if (result == null)
+      {
         result = caseIContainedElementNoParentLink(implContainedElementNPL);
+      }
       if (result == null)
+      {
         result = caseINamedElement(implContainedElementNPL);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_MULTI_NU_NON_CONTAINED:
@@ -437,7 +529,9 @@ public class model4Switch<T>
       GenRefMultiNUNonContained genRefMultiNUNonContained = (GenRefMultiNUNonContained)theEObject;
       T result = caseGenRefMultiNUNonContained(genRefMultiNUNonContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.GEN_REF_MAP_NON_CONTAINED:
@@ -445,7 +539,9 @@ public class model4Switch<T>
       GenRefMapNonContained genRefMapNonContained = (GenRefMapNonContained)theEObject;
       T result = caseGenRefMapNonContained(genRefMapNonContained);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case model4Package.STRING_TO_EOBJECT:
@@ -454,7 +550,9 @@ public class model4Switch<T>
       Map.Entry<String, EObject> stringToEObject = (Map.Entry<String, EObject>)theEObject;
       T result = caseStringToEObject(stringToEObject);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

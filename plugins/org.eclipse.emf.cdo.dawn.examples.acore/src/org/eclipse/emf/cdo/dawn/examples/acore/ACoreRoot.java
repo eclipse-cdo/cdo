@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore;
 
@@ -25,7 +25,7 @@ import org.eclipse.emf.common.util.EList;
  * <li>{@link org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot#getInterfaces <em>Interfaces</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getACoreRoot()
  * @model
  * @extends CDOObject
@@ -39,7 +39,7 @@ public interface ACoreRoot extends CDOObject
    * If the meaning of the '<em>Title</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Title</em>' attribute.
    * @see #setTitle(String)
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getACoreRoot_Title()
@@ -51,7 +51,7 @@ public interface ACoreRoot extends CDOObject
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot#getTitle <em>Title</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Title</em>' attribute.
    * @see #getTitle()
@@ -67,7 +67,7 @@ public interface ACoreRoot extends CDOObject
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Classes</em>' containment reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getACoreRoot_Classes()
    * @model containment="true"
@@ -83,7 +83,7 @@ public interface ACoreRoot extends CDOObject
    * a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Interfaces</em>' containment reference list.
    * @see org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage#getACoreRoot_Interfaces()
    * @model containment="true"

@@ -29,7 +29,7 @@ import java.util.Properties;
 
 /**
  * A user type which can handle {@link CDOIDExternal}. It's stored in a single varchar field.
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class CDOIDExternalUserType implements UserType, ParameterizedType

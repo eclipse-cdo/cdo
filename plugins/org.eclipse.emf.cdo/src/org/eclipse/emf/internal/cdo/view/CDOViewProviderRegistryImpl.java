@@ -50,7 +50,7 @@ import java.util.List;
  * @since 2.0
  * @see CDOViewProvider
  */
-public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> implements CDOViewProviderRegistry
+public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>implements CDOViewProviderRegistry
 {
   public static final CDOViewProviderRegistryImpl INSTANCE = new CDOViewProviderRegistryImpl();
 
@@ -240,14 +240,14 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
 
       if (StringUtil.isEmpty(element.getAttribute("class"))) //$NON-NLS-1$
       {
-        throw new IllegalArgumentException(MessageFormat.format(
-            Messages.getString("CDOViewProviderRegistryImpl.4"), element)); //$NON-NLS-1$
+        throw new IllegalArgumentException(
+            MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.4"), element)); //$NON-NLS-1$
       }
 
       if (StringUtil.isEmpty(element.getAttribute("regex"))) //$NON-NLS-1$
       {
-        throw new IllegalArgumentException(MessageFormat.format(
-            Messages.getString("CDOViewProviderRegistryImpl.6"), element)); //$NON-NLS-1$
+        throw new IllegalArgumentException(
+            MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.6"), element)); //$NON-NLS-1$
       }
     }
 

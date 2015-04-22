@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers;
 
@@ -196,7 +196,7 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
 
   /**
    * Utility method that consults ParserService
-   * 
+   *
    * @generated
    */
   public static IParser getParser(IElementType type, EObject object, String parserHint)
@@ -209,12 +209,12 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
    */
   public IParser getParser(IAdaptable hint)
   {
-    String vid = (String)hint.getAdapter(String.class);
+    String vid = hint.getAdapter(String.class);
     if (vid != null)
     {
       return getParser(AcoreVisualIDRegistry.getVisualID(vid));
     }
-    View view = (View)hint.getAdapter(View.class);
+    View view = hint.getAdapter(View.class);
     if (view != null)
     {
       return getParser(AcoreVisualIDRegistry.getVisualID(view));
@@ -263,6 +263,7 @@ public class AcoreParserProvider extends AbstractProvider implements IParserProv
     /**
      * @generated
      */
+    @Override
     public Object getAdapter(Class adapter)
     {
       if (IElementType.class.equals(adapter))

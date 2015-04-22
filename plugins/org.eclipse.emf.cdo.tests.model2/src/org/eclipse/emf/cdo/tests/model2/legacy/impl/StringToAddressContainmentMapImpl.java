@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -43,7 +43,7 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
   /**
    * The default value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -53,7 +53,7 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
   /**
    * The cached value of the '{@link #getTypedKey() <em>Key</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getTypedKey()
    * @generated
    * @ordered
@@ -107,8 +107,10 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
     String oldKey = key;
     key = newKey;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__KEY,
           oldKey, key));
+    }
   }
 
   /**
@@ -133,9 +135,13 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
       ENotificationImpl notification = new ENotificationImpl(this, Notification.SET,
           Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, oldValue, newValue);
       if (msgs == null)
+      {
         msgs = notification;
+      }
       else
+      {
         msgs.add(notification);
+      }
     }
     return msgs;
   }
@@ -150,18 +156,26 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
     {
       NotificationChain msgs = null;
       if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+      {
+        msgs = ((InternalEObject)value).eInverseRemove(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+      }
       if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE
-            - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+      {
+        msgs = ((InternalEObject)newValue).eInverseAdd(this,
+            EOPPOSITE_FEATURE_BASE - Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE, null, msgs);
+      }
       msgs = basicSetTypedValue(newValue, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model2Package.STRING_TO_ADDRESS_CONTAINMENT_MAP__VALUE,
           newValue, newValue));
+    }
   }
 
   /**
@@ -259,7 +273,9 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
@@ -283,7 +299,7 @@ public class StringToAddressContainmentMapImpl extends EObjectImpl implements Ba
     if (hash == -1)
     {
       Object theKey = getKey();
-      hash = (theKey == null ? 0 : theKey.hashCode());
+      hash = theKey == null ? 0 : theKey.hashCode();
     }
     return hash;
   }

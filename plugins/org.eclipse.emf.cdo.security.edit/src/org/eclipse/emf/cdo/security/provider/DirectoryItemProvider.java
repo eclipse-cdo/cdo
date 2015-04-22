@@ -42,8 +42,8 @@ import java.util.List;
  * @generated
  */
 public class DirectoryItemProvider extends SecurityItemItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -82,13 +82,12 @@ public class DirectoryItemProvider extends SecurityItemItemProvider implements I
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_Directory_name_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Directory_name_feature", "_UI_Directory_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.DIRECTORY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-        null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Directory_name_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_Directory_name_feature", "_UI_Directory_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.DIRECTORY__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -157,7 +156,8 @@ public class DirectoryItemProvider extends SecurityItemItemProvider implements I
   public String getText(Object object)
   {
     String label = ((Directory)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_Directory_type") : //$NON-NLS-1$
+    return label == null || label.length() == 0 ? getString("_UI_Directory_type") //$NON-NLS-1$
+        :
         label;
   }
 
@@ -197,17 +197,17 @@ public class DirectoryItemProvider extends SecurityItemItemProvider implements I
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS,
-        SecurityFactory.eINSTANCE.createDirectory()));
+    newChildDescriptors.add(
+        createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createDirectory()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS,
-        SecurityFactory.eINSTANCE.createRole()));
+    newChildDescriptors
+        .add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createRole()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS,
-        SecurityFactory.eINSTANCE.createGroup()));
+    newChildDescriptors
+        .add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createGroup()));
 
-    newChildDescriptors.add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS,
-        SecurityFactory.eINSTANCE.createUser()));
+    newChildDescriptors
+        .add(createChildParameter(SecurityPackage.Literals.DIRECTORY__ITEMS, SecurityFactory.eINSTANCE.createUser()));
   }
 
 }

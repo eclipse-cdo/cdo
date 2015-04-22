@@ -18,7 +18,7 @@ import java.io.IOException;
 
 /**
  * Some useful helpers for dealing with {@link CDOLob large objects}.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  */

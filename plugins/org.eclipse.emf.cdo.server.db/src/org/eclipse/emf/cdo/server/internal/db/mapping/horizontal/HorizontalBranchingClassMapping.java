@@ -76,8 +76,8 @@ import java.util.Set;
  * @author Stefan Winkler
  * @since 3.0
  */
-public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping implements
-    IClassMappingAuditSupport, IClassMappingDeltaSupport
+public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapping
+    implements IClassMappingAuditSupport, IClassMappingDeltaSupport
 {
   /**
    * @author Stefan Winkler
@@ -479,8 +479,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection()
-        .prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(),
+        ReuseProbability.MEDIUM);
 
     try
     {
@@ -1039,7 +1039,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
   }
 
-  private void doCopyOnBranch(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
+  private void doCopyOnBranch(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created,
+      OMMonitor monitor)
   {
     monitor.begin(2);
     try

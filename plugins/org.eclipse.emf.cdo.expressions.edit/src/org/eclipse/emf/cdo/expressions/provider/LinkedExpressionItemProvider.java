@@ -40,8 +40,8 @@ import java.util.List;
  * @generated
  */
 public class LinkedExpressionItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -80,13 +80,12 @@ public class LinkedExpressionItemProvider extends ItemProviderAdapter implements
    */
   protected void addExpressionPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(),
-        getString("_UI_LinkedExpression_expression_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_LinkedExpression_expression_feature",
-            "_UI_LinkedExpression_type"), ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, true, false, true,
-        null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_LinkedExpression_expression_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_LinkedExpression_expression_feature",
+                "_UI_LinkedExpression_type"),
+            ExpressionsPackage.Literals.LINKED_EXPRESSION__EXPRESSION, true, false, true, null, null, null));
   }
 
   /**

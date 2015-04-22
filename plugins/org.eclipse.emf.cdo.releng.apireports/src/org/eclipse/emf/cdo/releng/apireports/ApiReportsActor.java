@@ -335,8 +335,8 @@ public class ApiReportsActor extends AbstractActor
   {
     // add package fragment elements only if this is an API package
     IApiDescription apiDescription = apiComponent.getApiDescription();
-    IApiAnnotations annotations = apiDescription.resolveAnnotations(Factory.packageDescriptor(packageFragment
-        .getElementName()));
+    IApiAnnotations annotations = apiDescription
+        .resolveAnnotations(Factory.packageDescriptor(packageFragment.getElementName()));
     if (annotations == null || !VisibilityModifiers.isAPI(annotations.getVisibility()))
     {
       return;

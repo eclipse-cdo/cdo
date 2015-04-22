@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.parsers;
 
@@ -78,7 +78,7 @@ public abstract class AbstractParser implements IParser
     {
       throw new IllegalArgumentException();
     }
-    this.editableFeatures = this.features = features;
+    editableFeatures = this.features = features;
   }
 
   /**
@@ -233,7 +233,7 @@ public abstract class AbstractParser implements IParser
     {
       return UnexecutableCommand.INSTANCE;
     }
-    EObject element = (EObject)adapter.getAdapter(EObject.class);
+    EObject element = adapter.getAdapter(EObject.class);
     TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(element);
     if (editingDomain == null)
     {
@@ -577,6 +577,7 @@ public abstract class AbstractParser implements IParser
     /**
      * @generated
      */
+    @Override
     public String toString()
     {
       return description;

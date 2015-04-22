@@ -47,7 +47,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class ChannelMultiplexer extends Container<IChannel> implements InternalChannelMultiplexer
+public abstract class ChannelMultiplexer extends Container<IChannel>implements InternalChannelMultiplexer
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, ChannelMultiplexer.class);
 

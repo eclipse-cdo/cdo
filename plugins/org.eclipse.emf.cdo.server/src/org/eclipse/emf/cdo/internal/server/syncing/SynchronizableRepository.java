@@ -723,8 +723,8 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       throw new IllegalStateException("Durable locking is not enabled for view " + view);
     }
 
-    LockObjectsResult masterLockingResult = sessionProtocol.delegateLockObjects(areaID, revKeys, view.getBranch(),
-        type, recursive, timeout);
+    LockObjectsResult masterLockingResult = sessionProtocol.delegateLockObjects(areaID, revKeys, view.getBranch(), type,
+        recursive, timeout);
 
     if (masterLockingResult.isSuccessful() && masterLockingResult.isWaitForUpdate())
     {

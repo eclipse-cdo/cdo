@@ -28,14 +28,14 @@ import java.io.IOException;
  * -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class PluginResourceImpl extends ExternalArticleImpl implements PluginResource
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected PluginResourceImpl()
@@ -50,7 +50,7 @@ public class PluginResourceImpl extends ExternalArticleImpl implements PluginRes
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

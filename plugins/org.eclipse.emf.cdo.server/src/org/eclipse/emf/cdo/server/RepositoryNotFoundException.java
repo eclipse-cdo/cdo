@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 /**
  * An unchecked exception being thrown when opening a {@link CDOSession session} to a named {@link IRepository
  * repository} that cannot be found.
- * 
+ *
  * @author Eike Stepper
  */
 public class RepositoryNotFoundException extends CDOException

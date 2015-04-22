@@ -28,7 +28,7 @@ import java.util.Map;
 
 /**
  * Reads the version from the internal version cache.
- * 
+ *
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
 public class CDOSyntheticVersionPropertyHandler implements Getter, Setter, PropertyAccessor

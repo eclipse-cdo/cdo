@@ -20,7 +20,7 @@ import java.util.Properties;
 
 /**
  * Reads the hibernate mapping file from one or more resource locations and adds them to the configuration.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */

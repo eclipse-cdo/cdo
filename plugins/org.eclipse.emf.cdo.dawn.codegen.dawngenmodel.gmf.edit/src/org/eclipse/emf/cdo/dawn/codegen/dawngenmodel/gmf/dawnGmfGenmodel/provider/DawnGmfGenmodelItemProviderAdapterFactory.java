@@ -39,8 +39,8 @@ import java.util.Collection;
  * @generated
  * @author Martin Fluegge
  */
-public class DawnGmfGenmodelItemProviderAdapterFactory extends DawnGmfGenmodelAdapterFactory implements
-    ComposeableAdapterFactory, IChangeNotifier, IDisposable
+public class DawnGmfGenmodelItemProviderAdapterFactory extends DawnGmfGenmodelAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory. <!-- begin-user-doc --> <!--

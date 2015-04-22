@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -35,7 +35,7 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -88,8 +88,10 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, model4Package.CONTAINED_ELEMENT_NO_OPPOSITE__NAME, oldName,
           name));
+    }
   }
 
   /**
@@ -162,7 +164,9 @@ public class ContainedElementNoOppositeImpl extends EObjectImpl implements Conta
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

@@ -29,8 +29,8 @@ import org.eclipse.emf.ecore.EReference;
  * @model kind="package"
  * @generated
  */
-public interface model4interfacesPackage extends EPackage,
-    org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage
+public interface model4interfacesPackage
+    extends EPackage, org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage
 {
   /**
    * The package name.

@@ -130,8 +130,8 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
    */
   public void setOrder(Order newOrder)
   {
-    if (newOrder != eInternalContainer() || eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER
-        && newOrder != null)
+    if (newOrder != eInternalContainer()
+        || eContainerFeatureID() != Model1Package.ORDER_DETAIL__ORDER && newOrder != null)
     {
       if (EcoreUtil.isAncestor(this, newOrder))
       {
@@ -240,7 +240,8 @@ public class OrderDetailImpl extends EObjectImpl implements OrderDetail
     }
     else if (eNotificationRequired())
     {
-      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRODUCT, newProduct, newProduct));
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, Model1Package.ORDER_DETAIL__PRODUCT, newProduct, newProduct));
     }
   }
 

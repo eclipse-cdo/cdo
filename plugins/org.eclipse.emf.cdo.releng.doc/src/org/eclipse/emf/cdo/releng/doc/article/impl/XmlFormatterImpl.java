@@ -260,9 +260,9 @@ public class XmlFormatterImpl extends FormatterImpl implements XmlFormatter
     @Override
     public void startDocument() throws SAXException
     {
-      builder
-          .append("<font color=\"#0000e1\">&lt;?xml version=<font color=\"#000080\">'1.0'</font> encoding=<font color=\"#000080\">'UTF-8'</font>?&gt;</font><br/>"
-              + NL);
+      builder.append(
+          "<font color=\"#0000e1\">&lt;?xml version=<font color=\"#000080\">'1.0'</font> encoding=<font color=\"#000080\">'UTF-8'</font>?&gt;</font><br/>"
+          + NL);
     }
 
     @Override

@@ -20,7 +20,7 @@ import org.w3c.dom.NodeList;
 
 /**
  * Reads the hibernate mapping file from one or more resource locations and adds them to the configuration.
- * 
+ *
  * @author Martin Taal
  */
 public class FileHibernateMappingProviderFactory implements IHibernateMappingProvider.Factory

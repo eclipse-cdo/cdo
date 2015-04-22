@@ -55,18 +55,18 @@ public abstract class AbstractDawnTest extends AbstractCDOTest
     NotationPackage.eINSTANCE.getClass();
     String packageName = ePackage.getName();
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put(packageName + "_diagram", new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(packageName + "_diagram",
+        new XMIResourceFactoryImpl());
 
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(packageName, new XMIResourceFactoryImpl());
 
     URL resourceURI = GMFTest.class.getResource("");
     String resourcePath = resourceURI.toString().substring(0, resourceURI.toString().lastIndexOf("/bin"));
 
-    Resource emfResource = resourceSet.getResource(
-        URI.createURI(resourcePath + "/testdata/" + resourceName + "." + packageName), true);
-    Resource gmfResource = resourceSet.getResource(
-        URI.createURI(resourcePath + "/testdata/" + resourceName + "." + packageName + "_diagram"), true);
+    Resource emfResource = resourceSet
+        .getResource(URI.createURI(resourcePath + "/testdata/" + resourceName + "." + packageName), true);
+    Resource gmfResource = resourceSet
+        .getResource(URI.createURI(resourcePath + "/testdata/" + resourceName + "." + packageName + "_diagram"), true);
 
     EcoreUtil.resolveAll(emfResource);
     EcoreUtil.resolveAll(gmfResource);

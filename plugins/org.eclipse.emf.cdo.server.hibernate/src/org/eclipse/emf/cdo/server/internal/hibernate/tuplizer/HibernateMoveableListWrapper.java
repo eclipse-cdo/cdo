@@ -32,7 +32,7 @@ import java.util.ListIterator;
  * Wraps a moveable list so that hibernate always sees an object view while cdo always sees a cdoid view. The same for
  * EEnum: cdo wants to see an int (the ordinal), hibernate the real eenum value. This to support querying with EENum
  * parameters.
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateMoveableListWrapper implements MoveableList<Object>
@@ -52,7 +52,7 @@ public class HibernateMoveableListWrapper implements MoveableList<Object>
     int size = size();
     if (sourceIndex >= size)
     {
-      throw new IndexOutOfBoundsException("sourceIndex=" + sourceIndex + ", size=" + size); //$NON-NLS-1$  //$NON-NLS-2$
+      throw new IndexOutOfBoundsException("sourceIndex=" + sourceIndex + ", size=" + size); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     if (targetIndex >= size)

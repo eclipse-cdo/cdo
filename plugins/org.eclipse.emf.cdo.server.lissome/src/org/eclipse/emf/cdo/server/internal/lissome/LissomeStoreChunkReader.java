@@ -64,9 +64,9 @@ public class LissomeStoreChunkReader extends StoreChunkReader implements ILissom
     // else
     // {
     // builder.append(CDODBSchema.LIST_IDX);
-    //      builder.append(" BETWEEN "); //$NON-NLS-1$
+    // builder.append(" BETWEEN "); //$NON-NLS-1$
     // builder.append(fromIndex);
-    //      builder.append(" AND "); //$NON-NLS-1$
+    // builder.append(" AND "); //$NON-NLS-1$
     // builder.append(toIndex - 1);
     // }
   }

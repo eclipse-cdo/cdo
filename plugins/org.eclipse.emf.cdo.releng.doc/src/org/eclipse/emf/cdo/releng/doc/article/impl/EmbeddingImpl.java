@@ -31,7 +31,7 @@ import java.io.PrintWriter;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.impl.EmbeddingImpl#getElement <em>Element</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class EmbeddingImpl extends BodyElementImpl implements Embedding
@@ -39,7 +39,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
   /**
    * The cached value of the '{@link #getElement() <em>Element</em>}' reference. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @see #getElement()
    * @generated
    * @ordered
@@ -48,7 +48,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected EmbeddingImpl()
@@ -64,7 +64,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -75,7 +75,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public EmbeddableElement getElement()
@@ -85,7 +85,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -101,7 +101,7 @@ public class EmbeddingImpl extends BodyElementImpl implements Embedding
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

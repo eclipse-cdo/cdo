@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -77,7 +77,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @generated NOT
    */
   protected DefImpl()
@@ -88,7 +88,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * Gets the internal instance.
-   * 
+   *
    * @return the internal instance
    * @ADDED
    */
@@ -99,7 +99,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->.
-   * 
+   *
    * @return the e class
    * @generated
    */
@@ -112,7 +112,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
   /**
    * returns an instance that is created for the given definition. Instances are stored and reused. The instance is
    * activated before it is returned. A later call to #getInstace
-   * 
+   *
    * @return the instance that this definition defines
    * @see #createInstance()
    * @see #wireInstance(Object)
@@ -152,7 +152,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * Activate a given instance.
-   * 
+   *
    * @param instance
    *          the instance to activate
    * @ADDED
@@ -164,7 +164,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * Deactivate a given instance.
-   * 
+   *
    * @ADDED
    */
   protected void deactivateInstance(Object instance)
@@ -175,7 +175,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
   /**
    * <!-- begin-user-doc -->Unsets the instance managed by this Definition. The internal reference to it is cleared and
    * internal listeners to it are removed <!-- end-user-doc -->
-   * 
+   *
    * @ADDED
    */
   public void unsetInstance()
@@ -186,7 +186,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
   /**
    * Checks if the the instance in this <em>definition</em> is set. In other words, if the instance handled by this
    * <em>defintion</em> is present
-   * 
+   *
    * @return <code>true</code>, if the instance in this definition is set
    * @ADDED
    */
@@ -198,7 +198,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
   /**
    * Returns whether this definition (and all its nested, referenced defs) was touched since it created its internal
    * instance.
-   * 
+   *
    * @return true, if this definition was touched since it created its internal instance
    * @ADDED
    */
@@ -217,7 +217,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * Returns whether any referenced def is touched
-   * 
+   *
    * @return true, if there's any referenced def that has been touched
    */
   protected boolean areReferencedDefsTouched()
@@ -286,7 +286,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * validates the present definition. Subclasses have to provide an implementation
-   * 
+   *
    * @throws IllegalStateException
    * @ADDED
    */
@@ -296,7 +296,7 @@ public abstract class DefImpl extends EObjectImpl implements Def
 
   /**
    * Creates a new instance. Subclasses have to provide an implementation
-   * 
+   *
    * @return a new instance
    * @ADDED
    */

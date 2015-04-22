@@ -68,8 +68,8 @@ public class TypeMappingUtil
 
     if (!matcher.matches())
     {
-      throw new FactoryTypeParserException(MessageFormat.format(Messages.getString("FactoryTypeParserException.1"),
-          factoryType));
+      throw new FactoryTypeParserException(
+          MessageFormat.format(Messages.getString("FactoryTypeParserException.1"), factoryType));
     }
 
     String id = matcher.group(1);
@@ -80,22 +80,22 @@ public class TypeMappingUtil
     EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(packageUri);
     if (ePackage == null)
     {
-      throw new FactoryTypeParserException(MessageFormat.format(Messages.getString("FactoryTypeParserException.2"),
-          packageUri, factoryType));
+      throw new FactoryTypeParserException(
+          MessageFormat.format(Messages.getString("FactoryTypeParserException.2"), packageUri, factoryType));
     }
 
     EClassifier eClassifier = ePackage.getEClassifier(classifierName);
     if (eClassifier == null)
     {
-      throw new FactoryTypeParserException(MessageFormat.format(Messages.getString("FactoryTypeParserException.3"),
-          classifierName, factoryType));
+      throw new FactoryTypeParserException(
+          MessageFormat.format(Messages.getString("FactoryTypeParserException.3"), classifierName, factoryType));
     }
 
     DBType dbType = DBType.getTypeByKeyword(typeKeyword);
     if (dbType == null)
     {
-      throw new FactoryTypeParserException(MessageFormat.format(Messages.getString("FactoryTypeParserException.4"),
-          dbType, factoryType));
+      throw new FactoryTypeParserException(
+          MessageFormat.format(Messages.getString("FactoryTypeParserException.4"), dbType, factoryType));
     }
 
     return new TypeMappingDescriptor(id, factoryType, eClassifier, dbType);

@@ -50,8 +50,8 @@ import java.util.Collection;
  * @generated
  * @author Martin Fluegge
  */
-public class DawnEmfGenmodelActionBarContributor extends EditingDomainActionBarContributor implements
-    ISelectionChangedListener
+public class DawnEmfGenmodelActionBarContributor extends EditingDomainActionBarContributor
+    implements ISelectionChangedListener
 {
   /**
    * This keeps track of the active editor. <!-- begin-user-doc --> <!-- end-user-doc -->

@@ -156,8 +156,8 @@ public class ObjyPlacementManagerLocal
     {
       // we have to put it somewhere.
       // call the global placement manager.
-      nearObject = objySession.getObjectManager().getGlobalPlacementManager()
-          .getNearObject(null, null, revision.getEClass());
+      nearObject = objySession.getObjectManager().getGlobalPlacementManager().getNearObject(null, null,
+          revision.getEClass());
     }
 
     ObjyObject objyObject = objySession.getObjectManager().newObject(eClass, nearObject);

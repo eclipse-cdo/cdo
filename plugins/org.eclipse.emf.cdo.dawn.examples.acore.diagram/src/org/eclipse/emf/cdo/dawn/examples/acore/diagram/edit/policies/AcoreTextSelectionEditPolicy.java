@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
@@ -46,6 +46,7 @@ public class AcoreTextSelectionEditPolicy extends SelectionEditPolicy
   /**
    * @generated
    */
+  @Override
   protected void showPrimarySelection()
   {
     if (getHostFigure() instanceof WrappingLabel)
@@ -63,6 +64,7 @@ public class AcoreTextSelectionEditPolicy extends SelectionEditPolicy
   /**
    * @generated
    */
+  @Override
   protected void showSelection()
   {
     if (getHostFigure() instanceof WrappingLabel)
@@ -83,6 +85,7 @@ public class AcoreTextSelectionEditPolicy extends SelectionEditPolicy
   /**
    * @generated
    */
+  @Override
   protected void hideSelection()
   {
     if (getHostFigure() instanceof WrappingLabel)
@@ -105,6 +108,7 @@ public class AcoreTextSelectionEditPolicy extends SelectionEditPolicy
   /**
    * @generated
    */
+  @Override
   protected void showFocus()
   {
     if (getHostFigure() instanceof WrappingLabel)
@@ -122,6 +126,7 @@ public class AcoreTextSelectionEditPolicy extends SelectionEditPolicy
   /**
    * @generated
    */
+  @Override
   protected void hideFocus()
   {
     if (getHostFigure() instanceof WrappingLabel)
@@ -187,6 +192,7 @@ public class AcoreTextSelectionEditPolicy extends SelectionEditPolicy
     return new Figure()
     {
 
+      @Override
       protected void paintFigure(Graphics graphics)
       {
         graphics.drawFocus(getBounds().getResized(-1, -1));

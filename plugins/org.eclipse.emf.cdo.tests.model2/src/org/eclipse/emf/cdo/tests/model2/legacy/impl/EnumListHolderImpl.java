@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -30,7 +30,7 @@ import java.util.Collection;
  * <li>{@link org.eclipse.emf.cdo.tests.legacy.model2.impl.EnumListHolderImpl#getEnumList <em>Enum List</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
@@ -149,7 +149,9 @@ public class EnumListHolderImpl extends EObjectImpl implements EnumListHolder
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (enumList: ");

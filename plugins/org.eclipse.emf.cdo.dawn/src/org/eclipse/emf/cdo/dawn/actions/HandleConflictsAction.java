@@ -27,7 +27,7 @@ import org.eclipse.ui.IWorkbenchPart;
 /**
  * Since Dawn 0.2 this class is deprecated and replaced with "org.eclipse.emf.cdo.dawn.handlers.SolveConflictHandler".
  * It will be removed soon.
- * 
+ *
  * @author Martin Fluegge
  */
 @Deprecated

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -66,7 +66,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl <em>CDO View Def</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.defs.impl.CDOViewDefImpl
    * @see org.eclipse.emf.cdo.defs.impl.CDODefsPackageImpl#getCDOViewDef()
    * @generated
@@ -84,7 +84,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>CDO View Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -144,7 +144,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>CDO Audit Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -303,7 +303,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>EPackage Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -432,7 +432,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.defs.ResourceMode <em>Resource Mode</em>}' enum. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.defs.ResourceMode
    * @see org.eclipse.emf.cdo.defs.impl.CDODefsPackageImpl#getResourceMode()
    * @generated
@@ -442,7 +442,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.defs.CDOViewDef <em>CDO View Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>CDO View Def</em>'.
    * @see org.eclipse.emf.cdo.defs.CDOViewDef
    * @generated
@@ -471,7 +471,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.defs.CDOAuditDef <em>CDO Audit Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>CDO Audit Def</em>'.
    * @see org.eclipse.emf.cdo.defs.CDOAuditDef
    * @generated
@@ -491,7 +491,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.defs.CDOSessionDef <em>CDO Session Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>CDO Session Def</em>'.
    * @see org.eclipse.emf.cdo.defs.CDOSessionDef
    * @generated
@@ -579,7 +579,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.defs.EPackageDef <em>EPackage Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>EPackage Def</em>'.
    * @see org.eclipse.emf.cdo.defs.EPackageDef
    * @generated
@@ -636,7 +636,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.defs.CDOResourceDef <em>CDO Resource Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>CDO Resource Def</em>'.
    * @see org.eclipse.emf.cdo.defs.CDOResourceDef
    * @generated
@@ -676,7 +676,7 @@ public interface CDODefsPackage extends EPackage
   /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.defs.ResourceMode <em>Resource Mode</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for enum '<em>Resource Mode</em>'.
    * @see org.eclipse.emf.cdo.defs.ResourceMode
    * @generated
@@ -800,7 +800,7 @@ public interface CDODefsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Packages</b></em>' containment reference list feature. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @generated
      */
     EReference CDO_PACKAGE_REGISTRY_DEF__PACKAGES = eINSTANCE.getCDOPackageRegistryDef_Packages();
@@ -911,7 +911,7 @@ public interface CDODefsPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.defs.ResourceMode <em>Resource Mode</em>}' enum. <!--
      * begin-user-doc --> <!-- end-user-doc -->
-     * 
+     *
      * @see org.eclipse.emf.cdo.defs.ResourceMode
      * @see org.eclipse.emf.cdo.defs.impl.CDODefsPackageImpl#getResourceMode()
      * @generated

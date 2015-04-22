@@ -30,7 +30,7 @@ import java.util.Map;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Article</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class ArticleImpl extends ChapterImpl implements Article
@@ -39,7 +39,7 @@ public class ArticleImpl extends ChapterImpl implements Article
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected ArticleImpl()
@@ -66,7 +66,7 @@ public class ArticleImpl extends ChapterImpl implements Article
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

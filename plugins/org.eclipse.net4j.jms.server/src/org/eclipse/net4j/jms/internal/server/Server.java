@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Eike Stepper
  */
-public class Server extends QueueWorker<MessageImpl> implements IServer
+public class Server extends QueueWorker<MessageImpl>implements IServer
 {
   public static final Server INSTANCE = new Server();
 

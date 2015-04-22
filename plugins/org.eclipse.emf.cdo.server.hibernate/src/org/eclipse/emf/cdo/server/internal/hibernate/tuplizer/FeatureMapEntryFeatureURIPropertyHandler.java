@@ -34,7 +34,7 @@ import java.util.Map;
 
 /**
  * Handles the string representation of the feature of the feature map entry in the database.
- * 
+ *
  * @see CDOFeatureMapEntry#setEStructuralFeature(EStructuralFeature)
  * @author <a href="mailto:mtaal@elver.org">Martin Taal</a>
  */
@@ -101,7 +101,7 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
 
   /**
    * Set the EStructuralFeature (see {@link #setEStructuralFeature(EStructuralFeature)}) from its String representation.
-   * 
+   *
    * @param eFeatureURI
    *          a String representation, must be created by the {@link #getEStructuralFeatureAsString()} method
    * @see #getEStructuralFeatureAsString()
@@ -131,7 +131,8 @@ public class FeatureMapEntryFeatureURIPropertyHandler implements PropertyAccesso
     }
     if (ePackage == null)
     {
-      throw new IllegalArgumentException("EPackage not found using " + eFeatureURI + " and EPackageURI: " + ePackageURI); //$NON-NLS-1$ //$NON-NLS-2$
+      throw new IllegalArgumentException(
+          "EPackage not found using " + eFeatureURI + " and EPackageURI: " + ePackageURI); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     final EClass eClass = (EClass)ePackage.getEClassifier(eClassName);

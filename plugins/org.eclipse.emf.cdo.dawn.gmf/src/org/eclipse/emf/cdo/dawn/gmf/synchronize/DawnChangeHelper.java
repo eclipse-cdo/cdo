@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  */
@@ -84,6 +84,7 @@ public class DawnChangeHelper
   protected static final java.util.Map<String, Boolean> options = new HashMap<String, Boolean>();
 
   protected static final java.util.Map<Object, Object> setElementOptions = new HashMap<Object, Object>();
+
   static
   {
     options.put(Transaction.OPTION_UNPROTECTED, Boolean.FALSE);
@@ -93,7 +94,7 @@ public class DawnChangeHelper
 
   /**
    * generic Method to create an EditPart by the given view
-   * 
+   *
    * @param node
    * @param elementType
    * @param diagramEP
@@ -133,7 +134,7 @@ public class DawnChangeHelper
     ViewAndElementDescriptor viewAndElementDescriptor = new ViewAndElementDescriptor(createElementRequestAdapter,
         Node.class, ((IHintedType)elementType).getSemanticHint(),
 
-        parentEditpart.getDiagramPreferencesHint());
+    parentEditpart.getDiagramPreferencesHint());
 
     CreateViewAndElementRequest createViewRequest = new CreateViewAndElementRequest(viewAndElementDescriptor);
 
@@ -150,7 +151,7 @@ public class DawnChangeHelper
   /***************************************
    * This method creates an EditPart given by the specified ElemetType and PLaces it to the give coordinates
    * Element-Types could be: DawnElementTypes.Klasse_1001
-   * 
+   *
    * @param p
    *          the point where the view shoudl be created
    * @param elementType
@@ -174,7 +175,7 @@ public class DawnChangeHelper
 
   /***************************************
    * sets a property for an editpart
-   * 
+   *
    * @param editPart
    * @param name
    * @param object
@@ -194,7 +195,7 @@ public class DawnChangeHelper
 
   /***************************************
    * resizes an Editpart to the given dimension
-   * 
+   *
    * @param editpart
    * @param d
    *          dimension
@@ -235,7 +236,7 @@ public class DawnChangeHelper
 
   /***************************************
    * moves an EdidPart to the given postione
-   * 
+   *
    * @param editpart
    * @param p
    ********************************************************************************************************************/
@@ -272,7 +273,7 @@ public class DawnChangeHelper
 
   /**
    * deletes the EditPart an the concerning model element
-   * 
+   *
    * @param editPart
    * @param editor
    */
@@ -318,7 +319,7 @@ public class DawnChangeHelper
 
   /***************************************
    * Deletes a view and it's contained element
-   * 
+   *
    * @param view
    * @param editor
    ********************************************************************************************************************/
@@ -363,7 +364,7 @@ public class DawnChangeHelper
 
   /***************************************
    * creates an edge for a given elementType
-   * 
+   *
    * @param oldEdge
    * @param sourceEditPart
    * @param targetEditPart
@@ -382,15 +383,16 @@ public class DawnChangeHelper
     CreateConnectionViewAndElementRequest req = new CreateConnectionViewAndElementRequest(elementType,
         ((IHintedType)elementType).getSemanticHint(), root.getDiagramPreferencesHint());
 
-    ICommand createConnectionCmd = new DeferredCreateConnectionViewAndElementCommand(req, new EObjectAdapter(
-        (EObject)sourceEditPart.getModel()), new EObjectAdapter((EObject)targetEditPart.getModel()), root.getViewer());
+    ICommand createConnectionCmd = new DeferredCreateConnectionViewAndElementCommand(req,
+        new EObjectAdapter((EObject)sourceEditPart.getModel()), new EObjectAdapter((EObject)targetEditPart.getModel()),
+        root.getViewer());
 
     root.getDiagramEditDomain().getDiagramCommandStack().execute(new ICommandProxy(createConnectionCmd));
 
     final EditPartViewer viewer = root.getViewer();
 
-    final EditPart ret = (EditPart)viewer.getEditPartRegistry().get(
-        ((ConnectionViewAndElementDescriptor)req.getNewObject()).getAdapter(View.class));
+    final EditPart ret = (EditPart)viewer.getEditPartRegistry()
+        .get(((ConnectionViewAndElementDescriptor)req.getNewObject()).getAdapter(View.class));
 
     if (ret != null)
     {
@@ -401,12 +403,13 @@ public class DawnChangeHelper
 
   /***************************************
    * This Method sets the Anchors and Bendpoint from an old Edge to the edge of the given EditPart
-   * 
+   *
    * @param edgeEditpart
    * @param oldEdge
    * @param root
    ********************************************************************************************************************/
-  public static void setAnchorsAndBendPoints(final EditPart edgeEditpart, final Edge oldEdge, final DiagramEditPart root)
+  public static void setAnchorsAndBendPoints(final EditPart edgeEditpart, final Edge oldEdge,
+      final DiagramEditPart root)
   {
     TransactionalEditingDomain domain = root.getEditingDomain();// getEditingDomain();
     domain.getCommandStack().execute(new RecordingCommand(domain)
@@ -434,7 +437,7 @@ public class DawnChangeHelper
 
   /**
    * returns the border color from a given EditPart
-   * 
+   *
    * @param editPart
    * @return the border color of the EditPart
    */
@@ -465,7 +468,7 @@ public class DawnChangeHelper
 
   /**
    * activates a given EditPart
-   * 
+   *
    * @param editPart
    */
   public static void activateEditPart(final EditPart editPart)
@@ -483,7 +486,7 @@ public class DawnChangeHelper
 
   /**
    * activates the diagram EditPart
-   * 
+   *
    * @param diagramEditPart
    */
   public static void activateDiagramEditPart(DiagramEditPart diagramEditPart)
@@ -498,7 +501,7 @@ public class DawnChangeHelper
 
   /**
    * deactivates the given EditPart
-   * 
+   *
    * @param editPart
    */
   public static void deactivateEditPart(final EditPart editPart)
@@ -518,7 +521,7 @@ public class DawnChangeHelper
 
   /**
    * deactivates the DiagramEditPart
-   * 
+   *
    * @param diagramEditPart
    */
   public static void deactivateDiagramEditPart(DiagramEditPart diagramEditPart)
@@ -549,7 +552,7 @@ public class DawnChangeHelper
 
   /**
    * selects the given EditPart
-   * 
+   *
    * @param e
    */
   public static void select(final EditPart e)
@@ -566,7 +569,7 @@ public class DawnChangeHelper
 
   /***************************************
    * sets a property for an editpart
-   * 
+   *
    * @param editPart
    * @param name
    * @param object
@@ -584,7 +587,7 @@ public class DawnChangeHelper
 
   /***************************************
    * updates the model
-   * 
+   *
    * @param editPart
    * @param model
    * @param editor

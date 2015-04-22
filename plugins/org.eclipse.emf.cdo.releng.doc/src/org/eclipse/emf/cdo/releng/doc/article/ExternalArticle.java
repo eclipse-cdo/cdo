@@ -19,7 +19,7 @@ package org.eclipse.emf.cdo.releng.doc.article;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.ExternalArticle#getUrl <em>Url</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getExternalArticle()
  * @model
  * @generated
@@ -32,7 +32,7 @@ public interface ExternalArticle extends Article
    * If the meaning of the '<em>Url</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Url</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getExternalArticle_Url()
    * @model required="true" changeable="false" derived="true"

@@ -211,8 +211,8 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
    */
   public void setParent(StructuralElement newParent)
   {
-    if (newParent != eInternalContainer() || eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT
-        && newParent != null)
+    if (newParent != eInternalContainer()
+        || eContainerFeatureID() != ArticlePackage.STRUCTURAL_ELEMENT__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
       {
@@ -606,8 +606,9 @@ public abstract class StructuralElementImpl extends LinkTargetImpl implements St
       file.getParentFile().mkdirs();
       out = new PrintWriter(file);
 
-      out.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
-          + NL);
+      out.write(
+          "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">"
+              + NL);
       out.write("<HTML>" + NL);
       out.write("" + NL);
       out.write("<HEAD>" + NL);

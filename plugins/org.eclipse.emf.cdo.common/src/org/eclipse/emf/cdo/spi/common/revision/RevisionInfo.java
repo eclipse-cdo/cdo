@@ -215,8 +215,7 @@ public abstract class RevisionInfo
   /**
    * @since 4.1
    */
-  protected void writeRevision(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext)
-      throws IOException
+  protected void writeRevision(CDODataOutput out, int referenceChunk, CDOBranchPoint securityContext) throws IOException
   {
     out.writeCDORevision(result, referenceChunk, securityContext);
   }
@@ -231,8 +230,7 @@ public abstract class RevisionInfo
    * @deprecated Call {@link #writeResult(CDODataOutput, InternalCDORevision, int, CDOBranchPoint)}
    */
   @Deprecated
-  public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk)
-      throws IOException
+  public static void writeResult(CDODataOutput out, InternalCDORevision revision, int referenceChunk) throws IOException
   {
     writeResult(out, revision, referenceChunk, null);
   }

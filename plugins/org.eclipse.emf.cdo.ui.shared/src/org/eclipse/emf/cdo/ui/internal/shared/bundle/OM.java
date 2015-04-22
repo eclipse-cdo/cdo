@@ -19,7 +19,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Martin Fluegge
  */
 public abstract class OM

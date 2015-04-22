@@ -27,7 +27,7 @@ import java.util.List;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getPlugins <em>Plugins</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation()
  * @model
  * @generated
@@ -43,7 +43,7 @@ public interface Documentation extends StructuralElement
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Context</em>' container reference.
    * @see #setContext(Context)
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Context()
@@ -56,7 +56,7 @@ public interface Documentation extends StructuralElement
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.releng.doc.article.Documentation#getContext <em>Context</em>}'
    * container reference. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Context</em>' container reference.
    * @see #getContext()
@@ -74,7 +74,7 @@ public interface Documentation extends StructuralElement
    * more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Embeddable Elements</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_EmbeddableElements()
    * @see org.eclipse.emf.cdo.releng.doc.article.EmbeddableElement#getDocumentation
@@ -91,7 +91,7 @@ public interface Documentation extends StructuralElement
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Dependencies</em>' reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Dependencies()
    * @model resolveProxies="false"
@@ -106,7 +106,7 @@ public interface Documentation extends StructuralElement
    * here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Project</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Project()
    * @model required="true" changeable="false"
@@ -122,7 +122,7 @@ public interface Documentation extends StructuralElement
    * description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Plugins</em>' containment reference list.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getDocumentation_Plugins()
    * @model containment="true" changeable="false" derived="true"

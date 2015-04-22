@@ -23,7 +23,7 @@ import java.io.Serializable;
 
 /**
  * Resolves entitynames, todo: use entityname strategy!
- * 
+ *
  * @author Martin Taal
  */
 public class CDOInterceptor extends EMFInterceptor

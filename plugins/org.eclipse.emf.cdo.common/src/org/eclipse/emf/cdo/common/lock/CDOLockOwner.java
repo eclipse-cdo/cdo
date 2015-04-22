@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.common.lock;
 /**
  * A client-side representation of a view owning locks.
  * <p>
- * 
+ *
  * @author Caspar De Groot
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.

@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.provider;
 
@@ -36,15 +36,15 @@ import java.util.List;
 /**
  * This is the item provider adapter for a {@link org.eclipse.emf.cdo.dawn.examples.acore.ABasicClass} object. <!--
  * begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class ABasicClassItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource
 {
   /**
    * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   public ABasicClassItemProvider(AdapterFactory adapterFactory)
@@ -54,7 +54,7 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -71,17 +71,17 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * This adds a property descriptor for the Name feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected void addNamePropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_ABasicClass_name_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ABasicClass_name_feature", "_UI_ABasicClass_type"),
-        AcorePackage.Literals.ABASIC_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null,
-        null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ABasicClass_name_feature"),
+            getString("_UI_PropertyDescriptor_description", "_UI_ABasicClass_name_feature", "_UI_ABasicClass_type"),
+            AcorePackage.Literals.ABASIC_CLASS__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+            null, null));
   }
 
   /**
@@ -89,7 +89,7 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}. <!-- begin-user-doc --> <!--
    * end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -106,7 +106,7 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -120,7 +120,7 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * This returns ABasicClass.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -131,21 +131,21 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
   public String getText(Object object)
   {
     String label = ((ABasicClass)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_ABasicClass_type") : getString("_UI_ABasicClass_type")
-        + " " + label;
+    return label == null || label.length() == 0 ? getString("_UI_ABasicClass_type")
+        : getString("_UI_ABasicClass_type") + " " + label;
   }
 
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a
    * viewer notification, which it passes to {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -169,7 +169,7 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
   /**
    * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under
    * this object. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override
@@ -186,7 +186,7 @@ public class ABasicClassItemProvider extends ItemProviderAdapter implements IEdi
 
   /**
    * Return the resource locator for this item provider's resources. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

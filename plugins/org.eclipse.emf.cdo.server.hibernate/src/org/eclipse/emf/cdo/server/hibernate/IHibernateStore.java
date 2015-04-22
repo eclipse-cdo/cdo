@@ -23,7 +23,7 @@ import org.hibernate.cfg.Configuration;
 /**
  * The Hibernate store manages the Hibernate {@link SessionFactory} and the installed
  * {@link EPackage} instances.
- * 
+ *
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.
@@ -43,7 +43,7 @@ public interface IHibernateStore extends IStore, IDBConnectionProvider, IStore.C
 
   /**
    * If results should be cached in the query cache, only needed if they are accessed directly as part of the query.
-   * 
+   *
    * @since 4.0
    */
   public static final String CACHE_RESULTS = "cacheResults"; //$NON-NLS-1$

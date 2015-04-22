@@ -19,14 +19,14 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Source Code</b></em>'. <!-- end-user-doc -->
  * <p>
  * </p>
- * 
+ *
  * @generated
  */
 public class SourceCodeImpl extends ExternalTargetImpl implements SourceCode
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   protected SourceCodeImpl()
@@ -36,7 +36,7 @@ public class SourceCodeImpl extends ExternalTargetImpl implements SourceCode
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   @Override

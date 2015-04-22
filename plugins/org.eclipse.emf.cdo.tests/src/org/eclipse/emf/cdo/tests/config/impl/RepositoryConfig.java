@@ -114,8 +114,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private static final boolean LOG_MULTI_VIEW_COMMIT = false;
 
-  private static final Boolean enableServerBrowser = Boolean.valueOf(System.getProperty(
-      "org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser", "false"));
+  private static final Boolean enableServerBrowser = Boolean.valueOf(
+      System.getProperty("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser", "false"));
 
   private static final long serialVersionUID = 1L;
 
@@ -533,8 +533,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
               if (!path.startsWith(prefix) && !hasAnnotation(CleanRepositoriesBefore.class))
               {
                 throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName()
-                    + " does not use getResourcePath() for resource " + path + ", nor does it declare @"
-                    + CleanRepositoriesBefore.class.getSimpleName());
+                + " does not use getResourcePath() for resource " + path + ", nor does it declare @"
+                + CleanRepositoriesBefore.class.getSimpleName());
               }
             }
           }

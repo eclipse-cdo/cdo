@@ -93,8 +93,10 @@ public class Bz398057B1Impl extends Bz398057BImpl implements Bz398057B1
     String oldValueStr = valueStr;
     valueStr = newValueStr;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, HibernateTestPackage.BZ398057_B1__VALUE_STR, oldValueStr,
           valueStr));
+    }
   }
 
   /**
@@ -172,7 +174,9 @@ public class Bz398057B1Impl extends Bz398057BImpl implements Bz398057B1
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (valueStr: ");

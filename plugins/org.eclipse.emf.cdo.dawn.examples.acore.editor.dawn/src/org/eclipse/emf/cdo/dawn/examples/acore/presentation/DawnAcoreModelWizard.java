@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.presentation;
 
@@ -63,8 +63,8 @@ public class DawnAcoreModelWizard extends AcoreModelWizard implements INewWizard
 
     initialObjectCreationPage = new AcoreModelWizardInitialObjectCreationPage("Whatever2");
     initialObjectCreationPage.setTitle(AcoreEditorPlugin.INSTANCE.getString("_UI_AcoreModelWizard_label"));
-    initialObjectCreationPage.setDescription(AcoreEditorPlugin.INSTANCE
-        .getString("_UI_Wizard_initial_object_description"));
+    initialObjectCreationPage
+        .setDescription(AcoreEditorPlugin.INSTANCE.getString("_UI_Wizard_initial_object_description"));
     addPage(initialObjectCreationPage);
   }
 

@@ -269,7 +269,8 @@ public final class CDOServerUtil
   /**
    * @since 4.0
    */
-  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store, Map<String, String> props)
+  public static ISynchronizableRepository createFailoverParticipant(String name, IStore store,
+      Map<String, String> props)
   {
     return createFailoverParticipant(name, store, props, null);
   }
@@ -296,8 +297,8 @@ public final class CDOServerUtil
     return RepositoryFactory.get(container, name);
   }
 
-  public static Element getRepositoryConfig(String repositoryName) throws ParserConfigurationException, SAXException,
-      IOException
+  public static Element getRepositoryConfig(String repositoryName)
+      throws ParserConfigurationException, SAXException, IOException
   {
     File configFile = OMPlatform.INSTANCE.getConfigFile("cdo-server.xml"); //$NON-NLS-1$
 

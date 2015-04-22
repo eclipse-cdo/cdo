@@ -152,11 +152,11 @@ public final class ObjectUtil
 
   /**
    * Attempts to cast an {@code object} as an instance of the given {@code type}.
-   * 
+   *
    * @param object an object to cast to some {@code type}
    * @param type the type to cast the {@code object} to
    * @return the {@code object} or {@code null} if it is not of the required {@code type}
-   * 
+   *
    * @since 3.4
    */
   public static <T> T tryCast(Object object, Class<T> type)

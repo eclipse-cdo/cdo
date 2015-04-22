@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.lifecycle;
 
 /**
  * Enumerates the possible lifecycle states of an entity with a {@link ILifecycle lifecycle}.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  */

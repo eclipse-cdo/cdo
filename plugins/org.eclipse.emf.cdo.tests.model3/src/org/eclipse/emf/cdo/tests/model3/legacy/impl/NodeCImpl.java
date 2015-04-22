@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -57,7 +57,7 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getName()
    * @generated
    * @ordered
@@ -133,7 +133,9 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   public NodeC getParent()
   {
     if (eContainerFeatureID() != Model3Package.NODE_C__PARENT)
+    {
       return null;
+    }
     return (NodeC)eContainer();
   }
 
@@ -153,22 +155,31 @@ public class NodeCImpl extends EObjectImpl implements NodeC
    */
   public void setParent(NodeC newParent)
   {
-    if (newParent != eInternalContainer()
-        || (eContainerFeatureID() != Model3Package.NODE_C__PARENT && newParent != null))
+    if (newParent != eInternalContainer() || eContainerFeatureID() != Model3Package.NODE_C__PARENT && newParent != null)
     {
       if (EcoreUtil.isAncestor(this, newParent))
+      {
         throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+      }
       NotificationChain msgs = null;
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       if (newParent != null)
+      {
         msgs = ((InternalEObject)newParent).eInverseAdd(this, Model3Package.NODE_C__CHILDREN, NodeC.class, msgs);
+      }
       msgs = basicSetParent(newParent, msgs);
       if (msgs != null)
+      {
         msgs.dispatch();
+      }
     }
     else if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_C__PARENT, newParent, newParent));
+    }
   }
 
   /**
@@ -189,7 +200,9 @@ public class NodeCImpl extends EObjectImpl implements NodeC
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
+    {
       eNotify(new ENotificationImpl(this, Notification.SET, Model3Package.NODE_C__NAME, oldName, name));
+    }
   }
 
   /**
@@ -234,7 +247,9 @@ public class NodeCImpl extends EObjectImpl implements NodeC
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getChildren()).basicAdd(otherEnd, msgs);
     case Model3Package.NODE_C__PARENT:
       if (eInternalContainer() != null)
+      {
         msgs = eBasicRemoveFromContainer(msgs);
+      }
       return basicSetParent((NodeC)otherEnd, msgs);
     case Model3Package.NODE_C__OTHER_NODES:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getOtherNodes()).basicAdd(otherEnd, msgs);
@@ -394,7 +409,9 @@ public class NodeCImpl extends EObjectImpl implements NodeC
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

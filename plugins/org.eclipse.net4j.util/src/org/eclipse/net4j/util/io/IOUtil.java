@@ -940,7 +940,7 @@ public final class IOUtil
           return false;
         }
 
-        if (byte1 == -1)// Implies byte2 == -1
+        if (byte1 == -1) // Implies byte2 == -1
         {
           return true;
         }
@@ -969,7 +969,7 @@ public final class IOUtil
           return false;
         }
 
-        if (char1 == -1)// Implies char2 == -1
+        if (char1 == -1) // Implies char2 == -1
         {
           return true;
         }

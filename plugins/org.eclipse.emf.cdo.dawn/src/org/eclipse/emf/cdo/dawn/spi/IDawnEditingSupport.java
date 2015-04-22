@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -19,7 +19,7 @@ import java.util.Map;
  * The IDawnEditingSupport is the direct connection the the Dawn Runtime. Service Providers must implement this
  * interface to react on repository changes or local data manipulation. For implementation example @see
  * org.eclipse.emf.cdo.dawn.gmf.editors.impl.DawnGMFEditorSupport.
- * 
+ *
  * @author Martin Fluegge
  * @since 2.0
  */
@@ -33,7 +33,7 @@ public interface IDawnEditingSupport
 
   /**
    * Returns the dirty state of the UI element.
-   * 
+   *
    * @return true if the specific parts of the model that should be reflected as dirty to the UI are dirty, else
    *         otherwise.
    */
@@ -62,21 +62,21 @@ public interface IDawnEditingSupport
   /**
    * Implementations must process all operations that are need to provide a clean rollback. This includes the rollback
    * on the repository site and the refreshing of the user interface.
-   * 
+   *
    * @since 1.0
    */
   public void rollback();
 
   /**
    * Refreshes the internal components of the IDawnEditor
-   * 
+   *
    * @since 2.0
    */
   public void refresh();
 
   /**
    * Locks the objects
-   * 
+   *
    * @since 2.0
    */
   public void lockObjects(List<Object> objectsToBeLocked);
@@ -88,7 +88,7 @@ public interface IDawnEditingSupport
 
   /**
    * Unlocks the objects
-   * 
+   *
    * @since 2.0
    */
   public void unlockObjects(List<Object> objectsToBeLocked);
@@ -101,7 +101,7 @@ public interface IDawnEditingSupport
   /**
    * Implementations must handle all operations which are necessary on remotely locked objects, like disabling them,
    * providing specific markers, like colors or icons, and so on.
-   * 
+   *
    * @since 2.0
    */
   public void handleRemoteLockChanges(Map<Object, DawnState> changedObjects);

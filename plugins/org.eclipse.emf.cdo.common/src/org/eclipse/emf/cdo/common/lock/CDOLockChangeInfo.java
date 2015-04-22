@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Caspar De Groot - initial API and implementation
  */
@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 /**
  * Represents a change in the lock state of a set of objects. Instances are meant to be sent from the server to the
  * client for the purpose of notifying the latter.
- * 
+ *
  * @author Caspar De Groot
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
@@ -69,7 +69,7 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
 
   /**
    * Enumerates the possible locking operations.
-   * 
+   *
    * @author Caspar De Groot
    */
   public enum Operation

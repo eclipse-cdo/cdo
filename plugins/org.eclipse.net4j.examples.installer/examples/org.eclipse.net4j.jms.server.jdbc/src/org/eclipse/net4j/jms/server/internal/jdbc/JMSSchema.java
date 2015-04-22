@@ -31,13 +31,13 @@ public class JMSSchema
   public static final IDBTable DESTINATIONS = INSTANCE.addTable("destinations"); //$NON-NLS-1$
 
   public static final IDBField DESTINATIONS_NAME = //
-  DESTINATIONS.addField("name", DBType.VARCHAR, 255); //$NON-NLS-1$
+      DESTINATIONS.addField("name", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBField DESTINATIONS_TYPE = //
-  DESTINATIONS.addField("type", DBType.INTEGER); //$NON-NLS-1$
+      DESTINATIONS.addField("type", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_DESTINATIONS_PK = //
-  DESTINATIONS.addIndex(IDBIndex.Type.PRIMARY_KEY, DESTINATIONS_NAME);
+      DESTINATIONS.addIndex(IDBIndex.Type.PRIMARY_KEY, DESTINATIONS_NAME);
 
   /**
    * DBTable Messages
@@ -45,16 +45,16 @@ public class JMSSchema
   public static final IDBTable MESSAGES = INSTANCE.addTable("messages"); //$NON-NLS-1$
 
   public static final IDBField MESSAGES_ID = //
-  MESSAGES.addField("id", DBType.VARCHAR); //$NON-NLS-1$
+      MESSAGES.addField("id", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField MESSAGES_DESTINATION = //
-  MESSAGES.addField("destination", DBType.VARCHAR); //$NON-NLS-1$
+      MESSAGES.addField("destination", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField MESSAGES_PRIORITY = //
-  MESSAGES.addField("priority", DBType.INTEGER); //$NON-NLS-1$
+      MESSAGES.addField("priority", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_MESSAGES_PK = //
-  MESSAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, MESSAGES_ID);
+      MESSAGES.addIndex(IDBIndex.Type.PRIMARY_KEY, MESSAGES_ID);
 
   /**
    * Queries

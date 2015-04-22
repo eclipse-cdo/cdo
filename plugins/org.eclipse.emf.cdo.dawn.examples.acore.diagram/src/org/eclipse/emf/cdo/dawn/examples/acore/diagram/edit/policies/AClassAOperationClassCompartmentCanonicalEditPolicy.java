@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.edit.policies;
 
@@ -37,6 +37,7 @@ public class AClassAOperationClassCompartmentCanonicalEditPolicy extends Canonic
   /**
    * @generated
    */
+  @Override
   protected List getSemanticChildrenList()
   {
     View viewObject = (View)getHost().getModel();
@@ -54,6 +55,7 @@ public class AClassAOperationClassCompartmentCanonicalEditPolicy extends Canonic
   /**
    * @generated
    */
+  @Override
   protected boolean isOrphaned(Collection semanticChildren, final View view)
   {
     int visualID = AcoreVisualIDRegistry.getVisualID(view);
@@ -71,6 +73,7 @@ public class AClassAOperationClassCompartmentCanonicalEditPolicy extends Canonic
   /**
    * @generated
    */
+  @Override
   protected EStructuralFeature getFeatureToSynchronize()
   {
     return AcorePackage.eINSTANCE.getABasicClass_Operations();

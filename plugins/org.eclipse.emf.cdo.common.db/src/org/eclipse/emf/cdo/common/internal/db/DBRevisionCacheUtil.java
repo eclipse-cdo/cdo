@@ -28,7 +28,7 @@ public class DBRevisionCacheUtil
    * Gets the name of a revision of a CDOResourceNode.
    * <p>
    * See bug 279817
-   * 
+   *
    * @param revision
    *          the revision
    * @return the resource node name
@@ -39,8 +39,8 @@ public class DBRevisionCacheUtil
   public static String getResourceNodeName(CDORevision revision)
   {
     CheckUtil.checkArg(revision.isResourceNode(), "The revision is not a resource node!");
-    EStructuralFeature feature = revision.getEClass().getEStructuralFeature(
-        CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+    EStructuralFeature feature = revision.getEClass()
+        .getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
     return (String)((InternalCDORevision)revision).getValue(feature);
   }
 }

@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Martin Fluegge - initial API and implementation
  */
@@ -35,14 +35,14 @@ public interface IDawnListener extends IListener
 
   /**
    * Allows the user to react on lock change notifications:
-   * 
+   *
    * @since 2.0
    */
   public void handleLocksChangedEvent(CDOViewLocksChangedEvent event);
 
   /**
    * This method typically will be called for unprocessed events.
-   * 
+   *
    * @since 2.0
    */
   public void handleEvent(IEvent event);

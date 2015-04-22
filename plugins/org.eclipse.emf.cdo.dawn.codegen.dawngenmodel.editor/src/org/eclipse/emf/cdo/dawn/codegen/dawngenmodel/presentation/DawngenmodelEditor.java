@@ -131,7 +131,7 @@ import java.util.Map;
  * @generated
  */
 public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-    IMenuListener, IViewerProvider, IGotoMarker, ISelectionChangedListener
+IMenuListener, IViewerProvider, IGotoMarker, ISelectionChangedListener
 {
   /**
    * This keeps track of the editing domain that is used to track all changes to the model. <!-- begin-user-doc --> <!--
@@ -398,11 +398,11 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
           {
             if (delta.getResource().getType() == IResource.FILE)
             {
-              if (delta.getKind() == IResourceDelta.REMOVED || delta.getKind() == IResourceDelta.CHANGED
-                  && delta.getFlags() != IResourceDelta.MARKERS)
+              if (delta.getKind() == IResourceDelta.REMOVED
+                  || delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS)
               {
-                Resource resource = resourceSet.getResource(
-                    URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
+                Resource resource = resourceSet
+                    .getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
                 if (resource != null)
                 {
                   if (delta.getKind() == IResourceDelta.REMOVED)
@@ -939,8 +939,9 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
     if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
     {
       BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR,
-          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor", 0, getString("_UI_CreateModelError_message",
-              resource.getURI()), new Object[] { exception == null ? (Object)resource : exception });
+          "org.eclipse.emf.cdo.dawn.codegen.dawngenmodel.editor", 0,
+          getString("_UI_CreateModelError_message", resource.getURI()),
+          new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
       return basicDiagnostic;
     }
@@ -1199,8 +1200,8 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
           {
             // Select the root object in the view.
             //
-            contentOutlineViewer.setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources()
-                .get(0)), true);
+            contentOutlineViewer
+                .setSelection(new StructuredSelection(editingDomain.getResourceSet().getResources().get(0)), true);
           }
         }
 
@@ -1467,9 +1468,9 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
     editingDomain.getResourceSet().getResources().get(0).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
-    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null ? getActionBars()
-        .getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-    doSave(progressMonitor);
+    IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
+        ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
+        doSave(progressMonitor);
   }
 
   /**
@@ -1583,8 +1584,8 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
    */
   public void setStatusLineManager(ISelection selection)
   {
-    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer ? contentOutlineStatusLineManager
-        : getActionBars().getStatusLineManager();
+    IStatusLineManager statusLineManager = currentViewer != null && currentViewer == contentOutlineViewer
+        ? contentOutlineStatusLineManager : getActionBars().getStatusLineManager();
 
     if (statusLineManager != null)
     {

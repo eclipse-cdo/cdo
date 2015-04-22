@@ -123,7 +123,8 @@ public final class CDODBUtil
   /**
    * @since 4.1
    */
-  public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing, boolean branching, boolean withRanges)
+  public static IMappingStrategy createHorizontalMappingStrategy(boolean auditing, boolean branching,
+      boolean withRanges)
   {
     if (branching)
     {

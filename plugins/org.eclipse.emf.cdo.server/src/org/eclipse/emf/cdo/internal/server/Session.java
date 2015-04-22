@@ -74,7 +74,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Eike Stepper
  */
-public class Session extends Container<IView> implements InternalSession
+public class Session extends Container<IView>implements InternalSession
 {
   private InternalSessionManager manager;
 

@@ -18,7 +18,7 @@ package org.eclipse.emf.cdo.releng.doc.article;
  * <li>{@link org.eclipse.emf.cdo.releng.doc.article.Toc#getLevels <em>Levels</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getToc()
  * @model
  * @generated
@@ -32,7 +32,7 @@ public interface Toc extends BodyElement
    * If the meaning of the '<em>Levels</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * 
+   *
    * @return the value of the '<em>Levels</em>' attribute.
    * @see org.eclipse.emf.cdo.releng.doc.article.ArticlePackage#getToc_Levels()
    * @model default="-1" changeable="false" derived="true"

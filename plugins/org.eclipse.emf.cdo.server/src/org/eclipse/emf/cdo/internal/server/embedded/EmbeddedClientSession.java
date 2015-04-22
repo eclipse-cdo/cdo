@@ -70,7 +70,7 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   /**
    * Changing the user's password in an embedded client session is not supported:
    * it must be done interactively with the user in a client session.
-   * 
+   *
    * @since 4.3
    */
   public void changeCredentials()
@@ -81,7 +81,7 @@ public class EmbeddedClientSession extends CDOSessionImpl implements CDOSession
   /**
    * Resetting a user's password in an embedded client session is not supported:
    * it must be done interactively in a client session.
-   * 
+   *
    * @since 4.3
    */
   public void resetCredentials(String userID)

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 /**
  * Class to be used for testing, all persistence related calls are overriden by local ones.
- * 
+ *
  * @author ibrahim
  */
 class ObjyLocalArrayListLong extends ObjyArrayList<Long>
@@ -126,7 +126,7 @@ public class ObjyArrayListTest
   {
     //
     arrayListLong.remove((int)arrayListLong.size());
-    assertEquals((numItems - 1), arrayListLong.size());
+    assertEquals(numItems - 1, arrayListLong.size());
   }
 
   @Test
@@ -134,7 +134,7 @@ public class ObjyArrayListTest
   {
     //
     arrayListLong.remove(5);
-    assertEquals((numItems - 1), arrayListLong.size());
+    assertEquals(numItems - 1, arrayListLong.size());
   }
 
   @Test(expected = IndexOutOfBoundsException.class)

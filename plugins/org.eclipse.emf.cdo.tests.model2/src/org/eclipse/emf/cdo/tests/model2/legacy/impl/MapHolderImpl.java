@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *
@@ -99,7 +99,7 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   /**
    * The cached value of the '{@link #getEObjectToEObjectMap() <em>EObject To EObject Map</em>}' map. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getEObjectToEObjectMap()
    * @generated
    * @ordered
@@ -188,8 +188,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
   {
     if (stringToVATMap == null)
     {
-      stringToVATMap = new EcoreEMap<String, VAT>(Model2Package.eINSTANCE.getStringToVATMap(),
-          StringToVATMapImpl.class, this, Model2Package.MAP_HOLDER__STRING_TO_VAT_MAP);
+      stringToVATMap = new EcoreEMap<String, VAT>(Model2Package.eINSTANCE.getStringToVATMap(), StringToVATMapImpl.class,
+          this, Model2Package.MAP_HOLDER__STRING_TO_VAT_MAP);
     }
     return stringToVATMap;
   }
@@ -247,8 +247,8 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
     if (eObjectToEObjectKeyContainedMap == null)
     {
       eObjectToEObjectKeyContainedMap = new EcoreEMap<EObject, EObject>(
-          Model2Package.eINSTANCE.getEObjectToEObjectKeyContainedMap(), EObjectToEObjectKeyContainedMapImpl.class,
-          this, Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP);
+          Model2Package.eINSTANCE.getEObjectToEObjectKeyContainedMap(), EObjectToEObjectKeyContainedMapImpl.class, this,
+          Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP);
     }
     return eObjectToEObjectKeyContainedMap;
   }
@@ -325,49 +325,85 @@ public class MapHolderImpl extends EObjectImpl implements MapHolder
     {
     case Model2Package.MAP_HOLDER__INTEGER_TO_STRING_MAP:
       if (coreType)
+      {
         return getIntegerToStringMap();
+      }
       else
+      {
         return getIntegerToStringMap().map();
+      }
     case Model2Package.MAP_HOLDER__STRING_TO_STRING_MAP:
       if (coreType)
+      {
         return getStringToStringMap();
+      }
       else
+      {
         return getStringToStringMap().map();
+      }
     case Model2Package.MAP_HOLDER__STRING_TO_VAT_MAP:
       if (coreType)
+      {
         return getStringToVATMap();
+      }
       else
+      {
         return getStringToVATMap().map();
+      }
     case Model2Package.MAP_HOLDER__STRING_TO_ADDRESS_CONTAINMENT_MAP:
       if (coreType)
+      {
         return getStringToAddressContainmentMap();
+      }
       else
+      {
         return getStringToAddressContainmentMap().map();
+      }
     case Model2Package.MAP_HOLDER__STRING_TO_ADDRESS_REFERENCE_MAP:
       if (coreType)
+      {
         return getStringToAddressReferenceMap();
+      }
       else
+      {
         return getStringToAddressReferenceMap().map();
+      }
     case Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_MAP:
       if (coreType)
+      {
         return getEObjectToEObjectMap();
+      }
       else
+      {
         return getEObjectToEObjectMap().map();
+      }
     case Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_KEY_CONTAINED_MAP:
       if (coreType)
+      {
         return getEObjectToEObjectKeyContainedMap();
+      }
       else
+      {
         return getEObjectToEObjectKeyContainedMap().map();
+      }
     case Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_BOTH_CONTAINED_MAP:
       if (coreType)
+      {
         return getEObjectToEObjectBothContainedMap();
+      }
       else
+      {
         return getEObjectToEObjectBothContainedMap().map();
+      }
     case Model2Package.MAP_HOLDER__EOBJECT_TO_EOBJECT_VALUE_CONTAINED_MAP:
       if (coreType)
+      {
         return getEObjectToEObjectValueContainedMap();
+      }
       else
+      {
         return getEObjectToEObjectValueContainedMap().map();
+      }
     }
     return super.eGet(featureID, resolve, coreType);
   }

@@ -74,7 +74,7 @@ public final class NIOUtil
   /**
    * Copy source file to destination. If destination is a path then source file name is appended. If destination file
    * exists then: overwrite=true - destination file is replaced; overwite=false - exception is thrown.
-   * 
+   *
    * @param src
    *          source file
    * @param dst

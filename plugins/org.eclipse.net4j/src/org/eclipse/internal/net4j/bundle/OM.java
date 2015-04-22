@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
- * 
+ *
  * @author Eike Stepper
  */
 public abstract class OM
@@ -41,8 +41,8 @@ public abstract class OM
 
   public static final OMTracer DEBUG_SIGNAL = DEBUG.tracer("signal"); //$NON-NLS-1$
 
-  public static final boolean SET_SIGNAL_THREAD_NAME = BUNDLE.getDebugSupport().getDebugOption(
-      "set.signal.thread.name", false); //$NON-NLS-1$
+  public static final boolean SET_SIGNAL_THREAD_NAME = BUNDLE.getDebugSupport().getDebugOption("set.signal.thread.name", //$NON-NLS-1$
+      false);
 
   public static final OMLogger LOG = BUNDLE.logger();
 

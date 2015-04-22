@@ -44,8 +44,8 @@ import java.util.List;
  * @generated
  */
 public class RoleItemProvider extends SecurityItemItemProvider implements IEditingDomainItemProvider,
-    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -85,11 +85,11 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
    */
   protected void addAssigneesPropertyDescriptor(Object object)
   {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(
-        ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Role_assignees_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Role_assignees_feature", "_UI_Role_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        SecurityPackage.Literals.ROLE__ASSIGNEES, true, false, true, null, null, null));
+    itemPropertyDescriptors
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_Role_assignees_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_Role_assignees_feature", "_UI_Role_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            SecurityPackage.Literals.ROLE__ASSIGNEES, true, false, true, null, null, null));
   }
 
   /**
@@ -173,7 +173,8 @@ public class RoleItemProvider extends SecurityItemItemProvider implements IEditi
   public String getText(Object object)
   {
     String label = ((Role)object).getId();
-    return label == null || label.length() == 0 ? getString("_UI_Role_type") : //$NON-NLS-1$
+    return label == null || label.length() == 0 ? getString("_UI_Role_type") //$NON-NLS-1$
+        :
         label;
   }
 

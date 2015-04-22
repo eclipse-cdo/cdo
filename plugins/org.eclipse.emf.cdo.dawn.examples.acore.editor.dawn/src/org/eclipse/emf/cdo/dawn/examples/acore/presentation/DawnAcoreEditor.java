@@ -4,11 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
  *     Christian W. Damus (CEA) - bug 399933 NPE in editor when finishing Ecore wizard
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.presentation;
 
@@ -34,7 +34,7 @@ import org.eclipse.ui.IEditorInput;
 
 /**
  * This is an example of a Acore model editor. <!-- begin-user-doc --> <!-- end-user-doc -->
- * 
+ *
  * @generated
  */
 public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
@@ -101,13 +101,13 @@ public class DawnAcoreEditor extends AcoreEditor implements IDawnEditor
     selectionViewer.setContentProvider(new DawnSelectionViewerAdapterFactoryContentProvider(adapterFactory,
         ((DawnEditorInput)getEditorInput()).getResource()));
     selectionViewer
-        .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
+    .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     parentViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     listViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     treeViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
     tableViewer.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
-    treeViewerWithColumns.setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(),
-        selectionViewer));
+    treeViewerWithColumns
+        .setLabelProvider(new DawnLabelProvider(adapterFactory, dawnEditorSupport.getView(), selectionViewer));
 
     CDOResource resource = ((DawnEditorInput)getEditorInput()).getResource();
 

@@ -30,7 +30,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
  * @since 4.4
  */
 public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, IPasswordCredentialsProvider2,
-    CDOSessionProvider, CDOViewOpener, CDOTransactionOpener
+CDOSessionProvider, CDOViewOpener, CDOTransactionOpener
 {
   public static final String TYPE_REMOTE = "remote";
 

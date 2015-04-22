@@ -639,8 +639,8 @@ public final class CDORevisionUtil
         @Override
         protected void dumpBranch(CDOBranch branch)
         {
-          out().println(
-              padTimeRange(branch.getName() + "[" + branch.getID() + "]", pad, branch.getBase().getTimeStamp(), //$NON-NLS-1$ //$NON-NLS-2$
+          out()
+              .println(padTimeRange(branch.getName() + "[" + branch.getID() + "]", pad, branch.getBase().getTimeStamp(), //$NON-NLS-1$ //$NON-NLS-2$
                   CDORevision.UNSPECIFIED_DATE));
         }
 

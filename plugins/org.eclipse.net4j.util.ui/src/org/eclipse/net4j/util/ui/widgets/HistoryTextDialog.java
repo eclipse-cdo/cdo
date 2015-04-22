@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * TODO extend BaseDialog
- * 
+ *
  * @author Eike Stepper
  */
 public class HistoryTextDialog extends InputDialog

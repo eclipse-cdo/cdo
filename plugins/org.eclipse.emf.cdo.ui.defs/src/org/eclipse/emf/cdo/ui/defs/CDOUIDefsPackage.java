@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -64,7 +64,7 @@ public interface CDOUIDefsPackage extends EPackage
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.ui.defs.impl.EditorDefImpl <em>Editor Def</em>}' class. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see org.eclipse.emf.cdo.ui.defs.impl.EditorDefImpl
    * @see org.eclipse.emf.cdo.ui.defs.impl.CDOUIDefsPackageImpl#getEditorDef()
    * @generated
@@ -123,7 +123,7 @@ public interface CDOUIDefsPackage extends EPackage
   /**
    * The number of structural features of the '<em>CDO Editor Def</em>' class. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @generated
    * @ordered
    */
@@ -132,7 +132,7 @@ public interface CDOUIDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.ui.defs.EditorDef <em>Editor Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>Editor Def</em>'.
    * @see org.eclipse.emf.cdo.ui.defs.EditorDef
    * @generated
@@ -152,7 +152,7 @@ public interface CDOUIDefsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.ui.defs.CDOEditorDef <em>CDO Editor Def</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @return the meta object for class '<em>CDO Editor Def</em>'.
    * @see org.eclipse.emf.cdo.ui.defs.CDOEditorDef
    * @generated

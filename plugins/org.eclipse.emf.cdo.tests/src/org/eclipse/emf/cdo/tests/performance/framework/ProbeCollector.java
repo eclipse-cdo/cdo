@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Stefan Winkler - initial API and implementation
  */
@@ -22,7 +22,8 @@ public class ProbeCollector
 {
   private final List<PerformanceRecord> performanceRecords = new ArrayList<PerformanceRecord>();
 
-  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName, int runs)
+  protected PerformanceRecord createPerformanceRecord(IScenario scenario, String testName, String testCaseName,
+      int runs)
   {
     PerformanceRecord performanceRecord = new PerformanceRecord(scenario, testName, testCaseName, runs);
     performanceRecords.add(performanceRecord);

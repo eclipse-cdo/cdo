@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.common.commit;
 /**
  * A call-back interface that indicates the ability to <i>handle</i> {@link CDOCommitInfo commit infos} that are passed
  * from other entities.
- * 
+ *
  * @author Eike Stepper
  * @since 3.0
  * @apiviz.uses {@link CDOCommitInfo} - - handles

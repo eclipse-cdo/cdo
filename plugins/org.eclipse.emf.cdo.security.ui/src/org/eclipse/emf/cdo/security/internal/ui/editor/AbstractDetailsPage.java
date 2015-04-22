@@ -61,7 +61,7 @@ import org.eclipse.ui.forms.widgets.TableWrapData;
  *
  * @author Christian W. Damus (CEA LIST)
  */
-public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSectionPart<T> implements IDetailsPage
+public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSectionPart<T>implements IDetailsPage
 {
   public AbstractDetailsPage(Class<T> elementType, EClass elementEClass, EditingDomain domain,
       AdapterFactory adapterFactory)
@@ -104,8 +104,8 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
   protected Text text(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
     toolkit.createLabel(parent, label);
-    Text result = toolkit.createText(
-        createDecorationComposite(parent, toolkit, layoutData(parent, SWT.FILL, false, 1)), ""); //$NON-NLS-1$
+    Text result = toolkit.createText(createDecorationComposite(parent, toolkit, layoutData(parent, SWT.FILL, false, 1)),
+        ""); //$NON-NLS-1$
     getContext().bindValue(observeText(result),
         EMFEditObservables.observeDetailValue(getRealm(), getEditingDomain(), getValue(), attribute));
     getContext().bindValue(WidgetProperties.enabled().observe(result), getValue(), null,
@@ -293,8 +293,9 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
   protected ComboViewer combo(Composite parent, FormToolkit toolkit, String label, EAttribute attribute)
   {
     toolkit.createLabel(parent, label);
-    ComboViewer result = new ComboViewer(createDecorationComposite(parent, toolkit,
-        layoutData(parent, SWT.LEFT, false, 1)), SWT.READ_ONLY | SWT.DROP_DOWN);
+    ComboViewer result = new ComboViewer(
+        createDecorationComposite(parent, toolkit, layoutData(parent, SWT.LEFT, false, 1)),
+        SWT.READ_ONLY | SWT.DROP_DOWN);
     result.setLabelProvider(new AdapterFactoryLabelProvider(getAdapterFactory()));
     result.setContentProvider(new ArrayContentProvider());
     result.setInput(attribute.getEAttributeType().getInstanceClass().getEnumConstants());
@@ -327,8 +328,8 @@ public abstract class AbstractDetailsPage<T extends EObject> extends AbstractSec
     final ControlDecoration decoration = new ControlDecoration(control, SWT.RIGHT | SWT.CENTER);
     decoration.hide();
     decoration.setDescriptionText(Messages.AbstractDetailsPage_3);
-    decoration.setImage(ExtendedImageRegistry.getInstance().getImage(
-        URI.createPlatformPluginURI(OM.BUNDLE_ID + "/icons/full/elcl16/revert.gif", true))); //$NON-NLS-1$
+    decoration.setImage(ExtendedImageRegistry.getInstance()
+        .getImage(URI.createPlatformPluginURI(OM.BUNDLE_ID + "/icons/full/elcl16/revert.gif", true))); //$NON-NLS-1$
     decoration.setMarginWidth(2);
 
     decoration.addSelectionListener(new SelectionAdapter()

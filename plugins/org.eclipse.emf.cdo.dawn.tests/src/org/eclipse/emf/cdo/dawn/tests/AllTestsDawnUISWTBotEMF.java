@@ -20,18 +20,18 @@ import org.junit.runners.Suite.SuiteClasses;
 
 /**
  * This test suite should be executed as SWTBot test.
- * 
+ *
  * @author Martin Fluegge
  * @formatter:off
  */
 @Deprecated
 @RunWith(Suite.class)
-@SuiteClasses({ 
+@SuiteClasses({
   DawnEMFCreationWizardTest.class,
   EMFEditorRollbackTest.class,
   DawnEMFHandleEditorTest.class
-   })
-   
+})
+
 public class AllTestsDawnUISWTBotEMF
 {
 }

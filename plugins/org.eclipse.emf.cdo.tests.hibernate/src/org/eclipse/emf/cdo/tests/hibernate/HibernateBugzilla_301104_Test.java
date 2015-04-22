@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EcoreFactory;
  * Allow application to set generated id.
  * <p>
  * See bug 301104
- * 
+ *
  * @author Martin Taal
  */
 public class HibernateBugzilla_301104_Test extends AbstractCDOTest

@@ -44,16 +44,16 @@ public final class AuthenticationUtil
    */
   public static <V> Callable<V> authenticatingOperation(IAuthenticationProtocol authenticationProtocol,
       final Callable<V> operation)
-      {
+  {
     return new AuthenticatingOperation<V>(authenticationProtocol)
-        {
+    {
       @Override
       protected V doCall() throws Exception
       {
         return operation.call();
       }
-        };
-      }
+    };
+  }
 
   /**
    * Encapsulation of an administrative operation requiring (potentially) client

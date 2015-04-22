@@ -43,7 +43,7 @@ import java.util.Collection;
 /**
  * Overrides the {@link AuditHandler} to implement CDO
  * specific audit handling.
- * 
+ *
  * @author Martin Taal
  */
 public class CDOAuditHandler extends AuditHandler
@@ -55,8 +55,8 @@ public class CDOAuditHandler extends AuditHandler
     final InternalCDORevision cdoRevision = (InternalCDORevision)object;
 
     teneoAuditEntry.setTeneo_container_feature_id(cdoRevision.getContainingFeatureID());
-    teneoAuditEntry.setTeneo_container_id(HibernateUtil.getInstance().convertCDOIDToString(
-        (CDOID)cdoRevision.getContainerID()));
+    teneoAuditEntry
+        .setTeneo_container_id(HibernateUtil.getInstance().convertCDOIDToString((CDOID)cdoRevision.getContainerID()));
   }
 
   @Override
@@ -173,8 +173,8 @@ public class CDOAuditHandler extends AuditHandler
             {
               for (Object value : (Collection<?>)source.getList(sourceEFeature))
               {
-                ((Collection<Object>)auditEntry.eGet(targetEFeature)).add(convertValue(sourceEFeature, targetEFeature,
-                    value));
+                ((Collection<Object>)auditEntry.eGet(targetEFeature))
+                    .add(convertValue(sourceEFeature, targetEFeature, value));
               }
             }
           }
@@ -249,8 +249,8 @@ public class CDOAuditHandler extends AuditHandler
         cnt++;
         if (cnt > 1000)
         {
-          throw new IllegalStateException("Cycle detected in id mappings " + newID + " maps to "
-              + commitContext.getIDMappings().get(newID));
+          throw new IllegalStateException(
+              "Cycle detected in id mappings " + newID + " maps to " + commitContext.getIDMappings().get(newID));
         }
       }
       cdoID = newID;

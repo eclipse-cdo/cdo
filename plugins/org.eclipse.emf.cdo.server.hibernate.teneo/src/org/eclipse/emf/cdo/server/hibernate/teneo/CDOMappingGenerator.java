@@ -32,7 +32,7 @@ import java.util.Properties;
 
 /**
  * Generates a CDO enabled mapping for Hibernate.
- * 
+ *
  * @author <a href="mtaal@elver.org">Martin Taal</a>
  * @since 3.0
  */
@@ -75,7 +75,8 @@ public class CDOMappingGenerator
     }
   }
 
-  protected void addDefaultExtension(Class<?> extensionClass, Class<?> extendingClass, ExtensionManager extensionManager)
+  protected void addDefaultExtension(Class<?> extensionClass, Class<?> extendingClass,
+      ExtensionManager extensionManager)
   {
     if (extensions.containsKey(extensionClass.getName()))
     {

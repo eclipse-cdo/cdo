@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 @CleanRepositoriesBefore(reason = "to not be disturb by branches created by others tests")
 public class Bugzilla_449171_Test extends AbstractCDOTest
 {
-
   private static final String RESOURCE_NAME = "test1.model1";
 
   public void testCommitNotificationIndicationCDOCommitInfoDecoding() throws Exception
@@ -54,7 +53,5 @@ public class Bugzilla_449171_Test extends AbstractCDOTest
     CDOTransaction txOfSession2 = session2.openTransaction(subBranch);
 
     commitAndSync(txOfSession1, txOfSession2);
-
   }
-
 }

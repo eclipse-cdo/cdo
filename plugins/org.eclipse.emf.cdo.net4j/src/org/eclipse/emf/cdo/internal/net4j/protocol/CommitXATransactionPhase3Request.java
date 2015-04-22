@@ -28,7 +28,7 @@ import java.io.IOException;
  * At this stage, everything on the database was done except to flush on the disk.
  * <p>
  * It is useful to assure that all {@link CDOTransaction} involve in that commit are synchronize.
- * 
+ *
  * @author Simon McDuff
  */
 public class CommitXATransactionPhase3Request extends CommitXATransactionRequest

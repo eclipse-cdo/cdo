@@ -41,7 +41,7 @@ public interface InternalCDORevisionCache extends CDORevisionCache, CDOAllRevisi
 
   /**
    * Fills a list with all {@link CDORevision revisions}.
-   * 
+   *
    * @since 4.3
    * @see #getAllRevisions()
    */

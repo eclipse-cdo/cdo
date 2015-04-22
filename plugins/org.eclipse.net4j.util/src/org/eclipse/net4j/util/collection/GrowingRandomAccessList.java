@@ -24,7 +24,7 @@ import java.util.RandomAccess;
  * @author Eike Stepper
  * @since 3.3
  */
-public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue<E>, RandomAccess
+public class GrowingRandomAccessList<E> extends AbstractList<E>implements Queue<E>, RandomAccess
 {
   private final Class<E> componentType;
 

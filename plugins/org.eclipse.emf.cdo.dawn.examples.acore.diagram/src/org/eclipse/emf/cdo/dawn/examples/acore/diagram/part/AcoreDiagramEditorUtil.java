@@ -4,10 +4,10 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *  
+ *
  * Contributors:
  *     Martin Fluegge - initial API and implementation
- * 
+ *
  */
 package org.eclipse.emf.cdo.dawn.examples.acore.diagram.part;
 
@@ -151,7 +151,7 @@ public class AcoreDiagramEditorUtil
 
   /**
    * Runs the wizard in a dialog.
-   * 
+   *
    * @generated
    */
   public static void runWizard(Shell shell, Wizard wizard, String settingsKey)
@@ -171,7 +171,7 @@ public class AcoreDiagramEditorUtil
 
   /**
    * This method should be called within a workspace modify operation since it creates resources.
-   * 
+   *
    * @generated
    */
   public static Resource createDiagram(URI diagramURI, URI modelURI, IProgressMonitor progressMonitor)
@@ -184,6 +184,7 @@ public class AcoreDiagramEditorUtil
     AbstractTransactionalCommand command = new AbstractTransactionalCommand(editingDomain,
         Messages.AcoreDiagramEditorUtil_CreateDiagramCommandLabel, Collections.EMPTY_LIST)
     {
+      @Override
       protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException
       {
         ACoreRoot model = createInitialModel();
@@ -200,10 +201,10 @@ public class AcoreDiagramEditorUtil
 
         try
         {
-          modelResource.save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil
-              .getSaveOptions());
-          diagramResource.save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil
-              .getSaveOptions());
+          modelResource
+              .save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil.getSaveOptions());
+          diagramResource
+              .save(org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.AcoreDiagramEditorUtil.getSaveOptions());
         }
         catch (IOException e)
         {
@@ -228,7 +229,7 @@ public class AcoreDiagramEditorUtil
 
   /**
    * Create a new instance of domain element associated with canvas. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static ACoreRoot createInitialModel()
@@ -238,7 +239,7 @@ public class AcoreDiagramEditorUtil
 
   /**
    * Store model element in the resource. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated
    */
   private static void attachModelToResource(ACoreRoot model, Resource resource)
@@ -249,7 +250,7 @@ public class AcoreDiagramEditorUtil
   /**
    * @generated
    */
-  public static void selectElementsInDiagram(IDiagramWorkbenchPart diagramPart, List/* EditPart */editParts)
+  public static void selectElementsInDiagram(IDiagramWorkbenchPart diagramPart, List/* EditPart */ editParts)
   {
     diagramPart.getDiagramGraphicalViewer().deselectAll();
 
@@ -346,7 +347,7 @@ public class AcoreDiagramEditorUtil
       view = editPart.getModel() instanceof View ? (View)editPart.getModel() : null;
     }
 
-    return (view == null) ? diagramEditPart.getDiagramView() : view;
+    return view == null ? diagramEditPart.getDiagramView() : view;
   }
 
   /**
@@ -380,7 +381,7 @@ public class AcoreDiagramEditorUtil
     public LazyElement2ViewMap(View scope, Set elements)
     {
       this.scope = scope;
-      this.elementSet = elements;
+      elementSet = elements;
     }
 
     /**
@@ -416,33 +417,43 @@ public class AcoreDiagramEditorUtil
     static Map buildElement2ViewMap(View parentView, Map element2ViewMap, Set elements)
     {
       if (elements.size() == element2ViewMap.size())
+      {
         return element2ViewMap;
+      }
 
       if (parentView.isSetElement() && !element2ViewMap.containsKey(parentView.getElement())
           && elements.contains(parentView.getElement()))
       {
         element2ViewMap.put(parentView.getElement(), parentView);
         if (elements.size() == element2ViewMap.size())
+        {
           return element2ViewMap;
+        }
       }
 
       for (Iterator it = parentView.getChildren().iterator(); it.hasNext();)
       {
         buildElement2ViewMap((View)it.next(), element2ViewMap, elements);
         if (elements.size() == element2ViewMap.size())
+        {
           return element2ViewMap;
+        }
       }
       for (Iterator it = parentView.getSourceEdges().iterator(); it.hasNext();)
       {
         buildElement2ViewMap((View)it.next(), element2ViewMap, elements);
         if (elements.size() == element2ViewMap.size())
+        {
           return element2ViewMap;
+        }
       }
       for (Iterator it = parentView.getSourceEdges().iterator(); it.hasNext();)
       {
         buildElement2ViewMap((View)it.next(), element2ViewMap, elements);
         if (elements.size() == element2ViewMap.size())
+        {
           return element2ViewMap;
+        }
       }
       return element2ViewMap;
     }

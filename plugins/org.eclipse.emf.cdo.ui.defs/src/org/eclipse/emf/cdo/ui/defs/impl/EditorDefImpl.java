@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Andre Dietisheim - initial API and implementation
  *    Eike Stepper - maintenance
@@ -91,8 +91,10 @@ public class EditorDefImpl extends DefImpl implements EditorDef
     String oldEditorID = editorID;
     editorID = newEditorID;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.EDITOR_DEF__EDITOR_ID, oldEditorID,
-          editorID));
+    {
+      eNotify(
+          new ENotificationImpl(this, Notification.SET, CDOUIDefsPackage.EDITOR_DEF__EDITOR_ID, oldEditorID, editorID));
+    }
   }
 
   /**
@@ -165,7 +167,9 @@ public class EditorDefImpl extends DefImpl implements EditorDef
   public String toString()
   {
     if (eIsProxy())
+    {
       return super.toString();
+    }
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (editorID: ");

@@ -97,7 +97,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz356181_Main bz356181_Main = (Bz356181_Main)theEObject;
       T result = caseBz356181_Main(bz356181_Main);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ356181_TRANSIENT:
@@ -105,7 +107,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz356181_Transient bz356181_Transient = (Bz356181_Transient)theEObject;
       T result = caseBz356181_Transient(bz356181_Transient);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ356181_NON_TRANSIENT:
@@ -113,7 +117,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz356181_NonTransient bz356181_NonTransient = (Bz356181_NonTransient)theEObject;
       T result = caseBz356181_NonTransient(bz356181_NonTransient);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ387752_MAIN:
@@ -121,7 +127,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz387752_Main bz387752_Main = (Bz387752_Main)theEObject;
       T result = caseBz387752_Main(bz387752_Main);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ380987_GROUP:
@@ -129,7 +137,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz380987_Group bz380987_Group = (Bz380987_Group)theEObject;
       T result = caseBz380987_Group(bz380987_Group);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ380987_PLACE:
@@ -137,7 +147,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz380987_Place bz380987_Place = (Bz380987_Place)theEObject;
       T result = caseBz380987_Place(bz380987_Place);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ380987_PERSON:
@@ -145,7 +157,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz380987_Person bz380987_Person = (Bz380987_Person)theEObject;
       T result = caseBz380987_Person(bz380987_Person);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ398057_A:
@@ -153,7 +167,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz398057A bz398057A = (Bz398057A)theEObject;
       T result = caseBz398057A(bz398057A);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ398057_A1:
@@ -161,9 +177,13 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz398057A1 bz398057A1 = (Bz398057A1)theEObject;
       T result = caseBz398057A1(bz398057A1);
       if (result == null)
+      {
         result = caseBz398057A(bz398057A1);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ398057_B:
@@ -171,7 +191,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz398057B bz398057B = (Bz398057B)theEObject;
       T result = caseBz398057B(bz398057B);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ398057_B1:
@@ -179,9 +201,13 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz398057B1 bz398057B1 = (Bz398057B1)theEObject;
       T result = caseBz398057B1(bz398057B1);
       if (result == null)
+      {
         result = caseBz398057B(bz398057B1);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ397682_P:
@@ -189,7 +215,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz397682P bz397682P = (Bz397682P)theEObject;
       T result = caseBz397682P(bz397682P);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case HibernateTestPackage.BZ397682_C:
@@ -197,7 +225,9 @@ public class HibernateTestSwitch<T> extends Switch<T>
       Bz397682C bz397682C = (Bz397682C)theEObject;
       T result = caseBz397682C(bz397682C);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     default:

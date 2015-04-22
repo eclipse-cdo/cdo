@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
  * EObjectValidator.validate_UniqueID broken for CDOObjects
  * <p>
  * See bug 278900
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_278900_Test extends AbstractCDOTest

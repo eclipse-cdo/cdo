@@ -55,8 +55,8 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
-    ResourceDialog dialog = new ResourceDialog(new Shell(),
-        Messages.getString("ExportSelectedResourceAction_1"), SWT.SAVE); //$NON-NLS-1$
+    ResourceDialog dialog = new ResourceDialog(new Shell(), Messages.getString("ExportSelectedResourceAction_1"), //$NON-NLS-1$
+        SWT.SAVE);
     if (dialog.open() == ImportResourceDialog.OK)
     {
       List<URI> uris = dialog.getURIs();
@@ -95,8 +95,8 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
   {
     // Target Resource
     ResourceSet resourceSet = new ResourceSetImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap()
-        .put(Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(Resource.Factory.Registry.DEFAULT_EXTENSION,
+        new XMIResourceFactoryImpl());
     Resource resource = resourceSet.createResource(targetURI);
 
     Collection<EObject> copiedRoots = EcoreUtil.copyAll(sourceContents);

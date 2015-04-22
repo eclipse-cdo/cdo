@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EReference;
  * <li>{@link org.eclipse.emf.cdo.tests.model3.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class MetaRefImpl extends CDOObjectImpl implements MetaRef

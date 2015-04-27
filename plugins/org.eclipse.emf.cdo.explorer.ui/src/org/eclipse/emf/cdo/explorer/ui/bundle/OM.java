@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.bundle;
 
+import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutEditorOpenerRegistry;
 import org.eclipse.emf.cdo.ui.OverlayImage;
 
 import org.eclipse.net4j.util.om.OMBundle;
@@ -86,6 +87,18 @@ public abstract class OM
     {
       super(BUNDLE);
       INSTANCE = this;
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      CDOCheckoutEditorOpenerRegistry.INSTANCE.activate();
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      CDOCheckoutEditorOpenerRegistry.INSTANCE.deactivate();
     }
   }
 }

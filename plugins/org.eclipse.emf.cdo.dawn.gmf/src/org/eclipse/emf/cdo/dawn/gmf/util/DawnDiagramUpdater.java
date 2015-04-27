@@ -131,7 +131,6 @@ public class DawnDiagramUpdater
     {
       try
       {
-
         // EObject modelElement = ((View)(editPart).getModel()).getElement();
         // List editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);
         // for (Iterator it = editPolicies.iterator(); it.hasNext();)
@@ -144,7 +143,7 @@ public class DawnDiagramUpdater
       }
       catch (Exception e)
       {
-        e.printStackTrace();
+        //$FALL-THROUGH$
       }
 
       if (editPart instanceof DiagramEditPart)

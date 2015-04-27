@@ -114,11 +114,15 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
   public CDOViewProvider[] getViewProviders(URI uri)
   {
     List<CDOViewProvider> result = new ArrayList<CDOViewProvider>();
-    for (CDOViewProvider viewProvider : viewProviders)
+
+    synchronized (viewProviders)
     {
-      if (viewProvider.matchesRegex(uri))
+      for (CDOViewProvider viewProvider : viewProviders)
       {
-        result.add(viewProvider);
+        if (viewProvider.matchesRegex(uri))
+        {
+          result.add(viewProvider);
+        }
       }
     }
 
@@ -235,19 +239,13 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
 
     public CDOViewProviderDescriptor(IConfigurationElement element)
     {
-      super(element.getAttribute("regex"), Integer.parseInt(element.getAttribute("priority"))); //$NON-NLS-1$ //$NON-NLS-2$
+      super(getRegex(element), getPriority(element));
       this.element = element;
 
       if (StringUtil.isEmpty(element.getAttribute("class"))) //$NON-NLS-1$
       {
         throw new IllegalArgumentException(
             MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.4"), element)); //$NON-NLS-1$
-      }
-
-      if (StringUtil.isEmpty(element.getAttribute("regex"))) //$NON-NLS-1$
-      {
-        throw new IllegalArgumentException(
-            MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.6"), element)); //$NON-NLS-1$
       }
     }
 
@@ -262,6 +260,18 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
       return getViewProvider().getResourceURI(view, path);
     }
 
+    @Override
+    public String getPath(URI uri)
+    {
+      CDOViewProvider viewProvider = getViewProvider();
+      if (viewProvider instanceof CDOViewProvider2)
+      {
+        return ((CDOViewProvider2)viewProvider).getPath(uri);
+      }
+
+      return super.getPath(uri);
+    }
+
     private CDOViewProvider getViewProvider()
     {
       try
@@ -271,6 +281,31 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
       catch (CoreException ex)
       {
         throw WrappedException.wrap(ex);
+      }
+    }
+
+    private static String getRegex(IConfigurationElement element)
+    {
+      String value = element.getAttribute("regex");
+      if (StringUtil.isEmpty(value))
+      {
+        throw new IllegalArgumentException(
+            MessageFormat.format(Messages.getString("CDOViewProviderRegistryImpl.6"), element)); //$NON-NLS-1$
+      }
+
+      return value;
+    }
+
+    private static int getPriority(IConfigurationElement element)
+    {
+      try
+      {
+        String value = element.getAttribute("priority");
+        return Integer.parseInt(value);
+      }
+      catch (Exception ex)
+      {
+        return DEFAULT_PRIORITY;
       }
     }
   }

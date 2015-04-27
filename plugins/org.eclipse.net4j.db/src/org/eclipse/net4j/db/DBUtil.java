@@ -14,6 +14,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.DBConnection;
 import org.eclipse.net4j.internal.db.DBDatabase;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
@@ -54,6 +55,7 @@ import java.util.Set;
  *
  * @author Eike Stepper
  */
+@SuppressWarnings("resource")
 public final class DBUtil
 {
   /**
@@ -76,6 +78,18 @@ public final class DBUtil
 
   private DBUtil()
   {
+  }
+
+  /**
+   * @deprecated This method exists only to create a "resource leak" warning, so that DBUtil can safely SuppressWarnings("resource").
+   */
+  @Deprecated
+  @SuppressWarnings("unused")
+  private static void avoidResourceLeakWarning() throws SQLException
+  {
+    Connection connection = new DBConnection(null, null);
+    Statement statement = connection.createStatement();
+    close(statement);
   }
 
   /**
@@ -376,6 +390,7 @@ public final class DBUtil
       }
       catch (Exception ignore)
       {
+        //$FALL-THROUGH$
       }
 
       try
@@ -388,6 +403,7 @@ public final class DBUtil
         {
           throw new DBException(ex);
         }
+
         OM.LOG.error(ex);
         return ex;
       }
@@ -410,6 +426,7 @@ public final class DBUtil
         {
           throw new DBException(ex);
         }
+
         OM.LOG.error(ex);
         return ex;
       }
@@ -439,6 +456,7 @@ public final class DBUtil
         {
           throw new DBException(ex);
         }
+
         OM.LOG.error(ex);
         return ex;
       }
@@ -934,7 +952,6 @@ public final class DBUtil
     return update(connection, sql);
   }
 
-  @SuppressWarnings("resource")
   public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields)
       throws DBException
   {

@@ -574,11 +574,14 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     if (revision != null)
     {
       CDOID resourceID = revision.getResourceID();
-      InternalEObject resource = getEObjectFromPotentialID(viewAndState.view, null, resourceID);
-      setInstanceResource((Resource.Internal)resource);
-      if (resource != null)
+      if (!CDOIDUtil.isNull(resourceID))
       {
-        viewAndState.view.registerObject((InternalCDOObject)resource);
+        InternalEObject resource = getEObjectFromPotentialID(viewAndState.view, null, resourceID);
+        setInstanceResource((Resource.Internal)resource);
+        if (resource != null)
+        {
+          viewAndState.view.registerObject((InternalCDOObject)resource);
+        }
       }
     }
   }

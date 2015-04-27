@@ -52,7 +52,7 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
   private CDOBranch branch;
 
-  private long timeStamp = CDOBranchPoint.INVALID_DATE;
+  private long timeStamp;
 
   private Composite pointGroup;
 
@@ -73,7 +73,7 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
    */
   public SelectTimeStampComposite(Composite parent, int style)
   {
-    this(parent, style, null, CDOBranchPoint.UNSPECIFIED_DATE);
+    this(parent, style, null, CDOBranchPoint.INVALID_DATE);
   }
 
   public SelectTimeStampComposite(Composite parent, int style, CDOBranch branch, long timeStamp)
@@ -123,7 +123,7 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
     timeText = new Text(pointGroup, SWT.BORDER);
     timeText.setLayoutData(createTimeGridData());
-    timeText.setText(CDOCommonUtil.formatTimeStamp());
+    timeText.setText(CDOCommonUtil.formatTimeStamp(timeStamp));
     timeText.addModifyListener(new ModifyListener()
     {
       public void modifyText(ModifyEvent e)
@@ -174,8 +174,9 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
     new Label(pointGroup, SWT.NONE);
     new Label(pointGroup, SWT.NONE);
 
+    this.timeStamp = timeStamp;
     setBranch(branch);
-    setTimeStamp(timeStamp);
+    // setTimeStamp(timeStamp);
   }
 
   public ValidationContext getValidationContext()
@@ -222,13 +223,13 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
     else
     {
       selectRadio(timeRadio);
-      String text = CDOCommonUtil
-          .formatTimeStamp(timeStamp == CDOBranchPoint.INVALID_DATE || timeStamp == CDOBranchPoint.UNSPECIFIED_DATE
-              ? System.currentTimeMillis() : timeStamp);
-      if (!timeText.getText().equals(text))
-      {
-        timeText.setText(text);
-      }
+      // String text = CDOCommonUtil
+      // .formatTimeStamp(timeStamp == CDOBranchPoint.INVALID_DATE || timeStamp == CDOBranchPoint.UNSPECIFIED_DATE
+      // ? System.currentTimeMillis() : timeStamp);
+      // if (!timeText.getText().equals(text))
+      // {
+      // timeText.setText(text);
+      // }
     }
 
     if (oldTimeStamp != timeStamp)

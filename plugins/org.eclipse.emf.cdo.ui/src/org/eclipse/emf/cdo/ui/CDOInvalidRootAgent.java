@@ -1,0 +1,110 @@
+/*
+ * Copyright (c) 2004-2014 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.ui;
+
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
+
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.UIUtil;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+
+/**
+ * @author Eike Stepper
+ * @since 4.4
+ */
+public abstract class CDOInvalidRootAgent implements IListener
+{
+  private static final Object EMPTY_INPUT = new Object();
+
+  private final CDOView view;
+
+  private CDOID inputID;
+
+  public CDOInvalidRootAgent(CDOView view)
+  {
+    this.view = view;
+    view.addListener(this);
+  }
+
+  public void notifyEvent(IEvent event)
+  {
+    if (event instanceof CDOViewTargetChangedEvent)
+    {
+      final CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
+      UIUtil.getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          Object input = getRootFromUI();
+          if (inputID != null)
+          {
+            try
+            {
+              InternalCDOObject object = (InternalCDOObject)view.getObject(inputID);
+              if (!object.cdoInvalid())
+              {
+                setRootToUI(object.cdoInternalInstance());
+                inputID = null;
+              }
+            }
+            catch (Exception ex)
+            {
+              // Ignore
+            }
+          }
+          else if (input instanceof EObject)
+          {
+            CDOObject object = CDOUtil.getCDOObject((EObject)input);
+            if (object.cdoInvalid())
+            {
+              if (e.getBranchPoint().getTimeStamp() == e.getOldBranchPoint().getTimeStamp())
+              {
+                inputID = null;
+                closeUI();
+              }
+              else
+              {
+                inputID = object.cdoID();
+                Object emptyRoot = createEmptyRoot(object);
+                setRootToUI(emptyRoot);
+              }
+            }
+          }
+        }
+      });
+    }
+  }
+
+  public void dispose()
+  {
+    view.removeListener(this);
+  }
+
+  protected Object createEmptyRoot(CDOObject invalidRoot)
+  {
+    return EMPTY_INPUT;
+  }
+
+  protected abstract Object getRootFromUI();
+
+  protected abstract void setRootToUI(Object root);
+
+  protected void closeUI()
+  {
+  }
+}

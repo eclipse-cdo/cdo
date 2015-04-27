@@ -56,109 +56,130 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
 
   /************ XML STUFF BEGIN ********************/
 
+  @Override
   public DOMHelper getDOMHelper()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Map<Object, Object> getDefaultLoadOptions()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Map<Object, Object> getDefaultSaveOptions()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Map<EObject, AnyType> getEObjectToExtensionMap()
   {
 
     throw new UnsupportedOperationException();
   }
 
+  @Override
   @Deprecated
   public Map<EObject, String> getEObjectToIDMap()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getEncoding()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getID(EObject eObject)
   {
     return getURIFragment(eObject);
   }
 
+  @Override
   @Deprecated
   public Map<String, EObject> getIDToEObjectMap()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getPublicId()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getSystemId()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public String getXMLVersion()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void load(Node node, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void load(InputSource inputSource, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void save(Writer writer, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public Document save(Document document, Map<?, ?> options, DOMHandler handler)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setDoctypeInfo(String publicId, String systemId)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setEncoding(String encoding)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setID(EObject eObject, String id)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setUseZip(boolean useZip)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public void setXMLVersion(String version)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Override
   public boolean useZip()
   {
     return false;

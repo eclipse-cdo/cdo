@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
@@ -180,10 +181,12 @@ public class CheckoutTypePage extends CheckoutWizardPage
       {
         transactionalButton.setEnabled(true);
 
-        if (repository.getVersioningMode().isSupportingAudits())
+        VersioningMode versioningMode = repository.getVersioningMode();
+        if (versioningMode == null || versioningMode.isSupportingAudits())
         {
           historicalButton.setEnabled(true);
-          if (repository.getIDGeneration() == IDGeneration.UUID)
+          IDGeneration idGeneration = repository.getIDGeneration();
+          if (idGeneration == null || idGeneration == IDGeneration.UUID)
           {
             offlineButton.setEnabled(true);
           }

@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
@@ -864,16 +864,17 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             ViewerUtil.expand(viewer, checkout, true);
           }
         }
-        else if (element instanceof CDOResourceFolder)
+        else if (element instanceof CDOResourceNode)
         {
           // Do nothing special.
         }
         else if (element instanceof EObject)
         {
           EObject eObject = (EObject)element;
-          IWorkbenchPage page = getWorkbenchPage();
+
+          Shell shell = getWorkbenchPage().getWorkbenchWindow().getShell();
           ComposedAdapterFactory adapterFactory = stateManager.getAdapterFactory(eObject);
-          OpenWithActionProvider.openEditor(page, adapterFactory, eObject, null);
+          OpenWithActionProvider.editObject(shell, adapterFactory, eObject);
         }
       }
     }

@@ -358,6 +358,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
     else
     {
+      if (this.revision != null)
+      {
+        CDOID objectID = this.revision.getID();
+        if (objectID != null && objectID != revision.getID())
+        {
+          throw new IllegalArgumentException("The revision " + revision + " does not match the object " + objectID);
+        }
+      }
+
       this.revision = (InternalCDORevision)revision;
     }
   }
@@ -760,7 +769,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   public final NotificationChain eBasicSetContainer(InternalEObject newContainer, int newContainerFeatureID,
       NotificationChain msgs)
   {
-    boolean isResourceRoot = this instanceof CDOResource && ((CDOResource)this).isRoot();
+    boolean isResource = this instanceof CDOResource;
+    boolean isRootResource = isResource && ((CDOResource)this).isRoot();
 
     InternalEObject oldContainer = eInternalContainer();
     Resource.Internal oldResource = eDirectResource();
@@ -796,7 +806,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         : null;
 
     boolean moved = oldView != null && oldView == newView;
-    if (!moved && oldResource != null && oldResource != newResource && !isResourceRoot)
+    if (!moved && oldResource != null && oldResource != newResource && !isRootResource)
     {
       oldResource.detached(this);
     }

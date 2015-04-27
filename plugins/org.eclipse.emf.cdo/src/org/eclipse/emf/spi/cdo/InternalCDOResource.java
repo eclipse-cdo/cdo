@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 
 /**
  * Internal protocol for the {@link CDOResource}.
@@ -22,7 +23,7 @@ import org.eclipse.emf.ecore.resource.Resource;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOResource extends CDOResource, Resource.Internal
+public interface InternalCDOResource extends CDOResource, Resource.Internal, XMLResource
 {
   /**
    * Informs the resource that an {@code object} contained within it is being loaded.

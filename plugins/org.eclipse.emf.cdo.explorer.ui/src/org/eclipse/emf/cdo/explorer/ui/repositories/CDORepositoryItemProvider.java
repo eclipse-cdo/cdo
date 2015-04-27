@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager.RepositoryConnectionEvent;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
@@ -295,7 +297,8 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       if (element instanceof CDORepository)
       {
         CDORepository repository = (CDORepository)element;
-        return repository.getVersioningMode().toString();
+        VersioningMode versioningMode = repository.getVersioningMode();
+        return versioningMode == null ? "Unknown" : versioningMode.toString();
       }
 
       break;
@@ -304,7 +307,8 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
       if (element instanceof CDORepository)
       {
         CDORepository repository = (CDORepository)element;
-        return repository.getIDGeneration().toString();
+        IDGeneration idGeneration = repository.getIDGeneration();
+        return idGeneration == null ? "Unknown" : idGeneration.toString();
       }
     }
 

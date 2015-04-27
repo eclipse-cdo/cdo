@@ -254,7 +254,8 @@ public class ComposeBranchPointComposite extends Composite
     timeStampGroup.setLayout(new GridLayout(1, false));
     timeStampGroup.setText("Time Stamp:");
 
-    SelectTimeStampComposite timeStampComposite = new SelectTimeStampComposite(timeStampGroup, SWT.NONE)
+    SelectTimeStampComposite timeStampComposite = new SelectTimeStampComposite(timeStampGroup, SWT.NONE,
+        branchPoint.getBranch(), branchPoint.getTimeStamp())
     {
       @Override
       protected void timeStampChanged(long timeStamp)

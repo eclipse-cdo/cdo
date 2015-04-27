@@ -325,7 +325,13 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     InternalCDORevision revision = cdoRevision();
     if (revision != null)
     {
-      string += "(\"" + revision.getResourceNodeName() + "\")";
+      String name = revision.getResourceNodeName();
+      if (name == null)
+      {
+        name = "/";
+      }
+
+      string += "(\"" + name + "\")";
     }
 
     return string;

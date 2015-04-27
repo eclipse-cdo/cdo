@@ -13,6 +13,8 @@
 
 <plugin>
 
+   <extension-point id="editorOpeners" name="Editor Openers" schema="schema/editorOpeners.exsd"/>
+
   <extension id="app" point="org.eclipse.core.runtime.applications" name="%app.name">
       <application>
          <run class="org.eclipse.emf.cdo.explorer.ui.application.CDOExplorerApplication"/>
@@ -121,7 +123,7 @@
         </description>
      </wizard>
   </extension>
-  
+
   <extension point="org.eclipse.ui.newWizards">
      <wizard
            category="org.eclipse.emf.cdo.category"
@@ -525,11 +527,11 @@
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?after=group.checkout">
          <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
+               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutQuick"
                icon="icons/new_checkout.gif"
-               label="Checkout..."
+               label="Checkout"
                style="push"
-               tooltip="Check the repository out into the Project Explorer">
+               tooltip="Check the repository out as an online connection">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <and>
@@ -542,11 +544,11 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutQuick"
-               icon="icons/new_checkout_quick.gif"
-               label="Checkout Quick"
+               commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
+               icon="icons/new_checkout.gif"
+               label="Checkout As..."
                style="push"
-               tooltip="Check the repository out as an online connection">
+               tooltip="Check the repository out into the Project Explorer">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <and>
@@ -723,20 +725,20 @@
           id="org.eclipse.emf.cdo.explorer.ui.contribution1"
           objectClass="org.eclipse.emf.cdo.common.commit.CDOCommitInfo">
        <action
-             class="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate$Quick"
-             enablesFor="1"
-             icon="icons/new_checkout_quick.gif"
-             id="org.eclipse.emf.cdo.explorer.ui.CheckoutCommitInfo"
-             label="Checkout Quick"
-             menubarPath="additions"
-             style="push">
-       </action>
-       <action
              class="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate"
              enablesFor="1"
              icon="icons/new_checkout.gif"
              id="org.eclipse.emf.cdo.explorer.ui.CheckoutCommitInfo"
-             label="Checkout..."
+             label="Checkout As..."
+             menubarPath="additions"
+             style="push">
+       </action>
+       <action
+             class="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate$Quick"
+             enablesFor="1"
+             icon="icons/new_checkout.gif"
+             id="org.eclipse.emf.cdo.explorer.ui.CheckoutCommitInfo"
+             label="Checkout"
              menubarPath="additions"
              style="push">
        </action>

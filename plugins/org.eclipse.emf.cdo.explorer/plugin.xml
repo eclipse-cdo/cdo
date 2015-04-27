@@ -42,4 +42,18 @@
          class="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutProperties$Tester"/>
    </extension>
 
+   <extension point="org.eclipse.emf.cdo.viewProviders">
+      <viewProvider
+            class="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutViewProvider"
+            priority="500"
+            regex="cdo\.checkout://.*"/>
+   </extension>
+
+   <extension
+         point="org.eclipse.emf.ecore.protocol_parser">
+      <parser
+            class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
+            protocolName="cdo.checkout"/>
+   </extension>
+
 </plugin>

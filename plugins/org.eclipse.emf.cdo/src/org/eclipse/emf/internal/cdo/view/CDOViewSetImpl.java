@@ -30,7 +30,6 @@ import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.notify.impl.NotifierImpl;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.Resource.Factory.Registry;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -58,7 +57,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private Map<String, InternalCDOView> mapOfViews = new HashMap<String, InternalCDOView>();
 
-  private CDOResourceFactory resourceFactory = CDOResourceFactory.INSTANCE;
+  private CDOResourceFactory resourceFactory;
 
   private CDOViewSetPackageRegistryImpl packageRegistry;
 
@@ -244,9 +243,17 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       packageRegistry = new CDOViewSetPackageRegistryImpl(this, oldPackageRegistry);
       resourceSet.setPackageRegistry(packageRegistry);
 
-      Registry registry = resourceSet.getResourceFactoryRegistry();
-      Map<String, Object> map = registry.getProtocolToFactoryMap();
-      map.put(CDOProtocolConstants.PROTOCOL_NAME, getResourceFactory());
+      Map<String, Object> map = resourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap();
+      Resource.Factory resourceFactory = (Resource.Factory)map.get(CDOProtocolConstants.PROTOCOL_NAME);
+      if (resourceFactory instanceof CDOResourceFactory)
+      {
+        this.resourceFactory = (CDOResourceFactory)resourceFactory;
+      }
+      else if (resourceFactory == null)
+      {
+        this.resourceFactory = CDOResourceFactory.INSTANCE;
+        map.put(CDOProtocolConstants.PROTOCOL_NAME, this.resourceFactory);
+      }
     }
   }
 

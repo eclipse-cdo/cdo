@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
+import org.eclipse.emf.cdo.internal.ui.views.CDOTimeMachineView;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -169,6 +170,11 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
         else
         {
           filled |= addAction(menu, checkout, new ShowInSessionsViewAction(page, checkout.getRepository(), checkout));
+        }
+
+        if (checkout.isReadOnly())
+        {
+          filled |= addAction(menu, checkout, new ShowInViewAction(page, CDOTimeMachineView.ID));
         }
 
         filled |= addAction(menu, checkout.getView(), new ShowInViewAction(page, HISTORY_VIEW_ID));

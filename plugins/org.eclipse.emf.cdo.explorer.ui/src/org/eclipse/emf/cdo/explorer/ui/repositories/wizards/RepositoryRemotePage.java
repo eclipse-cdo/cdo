@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.internal.explorer.repositories.RemoteCDORepository;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -67,5 +69,17 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
     properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_TYPE, "tcp");
     properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_DESCRIPTION, connectorDescription);
     properties.setProperty(RemoteCDORepository.PROP_NAME, repositoryName);
+
+    VersioningMode versioningMode = controller.getVersioningMode();
+    if (versioningMode != null)
+    {
+      properties.setProperty(RemoteCDORepository.PROP_VERSIONING_MODE, versioningMode.toString());
+    }
+
+    IDGeneration idGeneration = controller.getIDGeneration();
+    if (idGeneration != null)
+    {
+      properties.setProperty(RemoteCDORepository.PROP_ID_GENERATION, idGeneration.toString());
+    }
   }
 }

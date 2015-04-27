@@ -26,6 +26,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EAdapterList;
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.Logger;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -238,14 +240,30 @@ public interface CDOStaleReferencePolicy
       // Be sure to have only interface
       if (instanceClass.isInterface())
       {
-        interfaces = new Class<?>[] { instanceClass, InternalEObject.class, CDOStaleObject.class };
+        interfaces = new Class<?>[] { InternalEObject.class, CDOStaleObject.class, instanceClass };
       }
       else
       {
         interfaces = new Class<?>[] { InternalEObject.class, CDOStaleObject.class };
       }
 
-      return Proxy.newProxyInstance(instanceClass.getClassLoader(), interfaces, handler);
+      try
+      {
+        return Proxy.newProxyInstance(instanceClass.getClassLoader(), interfaces, handler);
+      }
+      catch (IllegalArgumentException ex)
+      {
+        String message = ex.getMessage();
+        if (message != null && message.contains("CDOStaleObject"))
+        {
+          // Interface org.eclipse.emf.cdo.view.CDOStaleObject is not visible from class loader.
+          // Use org.eclipse.emf.common.util.Logger instead.
+          interfaces[1] = Logger.class;
+          return Proxy.newProxyInstance(instanceClass.getClassLoader(), interfaces, handler);
+        }
+
+        throw ex;
+      }
     }
 
     protected EClassifier getType(EObject source, EStructuralFeature feature, int index, CDOID target)
@@ -314,7 +332,12 @@ public interface CDOStaleReferencePolicy
 
       private void addType(CDOObject object)
       {
-        types.putIfAbsent(object.cdoID(), object.eClass());
+        CDOID id = object.cdoID();
+        EClass type = object.eClass();
+        if (id != null && type != null)
+        {
+          types.putIfAbsent(id, type);
+        }
       }
     }
   }

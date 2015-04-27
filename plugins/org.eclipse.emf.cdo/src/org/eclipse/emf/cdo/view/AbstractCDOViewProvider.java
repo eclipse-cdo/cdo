@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.view;
 
+import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
+
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import org.eclipse.emf.common.util.URI;
@@ -25,7 +27,7 @@ import java.util.regex.Pattern;
  * @since 2.0
  * @apiviz.exclude
  */
-public abstract class AbstractCDOViewProvider implements CDOViewProvider
+public abstract class AbstractCDOViewProvider implements CDOViewProvider2
 {
   private String regex;
 
@@ -93,6 +95,16 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider
    * @since 4.0
    */
   public URI getResourceURI(CDOView view, String path)
+  {
+    return null;
+  }
+
+  /**
+   * Must be overwritten for non-canonical URI formats!
+   *
+   * @since 4.4
+   */
+  public String getPath(URI uri)
   {
     return null;
   }

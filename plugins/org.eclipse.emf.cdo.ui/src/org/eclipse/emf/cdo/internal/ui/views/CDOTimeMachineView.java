@@ -1,0 +1,119 @@
+/*
+ * Copyright (c) 2004-2014 Eike Stepper (Berlin, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.internal.ui.views;
+
+import org.eclipse.emf.cdo.CDOElement;
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.ui.widgets.TimeSlider;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.net4j.util.AdapterUtil;
+
+import org.eclipse.emf.ecore.EObject;
+
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.ISelectionListener;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.part.ViewPart;
+
+import java.util.Iterator;
+
+/**
+ * @author Eike Stepper
+ */
+public class CDOTimeMachineView extends ViewPart implements ISelectionListener
+{
+  public final static String ID = "org.eclipse.emf.cdo.ui.CDOTimeMachineView"; //$NON-NLS-1$
+
+  private TimeSlider timeSlider;
+
+  public CDOTimeMachineView()
+  {
+  }
+
+  @Override
+  public void createPartControl(Composite parent)
+  {
+    timeSlider = new TimeSlider(parent, SWT.NONE);
+
+    IWorkbenchPage page = getSite().getPage();
+    selectionChanged(null, page.getSelection());
+    page.addSelectionListener(this);
+  }
+
+  @Override
+  public void dispose()
+  {
+    getSite().getPage().removeSelectionListener(this);
+    timeSlider.disconnect();
+    super.dispose();
+  }
+
+  @Override
+  public void setFocus()
+  {
+    timeSlider.setFocus();
+  }
+
+  public void selectionChanged(IWorkbenchPart part, ISelection selection)
+  {
+    CDOView view = getView(selection);
+    if (view != null)
+    {
+      timeSlider.connect(view, null);
+    }
+  }
+
+  private CDOView getView(ISelection selection)
+  {
+    if (selection instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)selection;
+      for (Iterator<?> it = ssel.iterator(); it.hasNext();)
+      {
+        Object element = it.next();
+        if (element instanceof CDOElement)
+        {
+          element = ((CDOElement)element).getDelegate();
+        }
+
+        if (element instanceof EObject)
+        {
+          EObject eObject = (EObject)element;
+          CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+          if (cdoObject != null)
+          {
+            CDOView view = cdoObject.cdoView();
+            if (view != null && view.isReadOnly())
+            {
+              return view;
+            }
+          }
+        }
+        else
+        {
+          CDOView view = AdapterUtil.adapt(element, CDOView.class);
+          if (view != null && view.isReadOnly())
+          {
+            return view;
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+}

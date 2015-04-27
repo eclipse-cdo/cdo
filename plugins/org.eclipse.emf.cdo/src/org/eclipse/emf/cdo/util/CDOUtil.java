@@ -68,6 +68,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -368,15 +369,6 @@ public final class CDOUtil
       return (CDOViewSet)notifier;
     }
 
-    EList<Adapter> adapters = notifier.eAdapters();
-    for (Adapter adapter : adapters)
-    {
-      if (adapter instanceof CDOViewSet)
-      {
-        return (CDOViewSet)adapter;
-      }
-    }
-
     if (notifier instanceof Resource)
     {
       Resource resource = (Resource)notifier;
@@ -388,6 +380,15 @@ public final class CDOUtil
         {
           return viewSet;
         }
+      }
+    }
+
+    EList<Adapter> adapters = notifier.eAdapters();
+    for (Adapter adapter : adapters)
+    {
+      if (adapter instanceof CDOViewSet)
+      {
+        return (CDOViewSet)adapter;
       }
     }
 
@@ -419,11 +420,40 @@ public final class CDOUtil
   }
 
   /**
+   * @since 4.4
+   */
+  public static CDOView getView(Notifier notifier)
+  {
+    CDOViewSet viewSet = getViewSet(notifier);
+    if (viewSet != null)
+    {
+      CDOView[] views = viewSet.getViews();
+      if (views != null && views.length != 0)
+      {
+        return views[0];
+      }
+    }
+
+    return null;
+  }
+
+  /**
    * @since 3.0
    */
   public static boolean isStaleObject(Object object)
   {
-    return object instanceof CDOStaleObject;
+    if (object instanceof CDOStaleObject)
+    {
+      return true;
+    }
+
+    if (object instanceof Logger)
+    {
+      // See org.eclipse.emf.cdo.view.CDOStaleReferencePolicy.DynamicProxy
+      return true;
+    }
+
+    return false;
   }
 
   /**

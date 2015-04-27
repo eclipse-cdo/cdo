@@ -12,6 +12,8 @@ package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
@@ -159,24 +161,24 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
     if (normalButton.getSelection())
     {
-      properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, CDORepository.VersioningMode.Normal.toString());
+      properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, VersioningMode.Normal.toString());
     }
     else if (auditingButton.getSelection())
     {
-      properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, CDORepository.VersioningMode.Auditing.toString());
+      properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, VersioningMode.Auditing.toString());
     }
     else if (branchingButton.getSelection())
     {
-      properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, CDORepository.VersioningMode.Branching.toString());
+      properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
     }
 
     if (counterButton.getSelection())
     {
-      properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, CDORepository.IDGeneration.Counter.toString());
+      properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, IDGeneration.Counter.toString());
     }
     else if (uuidButton.getSelection())
     {
-      properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, CDORepository.IDGeneration.UUID.toString());
+      properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, IDGeneration.UUID.toString());
     }
 
     boolean tcpPortDisabled = portText.isDisabled();

@@ -1172,6 +1172,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       CDOID id = object.cdoID();
       InternalCDOObject contextified = getObject(id, true);
 
+      if (objectFromDifferentView instanceof CDOLegacyAdapter)
+      {
+        @SuppressWarnings("unchecked")
+        T cast = (T)contextified;
+        return cast;
+      }
+
       @SuppressWarnings("unchecked")
       T cast = (T)CDOUtil.getEObject(contextified);
       return cast;

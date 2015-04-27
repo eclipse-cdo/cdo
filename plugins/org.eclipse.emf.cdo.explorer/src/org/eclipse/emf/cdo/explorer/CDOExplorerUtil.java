@@ -15,10 +15,14 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutViewProvider;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -42,6 +46,18 @@ public final class CDOExplorerUtil
 
   public static CDOCheckout getCheckout(Object object)
   {
+    if (object instanceof CDOView)
+    {
+      CDOView view = (CDOView)object;
+      return (CDOCheckout)view.properties().get(CDOCheckoutImpl.CHECKOUT_KEY);
+    }
+
+    if (object instanceof URI)
+    {
+      URI uri = (URI)object;
+      return CDOCheckoutViewProvider.getCheckout(uri);
+    }
+
     return walkUp(object, null);
   }
 

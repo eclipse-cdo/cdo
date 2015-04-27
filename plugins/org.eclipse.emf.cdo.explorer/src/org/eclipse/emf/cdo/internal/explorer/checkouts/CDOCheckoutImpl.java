@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -40,6 +41,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -75,7 +77,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public static final String EDITOR_PROPERTIES = "editor.properties";
 
-  private static final String CHECKOUT_KEY = CDOCheckout.class.getName();
+  public static final String CHECKOUT_KEY = CDOCheckout.class.getName();
 
   private static final CDOBranchPoint[] NO_BRANCH_POINTS = {};
 
@@ -624,11 +626,29 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       }
     });
 
+    URI from = URI.createURI("cdo://" + view.getSession().getRepositoryInfo().getName() + "/");
+    URI to = URI.createURI("cdo.checkout://" + getID() + "/" + repository.getID() + "/");
+    view.getResourceSet().getURIConverter().getURIMap().put(from, to);
+
     addView(view);
     return view;
   }
 
-  public String getEditorID(CDOID objectID)
+  public URI createResourceURI(String path)
+  {
+    if (StringUtil.isEmpty(path))
+    {
+      path = "";
+    }
+    else if (!path.startsWith("/"))
+    {
+      path = "/" + path;
+    }
+
+    return URI.createURI(CDOCheckoutViewProvider.SCHEME + "://" + getID() + "/" + getRepository().getID() + path);
+  }
+
+  public String getEditorOpenerID(CDOID objectID)
   {
     synchronized (editorIDs)
     {
@@ -649,7 +669,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
   }
 
-  public void setEditorID(CDOID objectID, String editorID)
+  public void setEditorOpenerID(CDOID objectID, String editorID)
   {
     synchronized (editorIDs)
     {

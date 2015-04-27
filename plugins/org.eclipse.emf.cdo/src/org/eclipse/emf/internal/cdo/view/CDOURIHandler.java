@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.net4j.util.io.IOUtil;
@@ -68,7 +69,8 @@ public class CDOURIHandler implements URIHandler
 
   public boolean exists(URI uri, Map<?, ?> options)
   {
-    return view.hasResource(CDOURIUtil.extractResourcePath(uri));
+    String path = getPath(uri);
+    return view.hasResource(path);
   }
 
   public void delete(URI uri, Map<?, ?> options) throws IOException
@@ -145,5 +147,23 @@ public class CDOURIHandler implements URIHandler
   {
     // ViK: We can't change any of the proposed attributes. Only TIME_STAMP, and I believe we are not
     // storing that attribute in the server. Due to CDOResouce distributed nature, changing it wouldn't make much sense.
+  }
+
+  private String getPath(URI uri)
+  {
+    if (CDO_URI_SCHEME.equals(uri.scheme()))
+    {
+      return CDOURIUtil.extractResourcePath(uri);
+    }
+  
+    for (CDOViewProvider viewProvider : CDOViewProviderRegistry.INSTANCE.getViewProviders(uri))
+    {
+      if (viewProvider instanceof CDOViewProvider2)
+      {
+        return ((CDOViewProvider2)viewProvider).getPath(uri);
+      }
+    }
+  
+    return null;
   }
 }

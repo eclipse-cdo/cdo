@@ -1292,6 +1292,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         throw new OperationCanceledException("CDOTransactionImpl.7");//$NON-NLS-1$
       }
+
       throw new CommitException(t);
     }
     finally
@@ -3193,8 +3194,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           ((InternalCDOPackageUnit)newPackageUnit).setState(CDOPackageUnit.State.LOADED);
         }
 
-        postCommit(getNewObjects(), result);
-        postCommit(getDirtyObjects(), result);
+        Map<CDOID, CDOObject> newObjects = getNewObjects();
+        postCommit(newObjects, result);
+
+        Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
+        postCommit(dirtyObjects, result);
 
         for (CDORevisionDelta delta : getRevisionDeltas().values())
         {
@@ -3220,12 +3224,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           CDOBranchPoint commitBranchPoint = CDOBranchUtil.copyBranchPoint(result);
 
           // Note: keyset() does not work because ID mappings are not applied there!
-          for (CDOObject object : getNewObjects().values())
+          for (CDOObject object : newObjects.values())
           {
             session.setCommittedSinceLastRefresh(object.cdoID(), commitBranchPoint);
           }
 
-          for (CDOID id : getDirtyObjects().keySet())
+          for (CDOID id : dirtyObjects.keySet())
           {
             session.setCommittedSinceLastRefresh(id, commitBranchPoint);
           }

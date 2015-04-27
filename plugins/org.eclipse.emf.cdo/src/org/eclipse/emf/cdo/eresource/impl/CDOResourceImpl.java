@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.util.CDOModificationTrackingAdapter;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
@@ -61,10 +60,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ContentTreeIterator;
 import org.eclipse.emf.ecore.util.EcoreUtil.ProperContentIterator;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.xmi.DOMHandler;
+import org.eclipse.emf.ecore.xmi.DOMHelper;
 import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.emf.ecore.xmi.XMLHelper;
 import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.emf.ecore.xml.type.AnyType;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOResource;
@@ -74,9 +76,14 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -128,6 +135,11 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    * @ADDED
    */
   private URI initialURI;
+
+  /**
+   * @ADDED
+   */
+  private URI uri;
 
   /**
    * TODO Set to true in commit()?
@@ -308,6 +320,11 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   @Override
   public URI getURI()
   {
+    if (uri != null)
+    {
+      return uri;
+    }
+
     if ((cdoID() == null || cdoView() == null || cdoView().isClosed()) && initialURI != null)
     {
       return initialURI;
@@ -343,12 +360,15 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    */
   public void setURI(URI newURI)
   {
-    URI uri = getURI();
+    boolean notificationRequired = eNotificationRequired();
+    URI oldURI = notificationRequired ? getURI() : null;
+
     String newPath = CDOURIUtil.extractResourcePath(newURI);
     setPath(newPath);
-    if (eNotificationRequired())
+
+    if (notificationRequired)
     {
-      Notification notification = new NotificationImpl(Notification.SET, uri, newURI)
+      Notification notification = new NotificationImpl(Notification.SET, oldURI, newURI)
       {
         @Override
         public Object getNotifier()
@@ -362,8 +382,19 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
           return RESOURCE__URI;
         }
       };
+
       eNotify(notification);
     }
+  }
+
+  /**
+  * @ADDED
+  */
+  @Override
+  public void setPath(String newPath)
+  {
+    super.setPath(newPath);
+    uri = CDOURIUtil.createResourceURI(cdoView(), newPath);
   }
 
   @Override
@@ -531,7 +562,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (cdoView().isReadOnly())
     {
-      throw new ReadOnlyException("Underlying view is read-only");
+      return;
     }
 
     if (newTrackingModification == isTrackingModification())
@@ -1210,16 +1241,16 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     IProgressMonitor progressMonitor = options != null
         ? (IProgressMonitor)options.get(CDOResource.OPTION_SAVE_PROGRESS_MONITOR) : null;
 
-        try
-        {
-          transaction.commit(progressMonitor);
-        }
-        catch (CommitException ex)
-        {
-          throw new TransactionException(ex);
-        }
+    try
+    {
+      transaction.commit(progressMonitor);
+    }
+    catch (CommitException ex)
+    {
+      throw new TransactionException(ex);
+    }
 
-        setModified(false);
+    setModified(false);
   }
 
   /**
@@ -1230,20 +1261,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     CDOTransaction transaction = options != null
         ? (CDOTransaction)options.get(CDOResource.OPTION_SAVE_OVERRIDE_TRANSACTION) : null;
 
-        if (transaction == null)
-        {
-          CDOView view = cdoView();
-          if (view instanceof CDOTransaction)
-          {
-            transaction = (CDOTransaction)view;
-          }
-          else
-          {
-            throw new IllegalStateException("No transaction available");
-          }
-        }
+    if (transaction == null)
+    {
+      CDOView view = cdoView();
+      if (view instanceof CDOTransaction)
+      {
+        transaction = (CDOTransaction)view;
+      }
+      else
+      {
+        throw new IllegalStateException("No transaction available");
+      }
+    }
 
-        return transaction;
+    return transaction;
   }
 
   /**
@@ -1478,10 +1509,20 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
         InternalCDOTransaction transaction = (InternalCDOTransaction)view;
         InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
 
-        if (CDOUtil.isLegacyObject(cdoObject) && FSMUtil.isClean(cdoObject))
+        if (CDOUtil.isLegacyObject(cdoObject))
         {
-          // Bug 352204
-          return;
+          if (FSMUtil.isClean(cdoObject))
+          {
+            // Bug 352204
+            return;
+          }
+
+          int xxx;
+          // EReference containmentFeature = object.eContainmentFeature();
+          // if (!EMFUtil.isPersistent(containmentFeature))
+          // {
+          // return;
+          // }
         }
 
         attached(cdoObject, transaction);
@@ -1697,6 +1738,178 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   // return eObject.eSetResource(null, notifications);
   // }
   // }
+
+  /* XML STUFF BEGIN */
+
+  /**
+   * @since 4.4
+   */
+  public String getID(EObject eObject)
+  {
+    return getURIFragment(eObject);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void setID(EObject eObject, String id)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  public boolean useZip()
+  {
+    return false;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void setUseZip(boolean useZip)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  public String getPublicId()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public String getSystemId()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public DOMHelper getDOMHelper()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public Map<Object, Object> getDefaultLoadOptions()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public Map<Object, Object> getDefaultSaveOptions()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public Map<EObject, AnyType> getEObjectToExtensionMap()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public String getEncoding()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void setEncoding(String encoding)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  public String getXMLVersion()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void setXMLVersion(String version)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void setDoctypeInfo(String publicId, String systemId)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void load(Node node, Map<?, ?> options) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void load(InputSource inputSource, Map<?, ?> options) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public void save(Writer writer, Map<?, ?> options) throws IOException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  public Document save(Document document, Map<?, ?> options, DOMHandler handler)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  @Deprecated
+  public Map<String, EObject> getIDToEObjectMap()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.4
+   */
+  @Deprecated
+  public Map<EObject, String> getEObjectToIDMap()
+  {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * An implementation of a CDO specific '<em><b>contents</b></em>' list.

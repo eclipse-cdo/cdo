@@ -25,6 +25,8 @@ public class DawnResourceFactoryImpl extends CDOResourceFactoryImpl implements D
   protected CDOResourceImpl createCDOResource(URI uri)
   {
     uri = URI.createURI(uri.toString().replace("dawn:", "cdo:"));
-    return new DawnWrapperResourceImpl(uri);
+    // return new DawnWrapperResourceImpl(uri);
+
+    return new CDOResourceImpl(uri);
   }
 }

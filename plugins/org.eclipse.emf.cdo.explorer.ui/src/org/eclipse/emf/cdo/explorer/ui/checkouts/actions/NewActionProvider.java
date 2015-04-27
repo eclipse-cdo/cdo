@@ -445,7 +445,8 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     @Override
     protected final void doRun(CDOTransaction transaction, CDOObject parent, IProgressMonitor monitor) throws Exception
     {
-      newObject = doRun(transaction, parent, new StructuredSelection(parent));
+      ISelection selection = new StructuredSelection(CDOUtil.getEObject(parent));
+      newObject = doRun(transaction, parent, selection);
     }
 
     protected abstract EObject doRun(CDOTransaction transaction, CDOObject parent, ISelection selection);

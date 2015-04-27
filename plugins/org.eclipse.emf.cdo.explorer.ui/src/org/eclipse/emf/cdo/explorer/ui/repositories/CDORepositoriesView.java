@@ -12,10 +12,14 @@ package org.eclipse.emf.cdo.explorer.ui.repositories;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.State;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider;
+import org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandlerQuick;
 import org.eclipse.emf.cdo.explorer.ui.repositories.wizards.NewRepositoryWizard;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
@@ -130,70 +134,75 @@ public class CDORepositoriesView extends ContainerView
   {
     addCollapseAllAction(manager);
 
-    manager.add(new Action("Test")
+    if (Boolean.getBoolean("cdo.explorer.testRepo"))
     {
-      @Override
-      public void run()
+      manager.add(new Action("Test")
       {
-        Properties properties = new Properties();
-        properties.setProperty(LocalCDORepository.PROP_TYPE, CDORepository.TYPE_LOCAL);
-        properties.setProperty(LocalCDORepository.PROP_LABEL, "repo2");
-        properties.setProperty(LocalCDORepository.PROP_NAME, "repo2");
-        properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE,
-            CDORepository.VersioningMode.Branching.toString());
-        properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, CDORepository.IDGeneration.UUID.toString());
-        properties.setProperty(LocalCDORepository.PROP_TCP_DISABLED, "false");
-        properties.setProperty(LocalCDORepository.PROP_TCP_PORT, "2037");
-
-        CDORepository repository = CDOExplorerUtil.getRepositoryManager().addRepository(properties);
-        repository.connect();
-
-        CDOSession session = repository.getSession();
-        CDOTransaction transaction = session.openTransaction();
-        CDOUtil.configureView(transaction);
-
-        try
+        @Override
+        public void run()
         {
-          EPackage ePackage = EPackage.Registry.INSTANCE
-              .getEPackage("http://www.eclipse.org/emf/CDO/examples/company/1.0.0");
-          EClass eClass = (EClass)ePackage.getEClassifier("Company");
+          Properties properties = new Properties();
+          properties.setProperty(LocalCDORepository.PROP_TYPE, CDORepository.TYPE_LOCAL);
+          properties.setProperty(LocalCDORepository.PROP_LABEL, "repo2");
+          properties.setProperty(LocalCDORepository.PROP_NAME, "repo2");
+          properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
+          properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, IDGeneration.UUID.toString());
+          properties.setProperty(LocalCDORepository.PROP_TCP_DISABLED, "false");
+          properties.setProperty(LocalCDORepository.PROP_TCP_PORT, "2037");
 
-          EObject company = EcoreUtil.create(eClass);
-          addChild(company, "categories", "Category");
-          addChild(company, "suppliers", "Supplier");
-          addChild(company, "customers", "Customer");
-          addChild(company, "purchaseOrders", "PurchaseOrder");
-          addChild(company, "salesOrders", "SalesOrder");
+          CDORepository repository = CDOExplorerUtil.getRepositoryManager().addRepository(properties);
+          repository.connect();
 
-          CDOResource resource = transaction.createResource("model1");
-          resource.getContents().add(company);
+          CDOSession session = repository.getSession();
+          CDOTransaction transaction = session.openTransaction();
+          CDOUtil.configureView(transaction);
 
-          transaction.commit();
+          try
+          {
+            EPackage ePackage = EPackage.Registry.INSTANCE
+                .getEPackage("http://www.eclipse.org/emf/CDO/examples/company/1.0.0");
+            EClass eClass = (EClass)ePackage.getEClassifier("Company");
+
+            EObject company = EcoreUtil.create(eClass);
+            addChild(company, "categories", "Category");
+            addChild(company, "suppliers", "Supplier");
+            addChild(company, "customers", "Customer");
+            addChild(company, "purchaseOrders", "PurchaseOrder");
+            addChild(company, "salesOrders", "SalesOrder");
+
+            CDOResource resource = transaction.createResource("model1");
+            resource.getContents().add(company);
+
+            transaction.commit();
+
+            RepositoryCheckoutHandlerQuick.checkout(repository, CDOCheckout.TYPE_ONLINE_HISTORICAL);
+
+          }
+          catch (ConcurrentAccessException ex)
+          {
+            ex.printStackTrace();
+          }
+          catch (CommitException ex)
+          {
+            ex.printStackTrace();
+          }
+          finally
+          {
+            transaction.close();
+          }
         }
-        catch (ConcurrentAccessException ex)
+
+        private void addChild(EObject company, String featureName, String className)
         {
-          ex.printStackTrace();
-        }
-        catch (CommitException ex)
-        {
-          ex.printStackTrace();
-        }
-        finally
-        {
-          transaction.close();
-        }
-      }
+          EClass companyClass = company.eClass();
+          EObject object = EcoreUtil.create((EClass)companyClass.getEPackage().getEClassifier(className));
 
-      private void addChild(EObject company, String featureName, String className)
-      {
-        EClass companyClass = company.eClass();
-        EObject object = EcoreUtil.create((EClass)companyClass.getEPackage().getEClassifier(className));
-
-        @SuppressWarnings("unchecked")
-        EList<EObject> list = (EList<EObject>)company.eGet(companyClass.getEStructuralFeature(featureName));
-        list.add(object);
-      }
-    });
+          @SuppressWarnings("unchecked")
+          EList<EObject> list = (EList<EObject>)company.eGet(companyClass.getEStructuralFeature(featureName));
+          list.add(object);
+        }
+      });
+    }
 
     manager.add(newAction);
   }

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionProvider;
 import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
@@ -102,6 +103,21 @@ CDOSessionProvider, CDOViewOpener, CDOTransactionOpener
     {
       return supportingBranches;
     }
+
+    public static VersioningMode from(CDORepositoryInfo repositoryInfo)
+    {
+      if (repositoryInfo.isSupportingBranches())
+      {
+        return VersioningMode.Branching;
+      }
+
+      if (repositoryInfo.isSupportingAudits())
+      {
+        return VersioningMode.Auditing;
+      }
+
+      return VersioningMode.Normal;
+    }
   }
 
   /**
@@ -118,9 +134,19 @@ CDOSessionProvider, CDOViewOpener, CDOTransactionOpener
       this.location = location;
     }
 
-    public final IDGenerationLocation getLocation()
+    public IDGenerationLocation getLocation()
     {
       return location;
+    }
+
+    public static IDGeneration from(CDORepositoryInfo repositoryInfo)
+    {
+      if (repositoryInfo.getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+      {
+        return IDGeneration.UUID;
+      }
+
+      return IDGeneration.Counter;
     }
   }
 

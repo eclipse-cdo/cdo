@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -105,11 +106,13 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public CDOTransaction openTransaction(ResourceSet resourceSet);
 
+  public URI createResourceURI(String path);
+
   public boolean isDirty();
 
-  public String getEditorID(CDOID objectID);
+  public String getEditorOpenerID(CDOID objectID);
 
-  public void setEditorID(CDOID objectID, String editorID);
+  public void setEditorOpenerID(CDOID objectID, String editorOpenerID);
 
   /**
    * @author Eike Stepper

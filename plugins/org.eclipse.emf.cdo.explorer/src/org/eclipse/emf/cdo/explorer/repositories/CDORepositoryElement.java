@@ -25,7 +25,5 @@ public interface CDORepositoryElement extends CDOTimeProvider
 
   public int getBranchID();
 
-  public long getTimeStamp();
-
   public CDOID getObjectID();
 }

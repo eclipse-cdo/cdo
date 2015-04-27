@@ -14,7 +14,8 @@ import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.admin.CDOAdminClientUtil;
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
@@ -139,6 +140,10 @@ public class MasterRepositoryController
 
   private String password;
 
+  private VersioningMode versioningMode;
+
+  private IDGeneration idGeneration;
+
   public MasterRepositoryController(Composite parent)
   {
     this.parent = parent;
@@ -231,6 +236,16 @@ public class MasterRepositoryController
   public final String getPassword()
   {
     return password;
+  }
+
+  public final VersioningMode getVersioningMode()
+  {
+    return versioningMode;
+  }
+
+  public final IDGeneration getIDGeneration()
+  {
+    return idGeneration;
   }
 
   public final boolean isValid()
@@ -463,6 +478,8 @@ public class MasterRepositoryController
               {
                 //$FALL-THROUGH$
               }
+
+              validateController();
             }
           });
         }
@@ -580,6 +597,9 @@ public class MasterRepositoryController
       CDONet4jSession session = null;
       authenticating = false;
 
+      versioningMode = null;
+      idGeneration = null;
+
       try
       {
         IConnector connector = getConnector();
@@ -629,10 +649,11 @@ public class MasterRepositoryController
         showCredentials(authenticating);
 
         CDORepositoryInfo repositoryInfo = session.getRepositoryInfo();
-        String message = getMode(repositoryInfo);
+        versioningMode = VersioningMode.from(repositoryInfo);
+        idGeneration = IDGeneration.from(repositoryInfo);
 
-        if (repositoryInfo.isSupportingBranches()
-            && repositoryInfo.getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+        String message = versioningMode.toString();
+        if (versioningMode == VersioningMode.Branching && idGeneration == IDGeneration.UUID)
         {
           message += ", Replicable";
         }
@@ -664,21 +685,6 @@ public class MasterRepositoryController
       }
 
       return connector;
-    }
-
-    private String getMode(CDORepositoryInfo repositoryInfo)
-    {
-      if (repositoryInfo.isSupportingBranches())
-      {
-        return "Branching";
-      }
-
-      if (repositoryInfo.isSupportingAudits())
-      {
-        return "Auditing";
-      }
-
-      return "Normal";
     }
   }
 

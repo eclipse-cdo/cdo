@@ -53,4 +53,13 @@ public interface CDOViewProvider
    * @since 4.0
    */
   public URI getResourceURI(CDOView view, String path);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.4
+   */
+  public interface CDOViewProvider2 extends CDOViewProvider
+  {
+    public String getPath(URI uri);
+  }
 }

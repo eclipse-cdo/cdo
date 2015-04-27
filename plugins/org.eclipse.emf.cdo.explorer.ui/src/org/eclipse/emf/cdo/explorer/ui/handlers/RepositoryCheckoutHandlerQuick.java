@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutLabelPage;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -41,9 +42,10 @@ public class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler<CDORepos
     checkout(elements.get(0), CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
   }
 
-  public static void checkout(CDORepositoryElement repositoryElement, String type)
+  public static CDOCheckout checkout(CDORepositoryElement repositoryElement, String type)
   {
     CDORepository repository = repositoryElement.getRepository();
+    String readOnly = (CDOCheckout.TYPE_ONLINE_HISTORICAL.equals(type) ? Boolean.TRUE : Boolean.FALSE).toString();
 
     Properties properties = new Properties();
     properties.setProperty("type", type);
@@ -51,12 +53,19 @@ public class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler<CDORepos
     properties.setProperty("repository", repository.getID());
     properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
     properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
-    properties.setProperty("readOnly", Boolean.FALSE.toString());
+    properties.setProperty("readOnly", readOnly);
     properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
 
     CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
     checkout.open();
 
     CheckoutWizard.showInProjectExplorer(checkout);
+    return checkout;
+  }
+
+  public static CDOCheckout checkout(CDORepository repository, String type)
+  {
+    CDORepositoryElement repositoryElement = AdapterUtil.adapt(repository, CDORepositoryElement.class);
+    return checkout(repositoryElement, type);
   }
 }

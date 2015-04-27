@@ -28,6 +28,8 @@ import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.core.runtime.Path;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -76,6 +78,12 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     }
 
     return session.openView(branch, timeStamp, resourceSet);
+  }
+
+  @Override
+  public String getPath(URI uri)
+  {
+    return new Path(uri.path()).makeAbsolute().removeFirstSegments(1).toString();
   }
 
   @Override

@@ -55,8 +55,10 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
   public Resource createResource(URI uri)
   {
+    boolean existing = isGetResource();
+
     CDOResourceImpl resource = createCDOResource(uri);
-    resource.setExisting(isGetResource());
+    resource.setExisting(existing);
     return resource;
   }
 

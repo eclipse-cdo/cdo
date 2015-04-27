@@ -11,10 +11,12 @@
 package org.eclipse.emf.cdo.ui.widgets;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -22,6 +24,8 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
+import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -31,6 +35,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Scale;
 
 import java.util.HashSet;
@@ -83,8 +88,11 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
         long timeStamp = startTimeStamp + Math.round(stepSize * value);
         setTimeStamp(timeStamp);
 
-        viewer.refresh();
-        setExpandedStates();
+        if (viewer != null)
+        {
+          viewer.refresh();
+          setExpandedStates();
+        }
       }
 
       protected void setExpandedStates()
@@ -128,10 +136,28 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
     if (this.timeStamp != timeStamp)
     {
       this.timeStamp = timeStamp;
-      int newSelection = (int)((timeStamp - startTimeStamp) / stepSize);
-      if (getSelection() != newSelection)
+      final int newSelection = (int)((timeStamp - startTimeStamp) / stepSize);
+
+      Display display = getDisplay();
+      if (display == Display.getCurrent())
       {
-        setSelection(newSelection);
+        if (getSelection() != newSelection)
+        {
+          setSelection(newSelection);
+        }
+      }
+      else
+      {
+        display.asyncExec(new Runnable()
+        {
+          public void run()
+          {
+            if (getSelection() != newSelection)
+            {
+              setSelection(newSelection);
+            }
+          }
+        });
       }
 
       timeStampChanged(timeStamp);
@@ -140,54 +166,89 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
 
   public void connect(CDOView view, TreeViewer viewer)
   {
-    disconnect();
-
-    this.view = view;
-    this.viewer = viewer;
-
-    for (Object element : viewer.getExpandedElements())
+    if (this.view != view)
     {
-      CDOID id = getID(element);
-      if (id != null)
+      disconnect();
+
+      if (view != null)
       {
-        expandedIDs.add(id);
+        this.view = view;
+        this.viewer = viewer;
+
+        CDOBranchPointRange lifetime = null;
+
+        if (this.viewer != null)
+        {
+          for (Object element : viewer.getExpandedElements())
+          {
+            CDOID id = getID(element);
+            if (id != null)
+            {
+              expandedIDs.add(id);
+            }
+          }
+
+          this.viewer.addTreeListener(this);
+
+          Object input = viewer.getInput();
+          if (input instanceof EObject)
+          {
+            lifetime = CDOUtil.getLifetime(CDOUtil.getCDOObject((EObject)input));
+          }
+        }
+
+        if (lifetime == null)
+        {
+          CDOSession session = view.getSession();
+          CDOBranch branch = view.getBranch();
+
+          CDOBranchPoint firstPoint = branch.getPoint(session.getRepositoryInfo().getCreationTime());
+          CDOBranchPoint lastPoint = branch.getHead();
+          lifetime = CDOBranchUtil.createRange(firstPoint, lastPoint);
+        }
+
+        startTimeStamp = lifetime.getStartPoint().getTimeStamp();
+        endTimeStamp = lifetime.getEndPoint().getTimeStamp();
+        if (endTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          CDOSession session = view.getSession();
+          endTimeStamp = session.getLastUpdateTime();
+        }
+
+        absoluteTimeWindowLength = endTimeStamp - startTimeStamp;
+        stepSize = absoluteTimeWindowLength / FACTOR;
+
+        setTimeStamp(view.getTimeStamp());
+
+        staleReferencePolicy = new CDOStaleReferencePolicy.DynamicProxy.Enhanced(view);
+        view.addListener(this);
+        setEnabled(true);
+      }
+      else
+      {
+        setEnabled(false);
       }
     }
-
-    viewer.addTreeListener(this);
-
-    CDOObject input = CDOUtil.getCDOObject((EObject)viewer.getInput());
-    CDOBranchPointRange lifetime = CDOUtil.getLifetime(input);
-
-    startTimeStamp = lifetime.getStartPoint().getTimeStamp();
-    endTimeStamp = lifetime.getEndPoint().getTimeStamp();
-    if (endTimeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      CDOSession session = view.getSession();
-      endTimeStamp = session.getLastUpdateTime();
-    }
-
-    absoluteTimeWindowLength = endTimeStamp - startTimeStamp;
-    stepSize = absoluteTimeWindowLength / FACTOR;
-
-    setTimeStamp(view.getTimeStamp());
-
-    staleReferencePolicy = new CDOStaleReferencePolicy.DynamicProxy.Enhanced(view);
-    view.addListener(this);
   }
 
   public void disconnect()
   {
-    if (staleReferencePolicy != null)
+    if (view != null)
     {
-      view.removeListener(this);
-      staleReferencePolicy.dispose();
-      staleReferencePolicy = null;
+      if (staleReferencePolicy != null)
+      {
+        view.removeListener(this);
+        staleReferencePolicy.dispose();
+        staleReferencePolicy = null;
 
-      expandedIDs.clear();
-      viewer.removeTreeListener(this);
+        if (viewer != null)
+        {
+          expandedIDs.clear();
+          viewer.removeTreeListener(this);
+          viewer = null;
+        }
+      }
 
-      viewer = null;
       view = null;
     }
   }
@@ -198,6 +259,14 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
     {
       CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
       setTimeStamp(e.getBranchPoint().getTimeStamp());
+    }
+    else if (event instanceof ILifecycleEvent)
+    {
+      ILifecycleEvent e = (ILifecycleEvent)event;
+      if (e.getKind() == Kind.ABOUT_TO_DEACTIVATE)
+      {
+        disconnect();
+      }
     }
   }
 
@@ -228,7 +297,10 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
 
   protected void timeStampChanged(long timeStamp)
   {
-    view.setTimeStamp(timeStamp);
+    if (view != null)
+    {
+      view.setTimeStamp(timeStamp);
+    }
   }
 
   @Override

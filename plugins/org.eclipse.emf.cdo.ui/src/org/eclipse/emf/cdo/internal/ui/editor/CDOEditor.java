@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -30,20 +29,18 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
+import org.eclipse.emf.cdo.ui.CDOInvalidRootAgent;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.ui.widgets.TimeSlider;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ValidationException;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
@@ -212,17 +209,17 @@ public class CDOEditor extends MultiPageEditorPart
   /**
    * @ADDED
    */
-  protected static final Object EMPTY_INPUT = new Object();
-
-  /**
-   * @ADDED
-   */
   protected CDOView view;
 
   /**
    * @ADDED
    */
   protected Object viewerInput;
+
+  /**
+   * @ADDED
+   */
+  protected CDOInvalidRootAgent invalidRootAgent;
 
   /**
    * @ADDED
@@ -466,59 +463,6 @@ public class CDOEditor extends MultiPageEditorPart
           public void run()
           {
             updateProblemIndication();
-          }
-        });
-      }
-    }
-  };
-
-  protected IListener viewTargetListener = new IListener()
-  {
-    protected CDOID inputID;
-
-    public void notifyEvent(IEvent event)
-    {
-      if (event instanceof CDOViewTargetChangedEvent)
-      {
-        final CDOViewTargetChangedEvent e = (CDOViewTargetChangedEvent)event;
-        getSite().getShell().getDisplay().asyncExec(new Runnable()
-        {
-          public void run()
-          {
-            Object input = selectionViewer.getInput();
-            if (input == EMPTY_INPUT)
-            {
-              if (inputID != null)
-              {
-                try
-                {
-                  CDOObject object = view.getObject(inputID);
-                  selectionViewer.setInput(object);
-                  inputID = null;
-                }
-                catch (Exception ex)
-                {
-                  // Ignore
-                }
-              }
-            }
-            else if (input instanceof EObject)
-            {
-              CDOObject object = CDOUtil.getCDOObject((EObject)input);
-              if (object.cdoInvalid())
-              {
-                if (e.getBranchPoint().getTimeStamp() == e.getOldBranchPoint().getTimeStamp())
-                {
-                  inputID = null;
-                  closeEditor();
-                }
-                else
-                {
-                  inputID = object.cdoID();
-                  selectionViewer.setInput(EMPTY_INPUT);
-                }
-              }
-            }
           }
         });
       }
@@ -999,7 +943,31 @@ public class CDOEditor extends MultiPageEditorPart
     {
       CDOEditorInput editorInput = (CDOEditorInput)getEditorInput();
       view = editorInput.getView();
-      view.addListener(viewTargetListener);
+
+      // If the view can be switched to historical times let an InvalidRootAgent handle detached inputs.
+      if (view.isReadOnly())
+      {
+        invalidRootAgent = new CDOInvalidRootAgent(view)
+        {
+          @Override
+          protected Object getRootFromUI()
+          {
+            return selectionViewer.getInput();
+          }
+
+          @Override
+          protected void setRootToUI(Object root)
+          {
+            selectionViewer.setInput(root);
+          }
+
+          @Override
+          protected void closeUI()
+          {
+            closeEditor();
+          }
+        };
+      }
 
       CommandStack commandStack;
 
@@ -1213,7 +1181,7 @@ public class CDOEditor extends MultiPageEditorPart
       final boolean timeSliderAllowed = view.isReadOnly() && view.getSession().getRepositoryInfo().isSupportingAudits();
       if (timeSliderAllowed)
       {
-        IAction toolbarToggleAction = new Action()
+        final IAction toolbarToggleAction = new Action()
         {
           private Group group;
 
@@ -1254,11 +1222,59 @@ public class CDOEditor extends MultiPageEditorPart
           }
         };
 
+        final String id = "time-slider-" + System.currentTimeMillis();
+        toolbarToggleAction.setId(id);
         toolbarToggleAction.setEnabled(true);
         toolbarToggleAction.setChecked(false);
         toolbarToggleAction.setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_SLIDER));
         toolbarToggleAction.setToolTipText(Messages.getString("CDOEditor.1")); //$NON-NLS-1$
-        getActionBars().getToolBarManager().add(toolbarToggleAction);
+
+        getSite().getPage().addPartListener(new IPartListener()
+        {
+          private IToolBarManager toolBarManager = getActionBars().getToolBarManager();
+
+          public void partActivated(IWorkbenchPart part)
+          {
+            showToggleAction(part, true);
+          }
+
+          public void partDeactivated(IWorkbenchPart part)
+          {
+            showToggleAction(part, false);
+          }
+
+          private void showToggleAction(IWorkbenchPart part, boolean show)
+          {
+            if (part == CDOEditor.this)
+            {
+              if (show)
+              {
+                toolBarManager.add(toolbarToggleAction);
+              }
+              else
+              {
+                toolBarManager.remove(id);
+              }
+
+              toolBarManager.update(true);
+            }
+          }
+
+          public void partClosed(IWorkbenchPart part)
+          {
+            // Do nothing.
+          }
+
+          public void partOpened(IWorkbenchPart part)
+          {
+            // Do nothing.
+          }
+
+          public void partBroughtToTop(IWorkbenchPart part)
+          {
+            // Do nothing.
+          }
+        });
       }
 
       selectionViewer = new TreeViewer(tree)
@@ -2290,7 +2306,7 @@ public class CDOEditor extends MultiPageEditorPart
   public void dispose()
   {
     updateProblemIndication = false;
-    view.removeListener(viewTargetListener);
+    invalidRootAgent.dispose();
 
     if (!view.isClosed())
     {

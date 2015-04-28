@@ -19,11 +19,11 @@ import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getDiscountCode <em>Discount Code</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.SpecialPurchaseOrder#getShippingAddress <em>Shipping Address</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getSpecialPurchaseOrder()
  * @model

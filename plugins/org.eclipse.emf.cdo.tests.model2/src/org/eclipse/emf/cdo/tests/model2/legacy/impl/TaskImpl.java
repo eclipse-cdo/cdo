@@ -26,12 +26,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Task</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.TaskImpl#getTaskContainer <em>Task Container</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.TaskImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.TaskImpl#isDone <em>Done</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -104,7 +104,7 @@ public class TaskImpl extends EObjectImpl implements Task
     {
       return null;
     }
-    return (TaskContainer)eContainer();
+    return (TaskContainer)eInternalContainer();
   }
 
   /**

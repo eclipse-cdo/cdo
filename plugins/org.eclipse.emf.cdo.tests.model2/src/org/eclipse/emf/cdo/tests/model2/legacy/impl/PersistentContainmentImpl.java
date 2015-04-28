@@ -31,12 +31,12 @@ import java.util.Collection;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.PersistentContainmentImpl#getAttrBefore <em>Attr Before</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.PersistentContainmentImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.PersistentContainmentImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -26,10 +26,10 @@ import java.util.Collection;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model4.legacy.impl.GenRefMultiNUNonContainedImpl#getElements <em>Elements</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

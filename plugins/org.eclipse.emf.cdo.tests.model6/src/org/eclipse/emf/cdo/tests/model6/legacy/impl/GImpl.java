@@ -34,12 +34,12 @@ import java.util.List;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.GImpl#getDummy <em>Dummy</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.GImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.GImpl#getList <em>List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

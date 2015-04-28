@@ -30,12 +30,12 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Node B</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeBImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeBImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeBImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -113,7 +113,7 @@ public class NodeBImpl extends EObjectImpl implements NodeB
     {
       return null;
     }
-    return (NodeB)eContainer();
+    return (NodeB)eInternalContainer();
   }
 
   /**

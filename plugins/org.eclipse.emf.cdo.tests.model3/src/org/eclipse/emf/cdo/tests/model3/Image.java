@@ -19,12 +19,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getWidth <em>Width</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getHeight <em>Height</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.Image#getData <em>Data</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getImage()
  * @model

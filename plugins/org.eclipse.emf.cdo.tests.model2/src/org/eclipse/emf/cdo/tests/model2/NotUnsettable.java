@@ -23,6 +23,7 @@ import java.util.Date;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#isNotUnsettableBoolean <em>Not Unsettable Boolean</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableByte <em>Not Unsettable Byte</em>}</li>
@@ -36,7 +37,6 @@ import java.util.Date;
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableString <em>Not Unsettable String</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.NotUnsettable#getNotUnsettableVAT <em>Not Unsettable VAT</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getNotUnsettable()
  * @model

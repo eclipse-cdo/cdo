@@ -23,11 +23,11 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.SingleContainedElementImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model4.impl.SingleContainedElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

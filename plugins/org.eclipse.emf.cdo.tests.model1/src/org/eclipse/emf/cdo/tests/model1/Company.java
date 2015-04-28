@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getSuppliers <em>Suppliers</em>}</li>
@@ -24,7 +25,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getPurchaseOrders <em>Purchase Orders</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Company#getSalesOrders <em>Sales Orders</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCompany()
  * @model

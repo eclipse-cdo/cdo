@@ -21,12 +21,12 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Address</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.AddressImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.AddressImpl#getStreet <em>Street</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.AddressImpl#getCity <em>City</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

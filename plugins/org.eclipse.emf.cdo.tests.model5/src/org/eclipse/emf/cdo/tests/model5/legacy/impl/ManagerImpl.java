@@ -18,8 +18,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Manager</b></em>'. <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

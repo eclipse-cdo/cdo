@@ -28,10 +28,10 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>F</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.FImpl#getOwnedEs <em>Owned Es</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

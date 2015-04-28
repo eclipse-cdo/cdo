@@ -15,11 +15,11 @@ package org.eclipse.emf.cdo.tests.model1;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.SalesOrder#getCustomer <em>Customer</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSalesOrder()
  * @model

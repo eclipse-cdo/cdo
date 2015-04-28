@@ -18,10 +18,10 @@ import org.eclipse.emf.cdo.tests.model4interfaces.ISingleRefContainedElement;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model4.ImplSingleRefContainedElement#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model4.model4Package#getImplSingleRefContainedElement()
  * @model

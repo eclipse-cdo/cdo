@@ -52,8 +52,7 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   {
     try
     {
-      Model5Factory theModel5Factory = (Model5Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model5/1.0.0");
+      Model5Factory theModel5Factory = (Model5Factory)EPackage.Registry.INSTANCE.getEFactory(Model5Package.eNS_URI);
       if (theModel5Factory != null)
       {
         return theModel5Factory;

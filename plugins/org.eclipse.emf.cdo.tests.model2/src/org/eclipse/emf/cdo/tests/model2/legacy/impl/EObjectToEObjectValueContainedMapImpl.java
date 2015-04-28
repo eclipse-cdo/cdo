@@ -29,11 +29,11 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * '. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.EObjectToEObjectValueContainedMapImpl#getTypedKey <em>Key</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.EObjectToEObjectValueContainedMapImpl#getTypedValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

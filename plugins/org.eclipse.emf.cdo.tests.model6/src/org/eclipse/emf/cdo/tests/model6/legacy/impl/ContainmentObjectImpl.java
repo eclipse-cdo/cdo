@@ -30,11 +30,11 @@ import java.util.Collection;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.ContainmentObjectImpl#getContainmentOptional <em>Containment Optional</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.ContainmentObjectImpl#getContainmentList <em>Containment List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

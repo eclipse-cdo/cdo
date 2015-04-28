@@ -23,11 +23,11 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Customer</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl#getSalesOrders <em>Sales Orders</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CustomerImpl#getOrderByProduct <em>Order By Product</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

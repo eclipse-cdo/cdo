@@ -28,6 +28,7 @@ import java.util.Date;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable2WithDefaultImpl#isUnsettableBoolean <em>Unsettable Boolean</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable2WithDefaultImpl#getUnsettableByte <em>Unsettable Byte</em>}</li>
@@ -41,7 +42,6 @@ import java.util.Date;
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable2WithDefaultImpl#getUnsettableString <em>Unsettable String</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.Unsettable2WithDefaultImpl#getUnsettableVAT <em>Unsettable VAT</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

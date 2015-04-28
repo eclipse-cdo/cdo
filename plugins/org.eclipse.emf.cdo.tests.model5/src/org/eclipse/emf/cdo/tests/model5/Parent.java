@@ -20,12 +20,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.Parent#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.Parent#getFavourite <em>Favourite</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.Parent#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model5.Model5Package#getParent()
  * @model

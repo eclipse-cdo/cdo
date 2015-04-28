@@ -17,12 +17,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getStreet <em>Street</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Address#getCity <em>City</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getAddress()
  * @model

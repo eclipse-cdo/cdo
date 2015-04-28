@@ -18,12 +18,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeA#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeA#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.NodeA#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model3.Model3Package#getNodeA()
  * @model

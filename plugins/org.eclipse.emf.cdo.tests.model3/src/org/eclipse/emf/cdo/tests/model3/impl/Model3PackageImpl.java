@@ -189,12 +189,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     isInited = true;
 
     // Initialize simple dependencies
+    EcorePackage.eINSTANCE.eClass();
     EtypesPackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
     SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
         .getEPackage(SubpackagePackage.eNS_URI) instanceof SubpackagePackageImpl
-            ? EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI) : SubpackagePackage.eINSTANCE);
+        ? EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI) : SubpackagePackage.eINSTANCE);
 
     // Create package meta-data objects
     theModel3Package.createPackageContents();

@@ -50,8 +50,7 @@ public class Model1FactoryImpl extends EFactoryImpl implements Model1Factory
   {
     try
     {
-      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model1/1.0.0");
+      Model1Factory theModel1Factory = (Model1Factory)EPackage.Registry.INSTANCE.getEFactory(Model1Package.eNS_URI);
       if (theModel1Factory != null)
       {
         return theModel1Factory;

@@ -31,6 +31,7 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Node D</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeDImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeDImpl#getParent <em>Parent</em>}</li>
@@ -38,7 +39,6 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeDImpl#getOtherNodes <em>Other Nodes</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeDImpl#getOppositeNode <em>Opposite Node</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -136,7 +136,7 @@ public class NodeDImpl extends EObjectImpl implements NodeD
     {
       return null;
     }
-    return (NodeD)eContainer();
+    return (NodeD)eInternalContainer();
   }
 
   /**

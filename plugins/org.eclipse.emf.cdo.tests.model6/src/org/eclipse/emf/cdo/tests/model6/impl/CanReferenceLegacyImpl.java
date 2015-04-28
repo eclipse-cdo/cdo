@@ -25,13 +25,13 @@ import org.eclipse.emf.ecore.EObject;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.CanReferenceLegacyImpl#getSingleContainment <em>Single Containment</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.CanReferenceLegacyImpl#getMultipleContainment <em>Multiple Containment</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.CanReferenceLegacyImpl#getSingleReference <em>Single Reference</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.CanReferenceLegacyImpl#getMultipleReference <em>Multiple Reference</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

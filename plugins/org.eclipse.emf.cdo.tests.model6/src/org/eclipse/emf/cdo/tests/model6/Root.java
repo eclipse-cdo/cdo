@@ -18,13 +18,13 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListA <em>List A</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListB <em>List B</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListC <em>List C</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.Root#getListD <em>List D</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getRoot()
  * @model

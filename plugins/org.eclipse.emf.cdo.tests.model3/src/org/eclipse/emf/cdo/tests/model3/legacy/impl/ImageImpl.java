@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Image</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl#getWidth <em>Width</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl#getHeight <em>Height</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.ImageImpl#getData <em>Data</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

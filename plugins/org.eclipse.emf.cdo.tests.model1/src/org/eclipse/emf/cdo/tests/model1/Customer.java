@@ -18,11 +18,11 @@ import org.eclipse.emf.common.util.EMap;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Customer#getSalesOrders <em>Sales Orders</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Customer#getOrderByProduct <em>Order By Product</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCustomer()
  * @model

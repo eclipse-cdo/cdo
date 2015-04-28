@@ -17,11 +17,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Supplier#getPurchaseOrders <em>Purchase Orders</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Supplier#isPreferred <em>Preferred</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getSupplier()
  * @model

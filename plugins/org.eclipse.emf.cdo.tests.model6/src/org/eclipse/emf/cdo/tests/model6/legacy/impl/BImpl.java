@@ -25,10 +25,10 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>B</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.BImpl#getOwnedC <em>Owned C</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

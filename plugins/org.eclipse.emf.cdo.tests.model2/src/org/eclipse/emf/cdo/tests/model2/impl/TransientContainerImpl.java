@@ -23,12 +23,12 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getAttrBefore <em>Attr Before</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.TransientContainerImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

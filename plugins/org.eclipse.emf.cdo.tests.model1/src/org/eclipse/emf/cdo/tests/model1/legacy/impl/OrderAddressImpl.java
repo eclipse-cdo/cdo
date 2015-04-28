@@ -32,6 +32,7 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Order Address</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderAddressImpl#getOrderDetails <em>Order Details</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderAddressImpl#getOrder <em>Order</em>}</li>
@@ -39,7 +40,6 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderAddressImpl#getPrice <em>Price</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.OrderAddressImpl#isTestAttribute <em>Test Attribute</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

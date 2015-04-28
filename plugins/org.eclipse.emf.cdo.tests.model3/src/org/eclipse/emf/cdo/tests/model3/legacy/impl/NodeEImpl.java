@@ -30,12 +30,12 @@ import java.util.Collection;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeEImpl#getMainNode <em>Main Node</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeEImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.NodeEImpl#getOtherNodes <em>Other Nodes</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

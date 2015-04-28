@@ -25,12 +25,12 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapImpl#getPersistentMap <em>Persistent Map</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.PropertiesMapImpl#getTransientMap <em>Transient Map</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

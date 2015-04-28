@@ -40,8 +40,7 @@ public class MangoFactoryImpl extends EFactoryImpl implements MangoFactory
   {
     try
     {
-      MangoFactory theMangoFactory = (MangoFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/mango");
+      MangoFactory theMangoFactory = (MangoFactory)EPackage.Registry.INSTANCE.getEFactory(MangoPackage.eNS_URI);
       if (theMangoFactory != null)
       {
         return theMangoFactory;

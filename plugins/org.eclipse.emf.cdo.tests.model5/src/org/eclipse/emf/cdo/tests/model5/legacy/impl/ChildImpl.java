@@ -29,12 +29,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl#getPreferredBy <em>Preferred By</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model5.legacy.impl.ChildImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -102,7 +102,7 @@ public class ChildImpl extends EObjectImpl implements Child
     {
       return null;
     }
-    return (Parent)eContainer();
+    return (Parent)eInternalContainer();
   }
 
   /**

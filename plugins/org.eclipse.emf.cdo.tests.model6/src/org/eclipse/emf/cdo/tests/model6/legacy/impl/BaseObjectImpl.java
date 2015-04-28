@@ -26,12 +26,12 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object ' <em><b>Base Object</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -243,10 +243,10 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     {
     case Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL:
       return ATTRIBUTE_OPTIONAL_EDEFAULT == null ? attributeOptional != null
-          : !ATTRIBUTE_OPTIONAL_EDEFAULT.equals(attributeOptional);
+      : !ATTRIBUTE_OPTIONAL_EDEFAULT.equals(attributeOptional);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED:
       return ATTRIBUTE_REQUIRED_EDEFAULT == null ? attributeRequired != null
-          : !ATTRIBUTE_REQUIRED_EDEFAULT.equals(attributeRequired);
+      : !ATTRIBUTE_REQUIRED_EDEFAULT.equals(attributeRequired);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_LIST:
       return attributeList != null && !attributeList.isEmpty();
     }

@@ -37,7 +37,7 @@ public class SubpackageFactoryImpl extends EFactoryImpl implements SubpackageFac
     try
     {
       SubpackageFactory theSubpackageFactory = (SubpackageFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/subpackage/1.0.0");
+          .getEFactory(SubpackagePackage.eNS_URI);
       if (theSubpackageFactory != null)
       {
         return theSubpackageFactory;

@@ -72,8 +72,7 @@ public class model4FactoryImpl extends EFactoryImpl implements model4Factory
   {
     try
     {
-      model4Factory themodel4Factory = (model4Factory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.eclipse.org/emf/CDO/tests/model4/1.0.0");
+      model4Factory themodel4Factory = (model4Factory)EPackage.Registry.INSTANCE.getEFactory(model4Package.eNS_URI);
       if (themodel4Factory != null)
       {
         return themodel4Factory;

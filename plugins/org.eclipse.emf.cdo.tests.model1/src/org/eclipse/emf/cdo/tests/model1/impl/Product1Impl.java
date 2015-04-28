@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Product</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getOrderDetails <em>Order Details</em>}</li>
@@ -31,7 +32,6 @@ import org.eclipse.emf.ecore.EClass;
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getOtherVATs <em>Other VA Ts</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl#getDescription <em>Description</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

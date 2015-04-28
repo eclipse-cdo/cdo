@@ -27,11 +27,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model4.legacy.impl.SingleContainedElementImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model4.legacy.impl.SingleContainedElementImpl#getParent <em>Parent</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -109,7 +109,7 @@ public class SingleContainedElementImpl extends EObjectImpl implements SingleCon
     {
       return null;
     }
-    return (RefSingleContained)eContainer();
+    return (RefSingleContained)eInternalContainer();
   }
 
   /**

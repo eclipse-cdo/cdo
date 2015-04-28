@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>E</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.EImpl#getOwnedAs <em>Owned As</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

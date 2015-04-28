@@ -22,12 +22,12 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Base Object</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeOptional <em>Attribute Optional</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeRequired <em>Attribute Required</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.BaseObjectImpl#getAttributeList <em>Attribute List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

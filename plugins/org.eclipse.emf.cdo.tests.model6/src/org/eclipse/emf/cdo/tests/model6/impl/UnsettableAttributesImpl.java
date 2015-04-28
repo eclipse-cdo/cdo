@@ -27,6 +27,7 @@ import java.util.Date;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl#getAttrBigDecimal <em>Attr Big Decimal</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl#getAttrBigInteger <em>Attr Big Integer</em>}</li>
@@ -52,7 +53,6 @@ import java.util.Date;
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl#getAttrShortObject <em>Attr Short Object</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.UnsettableAttributesImpl#getAttrString <em>Attr String</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

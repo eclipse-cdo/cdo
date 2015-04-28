@@ -17,11 +17,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.mango.MangoParameter#getPassing <em>Passing</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.mango.MangoPackage#getMangoParameter()
  * @model

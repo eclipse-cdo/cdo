@@ -22,11 +22,11 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoParameterImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.mango.impl.MangoParameterImpl#getPassing <em>Passing</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

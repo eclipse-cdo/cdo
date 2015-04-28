@@ -33,13 +33,13 @@ import java.util.Collection;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.CanReferenceLegacyImpl#getSingleContainment <em>Single Containment</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.CanReferenceLegacyImpl#getMultipleContainment <em>Multiple Containment</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.CanReferenceLegacyImpl#getSingleReference <em>Single Reference</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.CanReferenceLegacyImpl#getMultipleReference <em>Multiple Reference</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

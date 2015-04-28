@@ -23,12 +23,12 @@ import java.util.List;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.G#getDummy <em>Dummy</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.G#getReference <em>Reference</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.G#getList <em>List</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model6.Model6Package#getG()
  * @model

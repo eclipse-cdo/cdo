@@ -28,11 +28,11 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Unordered List</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.UnorderedListImpl#getContained <em>Contained</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.UnorderedListImpl#getReferenced <em>Referenced</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

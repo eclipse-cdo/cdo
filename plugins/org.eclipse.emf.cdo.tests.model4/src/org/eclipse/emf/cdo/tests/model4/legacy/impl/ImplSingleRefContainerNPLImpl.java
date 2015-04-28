@@ -26,10 +26,10 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model4.legacy.impl.ImplSingleRefContainerNPLImpl#getElement <em>Element</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

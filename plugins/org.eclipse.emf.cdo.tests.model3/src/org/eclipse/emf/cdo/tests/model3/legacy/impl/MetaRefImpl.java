@@ -25,12 +25,12 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Meta Ref</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.MetaRefImpl#getEPackageRef <em>EPackage Ref</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.MetaRefImpl#getEClassRef <em>EClass Ref</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.MetaRefImpl#getEReferenceRef <em>EReference Ref</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

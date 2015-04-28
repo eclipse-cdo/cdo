@@ -25,10 +25,10 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Polygon</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.legacy.impl.PolygonImpl#getPoints <em>Points</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

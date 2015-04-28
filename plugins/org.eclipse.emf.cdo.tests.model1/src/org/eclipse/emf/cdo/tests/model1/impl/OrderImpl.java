@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Order</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.OrderImpl#getOrderDetails <em>Order Details</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

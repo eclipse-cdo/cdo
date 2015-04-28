@@ -26,11 +26,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.SpecialPurchaseOrderImpl#getDiscountCode <em>Discount Code</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.legacy.impl.SpecialPurchaseOrderImpl#getShippingAddress <em>Shipping Address</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

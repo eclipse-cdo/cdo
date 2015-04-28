@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Node C</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getParent <em>Parent</em>}</li>
@@ -29,7 +30,6 @@ import org.eclipse.emf.ecore.EClass;
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getOtherNodes <em>Other Nodes</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model3.impl.NodeCImpl#getOppositeNodes <em>Opposite Nodes</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

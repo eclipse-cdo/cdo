@@ -24,12 +24,12 @@ import org.eclipse.emf.ecore.EClass;
  * end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrBefore <em>Attr Before</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getChildren <em>Children</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.PersistentContainmentImpl#getAttrAfter <em>Attr After</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

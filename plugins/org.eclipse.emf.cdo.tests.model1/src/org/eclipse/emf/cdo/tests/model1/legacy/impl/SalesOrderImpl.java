@@ -24,11 +24,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Sales Order</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SalesOrderImpl#getCustomer <em>Customer</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

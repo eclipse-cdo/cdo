@@ -29,11 +29,11 @@ import java.util.Collection;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Supplier</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SupplierImpl#getPurchaseOrders <em>Purchase Orders</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.SupplierImpl#isPreferred <em>Preferred</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

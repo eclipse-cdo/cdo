@@ -26,6 +26,7 @@ import java.util.Date;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Not Unsettable</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#isNotUnsettableBoolean <em>Not Unsettable Boolean</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableByte <em>Not Unsettable Byte</em>}</li>
@@ -39,7 +40,6 @@ import java.util.Date;
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableString <em>Not Unsettable String</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.impl.NotUnsettableImpl#getNotUnsettableVAT <em>Not Unsettable VAT</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

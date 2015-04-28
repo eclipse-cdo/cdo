@@ -23,13 +23,13 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Root</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListA <em>List A</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListB <em>List B</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListC <em>List C</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model6.impl.RootImpl#getListD <em>List D</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

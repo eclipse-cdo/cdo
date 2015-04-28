@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getIntegerToStringMap <em>Integer To String Map</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getStringToStringMap <em>String To String Map</em>}</li>
@@ -34,7 +35,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectBothContainedMap <em>EObject To EObject Both Contained Map</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model2.MapHolder#getEObjectToEObjectValueContainedMap <em>EObject To EObject Value Contained Map</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder()
  * @model

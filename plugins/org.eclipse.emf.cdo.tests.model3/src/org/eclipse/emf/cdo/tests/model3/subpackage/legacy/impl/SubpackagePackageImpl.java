@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.model3.subpackage.legacy.SubpackagePackage;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -85,12 +86,13 @@ public class SubpackagePackageImpl extends EPackageImpl implements SubpackagePac
     isInited = true;
 
     // Initialize simple dependencies
+    EcorePackage.eINSTANCE.eClass();
     EtypesPackage.eINSTANCE.eClass();
 
     // Obtain or create and register interdependencies
     Model3PackageImpl theModel3Package = (Model3PackageImpl)(EPackage.Registry.INSTANCE
         .getEPackage(Model3Package.eNS_URI) instanceof Model3PackageImpl
-            ? EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI) : Model3Package.eINSTANCE);
+        ? EPackage.Registry.INSTANCE.getEPackage(Model3Package.eNS_URI) : Model3Package.eINSTANCE);
 
     // Create package meta-data objects
     theSubpackagePackage.createPackageContents();

@@ -727,7 +727,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
       if (object instanceof EObject)
       {
-        EObject eObject = (EObject)object;
+        EObject eObject = CDOUtil.getEObject((EObject)object);
 
         CDOElement element = CDOElement.getFor(eObject);
         if (element != null)

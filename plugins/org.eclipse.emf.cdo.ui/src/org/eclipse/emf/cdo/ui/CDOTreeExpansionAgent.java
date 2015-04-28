@@ -10,8 +10,10 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
@@ -44,6 +46,8 @@ public class CDOTreeExpansionAgent
 
   private final Set<CDOID> expandedIDs = new HashSet<CDOID>();
 
+  private final Set<CDOID> expandedWrappers = new HashSet<CDOID>();
+
   private final CDOView view;
 
   private final TreeViewer viewer;
@@ -65,11 +69,7 @@ public class CDOTreeExpansionAgent
         {
           for (Object element : viewer.getExpandedElements())
           {
-            CDOID id = getID(element);
-            if (id != null)
-            {
-              expandedIDs.add(id);
-            }
+            addExpandedElement(element);
           }
 
           view.addListener(listener);
@@ -87,26 +87,64 @@ public class CDOTreeExpansionAgent
       try
       {
         CDOObject object = view.getObject(id);
-        viewer.setExpandedState(object, true);
+        if (object != null)
+        {
+          EObject eObject = CDOUtil.getEObject(object);
+          viewer.setExpandedState(eObject, true);
+        }
       }
       catch (Exception ex)
       {
-        // Ignore
+        // Ignore.
+      }
+    }
+
+    for (CDOID id : expandedWrappers)
+    {
+      try
+      {
+        CDOObject object = view.getObject(id);
+        if (object != null)
+        {
+          CDOElement wrapper = CDOElement.getFor(object);
+          if (wrapper != null)
+          {
+            viewer.setExpandedState(wrapper, true);
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        // Ignore.
       }
     }
   }
 
   public void dispose()
   {
-    Tree tree = viewer.getTree();
-    if (!tree.isDisposed())
+    try
     {
-      tree.removeDisposeListener(listener);
-    }
+      final Tree tree = viewer.getTree();
+      if (!tree.isDisposed())
+      {
+        tree.getDisplay().syncExec(new Runnable()
+        {
+          public void run()
+          {
+            tree.removeDisposeListener(listener);
+          }
+        });
+      }
 
-    viewer.removeTreeListener(listener);
-    view.removeListener(listener);
-    expandedIDs.clear();
+      viewer.removeTreeListener(listener);
+      view.removeListener(listener);
+      expandedIDs.clear();
+      expandedWrappers.clear();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   private CDOID getID(Object element)
@@ -121,6 +159,50 @@ public class CDOTreeExpansionAgent
     }
 
     return null;
+  }
+
+  private void addExpandedElement(Object element)
+  {
+    if (element instanceof CDOElement)
+    {
+      CDOElement wrapper = (CDOElement)element;
+
+      CDOID id = getID(wrapper.getDelegate());
+      if (id != null)
+      {
+        expandedWrappers.add(id);
+      }
+    }
+    else
+    {
+      CDOID id = getID(element);
+      if (id != null)
+      {
+        expandedIDs.add(id);
+      }
+    }
+  }
+
+  private void removeExpandedElement(Object element)
+  {
+    if (element instanceof CDOElement)
+    {
+      CDOElement wrapper = (CDOElement)element;
+
+      CDOID id = getID(wrapper.getDelegate());
+      if (id != null)
+      {
+        expandedWrappers.remove(id);
+      }
+    }
+    else
+    {
+      CDOID id = getID(element);
+      if (id != null)
+      {
+        expandedIDs.remove(id);
+      }
+    }
   }
 
   /**
@@ -159,20 +241,14 @@ public class CDOTreeExpansionAgent
 
     public void treeExpanded(TreeExpansionEvent event)
     {
-      CDOID id = getID(event.getElement());
-      if (id != null)
-      {
-        expandedIDs.add(id);
-      }
+      Object element = event.getElement();
+      addExpandedElement(element);
     }
 
     public void treeCollapsed(TreeExpansionEvent event)
     {
-      CDOID id = getID(event.getElement());
-      if (id != null)
-      {
-        expandedIDs.remove(id);
-      }
+      Object element = event.getElement();
+      removeExpandedElement(element);
     }
 
     public void widgetDisposed(DisposeEvent e)

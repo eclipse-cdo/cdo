@@ -10,9 +10,9 @@
  */
 package org.eclipse.emf.cdo.dawn.tests;
 
-import org.eclipse.emf.cdo.dawn.resources.impl.DawnResourceFactoryImpl;
 import org.eclipse.emf.cdo.dawn.tests.common.GMFTest;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -45,7 +45,7 @@ public abstract class AbstractDawnTest extends AbstractCDOTest
   protected ResourceSet createResourceSet()
   {
     ResourceSet dawnResourceSet = new ResourceSetImpl();
-    dawnResourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("dawn", new DawnResourceFactoryImpl());
+    dawnResourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("dawn", new CDOResourceFactoryImpl());
     return dawnResourceSet;
   }
 
@@ -73,8 +73,7 @@ public abstract class AbstractDawnTest extends AbstractCDOTest
 
     Diagram notationalRoot = (Diagram)gmfResource.getContents().get(0);
 
-    ResourceSet dawnResourceSet = new ResourceSetImpl();
-    dawnResourceSet.getResourceFactoryRegistry().getProtocolToFactoryMap().put("dawn", new DawnResourceFactoryImpl());
+    ResourceSet dawnResourceSet = createResourceSet();
 
     CDOTransaction transaction = session.openTransaction(dawnResourceSet);
 

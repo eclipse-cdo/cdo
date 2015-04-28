@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.dawn.tests.common;
 
 import org.eclipse.emf.cdo.dawn.examples.acore.ACoreRoot;
 import org.eclipse.emf.cdo.dawn.examples.acore.AcorePackage;
-import org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnTest;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -43,9 +42,9 @@ public class TestFrameworkTest extends AbstractDawnTest
     CDOResource semanticResource = transaction.getResource("/simple.acore");
 
     assertInstanceOf(CDOResource.class, semanticResource);
-    DawnWrapperResource notationalResource = (DawnWrapperResource)resourceSet
+    CDOResource notationalResource = (CDOResource)resourceSet
         .getResource(URI.createURI("dawn://repo1/simple.acore_diagram"), true);// container.getNotationalResource();
-    assertInstanceOf(DawnWrapperResource.class, notationalResource);
+    assertInstanceOf(CDOResource.class, notationalResource);
     ACoreRoot acoreRoot = (ACoreRoot)semanticResource.getContents().get(0);
 
     assertEquals(3, acoreRoot.getClasses().size());

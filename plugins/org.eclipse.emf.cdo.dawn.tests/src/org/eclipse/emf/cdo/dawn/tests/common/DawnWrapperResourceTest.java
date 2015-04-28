@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.dawn.tests.common;
 
-import org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource;
 import org.eclipse.emf.cdo.dawn.tests.AbstractDawnTest;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.emf.common.util.URI;
@@ -37,7 +37,7 @@ public class DawnWrapperResourceTest extends AbstractDawnTest
 
     Resource resource = resourceSet.createResource(URI.createURI("dawn://repo1/default10.acore_diagram"));
 
-    assertInstanceOf(DawnWrapperResource.class, resource);
+    assertInstanceOf(CDOResource.class, resource);
 
     resource.save(Collections.EMPTY_MAP);
 

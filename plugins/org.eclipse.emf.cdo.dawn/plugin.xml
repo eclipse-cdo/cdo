@@ -17,14 +17,14 @@
    <extension
          point="org.eclipse.emf.ecore.extension_parser">
       <parser
-            class="org.eclipse.emf.cdo.dawn.resources.impl.DawnResourceFactoryImpl"
+            class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             type="org.eclipse.emf.cdo.dawn.dawnresourceparser">
       </parser>
    </extension>
    <extension
          point="org.eclipse.emf.ecore.protocol_parser">
       <parser
-            class="org.eclipse.emf.cdo.dawn.resources.impl.DawnResourceFactoryImpl"
+            class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             protocolName="dawn">
       </parser>
    </extension>
@@ -35,7 +35,7 @@
              name="Dawn">
        </category>
     </extension>
-     
+
    <!-- <extension point="org.eclipse.ui.popupMenus">
 	      <objectContribution
 	            adaptable="false"

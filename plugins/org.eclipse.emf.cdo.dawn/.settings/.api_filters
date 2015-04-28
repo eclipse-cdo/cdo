@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.dawn" version="2">
-    <resource path="src/org/eclipse/emf/cdo/dawn/resources/DawnResourceFactory.java" type="org.eclipse.emf.cdo.dawn.resources.DawnResourceFactory">
-        <filter id="571473929">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.dawn.resources.DawnResourceFactory">
+        <filter id="305324134">
             <message_arguments>
-                <message_argument value="CDOResourceFactory"/>
-                <message_argument value="DawnResourceFactory"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.resources.DawnResourceFactory"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn_2.0.300"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/dawn/resources/DawnWrapperResource.java" type="org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource">
-        <filter id="571473929">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource">
+        <filter id="305324134">
             <message_arguments>
-                <message_argument value="CDOResource"/>
-                <message_argument value="DawnWrapperResource"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.resources.DawnWrapperResource"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn_2.0.300"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/dawn/resources/impl/DawnResourceFactoryImpl.java" type="org.eclipse.emf.cdo.dawn.resources.impl.DawnResourceFactoryImpl">
-        <filter id="571473929">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.dawn.resources.impl.DawnResourceFactoryImpl">
+        <filter id="305324134">
             <message_arguments>
-                <message_argument value="CDOResourceFactoryImpl"/>
-                <message_argument value="DawnResourceFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.resources.impl.DawnResourceFactoryImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn_2.0.300"/>
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/dawn/resources/impl/DawnWrapperResourceImpl.java" type="org.eclipse.emf.cdo.dawn.resources.impl.DawnWrapperResourceImpl">
-        <filter id="571473929">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.dawn.resources.impl.DawnWrapperResourceImpl">
+        <filter id="305324134">
             <message_arguments>
-                <message_argument value="CDOResourceImpl"/>
-                <message_argument value="DawnWrapperResourceImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.resources.impl.DawnWrapperResourceImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn_2.0.300"/>
             </message_arguments>
         </filter>
     </resource>

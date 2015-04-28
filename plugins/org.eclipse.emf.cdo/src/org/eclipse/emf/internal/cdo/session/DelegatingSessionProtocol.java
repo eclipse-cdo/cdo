@@ -404,14 +404,20 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  @Deprecated
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
+  {
+    return getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
+  }
+
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.getLockStates(viewID, ids);
+        return delegate.getLockStates(viewID, ids, depth);
       }
       catch (Exception ex)
       {

@@ -770,9 +770,8 @@ public class CDOViewImpl extends AbstractCDOView
     if (loadOnDemand && (missing.size() > 0 || ids.isEmpty()))
     {
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, missing);
+      CDOLockState[] loadedLockStates = sessionProtocol.getLockStates(viewID, missing, CDOLockState.DEPTH_NONE);
       List<CDOLockState> newLockStateForCache = new ArrayList<CDOLockState>(loadedLockStates.length + missing.size());
-
       for (CDOLockState loadedLockState : loadedLockStates)
       {
         lockStates.add(loadedLockState);
@@ -1736,23 +1735,15 @@ public class CDOViewImpl extends AbstractCDOView
       if (event instanceof CDORevisionsLoadedEvent)
       {
         CDORevisionsLoadedEvent revisionsLoadedEvent = (CDORevisionsLoadedEvent)event;
-        List<CDORevision> loadedRevisions = new ArrayList<CDORevision>();
-        loadedRevisions.addAll(revisionsLoadedEvent.getPrimaryLoadedRevisions());
-        loadedRevisions.addAll(revisionsLoadedEvent.getAdditionalLoadedRevisions());
-
-        Map<CDOID, CDOObject> ids = updateCDOViewObjectsCache(loadedRevisions);
-        if (!ids.isEmpty())
-        {
-          updateCDOViewLockStatesCache(ids.keySet());
-        }
+        updateCDOViewObjectsCache(revisionsLoadedEvent);
       }
     }
 
-    private Map<CDOID, CDOObject> updateCDOViewObjectsCache(List<CDORevision> loadedRevisions)
+    private void updateCDOViewObjectsCache(CDORevisionsLoadedEvent revisionsLoadedEvent)
     {
-      Map<CDOID, CDOObject> ids = new HashMap<CDOID, CDOObject>();
+      Set<CDOID> ids = new HashSet<CDOID>();
       CDOLockStateLoadingPolicy lockStateLoadingPolicy = options().getLockStateLoadingPolicy();
-      for (CDORevision revision : loadedRevisions)
+      for (CDORevision revision : revisionsLoadedEvent.getPrimaryLoadedRevisions())
       {
         CDOID id = revision.getID();
         if (id != null && lockStateLoadingPolicy.loadLockState(id))
@@ -1765,28 +1756,58 @@ public class CDOViewImpl extends AbstractCDOView
           InternalCDOObject object = getObject(id, !isResourceNode);
           if (object != null)
           {
-            ids.put(id, object);
+            ids.add(id);
           }
         }
       }
 
-      return ids;
+      if (!ids.isEmpty())
+      {
+        // direct call the session protocol
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        CDOLockState[] lockStates = sessionProtocol.getLockStates(viewID, ids, revisionsLoadedEvent.getPrefetchDepth());
+
+        updateLockStatesForAllViews(lockStates);
+
+        // add missing lock states
+        List<CDOLockState> missingLockStates = new ArrayList<CDOLockState>();
+        for (CDOID id : ids)
+        {
+          InternalCDOObject obj = getObject(id, false);
+
+          if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
+          {
+            missingLockStates.add(CDOLockUtil.createLockState(id));
+          }
+        }
+
+        for (CDORevision revision : revisionsLoadedEvent.getAdditionalLoadedRevisions())
+        {
+          CDOID id = revision.getID();
+          if (id != null && lockStateLoadingPolicy.loadLockState(id))
+          {
+            boolean isResourceNode = revision.isResourceNode();
+            InternalCDOObject obj = getObject(id, !isResourceNode);
+            if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
+            {
+              missingLockStates.add(CDOLockUtil.createLockState(id));
+            }
+          }
+        }
+
+        updateLockStatesForAllViews(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]));
+      }
     }
 
-    private void updateCDOViewLockStatesCache(Set<CDOID> ids)
+    private void updateLockStatesForAllViews(CDOLockState[] lockStates)
     {
-      CDOLockState[] alreadyLoadedLockStates = getLockStates(ids, false);
-      if (alreadyLoadedLockStates == null || alreadyLoadedLockStates.length < ids.size()
-          || !options().isLockNotificationEnabled())
+      updateLockStates(lockStates);
+
+      for (CDOCommonView view : getSession().getViews())
       {
-        CDOLockState[] lockStates = getLockStates(ids);
-        updateLockStates(lockStates);
-        for (CDOCommonView view : session.getViews())
+        if (view != CDOViewImpl.this && view.getBranch() == getBranch())
         {
-          if (view != CDOViewImpl.this && view.getBranch() == getBranch())
-          {
-            updateLockStates(lockStates);
-          }
+          updateLockStates(lockStates);
         }
       }
     }

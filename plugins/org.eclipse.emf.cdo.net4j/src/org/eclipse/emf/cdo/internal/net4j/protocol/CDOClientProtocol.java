@@ -572,9 +572,15 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
+  @Deprecated
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
   {
-    return send(new LockStateRequest(this, viewID, ids));
+    return getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
+  }
+
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth)
+  {
+    return send(new LockStateRequest(this, viewID, ids, depth));
   }
 
   public void enableLockNotifications(int viewID, boolean on)

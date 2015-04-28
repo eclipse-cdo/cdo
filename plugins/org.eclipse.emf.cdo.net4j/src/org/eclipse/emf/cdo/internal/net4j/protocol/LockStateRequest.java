@@ -28,18 +28,31 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
 
   private Collection<CDOID> ids;
 
-  public LockStateRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> ids)
+  private int prefetchDepth;
+
+  public LockStateRequest(CDOClientProtocol protocol, int viewID, Collection<CDOID> ids, int prefetchDepth)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOCK_STATE);
     this.viewID = viewID;
     this.ids = ids;
+    this.prefetchDepth = prefetchDepth;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeInt(viewID);
-    out.writeInt(ids.size());
+
+    if (prefetchDepth == CDOLockState.DEPTH_NONE)
+    {
+      out.writeInt(ids.size());
+    }
+    else
+    {
+      out.writeInt(-ids.size());
+      out.writeInt(prefetchDepth);
+    }
+
     for (CDOID id : ids)
     {
       out.writeCDOID(id);

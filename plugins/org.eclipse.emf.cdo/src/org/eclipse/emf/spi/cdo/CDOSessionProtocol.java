@@ -287,8 +287,15 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   /**
    * @since 4.1
+   * @deprecated Not called anymore. Use {@link #getLockStates(int, Collection, int)} instead.
    */
+  @Deprecated
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids);
+
+  /**
+   * @since 4.4
+   */
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth);
 
   /**
    * @since 4.1

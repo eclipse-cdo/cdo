@@ -30,4 +30,6 @@ public interface CDORevisionsLoadedEvent extends IEvent
   public List<? extends CDORevision> getPrimaryLoadedRevisions();
 
   public List<? extends CDORevision> getAdditionalLoadedRevisions();
+
+  public int getPrefetchDepth();
 }

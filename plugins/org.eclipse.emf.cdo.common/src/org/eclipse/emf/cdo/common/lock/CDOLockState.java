@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.lock;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
@@ -36,6 +37,16 @@ import java.util.Set;
  */
 public interface CDOLockState
 {
+  /**
+   * @since 4.4
+   */
+  public static final int DEPTH_NONE = CDORevision.DEPTH_NONE;
+
+  /**
+   * @since 4.4
+   */
+  public static final int DEPTH_INFINITE = CDORevision.DEPTH_INFINITE;
+
   /**
    * Gets a unique identifier for the object that is locked; typically a {@link CDOID} or a {@link CDOIDAndBranch},
    * depending on whether branching support is enabled or not

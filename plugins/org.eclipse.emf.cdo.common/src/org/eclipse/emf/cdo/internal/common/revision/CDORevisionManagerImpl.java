@@ -324,7 +324,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           additionalLoadedRevisions = Collections.emptyList();
         }
 
-        fireEvent(new RevisionsLoadedEvent(this, primaryLoadedRevisions, additionalLoadedRevisions));
+        fireEvent(new RevisionsLoadedEvent(this, primaryLoadedRevisions, additionalLoadedRevisions, prefetchDepth));
       }
     }
 
@@ -428,7 +428,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
       List<InternalCDORevision> additionalRevisions = null;
 
       List<RevisionInfo> additionalRevisionInfos = //
-          revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
+      revisionLoader.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth);
 
       if (additionalRevisionInfos != null)
       {
@@ -605,12 +605,15 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     private List<? extends CDORevision> additionalLoadedRevisions;
 
+    private int prefetchDepth;
+
     public RevisionsLoadedEvent(CDORevisionManager revisionManager, List<? extends CDORevision> primaryLoadedRevisions,
-        List<? extends CDORevision> additionalLoadedRevisions)
+        List<? extends CDORevision> additionalLoadedRevisions, int prefetchDepth)
     {
       super(revisionManager);
       this.primaryLoadedRevisions = primaryLoadedRevisions;
       this.additionalLoadedRevisions = additionalLoadedRevisions;
+      this.prefetchDepth = prefetchDepth;
     }
 
     @Override
@@ -628,6 +631,10 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     {
       return additionalLoadedRevisions;
     }
-  }
 
+    public int getPrefetchDepth()
+    {
+      return prefetchDepth;
+    }
+  }
 }

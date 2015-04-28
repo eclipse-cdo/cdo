@@ -13,13 +13,18 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
+import org.eclipse.emf.cdo.ui.CDOTreeExpansionAgent;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -43,6 +48,7 @@ import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelP
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorDescriptor;
@@ -66,7 +72,31 @@ public final class CDOCheckoutState
 
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 
+  private final IListener checkoutManagerListener = new IListener()
+  {
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOCheckoutManager.CheckoutOpenEvent)
+      {
+        CDOCheckoutManager.CheckoutOpenEvent e = (CDOCheckoutManager.CheckoutOpenEvent)event;
+        if (e.getCheckout() == checkout)
+        {
+          if (e.isOpen())
+          {
+            initTreeExpansionAgent();
+          }
+          else
+          {
+            disposeTreeExpansionAgent();
+          }
+        }
+      }
+    }
+  };
+
   private final EventBroker eventBroker = new EventBroker();
+
+  private final CDOCheckoutStateManager stateManager;
 
   private final CDOCheckout checkout;
 
@@ -76,8 +106,11 @@ public final class CDOCheckoutState
 
   private final LabelProvider labelProvider;
 
+  private CDOTreeExpansionAgent treeExpansionAgent;
+
   CDOCheckoutState(CDOCheckoutStateManager stateManager, CDOCheckout checkout)
   {
+    this.stateManager = stateManager;
     this.checkout = checkout;
 
     adapterFactory = CDOEditor.createAdapterFactory(true);
@@ -90,6 +123,13 @@ public final class CDOCheckoutState
     ResourceManager resourceManager = stateManager.getResourceManager();
     labelProvider = new LabelProvider(adapterFactory, resourceManager);
     labelProvider.addListener(eventBroker);
+
+    if (checkout.isOpen())
+    {
+      initTreeExpansionAgent();
+    }
+
+    CDOExplorerUtil.getCheckoutManager().addListener(checkoutManagerListener);
   }
 
   public CDOCheckout getCheckout()
@@ -124,10 +164,28 @@ public final class CDOCheckoutState
 
   public void dispose()
   {
+    CDOExplorerUtil.getCheckoutManager().removeListener(checkoutManagerListener);
+    disposeTreeExpansionAgent();
+
     labelProvider.dispose();
     contentProvider.dispose();
     adapterFactory.dispose();
     eventBroker.dispose();
+  }
+
+  private void disposeTreeExpansionAgent()
+  {
+    if (treeExpansionAgent != null)
+    {
+      treeExpansionAgent.dispose();
+      treeExpansionAgent = null;
+    }
+  }
+
+  private void initTreeExpansionAgent()
+  {
+    TreeViewer viewer = stateManager.getMainContentProvider().getViewer();
+    treeExpansionAgent = new CDOTreeExpansionAgent(checkout.getView(), viewer);
   }
 
   /**

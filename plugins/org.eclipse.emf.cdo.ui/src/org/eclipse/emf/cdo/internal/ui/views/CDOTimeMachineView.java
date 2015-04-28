@@ -116,4 +116,10 @@ public class CDOTimeMachineView extends ViewPart implements ISelectionListener
 
     return null;
   }
+
+  // protected String formatTimeSliderLabel(long timeStamp)
+  // {
+  // CDOBranchPoint branchPoint = CDOBranchUtil.normalizeBranchPoint(view.getBranch(), timeStamp);
+  // return branchPoint.getBranch().getPathName() + " [" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
+  // }
 }

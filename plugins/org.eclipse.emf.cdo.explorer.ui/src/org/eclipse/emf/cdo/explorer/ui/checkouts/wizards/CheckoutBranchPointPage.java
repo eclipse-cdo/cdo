@@ -99,7 +99,9 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected void createUI(Composite parent)
   {
-    branchPointComposite = new ComposeBranchPointComposite(parent, true, null)
+    CDOBranchPoint branchPoint = getBranchPoint();
+
+    branchPointComposite = new ComposeBranchPointComposite(parent, true, branchPoint)
     {
       @Override
       protected void timeStampError(String message)

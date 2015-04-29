@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 import org.eclipse.emf.cdo.ui.CDOTreeExpansionAgent;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -76,16 +77,17 @@ public final class CDOCheckoutState
   {
     public void notifyEvent(IEvent event)
     {
-      if (event instanceof CDOCheckoutManager.CheckoutOpenEvent)
+      if (event instanceof CDOCheckoutManager.CheckoutStateEvent)
       {
-        CDOCheckoutManager.CheckoutOpenEvent e = (CDOCheckoutManager.CheckoutOpenEvent)event;
+        CDOCheckoutManager.CheckoutStateEvent e = (CDOCheckoutManager.CheckoutStateEvent)event;
         if (e.getCheckout() == checkout)
         {
-          if (e.isOpen())
+          CDOCheckout.State state = e.getNewState();
+          if (state == CDOCheckout.State.Open)
           {
             initTreeExpansionAgent();
           }
-          else
+          else if (state == CDOCheckout.State.Closed)
           {
             disposeTreeExpansionAgent();
           }
@@ -124,12 +126,26 @@ public final class CDOCheckoutState
     labelProvider = new LabelProvider(adapterFactory, resourceManager);
     labelProvider.addListener(eventBroker);
 
-    if (checkout.isOpen())
+    initTreeExpansionAgent();
+    CDOExplorerUtil.getCheckoutManager().addListener(checkoutManagerListener);
+  }
+
+  void inputChanged(TreeViewer newTreeViewer, Object oldInput, Object newInput)
+  {
+    contentProvider.inputChanged(newTreeViewer, oldInput, newInput);
+
+    if (treeExpansionAgent != null)
+    {
+      if (newTreeViewer != treeExpansionAgent.getViewer())
+      {
+        disposeTreeExpansionAgent();
+      }
+    }
+
+    if (newTreeViewer != null)
     {
       initTreeExpansionAgent();
     }
-
-    CDOExplorerUtil.getCheckoutManager().addListener(checkoutManagerListener);
   }
 
   public CDOCheckout getCheckout()
@@ -184,8 +200,18 @@ public final class CDOCheckoutState
 
   private void initTreeExpansionAgent()
   {
-    TreeViewer viewer = stateManager.getMainContentProvider().getViewer();
-    treeExpansionAgent = new CDOTreeExpansionAgent(checkout.getView(), viewer);
+    if (treeExpansionAgent == null)
+    {
+      CDOView view = checkout.getView();
+      if (view != null)
+      {
+        TreeViewer viewer = stateManager.getMainContentProvider().getViewer();
+        if (viewer != null)
+        {
+          treeExpansionAgent = new CDOTreeExpansionAgent(view, viewer);
+        }
+      }
+    }
   }
 
   /**

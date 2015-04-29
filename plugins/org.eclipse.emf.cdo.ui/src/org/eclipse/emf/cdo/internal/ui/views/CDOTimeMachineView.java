@@ -71,10 +71,7 @@ public class CDOTimeMachineView extends ViewPart implements ISelectionListener
   public void selectionChanged(IWorkbenchPart part, ISelection selection)
   {
     CDOView view = getView(selection);
-    if (view != null)
-    {
-      timeSlider.connect(view, null);
-    }
+    timeSlider.connect(view, null);
   }
 
   private CDOView getView(ISelection selection)

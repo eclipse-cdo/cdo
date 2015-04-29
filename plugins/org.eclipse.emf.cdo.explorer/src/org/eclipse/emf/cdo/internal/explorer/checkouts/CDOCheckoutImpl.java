@@ -45,6 +45,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.File;
@@ -360,58 +361,77 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public final void open()
   {
-    boolean opened = false;
+    CDOCheckoutManagerImpl manager = getManager();
+    State oldState = null;
+    State newState = null;
 
-    synchronized (this)
+    try
     {
-      if (!isOpen())
+      synchronized (this)
       {
-        try
+        oldState = state;
+
+        if (!isOpen())
         {
-          state = State.Opening;
-
-          prepareOpen();
-          CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
-
-          view = openView(session);
-          view.addListener(new LifecycleEventAdapter()
+          try
           {
-            @Override
-            protected void onDeactivated(ILifecycle lifecycle)
+            state = State.Opening;
+            if (manager != null)
             {
-              removeView(view);
-              close();
+              manager.fireCheckoutOpenEvent(this, null, oldState, state);
             }
-          });
 
-          configureView(view);
+            oldState = state;
 
-          rootObject = loadRootObject();
-          rootObject.eAdapters().add(this);
+            prepareOpen();
+            CDOSession session = ((CDORepositoryImpl)repository).openCheckout(this);
 
-          state = State.Open;
+            view = openView(session);
+            view.addListener(new LifecycleEventAdapter()
+            {
+              @Override
+              protected void onDeactivated(ILifecycle lifecycle)
+              {
+                removeView(view);
+                if (state != State.Closing)
+                {
+                  close();
+                }
+              }
+            });
+
+            configureView(view);
+
+            rootObject = loadRootObject();
+            rootObject.eAdapters().add(this);
+
+            state = State.Open;
+            newState = state;
+          }
+          catch (RuntimeException ex)
+          {
+            view = null;
+            rootObject = null;
+            state = State.Closed;
+            newState = state;
+            throw ex;
+          }
+          catch (Error ex)
+          {
+            view = null;
+            rootObject = null;
+            state = State.Closed;
+            newState = state;
+            throw ex;
+          }
         }
-        catch (RuntimeException ex)
-        {
-          state = State.Closed;
-          throw ex;
-        }
-        catch (Error ex)
-        {
-          state = State.Closed;
-          throw ex;
-        }
-
-        opened = true;
       }
     }
-
-    if (opened)
+    finally
     {
-      CDOCheckoutManagerImpl manager = getManager();
-      if (manager != null)
+      if (manager != null && oldState != null && newState != null && newState != oldState)
       {
-        manager.fireCheckoutOpenEvent(this, view, true);
+        manager.fireCheckoutOpenEvent(this, view, oldState, newState);
       }
     }
   }
@@ -467,7 +487,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       CDOCheckoutManagerImpl manager = getManager();
       if (manager != null)
       {
-        manager.fireCheckoutOpenEvent(this, oldView, false);
+        manager.fireCheckoutOpenEvent(this, oldView, State.Open, State.Closed);
       }
     }
   }
@@ -800,7 +820,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       rootID = view.getSession().getRepositoryInfo().getRootResourceID();
     }
 
-    return view.getObject(rootID);
+    InternalCDOObject cdoObject = (InternalCDOObject)view.getObject(rootID);
+    return cdoObject.cdoInternalInstance();
   }
 
   protected abstract CDOView openView(CDOSession session);

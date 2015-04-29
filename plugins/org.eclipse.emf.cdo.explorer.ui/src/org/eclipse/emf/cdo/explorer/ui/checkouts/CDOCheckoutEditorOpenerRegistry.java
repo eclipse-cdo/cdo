@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -23,6 +24,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -218,6 +220,12 @@ public class CDOCheckoutEditorOpenerRegistry extends Container<CDOCheckoutEditor
     {
       CDOCheckout checkout = CDOExplorerUtil.getCheckout(uri);
       final CDOView view = checkout.openView();
+
+      if (view instanceof CDOTransaction)
+      {
+        CDOTransaction transaction = (CDOTransaction)view;
+        transaction.options().addConflictResolver(new CDOMergingConflictResolver());
+      }
 
       final IEditorPart editor = openEditor(page, view, CDOURIUtil.extractResourcePath(uri));
       page.addPartListener(new IPartListener()

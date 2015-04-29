@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.runtime.IAdaptable;
 
@@ -45,7 +46,7 @@ public class CDOElement extends AdapterImpl implements IAdaptable
 
   public CDOElement(EObject delegate)
   {
-    this.delegate = delegate;
+    this.delegate = (EObject)getInstance(delegate);
   }
 
   public Object getDelegate()
@@ -70,6 +71,8 @@ public class CDOElement extends AdapterImpl implements IAdaptable
 
   public void addChild(Object child)
   {
+    child = getInstance(child);
+
     EList<Adapter> adapters = removeFrom(child);
     if (adapters != null)
     {
@@ -201,6 +204,17 @@ public class CDOElement extends AdapterImpl implements IAdaptable
     {
       removeSafe(adapters);
     }
+  }
+
+  private static Object getInstance(Object object)
+  {
+    if (object instanceof InternalCDOObject)
+    {
+      InternalCDOObject cdoObject = (InternalCDOObject)object;
+      object = cdoObject.cdoInternalInstance();
+    }
+
+    return object;
   }
 
   /**

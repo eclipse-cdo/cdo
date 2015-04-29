@@ -37,12 +37,14 @@ public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
   /**
    * @author Eike Stepper
    */
-  public interface CheckoutOpenEvent extends IEvent
+  public interface CheckoutStateEvent extends IEvent
   {
     public CDOCheckoutManager getSource();
 
     public CDOCheckout getCheckout();
 
-    public boolean isOpen();
+    public CDOCheckout.State getOldState();
+
+    public CDOCheckout.State getNewState();
   }
 }

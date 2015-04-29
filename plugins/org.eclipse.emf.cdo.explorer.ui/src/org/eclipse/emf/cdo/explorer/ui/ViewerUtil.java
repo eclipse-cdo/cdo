@@ -81,7 +81,7 @@ public final class ViewerUtil
 
   public static void refresh(final StructuredViewer viewer, final Object element, boolean async)
   {
-    refresh(viewer, element, true, false);
+    refresh(viewer, element, async, false);
   }
 
   public static void refresh(final StructuredViewer viewer, final Object element, boolean async,

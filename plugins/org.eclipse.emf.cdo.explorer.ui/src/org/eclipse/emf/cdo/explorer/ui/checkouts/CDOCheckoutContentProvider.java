@@ -21,9 +21,8 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout.State;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutOpenEvent;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider;
@@ -43,6 +42,7 @@ import org.eclipse.net4j.util.ui.views.ItemProvider;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
@@ -126,24 +126,36 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       {
         viewerRefresh.addNotification(null, true, true);
       }
-      else if (event instanceof CheckoutOpenEvent)
+      else if (event instanceof CheckoutStateEvent)
       {
-        CheckoutOpenEvent e = (CheckoutOpenEvent)event;
+        CheckoutStateEvent e = (CheckoutStateEvent)event;
         CDOCheckout checkout = e.getCheckout();
+        CDOCheckout.State state = e.getNewState();
 
-        if (!e.isOpen())
+        if (state == CDOCheckout.State.Opening)
         {
-          ViewerUtil.expand(viewer, checkout, false);
-        }
+          // Trigger hasChildren().
+          ViewerUtil.refresh(viewer, checkout);
 
-        viewerRefresh.addNotification(checkout, true, true);
-
-        if (e.isOpen())
-        {
+          // Trigger getChildren().
           ViewerUtil.expand(viewer, checkout, true);
         }
+        else
+        {
+          if (state == CDOCheckout.State.Closed)
+          {
+            ViewerUtil.expand(viewer, checkout, false);
+          }
 
-        updatePropertySheetPage(checkout);
+          viewerRefresh.addNotification(checkout, true, true);
+
+          if (state == CDOCheckout.State.Open)
+          {
+            ViewerUtil.expand(viewer, checkout, true);
+          }
+
+          updatePropertySheetPage(checkout);
+        }
       }
       else if (event instanceof CDOExplorerManager.ElementsChangedEvent)
       {
@@ -245,8 +257,6 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
   };
 
   private final CDOCheckoutStateManager stateManager = new CDOCheckoutStateManager(this);
-
-  private final Map<CDOCheckout, CDOCheckout> openingCheckouts = new ConcurrentHashMap<CDOCheckout, CDOCheckout>();
 
   private final Map<Object, Object[]> childrenCache = new ConcurrentHashMap<Object, Object[]>();
 
@@ -365,18 +375,20 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       if (object instanceof CDOCheckout)
       {
         CDOCheckout checkout = (CDOCheckout)object;
-        if (!checkout.isOpen())
+        switch (checkout.getState())
         {
-          if (openingCheckouts.get(checkout) != null)
-          {
-            // This must be the ViewerUtil.Pending element.
-            return true;
-          }
-
+        case Closing:
+        case Closed:
           return false;
-        }
 
-        object = checkout.getRootObject();
+        case Opening:
+          // This must be the ViewerUtil.Pending element.
+          return true;
+
+        case Open:
+          object = checkout.getRootObject();
+          break;
+        }
       }
 
       if (object instanceof CDOElement)
@@ -473,18 +485,20 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       if (object instanceof CDOCheckout)
       {
         checkout = (CDOCheckout)object;
-        if (!checkout.isOpen())
-        {
-          openingCheckout = openingCheckouts.remove(checkout);
-          if (openingCheckout == null)
-          {
-            return ViewerUtil.NO_CHILDREN;
-          }
-        }
 
-        if (openingCheckout == null)
+        switch (checkout.getState())
         {
+        case Closing:
+        case Closed:
+          return ViewerUtil.NO_CHILDREN;
+
+        case Opening:
+          openingCheckout = checkout;
+          break;
+
+        case Open:
           object = checkout.getRootObject();
+          break;
         }
       }
 
@@ -543,6 +557,21 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             synchronized (checkout.getView())
             {
               children = contentProvider.getChildren(finalObject);
+            }
+
+            // Adjust possible legacy adapters.
+            for (int i = 0; i < children.length; i++)
+            {
+              Object child = children[i];
+              if (child instanceof InternalCDOObject)
+              {
+                InternalCDOObject cdoObject = (InternalCDOObject)child;
+                InternalEObject instance = cdoObject.cdoInternalInstance();
+                if (instance != cdoObject)
+                {
+                  children[i] = instance;
+                }
+              }
             }
 
             children = CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(finalObject, children);
@@ -851,17 +880,27 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
         Object element = ssel.getFirstElement();
         if (element instanceof CDOCheckout)
         {
-          CDOCheckout checkout = (CDOCheckout)element;
-          if (checkout.getState() == State.Closed)
+          final CDOCheckout checkout = (CDOCheckout)element;
+          if (checkout.getState() == CDOCheckout.State.Closed)
           {
-            // Mark this checkout as loading.
-            openingCheckouts.put(checkout, checkout);
+            // Simulate CheckoutOpenHandler.
+            new Job("Open " + checkout.getLabel())
+            {
+              @Override
+              protected IStatus run(IProgressMonitor monitor)
+              {
+                try
+                {
+                  checkout.open();
+                }
+                catch (Exception ex)
+                {
+                  OM.LOG.error(ex);
+                }
 
-            // Trigger hasChildren().
-            ViewerUtil.refresh(viewer, checkout);
-
-            // Trigger getChildren().
-            ViewerUtil.expand(viewer, checkout, true);
+                return Status.OK_STATUS;
+              }
+            }.schedule();
           }
         }
         else if (element instanceof CDOResourceNode)

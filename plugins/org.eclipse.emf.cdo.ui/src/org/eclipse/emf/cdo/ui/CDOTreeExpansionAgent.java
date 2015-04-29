@@ -80,6 +80,16 @@ public class CDOTreeExpansionAgent
     }
   }
 
+  public final CDOView getView()
+  {
+    return view;
+  }
+
+  public final TreeViewer getViewer()
+  {
+    return viewer;
+  }
+
   public void setExpandedStates()
   {
     for (CDOID id : expandedIDs)

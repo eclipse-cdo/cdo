@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -100,7 +101,8 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     super.rollback();
     final DiagramDocumentEditor diagramDocumentEditor = getDiagramEditor(getEditor());
     TransactionalEditingDomain editingDomain = diagramDocumentEditor.getEditingDomain();
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
+    CommandStack commandStack = editingDomain.getCommandStack();
+    commandStack.execute(new RecordingCommand(editingDomain)
     {
       @Override
       public void doExecute()
@@ -134,7 +136,8 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
   {
     final DiagramDocumentEditor diagramDocumentEditor = getDiagramEditor(getEditor());
     TransactionalEditingDomain editingDomain = diagramDocumentEditor.getEditingDomain();
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
+    CommandStack commandStack = editingDomain.getCommandStack();
+    commandStack.execute(new RecordingCommand(editingDomain)
     {
       @Override
       public void doExecute()

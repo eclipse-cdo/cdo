@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.HashSet;
@@ -78,7 +79,21 @@ public class CDOChangeSubscriptionAdapter extends AdapterImpl
   {
     for (CDOObject notifier : notifiers)
     {
-      notifier.eAdapters().remove(this);
+      try
+      {
+        if (notifier != null)
+        {
+          EList<Adapter> adapters = notifier.eAdapters();
+          if (adapters != null)
+          {
+            adapters.remove(this);
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        //$FALL-THROUGH$
+      }
     }
 
     notifiers.clear();

@@ -22,7 +22,6 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.resource.LocalResourceManager;
 import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 
 import java.util.HashMap;
@@ -103,8 +102,7 @@ public final class CDOCheckoutStateManager
 
     for (CDOCheckoutState state : getStates())
     {
-      IContentProvider contentProvider = state.getContentProvider();
-      contentProvider.inputChanged(newTreeViewer, oldInput, newInput);
+      state.inputChanged(newTreeViewer, oldInput, newInput);
     }
   }
 

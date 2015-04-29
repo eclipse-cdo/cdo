@@ -64,18 +64,21 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout>implemen
     return newElement(properties);
   }
 
-  public void fireCheckoutOpenEvent(CDOCheckout checkout, CDOView view, boolean open)
+  public void fireCheckoutOpenEvent(CDOCheckout checkout, CDOView view, CDOCheckout.State oldState,
+      CDOCheckout.State newState)
   {
-    if (open)
+    switch (newState)
     {
+    case Open:
       viewMap.put(view, checkout);
-    }
-    else
-    {
+      break;
+
+    case Closed:
       viewMap.remove(view);
+      break;
     }
 
-    fireEvent(new CheckoutOpenEventImpl(this, checkout, open));
+    fireEvent(new CheckoutStateEventImpl(this, checkout, oldState, newState));
   }
 
   @Override
@@ -127,19 +130,23 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout>implemen
   /**
    * @author Eike Stepper
    */
-  private static final class CheckoutOpenEventImpl extends Event implements CheckoutOpenEvent
+  private static final class CheckoutStateEventImpl extends Event implements CheckoutStateEvent
   {
     private static final long serialVersionUID = 1L;
 
     private final CDOCheckout checkout;
 
-    private final boolean open;
+    private final CDOCheckout.State oldState;
 
-    public CheckoutOpenEventImpl(CDOCheckoutManager repositoryManager, CDOCheckout checkout, boolean open)
+    private final CDOCheckout.State newState;
+
+    public CheckoutStateEventImpl(CDOCheckoutManager repositoryManager, CDOCheckout checkout,
+        CDOCheckout.State oldState, CDOCheckout.State newState)
     {
       super(repositoryManager);
       this.checkout = checkout;
-      this.open = open;
+      this.oldState = oldState;
+      this.newState = newState;
     }
 
     @Override
@@ -153,9 +160,20 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout>implemen
       return checkout;
     }
 
-    public boolean isOpen()
+    public CDOCheckout.State getOldState()
     {
-      return open;
+      return oldState;
+    }
+
+    public CDOCheckout.State getNewState()
+    {
+      return newState;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "CDOCheckoutState[" + checkout + ", " + oldState + " --> " + newState + "]";
     }
   }
 }

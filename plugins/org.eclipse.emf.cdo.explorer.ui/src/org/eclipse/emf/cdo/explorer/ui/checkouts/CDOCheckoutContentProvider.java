@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.OpenWithActionProvider;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -57,18 +59,22 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IOpenListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.OpenEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -1033,6 +1039,65 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
       return false;
     }
+  }
+
+  public static TreeViewer createTreeViewer(Composite container)
+  {
+    // TODO This is not lazy, async:
+    CDOItemProvider parentItemProvider = new CDOItemProvider(null)
+    {
+      @Override
+      public boolean hasChildren(Object element)
+      {
+        return getChildren(element).length != 0;
+      }
+  
+      @Override
+      public Object[] getChildren(Object element)
+      {
+        List<Object> children = new ArrayList<Object>();
+        for (Object child : doGetChildren(element))
+        {
+          if (child instanceof CDOCheckout || child instanceof CDOResourceFolder)
+          {
+            children.add(child);
+          }
+        }
+  
+        return children.toArray();
+      }
+  
+      private Object[] doGetChildren(Object element)
+      {
+        if (element instanceof CDOCheckout)
+        {
+          CDOCheckout checkout = (CDOCheckout)element;
+          if (checkout.isOpen())
+          {
+            return checkout.getRootObject().eContents().toArray();
+          }
+        }
+  
+        return super.getChildren(element);
+      }
+  
+      @Override
+      public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
+      {
+        // Do nothing.
+      }
+    };
+  
+    CDOCheckoutContentProvider contentProvider = new CDOCheckoutContentProvider();
+    contentProvider.disposeWith(container);
+  
+    CDOCheckoutLabelProvider labelProvider = new CDOCheckoutLabelProvider(contentProvider);
+  
+    TreeViewer parentViewer = new TreeViewer(container, SWT.BORDER);
+    parentViewer.setContentProvider(parentItemProvider);
+    parentViewer.setLabelProvider(labelProvider);
+    parentViewer.setInput(CDOExplorerUtil.getCheckoutManager());
+    return parentViewer;
   }
 
   public static final CDOCheckoutContentProvider getInstance(String viewerID)

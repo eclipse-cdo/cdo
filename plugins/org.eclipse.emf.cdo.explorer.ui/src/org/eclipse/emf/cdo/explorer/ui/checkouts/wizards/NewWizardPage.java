@@ -12,12 +12,9 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelProvider;
-import org.eclipse.emf.cdo.ui.CDOItemProvider;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -27,10 +24,8 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -111,61 +106,8 @@ public class NewWizardPage extends WizardPage
     parentLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
     parentLabel.setText("Select the parent folder:");
 
-    // TODO This is not lazy, async:
-    CDOItemProvider parentItemProvider = new CDOItemProvider(null)
-    {
-      @Override
-      public boolean hasChildren(Object element)
-      {
-        return getChildren(element).length != 0;
-      }
-
-      @Override
-      public Object[] getChildren(Object element)
-      {
-        List<Object> children = new ArrayList<Object>();
-        for (Object child : doGetChildren(element))
-        {
-          if (child instanceof CDOCheckout || child instanceof CDOResourceFolder)
-          {
-            children.add(child);
-          }
-        }
-
-        return children.toArray();
-      }
-
-      private Object[] doGetChildren(Object element)
-      {
-        if (element instanceof CDOCheckout)
-        {
-          CDOCheckout checkout = (CDOCheckout)element;
-          if (checkout.isOpen())
-          {
-            return checkout.getRootObject().eContents().toArray();
-          }
-        }
-
-        return super.getChildren(element);
-      }
-
-      @Override
-      public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
-      {
-        // Do nothing.
-      }
-    };
-
-    CDOCheckoutContentProvider contentProvider = new CDOCheckoutContentProvider();
-    contentProvider.disposeWith(parentControl);
-
-    CDOCheckoutLabelProvider labelProvider = new CDOCheckoutLabelProvider(contentProvider);
-
-    parentViewer = new TreeViewer(container, SWT.BORDER);
+    parentViewer = CDOCheckoutContentProvider.createTreeViewer(container);
     parentViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
-    parentViewer.setContentProvider(parentItemProvider);
-    parentViewer.setLabelProvider(labelProvider);
-    parentViewer.setInput(CDOExplorerUtil.getCheckoutManager());
     parentViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
       public void selectionChanged(SelectionChangedEvent event)

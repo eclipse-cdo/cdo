@@ -29,9 +29,11 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider2;
  *
  * @author Eike Stepper
  * @since 4.4
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDORepository extends CDOExplorerElement, IContainer<CDOBranch>, IPasswordCredentialsProvider2,
-CDOSessionProvider, CDOViewOpener, CDOTransactionOpener
+    CDOSessionProvider, CDOViewOpener, CDOTransactionOpener
 {
   public static final String TYPE_REMOTE = "remote";
 

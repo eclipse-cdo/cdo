@@ -71,6 +71,8 @@ import java.util.Properties;
  */
 public class CDORepositoriesView extends ContainerView
 {
+  public static final String ID = "org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView";
+
   private final ActivityDetector activityDetector = new ActivityDetector();
 
   private CDORepositoryItemProvider itemProvider;

@@ -20,6 +20,8 @@ import java.util.Collection;
 /**
  * @author Eike Stepper
  * @since 4.4
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDOExplorerManager<T extends CDOExplorerElement> extends IContainer<T>, IAdaptable
 {

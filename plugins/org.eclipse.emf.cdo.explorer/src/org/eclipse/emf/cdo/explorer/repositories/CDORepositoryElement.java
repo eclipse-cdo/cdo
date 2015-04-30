@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
  *
  * @author Eike Stepper
  * @since 4.4
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface CDORepositoryElement extends CDOTimeProvider
 {

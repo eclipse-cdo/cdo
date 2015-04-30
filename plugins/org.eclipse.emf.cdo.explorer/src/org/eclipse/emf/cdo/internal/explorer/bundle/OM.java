@@ -38,9 +38,37 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
+  private static final String STATE_LOCATION = System.getProperty("org.eclipse.emf.cdo.explorer.stateLocation");
+
   private static CDORepositoryManagerImpl repositoryManager;
 
   private static CDOCheckoutManagerImpl checkoutManager;
+
+  public static void initializeManagers(File stateLocation)
+  {
+    disposeManagers();
+
+    repositoryManager = new CDORepositoryManagerImpl(new File(stateLocation, "rp"));
+    LifecycleUtil.activate(repositoryManager);
+
+    checkoutManager = new CDOCheckoutManagerImpl(new File(stateLocation, "co"));
+    LifecycleUtil.activate(checkoutManager);
+  }
+
+  public static void disposeManagers()
+  {
+    if (checkoutManager != null)
+    {
+      LifecycleUtil.deactivate(checkoutManager);
+      checkoutManager = null;
+    }
+
+    if (repositoryManager != null)
+    {
+      LifecycleUtil.deactivate(repositoryManager);
+      repositoryManager = null;
+    }
+  }
 
   public static CDORepositoryManagerImpl getRepositoryManager()
   {
@@ -66,24 +94,15 @@ public abstract class OM
     protected void doStart() throws Exception
     {
       super.doStart();
-      String stateLocation = BUNDLE.getStateLocation();
 
-      repositoryManager = new CDORepositoryManagerImpl(new File(stateLocation, "rp"));
-      LifecycleUtil.activate(repositoryManager);
-
-      checkoutManager = new CDOCheckoutManagerImpl(new File(stateLocation, "co"));
-      LifecycleUtil.activate(checkoutManager);
+      String stateLocation = STATE_LOCATION != null ? STATE_LOCATION : BUNDLE.getStateLocation();
+      initializeManagers(new File(stateLocation));
     }
 
     @Override
     protected void doStop() throws Exception
     {
-      LifecycleUtil.deactivate(checkoutManager);
-      checkoutManager = null;
-
-      LifecycleUtil.deactivate(repositoryManager);
-      repositoryManager = null;
-
+      disposeManagers();
       super.doStop();
     }
   }

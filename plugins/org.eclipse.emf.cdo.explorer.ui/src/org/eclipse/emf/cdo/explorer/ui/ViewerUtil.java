@@ -48,7 +48,12 @@ public final class ViewerUtil
           {
             if (!control.isDisposed())
             {
-              if (element instanceof Collection)
+              if (element instanceof Object[])
+              {
+                Object[] array = (Object[])element;
+                viewer.update(array, null);
+              }
+              else if (element instanceof Collection)
               {
                 Collection<?> collection = (Collection<?>)element;
                 viewer.update(collection.toArray(), null);

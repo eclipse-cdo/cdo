@@ -86,7 +86,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
           }
         }
 
-        getManager().fireElementsChangedEvent(objects);
+        getManager().fireElementsChangedEvent(objects.toArray());
       }
     }
   };

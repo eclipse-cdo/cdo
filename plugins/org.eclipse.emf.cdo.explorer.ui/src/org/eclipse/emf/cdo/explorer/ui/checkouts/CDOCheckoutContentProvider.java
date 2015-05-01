@@ -167,11 +167,11 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       {
         CDOExplorerManager.ElementsChangedEvent e = (CDOExplorerManager.ElementsChangedEvent)event;
         ElementsChangedEvent.StructuralImpact structuralImpact = e.getStructuralImpact();
-        Collection<Object> changedElements = e.getChangedElements();
+        Object[] changedElements = e.getChangedElements();
 
-        if (structuralImpact != ElementsChangedEvent.StructuralImpact.NONE && changedElements.size() == 1)
+        if (structuralImpact != ElementsChangedEvent.StructuralImpact.NONE && changedElements.length == 1)
         {
-          Object changedElement = changedElements.iterator().next();
+          Object changedElement = changedElements[0];
           if (changedElement instanceof CDOElement)
           {
             changedElement = ((CDOElement)changedElement).getParent();
@@ -1051,7 +1051,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
       {
         return getChildren(element).length != 0;
       }
-  
+
       @Override
       public Object[] getChildren(Object element)
       {
@@ -1063,10 +1063,10 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             children.add(child);
           }
         }
-  
+
         return children.toArray();
       }
-  
+
       private Object[] doGetChildren(Object element)
       {
         if (element instanceof CDOCheckout)
@@ -1077,22 +1077,22 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
             return checkout.getRootObject().eContents().toArray();
           }
         }
-  
+
         return super.getChildren(element);
       }
-  
+
       @Override
       public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
       {
         // Do nothing.
       }
     };
-  
+
     CDOCheckoutContentProvider contentProvider = new CDOCheckoutContentProvider();
     contentProvider.disposeWith(container);
-  
+
     CDOCheckoutLabelProvider labelProvider = new CDOCheckoutLabelProvider(contentProvider);
-  
+
     TreeViewer parentViewer = new TreeViewer(container, SWT.BORDER);
     parentViewer.setContentProvider(parentItemProvider);
     parentViewer.setLabelProvider(labelProvider);

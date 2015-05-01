@@ -33,6 +33,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -95,10 +96,10 @@ public class CDOEventHandler
       else if (event instanceof CDOViewLocksChangedEvent)
       {
         CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
-        List<CDOObject> objects = e.getAffectedObjects(view);
-        if (!objects.isEmpty())
+        EObject[] objects = e.getAffectedObjects(view);
+        if (objects.length != 0)
         {
-          updateElement(objects.toArray());
+          updateElement(objects);
         }
       }
       else if (event instanceof CDOTransactionFinishedEvent)

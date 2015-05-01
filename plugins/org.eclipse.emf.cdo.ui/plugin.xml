@@ -139,7 +139,7 @@
         <enablement>
            <or>
               <objectClass
-                    name="org.eclipse.emf.cdo.CDOObject">
+                    name="org.eclipse.emf.ecore.EObject">
               </objectClass>
               <objectClass
                     name="org.eclipse.emf.cdo.CDOElement">

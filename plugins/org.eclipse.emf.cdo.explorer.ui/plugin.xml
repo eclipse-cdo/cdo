@@ -400,12 +400,18 @@
             id="org.eclipse.emf.cdo.explorer.ui.repositories.decorator"
             label="CDO Repositories"
             state="true">
+         <description>
+            Decorates CDO repositories with their URI.
+         </description>
       </decorator>
       <decorator
             class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelDecorator"
             id="org.eclipse.emf.cdo.explorer.ui.checkouts.decorator"
             label="CDO Checkouts"
             state="true">
+         <description>
+            Decorates CDO checkouts with their branch point and offline state.
+         </description>
       </decorator>
   </extension>
 

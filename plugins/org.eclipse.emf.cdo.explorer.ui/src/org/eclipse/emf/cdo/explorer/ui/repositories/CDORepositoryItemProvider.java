@@ -38,7 +38,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +89,7 @@ public class CDORepositoryItemProvider extends ContainerItemProvider<IContainer<
         CDOExplorerManager.ElementsChangedEvent e = (CDOExplorerManager.ElementsChangedEvent)event;
 
         StructuredViewer viewer = getViewer();
-        Collection<Object> changedElements = e.getChangedElements();
+        Object[] changedElements = e.getChangedElements();
 
         ViewerUtil.update(viewer, changedElements);
         updatePropertySheetPage(changedElements);

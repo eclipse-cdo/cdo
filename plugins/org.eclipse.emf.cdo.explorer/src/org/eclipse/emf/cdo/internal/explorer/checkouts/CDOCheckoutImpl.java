@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -614,19 +613,13 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         if (event instanceof CDOViewLocksChangedEvent)
         {
           CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
-          List<CDOObject> objects = e.getAffectedObjects(view);
-          if (!objects.isEmpty())
+          EObject[] objects = e.getAffectedObjects(view);
+          if (objects.length != 0)
           {
-            List<Object> elements = new ArrayList<Object>();
-            for (CDOObject object : objects)
-            {
-              elements.add(object);
-            }
-
             CDOCheckoutManagerImpl manager = getManager();
             if (manager != null)
             {
-              manager.fireElementsChangedEvent(elements);
+              manager.fireElementsChangedEvent(objects);
             }
           }
         }

@@ -10,10 +10,12 @@
  */
 package org.eclipse.emf.cdo.internal.explorer;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.container.SetContainer;
@@ -21,10 +23,10 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.ecore.EObject;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -126,12 +128,33 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   public void fireElementChangedEvent(StructuralImpact structuralImpact, Object changedElement)
   {
-    fireEvent(new ElementsChangedImpl(this, structuralImpact, Collections.singleton(changedElement)));
+    if (changedElement instanceof CDOObject)
+    {
+      CDOObject cdoObject = (CDOObject)changedElement;
+      changedElement = CDOUtil.getEObject(cdoObject);
+    }
+
+    Object[] objects = { changedElement };
+    fireEvent(new ElementsChangedImpl(this, structuralImpact, objects));
   }
 
-  public void fireElementsChangedEvent(Collection<Object> changedElements)
+  public void fireElementsChangedEvent(Object[] objects)
   {
-    fireEvent(new ElementsChangedImpl(this, StructuralImpact.NONE, changedElements));
+    for (int i = 0; i < objects.length; i++)
+    {
+      Object object = objects[i];
+      if (object instanceof CDOObject)
+      {
+        CDOObject cdoObject = (CDOObject)object;
+        EObject instance = CDOUtil.getEObject(cdoObject);
+        if (instance != cdoObject)
+        {
+          objects[i] = instance;
+        }
+      }
+    }
+
+    fireEvent(new ElementsChangedImpl(this, StructuralImpact.NONE, objects));
   }
 
   public static Properties loadProperties(File folder, String fileName)
@@ -172,13 +195,12 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
     private final StructuralImpact structuralImpact;
 
-    private final Collection<Object> changedElements;
+    private final Object[] changedElements;
 
-    public ElementsChangedImpl(CDOExplorerManager<?> manager, StructuralImpact structuralImpact,
-        Collection<Object> changedElements)
+    public ElementsChangedImpl(CDOExplorerManager<?> manager, StructuralImpact structuralImpact, Object[] objects)
     {
       super(manager);
-      this.changedElements = changedElements;
+      this.changedElements = objects;
       this.structuralImpact = structuralImpact;
     }
 
@@ -193,7 +215,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
       return structuralImpact;
     }
 
-    public final Collection<Object> getChangedElements()
+    public final Object[] getChangedElements()
     {
       return changedElements;
     }

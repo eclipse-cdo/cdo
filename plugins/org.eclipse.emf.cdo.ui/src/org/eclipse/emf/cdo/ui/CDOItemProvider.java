@@ -79,6 +79,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.jface.action.IMenuManager;
@@ -1010,10 +1011,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       else if (event instanceof CDOViewLocksChangedEvent)
       {
         CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
-        List<CDOObject> objects = e.getAffectedObjects(e.getSource());
-        if (!objects.isEmpty())
+        EObject[] objects = e.getAffectedObjects(e.getSource());
+        if (objects.length != 0)
         {
-          updateLabels(objects.toArray());
+          updateLabels(objects);
         }
       }
     }

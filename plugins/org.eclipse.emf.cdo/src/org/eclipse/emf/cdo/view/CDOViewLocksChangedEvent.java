@@ -10,11 +10,10 @@
  */
 package org.eclipse.emf.cdo.view;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
 
-import java.util.List;
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * A {@link CDOViewEvent view event} fired when {@link CDOLockChangeInfo lock changes} are being received from a remote
@@ -37,5 +36,5 @@ public interface CDOViewLocksChangedEvent extends CDOViewEvent, CDOLockChangeInf
   /**
    * @since 4.4
    */
-  public List<CDOObject> getAffectedObjects(CDOView view);
+  public EObject[] getAffectedObjects(CDOView view);
 }

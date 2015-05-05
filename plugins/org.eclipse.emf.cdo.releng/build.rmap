@@ -98,7 +98,7 @@
 
 		<!-- GEF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/gef/updates/interim"/>
+			<rm:uri format="http://download.eclipse.org/tools/gef/updates/releases"/>
 		</rm:provider>
 
 		<!-- Graphiti -->

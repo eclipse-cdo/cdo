@@ -1256,6 +1256,12 @@ public class CDOViewImpl extends AbstractCDOView
     {
       synchronized (lockStates)
       {
+        if (options.lockStatePrefetcher != null)
+        {
+          options.lockStatePrefetcher.dispose();
+          options.lockStatePrefetcher = null;
+        }
+
         if (!lockStates.isEmpty())
         {
           List<CDOLockState> result = new ArrayList<CDOLockState>();

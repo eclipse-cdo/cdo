@@ -65,13 +65,6 @@ public class BasicDawnLockingHandler extends BasicDawnListener
       if (id != null)
       {
         CDOObject object = view.getObject(id);
-        int xxx;
-        // if (object.cdoWriteLock().isLocked())
-        // {
-        // throw new RuntimeException("Locally locked objects should not occur.");
-        // }
-        // else
-
         if (object.cdoWriteLock().isLockedByOthers())
         {
           changedObjects.put(object, DawnState.LOCKED_REMOTELY);

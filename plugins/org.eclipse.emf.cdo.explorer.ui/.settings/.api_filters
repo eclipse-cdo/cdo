@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.explorer.ui" version="2">
+    <resource path="src/org/eclipse/emf/cdo/explorer/ui/actions/CheckoutCommitInfoActionDelegate.java" type="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate">
+        <filter id="574664731">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate.doRun(IProgressMonitor)"/>
+                <message_argument value="CDORepositoryElement"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/explorer/ui/checkouts/actions/NewActionProvider.java" type="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.NewActionProvider">
         <filter id="574664731">
             <message_arguments>

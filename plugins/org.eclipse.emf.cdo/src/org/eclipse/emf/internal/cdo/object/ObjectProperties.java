@@ -323,6 +323,12 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
+        
+        CDOView view = cdoObject.cdoView();
+        if (view == null)
+        {
+          return false;
+        }
 
         CDOLock lock = cdoObject.cdoReadLock();
         if (lock == null)
@@ -341,6 +347,12 @@ public class ObjectProperties extends Properties<EObject>
       {
         CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
+        {
+          return false;
+        }
+        
+        CDOView view = cdoObject.cdoView();
+        if (view == null)
         {
           return false;
         }
@@ -387,6 +399,12 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
+        
+        CDOView view = cdoObject.cdoView();
+        if (view == null)
+        {
+          return false;
+        }
 
         CDOLock lock = cdoObject.cdoWriteLock();
         if (lock == null)
@@ -405,6 +423,12 @@ public class ObjectProperties extends Properties<EObject>
       {
         CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
+        {
+          return false;
+        }
+        
+        CDOView view = cdoObject.cdoView();
+        if (view == null)
         {
           return false;
         }
@@ -451,6 +475,12 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
+        
+        CDOView view = cdoObject.cdoView();
+        if (view == null)
+        {
+          return false;
+        }
 
         CDOLock lock = cdoObject.cdoWriteOption();
         if (lock == null)
@@ -469,6 +499,12 @@ public class ObjectProperties extends Properties<EObject>
       {
         CDOObject cdoObject = getCDOObject(object);
         if (cdoObject == null)
+        {
+          return false;
+        }
+        
+        CDOView view = cdoObject.cdoView();
+        if (view == null)
         {
           return false;
         }

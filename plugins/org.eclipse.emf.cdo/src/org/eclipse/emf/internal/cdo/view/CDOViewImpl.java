@@ -1751,18 +1751,22 @@ public class CDOViewImpl extends AbstractCDOView
       CDOLockStateLoadingPolicy lockStateLoadingPolicy = options().getLockStateLoadingPolicy();
       for (CDORevision revision : revisionsLoadedEvent.getPrimaryLoadedRevisions())
       {
-        CDOID id = revision.getID();
-        if (id != null && lockStateLoadingPolicy.loadLockState(id))
+        // Bug 466721 : Check null if it is a about a DetachedRevision
+        if (revision != null)
         {
-          // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource()
-          // can have created it but not yet registered in CDOView.
-          // - Don't ask others CDOResourceNode either as it will create some load revisions request
-          // in addition to mode without lock state prefetch
-          boolean isResourceNode = revision.isResourceNode();
-          InternalCDOObject object = getObject(id, !isResourceNode);
-          if (object != null)
+          CDOID id = revision.getID();
+          if (id != null && lockStateLoadingPolicy.loadLockState(id))
           {
-            ids.add(id);
+            // - Don't ask to create an object for CDOResource as the caller of ResourceSet.getResource()
+            // can have created it but not yet registered in CDOView.
+            // - Don't ask others CDOResourceNode either as it will create some load revisions request
+            // in addition to mode without lock state prefetch
+            boolean isResourceNode = revision.isResourceNode();
+            InternalCDOObject object = getObject(id, !isResourceNode);
+            if (object != null)
+            {
+              ids.add(id);
+            }
           }
         }
       }

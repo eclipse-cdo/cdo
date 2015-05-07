@@ -76,7 +76,15 @@ public class Bugzilla_421287_Test extends AbstractCDOTest
       CDOView view = session.openView();
 
       CloseableIterator<?> results = view.queryInstancesAsync(createDynamicEClass());
-      assertEquals(false, results.hasNext());
+
+      try
+      {
+        assertEquals(false, results.hasNext());
+      }
+      finally
+      {
+        results.close();
+      }
     }
   }
 

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -60,7 +61,13 @@ public class Bugzilla_449665_Test extends AbstractCDOTest
     company = (Company)resource2.getContents().get(0);
     CDOObject companyCDOObject = CDOUtil.getCDOObject(company);
     CDOLockState lockState = companyCDOObject.cdoLockState();
-    assertEquals(companyCDOObject.cdoID(), lockState.getLockedObject());
+    Object expectedLockedObject = companyCDOObject.cdoID();
+    if (session1.getRepositoryInfo().isSupportingBranches())
+    {
+      expectedLockedObject = CDOIDUtil.createIDAndBranch(companyCDOObject.cdoID(), transaction2.getBranch());
+    }
+
+    assertEquals(expectedLockedObject, lockState.getLockedObject());
     Assert.assertTrue(lockState.getReadLockOwners().isEmpty());
     assertNull(lockState.getWriteLockOwner());
     assertNull(lockState.getWriteOptionOwner());
@@ -86,7 +93,13 @@ public class Bugzilla_449665_Test extends AbstractCDOTest
     commitAndSync(transaction1, transaction2);
 
     CDOLockState lockState = resource2.cdoLockState();
-    assertEquals(resource2.cdoID(), lockState.getLockedObject());
+    Object expectedLockedObject = resource2.cdoID();
+    if (session1.getRepositoryInfo().isSupportingBranches())
+    {
+      expectedLockedObject = CDOIDUtil.createIDAndBranch(resource2.cdoID(), transaction2.getBranch());
+    }
+
+    assertEquals(expectedLockedObject, lockState.getLockedObject());
     Assert.assertTrue(lockState.getReadLockOwners().isEmpty());
     assertNull(lockState.getWriteLockOwner());
     assertNull(lockState.getWriteOptionOwner());
@@ -97,7 +110,6 @@ public class Bugzilla_449665_Test extends AbstractCDOTest
    */
   private static class EContentAdapterQueringCDOLockState extends EContentAdapter
   {
-
     @Override
     protected void addAdapter(Notifier notifier)
     {

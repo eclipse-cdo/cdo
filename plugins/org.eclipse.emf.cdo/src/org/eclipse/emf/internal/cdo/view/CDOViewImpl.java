@@ -748,6 +748,8 @@ public class CDOViewImpl extends AbstractCDOView
   {
     List<CDOID> missing = new LinkedList<CDOID>();
     List<CDOLockState> lockStates = new LinkedList<CDOLockState>();
+    List<CDOLockState> locksOnNewObjects = new ArrayList<CDOLockState>(ids.size());
+
     for (CDOID id : ids)
     {
       CDOLockState lockState = null;
@@ -760,6 +762,12 @@ public class CDOViewImpl extends AbstractCDOView
       if (lockState != null)
       {
         lockStates.add(lockState);
+      }
+      else if (loadOnDemand && obj != null && FSMUtil.isNew(obj))
+      {
+        CDOLockState defaultLockState = CDOLockUtil.createLockState(getLockTarget(obj));
+        locksOnNewObjects.add(defaultLockState);
+        lockStates.add(defaultLockState);
       }
       else
       {
@@ -776,6 +784,7 @@ public class CDOViewImpl extends AbstractCDOView
       {
         lockStates.add(loadedLockState);
         newLockStateForCache.add(loadedLockState);
+
         CDOID cdoID = CDOIDUtil.getCDOID(loadedLockState.getLockedObject());
         if (cdoID != null)
         {
@@ -785,7 +794,19 @@ public class CDOViewImpl extends AbstractCDOView
 
       for (CDOID missingLockStateForCDOID : missing)
       {
-        CDOLockState defaultLockState = CDOLockUtil.createLockState(missingLockStateForCDOID);
+        Object target;
+
+        InternalCDOObject obj = getObject(missingLockStateForCDOID, false);
+        if (obj != null)
+        {
+          target = getLockTarget(obj);
+        }
+        else
+        {
+          target = missingLockStateForCDOID;
+        }
+
+        CDOLockState defaultLockState = CDOLockUtil.createLockState(target);
         lockStates.add(defaultLockState);
         newLockStateForCache.add(defaultLockState);
       }
@@ -794,6 +815,9 @@ public class CDOViewImpl extends AbstractCDOView
       {
         updateLockStates(newLockStateForCache.toArray(new CDOLockState[newLockStateForCache.size()]));
       }
+
+      CDOLockState[] locksOnNewObjectsArray = locksOnNewObjects.toArray(new CDOLockState[locksOnNewObjects.size()]);
+      updateLockStates(locksOnNewObjectsArray);
     }
 
     return lockStates.toArray(new CDOLockState[lockStates.size()]);
@@ -1787,7 +1811,7 @@ public class CDOViewImpl extends AbstractCDOView
 
           if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
           {
-            missingLockStates.add(CDOLockUtil.createLockState(id));
+            missingLockStates.add(CDOLockUtil.createLockState(getLockTarget(obj)));
           }
         }
 
@@ -1800,7 +1824,7 @@ public class CDOViewImpl extends AbstractCDOView
             InternalCDOObject obj = getObject(id, !isResourceNode);
             if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
             {
-              missingLockStates.add(CDOLockUtil.createLockState(id));
+              missingLockStates.add(CDOLockUtil.createLockState(getLockTarget(obj)));
             }
           }
         }

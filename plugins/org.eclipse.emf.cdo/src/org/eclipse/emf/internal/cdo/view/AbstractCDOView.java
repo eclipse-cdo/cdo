@@ -1261,7 +1261,9 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     URI uri = CDOURIUtil.createResourceURI(this, path);
 
     // Bug 334995: Check if locally there is already a resource with the same URI
-    CDOResource resource1 = (CDOResource)getResourceSet().getResource(uri, false);
+    ResourceSet resourceSet = getResourceSet();
+    CDOResource resource1 = (CDOResource)resourceSet.getResource(uri, false);
+
     String oldName = null;
     if (resource1 != null && !isReadOnly())
     {
@@ -1273,7 +1275,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
 
     CDOResource resource2 = getResource(path, true);
-
     return resource2;
   }
 

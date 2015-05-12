@@ -12,8 +12,10 @@ package org.eclipse.emf.cdo.internal.explorer.checkouts;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -135,7 +137,23 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
         if (view == null)
         {
           ResourceSet resourceSet = getTarget();
-          view = checkout.openView(resourceSet);
+          CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
+          if (viewSet != null)
+          {
+            for (CDOView viewSetView : viewSet.getViews())
+            {
+              if (checkout == CDOExplorerUtil.getCheckout(viewSetView))
+              {
+                view = viewSetView;
+                break;
+              }
+            }
+          }
+
+          if (view == null)
+          {
+            view = checkout.openView(resourceSet);
+          }
 
           if (view != null)
           {

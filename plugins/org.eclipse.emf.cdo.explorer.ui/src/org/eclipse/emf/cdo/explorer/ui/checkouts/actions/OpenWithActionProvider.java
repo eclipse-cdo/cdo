@@ -150,9 +150,7 @@ public class OpenWithActionProvider extends CommonActionProvider
       if (resourceLeaf instanceof CDOResource)
       {
         CDOResource resource = (CDOResource)resourceLeaf;
-
         URI uri = resource.getURI();
-        uri = resource.getResourceSet().getURIConverter().normalize(uri);
 
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(cdoObject);
         if (checkout != null)
@@ -306,9 +304,7 @@ public class OpenWithActionProvider extends CommonActionProvider
     if (resourceLeaf instanceof CDOResource)
     {
       CDOResource resource = (CDOResource)resourceLeaf;
-
       URI uri = resource.getURI();
-      uri = resource.getResourceSet().getURIConverter().normalize(uri);
 
       CDOCheckout checkout = CDOExplorerUtil.getCheckout(cdoObject);
       if (checkout != null)

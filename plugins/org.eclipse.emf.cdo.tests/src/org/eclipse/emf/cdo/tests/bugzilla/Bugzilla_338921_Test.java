@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *
  * Contributors:
- *    Victor Roldan Betancort - initial API and implementation   
+ *    Victor Roldan Betancort - initial API and implementation
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * Cannot load resource on a previously cleared ResourceSet
  * <p>
  * See Bug 338921
- * 
+ *
  * @author Victor Roldan Betancort
  */
 public class Bugzilla_338921_Test extends AbstractCDOTest
@@ -52,7 +52,7 @@ public class Bugzilla_338921_Test extends AbstractCDOTest
     Resource resource2 = resourceSet.getResource(uri, true);
     assertNotNull(resource2);
     // forcing transition from PROXY to CLEAN. Revision is loaded
-    resource2.getURI();
+    resource2.getContents().size();
     assertClean((EObject)resource2, transaction);
 
   }
@@ -78,7 +78,7 @@ public class Bugzilla_338921_Test extends AbstractCDOTest
     Resource resource2 = resourceSet.getResource(uri, true);
     assertNotNull(resource2);
     // forcing transition from PROXY to CLEAN. Revision is loaded
-    resource2.getURI();
+    resource2.getContents().size();
     assertClean((EObject)resource2, transaction);
 
   }
@@ -132,7 +132,7 @@ public class Bugzilla_338921_Test extends AbstractCDOTest
     Resource resource3 = resourceSet.getResource(uri, true);
     assertNotNull(resource3);
     // forcing transition from PROXY to CLEAN. Revision is loaded
-    resource3.getURI();
+    resource3.getContents().size();
     assertClean((EObject)resource3, transaction);
 
   }
@@ -166,9 +166,9 @@ public class Bugzilla_338921_Test extends AbstractCDOTest
     assertNotNull(resource3);
     assertNotNull(resource4);
     // forcing transition from PROXY to CLEAN. Revision is loaded
-    resource3.getURI();
+    resource3.getContents().size();
     assertClean(resource3, transaction);
-    resource4.getURI();
+    resource4.getContents().size();
     assertClean(resource4, transaction);
   }
 

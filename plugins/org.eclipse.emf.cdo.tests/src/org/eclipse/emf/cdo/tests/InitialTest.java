@@ -288,22 +288,30 @@ public class InitialTest extends AbstractCDOTest
           resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());
-      assertEquals(CDOState.CLEAN, resource.cdoState());
       assertEquals(transaction, resource.cdoView());
+      assertEquals(CDOState.PROXY, resource.cdoState());
+      assertEquals(null, resource.cdoRevision());
+
+      assertEquals(1, resource.getContents().size()); // This loads the resource
+      assertEquals(CDOState.CLEAN, resource.cdoState());
       assertNotNull(resource.cdoRevision());
     }
 
     {
       CDOTransaction transaction = session.openTransaction();
-      CDOResource resource = (CDOResource)transaction.getResourceSet().getResource(
-          CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
+      CDOResource resource = (CDOResource)transaction.getResourceSet()
+          .getResource(CDOURIUtil.createResourceURI(transaction, getResourcePath("/test1")), true);
       assertNotNull(resource);
       assertEquals(URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + getResourcePath("/test1")),
           resource.getURI());
       assertEquals(transaction.getResourceSet(), resource.getResourceSet());
       assertEquals(1, transaction.getResourceSet().getResources().size());
-      assertEquals(CDOState.CLEAN, resource.cdoState());
       assertEquals(transaction, resource.cdoView());
+      assertEquals(CDOState.PROXY, resource.cdoState());
+      assertEquals(null, resource.cdoRevision());
+
+      assertEquals(1, resource.getContents().size()); // This loads the resource
+      assertEquals(CDOState.CLEAN, resource.cdoState());
       assertNotNull(resource.cdoRevision());
     }
   }
@@ -419,8 +427,12 @@ public class InitialTest extends AbstractCDOTest
     URI resourceURI = resource.getURI();
     assertEquals(uri, resourceURI);
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
-    assertEquals(CDOState.CLEAN, resource.cdoState());
     assertEquals(transaction, resource.cdoView());
+    assertEquals(CDOState.PROXY, resource.cdoState());
+    assertEquals(null, resource.cdoRevision());
+
+    assertEquals(1, resource.getContents().size()); // This loads the resource
+    assertEquals(CDOState.CLEAN, resource.cdoState());
     assertNotNull(resource.cdoRevision());
   }
 
@@ -459,8 +471,8 @@ public class InitialTest extends AbstractCDOTest
     OrderAddress orderAddress = getModel1Factory().createOrderAddress();
     resource.getContents().add(orderAddress);
 
-    assertEquals(getModel1Package().getAddress_City().getFeatureID(), getModel1Package().getOrderDetail_Price()
-        .getFeatureID());
+    assertEquals(getModel1Package().getAddress_City().getFeatureID(),
+        getModel1Package().getOrderDetail_Price().getFeatureID());
 
     orderAddress.setCity("ALLO");
     orderAddress.setPrice(2.8f);
@@ -483,8 +495,8 @@ public class InitialTest extends AbstractCDOTest
     session = openSession();
     transaction = session.openTransaction();
 
-    orderAddress = (OrderAddress)CDOUtil.getEObject(transaction.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(),
-        true));
+    orderAddress = (OrderAddress)CDOUtil
+        .getEObject(transaction.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(), true));
     assertEquals(2.8f, orderAddress.getPrice());
     assertEquals("ALLO", orderAddress.getCity());
 
@@ -495,8 +507,8 @@ public class InitialTest extends AbstractCDOTest
     session = openSession();
 
     transaction = session.openTransaction();
-    orderAddress = (OrderAddress)CDOUtil.getEObject(transaction.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(),
-        true));
+    orderAddress = (OrderAddress)CDOUtil
+        .getEObject(transaction.getObject(CDOUtil.getCDOObject(orderAddress).cdoID(), true));
 
     assertEquals(2.8f, orderAddress.getPrice());
     assertEquals("ALLO", orderAddress.getCity());

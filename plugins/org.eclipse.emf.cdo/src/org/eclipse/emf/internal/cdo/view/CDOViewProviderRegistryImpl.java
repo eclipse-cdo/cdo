@@ -81,6 +81,15 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
       return null;
     }
 
+    for (CDOViewProvider viewProvider : getViewProviders(uri))
+    {
+      CDOView view = viewProvider.getView(uri, resourceSet);
+      if (view != null)
+      {
+        return Pair.create(view, viewProvider);
+      }
+    }
+
     CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
     if (viewSet != null)
     {
@@ -96,15 +105,6 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
       catch (Exception ignore)
       {
         // Do nothing
-      }
-    }
-
-    for (CDOViewProvider viewProvider : getViewProviders(uri))
-    {
-      CDOView view = viewProvider.getView(uri, resourceSet);
-      if (view != null)
-      {
-        return Pair.create(view, viewProvider);
       }
     }
 

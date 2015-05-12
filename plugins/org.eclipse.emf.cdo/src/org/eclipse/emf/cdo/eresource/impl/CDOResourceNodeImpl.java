@@ -270,7 +270,10 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
    */
   public URI getURI()
   {
-    return CDOURIUtil.createResourceURI(cdoView(), getPath());
+    InternalCDOView view = cdoView();
+    URI uri = CDOURIUtil.createResourceURI(view, getPath());
+    uri = view.getResourceSet().getURIConverter().normalize(uri);
+    return uri;
   }
 
   /**
@@ -321,7 +324,14 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   public String toString()
   {
     String string = super.toString();
+    return toString(string);
+  }
 
+  /**
+   * @since 4.4
+   */
+  protected String toString(String string)
+  {
     InternalCDORevision revision = cdoRevision();
     if (revision != null)
     {
@@ -336,4 +346,5 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
     return string;
   }
+
 } // CDOResourceNodeImpl

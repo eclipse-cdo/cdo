@@ -305,7 +305,7 @@ public class ResourceTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
-    final URI uri = URI.createURI("cdo:/test1");
+    final URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
     assertActive(resource);
     assertNew(resource, transaction);
@@ -340,7 +340,7 @@ public class ResourceTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
-    final URI uri = URI.createURI("cdo:/folder/test1");
+    final URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/folder/test1");
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
     assertActive(resource);
     assertNew(resource, transaction);

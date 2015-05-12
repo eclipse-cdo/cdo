@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -325,14 +326,22 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
       return uri;
     }
 
-    if ((cdoID() == null || cdoView() == null || cdoView().isClosed()) && initialURI != null)
+    URI uri = doGetURI();
+    uri = normalizeURI(uri);
+    return uri;
+  }
+
+  private URI doGetURI()
+  {
+    InternalCDOView view = cdoView();
+    if (initialURI != null && (cdoID() == null || view == null || view.isClosed()))
     {
       return initialURI;
     }
 
     if (viewProvider != null)
     {
-      URI uri = viewProvider.getResourceURI(cdoView(), getPath());
+      URI uri = viewProvider.getResourceURI(view, getPath());
       if (uri != null)
       {
         return uri;
@@ -340,6 +349,45 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     }
 
     return super.getURI();
+  }
+
+  private URI normalizeURI(URI uri)
+  {
+    ResourceSet resourceSet = getResourceSet();
+    if (resourceSet == null)
+    {
+      InternalCDOView view = cdoView();
+      if (view != null)
+      {
+        resourceSet = view.getResourceSet();
+      }
+    }
+
+    if (resourceSet != null)
+    {
+      if (isRoot())
+      {
+        uri = URI.createURI(uri.toString() + "/");
+        uri = resourceSet.getURIConverter().normalize(uri);
+
+        String string = uri.toString();
+        if (string.endsWith("/"))
+        {
+          uri = URI.createURI(string.substring(0, string.length() - 1));
+        }
+      }
+      else
+      {
+        uri = resourceSet.getURIConverter().normalize(uri);
+      }
+    }
+
+    return uri;
+  }
+
+  private void cacheURI(URI uri)
+  {
+    this.uri = normalizeURI(uri);
   }
 
   /**
@@ -394,7 +442,27 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void setPath(String newPath)
   {
     super.setPath(newPath);
-    uri = CDOURIUtil.createResourceURI(cdoView(), newPath);
+    cacheURI(CDOURIUtil.createResourceURI(cdoView(), newPath));
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  public void setFolder(CDOResourceFolder newFolder)
+  {
+    super.setFolder(newFolder);
+    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  public void setName(String newName)
+  {
+    super.setName(newName);
+    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
   }
 
   @Override
@@ -1607,6 +1675,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
           }
 
           viewProvider = pair.getElement2();
+          cacheURI(uri);
         }
       }
     }
@@ -1663,81 +1732,26 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     if (eStructuralFeature == CDO_RESOURCE_CONTENTS)
     {
       return new ContentsCDOList(CDO_RESOURCE_CONTENTS);
-      // return new _ContentsCDOList<EObject>();
     }
 
     return super.createList(eStructuralFeature);
   }
 
-  // /**
-  // * A notifying list implementation for supporting {@link Resource#getContents}.
-  // */
-  // protected class _ContentsCDOList<E extends Object & EObject> extends ResourceContentsEList<E>
-  // {
-  // private static final long serialVersionUID = 1L;
-  //
-  // @Override
-  // public int getFeatureID()
-  // {
-  // return CDO_RESOURCE_CONTENTS.getFeatureID();
-  // }
-  //
-  // @Override
-  // protected CDOResourceImpl getResource()
-  // {
-  // return CDOResourceImpl.this;
-  // }
-  //
-  // @Override
-  // protected Notification setLoaded(boolean loaded)
-  // {
-  // return getResource().setLoaded(loaded);
-  // }
-  //
-  // @Override
-  // protected boolean isNotificationRequired()
-  // {
-  // return getResource().eNotificationRequired();
-  // }
-  //
-  // @Override
-  // public NotificationChain inverseAdd(E object, NotificationChain notifications)
-  // {
-  // if (FSMUtil.isTransient(getResource()))
-  // {
-  // InternalEObject eObject = (InternalEObject)object;
-  // return eObject.eSetResource(CDOResourceImpl.this, notifications);
-  // // return super.inverseAdd(object, notifications);
-  // }
-  //
-  // InternalCDOTransaction transaction = cdoView().toTransaction();
-  // InternalCDOObject cdoObject = FSMUtil.adapt(object, transaction);
-  // notifications = cdoObject.eSetResource(getResource(), notifications);
-  //
-  // // Attach here instead of in CDOObjectImpl.eSetResource because EMF does it also here
-  // if (FSMUtil.isTransient(cdoObject))
-  // {
-  // attached(cdoObject, transaction);
-  // }
-  //
-  // return notifications;
-  // }
-  //
-  // @Override
-  // public NotificationChain inverseRemove(E object, NotificationChain notifications)
-  // {
-  // if (FSMUtil.isTransient(getResource()))
-  // {
-  // InternalEObject eObject = (InternalEObject)object;
-  // return eObject.eSetResource(null, notifications);
-  // // return super.inverseRemove(object, notifications);
-  // }
-  //
-  // InternalEObject eObject = (InternalEObject)object;
-  // detached(eObject);
-  // return eObject.eSetResource(null, notifications);
-  // }
-  // }
+  @Override
+  public String toString(String string)
+  {
+    if (uri != null)
+    {
+      return string + "(\"" + uri + "\")";
+    }
+
+    if (initialURI != null)
+    {
+      return string + "(\"" + initialURI + "\")";
+    }
+
+    return super.toString(string);
+  }
 
   /* XML STUFF BEGIN */
 

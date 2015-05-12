@@ -639,7 +639,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       }
     });
 
-    URI from = URI.createURI("cdo://" + view.getSession().getRepositoryInfo().getName() + "/");
+    URI from = URI.createURI("cdo://" + view.getSession().getRepositoryInfo().getUUID() + "/");
     URI to = URI.createURI("cdo.checkout://" + getID() + "/" + repository.getID() + "/");
     view.getResourceSet().getURIConverter().getURIMap().put(from, to);
 

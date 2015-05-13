@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -23,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -121,6 +123,12 @@ public class CDOElement extends AdapterImpl implements IAdaptable
   public static EObject getParentOf(EObject eObject)
   {
     if (eObject == null)
+    {
+      return null;
+    }
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(eObject, false);
+    if (cdoObject != null && FSMUtil.isInvalid(cdoObject))
     {
       return null;
     }

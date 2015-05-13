@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -77,6 +78,22 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   public T getElement(String id)
   {
     return elementMap.get(id);
+  }
+
+  public T getElementByLabel(String label)
+  {
+    synchronized (this)
+    {
+      for (T element : getSet())
+      {
+        if (ObjectUtil.equals(element.getLabel(), label))
+        {
+          return element;
+        }
+      }
+    }
+
+    return null;
   }
 
   public T newElement(Properties properties)

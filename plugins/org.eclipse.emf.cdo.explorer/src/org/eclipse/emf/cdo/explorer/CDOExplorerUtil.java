@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer;
 
 import org.eclipse.emf.cdo.CDOElement;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
@@ -58,6 +59,12 @@ public final class CDOExplorerUtil
       return CDOCheckoutViewProvider.getCheckout(uri);
     }
 
+    if (object instanceof String)
+    {
+      String id = (String)object;
+      return getCheckoutManager().getCheckout(id);
+    }
+
     return walkUp(object, null);
   }
 
@@ -79,6 +86,23 @@ public final class CDOExplorerUtil
       }
 
       return CDOElement.getParentOf(eObject);
+    }
+
+    return null;
+  }
+
+  public static String getName(Object object)
+  {
+    if (object instanceof CDOCheckout)
+    {
+      CDOCheckout checkout = (CDOCheckout)object;
+      return checkout.getLabel();
+    }
+
+    if (object instanceof CDOResourceNode)
+    {
+      CDOResourceNode resourceNode = (CDOResourceNode)object;
+      return resourceNode.getName();
     }
 
     return null;

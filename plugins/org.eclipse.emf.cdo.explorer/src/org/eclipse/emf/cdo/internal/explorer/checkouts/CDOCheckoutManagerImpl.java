@@ -54,6 +54,11 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout>implemen
     return viewMap.get(view);
   }
 
+  public CDOCheckout getCheckoutByLabel(String label)
+  {
+    return getElementByLabel(label);
+  }
+
   public CDOCheckout[] getCheckouts()
   {
     return getElements();

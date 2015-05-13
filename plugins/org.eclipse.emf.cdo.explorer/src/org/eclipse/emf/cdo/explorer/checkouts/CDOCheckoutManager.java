@@ -32,6 +32,8 @@ public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
 
   public CDOCheckout getCheckout(CDOView view);
 
+  public CDOCheckout getCheckoutByLabel(String label);
+
   public CDOCheckout[] getCheckouts();
 
   public CDOCheckout addCheckout(Properties properties);

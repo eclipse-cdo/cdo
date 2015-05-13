@@ -240,16 +240,19 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
           }
 
           signal = provideSignalReactor(signalID);
-          signal.setCorrelationID(-correlationID);
-          signal.setBufferInputStream(new SignalInputStream(getTimeout()));
-          if (signal instanceof IndicationWithResponse)
+          if (signal != null)
           {
-            signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
-          }
+            signal.setCorrelationID(-correlationID);
+            signal.setBufferInputStream(new SignalInputStream(getTimeout()));
+            if (signal instanceof IndicationWithResponse)
+            {
+              signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
+            }
 
-          signals.put(-correlationID, signal);
-          getExecutorService().execute(signal);
-          newSignalScheduled = true;
+            signals.put(-correlationID, signal);
+            getExecutorService().execute(signal);
+            newSignalScheduled = true;
+          }
         }
       }
       else
@@ -341,7 +344,11 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
 
   protected final SignalReactor provideSignalReactor(short signalID)
   {
-    checkActive();
+    if (!isActive())
+    {
+      return null;
+    }
+
     switch (signalID)
     {
     case SIGNAL_REMOTE_EXCEPTION:

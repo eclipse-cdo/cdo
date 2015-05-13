@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cs:cspecExtension xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0">
+
+	<cs:dependencies>
+		<cs:dependency name="org.apache.log4j" componentType="osgi.bundle"/>
+	</cs:dependencies>
+
+</cs:cspecExtension>

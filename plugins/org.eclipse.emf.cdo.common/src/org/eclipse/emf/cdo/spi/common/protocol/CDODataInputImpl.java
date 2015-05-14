@@ -50,6 +50,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.util.CDOClassNotFoundException;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
@@ -170,7 +171,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     EClassifier classifier = classifierRef.resolve(getPackageRegistry());
     if (classifier == null)
     {
-      throw new IOException("Unable to resolve " + classifierRef);
+      throw new CDOClassNotFoundException(classifierRef.getPackageURI(), classifierRef.getClassifierName());
     }
 
     return classifier;

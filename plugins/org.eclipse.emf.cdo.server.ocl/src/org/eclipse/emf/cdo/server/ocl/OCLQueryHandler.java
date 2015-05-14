@@ -560,12 +560,9 @@ public class OCLQueryHandler implements IQueryHandler
       {
         for (CDOPackageInfo packageInfo : packageUnit.getPackageInfos())
         {
-          if (!packageUnit.isSystem())
+          for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
           {
-            for (EClassifier classifier : packageInfo.getEPackage().getEClassifiers())
-            {
-              return classifier;
-            }
+            return classifier;
           }
         }
       }

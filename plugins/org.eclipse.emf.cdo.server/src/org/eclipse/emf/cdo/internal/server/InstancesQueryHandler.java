@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
 
@@ -38,22 +39,24 @@ public class InstancesQueryHandler implements IQueryHandler
   public void executeQuery(CDOQueryInfo info, IQueryContext context)
   {
     EClass type = (EClass)info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_TYPE);
-    executeQuery(type, context);
-
-    boolean exact = Boolean.TRUE.equals(info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_EXACT));
-    if (!exact)
+    if (type != null)
     {
-      List<EClass> subTypes = context.getView().getRepository().getPackageRegistry().getSubTypes().get(type);
-      if (subTypes != null && !subTypes.isEmpty())
-      {
-        for (EClass subType : subTypes)
-        {
-          if (context.getResultCount() == 0)
-          {
-            break;
-          }
+      executeQuery(type, context);
 
-          executeQuery(subType, context);
+      if (!Boolean.TRUE.equals(info.getParameters().get(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_EXACT)))
+      {
+        List<EClass> subTypes = context.getView().getRepository().getPackageRegistry().getSubTypes().get(type);
+        if (subTypes != null && !subTypes.isEmpty())
+        {
+          for (EClass subType : subTypes)
+          {
+            if (context.getResultCount() == 0)
+            {
+              break;
+            }
+
+            executeQuery(subType, context);
+          }
         }
       }
     }
@@ -74,6 +77,11 @@ public class InstancesQueryHandler implements IQueryHandler
     {
       public boolean handleRevision(CDORevision revision)
       {
+        if (revision instanceof DetachedCDORevision)
+        {
+          return true;
+        }
+
         return context.addResult(revision);
       }
     });

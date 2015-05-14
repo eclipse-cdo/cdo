@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.common.util.CDOClassNotFoundException;
+import org.eclipse.emf.cdo.common.util.CDOPackageNotFoundException;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -50,7 +52,20 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
   {
     queryLanguage = in.readString();
     queryString = in.readString();
-    context = in.readCDORevisionOrPrimitiveOrClassifier();
+
+    try
+    {
+      context = in.readCDORevisionOrPrimitiveOrClassifier();
+    }
+    catch (CDOPackageNotFoundException e)
+    {
+      //$FALL-THROUGH$
+    }
+    catch (CDOClassNotFoundException e)
+    {
+      //$FALL-THROUGH$
+    }
+    
     maxResults = in.readInt();
 
     if (in.readBoolean())
@@ -62,8 +77,19 @@ public class CDOQueryInfoImpl implements CDOQueryInfo
     for (int i = 0; i < size; i++)
     {
       String key = in.readString();
-      Object object = in.readCDORevisionOrPrimitiveOrClassifier();
-      parameters.put(key, object);
+      try
+      {
+        Object object = in.readCDORevisionOrPrimitiveOrClassifier();
+        parameters.put(key, object);
+      }
+      catch (CDOPackageNotFoundException e)
+      {
+        //$FALL-THROUGH$
+      }
+      catch (CDOClassNotFoundException e)
+      {
+        //$FALL-THROUGH$
+      }
     }
   }
 

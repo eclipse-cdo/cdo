@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.common.util.CDOPackageNotFoundException;
 import org.eclipse.emf.cdo.internal.common.messages.Messages;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -113,7 +114,7 @@ public final class CDOClassifierRef implements Serializable
     EPackage ePackage = packageRegistry.getEPackage(packageURI);
     if (ePackage == null)
     {
-      throw new IllegalStateException(MessageFormat.format(Messages.getString("CDOClassifierRef.0"), packageURI)); //$NON-NLS-1$
+      throw new CDOPackageNotFoundException(packageURI);
     }
 
     return ePackage.getEClassifier(classifierName);

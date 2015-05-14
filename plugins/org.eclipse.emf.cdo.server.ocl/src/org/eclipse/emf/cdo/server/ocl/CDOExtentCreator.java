@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -170,7 +171,8 @@ public class CDOExtentCreator implements OCLExtentCreator
   {
     if (!eClass.isAbstract() && !eClass.isInterface())
     {
-      accessor.handleRevisions(eClass, branch, timeStamp, false, revisionHandler);
+      InternalRepository repository = (InternalRepository)accessor.getStore().getRepository();
+      repository.handleRevisions(eClass, branch, false, timeStamp, false, revisionHandler);
     }
   }
 

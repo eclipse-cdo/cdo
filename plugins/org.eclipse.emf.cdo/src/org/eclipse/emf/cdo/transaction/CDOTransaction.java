@@ -271,6 +271,22 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public void removeConflictResolver(CDOConflictResolver resolver);
 
     /**
+     * Get the {@link CDOStaleReferenceCleaner} to be used to clean stale references when receiving
+     * remote changes on invalidation.
+     *
+     * @since 4.4
+     */
+    public CDOStaleReferenceCleaner getStaleReferenceCleaner();
+
+    /**
+     * Set the {@link CDOStaleReferenceCleaner} to be used to clean stale references when receiving
+     * remote changes on invalidation.
+     *
+     * @since 4.4
+     */
+    public void setStaleReferenceCleaner(CDOStaleReferenceCleaner staleReferenceCleaner);
+
+    /**
      * Returns true if locks in this view will be removes when {@link CDOTransaction#commit()} or
      * {@link CDOTransaction#rollback()} is called.
      * <p>
@@ -310,6 +326,19 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface ConflictResolversEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
+     * {@link Options#setStaleReferenceCleaner(CDOStaleReferenceCleaner) stale reference cleaner} option has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.4
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface StaleReferenceCleanerEvent extends IOptionsEvent
     {
     }
 

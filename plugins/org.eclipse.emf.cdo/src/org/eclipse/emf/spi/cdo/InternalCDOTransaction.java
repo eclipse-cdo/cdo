@@ -129,6 +129,11 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void setConflict(InternalCDOObject object);
 
   /**
+   * @since 4.4
+   */
+  public void removeConflict(InternalCDOObject object);
+
+  /**
    * @param source
    *          May be <code>null</code> if changeSetData does not result from a
    *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in

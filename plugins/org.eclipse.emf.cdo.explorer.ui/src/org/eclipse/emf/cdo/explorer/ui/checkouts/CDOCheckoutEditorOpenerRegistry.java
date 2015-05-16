@@ -13,10 +13,13 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.InteractiveConflictHandlerSelector;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -24,7 +27,6 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -50,6 +52,7 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
+@SuppressWarnings("restriction")
 public class CDOCheckoutEditorOpenerRegistry extends Container<CDOCheckoutEditorOpener>
 {
   public static final CDOCheckoutEditorOpenerRegistry INSTANCE = new CDOCheckoutEditorOpenerRegistry();
@@ -223,8 +226,11 @@ public class CDOCheckoutEditorOpenerRegistry extends Container<CDOCheckoutEditor
 
       if (view instanceof CDOTransaction)
       {
+        CDOHandlingConflictResolver conflictResolver = new CDOHandlingConflictResolver();
+        conflictResolver.setConflictHandlerSelector(new InteractiveConflictHandlerSelector());
+
         CDOTransaction transaction = (CDOTransaction)view;
-        transaction.options().addConflictResolver(new CDOMergingConflictResolver());
+        transaction.options().addConflictResolver(conflictResolver);
       }
 
       final IEditorPart editor = openEditor(page, view, CDOURIUtil.extractResourcePath(uri));

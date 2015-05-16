@@ -11,14 +11,18 @@
 package org.eclipse.emf.cdo.ui.compare;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
@@ -31,7 +35,11 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.Comparison;
+import org.eclipse.emf.compare.Diff;
+import org.eclipse.emf.compare.DifferenceState;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
@@ -40,6 +48,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.compare.CompareConfiguration;
@@ -55,6 +65,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Static methods to open an EMF Compare dialog.
@@ -65,6 +76,8 @@ import java.util.List;
 public class CDOCompareEditorUtil
 {
   private static final ThreadLocal<Boolean> ACTIVATE_EDITOR = new ThreadLocal<Boolean>();
+
+  private static final ThreadLocal<Boolean> SUPPRESS_COMMIT = new ThreadLocal<Boolean>();
 
   private static final ThreadLocal<List<Runnable>> DISPOSE_RUNNABLES = new ThreadLocal<List<Runnable>>();
 
@@ -236,7 +249,8 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
+  public static boolean openDialog(CDOView leftView, final CDOView rightView, CDOView[] originView,
+      CDOViewOpener viewOpener)
   {
     final Input input = createComparisonInput(leftView, rightView, originView, viewOpener);
 
@@ -270,7 +284,29 @@ public class CDOCompareEditorUtil
     }
     else
     {
-      CompareUI.openCompareDialog(input);
+      final EList<Diff> differences = new BasicEList<Diff>();
+
+      UIUtil.getDisplay().syncExec(new Runnable()
+      {
+        public void run()
+        {
+          CompareUI.openCompareDialog(input);
+
+          if (rightView instanceof InternalCDOTransaction)
+          {
+            Comparison comparison = input.getComparison();
+            differences.addAll(comparison.getDifferences());
+          }
+        }
+      });
+
+      if (!differences.isEmpty() && rightView instanceof InternalCDOTransaction)
+      {
+        if (!handleMerges((InternalCDOTransaction)rightView, differences))
+        {
+          return false;
+        }
+      }
     }
 
     return input.isOK();
@@ -347,6 +383,29 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
+  public static boolean isSuppressCommit()
+  {
+    return Boolean.TRUE.equals(SUPPRESS_COMMIT.get());
+  }
+
+  /**
+   * @since 4.3
+   */
+  public static void setSuppressCommit(boolean suppressCommit)
+  {
+    if (suppressCommit)
+    {
+      SUPPRESS_COMMIT.set(true);
+    }
+    else
+    {
+      SUPPRESS_COMMIT.remove();
+    }
+  }
+
+  /**
+   * @since 4.3
+   */
   public static void addDisposeRunnables(Runnable... disposeRunnables)
   {
     List<Runnable> list = DISPOSE_RUNNABLES.get();
@@ -384,6 +443,47 @@ public class CDOCompareEditorUtil
     }
   }
 
+  private static boolean handleMerges(InternalCDOTransaction transaction, EList<Diff> differences)
+  {
+    Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
+    Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas2();
+
+    boolean unmergedConflicts = false;
+
+    for (Diff diff : differences)
+    {
+      if (diff.getState() != DifferenceState.MERGED)
+      {
+        unmergedConflicts = true;
+      }
+      else
+      {
+        Match match = diff.getMatch();
+        InternalCDOObject left = (InternalCDOObject)CDOUtil.getCDOObject(match.getLeft());
+        InternalCDOObject right = (InternalCDOObject)CDOUtil.getCDOObject(match.getRight());
+
+        InternalCDORevision leftRevision = left.cdoRevision();
+        cleanRevisions.put(right, leftRevision);
+        int remoteVersion = leftRevision.getVersion();
+
+        InternalCDORevision rightRevision = right.cdoRevision();
+        rightRevision.setBranchPoint(leftRevision);
+        rightRevision.setVersion(remoteVersion);
+
+        InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(rightRevision.getID());
+        if (revisionDelta != null)
+        {
+          revisionDelta.setVersion(remoteVersion);
+        }
+
+        transaction.removeConflict(right);
+        right.cdoInternalSetState(CDOState.DIRTY);
+      }
+    }
+
+    return !unmergedConflicts;
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -400,6 +500,8 @@ public class CDOCompareEditorUtil
 
     private boolean ok;
 
+    private boolean suppressCommit;
+
     private Input(CDOView targetView, CompareConfiguration configuration, Comparison comparison,
         ICompareEditingDomain editingDomain, AdapterFactory adapterFactory)
     {
@@ -407,6 +509,9 @@ public class CDOCompareEditorUtil
           comparison, editingDomain, adapterFactory);
       this.targetView = targetView;
       this.comparison = comparison;
+
+      suppressCommit = isSuppressCommit();
+      SUPPRESS_COMMIT.remove();
     }
 
     private void dispose()
@@ -420,6 +525,11 @@ public class CDOCompareEditorUtil
 
       runDisposeRunnables(disposeRunnables);
       disposeRunnables = null;
+    }
+
+    public final Comparison getComparison()
+    {
+      return comparison;
     }
 
     @Override
@@ -460,8 +570,11 @@ public class CDOCompareEditorUtil
 
           try
           {
-            transaction.commit(monitor);
-            setDirty(false);
+            if (!suppressCommit)
+            {
+              transaction.commit(monitor);
+              setDirty(false);
+            }
           }
           catch (Exception ex)
           {

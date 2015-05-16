@@ -13,6 +13,7 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -30,9 +31,11 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -57,6 +60,10 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
   private CDOMerger merger;
+
+  private long lastNonConflictTimeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+
+  private boolean conflict;
 
   public CDOMergingConflictResolver(CDOMerger merger)
   {
@@ -113,6 +120,22 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     return merger;
   }
 
+  /**
+   * @since 4.4
+   */
+  public long getLastNonConflictTimeStamp()
+  {
+    return lastNonConflictTimeStamp;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public boolean isConflict()
+  {
+    return conflict;
+  }
+
   public void resolveConflicts(Set<CDOObject> conflicts)
   {
     CDOChangeSet remoteChangeSet = getRemoteChangeSet();
@@ -123,7 +146,10 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     }
   }
 
-  private void resolveConflicts(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet)
+  /**
+   * @since 4.4
+   */
+  protected void resolveConflicts(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet)
   {
     CDOChangeSet localChangeSet = getLocalChangeSet();
     CDOChangeSetData result;
@@ -131,13 +157,60 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     try
     {
       result = merger.merge(localChangeSet, remoteChangeSet);
+
+      if (!conflict)
+      {
+        lastNonConflictTimeStamp = getRemoteTimeStamp();
+      }
     }
     catch (ConflictException ex)
     {
-      return;
+      result = handleConflict(ex.getResult());
+      if (result == null)
+      {
+        conflict = true;
+        return;
+      }
     }
 
     updateTransactionWithResult(conflicts, remoteChangeSet, result);
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected CDOChangeSetData handleConflict(CDOChangeSetData result)
+  {
+    return null;
+  }
+
+  @Override
+  protected void hookTransaction(CDOTransaction transaction)
+  {
+    lastNonConflictTimeStamp = transaction.getSession().getLastUpdateTime();
+    conflict = false;
+
+    super.hookTransaction(transaction);
+  }
+
+  @Override
+  protected void transactionCommitted(CDOCommitContext commitContext)
+  {
+    super.transactionCommitted(commitContext);
+    resetConflict();
+  }
+
+  @Override
+  protected void transactionRolledBack()
+  {
+    super.transactionRolledBack();
+    resetConflict();
+  }
+
+  private void resetConflict()
+  {
+    lastNonConflictTimeStamp = getTransaction().getLastUpdateTime();
+    conflict = false;
   }
 
   private void updateTransactionWithResult(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet,

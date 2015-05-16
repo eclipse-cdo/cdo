@@ -257,6 +257,11 @@ public class SharedIcons
   /**
    * @since 4.3
    */
+  public static final String WIZBAN_CONFLICT = WIZBAN + "conflict" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.3
+   */
   public static final String WIZBAN_EDIT = WIZBAN + "edit" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static Image getImage(String key)

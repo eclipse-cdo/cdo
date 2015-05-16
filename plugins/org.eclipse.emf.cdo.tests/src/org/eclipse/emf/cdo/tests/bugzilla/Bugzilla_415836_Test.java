@@ -42,7 +42,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
  */
 public class Bugzilla_415836_Test extends AbstractCDOTest
 {
-
   private CDOSession session;
 
   private CDOTransaction transaction;
@@ -57,15 +56,14 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
 
   public void testCDOTransaction_GetOrCreateResourceWithNullResourcePath() throws Exception
   {
-
     try
     {
       transaction.getOrCreateResource(null);
       fail("IllegalArgumentException must be thrown for a null path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -76,9 +74,9 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
       transaction.getOrCreateResource("");
       fail("IllegalArgumentException must be thrown for a empty path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -91,29 +89,29 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
+
     try
     {
       enableTimeoutException(true);
       transaction.getOrCreateResource(resourcePath);
       fail("TransportException must be thrown for a timeout");
     }
-    catch (TransportException e)
+    catch (TransportException expected)
     {
-
+      // SUCCESS
     }
   }
 
   public void testCDOTransaction_GetOrCreateResourceFolderWithNullResourcePath() throws Exception
   {
-
     try
     {
       transaction.getOrCreateResourceFolder(null);
       fail("IllegalArgumentException must be thrown for a null path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -124,9 +122,9 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
       transaction.getOrCreateResourceFolder("");
       fail("IllegalArgumentException must be thrown for a empty path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -139,29 +137,29 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
+
     try
     {
       enableTimeoutException(true);
       transaction.getOrCreateResourceFolder(resourcePath);
       fail("TransportException must be thrown for a timeout");
     }
-    catch (TransportException e)
+    catch (TransportException expected)
     {
-
+      // SUCCESS
     }
   }
 
   public void testCDOTransaction_GetOrCreateTextResourceWithNullResourcePath() throws Exception
   {
-
     try
     {
       transaction.getOrCreateTextResource(null);
       fail("IllegalArgumentException must be thrown for a null path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -172,9 +170,9 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
       transaction.getOrCreateTextResource("");
       fail("IllegalArgumentException must be thrown for a empty path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -187,29 +185,29 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
+
     try
     {
       enableTimeoutException(true);
       transaction.getOrCreateTextResource(resourcePath);
       fail("TransportException must be thrown for a timeout");
     }
-    catch (TransportException e)
+    catch (TransportException expected)
     {
-
+      // SUCCESS
     }
   }
 
   public void testCDOTransaction_GetOrCreateBinaryResourceWithNullResourcePath() throws Exception
   {
-
     try
     {
       transaction.getOrCreateBinaryResource(null);
       fail("IllegalArgumentException must be thrown for a null path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -220,9 +218,9 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
       transaction.getOrCreateBinaryResource("");
       fail("IllegalArgumentException must be thrown for a empty path");
     }
-    catch (IllegalArgumentException e)
+    catch (IllegalArgumentException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -235,15 +233,16 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
     session.close();
     session = openSession();
     transaction = session.openTransaction();
+
     try
     {
       enableTimeoutException(true);
       transaction.getOrCreateBinaryResource(resourcePath);
       fail("TransportException must be thrown for a timeout");
     }
-    catch (TransportException e)
+    catch (TransportException expected)
     {
-
+      // SUCCESS
     }
   }
 
@@ -269,7 +268,6 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
     CDOClientProtocol cdoClientProtocol = (CDOClientProtocol)cdoNet4jSession.getSessionProtocol();
     long timeout = cdoClientProtocol.getTimeout();
     assertEquals(newSignalTimeout, timeout);
-
   }
 
   private void enableTimeoutException(boolean enable)

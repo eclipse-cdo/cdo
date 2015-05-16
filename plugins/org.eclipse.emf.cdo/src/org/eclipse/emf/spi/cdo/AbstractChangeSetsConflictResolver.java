@@ -12,10 +12,12 @@ package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver.NonConflictAware;
@@ -35,11 +37,38 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   private CDOTransactionHandler handler = new CDODefaultTransactionHandler()
   {
     @Override
-    public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta ignored)
+    public void attachingObject(CDOTransaction transaction, CDOObject object)
     {
       if (getTransaction() == transaction)
       {
-        adapter.attach(object);
+        transactionAttachingObject(object);
+      }
+    }
+
+    @Override
+    public void detachingObject(CDOTransaction transaction, CDOObject object)
+    {
+      if (getTransaction() == transaction)
+      {
+        transactionDetachingObject(object);
+      }
+    }
+
+    @Override
+    public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+    {
+      if (getTransaction() == transaction)
+      {
+        transactionModifyingObject(object, featureDelta);
+      }
+    }
+
+    @Override
+    public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+    {
+      if (getTransaction() == transaction)
+      {
+        transactionCommitting(commitContext);
       }
     }
 
@@ -48,8 +77,7 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
     {
       if (getTransaction() == transaction)
       {
-        adapter.reset();
-        remoteInvalidationEvents.reset();
+        transactionCommitted(commitContext);
       }
     }
 
@@ -59,8 +87,7 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
       // Reset the accumulation only if it rolled back the transaction completely
       if (getTransaction() == transaction && transaction.getLastSavepoint().getPreviousSavepoint() == null)
       {
-        adapter.reset();
-        remoteInvalidationEvents.reset();
+        transactionRolledBack();
       }
     }
   };
@@ -70,6 +97,8 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   private RemoteInvalidationEventQueue remoteInvalidationEvents;
 
   private boolean ensureRemoteNotifications = true;
+
+  private long remoteTimeStamp;
 
   public AbstractChangeSetsConflictResolver()
   {
@@ -102,13 +131,28 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
 
   public CDOChangeSet getRemoteChangeSet()
   {
+    remoteTimeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+
     CDOChangeSetData changeSetData = getRemoteChangeSetData();
     if (changeSetData == null)
     {
       return null;
     }
 
+    if (changeSetData instanceof CDOTimeProvider)
+    {
+      remoteTimeStamp = ((CDOTimeProvider)changeSetData).getTimeStamp();
+    }
+
     return createChangeSet(changeSetData);
+  }
+
+  /**
+   * @since 4.4
+   */
+  public final long getRemoteTimeStamp()
+  {
+    return remoteTimeStamp;
   }
 
   /**
@@ -143,6 +187,56 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
 
     remoteInvalidationEvents.dispose();
     remoteInvalidationEvents = null;
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void transactionAttachingObject(CDOObject object)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void transactionDetachingObject(CDOObject object)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void transactionModifyingObject(CDOObject object, CDOFeatureDelta featureDelta)
+  {
+    adapter.attach(object);
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void transactionCommitting(CDOCommitContext commitContext)
+  {
+    // Do nothing.
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void transactionCommitted(CDOCommitContext commitContext)
+  {
+    adapter.reset();
+    remoteInvalidationEvents.reset();
+  }
+
+  /**
+   * @since 4.4
+   */
+  protected void transactionRolledBack()
+  {
+    adapter.reset();
+    remoteInvalidationEvents.reset();
   }
 
   private CDOChangeSet createChangeSet(CDOChangeSetData changeSetData)

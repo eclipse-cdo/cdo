@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.ui.dialogs;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.dialogs.TitleAreaDialog;
@@ -84,9 +85,19 @@ public class RollbackTransactionDialog extends TitleAreaDialog
     append(builder, transaction.getDetachedObjects().size(), Messages.getString("RollbackTransactionDialog.8"), //$NON-NLS-1$
         Messages.getString("RollbackTransactionDialog.9")); //$NON-NLS-1$
 
-    builder.append("\n\n"); //$NON-NLS-1$
-    builder.append(Messages.getString("RollbackTransactionDialog.11")); //$NON-NLS-1$
+    String question = getQuestion();
+    if (!StringUtil.isEmpty(question))
+    {
+      builder.append("\n\n"); //$NON-NLS-1$
+      builder.append(question);
+    }
+
     return builder.toString();
+  }
+
+  protected String getQuestion()
+  {
+    return Messages.getString("RollbackTransactionDialog.11");
   }
 
   private void append(StringBuilder builder, int count, String labelSingular, String labelPlural)

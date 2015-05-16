@@ -89,6 +89,7 @@ import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
+import org.eclipse.emf.cdo.transaction.CDOConflictResolver3;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
@@ -424,6 +425,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     fireEvent(event);
+  }
+
+  public void removeConflict(InternalCDOObject object)
+  {
+    synchronized (this)
+    {
+      --conflict;
+    }
   }
 
   /**
@@ -1239,6 +1248,31 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    */
   public/* synchronized */CDOCommitInfo commit(IProgressMonitor progressMonitor) throws CommitException
   {
+    CDOConflictResolver[] conflictResolvers = options().getConflictResolvers();
+    if (conflictResolvers.length != 0)
+    {
+      try
+      {
+        checkActive();
+
+        // Reach out to conflict resolvers before synchronizing on this transaction to avoid deadlocks in UI thread.
+        for (CDOConflictResolver resolver : conflictResolvers)
+        {
+          if (resolver instanceof CDOConflictResolver3)
+          {
+            if (!((CDOConflictResolver3)resolver).preCommit())
+            {
+              return null;
+            }
+          }
+        }
+      }
+      catch (Exception ex)
+      {
+        throw new CommitException(ex);
+      }
+    }
+
     CDOCommitInfo info = commitSynced(progressMonitor);
     if (info != null)
     {

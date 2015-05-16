@@ -13,6 +13,14 @@
 
 <plugin>
 
+   <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.emf.cdo.ui.internal.compare.CompareConflictHandler$Factory"
+            productGroup="org.eclipse.emf.cdo.conflictHandlers"
+            type="merge"/>
+   </extension>
+
    <extension point="org.eclipse.ui.popupMenus">
       <objectContribution
             id="org.eclipse.emf.cdo.ui.compare.contribution1"

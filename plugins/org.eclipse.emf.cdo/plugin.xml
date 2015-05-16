@@ -16,6 +16,14 @@
 
    <extension-point id="viewProviders" name="%extension-point.name.0" schema="schema/viewProviders.exsd"/>
 
+   <extension
+         point="org.eclipse.net4j.util.factories">
+      <factory
+            class="org.eclipse.emf.internal.cdo.transaction.RollbackConflictHandler$Factory"
+            productGroup="org.eclipse.emf.cdo.conflictHandlers"
+            type="rollback"/>
+   </extension>
+
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated etypes -->
       <package

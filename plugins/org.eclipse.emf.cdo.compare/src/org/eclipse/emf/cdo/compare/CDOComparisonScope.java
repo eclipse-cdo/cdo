@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -46,6 +47,7 @@ import com.google.common.collect.Iterators;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -317,7 +319,11 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
         CDOViewOpener viewOpener)
     {
       CDOView view = openOriginView(leftView, rightView, originView, viewOpener);
+
       Set<CDOID> ids = getAffectedIDs(leftView, rightView, view);
+      addDirtyIDs(ids, leftView);
+      addDirtyIDs(ids, rightView);
+
       return new CDOComparisonScope.Minimal(leftView, rightView, view, ids);
     }
 
@@ -373,6 +379,25 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
       CDOChangeSetData changeSetData = leftView.compareRevisions(rightView);
       return new HashSet<CDOID>(changeSetData.getChangeKinds().keySet());
+    }
+
+    private static void addDirtyIDs(Set<CDOID> ids, CDOView view)
+    {
+      if (view instanceof CDOTransaction)
+      {
+        CDOChangeSetData changeSetData = ((CDOTransaction)view).getChangeSetData();
+        addDirtyIDs(ids, changeSetData.getNewObjects());
+        addDirtyIDs(ids, changeSetData.getChangedObjects());
+        addDirtyIDs(ids, changeSetData.getDetachedObjects());
+      }
+    }
+
+    private static void addDirtyIDs(Set<CDOID> ids, List<? extends CDOIDAndVersion> keys)
+    {
+      for (CDOIDAndVersion key : keys)
+      {
+        ids.add(key.getID());
+      }
     }
 
     private static CDOResource getRoot(CDOView view)

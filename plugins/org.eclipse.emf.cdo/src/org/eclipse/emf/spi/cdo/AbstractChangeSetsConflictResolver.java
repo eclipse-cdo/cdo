@@ -181,7 +181,11 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
     if (ensureRemoteNotifications)
     {
       transaction.removeTransactionHandler(handler);
-      adapter.dispose();
+      if (!transaction.isClosed())
+      {
+        adapter.dispose();
+      }
+
       adapter = null;
     }
 

@@ -14,10 +14,12 @@
 
 <plugin>
 
-  <extension
+  <extension-point id="editorOpeners" name="Editor Openers" schema="schema/editorOpeners.exsd"/>
+
+   <extension
         point="org.eclipse.net4j.util.elementProcessors">
      <elementProcessor class="org.eclipse.emf.cdo.ui.CDOInteractiveExceptionHandler"/>
-	</extension>
+	 </extension>
 
    <extension
          point="org.eclipse.net4j.util.factories">
@@ -95,14 +97,14 @@
     </editor>
   </extension>
 
-  <extension 
+  <extension
         point="org.eclipse.ui.importWizards">
      <category
            id="org.eclipse.emf.cdo.category"
            name="CDO">
      </category>
   </extension>
-  
+
   <extension
         point="org.eclipse.ui.newWizards">
      <category
@@ -215,7 +217,7 @@
       </filesystem>
    </extension>
 	-->
-	
+
    <extension
          point="org.eclipse.ui.editors.documentProviders">
       <provider
@@ -317,7 +319,7 @@
 	       </enablement>
       </objectContribution>
    </extension-->
-   
+
     <extension point="org.eclipse.ui.popupMenus">
       <objectContribution
             adaptable="true"
@@ -334,7 +336,7 @@
          </action>
       </objectContribution>
    </extension>
-   
+
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.ui.CreateBranch"

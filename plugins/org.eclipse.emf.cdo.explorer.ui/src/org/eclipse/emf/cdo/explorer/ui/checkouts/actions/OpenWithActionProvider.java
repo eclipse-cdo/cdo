@@ -19,10 +19,9 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutEditorOpener;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutEditorOpenerRegistry;
 import org.eclipse.emf.cdo.internal.ui.dialogs.EditObjectDialog;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -155,13 +154,13 @@ public class OpenWithActionProvider extends CommonActionProvider
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(cdoObject);
         if (checkout != null)
         {
-          CDOCheckoutEditorOpener[] editorOpeners = CDOCheckoutEditorOpenerRegistry.INSTANCE.getEditorOpeners(uri);
+          CDOEditorOpener[] editorOpeners = CDOEditorOpener.Registry.INSTANCE.getEditorOpeners(uri);
           if (editorOpeners.length != 0)
           {
             IMenuManager submenu = new MenuManager("Open With", ICommonMenuConstants.GROUP_OPEN_WITH);
             submenu.add(new GroupMarker(ICommonMenuConstants.GROUP_TOP));
 
-            for (CDOCheckoutEditorOpener editorOpener : editorOpeners)
+            for (CDOEditorOpener editorOpener : editorOpeners)
             {
               OpenWithAction action = new OpenWithAction(viewSite.getPage(), cdoObject, editorOpener);
               submenu.add(action);
@@ -309,7 +308,7 @@ public class OpenWithActionProvider extends CommonActionProvider
       CDOCheckout checkout = CDOExplorerUtil.getCheckout(cdoObject);
       if (checkout != null)
       {
-        CDOCheckoutEditorOpener[] editorOpeners = CDOCheckoutEditorOpenerRegistry.INSTANCE.getEditorOpeners(uri);
+        CDOEditorOpener[] editorOpeners = CDOEditorOpener.Registry.INSTANCE.getEditorOpeners(uri);
         String defaultEditorOpenerID = editorOpeners.length != 0 ? editorOpeners[0].getID() : null;
 
         CDOID objectID = cdoObject.cdoID();
@@ -327,8 +326,7 @@ public class OpenWithActionProvider extends CommonActionProvider
 
         if (editorOpenerID != null)
         {
-          CDOCheckoutEditorOpener editorOpener = CDOCheckoutEditorOpenerRegistry.INSTANCE
-              .getEditorOpener(editorOpenerID);
+          CDOEditorOpener editorOpener = CDOEditorOpener.Registry.INSTANCE.getEditorOpener(editorOpenerID);
           if (editorOpener != null)
           {
             if (!ObjectUtil.equals(editorOpenerID, lastEditorOpenerID))
@@ -574,9 +572,9 @@ public class OpenWithActionProvider extends CommonActionProvider
 
     private EObject openableElement;
 
-    private CDOCheckoutEditorOpener editorOpener;
+    private CDOEditorOpener editorOpener;
 
-    public OpenWithAction(IWorkbenchPage page, EObject openableElement, CDOCheckoutEditorOpener editorOpener)
+    public OpenWithAction(IWorkbenchPage page, EObject openableElement, CDOEditorOpener editorOpener)
     {
       setId(ID);
       setText(editorOpener.getName());

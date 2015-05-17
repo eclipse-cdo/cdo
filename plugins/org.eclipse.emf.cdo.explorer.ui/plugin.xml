@@ -751,4 +751,16 @@
     </objectContribution>
   </extension>
 
+   <extension
+         point="org.eclipse.emf.cdo.ui.editorOpeners">
+      <editorOpener
+            class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorOpener"
+            icon="icons/cdo_editor.gif"
+            id="org.eclipse.papyrus.cdo.ui.editors.PapyrusCDOEditorOpener"
+            name="CDO Editor"
+            priority="100"
+            regex="cdo\.checkout://.*">
+      </editorOpener>
+   </extension>
+
 </plugin>

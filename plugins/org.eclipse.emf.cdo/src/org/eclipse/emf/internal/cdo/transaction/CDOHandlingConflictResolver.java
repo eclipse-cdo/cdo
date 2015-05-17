@@ -94,11 +94,16 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
         }
 
         long lastNonConflictTimeStamp = getLastNonConflictTimeStamp();
-        return conflictHandler.handleConflict(this, lastNonConflictTimeStamp);
+        return handleConflict(conflictHandler, lastNonConflictTimeStamp);
       }
     }
 
     return true;
+  }
+
+  protected boolean handleConflict(ConflictHandler conflictHandler, long lastNonConflictTimeStamp)
+  {
+    return conflictHandler.handleConflict(this, lastNonConflictTimeStamp);
   }
 
   protected IManagedContainer getContainer()

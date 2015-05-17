@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
+import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 import org.eclipse.emf.cdo.ui.OverlayImage;
 
@@ -49,25 +50,25 @@ public abstract class OM
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
   public static final OMPreference<String> PREF_LABEL_DECORATION = //
-      PREFS.init("PREF_LABEL_DECORATION", CDOLabelDecorator.DEFAULT_DECORATION); //$NON-NLS-1$
+  PREFS.init("PREF_LABEL_DECORATION", CDOLabelDecorator.DEFAULT_DECORATION); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_SELECT_PACKAGES = //
-      PREFS.initArray("PREF_HISTORY_SELECT_PACKAGES"); //$NON-NLS-1$
+  PREFS.initArray("PREF_HISTORY_SELECT_PACKAGES"); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_CONNECTORS = //
-      PREFS.init("PREF_HISTORY_CONNECTORS", new String[] { "tcp://localhost" }); //$NON-NLS-1$
+  PREFS.init("PREF_HISTORY_CONNECTORS", new String[] { "tcp://localhost" }); //$NON-NLS-1$
 
   public static final OMPreference<String[]> PREF_HISTORY_REPOSITORIES = //
-      PREFS.init("PREF_HISTORY_REPOSITORIES", new String[] { "repo1" }); //$NON-NLS-1$
+  PREFS.init("PREF_HISTORY_REPOSITORIES", new String[] { "repo1" }); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTRY = //
-      PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTRY", true); //$NON-NLS-1$
+  PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTRY", true); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_LEGACY_MODE_DEFAULT = //
-      PREFS.init("PREF_LEGACY_MODE_DEFAULT", true); //$NON-NLS-1$
+  PREFS.init("PREF_LEGACY_MODE_DEFAULT", true); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
-      PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$
+  PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$
 
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
   {
@@ -101,6 +102,18 @@ public abstract class OM
     {
       super(BUNDLE);
       INSTANCE = this;
+    }
+
+    @Override
+    protected void doStart() throws Exception
+    {
+      CDOEditorOpener.Registry.INSTANCE.activate();
+    }
+
+    @Override
+    protected void doStop() throws Exception
+    {
+      CDOEditorOpener.Registry.INSTANCE.deactivate();
     }
   }
 }

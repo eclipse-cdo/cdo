@@ -18,4 +18,10 @@ import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 @Deprecated
 public interface CDOCheckoutEditorOpener extends CDOEditorOpener
 {
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class Default extends CDOEditorOpener.Default implements CDOCheckoutEditorOpener
+  {
+  }
 }

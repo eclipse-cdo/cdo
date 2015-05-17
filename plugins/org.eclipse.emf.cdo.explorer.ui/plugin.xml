@@ -756,7 +756,7 @@
       <editorOpener
             class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOModelEditorOpener"
             icon="icons/cdo_editor.gif"
-            id="org.eclipse.papyrus.cdo.ui.editors.PapyrusCDOEditorOpener"
+            id="org.eclipse.emf.cdo.explorer.ui.CDOModelEditorOpener"
             name="CDO Editor"
             priority="100"
             regex="cdo\.checkout://.*">

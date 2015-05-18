@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -46,6 +47,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -596,6 +598,16 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public CDOSession getSession()
   {
     return delegate.getSession();
+  }
+
+  public CDOViewProvider getProvider()
+  {
+    return delegate.getProvider();
+  }
+
+  public URI createResourceURI(String path)
+  {
+    return delegate.createResourceURI(path);
   }
 
   public long getTimeStamp()

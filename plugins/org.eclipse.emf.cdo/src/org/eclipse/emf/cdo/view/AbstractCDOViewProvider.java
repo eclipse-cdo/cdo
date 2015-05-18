@@ -100,6 +100,24 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   }
 
   /**
+   * @since 4.4
+   */
+  public final URI getViewURI(CDOView view)
+  {
+    return getResourceURI(view, null);
+  }
+
+  /**
+   * Must be overwritten for non-canonical URI formats!
+   *
+   * @since 4.4
+   */
+  public URI getViewURI(URI uri)
+  {
+    return null;
+  }
+
+  /**
    * Must be overwritten for non-canonical URI formats!
    *
    * @since 4.4

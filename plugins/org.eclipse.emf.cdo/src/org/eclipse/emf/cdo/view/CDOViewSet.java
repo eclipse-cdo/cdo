@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -35,7 +36,16 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOViewSet extends Notifier
 {
+  /**
+   * @deprecated As of 4.4 use {@link #resolveView(URI)}.
+   */
+  @Deprecated
   public CDOView resolveView(String repositoryUUID);
+
+  /**
+   * @since 4.4
+   */
+  public CDOView resolveView(URI viewURI);
 
   public CDOView[] getViews();
 

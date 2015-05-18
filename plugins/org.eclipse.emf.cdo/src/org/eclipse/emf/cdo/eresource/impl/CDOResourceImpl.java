@@ -28,12 +28,10 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
-import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -1651,12 +1649,12 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
       if (view == null)
       {
         URI uri = getURI();
-        Pair<CDOView, CDOViewProvider> pair = CDOViewProviderRegistry.INSTANCE.provideViewWithInfo(uri, resourceSet);
-        if (pair != null)
+
+        view = (InternalCDOView)CDOUtil.getView(resourceSet, uri);
+        if (view != null)
         {
           try
           {
-            view = (InternalCDOView)pair.getElement1();
             view.attachResource(this);
           }
           catch (RuntimeException ex)
@@ -1674,7 +1672,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
             throw ex;
           }
 
-          viewProvider = pair.getElement2();
+          viewProvider = view.getProvider();
           cacheURI(uri);
         }
       }

@@ -12,7 +12,7 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.ManagedContainerViewProvider;
@@ -51,7 +51,7 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
       return null;
     }
 
-    String repoUUID = CDOURIUtil.extractRepositoryUUID(uri);
+    String repoUUID = getRepositoryUUID(uri);
     for (Object element : container.getElements(CDOSessionFactory.PRODUCT_GROUP))
     {
       CDOSession session = (CDOSession)element;
@@ -78,5 +78,22 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
   protected CDOView openView(CDOSession session, ResourceSet resourceSet)
   {
     return session.openTransaction(resourceSet);
+  }
+
+  public static String getRepositoryUUID(URI uri)
+  {
+    try
+    {
+      if (!uri.hasAuthority())
+      {
+        throw new InvalidURIException(uri);
+      }
+
+      return uri.authority();
+    }
+    catch (InvalidURIException ex)
+    {
+      return null;
+    }
   }
 }

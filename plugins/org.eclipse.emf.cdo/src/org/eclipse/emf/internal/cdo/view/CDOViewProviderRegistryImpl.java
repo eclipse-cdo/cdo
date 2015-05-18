@@ -11,11 +11,11 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
-import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.AbstractCDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
@@ -65,47 +65,59 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
 
   public CDOView provideView(URI uri, ResourceSet resourceSet)
   {
-    Pair<CDOView, CDOViewProvider> pair = provideViewWithInfo(uri, resourceSet);
-    if (pair == null)
-    {
-      return null;
-    }
-
-    return pair.getElement1();
-  }
-
-  public Pair<CDOView, CDOViewProvider> provideViewWithInfo(URI uri, ResourceSet resourceSet)
-  {
     if (uri == null)
     {
       return null;
     }
 
+    CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
+    // if (viewSet != null)
+    // {
+    // try
+    // {
+    // String uuid = CDOURIUtil.extractRepositoryUUID(uri);
+    // CDOView view = viewSet.resolveView(uuid);
+    // if (view != null)
+    // {
+    // return view;
+    // }
+    // }
+    // catch (Exception ignore)
+    // {
+    // // Do nothing
+    // }
+    // }
+
     for (CDOViewProvider viewProvider : getViewProviders(uri))
     {
+      if (viewSet != null && viewProvider instanceof CDOViewProvider2)
+      {
+        URI viewURI = ((CDOViewProvider2)viewProvider).getViewURI(uri);
+
+        CDOView view = viewSet.resolveView(viewURI);
+        if (view != null)
+        {
+          return view;
+        }
+      }
+
       CDOView view = viewProvider.getView(uri, resourceSet);
       if (view != null)
       {
-        return Pair.create(view, viewProvider);
+        return view;
       }
     }
 
-    CDOViewSet viewSet = CDOUtil.getViewSet(resourceSet);
-    if (viewSet != null)
+    return null;
+  }
+
+  @Deprecated
+  public Pair<CDOView, CDOViewProvider> provideViewWithInfo(URI uri, ResourceSet resourceSet)
+  {
+    CDOView view = provideView(uri, resourceSet);
+    if (view != null)
     {
-      try
-      {
-        String uuid = CDOURIUtil.extractRepositoryUUID(uri);
-        CDOView view = viewSet.resolveView(uuid);
-        if (view != null)
-        {
-          return Pair.create(view, null);
-        }
-      }
-      catch (Exception ignore)
-      {
-        // Do nothing
-      }
+      return Pair.create(view, view.getProvider());
     }
 
     return null;
@@ -258,6 +270,18 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
     public URI getResourceURI(CDOView view, String path)
     {
       return getViewProvider().getResourceURI(view, path);
+    }
+
+    @Override
+    public URI getViewURI(URI uri)
+    {
+      CDOViewProvider viewProvider = getViewProvider();
+      if (viewProvider instanceof CDOViewProvider2)
+      {
+        return ((CDOViewProvider2)viewProvider).getViewURI(uri);
+      }
+
+      return super.getViewURI(uri);
     }
 
     @Override

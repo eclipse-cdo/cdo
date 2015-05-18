@@ -87,6 +87,13 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   }
 
   @Override
+  public URI getViewURI(URI uri)
+  {
+    return URI.createHierarchicalURI(uri.scheme(), uri.authority(), null, uri.query(), null)
+        .appendSegment(uri.segment(1));
+  }
+
+  @Override
   public URI getResourceURI(CDOView view, String path)
   {
     StringBuilder builder = new StringBuilder();
@@ -117,12 +124,15 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     String repositoryName = session.getRepositoryInfo().getName();
     append(builder, connector, repositoryName);
 
-    if (!path.startsWith("/"))
+    if (path != null)
     {
-      builder.append("/");
-    }
+      if (!path.startsWith("/"))
+      {
+        builder.append("/");
+      }
 
-    builder.append(path);
+      builder.append(path);
+    }
 
     int params = 0;
 

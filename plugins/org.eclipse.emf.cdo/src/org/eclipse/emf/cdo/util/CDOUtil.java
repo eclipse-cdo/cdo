@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleObject;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.analyzer.CDOFeatureAnalyzerModelBased;
@@ -435,6 +436,14 @@ public final class CDOUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static CDOView getView(ResourceSet resourceSet, URI uri)
+  {
+    return CDOViewProviderRegistry.INSTANCE.provideView(uri, resourceSet);
   }
 
   /**

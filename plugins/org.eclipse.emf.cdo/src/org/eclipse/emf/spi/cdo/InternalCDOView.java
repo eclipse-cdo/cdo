@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -46,6 +47,11 @@ import java.util.Map;
 public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 {
   public void setViewID(int viewId);
+
+  /**
+   * @since 4.4
+   */
+  public void setProvider(CDOViewProvider provider);
 
   /**
    * @since 4.4

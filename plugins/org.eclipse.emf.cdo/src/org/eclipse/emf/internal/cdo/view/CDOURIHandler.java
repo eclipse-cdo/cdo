@@ -57,11 +57,12 @@ public class CDOURIHandler implements URIHandler
 
   public boolean canHandle(URI uri)
   {
-    if (CDO_URI_SCHEME.equals(uri.scheme()))
-    {
-      String uuid = view.getSession().getRepositoryInfo().getUUID();
-      return uuid.equals(CDOURIUtil.extractRepositoryUUID(uri));
-    }
+    int xxx;
+    // if (CDO_URI_SCHEME.equals(uri.scheme()))
+    // {
+    // String uuid = view.getSession().getRepositoryInfo().getUUID();
+    // return uuid.equals(CDOURIUtil.extractRepositoryUUID(uri));
+    // }
 
     CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
     return viewProviders.length != 0;
@@ -155,7 +156,7 @@ public class CDOURIHandler implements URIHandler
     {
       return CDOURIUtil.extractResourcePath(uri);
     }
-  
+
     for (CDOViewProvider viewProvider : CDOViewProviderRegistry.INSTANCE.getViewProviders(uri))
     {
       if (viewProvider instanceof CDOViewProvider2)
@@ -163,7 +164,7 @@ public class CDOURIHandler implements URIHandler
         return ((CDOViewProvider2)viewProvider).getPath(uri);
       }
     }
-  
+
     return null;
   }
 }

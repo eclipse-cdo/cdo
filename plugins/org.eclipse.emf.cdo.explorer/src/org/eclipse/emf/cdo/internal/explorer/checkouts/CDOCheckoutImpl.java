@@ -111,6 +111,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private EObject rootObject;
 
+  private URI uri;
+
   public CDOCheckoutImpl()
   {
   }
@@ -520,6 +522,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     return view;
   }
 
+  public final URI getURI()
+  {
+    return uri;
+  }
+
   public final EObject getRootObject()
   {
     return rootObject;
@@ -759,6 +766,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   protected void init(File folder, String type, Properties properties)
   {
     super.init(folder, type, properties);
+
+    uri = createResourceURI(null);
     repository = OM.getRepositoryManager().getElement(properties.getProperty(PROP_REPOSITORY));
     branchID = Integer.parseInt(properties.getProperty(PROP_BRANCH_ID));
     branchPath = properties.getProperty(PROP_BRANCH_PATH);

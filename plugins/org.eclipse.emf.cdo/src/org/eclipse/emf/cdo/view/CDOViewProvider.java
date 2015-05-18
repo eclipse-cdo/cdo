@@ -60,6 +60,10 @@ public interface CDOViewProvider
    */
   public interface CDOViewProvider2 extends CDOViewProvider
   {
+    public URI getViewURI(CDOView view);
+
+    public URI getViewURI(URI uri);
+
     public String getPath(URI uri);
   }
 }

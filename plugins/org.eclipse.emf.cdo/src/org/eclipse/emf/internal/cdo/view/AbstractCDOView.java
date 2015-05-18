@@ -65,6 +65,7 @@ import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -112,6 +113,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOStore;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 
@@ -140,9 +142,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private final ViewAndState[] viewAndStates = ViewAndState.create(this);
 
+  private final CDOURIHandler uriHandler = new CDOURIHandler(this);
+
   private CDOBranchPoint branchPoint;
 
-  private final CDOURIHandler uriHandler = new CDOURIHandler(this);
+  private CDOViewProvider provider;
 
   private InternalCDOViewSet viewSet;
 
@@ -347,6 +351,16 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  public CDOViewProvider getProvider()
+  {
+    return provider;
+  }
+
+  public void setProvider(CDOViewProvider provider)
+  {
+    this.provider = provider;
+  }
+
   public synchronized CDOResourceImpl getRootResource()
   {
     checkActive();
@@ -379,6 +393,22 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  @SuppressWarnings("deprecation")
+  public URI createResourceURI(String path)
+  {
+    if (provider != null)
+    {
+      URI uri = provider.getResourceURI(this, path);
+      if (uri != null)
+      {
+        return uri;
+      }
+    }
+
+    InternalCDOSession session = getSession();
+    return CDOURIUtil.createResourceURI(session, path);
   }
 
   public synchronized boolean isEmpty()

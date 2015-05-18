@@ -13,6 +13,7 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.util.URI;
 
 import java.util.concurrent.Callable;
 
@@ -30,6 +31,9 @@ public interface InternalCDOViewSet extends CDOViewSet, Adapter
 
   public void remove(InternalCDOView view);
 
+  public InternalCDOView resolveView(URI viewURI);
+
+  @Deprecated
   public InternalCDOView resolveView(String repositoryUUID);
 
   /**

@@ -18,7 +18,10 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
@@ -28,6 +31,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.notify.impl.NotifierImpl;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -53,9 +57,11 @@ import java.util.concurrent.Callable;
  */
 public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 {
+  public static final String KEY_VIEW_URI = "org.eclipse.emf.cdo.viewURI";
+
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
-  private Map<String, InternalCDOView> mapOfViews = new HashMap<String, InternalCDOView>();
+  private Map<URI, InternalCDOView> mapOfViews = new HashMap<URI, InternalCDOView>();
 
   private CDOResourceFactory resourceFactory;
 
@@ -96,18 +102,27 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
    * @throws IllegalArgumentException
    *           if repositoryUUID doesn't match any CDOView.
    */
+  @Deprecated
   public InternalCDOView resolveView(String repositoryUUID)
+  {
+    return resolveView(CDOURIUtil.PROTOCOL_NAME + "://" + repositoryUUID);
+  }
+
+  /**
+   * @throws IllegalArgumentException
+   *           if repositoryUUID doesn't match any CDOView.
+   */
+  public InternalCDOView resolveView(URI viewURI)
   {
     InternalCDOView view = null;
     synchronized (views)
     {
-      view = mapOfViews.get(repositoryUUID);
+      view = mapOfViews.get(viewURI);
       if (view == null)
       {
-        if (repositoryUUID != null)
+        if (viewURI != null)
         {
-          throw new IllegalArgumentException(
-              MessageFormat.format(Messages.getString("CDOViewSetImpl.0"), repositoryUUID)); //$NON-NLS-1$
+          throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDOViewSetImpl.0"), viewURI)); //$NON-NLS-1$
         }
 
         if (mapOfViews.size() == 1)
@@ -137,17 +152,18 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void add(InternalCDOView view)
   {
-    String repositoryUUID = view.getSession().getRepositoryInfo().getUUID();
+    URI viewURI = getViewURI(view);
+
     synchronized (views)
     {
-      CDOView lookupView = mapOfViews.get(repositoryUUID);
+      CDOView lookupView = mapOfViews.get(viewURI);
       if (lookupView != null)
       {
         throw new RuntimeException(Messages.getString("CDOViewSetImpl.2")); //$NON-NLS-1$
       }
 
       views.add(view);
-      mapOfViews.put(repositoryUUID, view);
+      mapOfViews.put(viewURI, view);
     }
 
     if (eNotificationRequired())
@@ -159,22 +175,25 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   public void remove(InternalCDOView view)
   {
-    String repositoryUUID = view.getSession().getRepositoryInfo().getUUID();
     List<Resource> resToRemove = new ArrayList<Resource>();
+
     synchronized (views)
     {
       // It is important to remove view from the list first. It is the way we can differentiate close and detach.
-      views.remove(view);
-      mapOfViews.remove(repositoryUUID);
-
-      for (Resource resource : getResourceSet().getResources())
+      if (views.remove(view))
       {
-        if (resource instanceof CDOResource)
+        URI viewURI = getViewURI(view);
+        mapOfViews.remove(viewURI);
+
+        for (Resource resource : getResourceSet().getResources())
         {
-          CDOResource cdoRes = (CDOResource)resource;
-          if (cdoRes.cdoView() == view)
+          if (resource instanceof CDOResource)
           {
-            resToRemove.add(resource);
+            CDOResource cdoRes = (CDOResource)resource;
+            if (cdoRes.cdoView() == view)
+            {
+              resToRemove.add(resource);
+            }
           }
         }
       }
@@ -394,5 +413,27 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
 
     return resourcesPerView;
+  }
+
+  private URI getViewURI(InternalCDOView view)
+  {
+    Object value = view.properties().get(KEY_VIEW_URI);
+    if (value instanceof String)
+    {
+      return URI.createURI((String)value);
+    }
+
+    CDOViewProvider provider = view.getProvider();
+    if (provider instanceof CDOViewProvider2)
+    {
+      URI viewURI = ((CDOViewProvider2)provider).getViewURI(view);
+      if (viewURI != null)
+      {
+        return viewURI;
+      }
+    }
+
+    String uuid = view.getSession().getRepositoryInfo().getUUID();
+    return URI.createURI(CDOURIUtil.PROTOCOL_NAME + "://" + uuid);
   }
 }

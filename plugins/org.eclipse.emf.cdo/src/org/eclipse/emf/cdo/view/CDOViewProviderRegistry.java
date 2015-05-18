@@ -43,7 +43,9 @@ public interface CDOViewProviderRegistry extends IContainer<CDOViewProvider>
    * the {@link CDOViewSet view set} of the resource set.
    *
    * @since 4.0
+   * @deprecated As of 4.4. use {@link #provideView(URI, ResourceSet)}.getProvider().
    */
+  @Deprecated
   public Pair<CDOView, CDOViewProvider> provideViewWithInfo(URI uri, ResourceSet resourceSet);
 
   /**

@@ -18,6 +18,11 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
+import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
+import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
+
+import org.eclipse.emf.internal.cdo.view.PluginContainerViewProvider;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -98,21 +103,13 @@ public final class CDOURIUtil
     // }
   }
 
+  /**
+   * @deprecated
+   */
+  @Deprecated
   public static String extractRepositoryUUID(URI uri)
   {
-    try
-    {
-      if (!uri.hasAuthority())
-      {
-        throw new InvalidURIException(uri);
-      }
-
-      return uri.authority();
-    }
-    catch (InvalidURIException ex)
-    {
-      return null;
-    }
+    return PluginContainerViewProvider.getRepositoryUUID(uri);
   }
 
   public static String[] extractResourceFolderAndName(URI uri) throws InvalidURIException
@@ -131,6 +128,23 @@ public final class CDOURIUtil
 
   public static String extractResourcePath(URI uri) throws InvalidURIException
   {
+    CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
+    if (viewProviders != null)
+    {
+      for (int i = 0; i < viewProviders.length; i++)
+      {
+        if (viewProviders[i] instanceof CDOViewProvider2)
+        {
+          CDOViewProvider2 viewProvider = (CDOViewProvider2)viewProviders[i];
+          String path = viewProvider.getPath(uri);
+          if (path != null)
+          {
+            return path;
+          }
+        }
+      }
+    }
+
     if (!PROTOCOL_NAME.equals(uri.scheme()))
     {
       CDOURIData data = new CDOURIData(uri);
@@ -155,7 +169,10 @@ public final class CDOURIUtil
    * e.g.: /resA or resA will give the same result -> cdo://repositoryUUID/resA <br>
    * authority = repositoryUUID <br>
    * path = /resA
+   *
+   * @deprecated This method is subject to removal in a future release.
    */
+  @Deprecated
   public static URI createResourceURI(String repositoryUUID, String path)
   {
     StringBuilder stringBuilder = new StringBuilder();
@@ -183,9 +200,13 @@ public final class CDOURIUtil
 
   public static URI createResourceURI(CDOView view, String path)
   {
-    return createResourceURI(view == null ? null : view.getSession(), path);
+    return view == null ? null : view.createResourceURI(path);
   }
 
+  /**
+   * @deprecated This method is subject to removal in a future release.
+   */
+  @Deprecated
   public static URI createResourceURI(CDOSession session, String path)
   {
     return createResourceURI(session == null ? null : session.getRepositoryInfo().getUUID(), path);

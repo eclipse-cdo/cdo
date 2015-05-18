@@ -108,6 +108,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public CDOSession getSession();
 
   /**
+   * Returns the {@link CDOViewProvider provider} that has opened this view.
+   */
+  public CDOViewProvider getProvider();
+
+  /**
    * Returns the {@link CDOViewSet view set} this view is associated with.
    *
    * @return The view set this view is associated with, never <code>null</code>.
@@ -289,6 +294,13 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @since 4.2
    */
   public void setResourcePathCache(Map<String, CDOID> resourcePathCache);
+
+  /**
+   * Returns a {@link URI} that can be used in {@link ResourceSet#getResource(URI, boolean)} to load the resource with the specified path.
+   *
+   * @since 4.4
+   */
+  public URI createResourceURI(String path);
 
   /**
    * Returns a list of the resources in the given folder with a name equal to or starting with the value of the name

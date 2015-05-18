@@ -44,6 +44,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public static final String TYPE_OFFLINE = "offline";
 
+  public URI getURI();
+
   public boolean isOffline();
 
   public boolean isOnline();

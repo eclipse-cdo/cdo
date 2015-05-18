@@ -159,7 +159,7 @@ public class Bugzilla_456993_Test extends AbstractCDOTest
     assertEquals(1, instances.size());
 
     CDOID companyCDOID = CDOUtil.getCDOObject(company).cdoID();
-    company = (Company)transaction1.getObject(companyCDOID);
+    company = (Company)CDOUtil.getEObject(transaction1.getObject(companyCDOID));
     EcoreUtil.remove(company);
     transaction1.commit();
 
@@ -181,7 +181,7 @@ public class Bugzilla_456993_Test extends AbstractCDOTest
     instances = query.getResult();
     assertEquals(0, instances.size());
 
-    company = (Company)transaction1.getObject(companyCDOID);
+    company = (Company)CDOUtil.getEObject(transaction1.getObject(companyCDOID));
     EcoreUtil.remove(company);
     transaction1.commit();
 

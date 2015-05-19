@@ -653,7 +653,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   public int hashCode(EStructuralFeature feature)
   {
-    return getValue(feature).hashCode();
+    Object value = getValue(feature);
+    if (value == null)
+    {
+      // See how AbstractEList.hashCode() returns 1 for an empty list.
+      return 1;
+    }
+
+    return value.hashCode();
   }
 
   public Object get(EStructuralFeature feature, int index)

@@ -33,6 +33,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticException;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
@@ -60,6 +61,7 @@ import org.eclipse.ocl.helper.OCLHelper;
 import org.eclipse.ocl.options.ParsingOptions;
 import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.ProblemAware;
+import org.eclipse.ocl.util.Tuple;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -163,12 +165,7 @@ public class OCLQueryHandler implements IQueryHandler
 
   protected boolean addResult(Object result, IQueryContext context, CDOView view)
   {
-    if (result instanceof EObject)
-    {
-      CDORevision revision = getRevision((EObject)result, view);
-      return context.addResult(revision);
-    }
-
+    result = convertResult(result, view);
     return context.addResult(result);
   }
 
@@ -468,6 +465,30 @@ public class OCLQueryHandler implements IQueryHandler
     }
 
     return null;
+  }
+
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  private Object convertResult(Object result, CDOView view)
+  {
+    if (result instanceof EObject)
+    {
+      return getRevision((EObject)result, view);
+    }
+
+    if (result instanceof Tuple)
+    {
+      Tuple tuple = (Tuple)result;
+      EList properties = tuple.getTupleType().oclProperties();
+      Object[] array = new Object[properties.size()];
+      for (int i = 0; i < array.length; ++i)
+      {
+        array[i] = convertResult(tuple.getValue(properties.get(i)), view);
+      }
+
+      return array;
+    }
+
+    return result;
   }
 
   public static void prepareContainer(IManagedContainer container)

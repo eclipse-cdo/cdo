@@ -108,22 +108,22 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   }
 
   /**
-   * Must be overwritten for non-canonical URI formats!
+   * Should be overwritten for non-canonical URI formats!
    *
    * @since 4.4
    */
   public URI getViewURI(URI uri)
   {
-    return null;
+    return URI.createHierarchicalURI(uri.scheme(), uri.authority(), uri.device(), null, null);
   }
 
   /**
-   * Must be overwritten for non-canonical URI formats!
+   * Should be overwritten for non-canonical URI formats!
    *
    * @since 4.4
    */
   public String getPath(URI uri)
   {
-    return null;
+    return uri.path();
   }
 }

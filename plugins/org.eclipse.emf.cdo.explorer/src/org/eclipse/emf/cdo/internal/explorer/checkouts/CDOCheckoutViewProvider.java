@@ -98,12 +98,6 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
     return new Path(uri.path()).makeAbsolute().removeFirstSegments(1).toString();
   }
 
-  @Override
-  public URI getViewURI(URI uri)
-  {
-    return URI.createHierarchicalURI(uri.scheme(), uri.authority(), null, uri.query(), null);
-  }
-
   public static void disposeResourceSet(ResourceSet resourceSet)
   {
     CheckoutViewProviderAdapter adapter = CheckoutViewProviderAdapter.get(resourceSet);

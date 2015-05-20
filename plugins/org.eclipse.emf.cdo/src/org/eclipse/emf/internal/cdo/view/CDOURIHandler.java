@@ -57,13 +57,6 @@ public class CDOURIHandler implements URIHandler
 
   public boolean canHandle(URI uri)
   {
-    int xxx;
-    // if (CDO_URI_SCHEME.equals(uri.scheme()))
-    // {
-    // String uuid = view.getSession().getRepositoryInfo().getUUID();
-    // return uuid.equals(CDOURIUtil.extractRepositoryUUID(uri));
-    // }
-
     CDOViewProvider[] viewProviders = CDOViewProviderRegistry.INSTANCE.getViewProviders(uri);
     return viewProviders.length != 0;
   }

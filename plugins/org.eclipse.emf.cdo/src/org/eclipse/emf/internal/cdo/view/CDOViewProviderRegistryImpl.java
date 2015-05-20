@@ -30,6 +30,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
@@ -90,22 +91,67 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
 
     for (CDOViewProvider viewProvider : getViewProviders(uri))
     {
-      if (viewSet != null && viewProvider instanceof CDOViewProvider2)
+      InternalCDOView view = provideView(uri, resourceSet, viewSet, viewProvider);
+      if (view != null)
       {
-        URI viewURI = ((CDOViewProvider2)viewProvider).getViewURI(uri);
+        CDOViewProvider provider = view.getProvider();
+        if (provider != null)
+        {
+          if (provider != viewProvider)
+          {
+            throw new IllegalStateException("View providers don't match");
+          }
+        }
+        else
+        {
+          view.setProvider(viewProvider);
+        }
 
-        CDOView view = viewSet.resolveView(viewURI);
+        return view;
+      }
+    }
+
+    return null;
+  }
+
+  private InternalCDOView provideView(URI uri, ResourceSet resourceSet, CDOViewSet viewSet,
+      CDOViewProvider viewProvider)
+  {
+    if (viewSet != null && viewProvider instanceof CDOViewProvider2)
+    {
+      URI viewURI;
+
+      try
+      {
+        viewURI = ((CDOViewProvider2)viewProvider).getViewURI(uri);
+      }
+      catch (IllegalArgumentException ex)
+      {
+        throw new IllegalArgumentException(ex.getMessage() + ": " + uri, ex);
+      }
+      catch (Error ex)
+      {
+        throw ex;
+      }
+
+      try
+      {
+        InternalCDOView view = (InternalCDOView)viewSet.resolveView(viewURI);
         if (view != null)
         {
           return view;
         }
       }
-
-      CDOView view = viewProvider.getView(uri, resourceSet);
-      if (view != null)
+      catch (Exception ex)
       {
-        return view;
+        //$FALL-THROUGH$
       }
+    }
+
+    InternalCDOView view = (InternalCDOView)viewProvider.getView(uri, resourceSet);
+    if (view != null)
+    {
+      return view;
     }
 
     return null;

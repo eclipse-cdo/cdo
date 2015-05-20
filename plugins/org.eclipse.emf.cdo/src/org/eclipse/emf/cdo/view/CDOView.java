@@ -109,6 +109,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
 
   /**
    * Returns the {@link CDOViewProvider provider} that has opened this view.
+   *
+   * @since 4.4
    */
   public CDOViewProvider getProvider();
 

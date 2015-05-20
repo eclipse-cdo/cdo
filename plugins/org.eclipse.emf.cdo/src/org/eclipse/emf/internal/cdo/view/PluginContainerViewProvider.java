@@ -12,6 +12,7 @@
 package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
@@ -24,6 +25,8 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+
+import org.eclipse.core.runtime.Path;
 
 /**
  * Provides <code>CDOView</code> from <code>CDOSession</code> registered in IPluginContainer
@@ -67,6 +70,20 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
     }
 
     return null;
+  }
+
+  @Override
+  public URI getResourceURI(CDOView view, String path)
+  {
+    if (path == null)
+    {
+      path = "";
+    }
+
+    String authority = view.getSession().getRepositoryInfo().getUUID();
+    String[] segments = new Path(path).segments();
+
+    return URI.createHierarchicalURI(CDOURIUtil.PROTOCOL_NAME, authority, null, segments, null, null);
   }
 
   @Override

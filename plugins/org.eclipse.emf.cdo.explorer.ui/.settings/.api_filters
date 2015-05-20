@@ -8,6 +8,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/explorer/ui/checkouts/CDOCheckoutEditorOpenerRegistry.java" type="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutEditorOpenerRegistry">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Registry"/>
+                <message_argument value="CDOCheckoutEditorOpenerRegistry"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/explorer/ui/checkouts/actions/NewActionProvider.java" type="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.NewActionProvider">
         <filter id="574664731">
             <message_arguments>

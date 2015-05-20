@@ -43,11 +43,12 @@ import java.util.Map;
  * Attaching adapters to resources does not load them?
  * <p>
  * See bug 265114
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_265114_Test extends AbstractCDOTest
 {
+  @SuppressWarnings("deprecation")
   public void testResourceSet() throws Exception
   {
     {

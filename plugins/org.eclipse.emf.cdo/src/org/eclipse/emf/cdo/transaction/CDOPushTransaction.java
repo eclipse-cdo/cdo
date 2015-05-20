@@ -600,11 +600,17 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getSession();
   }
 
+  /**
+   * @since 4.4
+   */
   public CDOViewProvider getProvider()
   {
     return delegate.getProvider();
   }
 
+  /**
+   * @since 4.4
+   */
   public URI createResourceURI(String path)
   {
     return delegate.createResourceURI(path);

@@ -512,6 +512,7 @@ public class AuditTest extends AbstractCDOTest
     session.close();
   }
 
+  @SuppressWarnings("deprecation")
   public void testChangeURI() throws Exception
   {
     long commitTime1;

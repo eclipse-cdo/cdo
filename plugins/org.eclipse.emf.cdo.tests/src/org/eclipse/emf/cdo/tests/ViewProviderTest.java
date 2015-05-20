@@ -95,6 +95,7 @@ public class ViewProviderTest extends AbstractCDOTest
     uri = URI.createURI(getURIPrefix() + "/" + REPO + getResourcePath(PATH) + "?transactional=true");
   }
 
+  @SuppressWarnings("deprecation")
   public void testNormal() throws Exception
   {
     init();

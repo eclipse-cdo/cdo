@@ -82,7 +82,7 @@ public class InitialTest extends AbstractCDOTest
 
   public void testTransientResource() throws Exception
   {
-    final URI uri = URI.createURI("cdo:/test1");
+    final URI uri = URI.createURI("cdo://repo1/test1");
 
     ResourceSet resourceSet = new ResourceSetImpl();
     SessionUtil.prepareResourceSet(resourceSet);

@@ -182,6 +182,7 @@ public class CDOConnectionUtil
     session.close();
   }
 
+  @SuppressWarnings("deprecation")
   public CDOTransaction getOrOpenCurrentTransaction(String id, ResourceSet resourceSet, String repositoryName)
   {
     CDOTransaction transaction = getCurrentTransaction(id);

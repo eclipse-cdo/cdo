@@ -89,8 +89,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   @Override
   public URI getViewURI(URI uri)
   {
-    return URI.createHierarchicalURI(uri.scheme(), uri.authority(), null, uri.query(), null)
-        .appendSegment(uri.segment(1));
+    return super.getViewURI(uri).appendSegment(uri.segment(1));
   }
 
   @Override

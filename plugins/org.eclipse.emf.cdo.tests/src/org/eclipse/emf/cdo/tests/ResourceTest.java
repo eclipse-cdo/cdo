@@ -264,7 +264,7 @@ public class ResourceTest extends AbstractCDOTest
       ResourceSet resourceSet = new ResourceSetImpl();
       CDOTransaction transaction = session.openTransaction(resourceSet);
 
-      resourceURI = URI.createURI("cdo:" + resourcePath);
+      resourceURI = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + resourcePath);
       Resource res1 = resourceSet.createResource(resourceURI);
 
       transaction.commit();
@@ -310,7 +310,7 @@ public class ResourceTest extends AbstractCDOTest
     assertActive(resource);
     assertNew(resource, transaction);
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
-    assertEquals(CDOURIUtil.createResourceURI(session, "test1"), resource.getURI());
+    assertEquals(createResourceURI(session, "test1"), resource.getURI());
     assertEquals("test1", resource.getName());
     assertEquals(null, resource.getFolder());
 
@@ -345,7 +345,7 @@ public class ResourceTest extends AbstractCDOTest
     assertActive(resource);
     assertNew(resource, transaction);
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
-    assertEquals(CDOURIUtil.createResourceURI(session, "folder/test1"), resource.getURI());
+    assertEquals(createResourceURI(session, "folder/test1"), resource.getURI());
     assertEquals("test1", resource.getName());
 
     CDOResourceFolder folder = resource.getFolder();
@@ -369,7 +369,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOResource resourceCopy = transaction.getOrCreateResource(getResourcePath("/test1"));
     assertEquals(resource, resourceCopy);
     assertNew(resource, transaction);
-    assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("test1")), resource.getURI());
+    assertEquals(createResourceURI(session, getResourcePath("test1")), resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
   }
 
@@ -386,7 +386,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("/org/eclipse/net4j/core"));
-    assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/org/eclipse/net4j/core")), resource.getURI());
+    assertEquals(createResourceURI(session, getResourcePath("/org/eclipse/net4j/core")), resource.getURI());
     assertEquals(transaction.getResourceSet(), resource.getResourceSet());
     session.close();
   }
@@ -397,7 +397,7 @@ public class ResourceTest extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOTransaction transaction = session.openTransaction(resourceSet);
 
-    final URI uri = URI.createURI("cdo:/test1");
+    final URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + "/test1");
     CDOResource resource = (CDOResource)resourceSet.getResource(uri, false);
     assertEquals(null, resource);
 
@@ -691,7 +691,7 @@ public class ResourceTest extends AbstractCDOTest
       transaction.commit();
 
       URI uri = URI.createURI("cdo://repo1/renamed");
-      assertEquals(CDOURIUtil.createResourceURI(session, "/renamed"), uri);
+      assertEquals(createResourceURI(session, "/renamed"), uri);
       resource.setURI(uri);
 
       transaction.commit();
@@ -717,7 +717,7 @@ public class ResourceTest extends AbstractCDOTest
       transaction.commit();
 
       URI uri = URI.createURI("cdo://repo1/renamed");
-      assertEquals(CDOURIUtil.createResourceURI(session, "/renamed"), uri);
+      assertEquals(createResourceURI(session, "/renamed"), uri);
       resource.setURI(uri);
 
       transaction.commit();
@@ -740,11 +740,11 @@ public class ResourceTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("/res1"));
       assertEquals(getResourcePath("/res1"), resource.getPath());
-      assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/res1")), resource.getURI());
+      assertEquals(createResourceURI(session, getResourcePath("/res1")), resource.getURI());
 
       transaction.commit();
       assertEquals(getResourcePath("/res1"), resource.getPath());
-      assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/res1")), resource.getURI());
+      assertEquals(createResourceURI(session, getResourcePath("/res1")), resource.getURI());
       session.close();
     }
 
@@ -753,15 +753,15 @@ public class ResourceTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource(getResourcePath("/res1"));
       assertEquals(getResourcePath("/res1"), resource.getPath());
-      assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/res1")), resource.getURI());
+      assertEquals(createResourceURI(session, getResourcePath("/res1")), resource.getURI());
 
       CDOResource resource2 = transaction.getOrCreateResource(getResourcePath("/res2"));
       assertEquals(getResourcePath("/res2"), resource2.getPath());
-      assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/res2")), resource2.getURI());
+      assertEquals(createResourceURI(session, getResourcePath("/res2")), resource2.getURI());
 
       transaction.commit();
       assertEquals(getResourcePath("/res2"), resource2.getPath());
-      assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/res2")), resource2.getURI());
+      assertEquals(createResourceURI(session, getResourcePath("/res2")), resource2.getURI());
       session.close();
     }
 
@@ -770,7 +770,7 @@ public class ResourceTest extends AbstractCDOTest
       CDOView view = session.openView();
       CDOResource resource2 = view.getResource(getResourcePath("/res2"));
       assertEquals(getResourcePath("/res2"), resource2.getPath());
-      assertEquals(CDOURIUtil.createResourceURI(session, getResourcePath("/res2")), resource2.getURI());
+      assertEquals(createResourceURI(session, getResourcePath("/res2")), resource2.getURI());
       session.close();
     }
   }
@@ -1628,7 +1628,7 @@ public class ResourceTest extends AbstractCDOTest
       path += "/" + name;
     }
 
-    final URI uri = URI.createURI("cdo:" + path);
+    final URI uri = URI.createURI("cdo://" + session.getRepositoryInfo().getUUID() + path);
     CDOResource resource = (CDOResource)resourceSet.createResource(uri);
     assertEquals(names.get(names.size() - 1), resource.getName());
 
@@ -1757,8 +1757,7 @@ public class ResourceTest extends AbstractCDOTest
       CDOID idAfterChangePathOrder = CDOUtil.getCDOObject(order).cdoID();
       assertEquals(idBeforeChangePathOrder, idAfterChangePathOrder);
 
-      Resource resourceRenamed = transaction.getResourceSet()
-          .getResource(CDOURIUtil.createResourceURI(session, newPath), false);
+      Resource resourceRenamed = transaction.getResourceSet().getResource(createResourceURI(session, newPath), false);
 
       assertEquals(resource, resourceRenamed);
       assertClean(resource, transaction);
@@ -1772,7 +1771,7 @@ public class ResourceTest extends AbstractCDOTest
 
     try
     {
-      URI uri = CDOURIUtil.createResourceURI(session, oldPath);
+      URI uri = createResourceURI(session, oldPath);
       transaction.getResourceSet().getResource(uri, true);
       fail("Doesn't exist");
     }
@@ -1780,8 +1779,14 @@ public class ResourceTest extends AbstractCDOTest
     {
     }
 
-    Resource resource = transaction.getResourceSet().getResource(CDOURIUtil.createResourceURI(session, newPath), true);
+    Resource resource = transaction.getResourceSet().getResource(createResourceURI(session, newPath), true);
     assertNotNull(resource);
+  }
+
+  @SuppressWarnings("deprecation")
+  private URI createResourceURI(CDOSession session, String path)
+  {
+    return CDOURIUtil.createResourceURI(session, path);
   }
 
   private String createPath(String namePrefix, int depth, String name)

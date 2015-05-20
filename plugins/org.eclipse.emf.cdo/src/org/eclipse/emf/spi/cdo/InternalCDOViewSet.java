@@ -31,6 +31,9 @@ public interface InternalCDOViewSet extends CDOViewSet, Adapter
 
   public void remove(InternalCDOView view);
 
+  /**
+   * @since 4.4
+   */
   public InternalCDOView resolveView(URI viewURI);
 
   @Deprecated

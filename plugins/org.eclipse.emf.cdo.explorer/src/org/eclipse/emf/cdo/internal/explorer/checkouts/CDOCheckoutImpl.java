@@ -647,7 +647,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     });
 
     URI from = URI.createURI("cdo://" + view.getSession().getRepositoryInfo().getUUID() + "/");
-    URI to = URI.createURI("cdo.checkout://" + getID() + "/" + repository.getID() + "/");
+    URI to = uri.appendSegment("");
     view.getResourceSet().getURIConverter().getURIMap().put(from, to);
 
     addView(view);
@@ -665,7 +665,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       path = "/" + path;
     }
 
-    return URI.createURI(CDOCheckoutViewProvider.SCHEME + "://" + getID() + "/" + getRepository().getID() + path);
+    return URI.createURI(CDOCheckoutViewProvider.SCHEME + "://" + getID() + path);
   }
 
   public String getEditorOpenerID(CDOID objectID)
@@ -767,8 +767,13 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   {
     super.init(folder, type, properties);
 
-    uri = createResourceURI(null);
-    repository = OM.getRepositoryManager().getElement(properties.getProperty(PROP_REPOSITORY));
+    String repositoryID = properties.getProperty(PROP_REPOSITORY);
+    repository = OM.getRepositoryManager().getElement(repositoryID);
+    if (repository == null)
+    {
+      throw new IllegalStateException("Repository not found: " + repositoryID);
+    }
+
     branchID = Integer.parseInt(properties.getProperty(PROP_BRANCH_ID));
     branchPath = properties.getProperty(PROP_BRANCH_PATH);
     branchPoints = properties.getProperty(PROP_BRANCH_POINTS);
@@ -781,6 +786,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       rootID = CDOIDUtil.read(property);
     }
 
+    uri = createResourceURI(null);
     ((CDORepositoryImpl)repository).addCheckout(this);
   }
 

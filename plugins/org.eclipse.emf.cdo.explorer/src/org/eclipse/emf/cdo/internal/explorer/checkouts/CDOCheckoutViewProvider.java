@@ -28,8 +28,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import org.eclipse.core.runtime.Path;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,12 +88,6 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
     }
 
     return super.getResourceURI(view, path);
-  }
-
-  @Override
-  public String getPath(URI uri)
-  {
-    return new Path(uri.path()).makeAbsolute().removeFirstSegments(1).toString();
   }
 
   public static void disposeResourceSet(ResourceSet resourceSet)

@@ -34,7 +34,21 @@ public interface CDOViewLocksChangedEvent extends CDOViewEvent, CDOLockChangeInf
   public CDOView getSender();
 
   /**
+   * Get {@link EObject objects} affected by lock changes. Same as <code>CDOViewLocksChangedEvent.getAffectedObjects(view, true);</code>.
+   *
+   * @param view the {@link CDOView} from which get objects
+   *
    * @since 4.4
    */
   public EObject[] getAffectedObjects(CDOView view);
+
+  /**
+   * Get {@link EObject objects} affected by lock changes.
+   *
+   * @param view the {@link CDOView} from which get objects
+   * @param loadObject if true and the corresponding object of a lock state is not already loaded by the view it will be loaded, if false it will not be loaded
+   *
+   * @since 4.4
+   */
+  public EObject[] getAffectedObjects(CDOView view, boolean loadObject);
 }

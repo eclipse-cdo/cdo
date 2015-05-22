@@ -1972,6 +1972,11 @@ public class CDOViewImpl extends AbstractCDOView
 
     public EObject[] getAffectedObjects(CDOView view)
     {
+      return getAffectedObjects(view, true);
+    }
+
+    public EObject[] getAffectedObjects(CDOView view, boolean loadObject)
+    {
       List<EObject> objects = new ArrayList<EObject>();
 
       CDOLockState[] lockStates = getLockStates();
@@ -1996,7 +2001,7 @@ public class CDOViewImpl extends AbstractCDOView
 
         if (id != null)
         {
-          CDOObject object = view.getObject(id);
+          CDOObject object = view.getObject(id, loadObject);
           if (object != null)
           {
             objects.add(CDOUtil.getEObject(object));

@@ -109,7 +109,7 @@ public abstract class AbstractCDORevisionCache extends ReferenceQueueWorker<Inte
     int version = key.getVersion();
 
     InternalCDORevision revision = (InternalCDORevision)removeRevision(id, branch.getVersion(version));
-    if (revision == null)
+    if (revision != null)
     {
       // Use revision in eviction event
       key = revision;

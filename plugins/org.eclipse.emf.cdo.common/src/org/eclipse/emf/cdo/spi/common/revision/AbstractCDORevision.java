@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.Predicates;
 
@@ -230,7 +231,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   @Override
   public int hashCode()
   {
-    return getID().hashCode() ^ getBranch().hashCode() ^ getVersion();
+    return ObjectUtil.hashCode(getID()) ^ ObjectUtil.hashCode(getBranch()) ^ getVersion();
   }
 
   @Override

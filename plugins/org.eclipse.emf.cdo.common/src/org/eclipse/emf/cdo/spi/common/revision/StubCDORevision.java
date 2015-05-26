@@ -185,7 +185,7 @@ public class StubCDORevision extends AbstractCDORevision
 
   public int getVersion()
   {
-    throw new UnsupportedOperationException(getExceptionMessage());
+    return 0;
   }
 
   public long getRevised()
@@ -218,7 +218,7 @@ public class StubCDORevision extends AbstractCDORevision
    */
   public InternalCDOBranch getBranch()
   {
-    throw new UnsupportedOperationException(getExceptionMessage());
+    return null;
   }
 
   public long getTimeStamp()

@@ -20,11 +20,10 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.junit.Assert;
-
-import javax.annotation.Resource;
 
 /**
  * Bug 435198 about {@link CDOResource} added to the {@link ResourceSet} even when we call {@link CDOView#getObject(CDOID)}

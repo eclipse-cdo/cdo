@@ -620,7 +620,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
         if (event instanceof CDOViewLocksChangedEvent)
         {
           CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
-          EObject[] objects = e.getAffectedObjects(view);
+          EObject[] objects = e.getAffectedObjects();
           if (objects.length != 0)
           {
             CDOCheckoutManagerImpl manager = getManager();

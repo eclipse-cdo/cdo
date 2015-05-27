@@ -1011,7 +1011,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       else if (event instanceof CDOViewLocksChangedEvent)
       {
         CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
-        EObject[] objects = e.getAffectedObjects(e.getSource());
+        EObject[] objects = e.getAffectedObjects();
         if (objects.length != 0)
         {
           updateLabels(objects);

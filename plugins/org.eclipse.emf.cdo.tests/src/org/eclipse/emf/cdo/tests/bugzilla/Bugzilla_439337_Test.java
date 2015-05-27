@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl.OptionsImpl;
+
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.SignalCounter;
 
@@ -81,7 +83,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOView view = session.openView();
-    view.options().setLockStatePrefetchEnabled(true);
+    ((OptionsImpl)view.options()).setLockStatePrefetchEnabled(true);
     testCDOLockState(view, true);
   }
 

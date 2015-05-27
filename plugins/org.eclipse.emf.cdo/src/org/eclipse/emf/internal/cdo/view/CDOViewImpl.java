@@ -45,10 +45,8 @@ import org.eclipse.emf.cdo.util.LockTimeoutException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
-import org.eclipse.emf.cdo.view.CDODefaultLockStateLoadingPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
-import org.eclipse.emf.cdo.view.CDOLockStateLoadingPolicy;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -80,6 +78,7 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 import org.eclipse.net4j.util.ref.ReferenceValueMap;
@@ -2013,7 +2012,7 @@ public class CDOViewImpl extends AbstractCDOView
    * @author Eike Stepper
    * @since 2.0
    */
-  protected class OptionsImpl extends Notifier implements Options
+  public class OptionsImpl extends Notifier implements Options
   {
     private boolean loadNotificationEnabled;
 
@@ -2559,9 +2558,15 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     /**
+     * An {@link IOptionsEvent options event} fired from common view {@link CDOCommonView#options() options} when the
+     * {@link OptionsImpl#setLockStatePrefetchEnabled(boolean) lock state prefetch enabled} option has changed.
+     *
      * @author Esteban Dugueperoux
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     * @since 4.4
      */
-    private final class LockStatePrefetchEventImpl extends OptionsEvent implements LockStatePrefetchEvent
+    private final class LockStatePrefetchEventImpl extends OptionsEvent
     {
       private static final long serialVersionUID = 1L;
 

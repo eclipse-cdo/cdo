@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewContainer;
+import org.eclipse.emf.cdo.view.CDOViewProvider;
 
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
@@ -42,6 +43,8 @@ import java.util.Set;
  */
 public abstract class CDOViewContainerImpl extends Container<CDOView>implements CDOViewContainer
 {
+  public static final ThreadLocal<CDOViewProvider> VIEW_PROVIDER = new ThreadLocal<CDOViewProvider>();
+
   private Set<InternalCDOView> views = new HashSet<InternalCDOView>();
 
   @ExcludeFromDump
@@ -247,6 +250,12 @@ public abstract class CDOViewContainerImpl extends Container<CDOView>implements 
    */
   protected void initView(InternalCDOView view, ResourceSet resourceSet)
   {
+    CDOViewProvider viewProvider = VIEW_PROVIDER.get();
+    if (viewProvider != null)
+    {
+      view.setProvider(viewProvider);
+    }
+
     InternalCDOViewSet viewSet = SessionUtil.prepareResourceSet(resourceSet);
     synchronized (views)
     {

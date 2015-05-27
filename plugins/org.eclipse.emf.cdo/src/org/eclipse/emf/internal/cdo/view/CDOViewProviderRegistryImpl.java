@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
+import org.eclipse.emf.internal.cdo.session.CDOViewContainerImpl;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -148,10 +149,19 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider>imple
       }
     }
 
-    InternalCDOView view = (InternalCDOView)viewProvider.getView(uri, resourceSet);
-    if (view != null)
+    try
     {
-      return view;
+      CDOViewContainerImpl.VIEW_PROVIDER.set(viewProvider);
+
+      InternalCDOView view = (InternalCDOView)viewProvider.getView(uri, resourceSet);
+      if (view != null)
+      {
+        return view;
+      }
+    }
+    finally
+    {
+      CDOViewContainerImpl.VIEW_PROVIDER.remove();
     }
 
     return null;

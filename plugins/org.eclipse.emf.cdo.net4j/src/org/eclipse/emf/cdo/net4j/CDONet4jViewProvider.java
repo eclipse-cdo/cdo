@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -89,7 +90,10 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   @Override
   public URI getViewURI(URI uri)
   {
-    return super.getViewURI(uri).appendSegment(uri.segment(1));
+    CDOURIData uriData = new CDOURIData(uri);
+    uriData.setResourcePath(null);
+    uriData.setExtraParameters(null);
+    return uriData.toURI();
   }
 
   @Override
@@ -119,7 +123,12 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
     // builder.append("@");
     // }
 
-    IConnector connector = (IConnector)session.options().getNet4jProtocol().getChannel().getMultiplexer();
+    IChannel channel = session.options().getNet4jProtocol().getChannel();
+    if (channel == null)
+    {
+      return null;
+    }
+    IConnector connector = (IConnector)channel.getMultiplexer();
     String repositoryName = session.getRepositoryInfo().getName();
     append(builder, connector, repositoryName);
 

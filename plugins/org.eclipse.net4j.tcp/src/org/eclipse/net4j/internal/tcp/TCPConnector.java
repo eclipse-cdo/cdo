@@ -159,12 +159,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     StringBuilder builder = new StringBuilder();
     builder.append(getProtocolString());
     builder.append(host);
-    if (port != DEFAULT_PORT)
-    {
-      builder.append(":");
-      builder.append(port);
-    }
-
+    builder.append(":");
+    builder.append(port);
     return builder.toString();
   }
 

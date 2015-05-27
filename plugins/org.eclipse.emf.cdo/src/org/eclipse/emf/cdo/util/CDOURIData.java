@@ -324,6 +324,14 @@ public final class CDOURIData
     return extraParameters;
   }
 
+  /**
+   * @since 4.4
+   */
+  public void setExtraParameters(Map<String, String> extraParameters)
+  {
+    this.extraParameters = extraParameters;
+  }
+
   public URI toURI()
   {
     return URI.createURI(toString());

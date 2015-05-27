@@ -194,7 +194,7 @@
 
 		<!-- ORACLE.COM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.oracle.com/otn_software/oepe/luna"/>
+			<rm:uri format="http://download.oracle.com/otn_software/oepe/12.1.3.6/mars/repository"/>
 		</rm:provider>
 
 		<!-- EVLER.ORG -->

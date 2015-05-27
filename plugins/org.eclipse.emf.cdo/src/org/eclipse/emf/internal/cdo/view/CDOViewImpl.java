@@ -1285,7 +1285,7 @@ public class CDOViewImpl extends AbstractCDOView
           options.lockStatePrefetcher = null;
         }
 
-        if (!lockStates.isEmpty())
+        if (session.isActive() && !lockStates.isEmpty())
         {
           List<CDOLockState> result = new ArrayList<CDOLockState>();
           for (CDOLockState lockState : lockStates.values())

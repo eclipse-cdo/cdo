@@ -137,7 +137,7 @@ public final class CDOURIUtil
         {
           CDOViewProvider2 viewProvider = (CDOViewProvider2)viewProviders[i];
           String path = viewProvider.getPath(uri);
-          if (path != null)
+          if (path != null && !StringUtil.isEmpty(path))
           {
             return path;
           }

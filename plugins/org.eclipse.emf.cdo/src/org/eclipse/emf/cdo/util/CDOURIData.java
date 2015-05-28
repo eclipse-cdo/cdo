@@ -135,6 +135,10 @@ public final class CDOURIData
       IPath path = new Path(uri.path()).makeAbsolute();
       repositoryName = path.segment(0);
       resourcePath = path.removeFirstSegments(1);
+      if (resourcePath == null || resourcePath.isEmpty())
+      {
+        resourcePath = new Path(CDOURIUtil.SEGMENT_SEPARATOR);
+      }
 
       String query = uri.query();
       if (query != null && query.length() != 0)

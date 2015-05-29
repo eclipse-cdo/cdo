@@ -68,7 +68,7 @@ public final class CDOBranchUtil
         if (branch == null)
         {
           throw new IllegalArgumentException("Time " + CDOCommonUtil.formatTimeStamp(timeStamp)
-          + " is before the repository creation time " + CDOCommonUtil.formatTimeStamp(baseTime));
+              + " is before the repository creation time " + CDOCommonUtil.formatTimeStamp(baseTime));
         }
       }
       else

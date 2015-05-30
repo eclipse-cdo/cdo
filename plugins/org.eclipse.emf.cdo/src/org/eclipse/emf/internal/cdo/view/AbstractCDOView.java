@@ -146,6 +146,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private CDOBranchPoint branchPoint;
 
+  private CDOBranchPoint normalizedBranchPoint;
+
   private CDOViewProvider provider;
 
   private InternalCDOViewSet viewSet;
@@ -485,6 +487,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return branchPoint;
   }
 
+  protected synchronized CDOBranchPoint getNormalizedBranchPoint()
+  {
+    return normalizedBranchPoint;
+  }
+
   public synchronized boolean setBranch(CDOBranch branch)
   {
     return setBranchPoint(branch, getTimeStamp(), null);
@@ -524,10 +531,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   protected synchronized CDOBranchPoint basicSetBranchPoint(CDOBranchPoint branchPoint)
   {
     this.branchPoint = adjustBranchPoint(branchPoint);
+    normalizedBranchPoint = CDOBranchUtil.normalizeBranchPoint(this.branchPoint);
     return this.branchPoint;
   }
 
-  protected CDOBranchPoint adjustBranchPoint(CDOBranchPoint branchPoint)
+  protected final CDOBranchPoint adjustBranchPoint(CDOBranchPoint branchPoint)
   {
     CDOSession session = getSession();
     if (session != null)

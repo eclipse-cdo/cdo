@@ -481,7 +481,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     long now = getLastUpdateTime();
     CDOBranchPoint target = getBranch().getPoint(now);
 
-    if (source.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+    if (source.getTimeStamp() == UNSPECIFIED_DATE)
     {
       source = source.getBranch().getPoint(now);
     }
@@ -680,7 +680,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         goalRevision.setVersion(targetRevision.getVersion());
       }
 
-      goalRevision.setRevised(CDOBranchPoint.UNSPECIFIED_DATE);
+      goalRevision.setRevised(UNSPECIFIED_DATE);
       ancestorGoalDelta.applyTo(goalRevision);
 
       InternalCDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);

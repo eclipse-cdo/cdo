@@ -55,9 +55,49 @@ public final class CDOBranchUtil
   }
 
   /**
+   * @since 4.4
+   */
+  public static CDOBranchPoint adjustBranchPoint(CDOBranchPoint branchPoint, CDOBranchManager branchManager)
+  {
+    CDOBranch branch = branchPoint.getBranch();
+    if (branch.getBranchManager() != branchManager)
+    {
+      branch = branchManager.getBranch(branch.getID());
+      branchPoint = branch.getPoint(branchPoint.getTimeStamp());
+    }
+
+    return branchPoint;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static CDOBranchPoint normalizeBranchPoint(CDOBranchPoint branchPoint)
+  {
+    long timeStamp = branchPoint.getTimeStamp();
+    if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      return branchPoint;
+    }
+
+    CDOBranch branch = branchPoint.getBranch();
+    return doNormalizeBranchPoint(branch, timeStamp);
+  }
+
+  /**
    * @since 4.2
    */
   public static CDOBranchPoint normalizeBranchPoint(CDOBranch branch, long timeStamp)
+  {
+    if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      return branch.getHead();
+    }
+
+    return doNormalizeBranchPoint(branch, timeStamp);
+  }
+
+  private static CDOBranchPoint doNormalizeBranchPoint(CDOBranch branch, long timeStamp)
   {
     for (;;)
     {
@@ -76,21 +116,6 @@ public final class CDOBranchUtil
         return branch.getPoint(timeStamp);
       }
     }
-  }
-
-  /**
-   * @since 4.4
-   */
-  public static CDOBranchPoint adjustBranchPoint(CDOBranchPoint branchPoint, CDOBranchManager branchManager)
-  {
-    CDOBranch branch = branchPoint.getBranch();
-    if (branch.getBranchManager() != branchManager)
-    {
-      branch = branchManager.getBranch(branch.getID());
-      branchPoint = branch.getPoint(branchPoint.getTimeStamp());
-    }
-
-    return branchPoint;
   }
 
   public static boolean isContainedBy(CDOBranchPoint contained, CDOBranchPoint container)

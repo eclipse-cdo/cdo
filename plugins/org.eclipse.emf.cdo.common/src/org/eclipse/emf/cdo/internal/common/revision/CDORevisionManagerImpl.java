@@ -301,17 +301,6 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk,
       int prefetchDepth, boolean loadOnDemand, SyntheticCDORevision[] synthetics)
   {
-    long timeStamp = branchPoint.getTimeStamp();
-    if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-    {
-      CDOBranch branch = branchPoint.getBranch();
-      long baseTime = branch.getBase().getTimeStamp();
-      if (timeStamp < baseTime)
-      {
-        branchPoint = CDOBranchUtil.normalizeBranchPoint(branch, timeStamp);
-      }
-    }
-
     RevisionInfo[] infos = new RevisionInfo[ids.size()];
     List<RevisionInfo> infosToLoad = createRevisionInfos(ids, branchPoint, prefetchDepth, loadOnDemand, infos);
     if (infosToLoad != null)

@@ -245,7 +245,7 @@ public class CDOViewImpl extends AbstractCDOView
     try
     {
       CDOStateMachine.SWITCHING_TARGET.set(Boolean.TRUE);
-      doInvalidate(branch, CDOBranchPoint.UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects, oldRevisions, true);
+      doInvalidate(branch, UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects, oldRevisions, true);
     }
     finally
     {
@@ -300,7 +300,7 @@ public class CDOViewImpl extends AbstractCDOView
       boolean recursive) throws InterruptedException
   {
     checkActive();
-    checkState(getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE, "Locking not supported for historial views");
+    checkState(getTimeStamp() == UNSPECIFIED_DATE, "Locking not supported for historial views");
 
     Set<? extends CDOObject> uniqueObjects = getSet(objects);
     int size = uniqueObjects.size();
@@ -837,8 +837,8 @@ public class CDOViewImpl extends AbstractCDOView
     // If this view's timestamp is something other than UNSPECIFIED_DATE,
     // then this is an 'audit' view, and so this timestamp must always be
     // used without any concern for possible sticky-view behavior
-    CDOBranchPoint branchPoint = getBranchPoint();
-    if (branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE)
+    CDOBranchPoint branchPoint = getNormalizedBranchPoint();
+    if (branchPoint.getTimeStamp() != UNSPECIFIED_DATE)
     {
       return branchPoint;
     }
@@ -903,7 +903,7 @@ public class CDOViewImpl extends AbstractCDOView
       List<CDORevisionKey> allChangedObjects, List<CDOIDAndVersion> allDetachedObjects,
       Map<CDOID, InternalCDORevision> oldRevisions, boolean clearResourcePathCache)
   {
-    if (getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE && CDOStateMachine.SWITCHING_TARGET.get() != Boolean.TRUE)
+    if (getTimeStamp() != UNSPECIFIED_DATE && CDOStateMachine.SWITCHING_TARGET.get() != Boolean.TRUE)
     {
       // Don't invalidate historical views unless during a branch point switch.
       return;

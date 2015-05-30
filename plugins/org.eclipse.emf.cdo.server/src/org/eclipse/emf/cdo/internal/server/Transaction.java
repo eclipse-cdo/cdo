@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
@@ -48,7 +49,9 @@ public class Transaction extends View implements InternalTransaction
   public InternalCommitContext createCommitContext()
   {
     checkOpen();
-    return getRepository().createCommitContext(this);
+
+    InternalRepository repository = getRepository();
+    return repository.createCommitContext(this);
   }
 
   /**
@@ -59,12 +62,13 @@ public class Transaction extends View implements InternalTransaction
   public InternalCommitContext testCreateCommitContext(final long timeStamp)
   {
     checkOpen();
+
     return new TransactionCommitContext(this)
     {
       @Override
       protected long[] createTimeStamp(OMMonitor monitor)
       {
-        return new long[] { timeStamp, CDOBranchPoint.UNSPECIFIED_DATE };
+        return new long[] { timeStamp, UNSPECIFIED_DATE };
       }
     };
   }

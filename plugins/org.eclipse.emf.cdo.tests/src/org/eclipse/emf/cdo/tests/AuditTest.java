@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -439,9 +438,9 @@ public class AuditTest extends AbstractCDOTest
 
       session = openSession2();
       session.openView(timeStampPriorToRepoCreation);
-      fail("RemoteException expected");
+      fail("IllegalArgumentException expected");
     }
-    catch (RemoteException eexpected)
+    catch (IllegalArgumentException expected)
     {
       // Success
     }

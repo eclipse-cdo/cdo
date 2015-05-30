@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
@@ -51,6 +52,8 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   // deactivation!
 
   private CDOBranchPoint branchPoint;
+
+  private CDOBranchPoint normalizedBranchPoint;
 
   private String durableLockingID;
 
@@ -135,7 +138,14 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public InternalCDORevision getRevision(CDOID id)
   {
     CDORevisionManager revisionManager = repository.getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevision(id, this, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
+    return (InternalCDORevision)revisionManager.getRevision(id, normalizedBranchPoint, CDORevision.UNCHUNKED,
+        CDORevision.DEPTH_NONE, true);
+  }
+
+  private List<CDORevision> getRevisions(List<CDOID> ids)
+  {
+    InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+    return revisionManager.getRevisions(ids, normalizedBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
         true);
   }
 
@@ -145,7 +155,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     List<CDORevision> oldRevisions = getRevisions(invalidObjects);
     setBranchPoint(branchPoint);
     List<CDORevision> newRevisions = getRevisions(invalidObjects);
-
+  
     Iterator<CDORevision> it = newRevisions.iterator();
     for (CDORevision oldRevision : oldRevisions)
     {
@@ -159,17 +169,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
         // Fix for Bug 369646: ensure that revisions are fully loaded
         repository.ensureChunks((InternalCDORevision)newRevision, CDORevision.UNCHUNKED);
         repository.ensureChunks((InternalCDORevision)oldRevision, CDORevision.UNCHUNKED);
-
+  
         CDORevisionDelta delta = newRevision.compare(oldRevision);
         allChangedObjects.add(delta);
       }
     }
-  }
-
-  private List<CDORevision> getRevisions(List<CDOID> ids)
-  {
-    return repository.getRevisionManager().getRevisions(ids, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE,
-        true);
   }
 
   public void setBranchPoint(CDOBranchPoint branchPoint)
@@ -179,6 +183,7 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
 
     InternalCDOBranchManager branchManager = getSession().getManager().getRepository().getBranchManager();
     this.branchPoint = CDOBranchUtil.adjustBranchPoint(branchPoint, branchManager);
+    normalizedBranchPoint = CDOBranchUtil.normalizeBranchPoint(this.branchPoint);
   }
 
   protected void validateTimeStamp(long timeStamp) throws IllegalArgumentException

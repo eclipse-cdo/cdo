@@ -191,14 +191,23 @@ public class ComposeBranchPointComposite extends Composite
       public void selectionChanged(SelectionChangedEvent event)
       {
         IStructuredSelection selection = (IStructuredSelection)event.getSelection();
-        CDOBranch branch = (CDOBranch)selection.getFirstElement();
-
-        if (timeStampComposite != null)
+        Object element = selection.getFirstElement();
+        if (element == null)
         {
-          timeStampComposite.setBranch(branch);
+          return;
         }
 
-        composeBranchPoint();
+        if (element instanceof CDOBranch)
+        {
+          CDOBranch branch = (CDOBranch)element;
+
+          if (timeStampComposite != null)
+          {
+            timeStampComposite.setBranch(branch);
+          }
+
+          composeBranchPoint();
+        }
       }
     });
 

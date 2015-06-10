@@ -25,7 +25,6 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.List;
@@ -43,14 +42,13 @@ public class InteractiveConflictHandlerSelector implements ConflictHandlerSelect
   {
     final ConflictHandler[] result = { null };
 
-    final IWorkbenchPage workbenchPage = UIUtil.getActiveWorkbenchPage();
-
-    Display display = workbenchPage.getWorkbenchWindow().getShell().getDisplay();
-    display.syncExec(new Runnable()
+    UIUtil.getDisplay().syncExec(new Runnable()
     {
       public void run()
       {
+        IWorkbenchPage workbenchPage = UIUtil.getActiveWorkbenchPage();
         String title = "Conflict Error";
+
         new RollbackTransactionDialog(workbenchPage, title, title, transaction)
         {
           @Override

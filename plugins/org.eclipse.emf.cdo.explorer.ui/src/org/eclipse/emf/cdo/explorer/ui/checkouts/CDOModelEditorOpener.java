@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -34,6 +35,9 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class CDOModelEditorOpener extends CDOEditorOpener.Default
 {
+  private static final boolean INTERACTIVE_CONFLICT_RESOLUTION = "true"
+      .equalsIgnoreCase(System.getProperty("INTERACTIVE_CONFLICT_RESOLUTION"));
+
   public CDOModelEditorOpener()
   {
   }
@@ -98,10 +102,17 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
   @SuppressWarnings("restriction")
   protected void configureTransaction(CDOTransaction transaction)
   {
-    org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver conflictResolver = new org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver();
-    conflictResolver.setConflictHandlerSelector(new InteractiveConflictHandlerSelector());
+    if (INTERACTIVE_CONFLICT_RESOLUTION)
+    {
+      org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver conflictResolver = new org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver();
+      conflictResolver.setConflictHandlerSelector(new InteractiveConflictHandlerSelector());
 
-    transaction.options().addConflictResolver(conflictResolver);
+      transaction.options().addConflictResolver(conflictResolver);
+    }
+    else
+    {
+      transaction.options().addConflictResolver(new CDOMergingConflictResolver());
+    }
   }
 
   private IEditorPart openEditor(IWorkbenchPage page, CDOView view, String resourcePath)

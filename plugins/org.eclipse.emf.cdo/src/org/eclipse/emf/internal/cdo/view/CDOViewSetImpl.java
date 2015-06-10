@@ -159,7 +159,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       CDOView lookupView = mapOfViews.get(viewURI);
       if (lookupView != null)
       {
-        throw new RuntimeException(Messages.getString("CDOViewSetImpl.2")); //$NON-NLS-1$
+        throw new RuntimeException(MessageFormat.format(Messages.getString("CDOViewSetImpl.2"), viewURI)); //$NON-NLS-1$
       }
 
       views.add(view);

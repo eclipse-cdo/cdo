@@ -148,7 +148,7 @@ public class CDORepositoriesView extends ContainerView
           properties.setProperty(LocalCDORepository.PROP_LABEL, "repo2");
           properties.setProperty(LocalCDORepository.PROP_NAME, "repo2");
           properties.setProperty(CDORepositoryImpl.PROP_VERSIONING_MODE, VersioningMode.Branching.toString());
-          properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, IDGeneration.UUID.toString());
+          properties.setProperty(CDORepositoryImpl.PROP_ID_GENERATION, IDGeneration.Counter.toString());
           properties.setProperty(LocalCDORepository.PROP_TCP_DISABLED, "false");
           properties.setProperty(LocalCDORepository.PROP_TCP_PORT, "2037");
 
@@ -177,7 +177,7 @@ public class CDORepositoriesView extends ContainerView
 
             transaction.commit();
 
-            RepositoryCheckoutHandlerQuick.checkout(repository, CDOCheckout.TYPE_ONLINE_HISTORICAL);
+            RepositoryCheckoutHandlerQuick.checkout(repository, CDOCheckout.TYPE_ONLINE_TRANSACTIONAL);
 
           }
           catch (ConcurrentAccessException ex)

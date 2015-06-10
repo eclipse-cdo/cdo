@@ -80,19 +80,22 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
 
   public boolean preCommit()
   {
-    if (isConflict() && conflictHandlerSelector != null)
+    if (isConflict())
     {
       CDOTransaction transaction = getTransaction();
-      List<ConflictHandler> conflictHandlers = getConflictHandlers(transaction);
-      if (!conflictHandlers.isEmpty())
-      {
-        ConflictHandler conflictHandler = conflictHandlerSelector.selectConflictHandler(transaction, conflictHandlers);
-        if (conflictHandler == null)
-        {
-          // Cancel selected.
-          return false;
-        }
+      ConflictHandler conflictHandler;
 
+      try
+      {
+        conflictHandler = getConflictHandler(transaction);
+      }
+      catch (CancelException ex)
+      {
+        return false;
+      }
+
+      if (conflictHandler != null)
+      {
         long lastNonConflictTimeStamp = getLastNonConflictTimeStamp();
         return handleConflict(conflictHandler, lastNonConflictTimeStamp);
       }
@@ -111,7 +114,29 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
     return IPluginContainer.INSTANCE;
   }
 
-  private List<ConflictHandler> getConflictHandlers(CDOTransaction transaction)
+  protected ConflictHandler getConflictHandler(CDOTransaction transaction) throws CancelException
+  {
+    if (conflictHandlerSelector == null)
+    {
+      return null;
+    }
+
+    List<ConflictHandler> conflictHandlers = getConflictHandlers(transaction);
+    if (conflictHandlers.isEmpty())
+    {
+      return null;
+    }
+
+    ConflictHandler conflictHandler = conflictHandlerSelector.selectConflictHandler(transaction, conflictHandlers);
+    if (conflictHandler == null)
+    {
+      throw new CancelException();
+    }
+
+    return conflictHandler;
+  }
+
+  protected List<ConflictHandler> getConflictHandlers(CDOTransaction transaction)
   {
     List<ConflictHandler> result = new ArrayList<ConflictHandler>();
 
@@ -140,6 +165,18 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
     });
 
     return result;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  protected static final class CancelException extends Exception
+  {
+    private static final long serialVersionUID = 1L;
+
+    public CancelException()
+    {
+    }
   }
 
   /**

@@ -44,7 +44,7 @@
 
 	<rm:searchPath name="p2">
 
-		<!-- RELEASE TRAIN 
+		<!-- RELEASE TRAIN
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/releases/{0}">
 				<bc:propertyRef key="train"/>
@@ -154,28 +154,10 @@
 			<rm:uri format="http://download.eclipse.org/mylyn/snapshots/weekly"/>
 		</rm:provider>
 
-		<!-- EGIT 
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/egit/updates-nightly"/>
-		</rm:provider>
-      -->
-
 		<!-- BUCKMINSTER -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/tools/buckminster/headless-4.4"/>
 		</rm:provider>
-
-		<!-- M2E 
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/technology/m2e/milestones/1.5"/>
-		</rm:provider>
-      -->
-
-		<!-- WEB TOOLS 
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/webtools/repository/luna"/>
-		</rm:provider>
-      -->
 
 		<!-- NEBULA -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
@@ -184,7 +166,7 @@
 
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-      		<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
+  		<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
 		</rm:provider>
 
 		<!-- TENEO -->
@@ -208,7 +190,7 @@
 		<!-- OOMPH -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<rm:uri format="http://download.eclipse.org/oomph/updates"/>
-		</rm:provider>		
+		</rm:provider>
 
 	</rm:searchPath>
 

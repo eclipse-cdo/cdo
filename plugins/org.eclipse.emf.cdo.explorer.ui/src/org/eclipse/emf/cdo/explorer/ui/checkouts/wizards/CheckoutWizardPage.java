@@ -152,6 +152,10 @@ public abstract class CheckoutWizardPage extends WizardPage
   {
     private static final long serialVersionUID = 1L;
 
+    public ValidationProblem()
+    {
+    }
+
     public ValidationProblem(String message)
     {
       super(message);

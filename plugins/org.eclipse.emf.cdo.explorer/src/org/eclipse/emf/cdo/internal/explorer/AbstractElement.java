@@ -151,15 +151,9 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
 
     AbstractManager<?> manager = getManager();
-    if (manager != null)
+    if (manager != null && manager.getElementByLabel(label) != null)
     {
-      for (CDOExplorerElement element : manager.getElements())
-      {
-        if (ObjectUtil.equals(element.getLabel(), label))
-        {
-          return "Label is not unique.";
-        }
-      }
+      return "Label is not unique.";
     }
 
     return null;

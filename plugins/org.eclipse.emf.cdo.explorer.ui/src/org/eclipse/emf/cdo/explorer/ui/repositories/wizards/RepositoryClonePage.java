@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.ValidationProblem;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CloneCDORepository;
 import org.eclipse.emf.cdo.server.IRepositorySynchronizer;
 
@@ -35,9 +36,9 @@ public class RepositoryClonePage extends AbstractRepositoryPage
 
   public RepositoryClonePage()
   {
-    super("clone", "Clone Repository 1");
+    super("clone", "Clone Repository");
     setTitle("New Clone Repository");
-    setMessage("Enter the label and the connection parameters of the new remote location.");
+    setMessage("Enter label and connection parameters of the new clone repository.");
   }
 
   @Override
@@ -78,13 +79,13 @@ public class RepositoryClonePage extends AbstractRepositoryPage
     if (StringUtil.isEmpty(connectorDescription))
     {
       // TODO Port could be empty/invalid!
-      throw new Exception("Host is empty.");
+      throw new ValidationProblem("Host is empty.");
     }
 
     String repositoryName = controller.getRepositoryName();
     if (StringUtil.isEmpty(repositoryName))
     {
-      throw new Exception("Repository name is empty.");
+      throw new ValidationProblem("Repository name is empty.");
     }
 
     String reconnectSeconds = reconnectSecondsText.getText();
@@ -94,12 +95,12 @@ public class RepositoryClonePage extends AbstractRepositoryPage
       int value = Integer.parseInt(reconnectSeconds);
       if (value < 0)
       {
-        throw new Exception();
+        throw new ValidationProblem();
       }
     }
     catch (Exception ex)
     {
-      throw new Exception("Invalid reconnect seconds.");
+      throw new ValidationProblem("Invalid reconnect seconds.");
     }
 
     String recommitSeconds = recommitSecondsText.getText();
@@ -109,12 +110,12 @@ public class RepositoryClonePage extends AbstractRepositoryPage
       int value = Integer.parseInt(recommitSeconds);
       if (value < 0)
       {
-        throw new Exception();
+        throw new ValidationProblem();
       }
     }
     catch (Exception ex)
     {
-      throw new Exception("Invalid recommit seconds.");
+      throw new ValidationProblem("Invalid recommit seconds.");
     }
 
     String recommitAttempts = recommitAttemptsText.getText();
@@ -129,7 +130,7 @@ public class RepositoryClonePage extends AbstractRepositoryPage
     }
     catch (Exception ex)
     {
-      throw new Exception("Invalid recommit attempts.");
+      throw new ValidationProblem("Invalid recommit attempts.");
     }
 
     properties.setProperty(CloneCDORepository.PROP_CONNECTOR_TYPE, "tcp");

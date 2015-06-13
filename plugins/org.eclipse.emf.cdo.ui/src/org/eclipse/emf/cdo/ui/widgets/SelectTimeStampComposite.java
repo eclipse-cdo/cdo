@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.OpenAuditDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.ValidationContext;
 import org.eclipse.net4j.util.ui.ValidationParticipant;
@@ -73,7 +74,7 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
    */
   public SelectTimeStampComposite(Composite parent, int style)
   {
-    this(parent, style, null, CDOBranchPoint.INVALID_DATE);
+    this(parent, style, null, CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
   public SelectTimeStampComposite(Composite parent, int style, CDOBranch branch, long timeStamp)
@@ -123,7 +124,8 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
     timeText = new Text(pointGroup, SWT.BORDER);
     timeText.setLayoutData(createTimeGridData());
-    timeText.setText(CDOCommonUtil.formatTimeStamp(timeStamp));
+    timeText.setText(CDOCommonUtil
+        .formatTimeStamp(timeStamp > CDOBranchPoint.UNSPECIFIED_DATE ? timeStamp : System.currentTimeMillis()));
     timeText.addModifyListener(new ModifyListener()
     {
       public void modifyText(ModifyEvent e)
@@ -176,7 +178,6 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
 
     this.timeStamp = timeStamp;
     setBranch(branch);
-    // setTimeStamp(timeStamp);
   }
 
   public ValidationContext getValidationContext()
@@ -283,10 +284,34 @@ public class SelectTimeStampComposite extends Composite implements ValidationPar
   {
     try
     {
-      setTimeStamp(CDOCommonUtil.parseTimeStamp(timeText.getText()));
+      String text = timeText.getText();
+      if (StringUtil.isEmpty(text))
+      {
+        if (validationContext != null)
+        {
+          validationContext.setValidationError(timeText, "Please enter a valid time stamp.");
+        }
+
+        return;
+      }
+
+      long timeStamp = CDOCommonUtil.parseTimeStamp(text);
+      setTimeStamp(timeStamp);
+
       if (validationContext != null)
       {
-        validationContext.setValidationError(timeText, null);
+        String message = null;
+
+        if (branch != null && timeStamp != CDOBranchPoint.UNSPECIFIED_DATE && timeStamp != CDOBranchPoint.INVALID_DATE)
+        {
+          long repositoryCreation = branch.getBranchManager().getMainBranch().getBase().getTimeStamp();
+          if (timeStamp < repositoryCreation)
+          {
+            message = "The repository did not exist before " + CDOCommonUtil.formatTimeStamp(repositoryCreation) + ".";
+          }
+        }
+
+        validationContext.setValidationError(timeText, message);
       }
     }
     catch (ParseException ex)

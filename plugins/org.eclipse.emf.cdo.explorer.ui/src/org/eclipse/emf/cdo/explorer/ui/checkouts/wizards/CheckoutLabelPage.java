@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.swt.SWT;
@@ -67,12 +68,12 @@ public class CheckoutLabelPage extends CheckoutWizardPage
 
   public final void setLabel(String label)
   {
-    if (this.label != label)
+    if (!ObjectUtil.equals(this.label, label))
     {
       log("Setting label to " + label);
       this.label = label;
 
-      if (labelText != null)
+      if (labelText != null && !labelText.getText().equals(label))
       {
         labelText.setText(StringUtil.safe(label));
       }
@@ -118,6 +119,7 @@ public class CheckoutLabelPage extends CheckoutWizardPage
     {
       public void modifyText(ModifyEvent e)
       {
+        setLabel(labelText.getText());
         validate();
       }
     });
@@ -156,7 +158,9 @@ public class CheckoutLabelPage extends CheckoutWizardPage
   {
     CheckoutWizard wizard = getWizard();
     repositoryLabel.setText(wizard.getRepositoryPage().getRepository().getLabel());
-    typeLabel.setText(wizard.getTypePage().getType());
+
+    String type = wizard.getTypePage().getType();
+    typeLabel.setText(type);
 
     CDOBranchPoint branchPoint = wizard.getBranchPointPage().getBranchPoint();
     branchLabel.setText(branchPoint.getBranch().getPathName());
@@ -165,25 +169,10 @@ public class CheckoutLabelPage extends CheckoutWizardPage
     String rootObjectText = wizard.getRootObjectPage().getRootObjectText();
     rootLabel.setText(rootObjectText);
 
-    if (label == null)
+    if (StringUtil.isEmpty(label))
     {
-      Set<String> names = new HashSet<String>();
-
-      CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
-      for (CDOCheckout checkout : checkoutManager.getCheckouts())
-      {
-        names.add(checkout.getLabel());
-      }
-
-      for (int i = 1; i < Integer.MAX_VALUE; i++)
-      {
-        String name = i == 1 ? rootObjectText : rootObjectText + " (" + i + ")";
-        if (!names.contains(name))
-        {
-          setLabel(name);
-          break;
-        }
-      }
+      String label = StringUtil.capAll(type.replace('-', ' ')) + " Checkout";
+      setLabel(getUniqueLabel(label));
     }
 
     labelText.setFocus();
@@ -211,13 +200,9 @@ public class CheckoutLabelPage extends CheckoutWizardPage
       }
     }
 
-    CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
-    for (CDOCheckout checkout : checkoutManager.getCheckouts())
+    if (CDOExplorerUtil.getCheckoutManager().getCheckoutByLabel(label) != null)
     {
-      if (label.equals(checkout.getLabel()))
-      {
-        throw new ValidationProblem("Label is not unique.");
-      }
+      throw new ValidationProblem("Label is not unique.");
     }
 
     return true;

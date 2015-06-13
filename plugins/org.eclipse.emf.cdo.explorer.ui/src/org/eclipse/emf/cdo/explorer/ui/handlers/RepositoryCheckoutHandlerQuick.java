@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -46,10 +47,11 @@ public class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler<CDORepos
   {
     CDORepository repository = repositoryElement.getRepository();
     String readOnly = (CDOCheckout.TYPE_ONLINE_HISTORICAL.equals(type) ? Boolean.TRUE : Boolean.FALSE).toString();
+    String label = StringUtil.capAll(type.replace('-', ' ')) + " Checkout";
 
     Properties properties = new Properties();
     properties.setProperty("type", type);
-    properties.setProperty("label", CheckoutLabelPage.getUniqueLabel(repository.getLabel()));
+    properties.setProperty("label", CheckoutLabelPage.getUniqueLabel(label));
     properties.setProperty("repository", repository.getID());
     properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
     properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));

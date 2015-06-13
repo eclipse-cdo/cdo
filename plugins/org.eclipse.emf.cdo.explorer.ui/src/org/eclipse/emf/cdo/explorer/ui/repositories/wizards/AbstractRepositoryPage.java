@@ -10,8 +10,14 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.ValidationProblem;
+import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
@@ -26,7 +32,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -43,7 +51,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
   {
     super(pageName);
     setImageDescriptor(OM.getImageDescriptor("icons/wiz/new_repo.gif"));
-    this.defaultLabel = defaultLabel;
+    this.defaultLabel = getUniqueLabel(defaultLabel);
   }
 
   @Override
@@ -75,6 +83,13 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
     labelText = new Text(container, SWT.BORDER);
     labelText.setText(defaultLabel);
     labelText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+    labelText.addModifyListener(new ModifyListener()
+    {
+      public void modifyText(ModifyEvent e)
+      {
+        validate();
+      }
+    });
 
     fillPage(container);
 
@@ -121,7 +136,24 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
     String label = labelText.getText();
     if (label.length() == 0)
     {
-      throw new Exception("Label is empty.");
+      throw new ValidationProblem("Label is empty.");
+    }
+
+    for (int i = 0; i < label.length(); i++)
+    {
+      char c = label.charAt(i);
+      for (int j = 0; j < AbstractElement.ILLEGAL_LABEL_CHARACTERS.length(); j++)
+      {
+        if (c == AbstractElement.ILLEGAL_LABEL_CHARACTERS.charAt(j))
+        {
+          throw new ValidationProblem("Invalid character: " + AbstractElement.ILLEGAL_LABEL_CHARACTERS.substring(j, 1));
+        }
+      }
+    }
+
+    if (((CDORepositoryManagerImpl)CDOExplorerUtil.getRepositoryManager()).getRepositoryByLabel(label) != null)
+    {
+      throw new ValidationProblem("Label is not unique.");
     }
 
     properties.setProperty(CDORepositoryImpl.PROP_LABEL, label);
@@ -145,5 +177,27 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
     Text text = new Text(container, SWT.BORDER);
     text.setLayoutData(gridData);
     return text;
+  }
+
+  public static String getUniqueLabel(String label)
+  {
+    Set<String> names = new HashSet<String>();
+
+    CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
+    for (CDORepository repository : repositoryManager.getRepositories())
+    {
+      names.add(repository.getLabel());
+    }
+
+    for (int i = 1; i < Integer.MAX_VALUE; i++)
+    {
+      String name = i == 1 ? label : label + " (" + i + ")";
+      if (!names.contains(name))
+      {
+        return name;
+      }
+    }
+
+    throw new IllegalStateException("Too many repositories");
   }
 }

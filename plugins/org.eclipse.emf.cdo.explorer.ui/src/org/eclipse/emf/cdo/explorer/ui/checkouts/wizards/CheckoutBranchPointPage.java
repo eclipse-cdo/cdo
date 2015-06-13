@@ -177,6 +177,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
             CDOBranch branch = branchPoint.getBranch();
             branchViewer.setSelection(new StructuredSelection(branch));
             branchViewer.expandToLevel(branch, 1);
+            validate();
           }
         });
       }

@@ -193,8 +193,18 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
           @Override
           protected IStatus run(IProgressMonitor monitor)
           {
+            CDOTransaction transaction;
+
             CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
-            CDOTransaction transaction = checkout.openTransaction();
+            if (checkout != null)
+            {
+              transaction = checkout.openTransaction();
+            }
+            else
+            {
+              CDOView view = resourceNode.cdoView();
+              transaction = view.getSession().openTransaction(view.getBranch());
+            }
 
             CDOCommitInfo commitInfo = null;
 
@@ -214,7 +224,7 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
               transaction.close();
             }
 
-            if (commitInfo != null)
+            if (commitInfo != null && checkout != null)
             {
               checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
 

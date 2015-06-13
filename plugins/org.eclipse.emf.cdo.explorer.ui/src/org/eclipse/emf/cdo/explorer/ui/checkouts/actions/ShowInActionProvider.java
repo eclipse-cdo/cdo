@@ -114,14 +114,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
     if (selectedElement instanceof CDORepository)
     {
-      final CDORepository repository = (CDORepository)selectedElement;
-
-      CDOCheckout[] checkouts = repository.getCheckouts();
-      if (checkouts.length != 0)
-      {
-        filled |= addAction(menu, repository, new ShowInProjectExplorerAction(page, checkouts));
-      }
-
+      CDORepository repository = (CDORepository)selectedElement;
       if (repository.isConnected())
       {
         if (repository.isLocal())
@@ -135,6 +128,16 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
         filled |= addAction(menu, repository, new ShowInSessionsViewAction(page, repository, null));
         filled |= addAction(menu, repository.getSession(), new ShowInViewAction(page, HISTORY_VIEW_ID));
+      }
+      else
+      {
+        filled |= addAction(menu, repository, new ShowInSessionsViewAction(page, repository, null));
+      }
+
+      CDOCheckout[] checkouts = repository.getCheckouts();
+      if (checkouts.length != 0)
+      {
+        filled |= addAction(menu, repository, new ShowInProjectExplorerAction(page, checkouts));
       }
     }
 
@@ -541,6 +544,8 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
     private CDOSession getSession()
     {
+      repository.connect();
+
       String description = repository.getURI();
       int lastSlash = description.lastIndexOf('/');
       description = description.substring(0, lastSlash) + "?repositoryName=" + repository.getName()

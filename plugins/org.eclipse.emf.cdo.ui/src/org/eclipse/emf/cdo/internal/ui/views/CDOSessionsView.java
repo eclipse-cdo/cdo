@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.internal.ui.actions.DeleteResourceAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenSessionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.OpenTransactionAction;
 import org.eclipse.emf.cdo.internal.ui.transfer.RepositoryTransferDragListener;
@@ -22,6 +24,7 @@ import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
@@ -40,6 +43,7 @@ import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -108,6 +112,13 @@ public class CDOSessionsView extends ContainerView
     manager.add(new Separator("group.open"));
     manager.add(new GroupMarker("group.openWith"));
     manager.add(new Separator("group.edit"));
+
+    List<CDOResourceNode> nodes = UIUtil.getElements(selection, CDOResourceNode.class);
+    if (nodes != null && !nodes.isEmpty())
+    {
+      manager.add(new DeleteResourceAction(getShell(), nodes));
+    }
+
     manager.add(new GroupMarker("group.new.branch"));
     manager.add(new Separator("group.port"));
     manager.add(new Separator("group.build"));

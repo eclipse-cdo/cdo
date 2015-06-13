@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.ui;singleton:=true
-Bundle-Version: 4.4.0.qualifier
+Bundle-Version: 4.4.1.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.internal.ui.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
@@ -18,6 +18,7 @@ Require-Bundle: org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)";reso
  org.eclipse.emf.ecore.edit;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.util.ui;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.ui.shared;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.transfer.ui;bundle-version="[4.2.0,5.0.0)";visibility:=reexport,
@@ -26,7 +27,7 @@ Require-Bundle: org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)";reso
  org.eclipse.emf.ecp.edit;bundle-version="[1.5.0,2.0.0)";resolution:=optional,
  org.eclipse.emf.ecp.edit.swt;bundle-version="[1.5.0,2.0.0)";resolution:=optional,
  org.eclipse.emf.ecp.ui.view.swt;bundle-version="[1.5.0,2.0.0)";resolution:=optional
-Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
+Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -36,7 +37,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.actions;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.actions;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -46,7 +47,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.handlers;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.handlers;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -56,9 +57,9 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.actions.delegates;version="4.4.0";x-internal:=true,
- org.eclipse.emf.cdo.internal.ui.bundle;version="4.4.0";x-internal:=true,
- org.eclipse.emf.cdo.internal.ui.dialogs;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.actions.delegates;version="4.4.1";x-internal:=true,
+ org.eclipse.emf.cdo.internal.ui.bundle;version="4.4.1";x-internal:=true,
+ org.eclipse.emf.cdo.internal.ui.dialogs;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -68,7 +69,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.dnd;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.dnd;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -78,7 +79,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.editor;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.editor;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -88,7 +89,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.filters;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.filters;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -98,7 +99,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.history;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.history;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -108,7 +109,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.messages;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.messages;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -118,7 +119,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.perspectives;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.perspectives;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -128,7 +129,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.preferences;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.preferences;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -138,7 +139,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.transfer;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.transfer;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -148,7 +149,7 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.internal.ui.views;version="4.4.0";
+ org.eclipse.emf.cdo.internal.ui.views;version="4.4.1";
   x-friends:="org.eclipse.emf.cdo.ui.defs,
    org.eclipse.emf.cdo.ui.ide,
    org.eclipse.emf.cdo.ui.location,
@@ -158,5 +159,5 @@ Export-Package: org.eclipse.emf.cdo.internal.ui;version="4.4.0";
    org.eclipse.emf.cdo.explorer.ui,
    org.eclipse.emf.cdo.ui.team,
    org.eclipse.emf.cdo.ui.compare",
- org.eclipse.emf.cdo.ui;version="4.4.0",
- org.eclipse.emf.cdo.ui.widgets;version="4.4.0"
+ org.eclipse.emf.cdo.ui;version="4.4.1",
+ org.eclipse.emf.cdo.ui.widgets;version="4.4.1"

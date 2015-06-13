@@ -54,6 +54,11 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository>impl
     return sessionMap.get(session);
   }
 
+  public CDORepository getRepositoryByLabel(String label)
+  {
+    return getElementByLabel(label);
+  }
+
   public CDORepository[] getRepositories()
   {
     return getElements();

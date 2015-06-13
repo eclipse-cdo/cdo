@@ -32,6 +32,11 @@ public interface CDORepositoryManager extends CDOExplorerManager<CDORepository>
 
   public CDORepository getRepository(CDOSession session);
 
+  /**
+   * @since 4.5
+   */
+  public CDORepository getRepositoryByLabel(String label);
+
   public CDORepository[] getRepositories();
 
   public CDORepository addRepository(Properties properties);

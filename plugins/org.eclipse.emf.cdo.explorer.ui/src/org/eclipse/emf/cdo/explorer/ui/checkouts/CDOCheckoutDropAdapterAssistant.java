@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -82,10 +83,29 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
   @Override
   public IStatus validateDrop(Object target, int dropOperation, TransferData transferType)
   {
-    CDOBranchPoint branchPoint = getSelectedBranchPoint(target, transferType);
-    if (branchPoint != null)
+    Pair<CDOBranchPoint, CDOCheckout> result = getSelectedBranchPoint(target, dropOperation, transferType);
+    if (result != null)
     {
-      return Status.OK_STATUS;
+      CDOBranchPoint branchPoint = result.getElement1();
+      CDOCheckout checkout = result.getElement2();
+
+      if (dropOperation == DND.DROP_MOVE)
+      {
+        if (checkout.isReadOnly() || branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+        {
+          return Status.OK_STATUS;
+        }
+      }
+      else if (dropOperation == DND.DROP_COPY)
+      {
+        return Status.OK_STATUS;
+      }
+      else if (dropOperation == DND.DROP_LINK)
+      {
+        return Status.OK_STATUS;
+      }
+
+      return Status.CANCEL_STATUS;
     }
 
     if (dropOperation != DND.DROP_LINK)
@@ -116,19 +136,24 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
     TransferData transferType = dropAdapter.getCurrentTransfer();
     int dropOperation = dropAdapter.getCurrentOperation();
 
-    CDOBranchPoint branchPoint = getSelectedBranchPoint(target, transferType);
-    if (branchPoint != null)
+    Pair<CDOBranchPoint, CDOCheckout> result = getSelectedBranchPoint(target, dropOperation, transferType);
+    if (result != null)
     {
-      CDOCheckout checkout = (CDOCheckout)target;
+      CDOBranchPoint branchPoint = result.getElement1();
+      CDOCheckout checkout = result.getElement2();
+
       if (dropOperation == DND.DROP_MOVE)
       {
-        if (checkout.isOnline())
+        if (checkout.isReadOnly() || branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          SwitchToActionProvider.switchTo(checkout, branchPoint);
-        }
-        else
-        {
-          ReplaceWithActionProvider.replaceWith(checkout, branchPoint);
+          if (checkout.isOnline())
+          {
+            SwitchToActionProvider.switchTo(checkout, branchPoint);
+          }
+          else
+          {
+            ReplaceWithActionProvider.replaceWith(checkout, branchPoint);
+          }
         }
       }
       else if (dropOperation == DND.DROP_COPY)
@@ -153,7 +178,8 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
     return Status.CANCEL_STATUS;
   }
 
-  private static CDOBranchPoint getSelectedBranchPoint(Object target, TransferData transferType)
+  private static Pair<CDOBranchPoint, CDOCheckout> getSelectedBranchPoint(Object target, int dropOperation,
+      TransferData transferType)
   {
     // Drag within Eclipse?
     if (LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
@@ -200,10 +226,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
               CDOSession session = CDOUtil.getSession(branchPoint);
               if (session == checkout.getView().getSession())
               {
-                if (checkout.isReadOnly() || branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
-                {
-                  return branchPoint;
-                }
+                return Pair.create(branchPoint, checkout);
               }
             }
           }

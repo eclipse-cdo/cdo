@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.ValidationProblem;
 import org.eclipse.emf.cdo.internal.explorer.repositories.RemoteCDORepository;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -29,9 +30,9 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
 
   public RepositoryRemotePage()
   {
-    super("remote", "Remote Repository 1");
+    super("remote", "Remote Repository");
     setTitle("New Remote Repository");
-    setMessage("Enter the label and the connection parameters of the new remote location.");
+    setMessage("Enter label and connection parameters of the new remote location.");
   }
 
   @Override
@@ -63,7 +64,7 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
     String repositoryName = controller.getRepositoryName();
     if (StringUtil.isEmpty(repositoryName))
     {
-      throw new Exception("Repository name is empty.");
+      throw new ValidationProblem("Repository name is empty.");
     }
 
     properties.setProperty(RemoteCDORepository.PROP_CONNECTOR_TYPE, "tcp");

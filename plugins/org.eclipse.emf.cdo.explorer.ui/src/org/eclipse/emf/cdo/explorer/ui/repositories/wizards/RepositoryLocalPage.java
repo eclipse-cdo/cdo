@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.ValidationProblem;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
 
@@ -60,9 +61,9 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
   public RepositoryLocalPage()
   {
-    super("local", "Local Repository 1");
+    super("local", "Local Repository");
     setTitle("New Local Repository");
-    setMessage("Enter the label and the connection parameters of the new remote location.");
+    setMessage("Enter label and database parameters of the new local repository.");
 
     CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
     for (CDORepository repository : repositoryManager.getRepositories())
@@ -92,7 +93,7 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
   {
     createLabel(container, "Repository name:");
     nameText = new Text(container, SWT.BORDER);
-    nameText.setText("repo2");
+    nameText.setText(getUniqueRepositoryName());
     nameText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
     nameText.addModifyListener(this);
 
@@ -154,7 +155,18 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     String name = nameText.getText();
     if (StringUtil.isEmpty(name))
     {
-      throw new Exception("Name is empty.");
+      throw new ValidationProblem("Repository name is empty.");
+    }
+
+    for (CDORepository repository : CDOExplorerUtil.getRepositoryManager().getRepositories())
+    {
+      if (CDORepository.TYPE_LOCAL.equals(repository.getType()))
+      {
+        if (name.equals(repository.getName()))
+        {
+          throw new ValidationProblem("Repository name is not unique.");
+        }
+      }
     }
 
     properties.setProperty(LocalCDORepository.PROP_NAME, name);
@@ -198,12 +210,12 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
       }
       catch (Exception ex)
       {
-        throw new Exception("Invalid TCP port.");
+        throw new ValidationProblem("Invalid TCP port.");
       }
 
       if (!isFreePort(port))
       {
-        throw new Exception("TCP port " + port + " is not available.");
+        throw new ValidationProblem("TCP port " + port + " is not available.");
       }
 
       properties.setProperty(LocalCDORepository.PROP_TCP_PORT, Integer.toString(port));
@@ -231,5 +243,31 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
     }
 
     return IOUtil.isFreePort(port);
+  }
+
+  public static String getUniqueRepositoryName()
+  {
+    Set<String> names = new HashSet<String>();
+
+    CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
+    for (CDORepository repository : repositoryManager.getRepositories())
+    {
+      if (CDORepository.TYPE_LOCAL.equals(repository.getType()))
+      {
+        names.add(repository.getName());
+      }
+    }
+
+    String defaultName = "repo";
+    for (int i = 1; i < Integer.MAX_VALUE; i++)
+    {
+      String name = i == 1 ? defaultName : defaultName + i;
+      if (!names.contains(name))
+      {
+        return name;
+      }
+    }
+
+    throw new IllegalStateException("Too many repositories");
   }
 }

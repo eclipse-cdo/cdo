@@ -61,6 +61,11 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
   public StyledString getStyledText(Object obj)
   {
     String text = getText(obj);
+    if (text == null)
+    {
+      return new StyledString();
+    }
+
     return new StyledString(text);
   }
 

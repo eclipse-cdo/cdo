@@ -18,6 +18,7 @@ Require-Bundle: org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)";reso
  org.eclipse.emf.ecore.edit;bundle-version="[2.5.0,3.0.0)";visibility:=reexport,
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.util.ui;bundle-version="[3.0.0,4.0.0)";visibility:=reexport,
+ org.eclipse.net4j.ui.shared;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.transfer.ui;bundle-version="[4.2.0,5.0.0)";visibility:=reexport,

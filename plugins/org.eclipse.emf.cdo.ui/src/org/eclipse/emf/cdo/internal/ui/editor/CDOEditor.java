@@ -13,6 +13,7 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ValidationException;
+import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
@@ -223,6 +225,20 @@ public class CDOEditor extends MultiPageEditorPart
    * @ADDED
    */
   protected CDOEventHandler eventHandler;
+
+  /**
+   * @ADDED
+   */
+  protected CDOObjectHandler objectHandler = new CDOObjectHandler()
+  {
+    public void objectStateChanged(CDOView view, CDOObject object, CDOState oldState, CDOState newState)
+    {
+      if (object == viewerInput && newState == CDOState.INVALID)
+      {
+        closeEditor();
+      }
+    }
+  };
 
   /**
    * This keeps track of the editing domain that is used to track all changes to the model.
@@ -1041,6 +1057,11 @@ public class CDOEditor extends MultiPageEditorPart
       {
         URI resourceURI = CDOURIUtil.createResourceURI(view, resourcePath);
         viewerInput = resourceSet.getResource(resourceURI, true);
+
+        if (!view.isReadOnly())
+        {
+          view.addObjectHandler(objectHandler);
+        }
       }
 
       // resourceSet.eAdapters().add(problemIndicationAdapter);
@@ -2174,6 +2195,18 @@ public class CDOEditor extends MultiPageEditorPart
 
     if (!view.isClosed())
     {
+      try
+      {
+        if (objectHandler != null)
+        {
+          view.removeObjectHandler(objectHandler);
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
       try
       {
         if (eventHandler != null)

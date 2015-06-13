@@ -548,11 +548,39 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
+        value="4.5"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.baseline.version"
+        value="4.4"/>
+  </stream>
+  <stream name="streams/4.4-maintenance"
+      label="4.4 Maintenance">
+    <setupTask
+        xsi:type="setup.p2:P2Task">
+      <requirement
+          name="org.eclipse.emf.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.gmf.runtime.notation.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.gmf.runtime.sdk.feature.group"/>
+      <requirement
+          name="org.eclipse.gmf.sdk.feature.group"/>
+      <repository
+          url="http://download.eclipse.org/releases/mars"/>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.target.platform"
+        value="Mars"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.bugzilla.version"
         value="4.4"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
-        value="4.3"/>
+        value="4.4"/>
   </stream>
   <stream name="streams/4.3-maintenance"
       label="4.3 Maintenance">

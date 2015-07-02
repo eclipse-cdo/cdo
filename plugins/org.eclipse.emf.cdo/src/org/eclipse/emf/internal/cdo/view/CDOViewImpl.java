@@ -738,6 +738,26 @@ public class CDOViewImpl extends AbstractCDOView
     return revisionManager.getRevision(id, branchPoint, initialChunkSize, CDORevision.DEPTH_NONE, loadOnDemand);
   }
 
+  @Override
+  public synchronized void remapObject(CDOID oldID)
+  {
+    InternalCDOObject object = getObject(oldID, false);
+    InternalCDOLockState oldLockState = (InternalCDOLockState)lockStates.get(object);
+    if (oldLockState != null)
+    {
+      oldLockState.updateFrom(getLockTarget(object), oldLockState);
+    }
+    super.remapObject(oldID);
+  }
+
+  @Override
+  public synchronized InternalCDOObject removeObject(CDOID id)
+  {
+    InternalCDOObject removedObject = super.removeObject(id);
+    removeLockState(removedObject);
+    return removedObject;
+  }
+
   public synchronized CDOLockState[] getLockStates(Collection<CDOID> ids)
   {
     return getLockStates(ids, true);
@@ -814,10 +834,10 @@ public class CDOViewImpl extends AbstractCDOView
       {
         updateLockStates(newLockStateForCache.toArray(new CDOLockState[newLockStateForCache.size()]));
       }
-
-      CDOLockState[] locksOnNewObjectsArray = locksOnNewObjects.toArray(new CDOLockState[locksOnNewObjects.size()]);
-      updateLockStates(locksOnNewObjectsArray);
     }
+
+    CDOLockState[] locksOnNewObjectsArray = locksOnNewObjects.toArray(new CDOLockState[locksOnNewObjects.size()]);
+    updateLockStates(locksOnNewObjectsArray);
 
     return lockStates.toArray(new CDOLockState[lockStates.size()]);
   }

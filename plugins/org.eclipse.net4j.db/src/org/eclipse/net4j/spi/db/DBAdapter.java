@@ -155,10 +155,11 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public void readSchema(Connection connection, IDBSchema schema)
   {
-    boolean isTrackConstruction = DBField.isTrackConstruction();
+    boolean wasTrackConstruction = DBField.isTrackConstruction();
+    DBField.trackConstruction(false);
+
     try
     {
-      DBField.trackConstruction(false);
       String schemaName = schema.getName();
 
       DatabaseMetaData metaData = connection.getMetaData();
@@ -184,7 +185,7 @@ public abstract class DBAdapter implements IDBAdapter
     }
     finally
     {
-      DBField.trackConstruction(isTrackConstruction);
+      DBField.trackConstruction(wasTrackConstruction);
     }
   }
 

@@ -577,6 +577,29 @@
       </query>
     </setupTask>
   </setupTask>
+  <setupTask
+      xsi:type="setup:CompoundTask"
+      name="Mylyn Builds">
+    <setupTask
+        xsi:type="mylyn:MylynBuildsTask"
+        serverURL="https://hudson.eclipse.org/hudson"
+        userID="${bugzilla.id}"
+        password="${eclipse.user.password}">
+      <buildPlan
+          name="emf-cdo-integration"/>
+      <buildPlan
+          name="emf-cdo-maintenance"/>
+      <description>Shared Hudson</description>
+    </setupTask>
+    <setupTask
+        xsi:type="mylyn:MylynBuildsTask"
+        serverURL="https://hudson.eclipse.org/cdo"
+        userID="${bugzilla.id}"
+        password="${eclipse.user.password}">
+      <buildPlan
+          name="emf-cdo-gerrit"/>
+    </setupTask>
+  </setupTask>
   <stream name="master"
       label="Master">
     <setupTask

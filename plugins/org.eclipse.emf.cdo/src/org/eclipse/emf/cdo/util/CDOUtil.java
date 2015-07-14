@@ -156,7 +156,7 @@ public final class CDOUtil
    * @see #setIntrinsicIDToEObjectMap
    * @since 4.2
    */
-  public Map<String, EObject> getIntrinsicIDToEObjectMap(CDOResource resource)
+  public static Map<String, EObject> getIntrinsicIDToEObjectMap(CDOResource resource)
   {
     return ((CDOResourceImpl)resource).getIntrinsicIDToEObjectMap();
   }
@@ -171,7 +171,7 @@ public final class CDOUtil
    * @see #getIntrinsicIDToEObjectMap
    * @since 4.2
    */
-  public void setIntrinsicIDToEObjectMap(CDOResource resource, Map<String, EObject> intrinsicIDToEObjectMap)
+  public static void setIntrinsicIDToEObjectMap(CDOResource resource, Map<String, EObject> intrinsicIDToEObjectMap)
   {
     ((CDOResourceImpl)resource).setIntrinsicIDToEObjectMap(intrinsicIDToEObjectMap);
   }

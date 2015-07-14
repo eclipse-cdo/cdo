@@ -457,12 +457,18 @@
   <extension point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.emf.cdo.explorer.ui.handlers.RenameHandler"
-            commandId="org.eclipse.ui.edit.rename"/>
+            commandId="org.eclipse.ui.edit.rename">
+         <activeWhen>
+            <iterate ifEmpty="false">
+               <adapt type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
+            </iterate>
+         </activeWhen>
+      </handler>
       <handler
             class="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate ifEmpty="false" operator="and">
+            <iterate ifEmpty="false">
                <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
             </iterate>
          </activeWhen>
@@ -471,7 +477,7 @@
             class="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate ifEmpty="false" operator="and">
+            <iterate ifEmpty="false">
                <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
             </iterate>
          </activeWhen>
@@ -480,7 +486,7 @@
             class="org.eclipse.emf.cdo.explorer.ui.handlers.ObjectDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate ifEmpty="false" operator="and">
+            <iterate ifEmpty="false">
               <or>
                 <adapt type="org.eclipse.emf.cdo.CDOElement"/>
                 <adapt type="org.eclipse.emf.ecore.EObject">
@@ -544,9 +550,9 @@
                <with variable="activeMenuSelection">
                   <and>
                      <count value="1"/>
-                    <iterate>
-                      <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
-                    </iterate>
+                     <iterate>
+                        <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+                     </iterate>
                   </and>
                </with>
             </visibleWhen>
@@ -561,9 +567,9 @@
                <with variable="activeMenuSelection">
                   <and>
                      <count value="1"/>
-                    <iterate>
-                      <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
-                    </iterate>
+                     <iterate>
+                        <adapt type="org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement"/>
+                     </iterate>
                   </and>
                </with>
             </visibleWhen>

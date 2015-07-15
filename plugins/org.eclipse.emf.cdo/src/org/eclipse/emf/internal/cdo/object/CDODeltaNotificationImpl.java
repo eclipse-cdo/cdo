@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2013 Eike Stepper (Berlin, Germany) and others.
+ * Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -22,6 +22,10 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -167,6 +171,33 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
     if (object instanceof CDOObject)
     {
       object = CDOUtil.getEObject((EObject)object);
+    }
+
+    if (feature instanceof EAttribute)
+    {
+      if (object == null)
+      {
+        object = feature.getDefaultValue();
+      }
+      else
+      {
+        EDataType eAttributeType = ((EAttribute)feature).getEAttributeType();
+        if (eAttributeType != null)
+        {
+          String stringValue;
+          if (eAttributeType instanceof EEnum && object instanceof Integer)
+          {
+            EEnumLiteral literal = ((EEnum)eAttributeType).getEEnumLiteral((Integer)object);
+            stringValue = literal.getLiteral();
+          }
+          else
+          {
+            stringValue = String.valueOf(object);
+          }
+
+          object = eAttributeType.getEPackage().getEFactoryInstance().createFromString(eAttributeType, stringValue);
+        }
+      }
     }
 
     return object;

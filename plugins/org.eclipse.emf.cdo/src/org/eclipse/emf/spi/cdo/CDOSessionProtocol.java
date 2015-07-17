@@ -86,6 +86,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public RepositoryTimeResult getRepositoryTime();
 
   /**
+   * @since 4.5
+   */
+  public void openedSession();
+
+  /**
    * @since 3.0
    */
   public void disablePassiveUpdate();

@@ -1781,11 +1781,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public synchronized void reorderInvalidations(CDOCommitInfo commitInfo, InternalCDOTransaction sender,
         boolean clearResourcePathCache, byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
     {
-      if (!isActive())
-      {
-        return;
-      }
-
       Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache, securityImpact,
           newPermissions);
 
@@ -1950,7 +1945,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
       finally
       {
-        // setLastUpdateTimeStamp() is not synchronized with the Invalidator.
+        // setLastUpdateTime() is not synchronized with the Invalidator.
         // Give the Invalidator another chance to schedule Invalidations.
         invalidator.scheduleInvalidations();
       }

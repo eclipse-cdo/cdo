@@ -97,6 +97,7 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(LockingManagerRestartRepositoryTest.class);
     testClasses.add(LockingNotificationsTest.class);
     testClasses.add(LockingSequenceTest.class);
+    testClasses.add(LockingSequenceWithChildListTest.class);
     testClasses.add(MultiValuedOfAttributeTest.class);
     testClasses.add(MapTest.class);
     testClasses.add(FeatureMapTest.class);

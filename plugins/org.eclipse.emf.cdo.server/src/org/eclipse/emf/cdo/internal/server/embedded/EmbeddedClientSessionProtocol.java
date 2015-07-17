@@ -166,6 +166,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     return result;
   }
 
+  public void openedSession()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Deprecated
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
   {

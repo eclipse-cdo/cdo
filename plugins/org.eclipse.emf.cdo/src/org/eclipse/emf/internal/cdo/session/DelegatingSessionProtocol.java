@@ -404,6 +404,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
+  public void openedSession()
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        delegate.openedSession();
+        return;
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
   @Deprecated
   public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
   {

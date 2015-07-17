@@ -30,8 +30,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 26; // Add prefetch depth in LockStateRequest/Indication
+  public static final int PROTOCOL_VERSION = 27; // SIGNAL_OPENED_SESSION
 
+  // public static final int PROTOCOL_VERSION = 26; // Add prefetch depth in LockStateRequest/Indication
   // public static final int PROTOCOL_VERSION = 25; // OpenSessionResponse.repositoryAuthenticating
   // public static final int PROTOCOL_VERSION = 24; // SIGNAL_LOAD_OBJECT_LIFETIME
   // public static final int PROTOCOL_VERSION = 23; // Fix branch renaming
@@ -299,6 +300,11 @@ public interface CDOProtocolConstants
    * @since 4.4
    */
   public static final short SIGNAL_LOAD_OBJECT_LIFETIME = 59;
+
+  /**
+   * @since 4.5
+   */
+  public static final short SIGNAL_OPENED_SESSION = 60;
 
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh

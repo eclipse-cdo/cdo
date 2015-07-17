@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -352,11 +353,33 @@ public class CDOViewImpl extends AbstractCDOView
         if (!session.options().isPassiveUpdateEnabled())
         {
           throw new AssertionError(
-              "Lock result requires client to wait, but client does not have passiveUpdates enabled.");
+              "Lock result requires client to wait, but client does not have passiveUpdates enabled");
         }
 
         long requiredTimestamp = result.getRequiredTimestamp();
-        waitForUpdate(requiredTimestamp);
+        if (!waitForUpdate(requiredTimestamp, 10000L))
+        {
+          throw new AssertionError("Lock result requires client to wait for commit " + requiredTimestamp
+              + ", but client did not receive invalidations after " + lastUpdateTime);
+        }
+
+        InternalCDOSession session = this.session;
+        InternalCDORevisionManager revisionManager = session.getRevisionManager();
+
+        for (CDORevisionKey requiredKey : result.getStaleRevisions())
+        {
+          CDOID id = requiredKey.getID();
+          InternalCDOObject object = getObject(id);
+
+          CDORevision revision = object.cdoRevision(true);
+          if (!requiredKey.equals(revision))
+          {
+            InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey,
+                CDORevision.UNCHUNKED, true);
+            InternalCDORevisionDelta revisionDelta = requiredRevision.compare(revision);
+            CDOStateMachine.INSTANCE.invalidate(object, revisionDelta);
+          }
+        }
       }
     }
 
@@ -976,19 +999,6 @@ public class CDOViewImpl extends AbstractCDOView
 
   public QueueRunner getInvalidationRunner()
   {
-    try
-    {
-      invalidationRunner.activate();
-    }
-    catch (LifecycleException ex)
-    {
-      // Don't pollute the log if the worker thread is interrupted due to asynchronous view.close()
-      if (!(ex.getCause() instanceof InterruptedException))
-      {
-        throw ex;
-      }
-    }
-
     return invalidationRunner;
   }
 
@@ -1262,6 +1272,25 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     lockOwner = CDOLockUtil.createLockOwner(this);
+  }
+
+  @Override
+  protected void doAfterActivate() throws Exception
+  {
+    super.doAfterActivate();
+
+    try
+    {
+      invalidationRunner.activate();
+    }
+    catch (LifecycleException ex)
+    {
+      // Don't pollute the log if the worker thread is interrupted due to asynchronous view.close()
+      if (!(ex.getCause() instanceof InterruptedException))
+      {
+        throw ex;
+      }
+    }
   }
 
   @Override

@@ -208,6 +208,8 @@ public class Repository extends Container<Object>implements InternalRepository
   // Bug 297940
   private TimeStampAuthority timeStampAuthority = new TimeStampAuthority(this);
 
+  private long lastTreeRestructuringCommit = -1;
+
   @ExcludeFromDump
   private transient Object commitTransactionLock = new Object();
 
@@ -1101,7 +1103,13 @@ public class Repository extends Container<Object>implements InternalRepository
     timeStampAuthority.failCommit(timestamp);
   }
 
-  private long lastTreeRestructuringCommit = -1;
+  public void executeOutsideStartCommit(Runnable runnable)
+  {
+    synchronized (timeStampAuthority)
+    {
+      runnable.run();
+    }
+  }
 
   public void commit(InternalCommitContext commitContext, OMMonitor monitor)
   {
@@ -1780,7 +1788,8 @@ public class Repository extends Container<Object>implements InternalRepository
 
         if (!revKey.equals(rev))
         {
-          staleRevisions.add(revKey);
+          // Send back the *expected* revision keys, so that the client can check that it really has loaded those.
+          staleRevisions.add(CDORevisionUtil.copyRevisionKey(rev));
           requiredTimestamp[0] = Math.max(requiredTimestamp[0], rev.getTimeStamp());
         }
       }

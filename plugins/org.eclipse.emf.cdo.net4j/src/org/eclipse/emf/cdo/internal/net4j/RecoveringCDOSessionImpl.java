@@ -206,6 +206,9 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       updateConnectorAndRepositoryName();
       openSession();
 
+      CDOSessionProtocol sessionProtocol = getSessionProtocol();
+      sessionProtocol.openedSession();
+
       return runnables;
     }
     catch (RuntimeException ex)

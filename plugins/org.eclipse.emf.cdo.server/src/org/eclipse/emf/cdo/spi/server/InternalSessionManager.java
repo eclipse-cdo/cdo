@@ -116,6 +116,11 @@ public interface InternalSessionManager extends ISessionManager
 
   public void sessionClosed(InternalSession session);
 
+  /**
+   * @since 4.5
+   */
+  public void openedOnClientSide(InternalSession session);
+
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType);
 
   /**

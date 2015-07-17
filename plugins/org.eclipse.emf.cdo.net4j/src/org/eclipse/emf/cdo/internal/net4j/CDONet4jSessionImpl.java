@@ -200,6 +200,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     repository.getTimeStamp(true);
+    sessionProtocol.openedSession();
   }
 
   private CDOClientProtocol createProtocol()

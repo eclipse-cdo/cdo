@@ -430,7 +430,7 @@ public abstract class AbstractOMTest extends TestCase
     deleteFiles();
   }
 
-  public void deleteFiles()
+  public synchronized void deleteFiles()
   {
     for (File file : filesToDelete)
     {
@@ -440,7 +440,7 @@ public abstract class AbstractOMTest extends TestCase
     filesToDelete.clear();
   }
 
-  public void addFileToDelete(File file)
+  public synchronized void addFileToDelete(File file)
   {
     filesToDelete.add(file);
   }

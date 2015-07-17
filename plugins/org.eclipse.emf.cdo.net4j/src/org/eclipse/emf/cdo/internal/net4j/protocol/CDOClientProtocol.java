@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -129,6 +130,11 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public RepositoryTimeResult getRepositoryTime()
   {
     return send(new RepositoryTimeRequest(this));
+  }
+
+  public void openedSession()
+  {
+    send(new OpenedSessionRequest(this));
   }
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
@@ -524,6 +530,22 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
 
     default:
       return super.createSignalReactor(signalID);
+    }
+  }
+
+  private void send(Request request)
+  {
+    try
+    {
+      request.sendAsync();
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
     }
   }
 

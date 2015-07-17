@@ -48,6 +48,26 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
    */
   public void setUserID(String userID);
 
+  /**
+   * @since 4.5
+   */
+  public long getFirstUpdateTime();
+
+  /**
+   * @since 4.5
+   */
+  public void setFirstUpdateTime(long firstUpdateTime);
+
+  /**
+   * @since 4.5
+   */
+  public boolean isOpenOnClientSide();
+
+  /**
+   * @since 4.5
+   */
+  public void setOpenOnClientSide();
+
   public InternalView[] getViews();
 
   public InternalView getView(int viewID);

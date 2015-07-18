@@ -11,13 +11,17 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.application;
 
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider;
+import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
 import org.eclipse.emf.cdo.internal.ui.views.CDORemoteSessionsView;
 import org.eclipse.emf.cdo.internal.ui.views.CDOSessionsView;
+import org.eclipse.emf.cdo.internal.ui.views.CDOTimeMachineView;
 import org.eclipse.emf.cdo.internal.ui.views.CDOWatchListView;
 
 import org.eclipse.ui.IFolderLayout;
 import org.eclipse.ui.IPageLayout;
 import org.eclipse.ui.IPerspectiveFactory;
+import org.eclipse.ui.IPlaceholderFolderLayout;
 import org.eclipse.ui.PlatformUI;
 
 /**
@@ -26,6 +30,16 @@ import org.eclipse.ui.PlatformUI;
 public class CDOExplorerPerspective implements IPerspectiveFactory
 {
   public static final String ID = "org.eclipse.emf.cdo.explorer.CDOExplorerPerspective"; //$NON-NLS-1$
+
+  private static final String CHECKOUT_AREA = "checkoutArea";
+
+  private static final String AUDITING_AREA = "auditingArea";
+
+  private static final String REPOSITORY_AREA = "repositoryArea";
+
+  private static final String PROPERTIES_AREA = "propertiesArea";
+
+  private static final String OUTLINE_AREA = "outlineArea";
 
   private IPageLayout pageLayout;
 
@@ -48,27 +62,39 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
 
   protected void addViews()
   {
-    IFolderLayout sessionsPane = pageLayout.createFolder("sessionsPane", IPageLayout.LEFT, 0.30f, //$NON-NLS-1$
+    IFolderLayout checkoutArea = pageLayout.createFolder(CHECKOUT_AREA, IPageLayout.LEFT, 0.30f,
         pageLayout.getEditorArea());
-    sessionsPane.addView(CDOSessionsView.ID);
+    checkoutArea.addView(IPageLayout.ID_PROJECT_EXPLORER);
 
-    IFolderLayout propertiesPane = pageLayout.createFolder("propertiesPane", IPageLayout.BOTTOM, 0.70f, //$NON-NLS-1$
-        pageLayout.getEditorArea());
-    propertiesPane.addView(IPageLayout.ID_PROP_SHEET);
-    propertiesPane.addView(CDOWatchListView.ID);
-    propertiesPane.addView(CDORemoteSessionsView.ID);
+    IFolderLayout repositoryArea = pageLayout.createFolder(REPOSITORY_AREA, IPageLayout.BOTTOM, 0.70f, CHECKOUT_AREA);
+    repositoryArea.addView(CDORepositoriesView.ID);
 
-    IFolderLayout outlinePane = pageLayout.createFolder("outlinePane", IPageLayout.RIGHT, 0.70f, //$NON-NLS-1$
+    IFolderLayout propertiesArea = pageLayout.createFolder(PROPERTIES_AREA, IPageLayout.BOTTOM, 0.70f,
         pageLayout.getEditorArea());
-    outlinePane.addView(IPageLayout.ID_OUTLINE);
+    propertiesArea.addView(IPageLayout.ID_PROP_SHEET);
+    propertiesArea.addView(ShowInActionProvider.HISTORY_VIEW_ID);
+    propertiesArea.addView(CDOWatchListView.ID);
+    propertiesArea.addView(CDORemoteSessionsView.ID);
+
+    IFolderLayout outlineArea = pageLayout.createFolder(OUTLINE_AREA, IPageLayout.RIGHT, 0.70f,
+        pageLayout.getEditorArea());
+    outlineArea.addView(IPageLayout.ID_OUTLINE);
+
+    IPlaceholderFolderLayout auditingArea = pageLayout.createPlaceholderFolder(AUDITING_AREA, IPageLayout.BOTTOM, 0.84f,
+        pageLayout.getEditorArea());
+    auditingArea.addPlaceholder(CDOTimeMachineView.ID);
   }
 
   protected void addViewShortcuts()
   {
-    pageLayout.addShowViewShortcut(CDOSessionsView.ID);
-    pageLayout.addShowViewShortcut(CDOWatchListView.ID);
     pageLayout.addShowViewShortcut(CDORemoteSessionsView.ID);
+    pageLayout.addShowViewShortcut(CDORepositoriesView.ID);
+    pageLayout.addShowViewShortcut(CDOSessionsView.ID);
+    pageLayout.addShowViewShortcut(CDOTimeMachineView.ID);
+    pageLayout.addShowViewShortcut(CDOWatchListView.ID);
+    pageLayout.addShowViewShortcut(ShowInActionProvider.HISTORY_VIEW_ID);
     pageLayout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
+    pageLayout.addShowViewShortcut(IPageLayout.ID_PROJECT_EXPLORER);
     pageLayout.addShowViewShortcut(IPageLayout.ID_PROP_SHEET);
   }
 
@@ -79,7 +105,14 @@ public class CDOExplorerPerspective implements IPerspectiveFactory
 
   static public boolean isCurrent()
   {
-    return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId()
-        .equals(CDOExplorerPerspective.ID);
+    try
+    {
+      return PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getPerspective().getId()
+          .equals(CDOExplorerPerspective.ID);
+    }
+    catch (Throwable ex)
+    {
+      return false;
+    }
   }
 }

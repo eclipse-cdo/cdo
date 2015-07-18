@@ -91,6 +91,25 @@
      </perspective>
   </extension>
 
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView"
+               relationship="stack"
+               relative="org.eclipse.ui.views.ContentOutline">
+         </view>
+         <view
+               id="org.eclipse.ui.views.PropertySheet"
+               relationship="stack"
+               relative="org.eclipse.ui.views.TaskList">
+         </view>
+         <perspectiveShortcut id="org.eclipse.emf.cdo.explorer.ui.CDOExplorerPerspective"/>
+         <viewShortcut id="org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView"/>
+      </perspectiveExtension>
+   </extension>
+
   <extension point="org.eclipse.ui.preferencePages">
      <page
            category="org.eclipse.emf.cdo.ui.CDOPreferencePage"

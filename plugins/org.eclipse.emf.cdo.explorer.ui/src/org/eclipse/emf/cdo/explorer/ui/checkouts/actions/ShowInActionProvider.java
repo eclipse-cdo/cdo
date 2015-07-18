@@ -78,6 +78,8 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 {
   public static final String TITLE = "Show In";
 
+  public static final String HISTORY_VIEW_ID = "org.eclipse.team.ui.GenericHistoryView";
+
   private static final String ID = ShowInActionProvider.class.getName();
 
   private static final String DASHBOARD_KEY = CDOCheckoutDashboard.class.getName();
@@ -438,8 +440,6 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
    */
   private static final class ShowInHistoryAction extends ShowInViewAction
   {
-    private static final String HISTORY_VIEW_ID = "org.eclipse.team.ui.GenericHistoryView";
-
     private final Object selectedElement;
 
     public ShowInHistoryAction(IWorkbenchPage page, Object selectedElement)

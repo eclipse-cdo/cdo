@@ -14,8 +14,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
@@ -33,9 +31,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Layout;
 import org.eclipse.swt.widgets.Text;
 
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -172,7 +168,7 @@ public class CheckoutLabelPage extends CheckoutWizardPage
     if (StringUtil.isEmpty(label))
     {
       String label = StringUtil.capAll(type.replace('-', ' ')) + " Checkout";
-      setLabel(getUniqueLabel(label));
+      setLabel(CDOExplorerUtil.getCheckoutManager().getUniqueLabel(label));
     }
 
     labelText.setFocus();
@@ -221,27 +217,5 @@ public class CheckoutLabelPage extends CheckoutWizardPage
     {
       labelText.setText("");
     }
-  }
-
-  public static String getUniqueLabel(String label)
-  {
-    Set<String> names = new HashSet<String>();
-
-    CDOCheckoutManager checkoutManager = CDOExplorerUtil.getCheckoutManager();
-    for (CDOCheckout checkout : checkoutManager.getCheckouts())
-    {
-      names.add(checkout.getLabel());
-    }
-
-    for (int i = 1; i < Integer.MAX_VALUE; i++)
-    {
-      String name = i == 1 ? label : label + " (" + i + ")";
-      if (!names.contains(name))
-      {
-        return name;
-      }
-    }
-
-    throw new IllegalStateException("Too many checkouts");
   }
 }

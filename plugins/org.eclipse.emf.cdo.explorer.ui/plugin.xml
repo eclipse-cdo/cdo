@@ -441,6 +441,10 @@
             name="Close Checkout"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutCloseHandler"/>
       <command
+            id="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
+            name="Duplicate Checkout"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDuplicateHandler"/>
+      <command
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
             name="Update Workspace"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceUpdateHandler"/>
@@ -673,6 +677,20 @@
                       <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
+               icon="icons/duplicate.gif"
+               label="Duplicate Checkout"
+               style="push"
+               tooltip="Duplicate the checkout">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate ifEmpty="false">
+                    <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   </iterate>
                </with>
             </visibleWhen>

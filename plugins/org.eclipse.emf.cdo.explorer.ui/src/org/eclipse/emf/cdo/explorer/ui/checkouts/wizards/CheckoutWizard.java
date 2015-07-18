@@ -203,7 +203,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
     return true;
   }
 
-  public static void showInProjectExplorer(final CDOCheckout checkout)
+  public static void showInProjectExplorer(final Object... objects)
   {
     UIUtil.getDisplay().asyncExec(new Runnable()
     {
@@ -229,7 +229,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
                     .getInstance(CDOCheckoutContentProvider.PROJECT_EXPLORER_ID);
                 if (checkoutContentProvider != null)
                 {
-                  checkoutContentProvider.selectObjects(checkout);
+                  checkoutContentProvider.selectObjects(objects);
                 }
               }
               catch (Exception ex)

@@ -29,8 +29,12 @@ import org.eclipse.emf.ecore.EObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
@@ -38,6 +42,8 @@ import java.util.Properties;
 public abstract class AbstractManager<T extends CDOExplorerElement> extends SetContainer<T>
     implements CDOExplorerManager<T>
 {
+  private static final Pattern LABEL_PATTERN = Pattern.compile("(.+?) *\\([0-9]+\\)");
+
   private final File folder;
 
   private final Map<String, T> elementMap = new HashMap<String, T>();
@@ -73,6 +79,33 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
   public final File getFolder()
   {
     return folder;
+  }
+
+  public String getUniqueLabel(String label)
+  {
+    Set<String> names = new HashSet<String>();
+
+    for (T element : getElements())
+    {
+      names.add(element.getLabel());
+    }
+
+    Matcher matcher = LABEL_PATTERN.matcher(label);
+    if (matcher.matches())
+    {
+      label = matcher.group(1);
+    }
+
+    for (int i = 1; i < Integer.MAX_VALUE; i++)
+    {
+      String name = i == 1 ? label : label + " (" + i + ")";
+      if (!names.contains(name))
+      {
+        return name;
+      }
+    }
+
+    throw new IllegalStateException("Too many elements");
   }
 
   public T getElement(String id)

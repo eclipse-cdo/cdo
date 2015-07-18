@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
@@ -348,6 +349,31 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
   public final void setRootID(CDOID rootID)
   {
     this.rootID = rootID;
+  }
+
+  public CDOCheckout duplicate()
+  {
+    Properties properties = new Properties();
+    collectDuplicationProperties(properties);
+
+    CDOCheckout copy = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
+    if (isOpen())
+    {
+      copy.open();
+    }
+
+    return copy;
+  }
+
+  protected void collectDuplicationProperties(Properties properties)
+  {
+    properties.setProperty(PROP_TYPE, getType());
+    properties.setProperty(PROP_LABEL, getManager().getUniqueLabel(getLabel()));
+    properties.setProperty(PROP_REPOSITORY, getRepository().getID());
+    properties.setProperty(PROP_BRANCH_ID, Integer.toString(getBranchID()));
+    properties.setProperty(PROP_TIME_STAMP, Long.toString(getTimeStamp()));
+    properties.setProperty(PROP_READ_ONLY, Boolean.toString(isReadOnly()));
+    properties.setProperty(PROP_ROOT_ID, getCDOIDString(getRootID()));
   }
 
   public final State getState()

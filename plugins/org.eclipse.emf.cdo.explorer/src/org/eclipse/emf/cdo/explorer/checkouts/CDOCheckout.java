@@ -82,6 +82,11 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
 
   public void setRootID(CDOID rootID);
 
+  /**
+   * @since 4.5
+   */
+  public CDOCheckout duplicate();
+
   public State getState();
 
   public boolean isOpen();

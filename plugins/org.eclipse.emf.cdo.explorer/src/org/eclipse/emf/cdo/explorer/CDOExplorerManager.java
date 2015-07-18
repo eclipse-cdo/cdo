@@ -24,6 +24,11 @@ import org.eclipse.core.runtime.IAdaptable;
 public interface CDOExplorerManager<T extends CDOExplorerElement> extends IContainer<T>, IAdaptable
 {
   /**
+   * @since 4.5
+   */
+  public String getUniqueLabel(String label);
+
+  /**
    * @author Eike Stepper
    */
   public interface ElementsChangedEvent extends IEvent

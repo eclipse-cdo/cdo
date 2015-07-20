@@ -317,6 +317,7 @@
               <and>
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                 <test property="org.eclipse.emf.cdo.ui.support.compare" value="true"/>
               </and>
             </enablement>
          </actionProvider>
@@ -327,6 +328,7 @@
               <and>
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                 <test property="org.eclipse.emf.cdo.ui.support.compare" value="true"/>
               </and>
             </enablement>
          </actionProvider>

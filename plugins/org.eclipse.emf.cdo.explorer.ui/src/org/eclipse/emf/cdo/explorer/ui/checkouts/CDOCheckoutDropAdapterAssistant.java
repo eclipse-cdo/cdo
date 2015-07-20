@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ReplaceWithActionProvid
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.SwitchToActionProvider;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -68,6 +69,8 @@ import java.util.Set;
  */
 public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
 {
+  private static final boolean COMPARE_SUPPORT_AVAILABLE = Support.COMPARE.isAvailable();
+
   private static final EObject[] NO_OBJECTS = {};
 
   public CDOCheckoutDropAdapterAssistant()
@@ -96,13 +99,16 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
           return Status.OK_STATUS;
         }
       }
-      else if (dropOperation == DND.DROP_COPY)
+      else
       {
-        return Status.OK_STATUS;
-      }
-      else if (dropOperation == DND.DROP_LINK)
-      {
-        return Status.OK_STATUS;
+        if (dropOperation == DND.DROP_COPY && COMPARE_SUPPORT_AVAILABLE)
+        {
+          return Status.OK_STATUS;
+        }
+        else if (dropOperation == DND.DROP_LINK && COMPARE_SUPPORT_AVAILABLE)
+        {
+          return Status.OK_STATUS;
+        }
       }
 
       return Status.CANCEL_STATUS;
@@ -156,11 +162,11 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
           }
         }
       }
-      else if (dropOperation == DND.DROP_COPY)
+      else if (dropOperation == DND.DROP_COPY && COMPARE_SUPPORT_AVAILABLE)
       {
         MergeFromActionProvider.mergeFrom(checkout, branchPoint);
       }
-      else if (dropOperation == DND.DROP_LINK)
+      else if (dropOperation == DND.DROP_LINK && COMPARE_SUPPORT_AVAILABLE)
       {
         CompareWithActionProvider.compareWith(checkout, branchPoint);
       }

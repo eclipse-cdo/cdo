@@ -30,6 +30,17 @@
    </extension>
 
    <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.emf.cdo.internal.ui.SupportPropertyTester"
+            id="org.eclipse.emf.cdo.ui.Support"
+            namespace="org.eclipse.emf.cdo.ui.support"
+            properties="history,compare"
+            type="java.lang.Object">
+      </propertyTester>
+   </extension>
+
+   <extension
          point="org.eclipse.ui.dropActions">
       <action
             class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryPluginDropAdapter"

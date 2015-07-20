@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -82,6 +83,8 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
   private static final String ID = ShowInActionProvider.class.getName();
 
+  private static final boolean HISTORY_SUPPORT_AVAILABLE = Support.HISTORY.isAvailable();
+
   private static final String DASHBOARD_KEY = CDOCheckoutDashboard.class.getName();
 
   public ShowInActionProvider()
@@ -129,7 +132,11 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
         }
 
         filled |= addAction(menu, repository, new ShowInSessionsViewAction(page, repository, null));
-        filled |= addAction(menu, repository.getSession(), new ShowInHistoryAction(page, repository.getSession()));
+
+        if (HISTORY_SUPPORT_AVAILABLE)
+        {
+          filled |= addAction(menu, repository.getSession(), new ShowInHistoryAction(page, repository.getSession()));
+        }
       }
       else
       {
@@ -145,7 +152,10 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
     if (selectedElement instanceof CDOBranch)
     {
-      filled |= addAction(menu, selectedElement, new ShowInHistoryAction(page, selectedElement));
+      if (HISTORY_SUPPORT_AVAILABLE)
+      {
+        filled |= addAction(menu, selectedElement, new ShowInHistoryAction(page, selectedElement));
+      }
     }
 
     if (selectedElement instanceof CDOCheckout)
@@ -182,7 +192,10 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
           filled |= addAction(menu, checkout, new ShowInViewAction(page, CDOTimeMachineView.ID));
         }
 
-        filled |= addAction(menu, checkout.getView(), new ShowInHistoryAction(page, checkout.getView()));
+        if (HISTORY_SUPPORT_AVAILABLE)
+        {
+          filled |= addAction(menu, checkout.getView(), new ShowInHistoryAction(page, checkout.getView()));
+        }
       }
     }
 
@@ -191,7 +204,10 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       EObject eObject = (EObject)selectedElement;
       if (CDOExplorerUtil.getCheckout(eObject) != null)
       {
-        filled |= addAction(menu, eObject, new ShowInHistoryAction(page, eObject));
+        if (HISTORY_SUPPORT_AVAILABLE)
+        {
+          filled |= addAction(menu, eObject, new ShowInHistoryAction(page, eObject));
+        }
       }
     }
 
@@ -451,7 +467,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     @Override
     protected void run(IViewPart viewPart) throws Exception
     {
-      if (selectedElement != null)
+      if (selectedElement != null && HISTORY_SUPPORT_AVAILABLE)
       {
         CDOHistoryAdapterFactory.load();
         ((IHistoryView)viewPart).showHistoryFor(selectedElement);

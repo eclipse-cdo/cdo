@@ -350,9 +350,8 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   protected void writeRevisionDelta(InternalCDORevisionDelta revisionDelta, CDOBranch branch, long created)
   {
     CDOID id = revisionDelta.getID();
-    CDOBranchVersion version = revisionDelta.getBranch().getVersion(revisionDelta.getVersion());
-    InternalCDORevision revision = getStore().getRevisionByVersion(id, version);
-    if (revision.getVersion() != revisionDelta.getVersion())
+    InternalCDORevision revision = getStore().getRevisionByVersion(id, revisionDelta);
+    if (revision == null)
     {
       throw new ConcurrentModificationException("Trying to update object " + id //$NON-NLS-1$
           + " that was already modified"); //$NON-NLS-1$

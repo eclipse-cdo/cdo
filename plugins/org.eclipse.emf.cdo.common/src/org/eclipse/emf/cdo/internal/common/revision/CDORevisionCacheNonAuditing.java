@@ -186,10 +186,24 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
 
     if (!revision.isHistorical())
     {
+      CDOID id = revision.getID();
       Reference<InternalCDORevision> reference = createReference(revision);
+
       synchronized (revisions)
       {
-        revisions.put(revision.getID(), reference);
+        Reference<InternalCDORevision> oldReference = revisions.put(id, reference);
+        if (oldReference != null)
+        {
+          InternalCDORevision oldRevision = oldReference.get();
+          if (oldRevision != null)
+          {
+            if (oldRevision.getVersion() > revision.getVersion())
+            {
+              // Put the old revision back because it's newer.
+              revisions.put(id, oldReference);
+            }
+          }
+        }
       }
     }
   }

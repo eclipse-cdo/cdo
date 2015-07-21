@@ -34,7 +34,7 @@ import java.util.concurrent.TimeoutException;
  * @author Eike Stepper
  */
 @Requires({ ISessionConfig.CAPABILITY_NET4J_JVM, IModelConfig.CAPABILITY_NATIVE })
-public class LockingSequenceWithChildListTest extends AbstractLockingTest
+public class Locking_SequenceWithChildListTest_DISABLED extends AbstractLockingTest
 {
   private static final int USERS = 10;
 
@@ -163,7 +163,7 @@ public class LockingSequenceWithChildListTest extends AbstractLockingTest
       {
         for (int allocation = 0; allocation < ADDITIONS; allocation++)
         {
-          CDOSession session = LockingSequenceWithChildListTest.this.openSession();
+          CDOSession session = Locking_SequenceWithChildListTest_DISABLED.this.openSession();
           CDOTransaction transaction = session.openTransaction();
 
           try

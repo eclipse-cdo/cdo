@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -43,7 +44,7 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  * @since 4.3
  */
-public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
+public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2, IExecutorServiceProvider
 {
   public static final String DEFAULT_HOME_FOLDER = "/home";
 

@@ -67,8 +67,11 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.ExecutorWorkSerializer;
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.QueueRunner;
+import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -111,11 +114,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends AbstractCDOView
+public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -137,7 +141,7 @@ public class CDOViewImpl extends AbstractCDOView
 
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
 
-  private QueueRunner invalidationRunner = createInvalidationRunner();
+  private ExecutorWorkSerializer invalidationRunner = createInvalidationRunner();
 
   private volatile boolean invalidationRunnerActive;
 
@@ -175,6 +179,11 @@ public class CDOViewImpl extends AbstractCDOView
   public void setViewID(int viewId)
   {
     viewID = viewId;
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return ConcurrencyUtil.getExecutorService(session);
   }
 
   /**
@@ -932,8 +941,8 @@ public class CDOViewImpl extends AbstractCDOView
   {
     if (async)
     {
-      QueueRunner runner = getInvalidationRunner();
-      runner.addWork(new InvalidationRunnable(branch, lastUpdateTime, allChangedObjects, allDetachedObjects,
+      IWorkSerializer serializer = getInvalidationRunner();
+      serializer.addWork(new InvalidationRunnable(branch, lastUpdateTime, allChangedObjects, allDetachedObjects,
           oldRevisions, clearResourcePathCache));
     }
     else
@@ -997,34 +1006,22 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  public QueueRunner getInvalidationRunner()
+  public ExecutorWorkSerializer getInvalidationRunner()
   {
     return invalidationRunner;
   }
 
-  private QueueRunner createInvalidationRunner()
+  private ExecutorWorkSerializer createInvalidationRunner()
   {
-    return new QueueRunner()
+    return new ExecutorWorkSerializer()
     {
       @Override
-      protected String getThreadName()
-      {
-        return "CDOViewInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
-      }
-
-      @Override
-      protected void noWork(WorkContext context)
+      protected void noWork()
       {
         if (isClosed())
         {
-          context.terminate();
+          dispose();
         }
-      }
-
-      @Override
-      public String toString()
-      {
-        return getThreadName();
       }
     };
   }
@@ -1279,9 +1276,12 @@ public class CDOViewImpl extends AbstractCDOView
   {
     super.doAfterActivate();
 
+    ExecutorService executorService = ConcurrencyUtil.getExecutorService(session);
+    invalidationRunner.setExecutor(executorService);
+
     try
     {
-      invalidationRunner.activate();
+      LifecycleUtil.activate(invalidationRunner);
     }
     catch (LifecycleException ex)
     {

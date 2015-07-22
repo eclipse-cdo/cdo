@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.event;
 
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
+
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -20,12 +22,20 @@ import java.util.concurrent.ExecutorService;
  * @apiviz.exclude
  */
 @Deprecated
-public class ExecutorServiceNotifier extends Notifier
+public class ExecutorServiceNotifier extends Notifier implements IExecutorServiceProvider
 {
   private ExecutorService notificationExecutorService;
 
   public ExecutorServiceNotifier()
   {
+  }
+
+  /**
+   * @since 3.6
+   */
+  public ExecutorService getExecutorService()
+  {
+    return notificationExecutorService;
   }
 
   @Override

@@ -14,6 +14,7 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -29,7 +30,8 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol2<INFRA_STRUCTURE>
+public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle
+    implements IProtocol2<INFRA_STRUCTURE>, IExecutorServiceProvider
 {
   private String type;
 

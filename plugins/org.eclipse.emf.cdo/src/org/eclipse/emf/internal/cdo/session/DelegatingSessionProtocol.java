@@ -47,6 +47,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
@@ -70,11 +72,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionProtocol
+public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionProtocol, IExecutorServiceProvider
 {
   private CDOSessionProtocol delegate;
 
@@ -120,6 +123,11 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   public CDOSession getSession()
   {
     return (CDOSession)delegate.getSession();
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return ConcurrencyUtil.getExecutorService(delegate);
   }
 
   public boolean cancelQuery(int queryId)

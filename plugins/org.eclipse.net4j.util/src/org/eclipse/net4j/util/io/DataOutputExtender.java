@@ -10,13 +10,14 @@
  */
 package org.eclipse.net4j.util.io;
 
+import java.io.Closeable;
 import java.io.DataOutput;
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class DataOutputExtender implements ExtendedDataOutput
+public class DataOutputExtender implements ExtendedDataOutput, Closeable
 {
   private DataOutput output;
 
@@ -124,5 +125,16 @@ public class DataOutputExtender implements ExtendedDataOutput
   public void writeException(Throwable t) throws IOException
   {
     ExtendedIOUtil.writeException(output, t);
+  }
+
+  /**
+   * @since 3.6
+   */
+  public void close() throws IOException
+  {
+    if (output instanceof Closeable)
+    {
+      ((Closeable)output).close();
+    }
   }
 }

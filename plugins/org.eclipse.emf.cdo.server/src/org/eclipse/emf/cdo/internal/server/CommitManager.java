@@ -11,21 +11,25 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalCommitManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.ThreadPool;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import java.io.Closeable;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
@@ -62,8 +66,13 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   {
     if (executors == null)
     {
-      shutdownExecutorService = true;
-      executors = Executors.newFixedThreadPool(10);
+      executors = ConcurrencyUtil.getExecutorService(repository);
+
+      if (executors == null)
+      {
+        shutdownExecutorService = true;
+        executors = ThreadPool.create();
+      }
     }
 
     return executors;
@@ -73,7 +82,11 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
   {
     if (shutdownExecutorService)
     {
-      this.executors.shutdown();
+      if (this.executors != null)
+      {
+        this.executors.shutdown();
+      }
+
       shutdownExecutorService = false;
     }
 
@@ -87,12 +100,15 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
     setExecutors(null);
   }
 
-  /**
-   * Create a future to execute commitContext in a different thread.
-   */
+  @Deprecated
   public void preCommit(InternalCommitContext commitContext, OMMonitor monitor)
   {
-    TransactionCommitContextEntry contextEntry = new TransactionCommitContextEntry(monitor);
+    preCommit(commitContext, null, monitor);
+  }
+
+  public void preCommit(InternalCommitContext commitContext, CDODataInput in, OMMonitor monitor)
+  {
+    TransactionCommitContextEntry contextEntry = new TransactionCommitContextEntry(in, monitor);
     contextEntry.setContext(commitContext);
 
     Future<Object> future = getExecutors().submit(contextEntry.createCallable());
@@ -145,14 +161,17 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
    */
   private static final class TransactionCommitContextEntry
   {
+    private final CDODataInput in;
+
+    private final OMMonitor monitor;
+
     private InternalCommitContext context;
 
     private Future<Object> future;
 
-    private OMMonitor monitor;
-
-    public TransactionCommitContextEntry(OMMonitor monitor)
+    public TransactionCommitContextEntry(CDODataInput in, OMMonitor monitor)
     {
+      this.in = in;
       this.monitor = monitor;
     }
 
@@ -163,6 +182,12 @@ public class CommitManager extends Lifecycle implements InternalCommitManager
         public Object call() throws Exception
         {
           context.write(monitor);
+
+          if (in instanceof Closeable)
+          {
+            IOUtil.closeSilent((Closeable)in);
+          }
+
           return null;
         }
       };

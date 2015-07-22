@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOTimeoutException;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -194,6 +195,22 @@ public abstract class Signal implements Runnable
   }
 
   /**
+   * @since 4.5
+   */
+  protected boolean closeInputStreamAfterMe()
+  {
+    return true;
+  }
+
+  /**
+   * @since 4.5
+   */
+  protected boolean closeOutputStreamAfterMe()
+  {
+    return true;
+  }
+
+  /**
    * @since 2.0
    */
   protected InputStream getCurrentInputStream()
@@ -265,6 +282,16 @@ public abstract class Signal implements Runnable
     }
     finally
     {
+      if (closeInputStreamAfterMe())
+      {
+        IOUtil.closeSilent(bufferInputStream);
+      }
+
+      if (closeOutputStreamAfterMe())
+      {
+        IOUtil.closeSilent(bufferOutputStream);
+      }
+
       protocol.stopSignal(this, exception);
     }
   }
@@ -274,11 +301,19 @@ public abstract class Signal implements Runnable
     this.correlationID = correlationID;
   }
 
+  /**
+   * Transfers ownership of the passed stream to this signal.
+   * The signal closes the stream when done reading.
+   */
   void setBufferInputStream(BufferInputStream inputStream)
   {
     bufferInputStream = inputStream;
   }
 
+  /**
+   * Transfers ownership of the passed stream to this signal.
+   * The signal closes the stream when done writing.
+   */
   void setBufferOutputStream(BufferOutputStream outputStream)
   {
     bufferOutputStream = outputStream;

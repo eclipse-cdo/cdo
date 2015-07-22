@@ -18,7 +18,9 @@ import java.util.concurrent.Future;
 
 /**
  * @author Eike Stepper
+ * @deprecated As of 3.6 use {@link ExecutorWorkSerializer}.
  */
+@Deprecated
 public class CompletionWorkSerializer implements IWorkSerializer
 {
   private CompletionService<Object> completionService;

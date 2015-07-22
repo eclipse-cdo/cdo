@@ -165,6 +165,11 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     buffers = null;
     currentBuffer = null;
     super.close();
+
+    if (ccam)
+    {
+      closeChannel();
+    }
   }
 
   @Override
@@ -217,6 +222,16 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     ccam = currentBuffer.isCCAM();
 
     return true;
+  }
+
+  /**
+   * Subclasses may override.
+   *
+   * @since 4.5
+   */
+  protected void closeChannel()
+  {
+    // Do nothing.
   }
 
   private long computeTimeout(final long check) throws IOTimeoutException

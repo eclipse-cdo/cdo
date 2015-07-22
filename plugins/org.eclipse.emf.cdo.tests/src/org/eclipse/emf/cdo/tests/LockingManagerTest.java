@@ -42,7 +42,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import junit.framework.AssertionFailedError;
@@ -184,7 +183,7 @@ public class LockingManagerTest extends AbstractLockingTest
       }
     };
 
-    ExecutorService executors = Executors.newFixedThreadPool(10);
+    ExecutorService executors = getExecutorService();
     Set<Integer> keys = new HashSet<Integer>();
     keys.add(1);
     keys.add(2);

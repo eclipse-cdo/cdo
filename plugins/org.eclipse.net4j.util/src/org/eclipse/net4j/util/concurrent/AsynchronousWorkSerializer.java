@@ -19,8 +19,10 @@ import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
+ * @deprecated As of 3.6 use {@link ExecutorWorkSerializer}.
  */
-public class AsynchronousWorkSerializer implements IWorkSerializer, Runnable
+@Deprecated
+public class AsynchronousWorkSerializer implements IWorkSerializer, IExecutorServiceProvider, Runnable
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONCURRENCY, AsynchronousWorkSerializer.class);
 

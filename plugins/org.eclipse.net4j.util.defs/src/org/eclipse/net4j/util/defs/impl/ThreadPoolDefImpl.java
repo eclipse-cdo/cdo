@@ -11,14 +11,13 @@
  */
 package org.eclipse.net4j.util.defs.impl;
 
+import org.eclipse.net4j.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.defs.Net4jUtilDefsPackage;
 import org.eclipse.net4j.util.defs.ThreadPoolDef;
 
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Thread Pool Def</b></em>'. <!-- end-user-doc
@@ -30,9 +29,6 @@ import java.util.concurrent.ThreadFactory;
  */
 public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadPoolDef
 {
-
-  private static final String THREADGROUP_IDENTIFIER = "net4j"; //$NON-NLS-1$
-
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
@@ -61,26 +57,8 @@ public class ThreadPoolDefImpl extends ExecutorServiceDefImpl implements ThreadP
   @Override
   protected Object createInstance()
   {
-    ExecutorService executorService = Executors.newCachedThreadPool(new DaemonThreadFactory(THREADGROUP_IDENTIFIER));
+    ExecutorService executorService = ThreadPool.create();
     return executorService;
-  }
-
-  private static class DaemonThreadFactory implements ThreadFactory
-  {
-    private ThreadGroup threadGroup;
-
-    public DaemonThreadFactory(String threadGroupIdentifier)
-    {
-      super();
-      threadGroup = new ThreadGroup(threadGroupIdentifier);
-    }
-
-    public Thread newThread(Runnable r)
-    {
-      Thread thread = new Thread(threadGroup, r);
-      thread.setDaemon(true);
-      return thread;
-    }
   }
 
 } // ThreadPoolDefImpl

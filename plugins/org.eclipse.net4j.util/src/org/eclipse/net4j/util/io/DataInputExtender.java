@@ -12,13 +12,14 @@ package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 
+import java.io.Closeable;
 import java.io.DataInput;
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class DataInputExtender implements ExtendedDataInput
+public class DataInputExtender implements ExtendedDataInput, Closeable
 {
   private DataInput input;
 
@@ -141,5 +142,16 @@ public class DataInputExtender implements ExtendedDataInput
   public int skipBytes(int n) throws IOException
   {
     return input.skipBytes(n);
+  }
+
+  /**
+   * @since 3.6
+   */
+  public void close() throws IOException
+  {
+    if (input instanceof Closeable)
+    {
+      ((Closeable)input).close();
+    }
   }
 }

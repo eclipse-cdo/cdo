@@ -13,9 +13,11 @@ package org.eclipse.emf.cdo.tests.config.impl;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.concurrent.ThreadPool;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -23,6 +25,8 @@ import java.util.Set;
 public abstract class Config implements IConfig
 {
   private static final long serialVersionUID = 1L;
+
+  protected static ExecutorService executorService = ThreadPool.create("test", 20, 100, 30);
 
   private String name;
 
@@ -108,5 +112,10 @@ public abstract class Config implements IConfig
 
   public void tearDown() throws Exception
   {
+  }
+
+  public static ExecutorService getExecutorService()
+  {
+    return executorService;
   }
 }

@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 
+import java.io.Closeable;
 import java.io.DataInput;
 import java.io.EOFException;
 import java.io.IOException;
@@ -48,7 +49,7 @@ public interface ExtendedDataInput extends DataInput
    * @author Eike Stepper
    * @since 2.0
    */
-  public static class Delegating implements ExtendedDataInput
+  public static class Delegating implements ExtendedDataInput, Closeable
   {
     private ExtendedDataInput delegate;
 
@@ -177,6 +178,17 @@ public interface ExtendedDataInput extends DataInput
     {
       return delegate.skipBytes(n);
     }
+
+    /**
+     * @since 3.6
+     */
+    public void close() throws IOException
+    {
+      if (delegate instanceof Closeable)
+      {
+        ((Closeable)delegate).close();
+      }
+    }
   }
 
   /**
@@ -208,6 +220,17 @@ public interface ExtendedDataInput extends DataInput
       {
         return -1;
       }
+    }
+
+    @Override
+    public void close() throws IOException
+    {
+      if (delegate instanceof Closeable)
+      {
+        ((Closeable)delegate).close();
+      }
+
+      super.close();
     }
   }
 }

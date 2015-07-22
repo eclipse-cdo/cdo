@@ -18,12 +18,12 @@ import org.eclipse.net4j.defs.Net4jDefsFactory;
 import org.eclipse.net4j.internal.jvm.JVMClientConnector;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
+import org.eclipse.net4j.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.defs.Net4jUtilDefsFactory;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author Andre Dietisheim
@@ -88,8 +88,6 @@ public class JVMAcceptorDefImplTest extends AbstractOMTest
 
   private ExecutorService createThreadPool()
   {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-    return threadPool;
+    return ThreadPool.create();
   }
 }

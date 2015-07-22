@@ -179,7 +179,8 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     return result;
   }
 
-  public void addRevision(CDORevision revision)
+  @Override
+  protected void doAddRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
     checkBranch(revision.getBranch());
@@ -208,7 +209,8 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     }
   }
 
-  public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
+  @Override
+  protected InternalCDORevision doRemoveRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     checkBranch(branchVersion.getBranch());
     synchronized (revisions)

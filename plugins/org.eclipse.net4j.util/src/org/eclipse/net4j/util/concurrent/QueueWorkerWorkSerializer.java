@@ -15,7 +15,9 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 
 /**
  * @author Eike Stepper
+ * @deprecated As of 3.6 use {@link ExecutorWorkSerializer}.
  */
+@Deprecated
 public class QueueWorkerWorkSerializer extends QueueRunner implements IWorkSerializer
 {
   public QueueWorkerWorkSerializer()

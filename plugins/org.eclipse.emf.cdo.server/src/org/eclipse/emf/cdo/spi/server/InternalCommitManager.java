@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.concurrent.ExecutionException;
@@ -30,8 +32,17 @@ public interface InternalCommitManager
 
   /**
    * Create a future to execute commitContext in a different thread.
+   *
+   * @deprecated As of 4.5 use {@link #preCommit(InternalCommitContext, CDODataInput, OMMonitor)}.
    */
+  @Deprecated
   public void preCommit(InternalCommitContext commitContext, OMMonitor monitor);
+
+  /**
+   * Create a future to execute commitContext in a different thread.
+   * @since 4.5
+   */
+  public void preCommit(InternalCommitContext commitContext, CDODataInput in, OMMonitor monitor);
 
   /**
    * Called after a commitContext is done successfully or not.

@@ -85,14 +85,10 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     return commitContext.getPackageRegistry();
   }
 
-  @Override
-  protected void indicatingFailed()
+  protected void initializeCommitContext(CDODataInput in) throws Exception
   {
-    if (commitContext != null)
-    {
-      commitContext.postCommit(false);
-      commitContext = null;
-    }
+    int viewID = in.readInt();
+    commitContext = getTransaction(viewID).createCommitContext();
   }
 
   @Override
@@ -101,8 +97,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     try
     {
       monitor.begin(OMMonitor.TEN);
-      indicatingCommit(in, monitor.fork(OMMonitor.ONE));
-      indicatingCommit(monitor.fork(OMMonitor.TEN - OMMonitor.ONE));
+      indicatingRead(in, monitor.fork(OMMonitor.ONE));
+      indicatingCommit(in, monitor.fork(OMMonitor.TEN - OMMonitor.ONE));
     }
     catch (IOException ex)
     {
@@ -119,7 +115,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
   }
 
-  protected void indicatingCommit(CDODataInput in, OMMonitor monitor) throws Exception
+  protected void indicatingRead(CDODataInput in, OMMonitor monitor) throws Exception
   {
     // Create commit context
     initializeCommitContext(in);
@@ -292,32 +288,19 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
   }
 
-  private ResourceSet createResourceSet(InternalCDOPackageRegistry packageRegistry)
-  {
-    ResourceSet resourceSet = new ResourceSetImpl()
-    {
-      @Override
-      protected void demandLoad(Resource resource) throws IOException
-      {
-        // Do nothing: we don't want this ResourceSet to attempt demand-loads.
-      }
-    };
-
-    Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
-    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
-    resourceSet.setPackageRegistry(packageRegistry);
-    return resourceSet;
-  }
-
-  protected void initializeCommitContext(CDODataInput in) throws Exception
-  {
-    int viewID = in.readInt();
-    commitContext = getTransaction(viewID).createCommitContext();
-  }
-
-  protected void indicatingCommit(OMMonitor monitor)
+  protected void indicatingCommit(CDODataInput in, OMMonitor monitor)
   {
     getRepository().commit(commitContext, monitor);
+  }
+
+  @Override
+  protected void indicatingFailed()
+  {
+    if (commitContext != null)
+    {
+      commitContext.postCommit(false);
+      commitContext = null;
+    }
   }
 
   @Override
@@ -465,5 +448,22 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
 
     throw new IllegalStateException("Illegal transaction: " + view); //$NON-NLS-1$
+  }
+
+  private ResourceSet createResourceSet(InternalCDOPackageRegistry packageRegistry)
+  {
+    ResourceSet resourceSet = new ResourceSetImpl()
+    {
+      @Override
+      protected void demandLoad(Resource resource) throws IOException
+      {
+        // Do nothing: we don't want this ResourceSet to attempt demand-loads.
+      }
+    };
+
+    Resource.Factory resourceFactory = new EcoreResourceFactoryImpl();
+    resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("*", resourceFactory); //$NON-NLS-1$
+    resourceSet.setPackageRegistry(packageRegistry);
+    return resourceSet;
   }
 }

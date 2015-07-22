@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.io;
 
+import java.io.Closeable;
 import java.io.DataOutput;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -41,7 +42,7 @@ public interface ExtendedDataOutput extends DataOutput
    * @author Eike Stepper
    * @since 2.0
    */
-  public static class Delegating implements ExtendedDataOutput
+  public static class Delegating implements ExtendedDataOutput, Closeable
   {
     private ExtendedDataOutput delegate;
 
@@ -155,6 +156,17 @@ public interface ExtendedDataOutput extends DataOutput
     {
       delegate.writeUTF(str);
     }
+
+    /**
+     * @since 3.6
+     */
+    public void close() throws IOException
+    {
+      if (delegate instanceof Closeable)
+      {
+        ((Closeable)delegate).close();
+      }
+    }
   }
 
   /**
@@ -179,6 +191,17 @@ public interface ExtendedDataOutput extends DataOutput
     public void write(int b) throws IOException
     {
       delegate.write(b);
+    }
+
+    @Override
+    public void close() throws IOException
+    {
+      if (delegate instanceof Closeable)
+      {
+        ((Closeable)delegate).close();
+      }
+
+      super.close();
     }
   }
 }

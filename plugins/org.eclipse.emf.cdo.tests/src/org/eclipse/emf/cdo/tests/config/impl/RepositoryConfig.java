@@ -64,6 +64,8 @@ import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.DelegatingExecutorService;
+import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -92,6 +94,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -242,6 +245,16 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container);
     CDONet4jServerUtil.prepareContainer(container);
+
+    container.registerFactory(new ExecutorServiceFactory()
+    {
+      @Override
+      public ExecutorService create(String threadGroupName)
+      {
+        return new DelegatingExecutorService(executorService);
+      }
+    });
+
     return container;
   }
 
@@ -533,8 +546,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
               if (!path.startsWith(prefix) && !hasAnnotation(CleanRepositoriesBefore.class))
               {
                 throw new RuntimeException("Test case " + test.getClass().getName() + '.' + test.getName()
-                + " does not use getResourcePath() for resource " + path + ", nor does it declare @"
-                + CleanRepositoriesBefore.class.getSimpleName());
+                    + " does not use getResourcePath() for resource " + path + ", nor does it declare @"
+                    + CleanRepositoriesBefore.class.getSimpleName());
               }
             }
           }

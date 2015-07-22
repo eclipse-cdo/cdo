@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
@@ -38,7 +40,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
@@ -85,8 +86,13 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
   {
     if (executors == null)
     {
-      shutdownExecutorService = true;
-      executors = Executors.newFixedThreadPool(10);
+      executors = ConcurrencyUtil.getExecutorService(repository);
+
+      if (executors == null)
+      {
+        shutdownExecutorService = true;
+        executors = ThreadPool.create();
+      }
     }
 
     return executors;
@@ -96,7 +102,11 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
   {
     if (shutdownExecutorService)
     {
-      this.executors.shutdown();
+      if (this.executors != null)
+      {
+        this.executors.shutdown();
+      }
+
       shutdownExecutorService = false;
     }
 

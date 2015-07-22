@@ -96,10 +96,12 @@ import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.ExecutorWorkSerializer;
+import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
-import org.eclipse.net4j.util.concurrent.QueueRunner2;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -149,11 +151,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession
+public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
+    implements InternalCDOSession, IExecutorServiceProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -361,6 +365,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public CDOFetchRuleManager getFetchRuleManager()
   {
     return fetchRuleManager;
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return ConcurrencyUtil.getExecutorService(sessionProtocol);
   }
 
   /**
@@ -1308,6 +1317,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   protected void doAfterActivate() throws Exception
   {
     super.doAfterActivate();
+
+    ExecutorService executorService = ConcurrencyUtil.getExecutorService(sessionProtocol);
+    invalidator.setExecutor(executorService);
     LifecycleUtil.activate(invalidator);
   }
 
@@ -1738,7 +1750,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @author Eike Stepper
    */
-  private class Invalidator extends QueueRunner2<Invalidation>
+  private class Invalidator extends ExecutorWorkSerializer
   {
     private static final boolean DEBUG = false;
 
@@ -1820,11 +1832,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     @Override
-    protected void noWork(WorkContext context)
+    protected void noWork()
     {
       if (isClosed() && terminateIfSessionClosed)
       {
-        context.terminate();
+        dispose();
       }
     }
 
@@ -1833,12 +1845,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       super.doAfterActivate();
       terminateIfSessionClosed = true;
-    }
-
-    @Override
-    protected String getThreadName()
-    {
-      return "CDOSessionInvalidator-" + CDOSessionImpl.this;
     }
   }
 

@@ -54,4 +54,36 @@ public final class ConcurrencyUtil
   {
     return ExecutorServiceFactory.get(container);
   }
+
+  /**
+   * @since 3.6
+   */
+  public static ExecutorService getExecutorService(Object object)
+  {
+    if (object instanceof IExecutorServiceProvider)
+    {
+      try
+      {
+        return ((IExecutorServiceProvider)object).getExecutorService();
+      }
+      catch (Exception ex)
+      {
+        //$FALL-THROUGH$
+      }
+    }
+
+    if (object instanceof IManagedContainer)
+    {
+      try
+      {
+        return getExecutorService((IManagedContainer)object);
+      }
+      catch (Exception ex)
+      {
+        //$FALL-THROUGH$
+      }
+    }
+
+    return null;
+  }
 }

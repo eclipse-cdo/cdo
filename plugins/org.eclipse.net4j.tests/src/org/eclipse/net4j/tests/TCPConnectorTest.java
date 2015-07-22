@@ -31,6 +31,7 @@ import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.collection.RoundRobinBlockingQueue;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.ChallengeNegotiator;
@@ -47,7 +48,6 @@ import org.eclipse.spi.net4j.InternalChannel;
 import java.nio.channels.ServerSocketChannel;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author Eike Stepper
@@ -221,9 +221,7 @@ public class TCPConnectorTest extends AbstractTransportTest
   public void testDeferredActivation() throws Exception
   {
     final long DELAY = 500L;
-    threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-
+    threadPool = ThreadPool.create();
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
@@ -272,9 +270,7 @@ public class TCPConnectorTest extends AbstractTransportTest
 
   public void testNegotiationSuccess() throws Exception
   {
-    threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-
+    threadPool = ThreadPool.create();
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
@@ -351,9 +347,7 @@ public class TCPConnectorTest extends AbstractTransportTest
 
   public void testInvalidUser() throws Exception
   {
-    threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-
+    threadPool = ThreadPool.create();
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
@@ -412,9 +406,7 @@ public class TCPConnectorTest extends AbstractTransportTest
 
   public void testInvalidPassword() throws Exception
   {
-    threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-
+    threadPool = ThreadPool.create();
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
@@ -473,9 +465,7 @@ public class TCPConnectorTest extends AbstractTransportTest
 
   public void testNoNegotiator() throws Exception
   {
-    threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-
+    threadPool = ThreadPool.create();
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 
@@ -513,9 +503,7 @@ public class TCPConnectorTest extends AbstractTransportTest
 
   public void testNegotiatorTooLate() throws Exception
   {
-    threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-
+    threadPool = ThreadPool.create();
     bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);
 

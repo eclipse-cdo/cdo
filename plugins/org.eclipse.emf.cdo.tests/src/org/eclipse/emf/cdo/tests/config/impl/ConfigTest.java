@@ -78,6 +78,7 @@ import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
 
 import junit.framework.TestResult;
 
@@ -98,6 +99,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 
   public ConfigTest()
   {
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return Config.getExecutorService();
   }
 
   public synchronized IScenario getScenario()
@@ -574,8 +580,8 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}]", getClass().getSimpleName(), getName(),
-        getRepositoryConfig(), getSessionConfig(), getModelConfig());
+    return MessageFormat.format("{0}.{1} [{2}, {3}, {4}]", getClass().getSimpleName(), getName(), getRepositoryConfig(),
+        getSessionConfig(), getModelConfig());
   }
 
   @Override
@@ -861,7 +867,7 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Target({ ElementType.TYPE, ElementType.METHOD })
   public @interface Requires
   {
-    String[] value();
+    String[]value();
   }
 
   @Inherited
@@ -869,6 +875,6 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
   @Target({ ElementType.TYPE, ElementType.METHOD })
   public @interface Skips
   {
-    String[] value();
+    String[]value();
   }
 }

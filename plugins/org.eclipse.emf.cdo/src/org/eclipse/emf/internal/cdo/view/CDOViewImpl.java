@@ -441,8 +441,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
         if (existingLockState != null)
         {
-          Object lockTarget = getLockTarget(object);
-          existingLockState.updateFrom(lockTarget, lockState);
+          existingLockState.updateFrom(lockState);
         }
         else
         {
@@ -774,11 +773,15 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   public synchronized void remapObject(CDOID oldID)
   {
     InternalCDOObject object = getObject(oldID, false);
-    InternalCDOLockState oldLockState = (InternalCDOLockState)lockStates.get(object);
+    InternalCDOLockState oldLockState = (InternalCDOLockState)lockStates.remove(object);
     if (oldLockState != null)
     {
-      oldLockState.updateFrom(getLockTarget(object), oldLockState);
+      Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+      InternalCDOLockState newLockState = (InternalCDOLockState)CDOLockUtil.createLockState(lockedObject);
+      newLockState.updateFrom(oldLockState);
+      lockStates.put(object, newLockState);
     }
+
     super.remapObject(oldID);
   }
 
@@ -804,19 +807,20 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     for (CDOID id : ids)
     {
       CDOLockState lockState = null;
-      InternalCDOObject obj = getObject(id, false);
-      if (obj != null)
+      InternalCDOObject object = getObject(id, false);
+      if (object != null)
       {
-        lockState = this.lockStates.get(obj);
+        lockState = this.lockStates.get(object);
       }
 
       if (lockState != null)
       {
         lockStates.add(lockState);
       }
-      else if (loadOnDemand && obj != null && FSMUtil.isNew(obj))
+      else if (loadOnDemand && object != null && FSMUtil.isNew(object))
       {
-        CDOLockState defaultLockState = CDOLockUtil.createLockState(getLockTarget(obj));
+        Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+        CDOLockState defaultLockState = CDOLockUtil.createLockState(lockedObject);
         locksOnNewObjects.add(defaultLockState);
         lockStates.add(defaultLockState);
       }
@@ -847,10 +851,10 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       {
         Object target;
 
-        InternalCDOObject obj = getObject(missingLockStateForCDOID, false);
-        if (obj != null)
+        InternalCDOObject object = getObject(missingLockStateForCDOID, false);
+        if (object != null)
         {
-          target = getLockTarget(obj);
+          target = getLockTarget(object); // CDOID or CDOIDAndBranch
         }
         else
         {
@@ -1855,11 +1859,12 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         List<CDOLockState> missingLockStates = new ArrayList<CDOLockState>();
         for (CDOID id : ids)
         {
-          InternalCDOObject obj = getObject(id, false);
+          InternalCDOObject object = getObject(id, false);
 
-          if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
+          if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
           {
-            missingLockStates.add(CDOLockUtil.createLockState(getLockTarget(obj)));
+            Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+            missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
           }
         }
 
@@ -1869,10 +1874,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           if (id != null && lockStateLoadingPolicy.loadLockState(id))
           {
             boolean isResourceNode = revision.isResourceNode();
-            InternalCDOObject obj = getObject(id, !isResourceNode);
-            if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
+            InternalCDOObject object = getObject(id, !isResourceNode);
+            if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
             {
-              missingLockStates.add(CDOLockUtil.createLockState(getLockTarget(obj)));
+              Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+              missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
             }
           }
         }

@@ -76,13 +76,8 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, ThreadFactory threadFactory)
   {
     super(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, createWorkQueue(), threadFactory);
-    ((ThreadPool.WorkQueue)getQueue()).setThreadPool(this);
+    ((WorkQueue)getQueue()).setThreadPool(this);
     setRejectedExecutionHandler(this);
-  }
-
-  public final void setNaming(boolean naming)
-  {
-    executor = naming ? namingExecutor : defaultExecutor;
   }
 
   @Override
@@ -93,7 +88,12 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
   public void rejectedExecution(Runnable runnable, ThreadPoolExecutor executor)
   {
-    ((ThreadPool.WorkQueue)getQueue()).addFirst(runnable);
+    ((WorkQueue)getQueue()).addFirst(runnable);
+  }
+
+  final void setNaming(boolean naming)
+  {
+    executor = naming ? namingExecutor : defaultExecutor;
   }
 
   public static ThreadPool create()
@@ -185,7 +185,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     return threadFactory;
   }
 
-  private static ThreadPool.WorkQueue createWorkQueue()
+  private static WorkQueue createWorkQueue()
   {
     if (LINKED_BLOCKING_DEQUE_CLASS != null)
     {
@@ -235,7 +235,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   /**
    * @author Eike Stepper
    */
-  private static final class WorkQueueJRE15 extends LinkedBlockingQueue<Runnable>implements ThreadPool.WorkQueue
+  private static final class WorkQueueJRE15 extends LinkedBlockingQueue<Runnable>implements WorkQueue
   {
     private static final long serialVersionUID = 1L;
 
@@ -270,7 +270,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   /**
    * @author Eike Stepper
    */
-  private static final class WorkQueueJRE16 extends AbstractQueue<Runnable>implements ThreadPool.WorkQueue
+  private static final class WorkQueueJRE16 extends AbstractQueue<Runnable>implements WorkQueue
   {
     private final BlockingQueue<Runnable> delegate = createDelegate();
 

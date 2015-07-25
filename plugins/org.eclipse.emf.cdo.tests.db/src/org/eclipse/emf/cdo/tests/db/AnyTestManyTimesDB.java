@@ -8,8 +8,9 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_416474_Test;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
@@ -25,9 +26,20 @@ import junit.framework.TestSuite;
 /**
  * @author Eike Stepper
  */
-public class AnyTestManyTimes extends TestSuite implements IConstants
+public class AnyTestManyTimesDB extends TestSuite implements IConstants
 {
-  private static final RepositoryConfig REPOSITORY_CONFIG = MEM;
+  private static final boolean SUPPORTING_AUDITS = false;
+
+  private static final boolean SUPPORTING_BRANCHES = false;
+
+  private static final boolean WITH_RANGES = false;
+
+  private static final boolean COPY_ON_BRANCH = false;
+
+  private static final IDGenerationLocation ID_GENERATION_LOCATION = IDGenerationLocation.STORE;
+
+  private static final RepositoryConfig REPOSITORY_CONFIG = new H2Config(SUPPORTING_AUDITS, SUPPORTING_BRANCHES,
+      WITH_RANGES, COPY_ON_BRANCH, ID_GENERATION_LOCATION);
 
   private static final SessionConfig SESSION_CONFIG = JVM;
 
@@ -57,7 +69,7 @@ public class AnyTestManyTimes extends TestSuite implements IConstants
 
   public static Test suite()
   {
-    TestSuite suite = new TestSuite(AnyTestManyTimes.class)
+    TestSuite suite = new TestSuite(AnyTestManyTimesDB.class)
     {
       @Override
       public void addTest(Test test)

@@ -52,6 +52,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
@@ -529,6 +530,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected void addResourcePathChecker(InternalRepository repository)
   {
+    if (getCurrentTest().getScenario().alwaysCleanRepositories())
+    {
+      return;
+    }
+
     if (resourcePathChecker == null)
     {
       resourcePathChecker = new IRepository.WriteAccessHandler()
@@ -671,9 +677,15 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected boolean needsCleanRepos()
   {
-    String scenario = getCurrentTest().getScenario().toString();
-    boolean sameScenario = scenario.equals(lastScenario);
-    lastScenario = scenario;
+    IScenario scenario = getCurrentTest().getScenario();
+    if (scenario.alwaysCleanRepositories())
+    {
+      return true;
+    }
+
+    String scenarioName = scenario.toString();
+    boolean sameScenario = scenarioName.equals(lastScenario);
+    lastScenario = scenarioName;
 
     String repoProps = getRepositoryPropertiesDigest();
     boolean sameProps = repoProps.equals(lastRepoProps);
@@ -704,7 +716,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   private <T extends Annotation> boolean hasAnnotation(Class<T> annotationClass)
   {
     Class<? extends ConfigTest> testClass = getCurrentTest().getClass();
-    String methodName = getCurrentTest().getName();
+    String methodName = getCurrentTest().getTestMethodName();
     Method method = ReflectUtil.getMethod(testClass, methodName, new Class[0]);
     if (method.getAnnotation(annotationClass) != null)
     {

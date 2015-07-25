@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -590,12 +591,15 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       return node;
     }
 
-    for (NodeB child : node.getChildren())
+    synchronized (CDOUtil.getView(node))
     {
-      NodeB elementFromGraph = getElementFromGraphNodeB(child, name);
-      if (elementFromGraph != null)
+      for (NodeB child : node.getChildren())
       {
-        return elementFromGraph;
+        NodeB elementFromGraph = getElementFromGraphNodeB(child, name);
+        if (elementFromGraph != null)
+        {
+          return elementFromGraph;
+        }
       }
     }
 
@@ -610,15 +614,17 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       return node;
     }
 
-    for (NodeA child : node.getChildren())
+    synchronized (CDOUtil.getView(node))
     {
-      NodeA elementFromGraph = getElementFromGraphNodeA(child, name);
-      if (elementFromGraph != null)
+      for (NodeA child : node.getChildren())
       {
-        return elementFromGraph;
+        NodeA elementFromGraph = getElementFromGraphNodeA(child, name);
+        if (elementFromGraph != null)
+        {
+          return elementFromGraph;
+        }
       }
     }
-
     return null;
   }
 

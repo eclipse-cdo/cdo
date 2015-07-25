@@ -798,6 +798,11 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     return scenario;
   }
 
+  protected String getTestMethodName()
+  {
+    return getName();
+  }
+
   @Override
   public void setUp() throws Exception
   {

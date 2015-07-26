@@ -79,9 +79,13 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 {
   public static final String TITLE = "Show In";
 
+  public static final String PROPERTIES_VIEW_ID = "org.eclipse.ui.views.PropertySheet";
+
   public static final String HISTORY_VIEW_ID = "org.eclipse.team.ui.GenericHistoryView";
 
   private static final String ID = ShowInActionProvider.class.getName();
+
+  private static final boolean PROPERTIES_SUPPORT_AVAILABLE = Support.PROPERTIES.isAvailable();
 
   private static final boolean HISTORY_SUPPORT_AVAILABLE = Support.HISTORY.isAvailable();
 
@@ -132,6 +136,11 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
         }
 
         filled |= addAction(menu, repository, new ShowInSessionsViewAction(page, repository, null));
+
+        if (PROPERTIES_SUPPORT_AVAILABLE)
+        {
+          filled |= addAction(menu, repository, new ShowInViewAction(page, PROPERTIES_VIEW_ID));
+        }
 
         if (HISTORY_SUPPORT_AVAILABLE)
         {
@@ -192,6 +201,11 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
           filled |= addAction(menu, checkout, new ShowInViewAction(page, CDOTimeMachineView.ID));
         }
 
+        if (PROPERTIES_SUPPORT_AVAILABLE)
+        {
+          filled |= addAction(menu, checkout, new ShowInViewAction(page, PROPERTIES_VIEW_ID));
+        }
+
         if (HISTORY_SUPPORT_AVAILABLE)
         {
           filled |= addAction(menu, checkout.getView(), new ShowInHistoryAction(page, checkout.getView()));
@@ -204,6 +218,11 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
       EObject eObject = (EObject)selectedElement;
       if (CDOExplorerUtil.getCheckout(eObject) != null)
       {
+        if (PROPERTIES_SUPPORT_AVAILABLE)
+        {
+          filled |= addAction(menu, eObject, new ShowInViewAction(page, PROPERTIES_VIEW_ID));
+        }
+
         if (HISTORY_SUPPORT_AVAILABLE)
         {
           filled |= addAction(menu, eObject, new ShowInHistoryAction(page, eObject));

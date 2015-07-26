@@ -18,6 +18,15 @@ import org.eclipse.emf.common.CommonPlugin;
  */
 public abstract class Support
 {
+  public static final Support PROPERTIES = new Support()
+  {
+    @Override
+    protected boolean determineAvailability() throws Throwable
+    {
+      return CommonPlugin.loadClass("org.eclipse.ui.views", "org.eclipse.ui.views.properties.PropertySheet") != null;
+    }
+  };
+
   public static final Support HISTORY = new Support()
   {
     @Override

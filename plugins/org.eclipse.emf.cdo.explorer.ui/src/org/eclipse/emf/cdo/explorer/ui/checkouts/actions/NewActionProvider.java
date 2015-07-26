@@ -19,16 +19,20 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewWizard;
 import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
+import org.eclipse.emf.cdo.internal.ui.dialogs.SelectClassDialog;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor.NewRootMenuPopulator;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.command.BasicCommandStack;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -204,6 +208,10 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
       if (!resource.isRoot())
       {
         fillNewRootActions(submenu, checkout, resource);
+
+        submenu.add(new Separator());
+        submenu.add(new NewRootOtherAction(resource, checkout));
+        submenu.add(new Separator());
       }
     }
     else if (selectedObject instanceof CDOResourceNode)
@@ -216,10 +224,6 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     }
 
     submenu.add(new Separator(ICommonMenuConstants.GROUP_ADDITIONS));
-
-    // Add other...
-    submenu.add(new Separator());
-    submenu.add(showDlgAction);
 
     // Append the submenu after the GROUP_NEW group.
     menu.insertAfter(ICommonMenuConstants.GROUP_NEW, submenu);
@@ -480,6 +484,44 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     {
       super(object.eClass().getName(), null, image, checkout, resource);
       this.object = object;
+    }
+
+    @Override
+    protected EObject doRun(CDOTransaction transaction, CDOObject resource, ISelection selection)
+    {
+      EList<EObject> contents = ((CDOResource)resource).getContents();
+      contents.add(object);
+      return object;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private class NewRootOtherAction extends AbstractNewAction
+  {
+    private EObject object;
+
+    public NewRootOtherAction(CDOResource resource, CDOCheckout checkout)
+    {
+      super("Other...", null, SharedIcons.getDescriptor(SharedIcons.OBJ_ECLASS), checkout, resource);
+    }
+
+    @Override
+    protected void preRun() throws Exception
+    {
+      SelectClassDialog dialog = new SelectClassDialog(page, "New Root Object",
+          "Select a package and a class for new root object.");
+
+      if (dialog.open() == SelectClassDialog.OK)
+      {
+        EClass eClass = dialog.getSelectedClass();
+        object = EcoreUtil.create(eClass);
+      }
+      else
+      {
+        cancel();
+      }
     }
 
     @Override

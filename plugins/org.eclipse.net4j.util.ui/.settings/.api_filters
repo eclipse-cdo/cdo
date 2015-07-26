@@ -100,6 +100,31 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/UIUtil.java" type="org.eclipse.net4j.util.ui.UIUtil">
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="3.5"/>
+                <message_argument value="3.6"/>
+                <message_argument value="syncExec(Display, Runnable)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1141899266">
+            <message_arguments>
+                <message_argument value="3.5"/>
+                <message_argument value="3.6"/>
+                <message_argument value="syncExec(Runnable)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/widgets/FirstChildLayout.java" type="org.eclipse.net4j.util.ui.widgets.FirstChildLayout">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="3.5"/>
+                <message_argument value="3.6"/>
+                <message_argument value="org.eclipse.net4j.util.ui.widgets.FirstChildLayout"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/ui/widgets/ImageButton.java" type="org.eclipse.net4j.util.ui.widgets.ImageButton">
         <filter id="571473929">
             <message_arguments>

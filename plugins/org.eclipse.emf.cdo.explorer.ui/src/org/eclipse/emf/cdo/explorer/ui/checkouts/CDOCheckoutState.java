@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 import org.eclipse.emf.cdo.ui.CDOTreeExpansionAgent;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
@@ -32,6 +33,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -326,13 +328,21 @@ public final class CDOCheckoutState
         if (element instanceof CDOCheckout)
         {
           CDOCheckout checkout = (CDOCheckout)element;
-          return checkout.getLabel();
+          String text = checkout.getLabel();
+          if (!StringUtil.isEmpty(text))
+          {
+            return text;
+          }
         }
 
         if (element instanceof CDOElement)
         {
           CDOElement checkoutElement = (CDOElement)element;
-          return checkoutElement.toString();
+          String text = checkoutElement.toString();
+          if (!StringUtil.isEmpty(text))
+          {
+            return text;
+          }
         }
 
         if (element instanceof EObject)
@@ -340,7 +350,11 @@ public final class CDOCheckoutState
           CDOElement checkoutElement = (CDOElement)EcoreUtil.getExistingAdapter((Notifier)element, CDOElement.class);
           if (checkoutElement != null)
           {
-            return checkoutElement.toString(element);
+            String text = checkoutElement.toString(element);
+            if (!StringUtil.isEmpty(text))
+            {
+              return text;
+            }
           }
 
           if (element instanceof CDOResourceNode)
@@ -364,12 +378,36 @@ public final class CDOCheckoutState
           return pending.getText();
         }
 
-        return super.getText(element);
+        String text = super.getText(element);
+        if (!StringUtil.isEmpty(text))
+        {
+          return text;
+        }
       }
       catch (Exception ex)
       {
-        return ex.getMessage();
+        //$FALL-THROUGH$
       }
+
+      try
+      {
+        if (element instanceof EObject)
+        {
+          EObject eObject = (EObject)element;
+          EClass eClass = eObject.eClass();
+          String text = getText(eClass);
+          if (!StringUtil.isEmpty(text))
+          {
+            return text;
+          }
+        }
+      }
+      catch (Exception ignore)
+      {
+        //$FALL-THROUGH$
+      }
+
+      return element.getClass().getSimpleName();
     }
 
     @Override
@@ -400,7 +438,13 @@ public final class CDOCheckoutState
           return CDOLabelDecorator.decorate(image, element);
         }
 
-        return doGetImage(element);
+        Image image = doGetImage(element);
+        if (image == null)
+        {
+          return ERROR_IMAGE;
+        }
+
+        return image;
       }
       catch (Exception ex)
       {

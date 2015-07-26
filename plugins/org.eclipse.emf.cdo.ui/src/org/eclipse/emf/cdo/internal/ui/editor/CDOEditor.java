@@ -40,6 +40,8 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 
@@ -111,6 +113,7 @@ import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -125,17 +128,21 @@ import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Item;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.Widget;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
@@ -199,7 +206,14 @@ public class CDOEditor extends MultiPageEditorPart
     return Collections.unmodifiableList(result);
   }
 
-  private static final Field VIEWER_FIELD = getViewerField();
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOEditor.class);
+
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
+      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+
+  private static final Field PROPERTY_SHEET_PAGE_VIEWER_FIELD = getPropertySheetPageViewerField();
+
+  private static final Field CONTENT_OUTLINE_PAGE_VIEWER_FIELD = getContentOutlinePageViewerField();
 
   /**
    * @ADDED
@@ -1187,12 +1201,37 @@ public class CDOEditor extends MultiPageEditorPart
       createModel();
 
       Tree tree = new Tree(getContainer(), SWT.MULTI);
-      selectionViewer = new TreeViewer(tree);
+      selectionViewer = new SafeTreeViewer(tree);
       setCurrentViewer(selectionViewer);
 
       selectionViewer.setContentProvider(createContentProvider());
       selectionViewer.setLabelProvider(createLabelProvider());
       selectionViewer.setInput(viewerInput);
+
+      getSite().getShell().getDisplay().asyncExec(new Runnable()
+      {
+        public void run()
+        {
+          try
+          {
+            IContentProvider contentProvider = selectionViewer.getContentProvider();
+            if (contentProvider instanceof IStructuredContentProvider)
+            {
+              IStructuredContentProvider structuredContentProvider = (IStructuredContentProvider)contentProvider;
+
+              Object[] elements = structuredContentProvider.getElements(viewerInput);
+              if (elements != null && elements.length != 0)
+              {
+                setSelectionToViewer(Collections.singleton(elements[0]));
+              }
+            }
+          }
+          catch (Exception ex)
+          {
+            //$FALL-THROUGH$
+          }
+        }
+      });
 
       new AdapterFactoryTreeEditor(selectionViewer.getTree(), adapterFactory);
 
@@ -1246,7 +1285,7 @@ public class CDOEditor extends MultiPageEditorPart
             }
             catch (NoSuchMethodError ex)
             {
-              if (VIEWER_FIELD == null)
+              if (PROPERTY_SHEET_PAGE_VIEWER_FIELD == null)
               {
                 throw ex;
               }
@@ -1256,7 +1295,7 @@ public class CDOEditor extends MultiPageEditorPart
 
             if (objects == null)
             {
-              Object value = ReflectUtil.getValue(VIEWER_FIELD, propertySheetPage);
+              Object value = ReflectUtil.getValue(PROPERTY_SHEET_PAGE_VIEWER_FIELD, propertySheetPage);
               if (value instanceof IInputProvider)
               {
                 IInputProvider inputProvider = (IInputProvider)value;
@@ -1353,7 +1392,26 @@ public class CDOEditor extends MultiPageEditorPart
    */
   protected IContentProvider createContentProvider()
   {
-    return new AdapterFactoryContentProvider(adapterFactory);
+    return new AdapterFactoryContentProvider(adapterFactory)
+    {
+      @Override
+      public boolean hasChildren(Object object)
+      {
+        try
+        {
+          return super.hasChildren(object);
+        }
+        catch (Exception ex)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(ex);
+          }
+
+          return false;
+        }
+      }
+    };
   }
 
   /**
@@ -1362,7 +1420,70 @@ public class CDOEditor extends MultiPageEditorPart
   protected ILabelProvider createLabelProvider()
   {
     return new DecoratingLabelProvider(new CDOLabelProvider(adapterFactory, view, selectionViewer),
-        createLabelDecorator());
+        createLabelDecorator())
+    {
+      @Override
+      public Image getImage(Object element)
+      {
+        try
+        {
+          Image image = super.getImage(element);
+          if (image != null)
+          {
+            return image;
+          }
+        }
+        catch (Exception ex)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(ex);
+          }
+        }
+
+        return ERROR_IMAGE;
+      }
+
+      @Override
+      public String getText(Object element)
+      {
+        try
+        {
+          String text = super.getText(element);
+          if (!StringUtil.isEmpty(text))
+          {
+            return text;
+          }
+        }
+        catch (Exception ex)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(ex);
+          }
+        }
+
+        try
+        {
+          if (element instanceof EObject)
+          {
+            EObject eObject = (EObject)element;
+            EClass eClass = eObject.eClass();
+            String text = getText(eClass);
+            if (!StringUtil.isEmpty(text))
+            {
+              return text;
+            }
+          }
+        }
+        catch (Exception ignore)
+        {
+          //$FALL-THROUGH$
+        }
+
+        return element.getClass().getSimpleName();
+      }
+    };
   }
 
   /**
@@ -1468,15 +1589,34 @@ public class CDOEditor extends MultiPageEditorPart
         @Override
         public void createControl(Composite parent)
         {
-          super.createControl(parent);
+          if (CONTENT_OUTLINE_PAGE_VIEWER_FIELD == null)
+          {
+            super.createControl(parent);
+          }
+          else
+          {
+            TreeViewer treeViewer = new SafeTreeViewer(parent, getTreeStyle());
+            treeViewer.addSelectionChangedListener(this);
+            ReflectUtil.setValue(CONTENT_OUTLINE_PAGE_VIEWER_FIELD, this, treeViewer);
+          }
+
+          // super.createControl(parent);
           contentOutlineViewer = getTreeViewer();
           contentOutlineViewer.addSelectionChangedListener(this);
 
           // Set up the tree viewer.
           //
-          contentOutlineViewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
-          contentOutlineViewer.setLabelProvider(new AdapterFactoryLabelProvider(adapterFactory));
-          contentOutlineViewer.setInput(viewerInput);
+          contentOutlineViewer.setContentProvider(createContentProvider());
+          contentOutlineViewer.setLabelProvider(createLabelProvider());
+
+          try
+          {
+            contentOutlineViewer.setInput(viewerInput);
+          }
+          catch (Exception ex)
+          {
+            contentOutlineViewer.setInput(null);
+          }
 
           // Make sure our popups work.
           //
@@ -1586,6 +1726,24 @@ public class CDOEditor extends MultiPageEditorPart
       {
         super.setActionBars(actionBars);
         getActionBarContributor().shareGlobalActions(this, actionBars);
+      }
+
+      @Override
+      public void selectionChanged(IWorkbenchPart part, ISelection selection)
+      {
+        try
+        {
+          super.selectionChanged(part, selection);
+        }
+        catch (Exception ex)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace(ex);
+          }
+
+          super.selectionChanged(part, StructuredSelection.EMPTY);
+        }
       }
     };
 
@@ -1969,7 +2127,7 @@ public class CDOEditor extends MultiPageEditorPart
    * This implements {@link org.eclipse.jface.viewers.ISelectionProvider} to set this editor's overall selection.
    * Calling this result will notify the listeners.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void setSelection(ISelection selection)
   {
@@ -1977,14 +2135,25 @@ public class CDOEditor extends MultiPageEditorPart
 
     for (ISelectionChangedListener listener : selectionChangedListeners)
     {
-      listener.selectionChanged(new SelectionChangedEvent(this, selection));
+      try
+      {
+        listener.selectionChanged(new SelectionChangedEvent(this, selection));
+      }
+      catch (Exception ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+      }
     }
+
     setStatusLineManager(selection);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void setStatusLineManager(ISelection selection)
   {
@@ -2005,7 +2174,43 @@ public class CDOEditor extends MultiPageEditorPart
         }
         case 1:
         {
-          String text = new AdapterFactoryItemDelegator(adapterFactory).getText(collection.iterator().next());
+          Object element = collection.iterator().next();
+          AdapterFactoryItemDelegator adapterFactoryItemDelegator = new AdapterFactoryItemDelegator(adapterFactory);
+          String text = null;
+
+          try
+          {
+            text = adapterFactoryItemDelegator.getText(element);
+          }
+          catch (Exception ex)
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace(ex);
+            }
+
+            text = null;
+          }
+
+          try
+          {
+            if (StringUtil.isEmpty(text) && element instanceof EObject)
+            {
+              EObject eObject = (EObject)element;
+              EClass eClass = eObject.eClass();
+              text = adapterFactoryItemDelegator.getText(eClass);
+            }
+          }
+          catch (Exception ignore)
+          {
+            //$FALL-THROUGH$
+          }
+
+          if (StringUtil.isEmpty(text))
+          {
+            text = element.getClass().getSimpleName();
+          }
+
           statusLineManager.setMessage(getString("_UI_SingleObjectSelected", text));
           break;
         }
@@ -2039,6 +2244,7 @@ public class CDOEditor extends MultiPageEditorPart
   public void menuAboutToShow(IMenuManager menuManager)
   {
     menuAboutToShowGen(menuManager);
+
     MenuManager submenuManager = new MenuManager(Messages.getString("CDOEditor.23")); //$NON-NLS-1$
 
     NewRootMenuPopulator populator = new NewRootMenuPopulator(view.getSession().getPackageRegistry())
@@ -2450,7 +2656,7 @@ public class CDOEditor extends MultiPageEditorPart
     return PluginDelegator.INSTANCE.getString(key, new Object[] { s1 });
   }
 
-  private static Field getViewerField()
+  private static Field getPropertySheetPageViewerField()
   {
     try
     {
@@ -2459,6 +2665,84 @@ public class CDOEditor extends MultiPageEditorPart
     catch (Throwable ex)
     {
       return null;
+    }
+  }
+
+  private static Field getContentOutlinePageViewerField()
+  {
+    try
+    {
+      return ReflectUtil.getField(ContentOutlinePage.class, "treeViewer");
+    }
+    catch (Throwable ex)
+    {
+      return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class SafeTreeViewer extends TreeViewer
+  {
+    public SafeTreeViewer(Tree tree)
+    {
+      super(tree);
+    }
+
+    public SafeTreeViewer(Composite parent, int style)
+    {
+      super(parent, style);
+    }
+
+    @Override
+    protected void doUpdateItem(Widget widget, Object element, boolean fullMap)
+    {
+      try
+      {
+        super.doUpdateItem(widget, element, fullMap);
+      }
+      catch (Exception ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+      }
+    }
+
+    @Override
+    protected void doUpdateItem(final Item item, Object element)
+    {
+      try
+      {
+        super.doUpdateItem(item, element);
+      }
+      catch (Exception ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+      }
+    }
+
+    @Override
+    public boolean isExpandable(Object element)
+    {
+      try
+      {
+        return super.isExpandable(element);
+      }
+      catch (Exception ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+
+        return false;
+      }
     }
   }
 

@@ -30,6 +30,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.DND;
 import org.eclipse.swt.dnd.DragSourceAdapter;
@@ -539,6 +540,70 @@ public final class UIUtil
   }
 
   /**
+   * @since 3.5
+   */
+  public static void syncExec(final Runnable runnable)
+  {
+    final Display display = getDisplay();
+    if (Display.getCurrent() == display || display == null)
+    {
+      runnable.run();
+    }
+    else
+    {
+      syncExec(display, runnable);
+    }
+  }
+
+  /**
+   * @since 3.5
+   */
+  public static void syncExec(final Display display, final Runnable runnable)
+  {
+    try
+    {
+      if (display.isDisposed())
+      {
+        return;
+      }
+
+      display.syncExec(new Runnable()
+      {
+        public void run()
+        {
+          if (display.isDisposed())
+          {
+            return;
+          }
+
+          try
+          {
+            runnable.run();
+          }
+          catch (SWTException ex)
+          {
+            if (ex.code != SWT.ERROR_WIDGET_DISPOSED)
+            {
+              throw ex;
+            }
+
+            //$FALL-THROUGH$
+          }
+        }
+      });
+    }
+    catch (SWTException ex)
+    {
+      if (ex.code != SWT.ERROR_WIDGET_DISPOSED)
+      {
+        throw ex;
+      }
+
+      //$FALL-THROUGH$
+    }
+  }
+
+  /**
    * @since 3.3
    */
   public static void runWithProgress(final IRunnableWithProgress runnable)
@@ -736,25 +801,25 @@ public final class UIUtil
   {
     viewer.addDragSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY,
         new Transfer[] { LocalSelectionTransfer.getTransfer() }, new DragSourceAdapter()
-    {
-      private long lastDragTime;
-
-      @Override
-      public void dragStart(DragSourceEvent event)
-      {
-        lastDragTime = System.currentTimeMillis();
-        LocalSelectionTransfer.getTransfer().setSelection(viewer.getSelection());
-        LocalSelectionTransfer.getTransfer().setSelectionSetTime(lastDragTime);
-      }
-
-      @Override
-      public void dragFinished(DragSourceEvent event)
-      {
-        if (LocalSelectionTransfer.getTransfer().getSelectionSetTime() == lastDragTime)
         {
-          LocalSelectionTransfer.getTransfer().setSelection(null);
-        }
-      }
-    });
+          private long lastDragTime;
+
+          @Override
+          public void dragStart(DragSourceEvent event)
+          {
+            lastDragTime = System.currentTimeMillis();
+            LocalSelectionTransfer.getTransfer().setSelection(viewer.getSelection());
+            LocalSelectionTransfer.getTransfer().setSelectionSetTime(lastDragTime);
+          }
+
+          @Override
+          public void dragFinished(DragSourceEvent event)
+          {
+            if (LocalSelectionTransfer.getTransfer().getSelectionSetTime() == lastDragTime)
+            {
+              LocalSelectionTransfer.getTransfer().setSelection(null);
+            }
+          }
+        });
   }
 }

@@ -14,7 +14,11 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.ui.ViewerUtil;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
@@ -27,6 +31,7 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorRegistry;
 import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.navigator.ICommonContentExtensionSite;
 import org.eclipse.ui.navigator.ICommonLabelProvider;
@@ -37,6 +42,9 @@ import org.eclipse.ui.navigator.ICommonLabelProvider;
 public class CDOCheckoutLabelProvider extends LabelProvider
     implements ICommonLabelProvider, IColorProvider, IStyledLabelProvider
 {
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
+      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+
   private static final IEditorRegistry EDITOR_REGISTRY = PlatformUI.getWorkbench().getEditorRegistry();
 
   private final EditorRegistryListener editorRegistryListener = new EditorRegistryListener();
@@ -84,10 +92,17 @@ public class CDOCheckoutLabelProvider extends LabelProvider
 
   public Color getForeground(Object object)
   {
-    IColorProvider provider = getStateManager().getLabelProvider(object);
-    if (provider != null)
+    try
     {
-      return provider.getForeground(object);
+      IColorProvider provider = getStateManager().getLabelProvider(object);
+      if (provider != null)
+      {
+        return provider.getForeground(object);
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
     }
 
     return null;
@@ -95,10 +110,17 @@ public class CDOCheckoutLabelProvider extends LabelProvider
 
   public Color getBackground(Object object)
   {
-    IColorProvider provider = getStateManager().getLabelProvider(object);
-    if (provider != null)
+    try
     {
-      return provider.getBackground(object);
+      IColorProvider provider = getStateManager().getLabelProvider(object);
+      if (provider != null)
+      {
+        return provider.getBackground(object);
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
     }
 
     return null;
@@ -117,10 +139,17 @@ public class CDOCheckoutLabelProvider extends LabelProvider
 
   public StyledString getStyledText(Object object)
   {
-    IStyledLabelProvider provider = getStateManager().getLabelProvider(object);
-    if (provider != null)
+    try
     {
-      return provider.getStyledText(object);
+      IStyledLabelProvider provider = getStateManager().getLabelProvider(object);
+      if (provider != null)
+      {
+        return provider.getStyledText(object);
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
     }
 
     String text = getText(object);
@@ -136,13 +165,55 @@ public class CDOCheckoutLabelProvider extends LabelProvider
       return pending.getText();
     }
 
-    ILabelProvider provider = getStateManager().getLabelProvider(object);
-    if (provider != null)
+    try
     {
-      return provider.getText(object);
+      ILabelProvider provider = getStateManager().getLabelProvider(object);
+      if (provider != null)
+      {
+        String text = provider.getText(object);
+        if (!StringUtil.isEmpty(text))
+        {
+          return text;
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
     }
 
-    return super.getText(object);
+    try
+    {
+      String text = super.getText(object);
+      if (!StringUtil.isEmpty(text))
+      {
+        return text;
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    try
+    {
+      if (object instanceof EObject)
+      {
+        EObject eObject = (EObject)object;
+        EClass eClass = eObject.eClass();
+        String text = getText(eClass);
+        if (!StringUtil.isEmpty(text))
+        {
+          return text;
+        }
+      }
+    }
+    catch (Exception ignore)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return object.getClass().getSimpleName();
   }
 
   @Override
@@ -153,13 +224,27 @@ public class CDOCheckoutLabelProvider extends LabelProvider
       return ContainerItemProvider.PENDING_IMAGE;
     }
 
-    ILabelProvider provider = getStateManager().getLabelProvider(object);
-    if (provider != null)
+    try
     {
-      return provider.getImage(object);
+      ILabelProvider provider = getStateManager().getLabelProvider(object);
+      if (provider != null)
+      {
+        return provider.getImage(object);
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
     }
 
-    return super.getImage(object);
+    try
+    {
+      return super.getImage(object);
+    }
+    catch (Exception ex)
+    {
+      return ERROR_IMAGE;
+    }
   }
 
   public CDOCheckoutStateManager getStateManager()

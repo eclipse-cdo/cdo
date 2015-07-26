@@ -622,14 +622,14 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
 
     CDOSession session = view.getSession();
-    CDOBranch branch = view.getBranch();
-    CDOBranchPoint head = branch.getHead();
 
     if (readOnly)
     {
-      return session.openView(head, resourceSet);
+      return session.openView(view, resourceSet);
     }
 
+    CDOBranch branch = view.getBranch();
+    CDOBranchPoint head = branch.getHead();
     return session.openTransaction(head, resourceSet);
   }
 
@@ -638,7 +638,9 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     CDOUtil.configureView(view);
     ((InternalCDOView)view).setRepositoryName(repository.getLabel());
 
+    view.properties().put(CDOView.PROP_TIME_MACHINE_DISABLED, !isReadOnly());
     view.properties().put(CHECKOUT_KEY, this);
+
     view.addListener(new IListener()
     {
       public void notifyEvent(IEvent event)

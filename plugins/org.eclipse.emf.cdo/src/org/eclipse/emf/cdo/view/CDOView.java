@@ -96,6 +96,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
     IContainer<CDOResourceNode>
 {
   /**
+   * @since 4.5
+   */
+  public static String PROP_TIME_MACHINE_DISABLED = "timeMachineDisabled";
+
+  /**
    * Returns the {@link CDOSession session} this view was opened by.
    *
    * @return The session this view was opened by, or <code>null</code> if this view is closed.

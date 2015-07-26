@@ -71,7 +71,7 @@ public class CDOTimeMachineView extends ViewPart implements ISelectionListener
   public void selectionChanged(IWorkbenchPart part, ISelection selection)
   {
     CDOView view = getView(selection);
-    if (view != null && view.properties().getOrDefault(CDOView.PROP_TIME_MACHINE_DISABLED, false) == Boolean.TRUE)
+    if (view != null && view.properties().get(CDOView.PROP_TIME_MACHINE_DISABLED) == Boolean.TRUE)
     {
       view = null;
     }

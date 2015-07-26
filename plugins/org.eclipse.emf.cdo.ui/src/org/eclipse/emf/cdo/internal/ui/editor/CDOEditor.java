@@ -1586,6 +1586,8 @@ public class CDOEditor extends MultiPageEditorPart
       //
       class MyContentOutlinePage extends ContentOutlinePage
       {
+        private CDOInvalidRootAgent invalidRootAgent;
+
         @Override
         public void createControl(Composite parent)
         {
@@ -1618,6 +1620,31 @@ public class CDOEditor extends MultiPageEditorPart
             contentOutlineViewer.setInput(null);
           }
 
+          // If the view can be switched to historical times let an InvalidRootAgent handle detached inputs.
+          if (view.isReadOnly())
+          {
+            invalidRootAgent = new CDOInvalidRootAgent(view)
+            {
+              @Override
+              protected Object getRootFromUI()
+              {
+                return contentOutlineViewer.getInput();
+              }
+
+              @Override
+              protected void setRootToUI(Object root)
+              {
+                contentOutlineViewer.setInput(root);
+              }
+
+              @Override
+              protected void closeUI()
+              {
+                closeEditor();
+              }
+            };
+          }
+
           // Make sure our popups work.
           //
           createContextMenuFor(contentOutlineViewer);
@@ -1644,6 +1671,18 @@ public class CDOEditor extends MultiPageEditorPart
         {
           super.setActionBars(actionBars);
           getActionBarContributor().shareGlobalActions(this, actionBars);
+        }
+
+        @Override
+        public void dispose()
+        {
+          if (invalidRootAgent != null)
+          {
+            invalidRootAgent.dispose();
+            invalidRootAgent = null;
+          }
+
+          super.dispose();
         }
       }
 

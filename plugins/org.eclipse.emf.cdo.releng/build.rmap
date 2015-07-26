@@ -78,7 +78,7 @@
 
 		<!-- EMF Compare -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/milestones"/>
+      <rm:uri format="http://download.eclipse.org/modeling/emf/compare/updates/nightly/latest"/>
 		</rm:provider>
 
 		<!-- EMF Clientt Platform -->

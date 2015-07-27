@@ -30,7 +30,6 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EClass;
@@ -53,6 +52,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.LabelProviderChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorRegistry;
@@ -121,11 +121,11 @@ public final class CDOCheckoutState
     ViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
 
     CDOCheckoutContentProvider main = stateManager.getMainContentProvider();
-    contentProvider = new ContentProvider(adapterFactory, viewerRefresh);
+    contentProvider = new ContentProvider(this, viewerRefresh);
     contentProvider.inputChanged(main.getViewer(), null, main.getInput());
 
     ResourceManager resourceManager = stateManager.getResourceManager();
-    labelProvider = new LabelProvider(adapterFactory, resourceManager);
+    labelProvider = new LabelProvider(this, resourceManager);
     labelProvider.addListener(eventBroker);
 
     initTreeExpansionAgent();
@@ -258,10 +258,49 @@ public final class CDOCheckoutState
    */
   public static final class ContentProvider extends AdapterFactoryContentProvider
   {
-    public ContentProvider(AdapterFactory adapterFactory, ViewerRefresh viewerRefresh)
+    private final CDOCheckoutState checkoutState;
+
+    public ContentProvider(CDOCheckoutState checkoutState, ViewerRefresh viewerRefresh)
     {
-      super(adapterFactory);
+      super(checkoutState.getAdapterFactory());
+      this.checkoutState = checkoutState;
       this.viewerRefresh = viewerRefresh;
+    }
+
+    @Override
+    public Object[] getElements(Object object)
+    {
+      synchronized (checkoutState)
+      {
+        return super.getElements(object);
+      }
+    }
+
+    @Override
+    public Object[] getChildren(Object object)
+    {
+      synchronized (checkoutState)
+      {
+        return super.getChildren(object);
+      }
+    }
+
+    @Override
+    public boolean hasChildren(Object object)
+    {
+      synchronized (checkoutState)
+      {
+        return super.hasChildren(object);
+      }
+    }
+
+    @Override
+    public Object getParent(Object object)
+    {
+      synchronized (checkoutState)
+      {
+        return super.getParent(object);
+      }
     }
 
     @Override
@@ -301,154 +340,184 @@ public final class CDOCheckoutState
   public static final class LabelProvider extends AdapterFactoryLabelProvider
       implements IColorProvider, IStyledLabelProvider
   {
+    private final CDOCheckoutState checkoutState;
+
     private final ResourceManager resourceManager;
 
-    public LabelProvider(AdapterFactory adapterFactory, ResourceManager resourceManager)
+    public LabelProvider(CDOCheckoutState checkoutState, ResourceManager resourceManager)
     {
-      super(adapterFactory);
+      super(checkoutState.getAdapterFactory());
+      this.checkoutState = checkoutState;
       this.resourceManager = resourceManager;
     }
 
     @Override
     public Color getForeground(Object object)
     {
-      if (object instanceof ViewerUtil.Pending)
+      synchronized (checkoutState)
       {
-        return ContainerItemProvider.PENDING_COLOR;
-      }
+        if (object instanceof ViewerUtil.Pending)
+        {
+          return ContainerItemProvider.PENDING_COLOR;
+        }
 
-      return super.getForeground(object);
+        return super.getForeground(object);
+      }
+    }
+
+    @Override
+    public Color getBackground(Object object)
+    {
+      synchronized (checkoutState)
+      {
+        return super.getBackground(object);
+      }
+    }
+
+    @Override
+    public Font getFont(Object object)
+    {
+      synchronized (checkoutState)
+      {
+        return super.getFont(object);
+      }
     }
 
     @Override
     public String getText(Object element)
     {
-      try
+      synchronized (checkoutState)
       {
-        if (element instanceof CDOCheckout)
+        try
         {
-          CDOCheckout checkout = (CDOCheckout)element;
-          String text = checkout.getLabel();
-          if (!StringUtil.isEmpty(text))
+          if (element instanceof CDOCheckout)
           {
-            return text;
-          }
-        }
-
-        if (element instanceof CDOElement)
-        {
-          CDOElement checkoutElement = (CDOElement)element;
-          String text = checkoutElement.toString();
-          if (!StringUtil.isEmpty(text))
-          {
-            return text;
-          }
-        }
-
-        if (element instanceof EObject)
-        {
-          CDOElement checkoutElement = (CDOElement)EcoreUtil.getExistingAdapter((Notifier)element, CDOElement.class);
-          if (checkoutElement != null)
-          {
-            String text = checkoutElement.toString(element);
+            CDOCheckout checkout = (CDOCheckout)element;
+            String text = checkout.getLabel();
             if (!StringUtil.isEmpty(text))
             {
               return text;
             }
           }
 
-          if (element instanceof CDOResourceNode)
+          if (element instanceof CDOElement)
           {
-            CDOResourceNode resourceNode = (CDOResourceNode)element;
-
-            String name = resourceNode.getName();
-            if (name == null)
+            CDOElement checkoutElement = (CDOElement)element;
+            String text = checkoutElement.toString();
+            if (!StringUtil.isEmpty(text))
             {
-              // This must be the root resource.
-              return "";
+              return text;
+            }
+          }
+
+          if (element instanceof EObject)
+          {
+            CDOElement checkoutElement = (CDOElement)EcoreUtil.getExistingAdapter((Notifier)element, CDOElement.class);
+            if (checkoutElement != null)
+            {
+              String text = checkoutElement.toString(element);
+              if (!StringUtil.isEmpty(text))
+              {
+                return text;
+              }
             }
 
-            return name;
+            if (element instanceof CDOResourceNode)
+            {
+              CDOResourceNode resourceNode = (CDOResourceNode)element;
+
+              String name = resourceNode.getName();
+              if (name == null)
+              {
+                // This must be the root resource.
+                return "";
+              }
+
+              return name;
+            }
           }
-        }
 
-        if (element instanceof ViewerUtil.Pending)
-        {
-          ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
-          return pending.getText();
-        }
+          if (element instanceof ViewerUtil.Pending)
+          {
+            ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
+            return pending.getText();
+          }
 
-        String text = super.getText(element);
-        if (!StringUtil.isEmpty(text))
-        {
-          return text;
-        }
-      }
-      catch (Exception ex)
-      {
-        //$FALL-THROUGH$
-      }
-
-      try
-      {
-        if (element instanceof EObject)
-        {
-          EObject eObject = (EObject)element;
-          EClass eClass = eObject.eClass();
-          String text = getText(eClass);
+          String text = super.getText(element);
           if (!StringUtil.isEmpty(text))
           {
             return text;
           }
         }
-      }
-      catch (Exception ignore)
-      {
-        //$FALL-THROUGH$
-      }
+        catch (Exception ex)
+        {
+          //$FALL-THROUGH$
+        }
 
-      return element.getClass().getSimpleName();
+        try
+        {
+          if (element instanceof EObject)
+          {
+            EObject eObject = (EObject)element;
+            EClass eClass = eObject.eClass();
+            String text = getText(eClass);
+            if (!StringUtil.isEmpty(text))
+            {
+              return text;
+            }
+          }
+        }
+        catch (Exception ignore)
+        {
+          //$FALL-THROUGH$
+        }
+
+        return element.getClass().getSimpleName();
+      }
     }
 
     @Override
     public Image getImage(Object element)
     {
-      try
+      synchronized (checkoutState)
       {
-        if (element instanceof CDOCheckout)
+        try
         {
-          CDOCheckout checkout = (CDOCheckout)element;
-          if (checkout.isOpen())
+          if (element instanceof CDOCheckout)
           {
-            return CDOLabelDecorator.decorate(CHECKOUT_IMAGE, checkout.getRootObject());
+            CDOCheckout checkout = (CDOCheckout)element;
+            if (checkout.isOpen())
+            {
+              return CDOLabelDecorator.decorate(CHECKOUT_IMAGE, checkout.getRootObject());
+            }
+
+            return CHECKOUT_CLOSED_IMAGE;
           }
 
-          return CHECKOUT_CLOSED_IMAGE;
-        }
+          if (element instanceof ViewerUtil.Pending)
+          {
+            return ContainerItemProvider.PENDING_IMAGE;
+          }
 
-        if (element instanceof ViewerUtil.Pending)
-        {
-          return ContainerItemProvider.PENDING_IMAGE;
-        }
+          if (element instanceof CDOElement)
+          {
+            element = ((CDOElement)element).getDelegate();
+            Image image = doGetImage(element);
+            return CDOLabelDecorator.decorate(image, element);
+          }
 
-        if (element instanceof CDOElement)
-        {
-          element = ((CDOElement)element).getDelegate();
           Image image = doGetImage(element);
-          return CDOLabelDecorator.decorate(image, element);
-        }
+          if (image == null)
+          {
+            return ERROR_IMAGE;
+          }
 
-        Image image = doGetImage(element);
-        if (image == null)
+          return image;
+        }
+        catch (Exception ex)
         {
           return ERROR_IMAGE;
         }
-
-        return image;
-      }
-      catch (Exception ex)
-      {
-        return ERROR_IMAGE;
       }
     }
 

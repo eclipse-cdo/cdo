@@ -168,17 +168,18 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
   @Override
   public void fillContextMenu(IMenuManager menu)
   {
-    IMenuManager submenu = new MenuManager("&New", NEW_MENU_NAME);
     if (viewer == null)
     {
       return;
     }
 
     CDOCheckout checkout = CDOExplorerUtil.getCheckout(selectedObject);
-    if (checkout == null)
+    if (checkout == null || checkout.isReadOnly())
     {
       return;
     }
+
+    IMenuManager submenu = new MenuManager("&New", NEW_MENU_NAME);
 
     // Fill the menu from the commonWizard contributions.
     newWizardActionGroup.setContext(getContext());

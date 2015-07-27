@@ -29,6 +29,12 @@ public class MergeFromActionProvider extends AbstractBranchPointActionProvider
   }
 
   @Override
+  protected boolean createSubMenu(CDOCheckout checkout)
+  {
+    return super.createSubMenu(checkout) && !checkout.isReadOnly();
+  }
+
+  @Override
   protected String getHistorizedBranchPointToolTip(boolean allowTimeStamp)
   {
     return allowTimeStamp ? "Merge from this branch point" : "Merge from this branch";

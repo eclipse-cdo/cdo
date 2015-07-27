@@ -67,15 +67,21 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
         AbstractElement element = (AbstractElement)adaptableObject;
         return (T)createRenameContext(element);
       }
-      else if (adaptableObject instanceof CDOBranch)
+
+      if (adaptableObject instanceof CDOBranch)
       {
         CDOBranch branch = (CDOBranch)adaptableObject;
         return (T)createRenameContext(branch);
       }
-      else if (adaptableObject instanceof CDOResourceNode)
+
+      if (adaptableObject instanceof CDOResourceNode)
       {
         CDOResourceNode resourceNode = (CDOResourceNode)adaptableObject;
-        return (T)createRenameContext(resourceNode);
+        CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
+        if (checkout != null && !checkout.isReadOnly())
+        {
+          return (T)createRenameContext(resourceNode);
+        }
       }
     }
     else if (adapterType == CLASS_STATE_PROVIDER)

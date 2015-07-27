@@ -513,9 +513,17 @@
          <activeWhen>
             <iterate ifEmpty="false">
               <or>
-                <adapt type="org.eclipse.emf.cdo.CDOElement"/>
+                <adapt type="org.eclipse.emf.cdo.CDOElement">
+                   <and>
+                     <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                     <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                   </and>
+                </adapt>
                 <adapt type="org.eclipse.emf.ecore.EObject">
-                   <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                   <and>
+                     <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                     <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                   </and>
                 </adapt>
               </or>
             </iterate>
@@ -655,9 +663,17 @@
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
                     <or>
-                      <adapt type="org.eclipse.emf.cdo.CDOElement"/>
+                      <adapt type="org.eclipse.emf.cdo.CDOElement">
+                         <and>
+                           <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                           <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                         </and>
+                      </adapt>
                       <adapt type="org.eclipse.emf.ecore.EObject">
-                         <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                         <and>
+                           <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                           <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                         </and>
                       </adapt>
                     </or>
                   </iterate>

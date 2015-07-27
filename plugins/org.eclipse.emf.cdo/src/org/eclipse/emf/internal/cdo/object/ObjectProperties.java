@@ -46,13 +46,13 @@ public class ObjectProperties extends Properties<EObject>
     super(EObject.class);
 
     add(new Property<EObject>("isCDO") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
         return getCDOObject(object) != null;
       }
-        });
+    });
 
     add(new Property<EObject>("id", //$NON-NLS-1$
         "ID", "The technical CDOID of this object.", CATEGORY_CDO)
@@ -131,7 +131,7 @@ public class ObjectProperties extends Properties<EObject>
     });
 
     add(new Property<EObject>("transactional") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -149,10 +149,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return !view.isReadOnly();
       }
-        });
+    });
 
     add(new Property<EObject>("readable") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -164,10 +164,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return cdoObject.cdoPermission() != CDOPermission.NONE;
       }
-        });
+    });
 
     add(new Property<EObject>("writable") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -185,10 +185,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return !view.isReadOnly() && cdoObject.cdoPermission() == CDOPermission.WRITE;
       }
-        });
+    });
 
     add(new Property<EObject>("writableContainer") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -212,10 +212,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return !view.isReadOnly() && cdoContainer.cdoPermission() == CDOPermission.WRITE;
       }
-        });
+    });
 
     add(new Property<EObject>("container") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -233,16 +233,16 @@ public class ObjectProperties extends Properties<EObject>
 
         return true;
       }
-        });
+    });
 
     add(new Property<EObject>("children") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
         return !object.eContents().isEmpty();
       }
-        });
+    });
 
     add(new Property<EObject>("permission", //$NON-NLS-1$
         "Permission", "The permission the current user has for this object.", CATEGORY_CDO)
@@ -261,7 +261,7 @@ public class ObjectProperties extends Properties<EObject>
     });
 
     add(new Property<EObject>("permissionContainer") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -289,7 +289,7 @@ public class ObjectProperties extends Properties<EObject>
 
         return cdoObject.cdoPermission();
       }
-        });
+    });
 
     add(new Property<EObject>("readLocks", //$NON-NLS-1$
         "Read Locks", "The owner of read locks on this object.", CATEGORY_CDO)
@@ -314,7 +314,7 @@ public class ObjectProperties extends Properties<EObject>
     });
 
     add(new Property<EObject>("readLocked")//$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -323,7 +323,7 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
-        
+
         CDOView view = cdoObject.cdoView();
         if (view == null)
         {
@@ -338,10 +338,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return lock.isLocked();
       }
-        });
+    });
 
     add(new Property<EObject>("readLockedByOthers")//$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -350,7 +350,7 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
-        
+
         CDOView view = cdoObject.cdoView();
         if (view == null)
         {
@@ -365,7 +365,7 @@ public class ObjectProperties extends Properties<EObject>
 
         return lock.isLockedByOthers();
       }
-        });
+    });
 
     add(new Property<EObject>("writeLock", //$NON-NLS-1$
         "Write Lock", "The owner of a write lock on this object.", CATEGORY_CDO)
@@ -390,7 +390,7 @@ public class ObjectProperties extends Properties<EObject>
     });
 
     add(new Property<EObject>("writeLocked")//$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -399,7 +399,7 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
-        
+
         CDOView view = cdoObject.cdoView();
         if (view == null)
         {
@@ -414,10 +414,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return lock.isLocked();
       }
-        });
+    });
 
     add(new Property<EObject>("writeLockedByOthers")//$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -426,7 +426,7 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
-        
+
         CDOView view = cdoObject.cdoView();
         if (view == null)
         {
@@ -441,7 +441,7 @@ public class ObjectProperties extends Properties<EObject>
 
         return lock.isLockedByOthers();
       }
-        });
+    });
 
     add(new Property<EObject>("writeOption", //$NON-NLS-1$
         "Write Option", "The owner of a write option on this object.", CATEGORY_CDO)
@@ -466,7 +466,7 @@ public class ObjectProperties extends Properties<EObject>
     });
 
     add(new Property<EObject>("writeOptioned")//$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -475,7 +475,7 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
-        
+
         CDOView view = cdoObject.cdoView();
         if (view == null)
         {
@@ -490,10 +490,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return lock.isLocked();
       }
-        });
+    });
 
     add(new Property<EObject>("writeOptionedByOthers")//$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -502,7 +502,7 @@ public class ObjectProperties extends Properties<EObject>
         {
           return false;
         }
-        
+
         CDOView view = cdoObject.cdoView();
         if (view == null)
         {
@@ -517,10 +517,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return lock.isLockedByOthers();
       }
-        });
+    });
 
     add(new Property<EObject>("viewHistorical") //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -538,10 +538,10 @@ public class ObjectProperties extends Properties<EObject>
 
         return view.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
       }
-        });
+    });
 
     add(new Property<EObject>("uri", "URI", "The URI of this object.", CATEGORY_CDO) //$NON-NLS-1$
-        {
+    {
       @Override
       protected Object eval(EObject object)
       {
@@ -561,7 +561,7 @@ public class ObjectProperties extends Properties<EObject>
         String fragment = id != null ? id.toURIFragment() : resource.getURIFragment(cdoObject);
         return resource.getURI().appendFragment(fragment).toString();
       }
-        });
+    });
   }
 
   private static CDOObject getCDOObject(EObject object)
@@ -589,33 +589,11 @@ public class ObjectProperties extends Properties<EObject>
   /**
    * @author Eike Stepper
    */
-  public static final class ElementTester extends DefaultPropertyTester<EObject>
+  public static final class ElementTester extends CDOElementTester
   {
     public ElementTester()
     {
       super(NAMESPACE, INSTANCE);
-    }
-
-    @Override
-    protected EObject convertReceiver(Object receiver)
-    {
-      if (receiver instanceof CDOElement)
-      {
-        CDOElement element = (CDOElement)receiver;
-        Object delegate = element.getDelegate();
-        if (delegate instanceof EObject)
-        {
-          return (EObject)delegate;
-        }
-      }
-
-      return super.convertReceiver(receiver);
-    }
-
-    @Override
-    protected String getReceiverTypeName()
-    {
-      return CDOElement.class.getName();
     }
   }
 }

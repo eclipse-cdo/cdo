@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.jobs.Job;
 /**
  * @author Eike Stepper
  */
-public class ResourceGroup extends CDOElement implements CDORenameContext
+public class ResourceGroup extends CDOElement
 {
   private String name;
 
@@ -48,104 +48,123 @@ public class ResourceGroup extends CDOElement implements CDORenameContext
     return (CDOResourceNode)super.getDelegate();
   }
 
-  public String getType()
-  {
-    return "Resource Group";
-  }
-
-  public String getName()
-  {
-    return name;
-  }
-
-  public void setName(final String name)
-  {
-    final String type = getType();
-    new Job("Rename " + type.toLowerCase())
-    {
-      @Override
-      protected IStatus run(IProgressMonitor monitor)
-      {
-        CDOResourceNode resourceNode = getDelegate();
-        CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
-        CDOTransaction transaction = checkout.openTransaction();
-
-        CDOCommitInfo commitInfo = null;
-
-        try
-        {
-          for (Object child : getChildren())
-          {
-            if (child instanceof CDOResourceNode)
-            {
-              CDOResourceNode childNode = (CDOResourceNode)child;
-              CDOResourceNode transactionalChildNode = transaction.getObject(childNode);
-              String extension = transactionalChildNode.getExtension();
-
-              transactionalChildNode.setName(name + "." + extension);
-            }
-          }
-
-          commitInfo = transaction.commit();
-        }
-        catch (Exception ex)
-        {
-          OM.LOG.error(ex);
-        }
-        finally
-        {
-          transaction.close();
-        }
-
-        if (commitInfo != null)
-        {
-          checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
-
-          CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
-          checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT, ResourceGroup.this);
-        }
-
-        return Status.OK_STATUS;
-      }
-    }.schedule();
-  }
-
-  public String validateName(String name)
-  {
-    String type = getType();
-    if (StringUtil.isEmpty(name))
-    {
-      return type + " name is empty.";
-    }
-
-    if (name.equals(getName()))
-    {
-      return null;
-    }
-
-    for (Object child : getChildren())
-    {
-      if (child instanceof CDOResourceNode)
-      {
-        CDOResourceNode childNode = (CDOResourceNode)child;
-        String extension = childNode.getExtension();
-
-        String error = ExplorerUIAdapterFactory.checkUniqueName(childNode, name + "." + extension, type);
-        if (error != null)
-        {
-          return error;
-        }
-      }
-    }
-
-    return null;
-  }
-
   @Override
   public void reset()
   {
     super.reset();
     name = getDelegate().trimExtension();
+  }
+
+  @Override
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class adapter)
+  {
+    if (adapter == CDORenameContext.class)
+    {
+      CDOResourceNode delegate = getDelegate();
+      CDOCheckout checkout = CDOExplorerUtil.getCheckout(delegate);
+      if (checkout != null && checkout.isOpen() && !checkout.isReadOnly())
+      {
+        return new CDORenameContext()
+        {
+
+          public String getType()
+          {
+            return "Resource Group";
+          }
+
+          public String getName()
+          {
+            return name;
+          }
+
+          public void setName(final String name)
+          {
+            final String type = getType();
+            new Job("Rename " + type.toLowerCase())
+            {
+              @Override
+              protected IStatus run(IProgressMonitor monitor)
+              {
+                CDOResourceNode resourceNode = getDelegate();
+                CDOCheckout checkout = CDOExplorerUtil.getCheckout(resourceNode);
+                CDOTransaction transaction = checkout.openTransaction();
+
+                CDOCommitInfo commitInfo = null;
+
+                try
+                {
+                  for (Object child : getChildren())
+                  {
+                    if (child instanceof CDOResourceNode)
+                    {
+                      CDOResourceNode childNode = (CDOResourceNode)child;
+                      CDOResourceNode transactionalChildNode = transaction.getObject(childNode);
+                      String extension = transactionalChildNode.getExtension();
+
+                      transactionalChildNode.setName(name + "." + extension);
+                    }
+                  }
+
+                  commitInfo = transaction.commit();
+                }
+                catch (Exception ex)
+                {
+                  OM.LOG.error(ex);
+                }
+                finally
+                {
+                  transaction.close();
+                }
+
+                if (commitInfo != null)
+                {
+                  checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
+
+                  CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
+                  checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT,
+                      ResourceGroup.this);
+                }
+
+                return Status.OK_STATUS;
+              }
+            }.schedule();
+          }
+
+          public String validateName(String name)
+          {
+            String type = getType();
+            if (StringUtil.isEmpty(name))
+            {
+              return type + " name is empty.";
+            }
+
+            if (name.equals(getName()))
+            {
+              return null;
+            }
+
+            for (Object child : getChildren())
+            {
+              if (child instanceof CDOResourceNode)
+              {
+                CDOResourceNode childNode = (CDOResourceNode)child;
+                String extension = childNode.getExtension();
+
+                String error = ExplorerUIAdapterFactory.checkUniqueName(childNode, name + "." + extension, type);
+                if (error != null)
+                {
+                  return error;
+                }
+              }
+            }
+
+            return null;
+          }
+        };
+      }
+    }
+
+    return super.getAdapter(adapter);
   }
 
   @Override

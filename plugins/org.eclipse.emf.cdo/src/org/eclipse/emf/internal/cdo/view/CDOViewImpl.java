@@ -72,6 +72,7 @@ import org.eclipse.net4j.util.concurrent.ExecutorWorkSerializer;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
+import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -1909,7 +1910,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @author Eike Stepper
    */
-  private final class InvalidationRunnable implements Runnable
+  private final class InvalidationRunnable extends RunnableWithName
   {
     private final CDOBranch branch;
 
@@ -1935,7 +1936,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       this.clearResourcePathCache = clearResourcePathCache;
     }
 
-    public void run()
+    @Override
+    public String getName()
+    {
+      return "CDOViewInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
+    }
+
+    @Override
+    protected void doRun()
     {
       try
       {

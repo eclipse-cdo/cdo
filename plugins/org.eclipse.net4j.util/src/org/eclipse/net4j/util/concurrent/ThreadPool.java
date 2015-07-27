@@ -17,7 +17,6 @@ import java.util.AbstractQueue;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadFactory;
@@ -43,36 +42,6 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
   private static final Method ADD_FIRST_METHOD;
 
-  private final Executor defaultExecutor = new Executor()
-  {
-    public void execute(Runnable runnable)
-    {
-      ThreadPool.super.execute(runnable);
-    }
-  };
-
-  private final Executor namingExecutor = new Executor()
-  {
-    public void execute(Runnable runnable)
-    {
-      if (runnable instanceof RunnableWithName)
-      {
-        String name = ((RunnableWithName)runnable).getName();
-        if (name != null)
-        {
-          Thread thread = new Thread(runnable, name);
-          thread.setDaemon(true);
-          thread.start();
-          return;
-        }
-      }
-
-      ThreadPool.super.execute(runnable);
-    }
-  };
-
-  private volatile Executor executor = defaultExecutor;
-
   public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, ThreadFactory threadFactory)
   {
     super(corePoolSize, maximumPoolSize, keepAliveTime, TimeUnit.SECONDS, createWorkQueue(), threadFactory);
@@ -80,20 +49,9 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     setRejectedExecutionHandler(this);
   }
 
-  @Override
-  public void execute(final Runnable runnable)
-  {
-    executor.execute(runnable);
-  }
-
   public void rejectedExecution(Runnable runnable, ThreadPoolExecutor executor)
   {
     ((WorkQueue)getQueue()).addFirst(runnable);
-  }
-
-  final void setNaming(boolean naming)
-  {
-    executor = naming ? namingExecutor : defaultExecutor;
   }
 
   public static ThreadPool create()

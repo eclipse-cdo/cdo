@@ -103,6 +103,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
+import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -1851,7 +1852,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
   /**
    * @author Eike Stepper
    */
-  private final class Invalidation implements Comparable<Invalidation>, Runnable
+  private final class Invalidation extends RunnableWithName implements Comparable<Invalidation>
   {
     private final CDOCommitInfo commitInfo;
 
@@ -1894,7 +1895,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
       return Long.toString(commitInfo.getTimeStamp() % 10000);
     }
 
-    public void run()
+    @Override
+    public String getName()
+    {
+      return "CDOSessionInvalidator-" + CDOSessionImpl.this;
+    }
+
+    @Override
+    protected void doRun()
     {
       long timeStamp = commitInfo.getTimeStamp();
 

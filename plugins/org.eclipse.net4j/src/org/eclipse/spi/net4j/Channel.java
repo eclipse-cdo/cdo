@@ -385,7 +385,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    *
    * @author Eike Stepper
    */
-  protected class ReceiverWork implements RunnableWithName
+  protected class ReceiverWork extends RunnableWithName
   {
     private final IBuffer buffer;
 
@@ -400,12 +400,14 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     /**
      * @since 4.5
      */
+    @Override
     public String getName()
     {
       return "Net4jReceiveSerializer-" + Channel.this; //$NON-NLS-1$
     }
 
-    public void run()
+    @Override
+    protected void doRun()
     {
       IBufferHandler receiveHandler = getReceiveHandler();
       if (receiveHandler != null)

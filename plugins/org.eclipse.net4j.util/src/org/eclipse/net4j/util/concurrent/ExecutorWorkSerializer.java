@@ -95,18 +95,8 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     working = true;
     if (!disposed)
     {
-      executor.execute(new RunnableWithName()
+      executor.execute(new Runnable()
       {
-        public String getName()
-        {
-          if (runnable instanceof RunnableWithName)
-          {
-            return ((RunnableWithName)runnable).getName();
-          }
-
-          return null;
-        }
-
         public void run()
         {
           try

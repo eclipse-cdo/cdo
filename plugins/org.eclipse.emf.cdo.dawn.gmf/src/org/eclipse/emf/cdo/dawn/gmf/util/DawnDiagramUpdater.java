@@ -11,7 +11,9 @@
  */
 package org.eclipse.emf.cdo.dawn.gmf.util;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -139,7 +141,10 @@ public class DawnDiagramUpdater
         // nextEditPolicy.refresh();
         // }
 
-        editPart.refresh();
+        if (hasValidModel(editPart))
+        {
+          editPart.refresh();
+        }
       }
       catch (Exception e)
       {
@@ -168,6 +173,21 @@ public class DawnDiagramUpdater
         }
       }
     }
+  }
+
+  private static boolean hasValidModel(EditPart editPart)
+  {
+    Object model = editPart.getModel();
+    if (model instanceof EObject)
+    {
+      CDOObject cdoObject = CDOUtil.getCDOObject((EObject)model, false);
+      if (cdoObject.cdoInvalid())
+      {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   public static View findViewByContainer(EObject element)

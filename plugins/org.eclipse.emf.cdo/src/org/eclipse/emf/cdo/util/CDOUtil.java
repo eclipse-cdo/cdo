@@ -407,7 +407,7 @@ public final class CDOUtil
       }
 
       Resource.Internal resource = object.eDirectResource();
-      if (resource != null)
+      if (resource != null && resource != object)
       {
         CDOViewSet viewSet = getViewSet(resource);
         if (viewSet != null)

@@ -361,6 +361,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public void setProvider(CDOViewProvider provider)
   {
     this.provider = provider;
+
+    if (viewSet != null)
+    {
+      viewSet.remapView(this);
+    }
   }
 
   public synchronized CDOResourceImpl getRootResource()

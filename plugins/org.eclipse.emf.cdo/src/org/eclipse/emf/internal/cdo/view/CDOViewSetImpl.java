@@ -45,6 +45,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -204,6 +205,25 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     {
       NotificationImpl notification = new NotificationImpl(NotificationImpl.REMOVE, view, null);
       eNotify(notification);
+    }
+  }
+
+  public void remapView(InternalCDOView view)
+  {
+    synchronized (views)
+    {
+      for (Iterator<Map.Entry<URI, InternalCDOView>> it = mapOfViews.entrySet().iterator(); it.hasNext();)
+      {
+        Map.Entry<URI, InternalCDOView> entry = it.next();
+        if (entry.getValue() == view)
+        {
+          it.remove();
+          break;
+        }
+      }
+
+      URI viewURI = getViewURI(view);
+      mapOfViews.put(viewURI, view);
     }
   }
 

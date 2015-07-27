@@ -74,24 +74,17 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
       TRACER.format("Dirty Objects {0} ", e.getDirtyObjects()); //$NON-NLS-1$
     }
 
-    int xxx;
-    // if (!e.getDetachedObjects().isEmpty())
+    adjustDeletedEdges(e);
+
+    for (CDOObject dirtyObject : e.getDirtyObjects())
     {
-      editor.getDawnEditorSupport().refresh();
-      return;
+      handleObject(dirtyObject);
     }
 
-    // adjustDeletedEdges(e);
-    //
-    // for (CDOObject dirtyObject : e.getDirtyObjects())
-    // {
-    // handleObject(dirtyObject);
-    // }
-    //
-    // for (CDOObject detachedObject : e.getDetachedObjects())
-    // {
-    // handleObject(detachedObject);
-    // }
+    for (CDOObject detachedObject : e.getDetachedObjects())
+    {
+      handleObject(detachedObject);
+    }
   }
 
   /**

@@ -65,6 +65,9 @@ public class BidiMap<K, V> extends AbstractMap<K, V>
   @Override
   public V put(K key, V value)
   {
+    CheckUtil.checkArg(key, "Key is null");
+    CheckUtil.checkArg(value, "Value is null");
+
     @SuppressWarnings("unchecked")
     V oldValue = (V)map.put(key, value);
     map.put(value, key);
@@ -94,6 +97,43 @@ public class BidiMap<K, V> extends AbstractMap<K, V>
   public void clear()
   {
     map.clear();
+  }
+
+  @Override
+  public int size()
+  {
+    return map.size() / 2;
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    return map.isEmpty();
+  }
+
+  @Override
+  public boolean containsKey(Object key)
+  {
+    return keyClass.isInstance(key) && map.containsKey(key);
+  }
+
+  @Override
+  public boolean containsValue(Object value)
+  {
+    return invert().containsKey(value);
+  }
+
+  @Override
+  public V get(Object key)
+  {
+    if (keyClass.isInstance(key))
+    {
+      @SuppressWarnings("unchecked")
+      V value = (V)map.get(key);
+      return value;
+    }
+
+    return null;
   }
 
   @Override

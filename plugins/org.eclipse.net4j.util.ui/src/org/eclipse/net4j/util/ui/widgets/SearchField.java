@@ -146,7 +146,6 @@ public class SearchField extends Composite
 
   /**
    * Subclasses may override.
-   * @param e
    */
   protected void finishFilter()
   {

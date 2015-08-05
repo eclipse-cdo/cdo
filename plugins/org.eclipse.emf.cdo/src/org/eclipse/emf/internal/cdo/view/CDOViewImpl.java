@@ -198,8 +198,10 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   /**
    * @since 2.0
    */
+  @Override
   public void setSession(InternalCDOSession session)
   {
+    super.setSession(session);
     this.session = session;
   }
 

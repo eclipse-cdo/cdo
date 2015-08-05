@@ -98,7 +98,8 @@
          <view
                id="org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView"
                relationship="stack"
-               relative="org.eclipse.ui.views.ContentOutline">
+               relative="org.eclipse.ui.views.ContentOutline"
+               visible="false">
          </view>
          <view
                id="org.eclipse.ui.views.PropertySheet"

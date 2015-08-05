@@ -319,13 +319,12 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   @Override
   public URI getURI()
   {
-    if (uri != null)
+    if (uri == null)
     {
-      return uri;
+      uri = doGetURI();
+      uri = normalizeURI(uri);
     }
 
-    URI uri = doGetURI();
-    uri = normalizeURI(uri);
     return uri;
   }
 
@@ -386,6 +385,11 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   private void cacheURI(URI uri)
   {
     this.uri = normalizeURI(uri);
+  }
+
+  private void recacheURI()
+  {
+    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
   }
 
   /**
@@ -450,7 +454,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void setFolder(CDOResourceFolder newFolder)
   {
     super.setFolder(newFolder);
-    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
+    recacheURI();
   }
 
   /**
@@ -460,7 +464,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void setName(String newName)
   {
     super.setName(newName);
-    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
+    recacheURI();
   }
 
   @Override

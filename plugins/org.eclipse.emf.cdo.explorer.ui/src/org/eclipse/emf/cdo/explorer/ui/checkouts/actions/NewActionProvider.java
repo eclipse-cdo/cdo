@@ -512,7 +512,7 @@ public class NewActionProvider extends CommonActionProvider implements ISelectio
     protected void preRun() throws Exception
     {
       SelectClassDialog dialog = new SelectClassDialog(page, "New Root Object",
-          "Select a package and a class for new root object.");
+          "Select a package and a class for the new root object.");
 
       if (dialog.open() == SelectClassDialog.OK)
       {

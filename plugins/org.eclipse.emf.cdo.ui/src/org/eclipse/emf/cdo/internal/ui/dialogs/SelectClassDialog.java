@@ -138,7 +138,15 @@ public class SelectClassDialog extends TitleAreaDialog
     packageComposite.setLayout(packageLayout);
 
     PackageContentProvider packageContentProvider = new PackageContentProvider();
-    packageSearch = new SearchField(packageComposite, packageContentProvider);
+    packageSearch = new SearchField(packageComposite, packageContentProvider)
+    {
+      @Override
+      protected void finishFilter()
+      {
+        packageViewer.getControl().setFocus();
+      }
+    };
+
     packageSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
     packageViewer = new TableViewer(packageComposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);
@@ -175,7 +183,15 @@ public class SelectClassDialog extends TitleAreaDialog
     classComposite.setLayout(classLayout);
 
     ClassContentProvider classContentProvider = new ClassContentProvider();
-    classSearch = new SearchField(classComposite, classContentProvider);
+    classSearch = new SearchField(classComposite, classContentProvider)
+    {
+      @Override
+      protected void finishFilter()
+      {
+        classViewer.getControl().setFocus();
+      }
+    };
+
     classSearch.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
     classViewer = new TableViewer(classComposite, SWT.BORDER | SWT.FULL_SELECTION | SWT.VIRTUAL);

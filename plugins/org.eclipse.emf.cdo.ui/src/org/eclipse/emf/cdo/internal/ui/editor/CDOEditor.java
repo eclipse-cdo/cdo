@@ -19,9 +19,11 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.ui.actions.TransactionalBackgroundAction;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.dialogs.BulkAddDialog;
 import org.eclipse.emf.cdo.internal.ui.dialogs.RollbackTransactionDialog;
+import org.eclipse.emf.cdo.internal.ui.dialogs.SelectClassDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
@@ -2284,6 +2286,7 @@ public class CDOEditor extends MultiPageEditorPart
   {
     menuAboutToShowGen(menuManager);
 
+    final IWorkbenchPage page = getSite().getPage();
     MenuManager submenuManager = new MenuManager(Messages.getString("CDOEditor.23")); //$NON-NLS-1$
 
     NewRootMenuPopulator populator = new NewRootMenuPopulator(view.getSession().getPackageRegistry())
@@ -2298,6 +2301,44 @@ public class CDOEditor extends MultiPageEditorPart
     if (populator.populateMenu(submenuManager))
     {
       menuManager.insertBefore("edit", submenuManager); //$NON-NLS-1$
+    }
+
+    Resource resource = getSelectedResource();
+    if (resource instanceof CDOResource)
+    {
+      final CDOResource parent = (CDOResource)resource;
+      String text = Messages.getString("CDOEditor.29") + SafeAction.INTERACTIVE;
+
+      submenuManager.add(new Separator());
+      submenuManager.add(new TransactionalBackgroundAction(page, text, null, null, parent)
+      {
+        private EObject newObject;
+
+        @Override
+        protected void preRun() throws Exception
+        {
+          SelectClassDialog dialog = new SelectClassDialog(page, "New Root Object",
+              "Select a package and a class for the new root object.");
+
+          if (dialog.open() == SelectClassDialog.OK)
+          {
+            EClass eClass = dialog.getSelectedClass();
+            newObject = EcoreUtil.create(eClass);
+          }
+          else
+          {
+            cancel();
+          }
+        }
+
+        @Override
+        protected void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor)
+            throws Exception
+        {
+          EList<EObject> contents = parent.getContents();
+          contents.add(newObject);
+        }
+      });
     }
 
     IStructuredSelection sel = (IStructuredSelection)editorSelection;
@@ -2318,7 +2359,6 @@ public class CDOEditor extends MultiPageEditorPart
 
         if (!features.isEmpty())
         {
-          final IWorkbenchPage page = getSite().getPage();
           menuManager.insertBefore("edit", //$NON-NLS-1$
               new LongRunningAction(page, Messages.getString("CDOEditor.26") + SafeAction.INTERACTIVE) //$NON-NLS-1$
               {
@@ -2600,6 +2640,33 @@ public class CDOEditor extends MultiPageEditorPart
     {
       // Do nothing
     }
+  }
+
+  private Resource getSelectedResource()
+  {
+    IStructuredSelection ssel = (IStructuredSelection)editorSelection;
+    if (ssel.isEmpty())
+    {
+      if (viewerInput instanceof Resource)
+      {
+        return (Resource)viewerInput;
+      }
+    }
+    else if (ssel.size() == 1)
+    {
+      Object element = ssel.getFirstElement();
+      if (element instanceof Resource)
+      {
+        return (Resource)element;
+      }
+
+      if (element instanceof EObject)
+      {
+        return ((EObject)element).eResource();
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -2901,49 +2968,28 @@ public class CDOEditor extends MultiPageEditorPart
    */
   protected class CreateRootAction extends LongRunningAction
   {
-    protected EObject object;
+    protected EObject newObject;
 
     protected CreateRootAction(EObject object)
     {
       super(getEditorSite().getPage(), object.eClass().getName(),
           ExtendedImageRegistry.getInstance().getImageDescriptor(getLabelImage(adapterFactory, object)));
-      this.object = object;
+      newObject = object;
     }
 
     @Override
     protected void doRun(IProgressMonitor progressMonitor) throws Exception
     {
-      Resource resource = null;
-      IStructuredSelection ssel = (IStructuredSelection)editorSelection;
-      if (ssel.isEmpty())
-      {
-        if (viewerInput instanceof Resource)
-        {
-          resource = (Resource)viewerInput;
-        }
-      }
-      else if (ssel.size() == 1)
-      {
-        Object element = ssel.getFirstElement();
-        if (element instanceof Resource)
-        {
-          resource = (Resource)element;
-        }
-        else if (element instanceof EObject)
-        {
-          resource = ((EObject)element).eResource();
-        }
-      }
-
+      Resource resource = getSelectedResource();
       if (resource != null)
       {
-        if (object instanceof InternalCDOObject)
+        if (newObject instanceof InternalCDOObject)
         {
-          object = ((InternalCDOObject)object).cdoInternalInstance();
+          newObject = ((InternalCDOObject)newObject).cdoInternalInstance();
         }
 
         // TODO Use a command!
-        resource.getContents().add(object);
+        resource.getContents().add(newObject);
       }
     }
   }

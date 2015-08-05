@@ -164,11 +164,11 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   /**
    * Checkout.
    */
-  public CDOWorkspaceImpl(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
+  public CDOWorkspaceImpl(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation,
       CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote, int branchID,
       String branchPath, long timeStamp)
   {
-    init(localRepositoryName, local, idGenerationLocation, idGenerator, base, remote);
+    init(localRepositoryName, store, idGenerationLocation, idGenerator, base, remote);
 
     this.branchID = branchID;
     this.branchPath = branchPath;
@@ -182,10 +182,10 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   /**
    * Open.
    */
-  public CDOWorkspaceImpl(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
+  public CDOWorkspaceImpl(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation,
       CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
-    init(localRepositoryName, local, idGenerationLocation, idGenerator, base, remote);
+    init(localRepositoryName, store, idGenerationLocation, idGenerator, base, remote);
     loadProperties();
   }
 
@@ -267,18 +267,18 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
   }
 
-  protected void init(String localRepositoryName, IStore local, IDGenerationLocation idGenerationLocation,
+  protected void init(String localRepositoryName, IStore store, IDGenerationLocation idGenerationLocation,
       CDOIDGenerator idGenerator, InternalCDOWorkspaceBase base, CDOSessionConfigurationFactory remote)
   {
     this.idGenerationLocation = idGenerationLocation;
     this.idGenerator = idGenerator;
 
-    container = createContainer(local);
+    container = createContainer(store);
     remoteSessionConfigurationFactory = remote;
 
     try
     {
-      localRepository = createLocalRepository(localRepositoryName, local);
+      localRepository = createLocalRepository(localRepositoryName, store);
       localRepositoryHead = localRepository.getBranchManager().getMainBranch().getHead();
 
       this.base = base;
@@ -1137,7 +1137,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     return container;
   }
 
-  protected IManagedContainer createContainer(IStore local)
+  protected IManagedContainer createContainer(IStore store)
   {
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container);
@@ -1231,7 +1231,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
 
     InternalCDOSession session = (InternalCDOSession)configuration.openNet4jSession();
-    session.setPackageRegistry(localRepository.getPackageRegistry(false)); // Use repo's registry
+    // session.setPackageRegistry(localRepository.getPackageRegistry(false)); // Use repo's registry
     setWorkspaceProperty(session);
 
     ISignalProtocol<?> protocol = (ISignalProtocol<?>)session.getSessionProtocol();

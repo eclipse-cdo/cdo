@@ -158,6 +158,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private CDOResourceImpl rootResource;
 
+  private CDOID rootResourceID;
+
   private final ConcurrentArray<CDOObjectHandler> objectHandlers = new ConcurrentArray<CDOObjectHandler>()
   {
     @Override
@@ -368,17 +370,20 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
+  public void setSession(InternalCDOSession session)
+  {
+    rootResourceID = session.getRepositoryInfo().getRootResourceID();
+    if (rootResourceID == null || rootResourceID.isNull())
+    {
+      throw new IllegalStateException("RootResourceID is null; is the repository not yet initialized?");
+    }
+  }
+
   public synchronized CDOResourceImpl getRootResource()
   {
     checkActive();
     if (rootResource == null)
     {
-      CDOID rootResourceID = getSession().getRepositoryInfo().getRootResourceID();
-      if (rootResourceID == null || rootResourceID.isNull())
-      {
-        throw new IllegalStateException("RootResourceID is null; is the repository not yet initialized?");
-      }
-
       getObject(rootResourceID);
       CheckUtil.checkState(rootResource, "rootResource");
     }
@@ -666,7 +671,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
       else
       {
-        CDOID rootResourceID = getSession().getRepositoryInfo().getRootResourceID();
         if (canHaveResourcePathImpact(delta, rootResourceID))
         {
           resourcePathCache.clear();
@@ -810,12 +814,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     if (name == null)
     {
-      if (rootResource != null)
-      {
-        return rootResource.cdoID();
-      }
-
-      return getSession().getRepositoryInfo().getRootResourceID();
+      return rootResourceID;
     }
 
     CDOQuery resourceQuery = createResourcesQuery(null, name, true);
@@ -1166,7 +1165,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         excludeNewObject(id);
         localLookupObject = createObject(id);
 
-        if (id == getSession().getRepositoryInfo().getRootResourceID())
+        if (id == rootResourceID)
         {
           setRootResource((CDOResourceImpl)localLookupObject);
         }
@@ -1275,7 +1274,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     EClass eClass = revision.getEClass();
     InternalCDOObject object;
-    if (CDOModelUtil.isResource(eClass) && id != getSession().getRepositoryInfo().getRootResourceID())
+    if (CDOModelUtil.isResource(eClass) && id != rootResourceID)
     {
       object = (InternalCDOObject)newResourceInstance(revision);
       // object is PROXY
@@ -1551,7 +1550,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       CDOID id;
       if (isRoot)
       {
-        id = getSession().getRepositoryInfo().getRootResourceID();
+        id = rootResourceID;
       }
       else
       {

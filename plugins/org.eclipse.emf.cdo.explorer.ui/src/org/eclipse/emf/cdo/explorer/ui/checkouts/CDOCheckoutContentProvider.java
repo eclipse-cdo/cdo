@@ -510,7 +510,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
       final Object finalObject = object;
       final CDOCheckout finalOpeningCheckout = openingCheckout;
-      final CDOCheckout finalCheckout = checkout;
+
       final ITreeContentProvider contentProvider = stateManager.getContentProvider(finalObject);
       if (contentProvider == null)
       {
@@ -558,12 +558,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
               loadedRevisions.addAll(revisions);
             }
 
-            Object[] children;
-            CDOCheckout checkout = finalCheckout != null ? finalCheckout : CDOExplorerUtil.getCheckout(finalObject);
-            synchronized (checkout.getView())
-            {
-              children = contentProvider.getChildren(finalObject);
-            }
+            Object[] children = contentProvider.getChildren(finalObject);
 
             // Adjust possible legacy adapters.
             for (int i = 0; i < children.length; i++)

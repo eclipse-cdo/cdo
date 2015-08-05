@@ -58,7 +58,7 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
 
   private DataBindingContext context;
 
-  private WritableValue value;
+  private WritableValue<Object> value;
 
   private IActionBars editorActionBars;
 
@@ -91,7 +91,7 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
   protected void initDatabindings()
   {
     context = new EMFDataBindingContext();
-    value = new WritableValue(context.getValidationRealm());
+    value = new WritableValue<Object>(context.getValidationRealm());
   }
 
   @Override
@@ -168,7 +168,7 @@ public abstract class AbstractSectionPart<T extends EObject> extends AbstractFor
     return context;
   }
 
-  protected IObservableValue getValue()
+  protected IObservableValue<Object> getValue()
   {
     return value;
   }

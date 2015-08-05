@@ -99,13 +99,13 @@ public class OneToManyBlock
 
   private final DataBindingContext context;
 
-  private final IObservableValue input;
+  private final IObservableValue<Object> input;
 
   private final IOneToManyConfiguration configuration;
 
   private final IFilter supportedContentFilter;
 
-  private IObservableList value;
+  private IObservableList<Object> value;
 
   private TableViewer viewer;
 
@@ -132,7 +132,7 @@ public class OneToManyBlock
     this.domain = domain;
     this.adapterFactory = adapterFactory;
     configuration = blockConfig;
-    input = new WritableValue(context.getValidationRealm());
+    input = new WritableValue<Object>(context.getValidationRealm());
     supportedContentFilter = SecurityUIUtil.getSupportedElementFilter(configuration.getItemType());
   }
 
@@ -228,7 +228,7 @@ public class OneToManyBlock
 
     removeButton = toolkit.createButton(buttons, Messages.OneToManyBlock_2, SWT.PUSH);
 
-    final IObservableValue selection = ViewersObservables.observeSingleSelection(viewer);
+    final IObservableValue<?> selection = ViewersObservables.observeSingleSelection(viewer);
 
     context.bindValue(WidgetProperties.enabled().observe(newButton), input, null,
         ObjectWritableConverter.createUpdateValueStrategy());
@@ -387,7 +387,8 @@ public class OneToManyBlock
     new ActionBarsHelper(editorActionBars).addGlobalAction(ActionFactory.DELETE.getId(), removeAction).install(viewer);
   }
 
-  public void setInput(IObservableValue input)
+  @SuppressWarnings("unchecked")
+  public void setInput(IObservableValue<Object> input)
   {
     if (input != null)
     {
@@ -539,17 +540,17 @@ public class OneToManyBlock
         });
   }
 
-  protected void hookUnsupportedModelContentValidation(IObservableList observableList)
+  protected void hookUnsupportedModelContentValidation(IObservableList<Object> observableList)
   {
     // No need to hook a listener if there is no supported-content filter to check
     if (observableList != null && supportedContentFilter != null)
     {
       observableList.addChangeListener(new IChangeListener()
       {
-
+        @SuppressWarnings("unchecked")
         public void handleChange(ChangeEvent event)
         {
-          checkUnsupportedModelContent((IObservableList)event.getObservable());
+          checkUnsupportedModelContent((IObservableList<Object>)event.getObservable());
         }
       });
 
@@ -558,7 +559,7 @@ public class OneToManyBlock
     }
   }
 
-  protected void checkUnsupportedModelContent(IObservableList observableList)
+  protected void checkUnsupportedModelContent(IObservableList<Object> observableList)
   {
     // Anything not matching the supported-content filter?
     for (Object element : observableList)

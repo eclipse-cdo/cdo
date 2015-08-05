@@ -476,78 +476,35 @@
         xsi:type="mylyn:MylynQueriesTask"
         repositoryURL="${cdo.bugzilla.repository}">
       <query
-          summary="0_REVIEWS"
-          url="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;query_format=advanced&amp;field0-0-0=flagtypes.name&amp;type0-0-0=equals&amp;value0-0-0=review%3F"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="1_BUGS"
+          summary="CDO_1_BUGS"
           url="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=blocker&amp;bug_severity=critical&amp;bug_severity=major&amp;bug_severity=normal&amp;bug_severity=minor&amp;bug_severity=trivial"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
       <query
-          summary="2_FEATURES"
+          summary="CDO_2_FEATURES"
           url="${cdo.bugzilla.prefix}&amp;component=cdo.core&amp;component=cdo.docs&amp;component=cdo.net4j&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}&amp;bug_severity=enhancement"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
       <query
-          summary="3_RESOLVED"
+          summary="CDO_3_UI"
+          url="${cdo.bugzilla.prefix}&amp;component=cdo.net4j.ui&amp;component=cdo.ui&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+      <query
+          summary="CDO_4_DB"
+          url="${cdo.bugzilla.prefix}&amp;component=cdo.db&amp;component=cdo.net4j.db&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+      <query
+          summary="CDO_5_Hibernate"
+          url="${cdo.bugzilla.prefix}&amp;component=cdo.hibernate&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+      <query
+          summary="CDO_6_Legacy"
+          url="${cdo.bugzilla.prefix}&amp;component=cdo.legacy&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+      <query
+          summary="CDO_7_Dawn"
+          url="${cdo.bugzilla.prefix}&amp;component=cdo.dawn&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+      <query
+          summary="CDO_8_Releng"
+          url="${cdo.bugzilla.prefix}&amp;component=cdo.releng&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
+      <query
+          summary="CDO_9_RESOLVED"
           url="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}&amp;version=${cdo.bugzilla.version}&amp;bug_status=RESOLVED&amp;resolution=FIXED"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
       <query
           summary="CDO_Complete"
           url="${cdo.bugzilla.prefix}&amp;${cdo.bugzilla.components}"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="CDO_Dawn"
-          url="${cdo.bugzilla.prefix}&amp;component=cdo.dawn&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="CDO_DB"
-          url="${cdo.bugzilla.prefix}&amp;component=cdo.db&amp;component=cdo.net4j.db&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="CDO_Hibernate"
-          url="${cdo.bugzilla.prefix}&amp;component=cdo.hibernate&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="CDO_Legacy"
-          url="${cdo.bugzilla.prefix}&amp;component=cdo.legacy&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="CDO_Releng"
-          url="${cdo.bugzilla.prefix}&amp;component=cdo.releng&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
-    </setupTask>
-    <setupTask
-        xsi:type="mylyn:MylynQueriesTask"
-        repositoryURL="${cdo.bugzilla.repository}">
-      <query
-          summary="CDO_UI"
-          url="${cdo.bugzilla.prefix}&amp;component=cdo.net4j.ui&amp;component=cdo.ui&amp;version=${cdo.bugzilla.version}&amp;${cdo.bugzilla.open}"/>
     </setupTask>
     <setupTask
         xsi:type="mylyn:MylynQueriesTask"
@@ -564,7 +521,7 @@
         userID="${bugzilla.id}"
         password="${eclipse.user.password}">
       <query
-          summary="Reviews in ${cdo.git.clone.checkoutBranch}">
+          summary="CDO_Reviews in ${cdo.git.clone.checkoutBranch}">
         <attribute
             key="gerrit query type"
             value="custom"/>

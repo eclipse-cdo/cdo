@@ -340,32 +340,35 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   private URI normalizeURI(URI uri)
   {
-    ResourceSet resourceSet = getResourceSet();
-    if (resourceSet == null)
+    if (uri != null)
     {
-      InternalCDOView view = cdoView();
-      if (view != null)
+      ResourceSet resourceSet = getResourceSet();
+      if (resourceSet == null)
       {
-        resourceSet = view.getResourceSet();
-      }
-    }
-
-    if (resourceSet != null)
-    {
-      if (isRoot())
-      {
-        uri = URI.createURI(uri.toString() + "/");
-        uri = resourceSet.getURIConverter().normalize(uri);
-
-        String string = uri.toString();
-        if (string.endsWith("/"))
+        InternalCDOView view = cdoView();
+        if (view != null)
         {
-          uri = URI.createURI(string.substring(0, string.length() - 1));
+          resourceSet = view.getResourceSet();
         }
       }
-      else
+
+      if (resourceSet != null)
       {
-        uri = resourceSet.getURIConverter().normalize(uri);
+        if (isRoot())
+        {
+          uri = URI.createURI(uri.toString() + "/");
+          uri = resourceSet.getURIConverter().normalize(uri);
+
+          String string = uri.toString();
+          if (string.endsWith("/"))
+          {
+            uri = URI.createURI(string.substring(0, string.length() - 1));
+          }
+        }
+        else
+        {
+          uri = resourceSet.getURIConverter().normalize(uri);
+        }
       }
     }
 

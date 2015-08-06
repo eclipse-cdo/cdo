@@ -600,6 +600,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private void applyNewObjects(List<CDOIDAndVersion> newObjects, List<CDOIDAndVersion> result)
   {
+    List<InternalCDOObject> objects = new ArrayList<InternalCDOObject>();
+
     for (CDOIDAndVersion key : newObjects)
     {
       InternalCDORevision revision = (InternalCDORevision)key;
@@ -614,13 +616,22 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         object.cdoInternalSetView(this);
         object.cdoInternalSetRevision(revision);
         object.cdoInternalSetState(CDOState.NEW);
-        object.cdoInternalPostLoad();
+        objects.add(object);
 
         registerObject(object);
-        registerAttached(object, true);
         result.add(revision);
-        setDirty(true);
       }
+    }
+
+    if (!objects.isEmpty())
+    {
+      for (InternalCDOObject object : objects)
+      {
+        object.cdoInternalPostLoad();
+        registerAttached(object, true);
+      }
+
+      setDirty(true);
     }
   }
 

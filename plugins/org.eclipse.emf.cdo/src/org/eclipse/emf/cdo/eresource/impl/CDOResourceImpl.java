@@ -1579,7 +1579,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
         if (CDOUtil.isLegacyObject(cdoObject))
         {
-          if (FSMUtil.isClean(cdoObject))
+          if (!FSMUtil.isTransient(cdoObject))
           {
             // Bug 352204
             return;

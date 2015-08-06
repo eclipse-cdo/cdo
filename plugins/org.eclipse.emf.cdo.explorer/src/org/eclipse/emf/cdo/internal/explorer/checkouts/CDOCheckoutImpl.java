@@ -48,6 +48,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import org.eclipse.core.runtime.Path;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -684,16 +686,15 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public URI createResourceURI(String path)
   {
+    String authority = getID();
+
     if (StringUtil.isEmpty(path))
     {
-      path = "";
-    }
-    else if (!path.startsWith("/"))
-    {
-      path = "/" + path;
+      return URI.createHierarchicalURI(CDOCheckoutViewProvider.SCHEME, authority, null, null, null, null);
     }
 
-    return URI.createURI(CDOCheckoutViewProvider.SCHEME + "://" + getID() + path);
+    String[] segments = new Path(path).segments();
+    return URI.createHierarchicalURI(CDOCheckoutViewProvider.SCHEME, authority, null, segments, null, null);
   }
 
   public String getEditorOpenerID(CDOID objectID)

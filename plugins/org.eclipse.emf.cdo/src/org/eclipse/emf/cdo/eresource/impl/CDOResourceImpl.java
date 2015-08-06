@@ -133,6 +133,11 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   /**
    * @ADDED
    */
+  private URI initialURI;
+
+  /**
+   * @ADDED
+   */
   private URI uri;
 
   /**
@@ -190,7 +195,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    */
   public CDOResourceImpl(URI initialURI)
   {
-    uri = initialURI;
+    this.initialURI = initialURI;
   }
 
   /**
@@ -324,11 +329,21 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   private URI doGetURI()
   {
+    if (initialURI != null)
+    {
+      InternalCDOView view = cdoView();
+      if (view == null || view.isClosed() || cdoID() == null)
+      {
+        return initialURI;
+      }
+    }
+
     if (viewProvider != null)
     {
       InternalCDOView view = cdoView();
+      String path = getPath();
 
-      URI uri = viewProvider.getResourceURI(view, getPath());
+      URI uri = viewProvider.getResourceURI(view, path);
       if (uri != null)
       {
         return uri;
@@ -1197,9 +1212,9 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (!isLoaded())
     {
-      if (uri != null)
+      if (initialURI != null)
       {
-        String query = uri.query();
+        String query = initialURI.query();
         if (query != null && query.length() != 0)
         {
           Map<String, String> parameters = CDOURIUtil.getParameters(query);
@@ -1739,6 +1754,11 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     if (uri != null)
     {
       return string + "(\"" + uri + "\")";
+    }
+
+    if (initialURI != null)
+    {
+      return string + "(\"" + initialURI + "\")";
     }
 
     return super.toString(string);

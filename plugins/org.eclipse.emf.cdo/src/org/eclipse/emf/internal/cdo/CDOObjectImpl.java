@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo.PersistenceFilter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -817,6 +818,11 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     if (!moved && newResource != null && newResource != oldResource)
     {
       newResource.attached(this);
+    }
+
+    if (newContainer != null && newContainer != oldContainer && this instanceof CDOResourceNodeImpl)
+    {
+      ((CDOResourceNodeImpl)this).recacheURIs();
     }
 
     if (eNotificationRequired())

@@ -133,11 +133,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   /**
    * @ADDED
    */
-  private URI initialURI;
-
-  /**
-   * @ADDED
-   */
   private URI uri;
 
   /**
@@ -195,7 +190,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    */
   public CDOResourceImpl(URI initialURI)
   {
-    this.initialURI = initialURI;
+    uri = initialURI;
   }
 
   /**
@@ -321,8 +316,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (uri == null)
     {
-      uri = doGetURI();
-      uri = normalizeURI(uri);
+      uri = normalizeURI(doGetURI());
     }
 
     return uri;
@@ -330,14 +324,10 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   private URI doGetURI()
   {
-    InternalCDOView view = cdoView();
-    if (initialURI != null && (cdoID() == null || view == null || view.isClosed()))
-    {
-      return initialURI;
-    }
-
     if (viewProvider != null)
     {
+      InternalCDOView view = cdoView();
+
       URI uri = viewProvider.getResourceURI(view, getPath());
       if (uri != null)
       {
@@ -387,9 +377,17 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     this.uri = normalizeURI(uri);
   }
 
-  private void recacheURI()
+  /**
+   * @since 4.5
+   */
+  @Override
+  public void recacheURIs()
   {
-    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
+    InternalCDOView view = cdoView();
+    String path = getPath();
+
+    URI uri = CDOURIUtil.createResourceURI(view, path);
+    cacheURI(uri);
   }
 
   /**
@@ -454,7 +452,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void setFolder(CDOResourceFolder newFolder)
   {
     super.setFolder(newFolder);
-    recacheURI();
+    recacheURIs();
   }
 
   /**
@@ -464,7 +462,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void setName(String newName)
   {
     super.setName(newName);
-    recacheURI();
+    recacheURIs();
   }
 
   @Override
@@ -1196,9 +1194,9 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   {
     if (!isLoaded())
     {
-      if (initialURI != null)
+      if (uri != null)
       {
-        String query = initialURI.query();
+        String query = uri.query();
         if (query != null && query.length() != 0)
         {
           Map<String, String> parameters = CDOURIUtil.getParameters(query);
@@ -1586,13 +1584,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
             // Bug 352204
             return;
           }
-
-          int xxx;
-          // EReference containmentFeature = object.eContainmentFeature();
-          // if (!EMFUtil.isPersistent(containmentFeature))
-          // {
-          // return;
-          // }
         }
 
         attached(cdoObject, transaction);
@@ -1745,11 +1736,6 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
     if (uri != null)
     {
       return string + "(\"" + uri + "\")";
-    }
-
-    if (initialURI != null)
-    {
-      return string + "(\"" + initialURI + "\")";
     }
 
     return super.toString(string);

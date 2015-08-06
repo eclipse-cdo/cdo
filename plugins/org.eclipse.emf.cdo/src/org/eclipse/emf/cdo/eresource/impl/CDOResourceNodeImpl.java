@@ -128,6 +128,13 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   }
 
   /**
+   * @since 4.5
+   */
+  public void recacheURIs()
+  {
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */

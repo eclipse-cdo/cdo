@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -47,6 +48,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryProviderImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -1743,6 +1745,14 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key);
         }
 
+        if (changedObject instanceof CDOResourceNodeImpl)
+        {
+          if (delta == null || isResourceNodeContainerOrNameChanged(delta))
+          {
+            ((CDOResourceNodeImpl)changedObject).recacheURIs();
+          }
+        }
+
         revisionDeltas.put(changedObject, delta);
         if (changedObject.cdoConflict())
         {
@@ -1757,6 +1767,21 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
 
     return conflicts;
+  }
+
+  private boolean isResourceNodeContainerOrNameChanged(CDORevisionDelta delta)
+  {
+    if (delta.getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME) != null)
+    {
+      return true;
+    }
+
+    if (delta.getFeatureDelta(CDOContainerFeatureDelta.CONTAINER_FEATURE) != null)
+    {
+      return true;
+    }
+
+    return false;
   }
 
   /**

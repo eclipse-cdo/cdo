@@ -54,7 +54,7 @@
 
 		<!-- PLATFORM -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.5milestones">
+			<rm:uri format="http://download.eclipse.org/eclipse/updates/4.6-I-builds">
 				<bc:propertyRef key="platform.version"/>
 			</rm:uri>
 		</rm:provider>
@@ -98,7 +98,7 @@
 
 		<!-- GEF -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/tools/gef/updates/releases"/>
+			<rm:uri format="http://download.eclipse.org/tools/gef/updates/interim"/>
 		</rm:provider>
 
 		<!-- Graphiti -->
@@ -128,7 +128,7 @@
 
 		<!-- QVTO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones/3.5.0"/>
+			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
 		</rm:provider>
 
 		<!-- UML2 -->
@@ -166,7 +166,7 @@
 
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-  		<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
+  		<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
 		</rm:provider>
 
 		<!-- TENEO -->
@@ -189,7 +189,7 @@
 
 		<!-- OOMPH -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/oomph/updates"/>
+			<rm:uri format="http://download.eclipse.org/oomph/updates/latest"/>
 		</rm:provider>
 
 	</rm:searchPath>

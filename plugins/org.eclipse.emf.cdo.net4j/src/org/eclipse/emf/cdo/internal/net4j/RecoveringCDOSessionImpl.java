@@ -266,6 +266,10 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       {
         recover();
       }
+      else
+      {
+        throw exception;
+      }
     }
   }
 

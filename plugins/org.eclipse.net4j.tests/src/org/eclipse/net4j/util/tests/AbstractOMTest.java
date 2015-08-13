@@ -946,4 +946,53 @@ public abstract class AbstractOMTest extends TestCase
       return !latch.await(timeoutMillis, TimeUnit.MILLISECONDS);
     }
   }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class ThreadTimeOuter extends LatchTimeOuter implements Runnable
+  {
+    private RuntimeException exception;
+
+    public ThreadTimeOuter()
+    {
+      super(1);
+    }
+
+    @Override
+    public boolean timedOut(long timeoutMillis) throws InterruptedException
+    {
+      Thread thread = new Thread(this, "ThreadTimeOuter")
+      {
+        @Override
+        public void run()
+        {
+          try
+          {
+            ThreadTimeOuter.this.run();
+          }
+          catch (RuntimeException ex)
+          {
+            exception = ex;
+          }
+          finally
+          {
+            countDown();
+          }
+        }
+      };
+
+      thread.setDaemon(true);
+      thread.start();
+
+      boolean result = super.timedOut(timeoutMillis);
+
+      if (exception != null)
+      {
+        throw exception;
+      }
+
+      return result;
+    }
+  }
 }

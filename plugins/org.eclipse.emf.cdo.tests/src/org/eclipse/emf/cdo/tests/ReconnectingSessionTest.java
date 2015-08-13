@@ -10,12 +10,14 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.net4j.ReconnectingCDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
@@ -23,6 +25,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -224,6 +227,55 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     finally
     {
       LifecycleUtil.deactivate(session2);
+      LifecycleUtil.deactivate(acceptor);
+    }
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testNonTransportFailure() throws Exception
+  {
+    String repositoryName;
+
+    {
+      CDOSession session = openSession();
+      repositoryName = session.getRepositoryInfo().getName();
+      session.close();
+    }
+
+    ITCPAcceptor acceptor = null;
+    CDONet4jSession session = null;
+
+    try
+    {
+      acceptor = TCPUtil.getAcceptor(getServerContainer(), ADDRESS2);
+
+      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2,
+          repositoryName, getClientContainer());
+      configuration.setHeartBeatEnabled(true);
+
+      session = (CDONet4jSession)openSession(configuration);
+      final CDOBranch branch = session.getBranchManager().getBranch(9999999);
+
+      try
+      {
+        new ThreadTimeOuter()
+        {
+          public void run()
+          {
+            branch.getName(); // This would hang without the fix in RecoveringExceptionHandler.handleException()
+          }
+        }.assertNoTimeOut();
+
+        fail("RemoteException expected");
+      }
+      catch (RemoteException expected)
+      {
+        assertInstanceOf(NullPointerException.class, expected.getCause());
+      }
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(session);
       LifecycleUtil.deactivate(acceptor);
     }
   }

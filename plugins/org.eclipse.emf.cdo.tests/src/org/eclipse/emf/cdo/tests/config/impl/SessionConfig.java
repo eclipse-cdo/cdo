@@ -156,7 +156,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     if (RepositoryConfig.REPOSITORY_NAME.equals(repositoryName))
     {
       // Start default repository
-      getCurrentTest().getRepository(RepositoryConfig.REPOSITORY_NAME);
+      getCurrentTest().getRepository(IRepositoryConfig.REPOSITORY_NAME);
     }
 
     CDOSessionConfiguration configuration = getTestSessionConfiguration();

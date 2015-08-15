@@ -46,3 +46,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475040
 
 475041: Bugzilla_316444_Test.testLockParentWithEAttributeChange fails randomly
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475041
+
+475042: The cached field CDOResourceImpl.uri needs to be recomputed after moves
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475042

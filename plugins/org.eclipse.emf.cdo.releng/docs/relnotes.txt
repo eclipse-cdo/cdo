@@ -1,0 +1,6 @@
+The 4.4-maintenance commit preceeding this commit,
+i.e., 61f4ab25ec2210ab4920219ce069807126139f73,
+merged the following bugzillas from master:
+
+475026: Consolidate UI
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475026

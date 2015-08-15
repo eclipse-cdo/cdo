@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPClientConnector;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.internal.tcp.TCPSelector;
+import org.eclipse.net4j.internal.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.ChallengeNegotiator;
 import org.eclipse.net4j.util.security.INegotiator;
@@ -27,7 +28,6 @@ import org.eclipse.net4j.util.security.ResponseNegotiator;
 import org.eclipse.net4j.util.security.UserManager;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author Eike Stepper
@@ -131,8 +131,6 @@ class Util
 
   public static ExecutorService createThreadPool()
   {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
-    return threadPool;
+    return ThreadPool.create();
   }
 }

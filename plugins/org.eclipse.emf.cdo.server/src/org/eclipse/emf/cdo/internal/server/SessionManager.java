@@ -36,7 +36,10 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
@@ -73,6 +76,20 @@ public class SessionManager extends Container<ISession>implements InternalSessio
   private final Map<Integer, InternalSession> sessions = new HashMap<Integer, InternalSession>();
 
   private final AtomicInteger lastSessionID = new AtomicInteger();
+
+  private final Map<InternalSession, List<CommitNotificationInfo>> commitNotificationInfoQueues = new HashMap<InternalSession, List<CommitNotificationInfo>>();
+
+  private final IListener sessionListener = new LifecycleEventAdapter()
+  {
+    @Override
+    protected void onDeactivated(ILifecycle lifecycle)
+    {
+      synchronized (commitNotificationInfoQueues)
+      {
+        commitNotificationInfoQueues.remove(lifecycle);
+      }
+    }
+  };
 
   /**
    * @since 2.0
@@ -191,19 +208,28 @@ public class SessionManager extends Container<ISession>implements InternalSessio
    */
   public InternalSession openSession(ISessionProtocol sessionProtocol)
   {
-    int id = lastSessionID.incrementAndGet();
+    final int id = lastSessionID.incrementAndGet();
     if (TRACER.isEnabled())
     {
       TRACER.trace("Opening session " + id); //$NON-NLS-1$
     }
 
     String userID = authenticateUser(sessionProtocol);
-    InternalSession session = createSession(id, userID, sessionProtocol);
+    final InternalSession session = createSession(id, userID, sessionProtocol);
     LifecycleUtil.activate(session);
 
     synchronized (sessions)
     {
-      sessions.put(id, session);
+      ((Repository)repository).executeOutsideStartCommit(new Runnable()
+      {
+        public void run()
+        {
+          long firstUpdateTime = repository.getLastCommitTimeStamp();
+          ((Session)session).setFirstUpdateTime(firstUpdateTime);
+
+          sessions.put(id, session);
+        }
+      });
     }
 
     fireElementAddedEvent(session);
@@ -230,6 +256,11 @@ public class SessionManager extends Container<ISession>implements InternalSessio
       fireElementRemovedEvent(session);
       sendRemoteSessionNotification(session, CDOProtocolConstants.REMOTE_SESSION_CLOSED);
     }
+  }
+
+  public void openedOnClientSide(InternalSession session)
+  {
+    processQueuedCommitNotifications(session);
   }
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)
@@ -312,14 +343,63 @@ public class SessionManager extends Container<ISession>implements InternalSessio
     {
       if (session != sender)
       {
-        try
+        if (((Session)session).isOpenOnClientSide())
         {
-          session.sendCommitNotification(info);
+          processQueuedCommitNotifications(session);
+          doSendCommitNotification(session, info);
         }
-        catch (Exception ex)
+        else
         {
-          handleNotificationProblem(session, ex);
+          queueCommitNotification(session, info);
         }
+      }
+    }
+  }
+
+  private void doSendCommitNotification(InternalSession session, CommitNotificationInfo info)
+  {
+    try
+    {
+      session.sendCommitNotification(info);
+    }
+    catch (Exception ex)
+    {
+      handleNotificationProblem(session, ex);
+    }
+  }
+
+  private void queueCommitNotification(InternalSession session, CommitNotificationInfo info)
+  {
+    synchronized (commitNotificationInfoQueues)
+    {
+      List<CommitNotificationInfo> queue = commitNotificationInfoQueues.get(session);
+      if (queue == null)
+      {
+        queue = new ArrayList<CommitNotificationInfo>();
+        commitNotificationInfoQueues.put(session, queue);
+
+        session.addListener(sessionListener);
+      }
+
+      queue.add(info);
+    }
+  }
+
+  private void processQueuedCommitNotifications(InternalSession session)
+  {
+    List<CommitNotificationInfo> queue;
+    synchronized (commitNotificationInfoQueues)
+    {
+      queue = commitNotificationInfoQueues.remove(session);
+    }
+
+    if (queue != null && !session.isClosed())
+    {
+      session.removeListener(sessionListener);
+
+      for (CommitNotificationInfo queuedInfo : queue)
+      {
+        doSendCommitNotification(session, queuedInfo);
       }
     }
   }
@@ -399,7 +479,17 @@ public class SessionManager extends Container<ISession>implements InternalSessio
 
   protected void handleNotificationProblem(InternalSession session, Throwable t)
   {
-    OM.LOG.warn("A problem occured while notifying session " + session, t);
+    if (session.isClosed())
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("A problem occured while notifying session " + session, t);
+      }
+    }
+    else
+    {
+      OM.LOG.warn("A problem occured while notifying session " + session, t);
+    }
   }
 
   public String authenticateUser(IAuthenticationProtocol protocol) throws SecurityException

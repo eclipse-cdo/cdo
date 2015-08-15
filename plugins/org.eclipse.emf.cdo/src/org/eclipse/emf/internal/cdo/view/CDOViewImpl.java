@@ -34,9 +34,11 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -62,12 +64,16 @@ import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
+import org.eclipse.net4j.internal.util.concurrent.ExecutorWorkSerializer;
+import org.eclipse.net4j.internal.util.concurrent.IExecutorServiceProvider;
+import org.eclipse.net4j.internal.util.concurrent.InternalConcurrencyUtil;
+import org.eclipse.net4j.internal.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.QueueRunner;
+import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -110,12 +116,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends AbstractCDOView
+public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProvider
 {
+  public static final String PROP_TIME_MACHINE_DISABLED = "timeMachineDisabled";
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
   private int viewID;
@@ -136,7 +145,7 @@ public class CDOViewImpl extends AbstractCDOView
 
   private Map<CDOObject, CDOLockState> lockStates = new WeakHashMap<CDOObject, CDOLockState>();
 
-  private QueueRunner invalidationRunner = createInvalidationRunner();
+  private ExecutorWorkSerializer invalidationRunner = createInvalidationRunner();
 
   private volatile boolean invalidationRunnerActive;
 
@@ -176,6 +185,11 @@ public class CDOViewImpl extends AbstractCDOView
     viewID = viewId;
   }
 
+  public ExecutorService getExecutorService()
+  {
+    return InternalConcurrencyUtil.getExecutorService(session);
+  }
+
   /**
    * @since 2.0
    */
@@ -187,8 +201,10 @@ public class CDOViewImpl extends AbstractCDOView
   /**
    * @since 2.0
    */
+  @Override
   public void setSession(InternalCDOSession session)
   {
+    super.setSession(session);
     this.session = session;
   }
 
@@ -352,11 +368,33 @@ public class CDOViewImpl extends AbstractCDOView
         if (!session.options().isPassiveUpdateEnabled())
         {
           throw new AssertionError(
-              "Lock result requires client to wait, but client does not have passiveUpdates enabled.");
+              "Lock result requires client to wait, but client does not have passiveUpdates enabled");
         }
 
         long requiredTimestamp = result.getRequiredTimestamp();
-        waitForUpdate(requiredTimestamp);
+        if (!waitForUpdate(requiredTimestamp, 10000L))
+        {
+          throw new AssertionError("Lock result requires client to wait for commit " + requiredTimestamp
+              + ", but client did not receive invalidations after " + lastUpdateTime);
+        }
+
+        InternalCDOSession session = this.session;
+        InternalCDORevisionManager revisionManager = session.getRevisionManager();
+
+        for (CDORevisionKey requiredKey : result.getStaleRevisions())
+        {
+          CDOID id = requiredKey.getID();
+          InternalCDOObject object = getObject(id);
+
+          CDORevision revision = object.cdoRevision(true);
+          if (!requiredKey.equals(revision))
+          {
+            InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey,
+                CDORevision.UNCHUNKED, true);
+            InternalCDORevisionDelta revisionDelta = requiredRevision.compare(revision);
+            CDOStateMachine.INSTANCE.invalidate(object, revisionDelta);
+          }
+        }
       }
     }
 
@@ -409,8 +447,7 @@ public class CDOViewImpl extends AbstractCDOView
         InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
         if (existingLockState != null)
         {
-          Object lockTarget = getLockTarget(object);
-          existingLockState.updateFrom(lockTarget, lockState);
+          ((CDOLockStateImpl)existingLockState).updateFrom(lockState);
         }
         else
         {
@@ -738,6 +775,30 @@ public class CDOViewImpl extends AbstractCDOView
     return revisionManager.getRevision(id, branchPoint, initialChunkSize, CDORevision.DEPTH_NONE, loadOnDemand);
   }
 
+  @Override
+  public synchronized void remapObject(CDOID oldID)
+  {
+    InternalCDOObject object = getObject(oldID, false);
+    InternalCDOLockState oldLockState = (InternalCDOLockState)lockStates.remove(object);
+    if (oldLockState != null)
+    {
+      Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+      InternalCDOLockState newLockState = (InternalCDOLockState)CDOLockUtil.createLockState(lockedObject);
+      ((CDOLockStateImpl)newLockState).updateFrom(oldLockState);
+      lockStates.put(object, newLockState);
+    }
+
+    super.remapObject(oldID);
+  }
+
+  @Override
+  public synchronized InternalCDOObject removeObject(CDOID id)
+  {
+    InternalCDOObject removedObject = super.removeObject(id);
+    removeLockState(removedObject);
+    return removedObject;
+  }
+
   public synchronized CDOLockState[] getLockStates(Collection<CDOID> ids)
   {
     return getLockStates(ids, true);
@@ -752,19 +813,20 @@ public class CDOViewImpl extends AbstractCDOView
     for (CDOID id : ids)
     {
       CDOLockState lockState = null;
-      InternalCDOObject obj = getObject(id, false);
-      if (obj != null)
+      InternalCDOObject object = getObject(id, false);
+      if (object != null)
       {
-        lockState = this.lockStates.get(obj);
+        lockState = this.lockStates.get(object);
       }
 
       if (lockState != null)
       {
         lockStates.add(lockState);
       }
-      else if (loadOnDemand && obj != null && FSMUtil.isNew(obj))
+      else if (loadOnDemand && object != null && FSMUtil.isNew(object))
       {
-        CDOLockState defaultLockState = CDOLockUtil.createLockState(getLockTarget(obj));
+        Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+        CDOLockState defaultLockState = CDOLockUtil.createLockState(lockedObject);
         locksOnNewObjects.add(defaultLockState);
         lockStates.add(defaultLockState);
       }
@@ -795,10 +857,10 @@ public class CDOViewImpl extends AbstractCDOView
       {
         Object target;
 
-        InternalCDOObject obj = getObject(missingLockStateForCDOID, false);
-        if (obj != null)
+        InternalCDOObject object = getObject(missingLockStateForCDOID, false);
+        if (object != null)
         {
-          target = getLockTarget(obj);
+          target = getLockTarget(object); // CDOID or CDOIDAndBranch
         }
         else
         {
@@ -814,10 +876,10 @@ public class CDOViewImpl extends AbstractCDOView
       {
         updateLockStates(newLockStateForCache.toArray(new CDOLockState[newLockStateForCache.size()]));
       }
-
-      CDOLockState[] locksOnNewObjectsArray = locksOnNewObjects.toArray(new CDOLockState[locksOnNewObjects.size()]);
-      updateLockStates(locksOnNewObjectsArray);
     }
+
+    CDOLockState[] locksOnNewObjectsArray = locksOnNewObjects.toArray(new CDOLockState[locksOnNewObjects.size()]);
+    updateLockStates(locksOnNewObjectsArray);
 
     return lockStates.toArray(new CDOLockState[lockStates.size()]);
   }
@@ -889,8 +951,8 @@ public class CDOViewImpl extends AbstractCDOView
   {
     if (async)
     {
-      QueueRunner runner = getInvalidationRunner();
-      runner.addWork(new InvalidationRunnable(branch, lastUpdateTime, allChangedObjects, allDetachedObjects,
+      IWorkSerializer serializer = getInvalidationRunner();
+      serializer.addWork(new InvalidationRunnable(branch, lastUpdateTime, allChangedObjects, allDetachedObjects,
           oldRevisions, clearResourcePathCache));
     }
     else
@@ -954,47 +1016,22 @@ public class CDOViewImpl extends AbstractCDOView
     }
   }
 
-  public QueueRunner getInvalidationRunner()
+  public ExecutorWorkSerializer getInvalidationRunner()
   {
-    try
-    {
-      invalidationRunner.activate();
-    }
-    catch (LifecycleException ex)
-    {
-      // Don't pollute the log if the worker thread is interrupted due to asynchronous view.close()
-      if (!(ex.getCause() instanceof InterruptedException))
-      {
-        throw ex;
-      }
-    }
-
     return invalidationRunner;
   }
 
-  private QueueRunner createInvalidationRunner()
+  private ExecutorWorkSerializer createInvalidationRunner()
   {
-    return new QueueRunner()
+    return new ExecutorWorkSerializer()
     {
       @Override
-      protected String getThreadName()
-      {
-        return "CDOViewInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
-      }
-
-      @Override
-      protected void noWork(WorkContext context)
+      protected void noWork()
       {
         if (isClosed())
         {
-          context.terminate();
+          dispose();
         }
-      }
-
-      @Override
-      public String toString()
-      {
-        return getThreadName();
       }
     };
   }
@@ -1242,6 +1279,28 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     lockOwner = CDOLockUtil.createLockOwner(this);
+  }
+
+  @Override
+  protected void doAfterActivate() throws Exception
+  {
+    super.doAfterActivate();
+
+    ExecutorService executorService = InternalConcurrencyUtil.getExecutorService(session);
+    invalidationRunner.setExecutor(executorService);
+
+    try
+    {
+      LifecycleUtil.activate(invalidationRunner);
+    }
+    catch (LifecycleException ex)
+    {
+      // Don't pollute the log if the worker thread is interrupted due to asynchronous view.close()
+      if (!(ex.getCause() instanceof InterruptedException))
+      {
+        throw ex;
+      }
+    }
   }
 
   @Override
@@ -1806,11 +1865,12 @@ public class CDOViewImpl extends AbstractCDOView
         List<CDOLockState> missingLockStates = new ArrayList<CDOLockState>();
         for (CDOID id : ids)
         {
-          InternalCDOObject obj = getObject(id, false);
+          InternalCDOObject object = getObject(id, false);
 
-          if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
+          if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
           {
-            missingLockStates.add(CDOLockUtil.createLockState(getLockTarget(obj)));
+            Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+            missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
           }
         }
 
@@ -1820,10 +1880,11 @@ public class CDOViewImpl extends AbstractCDOView
           if (id != null && lockStateLoadingPolicy.loadLockState(id))
           {
             boolean isResourceNode = revision.isResourceNode();
-            InternalCDOObject obj = getObject(id, !isResourceNode);
-            if (obj != null && CDOViewImpl.this.lockStates.get(obj) == null)
+            InternalCDOObject object = getObject(id, !isResourceNode);
+            if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
             {
-              missingLockStates.add(CDOLockUtil.createLockState(getLockTarget(obj)));
+              Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+              missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
             }
           }
         }
@@ -1854,7 +1915,7 @@ public class CDOViewImpl extends AbstractCDOView
   /**
    * @author Eike Stepper
    */
-  private final class InvalidationRunnable implements Runnable
+  private final class InvalidationRunnable extends RunnableWithName
   {
     private final CDOBranch branch;
 
@@ -1880,7 +1941,14 @@ public class CDOViewImpl extends AbstractCDOView
       this.clearResourcePathCache = clearResourcePathCache;
     }
 
-    public void run()
+    @Override
+    public String getName()
+    {
+      return "CDOViewInvalidationRunner-" + CDOViewImpl.this; //$NON-NLS-1$
+    }
+
+    @Override
+    protected void doRun()
     {
       try
       {

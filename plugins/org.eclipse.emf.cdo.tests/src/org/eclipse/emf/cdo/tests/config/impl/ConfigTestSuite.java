@@ -71,7 +71,7 @@ public abstract class ConfigTestSuite implements IConstants
       {
         try
         {
-          TestWrapper wrapper = new TestWrapper(testClass, scenario, this);
+          ScenarioSuite wrapper = new ScenarioSuite(testClass, scenario, this);
           if (wrapper.testCount() != 0)
           {
             suite.addTest(wrapper);
@@ -152,36 +152,28 @@ public abstract class ConfigTestSuite implements IConstants
   /**
    * @author Eike Stepper
    */
-  private static final class ConstraintsViolatedException extends Exception
-  {
-    private static final long serialVersionUID = 1L;
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class TestWrapper extends TestSuite
+  private static final class ScenarioSuite extends TestSuite
   {
     private IScenario scenario;
-
-    public TestWrapper(Class<? extends ConfigTest> testClass, IScenario scenario, ConfigTestSuite suite)
+  
+    public ScenarioSuite(Class<? extends ConfigTest> testClass, IScenario scenario, ConfigTestSuite suite)
         throws ConstraintsViolatedException
     {
       // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
       addTestsFromTestCase(testClass, suite);
     }
-
+  
     @Override
     public void runTest(Test test, TestResult result)
     {
       if (test instanceof ConfigTest)
       {
         scenario.save();
-
+  
         ConfigTest configTest = (ConfigTest)test;
         configTest.setScenario(scenario);
-
+  
         if (configTest.isValid())
         {
           super.runTest(configTest, result);
@@ -192,12 +184,12 @@ public abstract class ConfigTestSuite implements IConstants
         super.runTest(test, result);
       }
     }
-
+  
     private void addTestsFromTestCase(final Class<?> theClass, ConfigTestSuite suite)
         throws ConstraintsViolatedException
     {
       setName(theClass.getName());
-
+  
       try
       {
         getTestConstructor(theClass); // Avoid generating multiple error messages
@@ -208,15 +200,15 @@ public abstract class ConfigTestSuite implements IConstants
             + " has no public constructor TestCase(String name) or TestCase()"));
         return;
       }
-
+  
       if (!Modifier.isPublic(theClass.getModifiers()))
       {
         addTest(warning("Class " + theClass.getName() + " is not public"));
         return;
       }
-
+  
       Set<String> capabilities = scenario.getCapabilities();
-
+  
       Class<?> superClass = theClass;
       while (Test.class.isAssignableFrom(superClass))
       {
@@ -224,12 +216,12 @@ public abstract class ConfigTestSuite implements IConstants
         {
           throw new ConstraintsViolatedException();
         }
-
+  
         superClass = superClass.getSuperclass();
       }
-
+  
       List<String> names = new ArrayList<String>();
-
+  
       superClass = theClass;
       while (Test.class.isAssignableFrom(superClass))
       {
@@ -240,11 +232,11 @@ public abstract class ConfigTestSuite implements IConstants
             addTestMethod(method, names, theClass, suite);
           }
         }
-
+  
         superClass = superClass.getSuperclass();
       }
     }
-
+  
     private boolean validateConstraints(AnnotatedElement element, Set<String> capabilities)
     {
       Requires requires = element.getAnnotation(Requires.class);
@@ -258,7 +250,7 @@ public abstract class ConfigTestSuite implements IConstants
           }
         }
       }
-
+  
       Skips skips = element.getAnnotation(Skips.class);
       if (skips != null)
       {
@@ -270,10 +262,10 @@ public abstract class ConfigTestSuite implements IConstants
           }
         }
       }
-
+  
       return true;
     }
-
+  
     private void addTestMethod(Method m, List<String> names, Class<?> theClass, ConfigTestSuite suite)
     {
       String name = m.getName();
@@ -281,17 +273,17 @@ public abstract class ConfigTestSuite implements IConstants
       {
         return;
       }
-
+  
       if (!isPublicTestMethod(m))
       {
         if (isTestMethod(m))
         {
           addTest(warning("Test method isn't public: " + m.getName() + "(" + theClass.getCanonicalName() + ")"));
         }
-
+  
         return;
       }
-
+  
       names.add(name);
       Test test = createTest(theClass, name);
       if (test instanceof ConfigTest)
@@ -299,18 +291,26 @@ public abstract class ConfigTestSuite implements IConstants
         ConfigTest configTest = (ConfigTest)test;
         suite.prepareTest(configTest);
       }
-
+  
       addTest(test);
     }
-
+  
     private boolean isPublicTestMethod(Method m)
     {
       return isTestMethod(m) && Modifier.isPublic(m.getModifiers());
     }
-
+  
     private boolean isTestMethod(Method m)
     {
       return m.getParameterTypes().length == 0 && m.getName().startsWith("test") && m.getReturnType().equals(Void.TYPE);
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ConstraintsViolatedException extends Exception
+  {
+    private static final long serialVersionUID = 1L;
   }
 }

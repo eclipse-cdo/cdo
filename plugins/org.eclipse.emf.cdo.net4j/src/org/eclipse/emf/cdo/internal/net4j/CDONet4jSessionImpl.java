@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionProtocol2;
 import org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol;
 
 import org.eclipse.net4j.connector.IConnector;
@@ -200,6 +201,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     repository.getTimeStamp(true);
+    ((CDOSessionProtocol2)sessionProtocol).openedSession();
   }
 
   private CDOClientProtocol createProtocol()

@@ -11,7 +11,7 @@
  */
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
+import org.eclipse.net4j.internal.util.concurrent.ExecutorWorkSerializer;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.util.Random;
@@ -22,11 +22,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A test for {@link QueueWorkerWorkSerializer}.
+ * A test for {@link ExecutorWorkSerializer}.
  *
  * @author Andre Dietisheim
  */
-public class QueueWorkerWorkSerializerTest extends AbstractOMTest
+public class ExecutorWorkSerializerTest extends AbstractOMTest
 {
   /** timeout to wait for execution of all work units. */
   private static final int WORK_COMPLETION_TIMEOUT = 10000;
@@ -47,22 +47,24 @@ public class QueueWorkerWorkSerializerTest extends AbstractOMTest
   private ExecutorService threadPool;
 
   /** The queue worker to submit the work units to. */
-  private QueueWorkerWorkSerializer queueWorker;
+  private ExecutorWorkSerializer queueWorker;
 
   @Override
   public void setUp()
   {
-    threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
-    workConsumedLatch = new CountDownLatch(NUM_WORK);
-    queueWorker = new QueueWorkerWorkSerializer();
     workProduced = new AtomicInteger(0);
+    workConsumedLatch = new CountDownLatch(NUM_WORK);
+
+    threadPool = Executors.newFixedThreadPool(NUM_WORKPRODUCER_THREADS);
+    queueWorker = new ExecutorWorkSerializer(threadPool);
+    queueWorker.activate();
   }
 
   @Override
   public void tearDown()
   {
-    threadPool.shutdown();
     queueWorker.dispose();
+    threadPool.shutdown();
   }
 
   /**

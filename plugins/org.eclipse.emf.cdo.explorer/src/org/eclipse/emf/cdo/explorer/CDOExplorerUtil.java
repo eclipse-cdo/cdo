@@ -18,11 +18,13 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.internal.explorer.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutViewProvider;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -70,7 +72,23 @@ public final class CDOExplorerUtil
       return getCheckoutManager().getCheckout(id);
     }
 
-    return walkUp(object, null);
+    CDOCheckout checkout = walkUp(object, null);
+    if (checkout != null)
+    {
+      return checkout;
+    }
+
+    if (object instanceof Notifier)
+    {
+      Notifier notifier = (Notifier)object;
+      CDOView view = CDOUtil.getView(notifier);
+      if (view != null)
+      {
+        return getCheckout(view);
+      }
+    }
+
+    return null;
   }
 
   public static Object getParent(Object object)

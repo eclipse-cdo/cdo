@@ -72,15 +72,18 @@ public class CDOCheckoutManagerImpl extends AbstractManager<CDOCheckout>implemen
   public void fireCheckoutOpenEvent(CDOCheckout checkout, CDOView view, CDOCheckout.State oldState,
       CDOCheckout.State newState)
   {
-    switch (newState)
+    if (view != null)
     {
-    case Open:
-      viewMap.put(view, checkout);
-      break;
+      switch (newState)
+      {
+      case Open:
+        viewMap.put(view, checkout);
+        break;
 
-    case Closed:
-      viewMap.remove(view);
-      break;
+      case Closed:
+        viewMap.remove(view);
+        break;
+      }
     }
 
     fireEvent(new CheckoutStateEventImpl(this, checkout, oldState, newState));

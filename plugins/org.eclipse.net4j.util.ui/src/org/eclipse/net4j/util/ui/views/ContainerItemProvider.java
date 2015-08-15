@@ -189,8 +189,12 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
 
   private void disposeRoot()
   {
-    root.dispose(); // Also disposes of all children
-    root = null;
+    if (root != null)
+    {
+      root.dispose(); // Also disposes of all children
+      root = null;
+    }
+
     nodes.clear();
   }
 

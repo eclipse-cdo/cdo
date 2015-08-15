@@ -161,7 +161,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       public IDBPreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability)
       {
         org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability converted = //
-            org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
+        org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability.values()[reuseProbability.ordinal()];
 
         return connection.prepareStatement(sql, converted);
       }
@@ -801,18 +801,21 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   public EPackage[] loadPackageUnit(InternalCDOPackageUnit packageUnit)
   {
-    return getStore().getMetaDataManager().loadPackageUnit(getConnection(), packageUnit);
+    IMetaDataManager metaDataManager = getStore().getMetaDataManager();
+    return metaDataManager.loadPackageUnit(getConnection(), packageUnit);
   }
 
   public Collection<InternalCDOPackageUnit> readPackageUnits()
   {
-    return getStore().getMetaDataManager().readPackageUnits(getConnection());
+    IMetaDataManager metaDataManager = getStore().getMetaDataManager();
+    return metaDataManager.readPackageUnits(getConnection());
   }
 
   @Override
   protected void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
-    boolean oldValue = DBField.isTrackConstruction();
+    boolean wasTrackConstruction = DBField.isTrackConstruction();
+
     try
     {
       Map<String, String> properties = getStore().getProperties();
@@ -829,7 +832,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
-      DBField.trackConstruction(oldValue);
+      DBField.trackConstruction(wasTrackConstruction);
     }
   }
 
@@ -1259,7 +1262,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       Connection connection = getConnection();
 
       Collection<InternalCDOPackageUnit> imported = //
-          metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
+      metaDataManager.rawImport(connection, in, fromCommitTime, toCommitTime, monitor.fork());
       packageUnits.addAll(imported);
 
       if (!packageUnits.isEmpty())

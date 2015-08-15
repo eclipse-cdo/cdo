@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.ui.widgets.TimeSlider;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
+
 import org.eclipse.net4j.util.AdapterUtil;
 
 import org.eclipse.emf.ecore.EObject;
@@ -71,6 +73,11 @@ public class CDOTimeMachineView extends ViewPart implements ISelectionListener
   public void selectionChanged(IWorkbenchPart part, ISelection selection)
   {
     CDOView view = getView(selection);
+    if (view != null && view.properties().get(CDOViewImpl.PROP_TIME_MACHINE_DISABLED) == Boolean.TRUE)
+    {
+      view = null;
+    }
+
     timeSlider.connect(view, null);
   }
 

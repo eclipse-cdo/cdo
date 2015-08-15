@@ -93,13 +93,16 @@ import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent;
 
+import org.eclipse.net4j.internal.util.concurrent.ExecutorWorkSerializer;
+import org.eclipse.net4j.internal.util.concurrent.IExecutorServiceProvider;
+import org.eclipse.net4j.internal.util.concurrent.InternalConcurrencyUtil;
+import org.eclipse.net4j.internal.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
-import org.eclipse.net4j.util.concurrent.QueueRunner2;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -149,11 +152,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public abstract class CDOSessionImpl extends CDOTransactionContainerImpl implements InternalCDOSession
+public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
+    implements InternalCDOSession, IExecutorServiceProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
@@ -361,6 +366,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public CDOFetchRuleManager getFetchRuleManager()
   {
     return fetchRuleManager;
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return InternalConcurrencyUtil.getExecutorService(sessionProtocol);
   }
 
   /**
@@ -1308,6 +1318,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   protected void doAfterActivate() throws Exception
   {
     super.doAfterActivate();
+
+    ExecutorService executorService = InternalConcurrencyUtil.getExecutorService(sessionProtocol);
+    invalidator.setExecutor(executorService);
     LifecycleUtil.activate(invalidator);
   }
 
@@ -1738,7 +1751,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @author Eike Stepper
    */
-  private class Invalidator extends QueueRunner2<Invalidation>
+  private class Invalidator extends ExecutorWorkSerializer
   {
     private static final boolean DEBUG = false;
 
@@ -1781,11 +1794,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public synchronized void reorderInvalidations(CDOCommitInfo commitInfo, InternalCDOTransaction sender,
         boolean clearResourcePathCache, byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
     {
-      if (!isActive())
-      {
-        return;
-      }
-
       Invalidation invalidation = new Invalidation(commitInfo, sender, clearResourcePathCache, securityImpact,
           newPermissions);
 
@@ -1825,11 +1833,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     @Override
-    protected void noWork(WorkContext context)
+    protected void noWork()
     {
       if (isClosed() && terminateIfSessionClosed)
       {
-        context.terminate();
+        dispose();
       }
     }
 
@@ -1839,18 +1847,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       super.doAfterActivate();
       terminateIfSessionClosed = true;
     }
-
-    @Override
-    protected String getThreadName()
-    {
-      return "CDOSessionInvalidator-" + CDOSessionImpl.this;
-    }
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class Invalidation implements Comparable<Invalidation>, Runnable
+  private final class Invalidation extends RunnableWithName implements Comparable<Invalidation>
   {
     private final CDOCommitInfo commitInfo;
 
@@ -1893,7 +1895,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return Long.toString(commitInfo.getTimeStamp() % 10000);
     }
 
-    public void run()
+    @Override
+    public String getName()
+    {
+      return "CDOSessionInvalidator-" + CDOSessionImpl.this;
+    }
+
+    @Override
+    protected void doRun()
     {
       long timeStamp = commitInfo.getTimeStamp();
 
@@ -1950,7 +1959,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
       finally
       {
-        // setLastUpdateTimeStamp() is not synchronized with the Invalidator.
+        // setLastUpdateTime() is not synchronized with the Invalidator.
         // Give the Invalidator another chance to schedule Invalidations.
         invalidator.scheduleInvalidations();
       }

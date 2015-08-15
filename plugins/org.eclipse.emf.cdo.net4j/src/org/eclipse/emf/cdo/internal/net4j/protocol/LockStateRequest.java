@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Collection;
 
 /**
@@ -70,5 +71,11 @@ public class LockStateRequest extends CDOClientRequest<CDOLockState[]>
     }
 
     return lockStates;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("LockStateRequest(viewID={0}, ids={1}, prefetchDepth={2})", viewID, ids, prefetchDepth);
   }
 }

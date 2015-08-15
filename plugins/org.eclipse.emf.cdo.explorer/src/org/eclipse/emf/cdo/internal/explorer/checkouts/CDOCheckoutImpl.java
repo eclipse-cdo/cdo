@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
@@ -28,6 +29,8 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
+
+import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -46,6 +49,8 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
+
+import org.eclipse.core.runtime.Path;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -350,6 +355,31 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     this.rootID = rootID;
   }
 
+  public CDOCheckout duplicate()
+  {
+    Properties properties = new Properties();
+    collectDuplicationProperties(properties);
+
+    CDOCheckout copy = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
+    if (isOpen())
+    {
+      copy.open();
+    }
+
+    return copy;
+  }
+
+  protected void collectDuplicationProperties(Properties properties)
+  {
+    properties.setProperty(PROP_TYPE, getType());
+    properties.setProperty(PROP_LABEL, getManager().getUniqueLabel(getLabel()));
+    properties.setProperty(PROP_REPOSITORY, getRepository().getID());
+    properties.setProperty(PROP_BRANCH_ID, Integer.toString(getBranchID()));
+    properties.setProperty(PROP_TIME_STAMP, Long.toString(getTimeStamp()));
+    properties.setProperty(PROP_READ_ONLY, Boolean.toString(isReadOnly()));
+    properties.setProperty(PROP_ROOT_ID, getCDOIDString(getRootID()));
+  }
+
   public final State getState()
   {
     return state;
@@ -596,14 +626,14 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
 
     CDOSession session = view.getSession();
-    CDOBranch branch = view.getBranch();
-    CDOBranchPoint head = branch.getHead();
 
     if (readOnly)
     {
-      return session.openView(head, resourceSet);
+      return session.openView(view, resourceSet);
     }
 
+    CDOBranch branch = view.getBranch();
+    CDOBranchPoint head = branch.getHead();
     return session.openTransaction(head, resourceSet);
   }
 
@@ -612,7 +642,9 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     CDOUtil.configureView(view);
     ((InternalCDOView)view).setRepositoryName(repository.getLabel());
 
+    view.properties().put(CDOViewImpl.PROP_TIME_MACHINE_DISABLED, !isReadOnly());
     view.properties().put(CHECKOUT_KEY, this);
+
     view.addListener(new IListener()
     {
       public void notifyEvent(IEvent event)
@@ -656,16 +688,15 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   public URI createResourceURI(String path)
   {
+    String authority = getID();
+
     if (StringUtil.isEmpty(path))
     {
-      path = "";
-    }
-    else if (!path.startsWith("/"))
-    {
-      path = "/" + path;
+      return URI.createHierarchicalURI(CDOCheckoutViewProvider.SCHEME, authority, null, null, null, null);
     }
 
-    return URI.createURI(CDOCheckoutViewProvider.SCHEME + "://" + getID() + path);
+    String[] segments = new Path(path).segments();
+    return URI.createHierarchicalURI(CDOCheckoutViewProvider.SCHEME, authority, null, segments, null, null);
   }
 
   public String getEditorOpenerID(CDOID objectID)

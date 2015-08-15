@@ -413,18 +413,18 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
           InternalCDORevision revision = cdoObject.cdoRevision(false);
           if (revision != null)
           {
-            ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
-                ITreeItemContentProvider.class);
-            if (provider instanceof ItemProviderAdapter)
+            try
             {
-              try
+              ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
+                  ITreeItemContentProvider.class);
+              if (provider instanceof ItemProviderAdapter)
               {
                 return hasChildren(cdoObject, revision, (ItemProviderAdapter)provider);
               }
-              catch (Exception ex)
-              {
-                //$FALL-THROUGH$
-              }
+            }
+            catch (Exception ex)
+            {
+              //$FALL-THROUGH$
             }
           }
         }
@@ -510,7 +510,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
 
       final Object finalObject = object;
       final CDOCheckout finalOpeningCheckout = openingCheckout;
-      final CDOCheckout finalCheckout = checkout;
+
       final ITreeContentProvider contentProvider = stateManager.getContentProvider(finalObject);
       if (contentProvider == null)
       {
@@ -558,12 +558,7 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
               loadedRevisions.addAll(revisions);
             }
 
-            Object[] children;
-            CDOCheckout checkout = finalCheckout != null ? finalCheckout : CDOExplorerUtil.getCheckout(finalObject);
-            synchronized (checkout.getView())
-            {
-              children = contentProvider.getChildren(finalObject);
-            }
+            Object[] children = contentProvider.getChildren(finalObject);
 
             // Adjust possible legacy adapters.
             for (int i = 0; i < children.length; i++)
@@ -710,28 +705,28 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
         InternalCDORevision revision = cdoObject.cdoRevision(false);
         if (revision != null)
         {
-          ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
-              ITreeItemContentProvider.class);
-          if (provider instanceof ItemProviderAdapter)
+          try
           {
-            try
+            ITreeItemContentProvider provider = (ITreeItemContentProvider)stateManager.adapt(object,
+                ITreeItemContentProvider.class);
+            if (provider instanceof ItemProviderAdapter)
             {
               determineChildRevisions(cdoObject, revision, (ItemProviderAdapter)provider, loadedRevisions, missingIDs);
-            }
-            catch (Exception ex)
-            {
-              //$FALL-THROUGH$
-            }
 
-            if (missingIDs.isEmpty())
-            {
-              // All revisions are cached. Just return the objects without server round-trips.
-              ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
-              if (contentProvider != null)
+              if (missingIDs.isEmpty())
               {
-                return contentProvider.getChildren(object);
+                // All revisions are cached. Just return the objects without server round-trips.
+                ITreeContentProvider contentProvider = stateManager.getContentProvider(object);
+                if (contentProvider != null)
+                {
+                  return contentProvider.getChildren(object);
+                }
               }
             }
+          }
+          catch (Exception ex)
+          {
+            //$FALL-THROUGH$
           }
         }
       }

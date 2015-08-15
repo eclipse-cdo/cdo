@@ -42,13 +42,13 @@ public class RepositoryTimeIndication extends CDOServerIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    indicated = System.currentTimeMillis();
+    indicated = getRepository().getTimeStamp();
   }
 
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    long responded = System.currentTimeMillis();
+    long responded = getRepository().getTimeStamp();
     if (TRACER.isEnabled())
     {
       TRACER.format("Writing indicated: {0}", CDOCommonUtil.formatTimeStamp(indicated)); //$NON-NLS-1$

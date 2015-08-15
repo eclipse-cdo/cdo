@@ -34,6 +34,7 @@ import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
@@ -44,6 +45,8 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 public class CDOServerProtocol extends SignalProtocol<InternalSession>implements ISessionProtocol
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
+
+  private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_PROTOCOL, CDOServerProtocol.class);
 
   private long negotiationTimeout = DEFAULT_NEGOTIATION_TIMEOUT;
 
@@ -220,7 +223,10 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession>implements
 
   protected void handleInactiveSession()
   {
-    OM.LOG.warn("Session channel is inactive: " + this); //$NON-NLS-1$
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Session channel is inactive: " + this); //$NON-NLS-1$
+    }
   }
 
   @Override
@@ -377,6 +383,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession>implements
 
     case SIGNAL_LOAD_OBJECT_LIFETIME:
       return new LoadObjectLifetimeIndication(this);
+
+    case org.eclipse.emf.cdo.internal.common.bundle.OM.SIGNAL_OPENED_SESSION:
+      return new OpenedSessionNotification(this);
 
     default:
       return super.createSignalReactor(signalID);

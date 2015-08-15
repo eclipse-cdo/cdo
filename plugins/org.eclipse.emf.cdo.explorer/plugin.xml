@@ -44,8 +44,14 @@
          id="org.eclipse.emf.cdo.explorer.object.properties"
          type="org.eclipse.emf.ecore.EObject"
          namespace="org.eclipse.emf.cdo.explorer.object"
-         properties="inCheckout"
+         properties="inCheckout,stateCheckout,openCheckout,typeCheckout,readOnlyCheckout"
          class="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutObjectProperties$Tester"/>
+      <propertyTester
+         id="org.eclipse.emf.cdo.explorer.element.properties"
+         type="org.eclipse.emf.cdo.CDOElement"
+         namespace="org.eclipse.emf.cdo.explorer.object"
+         properties="inCheckout,stateCheckout,openCheckout,typeCheckout,readOnlyCheckout"
+         class="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutObjectProperties$ElementTester"/>
    </extension>
 
    <extension point="org.eclipse.emf.cdo.viewProviders">

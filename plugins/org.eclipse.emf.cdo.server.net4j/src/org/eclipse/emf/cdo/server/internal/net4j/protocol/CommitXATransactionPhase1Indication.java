@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.server.CommitManager;
 import org.eclipse.emf.cdo.internal.server.XATransactionCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 
@@ -30,10 +31,17 @@ public class CommitXATransactionPhase1Indication extends CommitTransactionIndica
   }
 
   @Override
-  protected void indicatingCommit(OMMonitor monitor)
+  protected boolean closeInputStreamAfterMe()
+  {
+    // The commit manager processes phase1 asynchronously, so don't close the input stream on him.
+    return false;
+  }
+
+  @Override
+  protected void indicatingCommit(CDODataInput in, OMMonitor monitor)
   {
     // Register transactionContext
-    getRepository().getCommitManager().preCommit(commitContext, monitor);
+    ((CommitManager)getRepository().getCommitManager()).preCommit(commitContext, in, monitor);
   }
 
   @Override

@@ -31,6 +31,13 @@
                 <message_argument value="CDOClientProtocol"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOSessionProtocol2"/>
+                <message_argument value="CDOClientProtocol"/>
+                <message_argument value="CDOSessionProtocol"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/net4j/protocol/OpenSessionRequest.java" type="org.eclipse.emf.cdo.internal.net4j.protocol.OpenSessionRequest">
         <filter id="572522506">

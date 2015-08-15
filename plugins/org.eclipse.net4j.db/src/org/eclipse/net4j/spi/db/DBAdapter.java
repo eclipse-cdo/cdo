@@ -27,6 +27,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.internal.db.ddl.InternalDBIndex2;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -155,10 +156,11 @@ public abstract class DBAdapter implements IDBAdapter
    */
   public void readSchema(Connection connection, IDBSchema schema)
   {
-    boolean isTrackConstruction = DBField.isTrackConstruction();
+    boolean wasTrackConstruction = DBField.isTrackConstruction();
+    DBField.trackConstruction(false);
+
     try
     {
-      DBField.trackConstruction(false);
       String schemaName = schema.getName();
 
       DatabaseMetaData metaData = connection.getMetaData();
@@ -184,7 +186,7 @@ public abstract class DBAdapter implements IDBAdapter
     }
     finally
     {
-      DBField.trackConstruction(isTrackConstruction);
+      DBField.trackConstruction(wasTrackConstruction);
     }
   }
 
@@ -394,21 +396,41 @@ public abstract class DBAdapter implements IDBAdapter
       @Override
       public void visit(IDBIndexDelta delta)
       {
-        IDBIndex element = delta.getSchemaElement(schema);
+        InternalDBIndex2 index = (InternalDBIndex2)delta.getSchemaElement(schema);
         ChangeKind changeKind = delta.getChangeKind();
         switch (changeKind)
         {
         case ADD:
-          createIndex(connection, element, delta);
+          try
+          {
+            createIndex(connection, index, delta);
+          }
+          catch (RuntimeException ex)
+          {
+            if (!index.isOptional())
+            {
+              throw ex;
+            }
+          }
           break;
 
         case REMOVE:
-          dropIndex(connection, element, delta);
+          dropIndex(connection, index, delta);
           break;
 
         case CHANGE:
-          dropIndex(connection, element, delta);
-          createIndex(connection, element, delta);
+          dropIndex(connection, index, delta);
+          try
+          {
+            createIndex(connection, index, delta);
+          }
+          catch (RuntimeException ex)
+          {
+            if (!index.isOptional())
+            {
+              throw ex;
+            }
+          }
           break;
 
         default:
@@ -768,7 +790,26 @@ public abstract class DBAdapter implements IDBAdapter
     IDBIndex[] indices = table.getIndices();
     for (int i = 0; i < indices.length; i++)
     {
-      createIndex(indices[i], statement, i);
+      InternalDBIndex2 index = (InternalDBIndex2)indices[i];
+
+      try
+      {
+        createIndex(index, statement, i);
+      }
+      catch (SQLException ex)
+      {
+        if (!index.isOptional())
+        {
+          throw ex;
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        if (!index.isOptional())
+        {
+          throw ex;
+        }
+      }
     }
   }
 

@@ -347,11 +347,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         if (t == null)
         {
-          // remember first exception
+          // Remember first exception
           t = th;
         }
 
-        // more exceptions go to the log
+        // More exceptions go to the log
         OM.LOG.error(t);
       }
     }
@@ -401,11 +401,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     public ListDeltaVisitor(int oldListSize)
     {
-      // reset the clear-flag
+      // Reset the clear-flag
       clearFirst = false;
       manipulations = new ArrayList<ManipulationElement>(oldListSize);
 
-      // create list and initialize with original indexes
+      // Create list and initialize with original indexes
       for (int i = 0; i < oldListSize; i++)
       {
         manipulations.add(ManipulationElement.createOriginalElement(i));
@@ -426,10 +426,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         TRACER.format("  - insert at {0} value {1}", delta.getIndex(), delta.getValue()); //$NON-NLS-1$
       }
 
-      // make room for the new item
+      // Make room for the new item
       shiftIndexes(delta.getIndex(), UNBOUNDED_SHIFT, +1);
 
-      // create the item
+      // Create the item
       manipulations.add(ManipulationElement.createInsertedElement(delta.getIndex(), delta.getValue()));
       ++newListSize;
     }
@@ -444,7 +444,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       ManipulationElement e = findElement(delta.getIndex());
       deleteItem(e);
 
-      // fill the gap by shifting all subsequent items down
+      // Fill the gap by shifting all subsequent items down
       shiftIndexes(delta.getIndex() + 1, UNBOUNDED_SHIFT, -1);
       --newListSize;
     }
@@ -457,15 +457,15 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       }
 
       ManipulationElement e = findElement(delta.getIndex());
-      // set the new value
+
+      // Set the new value
       e.value = delta.getValue();
 
-      // if the item is freshly inserted we do not set the SET-mark.
-      // setting the value of a new item results in inserting with the
-      // new value at once.
+      // If the item is freshly inserted we do not set the SET-mark.
+      // Setting the value of a new item results in inserting with the new value at once.
       if (!e.is(ManipulationConstants.INSERT))
       {
-        // else mark the existing item to be set to a new value
+        // Else mark the existing item to be set to a new value
         e.addType(ManipulationConstants.SET_VALUE);
       }
     }
@@ -482,10 +482,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         TRACER.format("  - unset list"); //$NON-NLS-1$
       }
 
-      // set the clear-flag
+      // Set the clear-flag
       clearFirst = true;
 
-      // and also clear all manipulation items
+      // And also clear all manipulation items
       manipulations.clear();
       newListSize = 0;
     }
@@ -497,10 +497,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         TRACER.format("  - clear list"); //$NON-NLS-1$
       }
 
-      // set the clear-flag
+      // Set the clear-flag
       clearFirst = true;
 
-      // and also clear all manipulation items
+      // And also clear all manipulation items
       manipulations.clear();
       newListSize = 0;
     }
@@ -515,7 +515,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         TRACER.format("  - move {0} -> {1}", fromIdx, toIdx); //$NON-NLS-1$
       }
 
-      // ignore the trivial case
+      // Ignore the trivial case
       if (fromIdx == toIdx)
       {
         return;
@@ -523,37 +523,37 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       ManipulationElement e = findElement(fromIdx);
 
-      // adjust indexes and shift either up or down
+      // Adjust indexes and shift either up or down
       if (fromIdx < toIdx)
       {
         shiftIndexes(fromIdx + 1, toIdx, -1);
       }
       else
-      { // fromIdx > toIdx here
+      {
+        // fromIdx > toIdx here
         shiftIndexes(toIdx, fromIdx - 1, +1);
       }
 
-      // set the new index
+      // Set the new index
       e.destinationIndex = toIdx;
 
-      // if it is a new element, no MOVE mark needed, because we insert it
-      // at the new position
+      // If it is a new element, no MOVE mark needed, because we insert it at the new position
       if (!e.is(ManipulationConstants.INSERT))
       {
-        // else we need to handle the move of an existing item
+        // Else we need to handle the move of an existing item
         e.addType(ManipulationConstants.MOVE);
       }
     }
 
     public void visit(CDOListFeatureDelta delta)
     {
-      // never called
+      // Never called
       Assert.isTrue(false);
     }
 
     public void visit(CDOContainerFeatureDelta delta)
     {
-      // never called
+      // Never called
       Assert.isTrue(false);
     }
 
@@ -597,15 +597,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (e.is(ManipulationConstants.INSERT))
       {
-        // newly inserted items are simply removed, as
-        // removing inserted items is equal to no change at all.
+        // Newly inserted items are simply removed, as removing inserted items is equal to no change at all.
         manipulations.remove(e);
       }
       else
       {
-        // mark the existing item as to be deleted.
-        // (previous MOVE and SET conditions are overridden by setting
-        // the exclusive DELETE type).
+        // Mark the existing item as to be deleted.
+        // Previous MOVE and SET conditions are overridden by setting the exclusive DELETE type.
         e.type = ManipulationConstants.DELETE;
         e.destinationIndex = ManipulationConstants.NO_INDEX;
       }
@@ -620,7 +618,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       if (!((HorizontalNonAuditMappingStrategy)getMappingStrategy()).shallForceZeroBasedIndex())
       {
         /*
-         * this is an optimization which reduces the amount of modifications on the database to maintain list indexes.
+         * This is an optimization which reduces the amount of modifications on the database to maintain list indexes.
          * For the optimization, we let go of the assumption that indexes are zero-based. Instead, we work with an
          * offset at the database level which can change with every change to the list (e.g. if the second element is
          * removed from a list with 1000 elements, instead of shifting down indexes 2 to 1000 by 1, we shift up index 0
@@ -628,7 +626,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
          * the list of ManipulationElements, which can be seen as the database modification plan.
          */
 
-        // first, get the current offset
+        // First, get the current offset
         int offsetBefore = getCurrentIndexOffset(accessor, id);
         if (TRACER.isEnabled())
         {
@@ -642,8 +640,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
         if ((long)Math.abs(offsetBefore) + (long)manipulations.size() > Integer.MAX_VALUE)
         {
-          // security belt for really huge collections or for collections that have been manipulated lots of times
-          // -> do not optimize after this border is crossed. Instead, reset offset for the whole list to a zero-based
+          // Security belt for really huge collections or for collections that have been manipulated lots of times
+          // -> Do not optimize after this border is crossed. Instead, reset offset for the whole list to a zero-based
           // index.
           offsetAfter = 0;
         }
@@ -659,7 +657,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
         applyOffsetToDestinationIndexes(offsetAfter);
 
-        // make sure temporary indexes do not get in the way of the other operations
+        // Make sure temporary indexes do not get in the way of the other operations
         tempIndex = Math.min(offsetBefore, offsetAfter) - 1;
       }
     }
@@ -695,7 +693,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           }
           occurrences.put(offset, newOccurrence);
 
-          // remember maximum along the way
+          // Remember maximum along the way
           if (newOccurrence > bestOffsetOccurrence)
           {
             bestOffsetOccurrence = newOccurrence;
@@ -704,7 +702,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         }
       }
 
-      // the offset which has occurred the most has to be applied negatively to normalize the list
+      // The offset which has occurred the most has to be applied negatively to normalize the list
       // therefore return the negative offset as the new offset to be applied
       return -bestOffset;
     }
@@ -731,7 +729,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         {
           if (element.destinationIndex != ManipulationConstants.NO_INDEX)
           {
-            // apply the offset to all indices to make them relative to the new offset
+            // Apply the offset to all indices to make them relative to the new offset
             element.destinationIndex += offsetAfter;
           }
         }
@@ -740,8 +738,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     /**
      * Write calculated changes to the database
-     *
-     * @param accessor
      */
     private void writeResultToDatabase(IDBStoreAccessor accessor, CDOID id)
     {
@@ -778,7 +774,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           if (element.is(ManipulationConstants.DELETE))
           {
             /*
-             * Step 1: DELETE all elements e which have e.is(REMOVE) by e.sourceIdx
+             * Step 1: DELETE all elements e which have e.is(DELETE) by e.sourceIdx
              */
 
             if (deleteStmt == null)
@@ -822,7 +818,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           }
         }
 
-        /* now perform deletes and moves ... */
+        /* Now perform deletes and moves ... */
         if (deleteCounter > 0)
         {
           if (TRACER.isEnabled())
@@ -965,8 +961,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
        * and shift up operations have to be executed in top to bottom order.
        */
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      int size = manipulations.size();
-
       LinkedList<ShiftOperation> shiftOperations = new LinkedList<ShiftOperation>();
 
       /*
@@ -978,13 +972,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       int rangeOffset = 0;
       int lastElementIndex = ManipulationConstants.NO_INDEX;
 
-      // iterate through the manipulationElements and collect the necessary operations
-      for (int i = 0; i < size; i++)
+      // Iterate through the manipulationElements and collect the necessary operations
+      for (ManipulationElement element : manipulations)
       {
-        ManipulationElement element = manipulations.get(i);
-
         /*
-         * shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET_VALUE and NONE
+         * Shift applies only to elements which are not moved, inserted or deleted (i.e. only plain SET_VALUE and NONE
          * are affected)
          */
         if (element.type == ManipulationConstants.NONE || element.type == ManipulationConstants.SET_VALUE)
@@ -992,20 +984,21 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           int elementOffset = element.destinationIndex - element.sourceIndex;
 
           /*
-           * first make sure if we have to close a previous range. This is the case, if the current element's offset
+           * First make sure if we have to close a previous range. This is the case, if the current element's offset
            * differs from the rangeOffset and a range is open.
            */
           if (elementOffset != rangeOffset && rangeStartIndex != ManipulationConstants.NO_INDEX)
           {
-            // there is an open range but the rangeOffset differs. We have to close the open range
+            // There is an open range but the rangeOffset differs. We have to close the open range
             shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
-            // and reset the state
+
+            // And reset the state
             rangeStartIndex = ManipulationConstants.NO_INDEX;
             rangeOffset = 0;
           }
 
           /*
-           * at this point, either a range is open, which means that the current element also fits in the range (i.e.
+           * At this point, either a range is open, which means that the current element also fits in the range (i.e.
            * the offsets match) or no range is open. In the latter case, we have to open one if the current element's
            * offset is not 0.
            */
@@ -1016,27 +1009,30 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
           }
         }
         else
-        { // shift does not apply to this element because of its type
+        {
+          // Shift does not apply to this element because of its type
           if (rangeStartIndex != ManipulationConstants.NO_INDEX)
           {
-            // if there is an open range, we have to close and remember it
+            // If there is an open range, we have to close and remember it
             shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
-            // and reset the state
+
+            // And reset the state
             rangeStartIndex = ManipulationConstants.NO_INDEX;
             rangeOffset = 0;
           }
         }
+
         lastElementIndex = element.sourceIndex;
       }
 
-      // after the iteration, we have to make sure that we remember the last open range, if it is there
+      // After the iteration, we have to make sure that we remember the last open range, if it is there
       if (rangeStartIndex != ManipulationConstants.NO_INDEX)
       {
         shiftOperations.add(new ShiftOperation(rangeStartIndex, lastElementIndex, rangeOffset));
       }
 
       /*
-       * now process the operations. Move down operations can be performed directly, move up operations need to be
+       * Now process the operations. Move down operations can be performed directly, move up operations need to be
        * performed later in the reverse direction
        */
       ListIterator<ShiftOperation> operationIt = shiftOperations.listIterator();
@@ -1087,7 +1083,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       try
       {
-
         while (operationIt.hasPrevious())
         {
           ShiftOperation operation = operationIt.previous();
@@ -1119,7 +1114,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         close(shiftUpStmt);
       }
     }
-
   }
 
   /**
@@ -1129,17 +1123,17 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   {
     public static final int NO_INDEX = Integer.MIN_VALUE;
 
-    public static final int DELETE = 1 << 4;
-
-    public static final int INSERT = 1 << 3;
-
-    public static final int MOVE = 1 << 2;
-
-    public static final int SET_VALUE = 1 << 1;
-
     public static final Object NIL = new Object();
 
     public static final int NONE = 0;
+
+    public static final int SET_VALUE = 1 << 1;
+
+    public static final int MOVE = 1 << 2;
+
+    public static final int INSERT = 1 << 3;
+
+    public static final int DELETE = 1 << 4;
   }
 
   /**

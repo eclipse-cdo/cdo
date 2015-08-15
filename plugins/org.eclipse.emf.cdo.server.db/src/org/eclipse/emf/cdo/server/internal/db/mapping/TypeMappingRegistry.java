@@ -515,7 +515,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
               registerFactoryType(factoryType);
             }
             else
-              // delta.getKind() == Kind.REMOVED
+            // delta.getKind() == Kind.REMOVED
             {
               // XXX Runtime removal of typeMappingFactories removal of type mappings is currently not supported.
               OM.LOG.warn(Messages.getString("TypeMappingRegistry.3"));

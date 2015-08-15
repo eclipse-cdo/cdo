@@ -98,12 +98,14 @@ import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
 
+import org.eclipse.net4j.internal.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -138,13 +140,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Semaphore;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
-public class Repository extends Container<Object>implements InternalRepository
+public class Repository extends Container<Object>implements InternalRepository, IExecutorServiceProvider
 {
   private static final int UNCHUNKED = CDORevision.UNCHUNKED;
 
@@ -207,6 +210,8 @@ public class Repository extends Container<Object>implements InternalRepository
 
   // Bug 297940
   private TimeStampAuthority timeStampAuthority = new TimeStampAuthority(this);
+
+  private long lastTreeRestructuringCommit = -1;
 
   @ExcludeFromDump
   private transient Object commitTransactionLock = new Object();
@@ -1101,7 +1106,13 @@ public class Repository extends Container<Object>implements InternalRepository
     timeStampAuthority.failCommit(timestamp);
   }
 
-  private long lastTreeRestructuringCommit = -1;
+  public void executeOutsideStartCommit(Runnable runnable)
+  {
+    synchronized (timeStampAuthority)
+    {
+      runnable.run();
+    }
+  }
 
   public void commit(InternalCommitContext commitContext, OMMonitor monitor)
   {
@@ -1240,7 +1251,8 @@ public class Repository extends Container<Object>implements InternalRepository
 
     if (queryHandlerProvider == null)
     {
-      queryHandlerProvider = new ContainerQueryHandlerProvider(getContainer());
+      IManagedContainer container = getContainer();
+      queryHandlerProvider = new ContainerQueryHandlerProvider(container);
     }
 
     IQueryHandler handler = queryHandlerProvider.getQueryHandler(info);
@@ -1265,6 +1277,12 @@ public class Repository extends Container<Object>implements InternalRepository
   public void setContainer(IManagedContainer container)
   {
     this.container = container;
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    IManagedContainer container = getContainer();
+    return ConcurrencyUtil.getExecutorService(container);
   }
 
   public Object[] getElements()
@@ -1780,7 +1798,8 @@ public class Repository extends Container<Object>implements InternalRepository
 
         if (!revKey.equals(rev))
         {
-          staleRevisions.add(revKey);
+          // Send back the *expected* revision keys, so that the client can check that it really has loaded those.
+          staleRevisions.add(CDORevisionUtil.copyRevisionKey(rev));
           requiredTimestamp[0] = Math.max(requiredTimestamp[0], rev.getTimeStamp());
         }
       }
@@ -2182,9 +2201,11 @@ public class Repository extends Container<Object>implements InternalRepository
 
     if (!skipInitialization)
     {
-      long lastCommitTimeStamp = Math.max(store.getCreationTime(), store.getLastCommitTime());
-      timeStampAuthority.setLastFinishedTimeStamp(lastCommitTimeStamp);
-      initMainBranch(branchManager, lastCommitTimeStamp);
+      long creationTime = store.getCreationTime();
+      initMainBranch(branchManager, creationTime);
+
+      long lastCommitTime = Math.max(creationTime, store.getLastCommitTime());
+      timeStampAuthority.setLastFinishedTimeStamp(lastCommitTime);
 
       if (store.isFirstStart())
       {

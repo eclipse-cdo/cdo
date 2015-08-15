@@ -21,7 +21,6 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.spi.db.ddl.InternalDBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
-import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -30,7 +29,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DBTable extends DBSchemaElement implements InternalDBTable
+public class DBTable extends DBSchemaElement implements InternalDBTable2
 {
   private static final long serialVersionUID = 1L;
 
@@ -178,6 +177,20 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     }
 
     return result.toArray(new IDBField[result.size()]);
+  }
+
+  public boolean hasIndexFor(IDBField... fields)
+  {
+    for (IDBIndex index : indices)
+    {
+      IDBField[] indexFields = index.getFields();
+      if (startsWith(indexFields, fields))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public IDBIndex addIndex(String name, IDBIndex.Type type, IDBField... fields)
@@ -338,5 +351,25 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   private void assertUnlocked()
   {
     ((InternalDBSchema)schema).assertUnlocked();
+  }
+
+  private static boolean startsWith(IDBField[] indexFields, IDBField[] fields)
+  {
+    int length = fields.length;
+    if (length <= indexFields.length)
+    {
+      for (int i = 0; i < length; i++)
+      {
+        IDBField field = fields[i];
+        if (field != indexFields[i])
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    return false;
   }
 }

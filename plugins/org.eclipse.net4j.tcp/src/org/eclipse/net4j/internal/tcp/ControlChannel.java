@@ -26,9 +26,9 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 
+import org.eclipse.internal.net4j.Channel2;
 import org.eclipse.internal.net4j.buffer.BufferUtil;
 
-import org.eclipse.spi.net4j.Channel;
 import org.eclipse.spi.net4j.InternalChannel;
 import org.eclipse.spi.net4j.InternalChannelMultiplexer;
 
@@ -38,7 +38,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class ControlChannel extends Channel
+public class ControlChannel extends Channel2
 {
   public static final short CONTROL_CHANNEL_INDEX = InternalChannelMultiplexer.RESERVED_CHANNEL;
 

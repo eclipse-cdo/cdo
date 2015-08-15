@@ -24,7 +24,7 @@
             name="%editor.name">
       </editor>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
@@ -78,7 +78,7 @@
          </command>
       </menuContribution>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.commands">
       <category
@@ -99,7 +99,7 @@
             defaultHandler="org.eclipse.emf.cdo.security.internal.ui.handlers.ManageSecurityHandler">
       </command>
    </extension>
-   
+
    <extension
          point="org.eclipse.ui.handlers">
       <handler
@@ -108,7 +108,7 @@
          <activeWhen>
             <with
                   variable="activeMenuSelection">
-               <iterate >
+               <iterate ifEmpty="false">
                   <adapt
                         type="org.eclipse.emf.cdo.admin.CDOAdminClientRepository">
                   </adapt>

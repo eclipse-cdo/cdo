@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.internal.common.model.CDOFeatureType;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -37,6 +39,9 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.ddl.InternalDBIndex2;
+import org.eclipse.net4j.internal.db.ddl.InternalDBTable2;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -51,6 +56,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This abstract base class provides basic behavior needed for mapping many-valued attributes to tables.
@@ -90,10 +96,13 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
   private void initTable()
   {
-    String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
-    typeMapping = getMappingStrategy().createValueMapping(getFeature());
+    IMappingStrategy mappingStrategy = getMappingStrategy();
+    EStructuralFeature feature = getFeature();
 
-    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    String tableName = mappingStrategy.getTableName(getContainingClass(), feature);
+    typeMapping = mappingStrategy.createValueMapping(feature);
+
+    IDBDatabase database = mappingStrategy.getStore().getDatabase();
     table = database.getSchema().getTable(tableName);
     if (table == null)
     {
@@ -116,6 +125,18 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     else
     {
       typeMapping.setDBField(table, LIST_VALUE);
+    }
+
+    Set<CDOFeatureType> forceIndexes = AbstractMappingStrategy.getForceIndexes(mappingStrategy);
+    if (CDOFeatureType.matchesCombination(feature, forceIndexes))
+    {
+      IDBField field = table.getField(LIST_VALUE);
+
+      if (!((InternalDBTable2)table).hasIndexFor(field))
+      {
+        InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+        ((InternalDBIndex2)index).setOptional(true); // Creation might fail for unsupported column type!
+      }
     }
   }
 

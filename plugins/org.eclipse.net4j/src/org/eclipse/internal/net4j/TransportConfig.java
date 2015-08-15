@@ -13,6 +13,7 @@ package org.eclipse.internal.net4j;
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.internal.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -24,7 +25,7 @@ import java.util.concurrent.ExecutorService;
 /**
  * @author Eike Stepper
  */
-public class TransportConfig implements ITransportConfig
+public class TransportConfig implements ITransportConfig, IExecutorServiceProvider
 {
   private transient ILifecycle lifecycle;
 
@@ -68,6 +69,11 @@ public class TransportConfig implements ITransportConfig
   public void setLifecycle(ILifecycle lifecycle)
   {
     this.lifecycle = lifecycle;
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return receiveExecutor;
   }
 
   public ExecutorService getReceiveExecutor()

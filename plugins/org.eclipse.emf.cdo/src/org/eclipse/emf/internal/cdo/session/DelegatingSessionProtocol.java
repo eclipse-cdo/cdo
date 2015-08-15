@@ -44,6 +44,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.internal.util.concurrent.IExecutorServiceProvider;
+import org.eclipse.net4j.internal.util.concurrent.InternalConcurrencyUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
@@ -70,11 +72,12 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
  */
-public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionProtocol
+public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionProtocol2, IExecutorServiceProvider
 {
   private CDOSessionProtocol delegate;
 
@@ -120,6 +123,11 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   public CDOSession getSession()
   {
     return (CDOSession)delegate.getSession();
+  }
+
+  public ExecutorService getExecutorService()
+  {
+    return InternalConcurrencyUtil.getExecutorService(delegate);
   }
 
   public boolean cancelQuery(int queryId)
@@ -396,6 +404,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.getRepositoryTime();
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public void openedSession()
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        ((CDOSessionProtocol2)delegate).openedSession();
+        return;
       }
       catch (Exception ex)
       {

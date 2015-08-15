@@ -58,8 +58,14 @@ import junit.framework.TestResult;
  */
 public abstract class AbstractOMTest extends TestCase
 {
+  /**
+   * Timeout duration in millseconds if timeout <b>is not</b> expected.
+   */
   public static final long DEFAULT_TIMEOUT = 15 * 1000;
 
+  /**
+   * Timeout duration in millseconds if timeout <b>is</b> expected.
+   */
   public static final long DEFAULT_TIMEOUT_EXPECTED = 3 * 1000;
 
   public static boolean EXTERNAL_LOG;
@@ -430,7 +436,7 @@ public abstract class AbstractOMTest extends TestCase
     deleteFiles();
   }
 
-  public void deleteFiles()
+  public synchronized void deleteFiles()
   {
     for (File file : filesToDelete)
     {
@@ -440,7 +446,7 @@ public abstract class AbstractOMTest extends TestCase
     filesToDelete.clear();
   }
 
-  public void addFileToDelete(File file)
+  public synchronized void addFileToDelete(File file)
   {
     filesToDelete.add(file);
   }
@@ -938,6 +944,55 @@ public abstract class AbstractOMTest extends TestCase
     public boolean timedOut(long timeoutMillis) throws InterruptedException
     {
       return !latch.await(timeoutMillis, TimeUnit.MILLISECONDS);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class ThreadTimeOuter extends LatchTimeOuter implements Runnable
+  {
+    private RuntimeException exception;
+
+    public ThreadTimeOuter()
+    {
+      super(1);
+    }
+
+    @Override
+    public boolean timedOut(long timeoutMillis) throws InterruptedException
+    {
+      Thread thread = new Thread(this, "ThreadTimeOuter")
+      {
+        @Override
+        public void run()
+        {
+          try
+          {
+            ThreadTimeOuter.this.run();
+          }
+          catch (RuntimeException ex)
+          {
+            exception = ex;
+          }
+          finally
+          {
+            countDown();
+          }
+        }
+      };
+
+      thread.setDaemon(true);
+      thread.start();
+
+      boolean result = super.timedOut(timeoutMillis);
+
+      if (exception != null)
+      {
+        throw exception;
+      }
+
+      return result;
     }
   }
 }

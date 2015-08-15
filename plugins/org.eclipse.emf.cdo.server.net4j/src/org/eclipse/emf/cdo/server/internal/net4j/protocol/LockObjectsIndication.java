@@ -46,6 +46,11 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     super(protocol, signalID);
   }
 
+  protected IView getView(int viewID)
+  {
+    return getSession().getView(viewID);
+  }
+
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
@@ -64,11 +69,6 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     InternalRepository repository = getRepository();
     IView view = getView(viewID);
     result = repository.lock((InternalView)view, lockType, revisionKeys, recursive, timeout);
-  }
-
-  protected IView getView(int viewID)
-  {
-    return getSession().getView(viewID);
   }
 
   @Override

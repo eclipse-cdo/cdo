@@ -30,6 +30,17 @@
    </extension>
 
    <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="org.eclipse.emf.cdo.internal.ui.SupportPropertyTester"
+            id="org.eclipse.emf.cdo.ui.Support"
+            namespace="org.eclipse.emf.cdo.ui.support"
+            properties="history,compare"
+            type="java.lang.Object">
+      </propertyTester>
+   </extension>
+
+   <extension
          point="org.eclipse.ui.dropActions">
       <action
             class="org.eclipse.emf.cdo.internal.ui.transfer.RepositoryPluginDropAdapter"
@@ -71,19 +82,6 @@
             id="org.eclipse.emf.cdo.ui.CDOTimeMachineView"
             name="%view.name.3">
       </view>
-   </extension>
-
-   <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.ui.resourcePerspective">
-         <view
-               id="org.eclipse.emf.cdo.ui.CDOSessionsView"
-               ratio="0.2"
-               relationship="bottom"
-               relative="org.eclipse.ui.views.ResourceNavigator">
-         </view>
-      </perspectiveExtension>
    </extension>
 
   <extension point = "org.eclipse.ui.editors">
@@ -168,16 +166,6 @@
         </enablement>
      </decorator>
      -->
-  </extension>
-
-  <extension
-        point="org.eclipse.ui.perspectives">
-     <perspective
-           class="org.eclipse.emf.cdo.internal.ui.perspectives.CDOPerspective"
-           icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_sessions.gif"
-           id="org.eclipse.emf.cdo.ui.CDOExplorerPerspective"
-           name="%perspective.name">
-     </perspective>
   </extension>
 
   <extension

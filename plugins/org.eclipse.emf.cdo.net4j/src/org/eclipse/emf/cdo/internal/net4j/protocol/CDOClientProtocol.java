@@ -47,8 +47,10 @@ import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionProtocol2;
 
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -67,7 +69,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
@@ -82,7 +83,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl>implements CDOSessionProtocol
+public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl>implements CDOSessionProtocol2
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDOClientProtocol.class);
 
@@ -129,6 +130,11 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public RepositoryTimeResult getRepositoryTime()
   {
     return send(new RepositoryTimeRequest(this));
+  }
+
+  public void openedSession()
+  {
+    send(new OpenedSessionRequest(this));
   }
 
   public EPackage[] loadPackages(CDOPackageUnit packageUnit)
@@ -524,6 +530,22 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
 
     default:
       return super.createSignalReactor(signalID);
+    }
+  }
+
+  private void send(Request request)
+  {
+    try
+    {
+      request.sendAsync();
+    }
+    catch (RuntimeException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new TransportException(ex);
     }
   }
 

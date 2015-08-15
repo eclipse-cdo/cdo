@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent.StructuralImpact;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -49,7 +50,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.h2.jdbcx.JdbcDataSource;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -154,6 +157,11 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     return null;
   }
 
+  public void refresh()
+  {
+    fireElementChangedEvent(StructuralImpact.ELEMENT);
+  }
+
   @Override
   public String getBranchPath()
   {
@@ -221,7 +229,12 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     JdbcDataSource dataSource = new JdbcDataSource();
     dataSource.setURL("jdbc:h2:" + dbPrefix);
 
+    Map<String, String> props = new HashMap<String, String>();
+    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true, false);
+    mappingStrategy.setProperties(props);
+
     IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);

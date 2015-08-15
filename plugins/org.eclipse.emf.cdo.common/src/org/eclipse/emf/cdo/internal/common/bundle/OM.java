@@ -55,4 +55,9 @@ public abstract class OM
       super(BUNDLE);
     }
   }
+
+  /**
+   * @since 4.4
+   */
+  public static final short SIGNAL_OPENED_SESSION = 60;
 }

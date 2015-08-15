@@ -238,6 +238,20 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     return label1.compareTo(label2);
   }
 
+  /**
+   * @since 4.5
+   */
+  public File getStateFolder(String path)
+  {
+    File stateFolder = new File(folder, path);
+    if (!stateFolder.exists())
+    {
+      stateFolder.mkdirs();
+    }
+
+    return stateFolder;
+  }
+
   public void delete(boolean deleteContents)
   {
     if (deleteContents)

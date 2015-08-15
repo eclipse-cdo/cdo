@@ -13,6 +13,7 @@ package org.eclipse.internal.net4j.buffer;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.internal.util.collection.CleanableReferenceQueue;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -42,10 +43,27 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
   private final Queue<BufferRef> buffers = new ConcurrentLinkedQueue<BufferRef>();
 
   @ExcludeFromDump
-  private final ReferenceQueue<IBuffer> referenceQueue = new ReferenceQueue<IBuffer>();
+  private final CleanableReferenceQueue<IBuffer> referenceQueue = new CleanableReferenceQueue<IBuffer>()
+  {
+    @Override
+    protected Reference<IBuffer> createReference(IBuffer buffer)
+    {
+      return new BufferRef(buffer, this);
+    }
 
-  @ExcludeFromDump
-  private Monitor monitor;
+    @Override
+    protected void cleanReference(Reference<? extends IBuffer> reference)
+    {
+      if (buffers.remove(reference))
+      {
+        --pooledBuffers;
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Collected buffer"); //$NON-NLS-1$
+        }
+      }
+    }
+  };
 
   public BufferPool(IBufferProvider provider)
   {
@@ -169,83 +187,11 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
     ++pooledBuffers;
   }
 
-  @Override
-  protected void doActivate() throws Exception
-  {
-    super.doActivate();
-    monitor = new Monitor();
-    monitor.start();
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    monitor.interrupt();
-    monitor = null;
-    super.doDeactivate();
-  }
-
   private static final class BufferRef extends SoftReference<IBuffer>
   {
     public BufferRef(IBuffer buffer, ReferenceQueue<IBuffer> queue)
     {
       super(buffer, queue);
-    }
-  }
-
-  private final class Monitor extends Thread
-  {
-    public Monitor()
-    {
-      setName("Net4jBufferPoolMonitor"); //$NON-NLS-1$
-      setDaemon(true);
-    }
-
-    @Override
-    public void run()
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Start monitoring"); //$NON-NLS-1$
-      }
-
-      try
-      {
-        while (isActive() && !isInterrupted())
-        {
-          Reference<? extends IBuffer> bufferRef = pollQueue();
-          if (bufferRef != null)
-          {
-            if (buffers.remove(bufferRef))
-            {
-              --pooledBuffers;
-              if (TRACER.isEnabled())
-              {
-                TRACER.trace("Collected buffer"); //$NON-NLS-1$
-              }
-            }
-          }
-        }
-      }
-      catch (InterruptedException ex)
-      {
-        return;
-      }
-      finally
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Stop monitoring"); //$NON-NLS-1$
-        }
-      }
-    }
-
-    /**
-     * Factored out for better profiling.
-     */
-    private Reference<? extends IBuffer> pollQueue() throws InterruptedException
-    {
-      return referenceQueue.remove(5000);
     }
   }
 }

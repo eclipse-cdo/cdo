@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
@@ -137,6 +138,7 @@ public abstract class DBConfig extends RepositoryConfig
   {
     Map<String, String> props = new HashMap<String, String>();
     props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    props.put(AbstractMappingStrategy.FORCE_INDEXES, "XREF");
     props.put(CDODBUtil.PROP_COPY_ON_BRANCH, Boolean.toString(copyOnBranch));
     return props;
   }

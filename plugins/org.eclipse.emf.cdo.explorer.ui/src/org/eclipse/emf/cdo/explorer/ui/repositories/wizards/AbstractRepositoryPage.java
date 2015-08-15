@@ -11,8 +11,6 @@
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.ValidationProblem;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
@@ -32,9 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -51,7 +47,7 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
   {
     super(pageName);
     setImageDescriptor(OM.getImageDescriptor("icons/wiz/new_repo.gif"));
-    this.defaultLabel = getUniqueLabel(defaultLabel);
+    this.defaultLabel = ((CDORepositoryManagerImpl)CDOExplorerUtil.getRepositoryManager()).getUniqueLabel(defaultLabel);
   }
 
   @Override
@@ -177,27 +173,5 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
     Text text = new Text(container, SWT.BORDER);
     text.setLayoutData(gridData);
     return text;
-  }
-
-  public static String getUniqueLabel(String label)
-  {
-    Set<String> names = new HashSet<String>();
-
-    CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
-    for (CDORepository repository : repositoryManager.getRepositories())
-    {
-      names.add(repository.getLabel());
-    }
-
-    for (int i = 1; i < Integer.MAX_VALUE; i++)
-    {
-      String name = i == 1 ? label : label + " (" + i + ")";
-      if (!names.contains(name))
-      {
-        return name;
-      }
-    }
-
-    throw new IllegalStateException("Too many repositories");
   }
 }

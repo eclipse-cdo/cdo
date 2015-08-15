@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
+import org.eclipse.emf.cdo.server.internal.security.HomeFolderHandler2;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.security.ISecurityManager.RealmOperation;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager.CommitHandler;
@@ -245,7 +246,7 @@ public class HomeFolderHandler implements InternalSecurityManager.CommitHandler2
     {
       ExecutorService executorService = ExecutorServiceFactory.get(container);
 
-      HomeFolderHandler handler = new HomeFolderHandler(homeFolder);
+      HomeFolderHandler handler = new HomeFolderHandler2(homeFolder);
       handler.setExecutorService(executorService);
       return handler;
     }

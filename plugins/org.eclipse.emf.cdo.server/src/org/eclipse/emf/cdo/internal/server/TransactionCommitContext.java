@@ -1108,6 +1108,7 @@ public class TransactionCommitContext implements InternalCommitContext
           detachedObjectsToUnlock.add(unlockable);
         }
       }
+
       lockManager.unlock2(true, LockType.WRITE, transaction, detachedObjectsToUnlock, false);
     }
   }
@@ -1144,6 +1145,8 @@ public class TransactionCommitContext implements InternalCommitContext
     CDOID id = delta.getID();
 
     InternalCDORevision oldRevision = null;
+    String rollbackMessage = null;
+    byte rollbackReason = CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN;
 
     try
     {
@@ -1152,21 +1155,30 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         if (oldRevision.getBranch() != delta.getBranch() || oldRevision.getVersion() != delta.getVersion())
         {
-          oldRevision = null;
+          rollbackMessage = "Attempt by " + transaction + " to modify historical revision: " + delta;
+          rollbackReason = CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT;
         }
+      }
+      else
+      {
+        rollbackMessage = "Revision " + id + " not found by " + transaction;
       }
     }
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      oldRevision = null;
+
+      rollbackMessage = ex.getMessage();
+      if (rollbackMessage == null)
+      {
+        rollbackMessage = ex.getClass().getName();
+      }
     }
 
-    if (oldRevision == null)
+    if (rollbackMessage != null)
     {
-      // If the object is logically locked (see lockObjects) but has a wrong (newer) version, someone else modified it
-      throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT,
-          "Attempt by " + transaction + " to modify historical revision: " + delta);
+      // If the object is logically locked (see lockObjects) but has a wrong (newer) version, someone else modified it.
+      throw new RollbackException(rollbackReason, rollbackMessage);
     }
 
     // Make sure all chunks are loaded
@@ -1309,9 +1321,9 @@ public class TransactionCommitContext implements InternalCommitContext
       applyLocksOnNewObjects();
       monitor.worked();
 
-      if (isAutoReleaseLocksEnabled())
+      if (autoReleaseLocksEnabled)
       {
-        postCommitLockStates = repository.getLockingManager().unlock2(true, transaction);
+        postCommitLockStates = lockManager.unlock2(true, transaction);
         if (!postCommitLockStates.isEmpty())
         {
           // TODO (CD) Does doing this here make sense?

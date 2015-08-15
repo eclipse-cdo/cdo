@@ -319,27 +319,31 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   @Override
   public URI getURI()
   {
-    if (uri != null)
+    if (uri == null)
     {
-      return uri;
+      uri = normalizeURI(doGetURI());
     }
 
-    URI uri = doGetURI();
-    uri = normalizeURI(uri);
     return uri;
   }
 
   private URI doGetURI()
   {
-    InternalCDOView view = cdoView();
-    if (initialURI != null && (cdoID() == null || view == null || view.isClosed()))
+    if (initialURI != null)
     {
-      return initialURI;
+      InternalCDOView view = cdoView();
+      if (view == null || view.isClosed() || cdoID() == null)
+      {
+        return initialURI;
+      }
     }
 
     if (viewProvider != null)
     {
-      URI uri = viewProvider.getResourceURI(view, getPath());
+      InternalCDOView view = cdoView();
+      String path = getPath();
+
+      URI uri = viewProvider.getResourceURI(view, path);
       if (uri != null)
       {
         return uri;
@@ -351,32 +355,35 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
   private URI normalizeURI(URI uri)
   {
-    ResourceSet resourceSet = getResourceSet();
-    if (resourceSet == null)
+    if (uri != null)
     {
-      InternalCDOView view = cdoView();
-      if (view != null)
+      ResourceSet resourceSet = getResourceSet();
+      if (resourceSet == null)
       {
-        resourceSet = view.getResourceSet();
-      }
-    }
-
-    if (resourceSet != null)
-    {
-      if (isRoot())
-      {
-        uri = URI.createURI(uri.toString() + "/");
-        uri = resourceSet.getURIConverter().normalize(uri);
-
-        String string = uri.toString();
-        if (string.endsWith("/"))
+        InternalCDOView view = cdoView();
+        if (view != null)
         {
-          uri = URI.createURI(string.substring(0, string.length() - 1));
+          resourceSet = view.getResourceSet();
         }
       }
-      else
+
+      if (resourceSet != null)
       {
-        uri = resourceSet.getURIConverter().normalize(uri);
+        if (isRoot())
+        {
+          uri = URI.createURI(uri.toString() + "/");
+          uri = resourceSet.getURIConverter().normalize(uri);
+
+          String string = uri.toString();
+          if (string.endsWith("/"))
+          {
+            uri = URI.createURI(string.substring(0, string.length() - 1));
+          }
+        }
+        else
+        {
+          uri = resourceSet.getURIConverter().normalize(uri);
+        }
       }
     }
 
@@ -386,6 +393,19 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   private void cacheURI(URI uri)
   {
     this.uri = normalizeURI(uri);
+  }
+
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  @Override
+  public void recacheURIs()
+  {
+    InternalCDOView view = cdoView();
+    String path = getPath();
+
+    URI uri = CDOURIUtil.createResourceURI(view, path);
+    cacheURI(uri);
   }
 
   /**
@@ -450,7 +470,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void setFolder(CDOResourceFolder newFolder)
   {
     super.setFolder(newFolder);
-    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
+    recacheURIs();
   }
 
   /**
@@ -460,7 +480,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
   public void setName(String newName)
   {
     super.setName(newName);
-    cacheURI(CDOURIUtil.createResourceURI(cdoView(), getPath()));
+    recacheURIs();
   }
 
   @Override
@@ -1577,18 +1597,11 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
 
         if (CDOUtil.isLegacyObject(cdoObject))
         {
-          if (FSMUtil.isClean(cdoObject))
+          if (!FSMUtil.isTransient(cdoObject))
           {
             // Bug 352204
             return;
           }
-
-          int xxx;
-          // EReference containmentFeature = object.eContainmentFeature();
-          // if (!EMFUtil.isPersistent(containmentFeature))
-          // {
-          // return;
-          // }
         }
 
         attached(cdoObject, transaction);

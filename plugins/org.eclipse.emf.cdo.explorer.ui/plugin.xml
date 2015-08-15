@@ -91,6 +91,26 @@
      </perspective>
   </extension>
 
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView"
+               relationship="stack"
+               relative="org.eclipse.ui.views.ContentOutline"
+               visible="false">
+         </view>
+         <view
+               id="org.eclipse.ui.views.PropertySheet"
+               relationship="stack"
+               relative="org.eclipse.ui.views.TaskList">
+         </view>
+         <perspectiveShortcut id="org.eclipse.emf.cdo.explorer.ui.CDOExplorerPerspective"/>
+         <viewShortcut id="org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView"/>
+      </perspectiveExtension>
+   </extension>
+
   <extension point="org.eclipse.ui.preferencePages">
      <page
            category="org.eclipse.emf.cdo.ui.CDOPreferencePage"
@@ -298,6 +318,7 @@
               <and>
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                 <test property="org.eclipse.emf.cdo.ui.support.compare" value="true"/>
               </and>
             </enablement>
          </actionProvider>
@@ -308,6 +329,7 @@
               <and>
                  <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                  <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
+                 <test property="org.eclipse.emf.cdo.ui.support.compare" value="true"/>
               </and>
             </enablement>
          </actionProvider>
@@ -441,6 +463,10 @@
             name="Close Checkout"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutCloseHandler"/>
       <command
+            id="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
+            name="Duplicate Checkout"
+            defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDuplicateHandler"/>
+      <command
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
             name="Update Workspace"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceUpdateHandler"/>
@@ -457,12 +483,18 @@
   <extension point="org.eclipse.ui.handlers">
       <handler
             class="org.eclipse.emf.cdo.explorer.ui.handlers.RenameHandler"
-            commandId="org.eclipse.ui.edit.rename"/>
+            commandId="org.eclipse.ui.edit.rename">
+         <activeWhen>
+            <iterate ifEmpty="false">
+               <adapt type="org.eclipse.emf.cdo.common.util.CDORenameContext"/>
+            </iterate>
+         </activeWhen>
+      </handler>
       <handler
             class="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate ifEmpty="false" operator="and">
+            <iterate ifEmpty="false">
                <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
             </iterate>
          </activeWhen>
@@ -471,7 +503,7 @@
             class="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate ifEmpty="false" operator="and">
+            <iterate ifEmpty="false">
                <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
             </iterate>
          </activeWhen>
@@ -480,11 +512,19 @@
             class="org.eclipse.emf.cdo.explorer.ui.handlers.ObjectDeleteHandler"
             commandId="org.eclipse.ui.edit.delete">
          <activeWhen>
-            <iterate ifEmpty="false" operator="and">
+            <iterate ifEmpty="false">
               <or>
-                <adapt type="org.eclipse.emf.cdo.CDOElement"/>
+                <adapt type="org.eclipse.emf.cdo.CDOElement">
+                   <and>
+                     <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                     <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                   </and>
+                </adapt>
                 <adapt type="org.eclipse.emf.ecore.EObject">
-                   <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                   <and>
+                     <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                     <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                   </and>
                 </adapt>
               </or>
             </iterate>
@@ -624,9 +664,17 @@
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
                     <or>
-                      <adapt type="org.eclipse.emf.cdo.CDOElement"/>
+                      <adapt type="org.eclipse.emf.cdo.CDOElement">
+                         <and>
+                           <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                           <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                         </and>
+                      </adapt>
                       <adapt type="org.eclipse.emf.ecore.EObject">
-                         <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                         <and>
+                           <test property="org.eclipse.emf.cdo.explorer.object.inCheckout" value="true"/>
+                           <test property="org.eclipse.emf.cdo.explorer.object.readOnlyCheckout" value="false"/>
+                         </and>
                       </adapt>
                     </or>
                   </iterate>
@@ -667,6 +715,20 @@
                       <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                       <test property="org.eclipse.emf.cdo.explorer.checkout.state" value="Open"/>
                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
+               icon="icons/duplicate.gif"
+               label="Duplicate Checkout"
+               style="push"
+               tooltip="Duplicate the checkout">
+            <visibleWhen checkEnabled="false">
+               <with variable="activeMenuSelection">
+                  <iterate ifEmpty="false">
+                    <instanceof value="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"/>
                   </iterate>
                </with>
             </visibleWhen>

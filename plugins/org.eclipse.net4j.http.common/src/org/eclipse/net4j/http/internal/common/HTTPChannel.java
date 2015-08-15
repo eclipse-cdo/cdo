@@ -13,7 +13,7 @@ package org.eclipse.net4j.http.internal.common;
 import org.eclipse.net4j.http.internal.common.HTTPConnector.ChannelOperation;
 import org.eclipse.net4j.util.WrappedException;
 
-import org.eclipse.spi.net4j.Channel;
+import org.eclipse.internal.net4j.Channel2;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author Eike Stepper
  */
-public class HTTPChannel extends Channel
+public class HTTPChannel extends Channel2
 {
   private long outputOperationCount = 1;// Open channel was 0 implicitely
 

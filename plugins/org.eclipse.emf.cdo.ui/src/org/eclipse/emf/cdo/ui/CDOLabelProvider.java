@@ -14,10 +14,13 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
@@ -28,6 +31,9 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * A {@link org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider AdapterFactoryLabelProvider} specialization
@@ -47,6 +53,9 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
   private static final Color YELLOW = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_YELLOW);
 
   private static final Color RED = UIUtil.getDisplay().getSystemColor(SWT.COLOR_RED);
+
+  private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages()
+      .getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
   private Font bold;
 
@@ -109,6 +118,56 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     catch (Exception ignore)
     {
     }
+  }
+
+  @Override
+  public Image getImage(Object object)
+  {
+    try
+    {
+      return super.getImage(object);
+    }
+    catch (Exception ex)
+    {
+      return ERROR_IMAGE;
+    }
+  }
+
+  @Override
+  public String getText(Object object)
+  {
+    try
+    {
+      String text = super.getText(object);
+      if (!StringUtil.isEmpty(text))
+      {
+        return text;
+      }
+    }
+    catch (Exception ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    try
+    {
+      if (object instanceof EObject)
+      {
+        EObject eObject = (EObject)object;
+        EClass eClass = eObject.eClass();
+        String text = getText(eClass);
+        if (!StringUtil.isEmpty(text))
+        {
+          return text;
+        }
+      }
+    }
+    catch (Exception ignore)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return object.getClass().getSimpleName();
   }
 
   @Override

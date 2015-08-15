@@ -31,9 +31,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.pref.OMPreferencesChangeEvent;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -122,18 +120,20 @@ public class CDOLabelDecorator implements ILabelDecorator
           element = cdoElement.getDelegate();
         }
 
-        if (element instanceof InternalCDOObject)
+        if (element instanceof EObject)
         {
-          InternalCDOView view = ((InternalCDOObject)element).cdoView();
-          InternalCDOObject object = FSMUtil.adapt(element, view);
+          EObject eObject = (EObject)element;
+          InternalCDOObject cdoObject = (InternalCDOObject)CDOUtil.getCDOObject(eObject, false);
+          if (cdoObject != null)
+          {
+            CDOID id = cdoObject.cdoID();
+            String state = getObjectState(cdoObject);
 
-          CDOID id = object.cdoID();
-          String state = getObjectState(object);
-
-          CDORevision rev = object.cdoRevision();
-          long created = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getTimeStamp();
-          long revised = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getRevised();
-          text = MessageFormat.format(pattern, text, id, state, created, revised).trim();
+            CDORevision rev = cdoObject.cdoRevision();
+            long created = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getTimeStamp();
+            long revised = rev == null ? CDORevision.UNSPECIFIED_DATE : rev.getRevised();
+            text = MessageFormat.format(pattern, text, id, state, created, revised).trim();
+          }
         }
       }
     }
@@ -192,7 +192,7 @@ public class CDOLabelDecorator implements ILabelDecorator
     if (element instanceof EObject)
     {
       EObject eObject = (EObject)element;
-      CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
+      CDOObject cdoObject = CDOUtil.getCDOObject(eObject, false);
       if (cdoObject != null)
       {
         CDOLockState lockState = cdoObject.cdoLockState();

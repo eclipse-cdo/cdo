@@ -229,6 +229,10 @@ public class TimeSlider extends Scale implements IListener, ITreeViewerListener
         setEnabled(false);
       }
     }
+    else if (this.view == null)
+    {
+      setEnabled(false);
+    }
   }
 
   public void disconnect()

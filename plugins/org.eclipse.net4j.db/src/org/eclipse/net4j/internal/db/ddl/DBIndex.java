@@ -20,7 +20,6 @@ import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.spi.db.ddl.InternalDBField;
-import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -37,7 +36,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class DBIndex extends DBSchemaElement implements InternalDBIndex
+public class DBIndex extends DBSchemaElement implements InternalDBIndex2
 {
   public static final ThreadLocal<Boolean> FIX_NULLABLE_INDEX_COLUMNS = new InheritableThreadLocal<Boolean>();
 
@@ -53,6 +52,8 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   private Type type;
 
   private List<IDBIndexField> indexFields = new ArrayList<IDBIndexField>();
+
+  private boolean optional;
 
   public DBIndex(IDBTable table, String name, Type type, IDBField[] fields)
   {
@@ -109,6 +110,16 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   {
     assertUnlocked();
     this.type = type;
+  }
+
+  public boolean isOptional()
+  {
+    return optional;
+  }
+
+  public void setOptional(boolean optional)
+  {
+    this.optional = optional;
   }
 
   @Deprecated

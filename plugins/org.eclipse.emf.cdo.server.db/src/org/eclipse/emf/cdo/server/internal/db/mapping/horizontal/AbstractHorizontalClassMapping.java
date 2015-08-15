@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.internal.common.model.CDOFeatureType;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -48,6 +50,9 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.ddl.InternalDBIndex2;
+import org.eclipse.net4j.internal.db.ddl.InternalDBTable2;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -202,6 +207,21 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           }
 
           valueMappings.add(mapping);
+
+          Set<CDOFeatureType> forceIndexes = AbstractMappingStrategy.getForceIndexes(mappingStrategy);
+          if (CDOFeatureType.matchesCombination(feature, forceIndexes))
+          {
+            if (field == null)
+            {
+              field = table.getField(fieldName);
+            }
+
+            if (!((InternalDBTable2)table).hasIndexFor(field))
+            {
+              InternalDBIndex index = (InternalDBIndex)table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+              ((InternalDBIndex2)index).setOptional(true); // Creation might fail for unsupported column type!
+            }
+          }
 
           if (feature.isUnsettable())
           {

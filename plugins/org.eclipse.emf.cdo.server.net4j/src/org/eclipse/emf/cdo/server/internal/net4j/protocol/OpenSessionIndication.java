@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.server.IRepositoryProvider;
 import org.eclipse.emf.cdo.server.RepositoryNotFoundException;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
@@ -192,7 +193,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       }
 
       out.writeLong(repository.getCreationTime());
-      out.writeLong(repository.getLastCommitTimeStamp());
+      out.writeLong(((Session)session).getFirstUpdateTime());
       out.writeCDOID(repository.getRootResourceID());
       out.writeBoolean(repository.isAuthenticating());
       out.writeBoolean(repository.isSupportingAudits());

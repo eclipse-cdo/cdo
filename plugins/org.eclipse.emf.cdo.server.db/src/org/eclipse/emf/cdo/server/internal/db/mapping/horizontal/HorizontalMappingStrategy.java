@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.server.IRepository.Props;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
@@ -237,8 +237,8 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
   {
     super.doActivate();
 
-    boolean auditing = getBooleanProperty(Props.SUPPORTING_AUDITS);
-    boolean branching = getBooleanProperty(Props.SUPPORTING_BRANCHES);
+    boolean auditing = getBooleanProperty(IRepository.Props.SUPPORTING_AUDITS);
+    boolean branching = getBooleanProperty(IRepository.Props.SUPPORTING_BRANCHES);
 
     boolean withRanges = false;
     if (auditing || branching)

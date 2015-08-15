@@ -179,22 +179,38 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
     return result;
   }
 
-  public void addRevision(CDORevision revision)
+  @Override
+  protected void doAddRevision(CDORevision revision)
   {
     CheckUtil.checkArg(revision, "revision");
     checkBranch(revision.getBranch());
 
     if (!revision.isHistorical())
     {
+      CDOID id = revision.getID();
       Reference<InternalCDORevision> reference = createReference(revision);
+
       synchronized (revisions)
       {
-        revisions.put(revision.getID(), reference);
+        Reference<InternalCDORevision> oldReference = revisions.put(id, reference);
+        if (oldReference != null)
+        {
+          InternalCDORevision oldRevision = oldReference.get();
+          if (oldRevision != null)
+          {
+            if (oldRevision.getVersion() > revision.getVersion())
+            {
+              // Put the old revision back because it's newer.
+              revisions.put(id, oldReference);
+            }
+          }
+        }
       }
     }
   }
 
-  public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
+  @Override
+  protected InternalCDORevision doRemoveRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     checkBranch(branchVersion.getBranch());
     synchronized (revisions)

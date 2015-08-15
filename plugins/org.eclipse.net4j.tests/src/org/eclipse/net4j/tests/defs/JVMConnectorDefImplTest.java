@@ -16,6 +16,7 @@ import org.eclipse.net4j.buffer.IBufferPool;
 import org.eclipse.net4j.defs.JVMConnectorDef;
 import org.eclipse.net4j.defs.Net4jDefsFactory;
 import org.eclipse.net4j.internal.jvm.JVMAcceptor;
+import org.eclipse.net4j.internal.util.concurrent.ThreadPool;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.util.defs.Net4jUtilDefsFactory;
@@ -23,7 +24,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author Andre Dietisheim
@@ -63,8 +63,7 @@ public class JVMConnectorDefImplTest extends AbstractOMTest
 
   private IJVMAcceptor createJVMAcceptor()
   {
-    ExecutorService threadPool = Executors.newCachedThreadPool();
-    LifecycleUtil.activate(threadPool);
+    ExecutorService threadPool = ThreadPool.create();
 
     IBufferPool bufferPool = Net4jUtil.createBufferPool();
     LifecycleUtil.activate(bufferPool);

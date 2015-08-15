@@ -23,7 +23,7 @@ import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 /**
  * @author Eike Stepper
  */
-public final class DelegatingDBTable extends DelegatingDBSchemaElement implements InternalDBTable
+public final class DelegatingDBTable extends DelegatingDBSchemaElement implements InternalDBTable2
 {
   DelegatingDBTable(InternalDBTable delegate)
   {
@@ -137,6 +137,17 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
   public IDBField[] getFields(String... fieldNames) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getFields(fieldNames), IDBField.class);
+  }
+
+  public boolean hasIndexFor(IDBField... fields)
+  {
+    InternalDBTable delegate = getDelegate();
+    if (delegate instanceof InternalDBTable2)
+    {
+      return ((InternalDBTable2)delegate).hasIndexFor(unwrap(fields, IDBField.class));
+    }
+
+    return false;
   }
 
   public IDBIndex addIndex(String name, Type type, IDBField... fields)

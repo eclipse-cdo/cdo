@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionProtocol2;
+
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
@@ -206,6 +208,9 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       updateConnectorAndRepositoryName();
       openSession();
 
+      CDOSessionProtocol sessionProtocol = getSessionProtocol();
+      ((CDOSessionProtocol2)sessionProtocol).openedSession();
+
       return runnables;
     }
     catch (RuntimeException ex)
@@ -262,6 +267,10 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       if (exception instanceof TransportException)
       {
         recover();
+      }
+      else
+      {
+        throw exception;
       }
     }
   }

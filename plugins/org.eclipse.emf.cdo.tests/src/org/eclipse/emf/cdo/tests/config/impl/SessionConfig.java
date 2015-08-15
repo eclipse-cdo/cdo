@@ -29,9 +29,11 @@ import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.internal.util.concurrent.DelegatingExecutorService;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
+import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
@@ -42,13 +44,13 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.io.File;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -61,7 +63,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   public static final String PROP_TEST_FETCH_RULE_MANAGER = "test.session.FetchRuleManager";
 
-  private static final Registry GLOBAL_REGISTRY = EPackage.Registry.INSTANCE;
+  private static final EPackage.Registry GLOBAL_REGISTRY = EPackage.Registry.INSTANCE;
 
   private static final long serialVersionUID = 1L;
 
@@ -123,6 +125,16 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
     IManagedContainer container = ContainerUtil.createContainer();
     Net4jUtil.prepareContainer(container);
+
+    container.registerFactory(new ExecutorServiceFactory()
+    {
+      @Override
+      public ExecutorService create(String threadGroupName)
+      {
+        return new DelegatingExecutorService(executorService);
+      }
+    });
+
     return container;
   }
 
@@ -144,7 +156,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     if (RepositoryConfig.REPOSITORY_NAME.equals(repositoryName))
     {
       // Start default repository
-      getCurrentTest().getRepository(RepositoryConfig.REPOSITORY_NAME);
+      getCurrentTest().getRepository(IRepositoryConfig.REPOSITORY_NAME);
     }
 
     CDOSessionConfiguration configuration = getTestSessionConfiguration();

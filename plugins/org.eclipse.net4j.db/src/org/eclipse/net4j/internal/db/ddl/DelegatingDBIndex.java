@@ -21,7 +21,7 @@ import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 /**
  * @author Eike Stepper
  */
-public final class DelegatingDBIndex extends DelegatingDBSchemaElement implements InternalDBIndex
+public final class DelegatingDBIndex extends DelegatingDBSchemaElement implements InternalDBIndex2
 {
   DelegatingDBIndex(InternalDBIndex delegate)
   {
@@ -78,6 +78,26 @@ public final class DelegatingDBIndex extends DelegatingDBSchemaElement implement
   public void removeIndexField(IDBIndexField indexFieldToRemove)
   {
     getDelegate().removeIndexField(unwrap(indexFieldToRemove));
+  }
+
+  public boolean isOptional()
+  {
+    InternalDBIndex delegate = getDelegate();
+    if (delegate instanceof InternalDBIndex2)
+    {
+      return ((InternalDBIndex2)delegate).isOptional();
+    }
+
+    return false;
+  }
+
+  public void setOptional(boolean optional)
+  {
+    InternalDBIndex delegate = getDelegate();
+    if (delegate instanceof InternalDBIndex2)
+    {
+      ((InternalDBIndex2)delegate).setOptional(optional);
+    }
   }
 
   @Deprecated

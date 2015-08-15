@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -46,6 +47,10 @@ import java.util.List;
  */
 public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
 {
+  private static final Method E_SET_DIRECT_RESOURCE = getMethod("eSetDirectResource", Resource.Internal.class);
+
+  private static final Method E_BASIC_SET_CONTAINER = getMethod("eBasicSetContainer", InternalEObject.class, int.class);
+
   protected InternalEObject instance;
 
   public CDOObjectWrapperBase()
@@ -176,14 +181,26 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
 
   public void setInstanceResource(Resource.Internal resource)
   {
-    Method method = ReflectUtil.getMethod(instance.getClass(), "eSetDirectResource", Resource.Internal.class); //$NON-NLS-1$
-    ReflectUtil.invokeMethod(method, instance, resource);
+    try
+    {
+      E_SET_DIRECT_RESOURCE.invoke(instance, resource);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   public void setInstanceContainer(InternalEObject container, int containerFeatureID)
   {
-    Method method = ReflectUtil.getMethod(instance.getClass(), "eBasicSetContainer", InternalEObject.class, int.class); //$NON-NLS-1$
-    ReflectUtil.invokeMethod(method, instance, container, containerFeatureID);
+    try
+    {
+      E_BASIC_SET_CONTAINER.invoke(instance, container, containerFeatureID);
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   public void setInstanceValue(InternalEObject instance, EStructuralFeature feature, Object value)
@@ -478,5 +495,22 @@ public abstract class CDOObjectWrapperBase implements CDOObject, InternalEObject
   public String toString()
   {
     return getClass().getSimpleName() + "[" + instance.getClass().getSimpleName() + "@" + cdoID() + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  }
+
+  private static Method getMethod(String methodName, Class<?>... parameterTypes)
+  {
+    Method method = null;
+
+    try
+    {
+      method = BasicEObjectImpl.class.getDeclaredMethod(methodName, parameterTypes);
+      method.setAccessible(true);
+    }
+    catch (Throwable ex)
+    {
+      method = null;
+    }
+
+    return method;
   }
 }

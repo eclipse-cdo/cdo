@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -125,6 +126,13 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
       setFolderGen(newFolder);
     }
+  }
+
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public void recacheURIs()
+  {
   }
 
   /**
@@ -271,8 +279,15 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   public URI getURI()
   {
     InternalCDOView view = cdoView();
-    URI uri = CDOURIUtil.createResourceURI(view, getPath());
-    uri = view.getResourceSet().getURIConverter().normalize(uri);
+    String path = getPath();
+
+    URI uri = CDOURIUtil.createResourceURI(view, path);
+    if (uri != null)
+    {
+      URIConverter uriConverter = view.getResourceSet().getURIConverter();
+      uri = uriConverter.normalize(uri);
+    }
+
     return uri;
   }
 

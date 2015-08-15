@@ -43,6 +43,8 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
       CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
       CDOTransaction transaction = workspace.update(merger);
       transaction.commit(monitor);
+
+      checkout.refresh();
     }
   }
 }

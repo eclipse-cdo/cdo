@@ -10,9 +10,9 @@
 	Contributors:
 	  Martin Fluegge - initial API and implementation
 -->
-
 <fragment>
-<extension
+
+    <extension
          point="org.eclipse.ui.editors">
       <editor
             class="org.eclipse.emf.cdo.dawn.examples.acore.diagram.part.DawnAcoreDiagramEditor"
@@ -25,7 +25,8 @@
 	            name="Dawn Acore Diagram">
 	      </editor>
 	   </extension>
-	       <extension
+
+	   <extension
           point="org.eclipse.ui.newWizards">
        <wizard
              category="org.eclipse.emf.cdo.dawn.ui.category.examples"
@@ -37,8 +38,8 @@
              description body text
           </description>
        </wizard>
-
     </extension>
+
         <extension
               point="org.eclipse.gmf.runtime.diagram.ui.resources.editor.documentProviders">
            <provider
@@ -48,6 +49,7 @@
                  inputTypes="org.eclipse.emf.common.ui .URIEditorInput">
            </provider>
         </extension>
+
        <extension
              point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
           <editpolicyProvider
@@ -57,12 +59,14 @@
              </Priority>
           </editpolicyProvider>
        </extension>
+
       <!--<extension
              point="org.eclipse.emf.cdo.dawn.listeners">
           <DawnTransactionListener
                 class="org.eclipse.emf.cdo.dawn.notifications.DawnGMFTransactionListener">
           </DawnTransactionListener>
        </extension>-->
+
       <!-- <extension
              point="org.eclipse.emf.cdo.dawn.editpartstylizers">
           <DawnEditPartStylizers
@@ -70,6 +74,7 @@
                 stylizer="org.eclipse.emf.cdo.dawn.gmf.appearance.impl.DawnBasicNodeEditPartStylizerImpl">
           </DawnEditPartStylizers>
        </extension>-->
+
       <extension point="org.eclipse.gmf.runtime.diagram.ui.editpartProviders" id="ep-provider">
       <?gmfgen generated="true"?>
       <editpartProvider class="org.eclipse.emf.cdo.dawn.examples.acore.diagram.providers.DawnAcoreEditPartProvider">
@@ -92,4 +97,5 @@
          <context views="generated-diagram,generated-nodes,generated-links,generated-labels,generated-compartments"/>
       </editpartProvider>
      </extension>
+
 </fragment>

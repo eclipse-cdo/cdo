@@ -15,9 +15,10 @@ import org.eclipse.net4j.buffer.BufferState;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferHandler;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.internal.util.concurrent.ExecutorWorkSerializer;
+import org.eclipse.net4j.internal.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
-import org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer;
 import org.eclipse.net4j.util.concurrent.SynchronousWorkSerializer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
@@ -33,6 +34,7 @@ import org.eclipse.spi.net4j.InternalChannel.SendQueueEvent.Type;
 import java.text.MessageFormat;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -219,7 +221,9 @@ public class Channel extends Lifecycle implements InternalChannel
       }
 
       ++receivedBuffers;
-      receiveSerializer.addWork(createReceiverWork(buffer));
+
+      ReceiverWork receiverWork = createReceiverWork(buffer);
+      receiveSerializer.addWork(receiverWork);
     }
     else
     {
@@ -273,13 +277,14 @@ public class Channel extends Lifecycle implements InternalChannel
   {
     super.doActivate();
     sendQueue = new SendQueue();
-    if (receiveExecutor == null)
+    if (receiveExecutor != null)
     {
-      receiveSerializer = new SynchronousWorkSerializer();
+      receiveSerializer = new ReceiveSerializer2(receiveExecutor);
+      LifecycleUtil.activate(receiveSerializer);
     }
     else
     {
-      receiveSerializer = new ReceiveSerializer();
+      receiveSerializer = new SynchronousWorkSerializer();
     }
   }
 
@@ -323,7 +328,7 @@ public class Channel extends Lifecycle implements InternalChannel
    * @author Eike Stepper
    * @since 4.1
    */
-  protected class ReceiveSerializer extends QueueWorkerWorkSerializer
+  protected class ReceiveSerializer extends org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer
   {
     @Override
     protected String getThreadName()
@@ -345,8 +350,31 @@ public class Channel extends Lifecycle implements InternalChannel
    * If the meaning of this type isn't clear, there really should be more of a description here...
    *
    * @author Eike Stepper
+   * @since 4.4
    */
-  protected class ReceiverWork implements Runnable
+  private class ReceiveSerializer2 extends ExecutorWorkSerializer
+  {
+    public ReceiveSerializer2(Executor executor)
+    {
+      super(executor);
+    }
+
+    @Override
+    protected void noWork()
+    {
+      if (isClosed())
+      {
+        dispose();
+      }
+    }
+  }
+
+  /**
+   * If the meaning of this type isn't clear, there really should be more of a description here...
+   *
+   * @author Eike Stepper
+   */
+  protected class ReceiverWork extends RunnableWithName
   {
     private final IBuffer buffer;
 
@@ -358,7 +386,30 @@ public class Channel extends Lifecycle implements InternalChannel
       this.buffer = buffer;
     }
 
+    /**
+     * @since 4.4
+     */
+    @Override
+    public String getName()
+    {
+      return "Net4jReceiveSerializer-" + Channel.this; //$NON-NLS-1$
+    }
+
+    /**
+     * @deprecated Needed here to make API Tools happy.
+     */
+    @Override
+    @Deprecated
     public void run()
+    {
+      super.run();
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    protected void doRun()
     {
       IBufferHandler receiveHandler = getReceiveHandler();
       if (receiveHandler != null)

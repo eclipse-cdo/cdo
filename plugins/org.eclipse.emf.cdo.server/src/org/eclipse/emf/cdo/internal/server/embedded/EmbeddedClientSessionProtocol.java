@@ -55,6 +55,8 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionProtocol2;
+
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -64,7 +66,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
-import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -82,7 +83,7 @@ import java.util.Set;
  * @deprecated Not yet supported.
  */
 @Deprecated
-public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessionProtocol
+public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessionProtocol2
 {
   private EmbeddedClientSession session;
 
@@ -164,6 +165,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     result.setResponded(timeStamp);
     result.setConfirmed(timeStamp);
     return result;
+  }
+
+  public void openedSession()
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Deprecated

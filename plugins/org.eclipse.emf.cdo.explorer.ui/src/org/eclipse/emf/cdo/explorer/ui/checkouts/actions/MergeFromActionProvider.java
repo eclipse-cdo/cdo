@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.ui.Support;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 
 /**
@@ -25,6 +26,12 @@ public class MergeFromActionProvider extends AbstractBranchPointActionProvider
   public MergeFromActionProvider()
   {
     super(ID, "Merge From");
+  }
+
+  @Override
+  protected boolean createSubMenu(CDOCheckout checkout)
+  {
+    return super.createSubMenu(checkout) && !checkout.isReadOnly();
   }
 
   @Override
@@ -59,9 +66,12 @@ public class MergeFromActionProvider extends AbstractBranchPointActionProvider
 
   public static void mergeFrom(CDOCheckout checkout, CDOBranchPoint branchPoint)
   {
-    CDORepository repository = checkout.getRepository();
-    CDOBranchPoint left = branchPoint;
-    CDOBranchPoint right = checkout.getBranchPoint();
-    CDOCompareEditorUtil.openEditor(repository, repository, left, right, null, true);
+    if (Support.COMPARE.isAvailable())
+    {
+      CDORepository repository = checkout.getRepository();
+      CDOBranchPoint left = branchPoint;
+      CDOBranchPoint right = checkout.getBranchPoint();
+      CDOCompareEditorUtil.openEditor(repository, repository, left, right, null, true);
+    }
   }
 }

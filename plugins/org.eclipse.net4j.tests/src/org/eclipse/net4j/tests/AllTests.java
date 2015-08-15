@@ -13,10 +13,10 @@ package org.eclipse.net4j.tests;
 import org.eclipse.net4j.tests.bugzilla.Bugzilla_241463_Test;
 import org.eclipse.net4j.tests.bugzilla.Bugzilla_259086_Test;
 import org.eclipse.net4j.tests.bugzilla.Bugzilla_262875_Test;
+import org.eclipse.net4j.util.tests.ExecutorWorkSerializerTest;
 import org.eclipse.net4j.util.tests.ExpectedIOTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
-import org.eclipse.net4j.util.tests.QueueWorkerWorkSerializerTest;
 import org.eclipse.net4j.util.tests.ReferenceValueMapTest;
 import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
@@ -52,7 +52,7 @@ public class AllTests
     suite.addTestSuite(SignalMonitorTest.TCP.class);
     suite.addTestSuite(ExceptionTest.TCP.class);
     suite.addTestSuite(SecurityTest.class);
-    suite.addTestSuite(QueueWorkerWorkSerializerTest.class);
+    suite.addTestSuite(ExecutorWorkSerializerTest.class);
     suite.addTestSuite(ExpectedIOTest.class);
 
     // Bugzillas

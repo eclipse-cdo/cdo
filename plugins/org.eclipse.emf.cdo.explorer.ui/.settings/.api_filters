@@ -16,14 +16,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/explorer/ui/checkouts/actions/NewActionProvider.java" type="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.NewActionProvider">
-        <filter id="574664731">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.NewActionProvider.init(ICommonActionExtensionSite)"/>
-                <message_argument value="IWizardRegistry"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/explorer/ui/checkouts/actions/NewActionProvider.java" type="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.NewActionProvider$WizardDescriptorWrapper">
         <filter id="574619656">
             <message_arguments>

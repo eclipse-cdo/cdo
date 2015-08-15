@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.net4j.FactoriesProtocolProvider;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.internal.util.concurrent.ThreadPool;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -31,8 +32,6 @@ import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * @author Eike Stepper
@@ -47,16 +46,7 @@ public class StandaloneManualExample
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
 
     // Prepare receiveExecutor
-    final ThreadGroup threadGroup = new ThreadGroup("net4j"); //$NON-NLS-1$
-    ExecutorService receiveExecutor = Executors.newCachedThreadPool(new ThreadFactory()
-    {
-      public Thread newThread(Runnable r)
-      {
-        Thread thread = new Thread(threadGroup, r);
-        thread.setDaemon(true);
-        return thread;
-      }
-    });
+    ExecutorService receiveExecutor = ThreadPool.create();
 
     // Prepare bufferProvider
     IBufferProvider bufferProvider = Net4jUtil.createBufferPool();

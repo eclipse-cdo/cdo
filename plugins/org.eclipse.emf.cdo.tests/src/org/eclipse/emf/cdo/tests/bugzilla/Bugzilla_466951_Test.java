@@ -42,12 +42,13 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
   private static final String RESOURCE_NAME = "test1.model1";
 
   /**
-   * Test that no {@link LockStateRequest} is sent to the server when calling {@link CDOObject#cdoLockState()}
+   * Test that no {@link LockStateRequest} is sent to the server when calling {@link CDOObject#cdoLockState()} for {@link CDOObject} in {@link CDOState#NEW} state.
    */
   public void testCDOObjectCDOLockState() throws Exception
   {
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().setAutoReleaseLocksEnabled(false);
     transaction1.options().setLockNotificationEnabled(true);
     CDOResource resource1 = transaction1.createResource(getResourcePath(RESOURCE_NAME));
     Company company = getModel1Factory().createCompany();
@@ -94,6 +95,23 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
     resource1.getContents().add(company2);
 
     CDOObject companyCDOObject2 = CDOUtil.getCDOObject(company2);
+    lockState = companyCDOObject2.cdoLockState();
+    expectedLockedObject = companyCDOObject2.cdoID();
+    if (session1.getRepositoryInfo().isSupportingBranches())
+    {
+      expectedLockedObject = CDOIDUtil.createIDAndBranch(companyCDOObject2.cdoID(), transaction1.getBranch());
+    }
+
+    assertEquals(expectedLockedObject, lockState.getLockedObject());
+    Assert.assertTrue(lockState.getReadLockOwners().isEmpty());
+    assertNull(lockState.getWriteLockOwner());
+    assertNull(lockState.getWriteOptionOwner());
+
+    nbLockStateRequest = signalCounter.getCountFor(LockStateRequest.class);
+    assertEquals(0, nbLockStateRequest);
+
+    transaction1.commit();
+
     lockState = companyCDOObject2.cdoLockState();
     expectedLockedObject = companyCDOObject2.cdoID();
     if (session1.getRepositoryInfo().isSupportingBranches())

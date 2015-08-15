@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.ui.internal.team.history;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcoreFactory;
+
 import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.team.ui.history.IHistoryPageSource;
 
 /**
@@ -40,5 +44,11 @@ public class CDOHistoryAdapterFactory implements IAdapterFactory
     }
 
     return null;
+  }
+
+  public static void load()
+  {
+    EObject dummy = EcoreFactory.eINSTANCE.createEObject();
+    Platform.getAdapterManager().loadAdapter(dummy, CLASS_IHISTORYPAGESOURCE.getName());
   }
 }

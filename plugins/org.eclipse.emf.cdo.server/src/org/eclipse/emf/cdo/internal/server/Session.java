@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
+import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
@@ -64,11 +65,10 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -90,12 +90,16 @@ public class Session extends Container<IView>implements InternalSession
 
   private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
 
+  private boolean openOnClientSide;
+
+  private long firstUpdateTime;
+
   private long lastUpdateTime;
 
   @ExcludeFromDump
   private Object lastUpdateTimeLock = new Object();
 
-  private ConcurrentMap<Integer, InternalView> views = new ConcurrentHashMap<Integer, InternalView>();
+  private Map<Integer, InternalView> views = new HashMap<Integer, InternalView>();
 
   private AtomicInteger lastTempViewID = new AtomicInteger();
 
@@ -261,6 +265,27 @@ public class Session extends Container<IView>implements InternalSession
     }
   }
 
+  public long getFirstUpdateTime()
+  {
+    return firstUpdateTime;
+  }
+
+  public void setFirstUpdateTime(long firstUpdateTime)
+  {
+    this.firstUpdateTime = firstUpdateTime;
+  }
+
+  public boolean isOpenOnClientSide()
+  {
+    return openOnClientSide;
+  }
+
+  public void setOpenOnClientSide()
+  {
+    openOnClientSide = true;
+    ((SessionManager)manager).openedOnClientSide(this);
+  }
+
   public InternalView[] getElements()
   {
     checkActive();
@@ -271,7 +296,11 @@ public class Session extends Container<IView>implements InternalSession
   public boolean isEmpty()
   {
     checkActive();
-    return views.isEmpty();
+
+    synchronized (views)
+    {
+      return views.isEmpty();
+    }
   }
 
   public InternalView[] getViews()
@@ -282,13 +311,20 @@ public class Session extends Container<IView>implements InternalSession
 
   private InternalView[] getViewsArray()
   {
-    return views.values().toArray(new InternalView[views.size()]);
+    synchronized (views)
+    {
+      return views.values().toArray(new InternalView[views.size()]);
+    }
   }
 
   public InternalView getView(int viewID)
   {
     checkActive();
-    return views.get(viewID);
+
+    synchronized (views)
+    {
+      return views.get(viewID);
+    }
   }
 
   /**
@@ -329,7 +365,12 @@ public class Session extends Container<IView>implements InternalSession
   {
     checkActive();
     int viewID = view.getViewID();
-    views.put(viewID, view);
+
+    synchronized (views)
+    {
+      views.put(viewID, view);
+    }
+
     fireElementAddedEvent(view);
   }
 
@@ -339,7 +380,14 @@ public class Session extends Container<IView>implements InternalSession
   public void viewClosed(InternalView view)
   {
     int viewID = view.getViewID();
-    if (views.remove(viewID) == view)
+    InternalView removedView;
+
+    synchronized (views)
+    {
+      removedView = views.remove(viewID);
+    }
+
+    if (removedView == view)
     {
       view.doClose();
       fireElementRemovedEvent(view);
@@ -505,13 +553,23 @@ public class Session extends Container<IView>implements InternalSession
         // only then do we send the lockChangeInfo.
         for (InternalView view : getViews())
         {
-          if (view.options().isLockNotificationEnabled())
+          try
           {
-            CDOBranch affectedBranch = lockChangeInfo.getBranch();
-            if (view.getBranch() == affectedBranch || affectedBranch == null)
+            if (view.options().isLockNotificationEnabled())
             {
-              protocol.sendLockNotification(lockChangeInfo);
-              break;
+              CDOBranch affectedBranch = lockChangeInfo.getBranch();
+              if (view.getBranch() == affectedBranch || affectedBranch == null)
+              {
+                protocol.sendLockNotification(lockChangeInfo);
+                break;
+              }
+            }
+          }
+          catch (Exception ex)
+          {
+            if (!view.isClosed())
+            {
+              OM.LOG.warn("A problem occured while notifying view " + view, ex);
             }
           }
         }
@@ -523,9 +581,19 @@ public class Session extends Container<IView>implements InternalSession
   {
     for (InternalView view : views)
     {
-      if (view.hasSubscription(id))
+      try
       {
-        return true;
+        if (view.hasSubscription(id))
+        {
+          return true;
+        }
+      }
+      catch (Exception ex)
+      {
+        if (!view.isClosed())
+        {
+          OM.LOG.warn("A problem occured while checking subscriptions of view " + view, ex);
+        }
       }
     }
 

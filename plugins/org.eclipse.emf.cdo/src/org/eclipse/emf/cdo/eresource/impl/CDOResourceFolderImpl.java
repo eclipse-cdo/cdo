@@ -10,12 +10,15 @@
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -72,6 +75,49 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
   protected EClass eStaticClass()
   {
     return EresourcePackage.Literals.CDO_RESOURCE_FOLDER;
+  }
+
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  @Override
+  public void recacheURIs()
+  {
+    InternalCDORevision revision = cdoRevision(false);
+    if (revision != null)
+    {
+      CDOList list;
+      boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
+
+      try
+      {
+        list = revision.getList(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
+      }
+      finally
+      {
+        revision.bypassPermissionChecks(bypassPermissionChecks);
+      }
+
+      if (list != null)
+      {
+        InternalCDOView view = cdoView();
+
+        for (Object value : list)
+        {
+          if (value instanceof CDOID)
+          {
+            CDOID id = (CDOID)value;
+            value = view.getObject(id, false);
+          }
+
+          if (value instanceof CDOResourceNodeImpl)
+          {
+            CDOResourceNodeImpl child = (CDOResourceNodeImpl)value;
+            child.recacheURIs();
+          }
+        }
+      }
+    }
   }
 
   /**

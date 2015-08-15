@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.internal.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
@@ -20,8 +21,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 
 /**
  * @author Eike Stepper
@@ -40,87 +39,70 @@ public class ExecutorServiceFactory extends Factory
     super(PRODUCT_GROUP, TYPE);
   }
 
-  public ExecutorService create(String threadGroupName)
+  public ExecutorService create(String description)
   {
-    if (threadGroupName == null)
-    {
-      threadGroupName = DEFAULT_THREAD_GROUP_NAME;
-    }
+    final ExecutorService executorService = ThreadPool.create(description);
 
-    final ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
-    ThreadFactory threadFactory = new ThreadFactory()
-    {
-      private int num;
-
-      public Thread newThread(Runnable r)
-      {
-        Thread thread = new Thread(threadGroup, r, threadGroup.getName() + "-Thread-" + ++num);
-        thread.setDaemon(true);
-        return thread;
-      }
-    };
-
-    final ExecutorService executorService = Executors.newCachedThreadPool(threadFactory);
     return LifecycleUtil.delegateLifecycle(getClass().getClassLoader(), executorService, ExecutorService.class,
         new ILifecycle()
-    {
-      private boolean active;
-
-      public void activate() throws LifecycleException
-      {
-        active = true;
-      }
-
-      public Exception deactivate()
-      {
-        try
         {
-          executorService.shutdown();
-          active = false;
-          return null;
-        }
-        catch (Exception ex)
-        {
-          return ex;
-        }
-      }
+          private boolean active;
 
-      public LifecycleState getLifecycleState()
-      {
-        return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
-      }
+          public void activate() throws LifecycleException
+          {
+            active = true;
+          }
 
-      public boolean isActive()
-      {
-        return active;
-      }
+          public Exception deactivate()
+          {
+            try
+            {
+              executorService.shutdown();
+              active = false;
+              return null;
+            }
+            catch (Exception ex)
+            {
+              return ex;
+            }
+          }
 
-      public void addListener(IListener listener)
-      {
-        // Do nothing
-      }
+          public LifecycleState getLifecycleState()
+          {
+            return active ? LifecycleState.ACTIVE : LifecycleState.INACTIVE;
+          }
 
-      public void removeListener(IListener listener)
-      {
-        // Do nothing
-      }
+          public boolean isActive()
+          {
+            return active;
+          }
 
-      public IListener[] getListeners()
-      {
-        return EventUtil.NO_LISTENERS;
-      }
+          public void addListener(IListener listener)
+          {
+            // Do nothing
+          }
 
-      public boolean hasListeners()
-      {
-        return false;
-      }
+          public void removeListener(IListener listener)
+          {
+            // Do nothing
+          }
 
-      @Override
-      public String toString()
-      {
-        return "CachedThreadPool";
-      }
-    });
+          public IListener[] getListeners()
+          {
+            return EventUtil.NO_LISTENERS;
+          }
+
+          public boolean hasListeners()
+          {
+            return false;
+          }
+
+          @Override
+          public String toString()
+          {
+            return "CachedThreadPool";
+          }
+        });
   }
 
   public static ExecutorService get(IManagedContainer container)

@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryElement;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutLabelPage;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutManagerImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -50,13 +50,15 @@ public class RepositoryCheckoutHandlerQuick extends AbstractBaseHandler<CDORepos
     String label = StringUtil.capAll(type.replace('-', ' ')) + " Checkout";
 
     Properties properties = new Properties();
-    properties.setProperty("type", type);
-    properties.setProperty("label", CheckoutLabelPage.getUniqueLabel(label));
-    properties.setProperty("repository", repository.getID());
-    properties.setProperty("branchID", Integer.toString(repositoryElement.getBranchID()));
-    properties.setProperty("timeStamp", Long.toString(repositoryElement.getTimeStamp()));
-    properties.setProperty("readOnly", readOnly);
-    properties.setProperty("rootID", CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
+    properties.setProperty(CDOCheckoutImpl.PROP_TYPE, type);
+    properties.setProperty(CDOCheckoutImpl.PROP_LABEL,
+        ((CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager()).getUniqueLabel(label));
+    properties.setProperty(CDOCheckoutImpl.PROP_REPOSITORY, repository.getID());
+    properties.setProperty(CDOCheckoutImpl.PROP_BRANCH_ID, Integer.toString(repositoryElement.getBranchID()));
+    properties.setProperty(CDOCheckoutImpl.PROP_TIME_STAMP, Long.toString(repositoryElement.getTimeStamp()));
+    properties.setProperty(CDOCheckoutImpl.PROP_READ_ONLY, readOnly);
+    properties.setProperty(CDOCheckoutImpl.PROP_ROOT_ID,
+        CDOCheckoutImpl.getCDOIDString(repositoryElement.getObjectID()));
 
     CDOCheckout checkout = CDOExplorerUtil.getCheckoutManager().addCheckout(properties);
     checkout.open();

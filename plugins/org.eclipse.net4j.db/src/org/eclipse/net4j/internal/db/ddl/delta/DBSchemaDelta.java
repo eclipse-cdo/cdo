@@ -23,6 +23,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
+import org.eclipse.net4j.internal.db.ddl.InternalDBIndex2;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 import java.text.MessageFormat;
@@ -201,9 +202,11 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
     {
       String name = delta.getName();
       IDBIndex.Type type = delta.getPropertyValue(IDBIndexDelta.TYPE_PROPERTY);
+      Boolean optional = delta.getPropertyValue(DBIndexDelta.OPTIONAL_PROPERTY);
 
       IDBTable table = delta.getParent().getSchemaElement(schema);
-      table.addIndexEmpty(name, type);
+      InternalDBIndex2 index = (InternalDBIndex2)table.addIndexEmpty(name, type);
+      index.setOptional(optional == Boolean.TRUE);
     }
 
     @Override

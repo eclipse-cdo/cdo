@@ -55,9 +55,9 @@ public class Scenario implements IScenario
 
   public Scenario(IRepositoryConfig repositoryConfig, ISessionConfig sessionConfig, IModelConfig modelConfig)
   {
-    this.repositoryConfig = repositoryConfig;
-    this.sessionConfig = sessionConfig;
-    this.modelConfig = modelConfig;
+    setRepositoryConfig(repositoryConfig);
+    setSessionConfig(sessionConfig);
+    setModelConfig(modelConfig);
   }
 
   public IRepositoryConfig getRepositoryConfig()
@@ -156,6 +156,11 @@ public class Scenario implements IScenario
     }
 
     return true;
+  }
+
+  public boolean alwaysCleanRepositories()
+  {
+    return false;
   }
 
   public ConfigTest getCurrentTest()

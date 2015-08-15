@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.internal.common.model.CDOFeatureType;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
@@ -90,6 +91,12 @@ import java.util.concurrent.Semaphore;
  */
 public abstract class AbstractMappingStrategy extends Lifecycle implements IMappingStrategy
 {
+  /**
+   * Name of the String property that configures on what types of {@link EStructuralFeature structural features} additional
+   * indexes are to be created.
+   */
+  public static final String FORCE_INDEXES = "forceIndexes"; //$NON-NLS-1$
+
   // --------- database name generation strings --------------
   protected static final String NAME_SEPARATOR = "_"; //$NON-NLS-1$
 
@@ -119,6 +126,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   private boolean allClassMappingsCreated;
 
   private SystemPackageMappingInfo systemPackageMappingInfo;
+
+  private Set<CDOFeatureType> forceIndexes;
 
   public AbstractMappingStrategy()
   {
@@ -170,6 +179,16 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   {
     String value = getProperties().get(PROP_TABLE_NAME_PREFIX);
     return StringUtil.safe(value);
+  }
+
+  public Set<CDOFeatureType> getForceIndexes()
+  {
+    if (forceIndexes == null)
+    {
+      forceIndexes = doGetForceIndexes(this);
+    }
+
+    return forceIndexes;
   }
 
   // -- getters and setters ----------------------------------------------
@@ -791,10 +810,25 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
 
+  private static Set<CDOFeatureType> doGetForceIndexes(IMappingStrategy mappingStrategy)
+  {
+    return CDOFeatureType.readCombination(mappingStrategy.getProperties().get(AbstractMappingStrategy.FORCE_INDEXES));
+  }
+
+  public static Set<CDOFeatureType> getForceIndexes(IMappingStrategy mappingStrategy)
+  {
+    if (mappingStrategy instanceof AbstractMappingStrategy)
+    {
+      return ((AbstractMappingStrategy)mappingStrategy).getForceIndexes();
+    }
+
+    return doGetForceIndexes(mappingStrategy);
+  }
+
   /**
    * @author Eike Stepper
    */
-  private final class SystemPackageMappingInfo
+  private static final class SystemPackageMappingInfo
   {
     public boolean ecoreMapped;
 

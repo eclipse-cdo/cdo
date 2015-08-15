@@ -19,6 +19,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
+import org.eclipse.net4j.internal.db.ddl.InternalDBIndex2;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.ObjectUtil;
 
@@ -34,6 +35,8 @@ import java.util.Map;
  */
 public final class DBIndexDelta extends DBDeltaWithProperties implements IDBIndexDelta
 {
+  public static final String OPTIONAL_PROPERTY = "optional";
+
   private static final long serialVersionUID = 1L;
 
   private Map<String, IDBIndexFieldDelta> indexFieldDeltas = new HashMap<String, IDBIndexFieldDelta>();
@@ -53,6 +56,14 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
     {
       addPropertyDelta(
           new DBPropertyDelta<IDBIndex.Type>(this, TYPE_PROPERTY, IDBPropertyDelta.Type.STRING, type, oldType));
+    }
+
+    Boolean optional = index == null ? null : ((InternalDBIndex2)index).isOptional();
+    Boolean oldOptional = oldIndex == null ? null : ((InternalDBIndex2)oldIndex).isOptional();
+    if (!ObjectUtil.equals(optional, oldOptional))
+    {
+      addPropertyDelta(
+          new DBPropertyDelta<Boolean>(this, OPTIONAL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, optional, oldOptional));
     }
 
     IDBIndexField[] indexFields = index == null ? InternalDBIndex.NO_INDEX_FIELDS : index.getIndexFields();

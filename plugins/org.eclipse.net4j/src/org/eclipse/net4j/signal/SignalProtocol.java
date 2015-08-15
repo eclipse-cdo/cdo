@@ -18,7 +18,6 @@ import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -31,7 +30,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.internal.net4j.bundle.OM;
 
-import org.eclipse.spi.net4j.InternalChannel;
 import org.eclipse.spi.net4j.Protocol;
 
 import java.io.IOException;
@@ -41,7 +39,6 @@ import java.nio.ByteBuffer;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 /**
  * The default implementation of a {@link ISignalProtocol signal protocol}.
@@ -634,25 +631,14 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
       return timeout;
     }
 
+    /**
+     * @noreference This method is not intended to be referenced by clients.
+     */
     @Override
-    public int read() throws IOException
+    protected void closeChannel()
     {
-      if (isCCAM())
-      {
-        final InternalChannel channel = (InternalChannel)getChannel();
-
-        ExecutorService executorService = channel.getReceiveExecutor();
-        executorService.submit(new Runnable()
-        {
-          public void run()
-          {
-            ConcurrencyUtil.sleep(500);
-            channel.close();
-          }
-        });
-      }
-
-      return super.read();
+      IChannel channel = getChannel();
+      LifecycleUtil.deactivate(channel);
     }
   }
 

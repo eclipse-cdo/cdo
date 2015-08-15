@@ -12,12 +12,12 @@ package org.eclipse.net4j.internal.jvm;
 
 import org.eclipse.net4j.jvm.IJVMChannel;
 
-import org.eclipse.spi.net4j.Channel;
+import org.eclipse.internal.net4j.Channel2;
 
 /**
  * @author Eike Stepper
  */
-public class JVMChannel extends Channel implements IJVMChannel
+public class JVMChannel extends Channel2 implements IJVMChannel
 {
   private JVMChannel peer;
 

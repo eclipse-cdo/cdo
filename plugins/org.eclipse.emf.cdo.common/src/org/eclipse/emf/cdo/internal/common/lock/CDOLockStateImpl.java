@@ -30,7 +30,7 @@ public class CDOLockStateImpl implements InternalCDOLockState
 {
   private static final Set<CDOLockOwner> NO_LOCK_OWNERS = Collections.emptySet();
 
-  private Object lockedObject;
+  private final Object lockedObject;
 
   private Set<CDOLockOwner> readLockOwners;
 
@@ -64,10 +64,14 @@ public class CDOLockStateImpl implements InternalCDOLockState
     return newLockState;
   }
 
+  @Deprecated
   public void updateFrom(Object object, CDOLockState source)
   {
-    lockedObject = object;
+    updateFrom(source);
+  }
 
+  public void updateFrom(CDOLockState source)
+  {
     Set<CDOLockOwner> owners = source.getReadLockOwners();
     if (owners.isEmpty())
     {
@@ -271,6 +275,25 @@ public class CDOLockStateImpl implements InternalCDOLockState
       return false;
     }
 
+    if (!getReadLockOwners().equals(other.getReadLockOwners()))
+    {
+      return false;
+    }
+
+    if (writeLockOwner == null && other.getWriteLockOwner() != null
+        || writeLockOwner != null && other.getWriteLockOwner() == null
+        || writeLockOwner != null && !writeLockOwner.equals(other.getWriteLockOwner()))
+    {
+      return false;
+    }
+
+    if (writeOptionOwner == null && other.getWriteOptionOwner() != null
+        || writeOptionOwner != null && other.getWriteOptionOwner() == null
+        || writeOptionOwner != null && !writeOptionOwner.equals(other.getWriteOptionOwner()))
+    {
+      return false;
+    }
+
     return true;
   }
 
@@ -316,7 +339,6 @@ public class CDOLockStateImpl implements InternalCDOLockState
 
   public void dispose()
   {
-    lockedObject = null;
     readLockOwners = null;
     writeLockOwner = null;
     writeOptionOwner = null;

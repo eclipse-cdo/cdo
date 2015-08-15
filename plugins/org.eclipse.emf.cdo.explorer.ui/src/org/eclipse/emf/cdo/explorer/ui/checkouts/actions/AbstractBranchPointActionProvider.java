@@ -50,10 +50,15 @@ public abstract class AbstractBranchPointActionProvider extends AbstractActionPr
     super(CDOCheckout.class, id, title, ICommonMenuConstants.GROUP_ADDITIONS);
   }
 
+  protected boolean createSubMenu(CDOCheckout checkout)
+  {
+    return checkout.isOpen();
+  }
+
   @Override
   protected final boolean fillSubMenu(ICommonViewerWorkbenchSite viewSite, IMenuManager subMenu, CDOCheckout checkout)
   {
-    if (checkout.isOpen())
+    if (createSubMenu(checkout))
     {
       IWorkbenchPage page = viewSite.getPage();
       subMenu.add(new Separator("top"));

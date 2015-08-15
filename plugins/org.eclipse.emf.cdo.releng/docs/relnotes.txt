@@ -22,3 +22,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475031
 
 475032: NPE on local resource unload
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475032
+
+475033: ClassCastException on CDODeltaNotification.getNewValue or getOldValue for Enum-based attribute
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475033

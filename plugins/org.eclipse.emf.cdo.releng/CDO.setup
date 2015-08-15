@@ -57,12 +57,6 @@
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      id=""
-      option="-Doomph.redirection.cdosetup"
-      value="=http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/plugins/org.eclipse.emf.cdo.releng/CDO.setup"
-      vm="true"/>
-  <setupTask
-      xsi:type="setup:EclipseIniTask"
       option="-Xmx"
       value="4g"
       vm="true"/>
@@ -316,7 +310,7 @@
             pattern="org\.eclipse\.emf\.cdo.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.1 //@setupTasks.12/@workingSets.2 //@setupTasks.12/@workingSets.3 //@setupTasks.12/@workingSets.7 //@setupTasks.12/@workingSets.8 //@setupTasks.12/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.1 //@setupTasks.11/@workingSets.2 //@setupTasks.11/@workingSets.3 //@setupTasks.11/@workingSets.7 //@setupTasks.11/@workingSets.8 //@setupTasks.11/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -329,7 +323,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -348,7 +342,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -361,7 +355,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -374,7 +368,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.5 //@setupTasks.12/@workingSets.6 //@setupTasks.12/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.5 //@setupTasks.11/@workingSets.6 //@setupTasks.11/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -387,7 +381,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -409,7 +403,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -435,7 +429,7 @@
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets.7 //@setupTasks.12/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.7 //@setupTasks.11/@workingSets.9"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -577,6 +571,12 @@
       <repository
           url="http://download.eclipse.org/releases/mars"/>
     </setupTask>
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        id=""
+        option="-Doomph.redirection.cdosetup"
+        value="=http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/plugins/org.eclipse.emf.cdo.releng/CDO.setup"
+        vm="true"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.git.branch"

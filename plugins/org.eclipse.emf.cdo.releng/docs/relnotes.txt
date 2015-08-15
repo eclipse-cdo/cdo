@@ -31,3 +31,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475034
 
 475035: Main branch can have wrong timestamp on server
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475035
+
+475036: CDORevisionCacheNonAuditing.addRevision() can replace newer revisions with older ones
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475036

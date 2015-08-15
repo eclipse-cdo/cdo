@@ -37,3 +37,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475036
 
 475038: Only offer optional compare or history functionality if that's available
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475038
+
+475039: Enhance ThreadPool and use it as much as possible
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475039

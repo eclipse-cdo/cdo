@@ -310,7 +310,7 @@
             pattern="org\.eclipse\.emf\.cdo.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.1 //@setupTasks.11/@workingSets.2 //@setupTasks.11/@workingSets.3 //@setupTasks.11/@workingSets.7 //@setupTasks.11/@workingSets.8 //@setupTasks.11/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.1 //@setupTasks.11/@workingSets.2 //@setupTasks.11/@workingSets.3 //@setupTasks.11/@workingSets.7 //@setupTasks.11/@workingSets.8"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -429,27 +429,8 @@
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7 //@setupTasks.11/@workingSets.9"/>
+            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
       </predicate>
-    </workingSet>
-    <workingSet
-        name="Infrastructure"
-        id="CDO Infrastructure">
-      <predicate
-          xsi:type="predicates:NamePredicate"
-          pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
-      <predicate
-          xsi:type="predicates:NamePredicate"
-          pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
-      <predicate
-          xsi:type="predicates:NamePredicate"
-          pattern="cdo\.www.*"/>
-      <predicate
-          xsi:type="predicates:NamePredicate"
-          pattern="org\.eclipse\.simrel\.build.*"/>
-      <predicate
-          xsi:type="predicates:NamePredicate"
-          pattern="com\.ibm\.db2\.jcc.*"/>
     </workingSet>
   </setupTask>
   <setupTask
@@ -593,6 +574,28 @@
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
         value="4.4"/>
+    <setupTask
+        xsi:type="setup.workingsets:WorkingSetTask">
+      <workingSet
+          name="Infrastructure"
+          id="CDO Infrastructure">
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="cdo\.www.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="org\.eclipse\.simrel\.build.*"/>
+        <predicate
+            xsi:type="predicates:NamePredicate"
+            pattern="com\.ibm\.db2\.jcc.*"/>
+      </workingSet>
+    </setupTask>
   </stream>
   <stream name="4.4-maintenance"
       label="4.4 Maintenance">

@@ -52,3 +52,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475042
 
 475043: RecoveringExceptionHandler swallows non-transport exceptions
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475043
+
+475045: [Legacy] Improve loading performance
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475045

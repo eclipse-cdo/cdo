@@ -40,3 +40,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475038
 
 475039: Enhance ThreadPool and use it as much as possible
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475039
+
+475040: CDOLockStateImpl.lockedObject field should not be updable
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475040

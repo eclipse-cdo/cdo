@@ -55,3 +55,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475043
 
 475045: [Legacy] Improve loading performance
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475045
+
+475046: Add mapping strategy option to support index creation on all cross references
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475046

@@ -13,3 +13,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475028
 
 475029: History page support (cdo.ui.team) is missing from cdo-feature
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475029
+
+475030: Conflicts between CDO rename handler and Papyrus rename handler
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475030

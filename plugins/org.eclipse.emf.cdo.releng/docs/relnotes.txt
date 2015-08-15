@@ -28,3 +28,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475033
 
 475034: Problems with explicit locking and high-frequency session open/close
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475034
+
+475035: Main branch can have wrong timestamp on server
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475035

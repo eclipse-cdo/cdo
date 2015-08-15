@@ -16,3 +16,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475029
 
 475030: Conflicts between CDO rename handler and Papyrus rename handler
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475030
+
+475031: Public methods of CDOUtil cannot be used
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475031

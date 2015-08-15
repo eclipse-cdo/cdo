@@ -25,3 +25,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475032
 
 475033: ClassCastException on CDODeltaNotification.getNewValue or getOldValue for Enum-based attribute
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475033
+
+475034: Problems with explicit locking and high-frequency session open/close
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475034

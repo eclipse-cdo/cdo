@@ -7,3 +7,6 @@ https://bugs.eclipse.org/bugs/show_bug.cgi?id=475026
 
 475027: Resource removal doesn't work with Mars M7
 https://bugs.eclipse.org/bugs/show_bug.cgi?id=475027
+
+475028: Avoid LockStateRequest for NEW objects
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=475028

@@ -97,7 +97,8 @@
   <setupTask
       xsi:type="git:GitCloneTask"
       id="cdo.git.clone"
-      remoteURI="cdo/cdo">
+      remoteURI="cdo/cdo"
+      checkoutBranch="${cdo.git.branch}">
     <annotation
         source="http://www.eclipse.org/oomph/setup/InducedChoices">
       <detail
@@ -574,6 +575,10 @@
     </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"
+        name="cdo.git.branch"
+        value="master"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
         name="cdo.target.platform"
         value="Neon"/>
     <setupTask
@@ -585,7 +590,7 @@
         name="cdo.baseline.version"
         value="4.4"/>
   </stream>
-  <stream name="streams/4.4-maintenance"
+  <stream name="4.4-maintenance"
       label="4.4 Maintenance">
     <setupTask
         xsi:type="setup.p2:P2Task">
@@ -602,6 +607,10 @@
     </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"
+        name="cdo.git.branch"
+        value="streams/4.4-maintenance"/>
+    <setupTask
+        xsi:type="setup:VariableTask"
         name="cdo.target.platform"
         value="Mars"/>
     <setupTask
@@ -613,7 +622,7 @@
         name="cdo.baseline.version"
         value="4.4"/>
   </stream>
-  <stream name="streams/4.3-maintenance"
+  <stream name="4.3-maintenance"
       label="4.3 Maintenance">
     <setupTask
         xsi:type="setup.p2:P2Task">
@@ -628,6 +637,10 @@
       <repository
           url="http://download.eclipse.org/releases/luna"/>
     </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="cdo.git.branch"
+        value="streams/4.3-maintenance"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"

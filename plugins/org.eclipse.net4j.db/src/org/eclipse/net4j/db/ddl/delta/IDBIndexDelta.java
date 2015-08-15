@@ -25,6 +25,11 @@ public interface IDBIndexDelta extends IDBDeltaWithProperties
 {
   public static final String TYPE_PROPERTY = "type";
 
+  /**
+   * @since 4.5
+   */
+  public static final String OPTIONAL_PROPERTY = "optional";
+
   public IDBTableDelta getParent();
 
   public int getIndexFieldDeltaCount();

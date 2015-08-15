@@ -180,6 +180,20 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     return result.toArray(new IDBField[result.size()]);
   }
 
+  public boolean hasIndexFor(IDBField... fields)
+  {
+    for (IDBIndex index : indices)
+    {
+      IDBField[] indexFields = index.getFields();
+      if (startsWith(indexFields, fields))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   public IDBIndex addIndex(String name, IDBIndex.Type type, IDBField... fields)
   {
     assertUnlocked();
@@ -338,5 +352,25 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   private void assertUnlocked()
   {
     ((InternalDBSchema)schema).assertUnlocked();
+  }
+
+  private static boolean startsWith(IDBField[] indexFields, IDBField[] fields)
+  {
+    int length = fields.length;
+    if (length <= indexFields.length)
+    {
+      for (int i = 0; i < length; i++)
+      {
+        IDBField field = fields[i];
+        if (field != indexFields[i])
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    return false;
   }
 }

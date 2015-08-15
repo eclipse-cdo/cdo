@@ -409,7 +409,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     int objectTypeCacheSize = ObjectTypeCache.DEFAULT_CACHE_CAPACITY;
 
-    Object value = getProperties().get(PROP_OBJECT_TYPE_CACHE_SIZE);
+    Object value = getProperties().get(Props.OBJECT_TYPE_CACHE_SIZE);
     if (value != null)
     {
       try

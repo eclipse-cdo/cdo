@@ -381,7 +381,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
   private ColumnTypeModifier getColumnTypeModifier(IMappingStrategy mappingStrategy)
   {
-    String factoryType = mappingStrategy.getProperties().get(IMappingStrategy.PROP_COLUMN_TYPE_MODIFIER);
+    String factoryType = mappingStrategy.getProperties().get(IMappingStrategy.Props.COLUMN_TYPE_MODIFIER);
     if (factoryType == null)
     {
       factoryType = mappingStrategy.getStore().getDBAdapter().getName();
@@ -515,7 +515,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
               registerFactoryType(factoryType);
             }
             else
-              // delta.getKind() == Kind.REMOVED
+            // delta.getKind() == Kind.REMOVED
             {
               // XXX Runtime removal of typeMappingFactories removal of type mappings is currently not supported.
               OM.LOG.warn(Messages.getString("TypeMappingRegistry.3"));

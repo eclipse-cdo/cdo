@@ -230,7 +230,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     dataSource.setURL("jdbc:h2:" + dbPrefix);
 
     Map<String, String> props = new HashMap<String, String>();
-    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    props.put(IMappingStrategy.Props.QUALIFIED_NAMES, "true");
 
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true, false);
     mappingStrategy.setProperties(props);

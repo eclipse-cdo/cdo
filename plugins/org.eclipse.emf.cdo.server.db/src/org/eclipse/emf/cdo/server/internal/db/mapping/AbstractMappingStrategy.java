@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOFeatureType;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -120,6 +121,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private SystemPackageMappingInfo systemPackageMappingInfo;
 
+  private Set<CDOFeatureType> forceIndexes;
+
   public AbstractMappingStrategy()
   {
     classMappings = new ConcurrentHashMap<EClass, IClassMapping>();
@@ -144,32 +147,42 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   private int getMaxTableNameLength()
   {
-    String value = getProperties().get(PROP_MAX_TABLE_NAME_LENGTH);
+    String value = getProperties().get(Props.MAX_TABLE_NAME_LENGTH);
     return value == null ? store.getDBAdapter().getMaxTableNameLength() : Integer.valueOf(value);
   }
 
   private int getMaxFieldNameLength()
   {
-    String value = getProperties().get(PROP_MAX_FIELD_NAME_LENGTH);
+    String value = getProperties().get(Props.MAX_FIELD_NAME_LENGTH);
     return value == null ? store.getDBAdapter().getMaxFieldNameLength() : Integer.valueOf(value);
   }
 
   private boolean isQualifiedNames()
   {
-    String value = getProperties().get(PROP_QUALIFIED_NAMES);
+    String value = getProperties().get(Props.QUALIFIED_NAMES);
     return value == null ? false : Boolean.valueOf(value);
   }
 
   private boolean isForceNamesWithID()
   {
-    String value = getProperties().get(PROP_FORCE_NAMES_WITH_ID);
+    String value = getProperties().get(Props.FORCE_NAMES_WITH_ID);
     return value == null ? false : Boolean.valueOf(value);
   }
 
   private String getTableNamePrefix()
   {
-    String value = getProperties().get(PROP_TABLE_NAME_PREFIX);
+    String value = getProperties().get(Props.TABLE_NAME_PREFIX);
     return StringUtil.safe(value);
+  }
+
+  public Set<CDOFeatureType> getForceIndexes()
+  {
+    if (forceIndexes == null)
+    {
+      forceIndexes = doGetForceIndexes(this);
+    }
+
+    return forceIndexes;
   }
 
   // -- getters and setters ----------------------------------------------
@@ -791,10 +804,25 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
 
+  private static Set<CDOFeatureType> doGetForceIndexes(IMappingStrategy mappingStrategy)
+  {
+    return CDOFeatureType.readCombination(mappingStrategy.getProperties().get(Props.FORCE_INDEXES));
+  }
+
+  public static Set<CDOFeatureType> getForceIndexes(IMappingStrategy mappingStrategy)
+  {
+    if (mappingStrategy instanceof AbstractMappingStrategy)
+    {
+      return ((AbstractMappingStrategy)mappingStrategy).getForceIndexes();
+    }
+
+    return doGetForceIndexes(mappingStrategy);
+  }
+
   /**
    * @author Eike Stepper
    */
-  private final class SystemPackageMappingInfo
+  private static final class SystemPackageMappingInfo
   {
     public boolean ecoreMapped;
 

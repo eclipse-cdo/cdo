@@ -54,6 +54,8 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
 
   private List<IDBIndexField> indexFields = new ArrayList<IDBIndexField>();
 
+  private boolean optional;
+
   public DBIndex(IDBTable table, String name, Type type, IDBField[] fields)
   {
     super(name);
@@ -109,6 +111,16 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   {
     assertUnlocked();
     this.type = type;
+  }
+
+  public boolean isOptional()
+  {
+    return optional;
+  }
+
+  public void setOptional(boolean optional)
+  {
+    this.optional = optional;
   }
 
   @Deprecated

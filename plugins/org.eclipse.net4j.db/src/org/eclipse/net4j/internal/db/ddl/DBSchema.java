@@ -25,6 +25,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 import javax.sql.DataSource;
@@ -75,6 +76,8 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
       for (IDBIndex sourceIndex : sourceTable.getIndices())
       {
         IDBIndex index = table.addIndexEmpty(sourceIndex.getName(), sourceIndex.getType());
+        ((InternalDBIndex)index).setOptional(((InternalDBIndex)sourceIndex).isOptional());
+
         for (IDBField sourceField : sourceIndex.getFields())
         {
           IDBField field = table.getField(sourceField.getPosition());

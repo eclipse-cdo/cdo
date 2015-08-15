@@ -27,6 +27,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -395,21 +396,41 @@ public abstract class DBAdapter implements IDBAdapter
       @Override
       public void visit(IDBIndexDelta delta)
       {
-        IDBIndex element = delta.getSchemaElement(schema);
+        InternalDBIndex index = (InternalDBIndex)delta.getSchemaElement(schema);
         ChangeKind changeKind = delta.getChangeKind();
         switch (changeKind)
         {
         case ADD:
-          createIndex(connection, element, delta);
+          try
+          {
+            createIndex(connection, index, delta);
+          }
+          catch (RuntimeException ex)
+          {
+            if (!index.isOptional())
+            {
+              throw ex;
+            }
+          }
           break;
 
         case REMOVE:
-          dropIndex(connection, element, delta);
+          dropIndex(connection, index, delta);
           break;
 
         case CHANGE:
-          dropIndex(connection, element, delta);
-          createIndex(connection, element, delta);
+          dropIndex(connection, index, delta);
+          try
+          {
+            createIndex(connection, index, delta);
+          }
+          catch (RuntimeException ex)
+          {
+            if (!index.isOptional())
+            {
+              throw ex;
+            }
+          }
           break;
 
         default:
@@ -769,7 +790,26 @@ public abstract class DBAdapter implements IDBAdapter
     IDBIndex[] indices = table.getIndices();
     for (int i = 0; i < indices.length; i++)
     {
-      createIndex(indices[i], statement, i);
+      InternalDBIndex index = (InternalDBIndex)indices[i];
+
+      try
+      {
+        createIndex(index, statement, i);
+      }
+      catch (SQLException ex)
+      {
+        if (!index.isOptional())
+        {
+          throw ex;
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        if (!index.isOptional())
+        {
+          throw ex;
+        }
+      }
     }
   }
 

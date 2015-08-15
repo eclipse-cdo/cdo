@@ -136,7 +136,8 @@ public abstract class DBConfig extends RepositoryConfig
   protected Map<String, String> createMappingStrategyProperties()
   {
     Map<String, String> props = new HashMap<String, String>();
-    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    props.put(IMappingStrategy.Props.QUALIFIED_NAMES, "true");
+    props.put(IMappingStrategy.Props.FORCE_INDEXES, "XREF");
     props.put(CDODBUtil.PROP_COPY_ON_BRANCH, Boolean.toString(copyOnBranch));
     return props;
   }

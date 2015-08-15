@@ -26,4 +26,14 @@ public interface InternalDBIndex extends IDBIndex, InternalDBSchemaElement
   public IDBIndex getWrapper();
 
   public void removeIndexField(IDBIndexField indexFieldToRemove);
+
+  /**
+   * @since 4.5
+   */
+  public boolean isOptional();
+
+  /**
+   * @since 4.5
+   */
+  public void setOptional(boolean optional);
 }

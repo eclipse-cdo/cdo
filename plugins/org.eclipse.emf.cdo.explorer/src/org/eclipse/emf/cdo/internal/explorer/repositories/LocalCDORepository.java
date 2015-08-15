@@ -161,7 +161,7 @@ public class LocalCDORepository extends CDORepositoryImpl
   protected Map<String, String> getMappingStrategyProperties()
   {
     Map<String, String> props = new HashMap<String, String>();
-    props.put(IMappingStrategy.PROP_QUALIFIED_NAMES, "true");
+    props.put(IMappingStrategy.Props.QUALIFIED_NAMES, "true");
     props.put(CDODBUtil.PROP_COPY_ON_BRANCH, "true");
     return props;
   }

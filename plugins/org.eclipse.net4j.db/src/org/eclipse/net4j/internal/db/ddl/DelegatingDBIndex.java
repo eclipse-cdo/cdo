@@ -80,6 +80,16 @@ public final class DelegatingDBIndex extends DelegatingDBSchemaElement implement
     getDelegate().removeIndexField(unwrap(indexFieldToRemove));
   }
 
+  public boolean isOptional()
+  {
+    return getDelegate().isOptional();
+  }
+
+  public void setOptional(boolean optional)
+  {
+    getDelegate().setOptional(optional);
+  }
+
   @Deprecated
   public int getPosition()
   {

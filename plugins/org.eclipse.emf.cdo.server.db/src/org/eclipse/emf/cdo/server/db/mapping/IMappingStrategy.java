@@ -56,31 +56,46 @@ public interface IMappingStrategy
   /**
    * Name of the integer property that configures the maximum length for table names. A value of zero indicates the
    * value of the {@link IDBAdapter#getMaxTableNameLength() db adapter} to be used.
+   *
+   * @deprecated As of 4.4 use {@link Props#MAX_TABLE_NAME_LENGTH}.
    */
-  public static final String PROP_MAX_TABLE_NAME_LENGTH = "maxTableNameLength"; //$NON-NLS-1$
+  @Deprecated
+  public static final String PROP_MAX_TABLE_NAME_LENGTH = Props.MAX_TABLE_NAME_LENGTH;
 
   /**
    * Name of the integer property that configures the maximum length for column names. A value of zero indicates the
    * value of the {@link IDBAdapter#getMaxFieldNameLength() db adapter} to be used.
+   *
+   * @deprecated As of 4.4 use {@link Props#MAX_FIELD_NAME_LENGTH}.
    */
-  public static final String PROP_MAX_FIELD_NAME_LENGTH = "maxFieldNameLength"; //$NON-NLS-1$
+  @Deprecated
+  public static final String PROP_MAX_FIELD_NAME_LENGTH = Props.MAX_FIELD_NAME_LENGTH;
 
   /**
    * Name of the String property that specifies a common prefix for table names.
+   *
+   * @deprecated As of 4.4 use {@link Props#TABLE_NAME_PREFIX}.
    */
-  public static final String PROP_TABLE_NAME_PREFIX = "tableNamePrefix"; //$NON-NLS-1$
+  @Deprecated
+  public static final String PROP_TABLE_NAME_PREFIX = Props.TABLE_NAME_PREFIX;
 
   /**
    * Name of the boolean property that configures whether the table names are made of simple class names or of qualified
    * class names.
+   *
+   * @deprecated As of 4.4 use {@link Props#QUALIFIED_NAMES}.
    */
-  public static final String PROP_QUALIFIED_NAMES = "qualifiedNames"; //$NON-NLS-1$
+  @Deprecated
+  public static final String PROP_QUALIFIED_NAMES = Props.QUALIFIED_NAMES;
 
   /**
    * Name of the boolean property that configures whether table names and column names are always suffixed with the
    * internal DBID or only in cases where generated names violate the naming constraints of the underlying backend.
+   *
+   * @deprecated As of 4.4 use {@link Props#FORCE_NAMES_WITH_ID}.
    */
-  public static final String PROP_FORCE_NAMES_WITH_ID = "forceNamesWithID"; //$NON-NLS-1$
+  @Deprecated
+  public static final String PROP_FORCE_NAMES_WITH_ID = Props.FORCE_NAMES_WITH_ID;
 
   /**
    * Name of the integer property that configures the size of the object type in-memory cache. Possible configuration
@@ -93,15 +108,19 @@ public interface IMappingStrategy
    * <p>
    *
    * @since 4.0
+   * @deprecated As of 4.4 use {@link Props#OBJECT_TYPE_CACHE_SIZE}.
    */
-  public static final String PROP_OBJECT_TYPE_CACHE_SIZE = "objectTypeCacheSize"; //$NON-NLS-1$
+  @Deprecated
+  public static final String PROP_OBJECT_TYPE_CACHE_SIZE = Props.OBJECT_TYPE_CACHE_SIZE;
 
   /**
    * Name of a String property that specifies the name of a {@link ColumnTypeModifier column type modifier}.
    *
    * @since 4.2
+   * @deprecated As of 4.4 use {@link Props#COLUMN_TYPE_MODIFIER}.
    */
-  public static final String PROP_COLUMN_TYPE_MODIFIER = "columnTypeModifier"; //$NON-NLS-1$
+  @Deprecated
+  public static final String PROP_COLUMN_TYPE_MODIFIER = Props.COLUMN_TYPE_MODIFIER;
 
   /**
    * @return the store, this MappingStrategy instance belongs to.
@@ -352,4 +371,67 @@ public interface IMappingStrategy
    * @since 4.0
    */
   public String getListJoin(String attrTable, String listTable);
+
+  /**
+   * Contains symbolic constants that specifiy valid keys of {@link IMappingStrategy#getProperties() mapping strategy properties}.
+   *
+   * @author Eike Stepper
+   * @since 4.4
+   * @noimplement This interface is not intended to be implemented by clients.
+   * @noextend This interface is not intended to be extended by clients.
+   * @apiviz.exclude
+   */
+  public interface Props
+  {
+    /**
+     * Name of the integer property that configures the maximum length for table names. A value of zero indicates the
+     * value of the {@link IDBAdapter#getMaxTableNameLength() db adapter} to be used.
+     */
+    public static final String MAX_TABLE_NAME_LENGTH = "maxTableNameLength"; //$NON-NLS-1$
+
+    /**
+     * Name of the integer property that configures the maximum length for column names. A value of zero indicates the
+     * value of the {@link IDBAdapter#getMaxFieldNameLength() db adapter} to be used.
+     */
+    public static final String MAX_FIELD_NAME_LENGTH = "maxFieldNameLength"; //$NON-NLS-1$
+
+    /**
+     * Name of the String property that specifies a common prefix for table names.
+     */
+    public static final String TABLE_NAME_PREFIX = "tableNamePrefix"; //$NON-NLS-1$
+
+    /**
+     * Name of the boolean property that configures whether the table names are made of simple class names or of qualified
+     * class names.
+     */
+    public static final String QUALIFIED_NAMES = "qualifiedNames"; //$NON-NLS-1$
+
+    /**
+     * Name of the boolean property that configures whether table names and column names are always suffixed with the
+     * internal DBID or only in cases where generated names violate the naming constraints of the underlying backend.
+     */
+    public static final String FORCE_NAMES_WITH_ID = "forceNamesWithID"; //$NON-NLS-1$
+
+    /**
+     * Name of the String property that configures on what types of {@link EStructuralFeature structural features} additional
+     * indexes are to be created.
+     */
+    public static final String FORCE_INDEXES = "forceIndexes"; //$NON-NLS-1$
+
+    /**
+     * Name of the integer property that configures the size of the object type in-memory cache. Possible configuration
+     * values are:
+     * <ul>
+     * <li>0 (zero). Don't use memory caching.
+     * <li>&gt;0. Use memory caching with the cache size given.
+     * </ul>
+     * Default is a memory cache size of 10,000,000.
+     */
+    public static final String OBJECT_TYPE_CACHE_SIZE = "objectTypeCacheSize"; //$NON-NLS-1$
+
+    /**
+     * Name of a String property that specifies the name of a {@link ColumnTypeModifier column type modifier}.
+     */
+    public static final String COLUMN_TYPE_MODIFIER = "columnTypeModifier"; //$NON-NLS-1$
+  }
 }

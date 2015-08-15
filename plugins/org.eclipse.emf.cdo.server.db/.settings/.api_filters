@@ -10,6 +10,12 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy"/>
+                <message_argument value="PROP_FORCE_INDEXES"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy"/>
                 <message_argument value="PROP_TYPE_MAPPING_MODIFIER"/>
             </message_arguments>
         </filter>

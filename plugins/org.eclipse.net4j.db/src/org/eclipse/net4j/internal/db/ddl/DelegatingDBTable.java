@@ -139,6 +139,11 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
     return wrap(getDelegate().getFields(fieldNames), IDBField.class);
   }
 
+  public boolean hasIndexFor(IDBField... fields)
+  {
+    return getDelegate().hasIndexFor(unwrap(fields, IDBField.class));
+  }
+
   public IDBIndex addIndex(String name, Type type, IDBField... fields)
   {
     return wrap(getDelegate().addIndex(name, type, unwrap(fields, IDBField.class)));

@@ -805,9 +805,9 @@
           </properties>
           <args>
             <arg value="-r" />
-            <arg value="http://download.eclipse.org/tools/buckminster/headless-4.4" />
+            <arg value="http://download.eclipse.org/tools/buckminster/headless-4.5" />
             <arg value="-r" />
-            <arg value="http://download.eclipse.org/releases/luna" />
+            <arg value="http://download.eclipse.org/releases/mars" />
             <arg value="-d" />
             <arg value="${tools}/buckminster" />
             <arg value="-p" />

@@ -118,7 +118,7 @@
       xsi:type="setup.targlets:TargletTask">
     <targlet
         name="CDO"
-        activeRepositoryList="${cdo.target.platform}">
+        activeRepositoryList="${eclipse.target.platform}">
       <requirement
           name="org.eclipse.emf.cdo.site.feature.group"/>
       <requirement

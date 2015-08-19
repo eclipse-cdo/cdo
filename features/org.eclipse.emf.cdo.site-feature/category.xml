@@ -65,8 +65,8 @@
 	<feature id="org.eclipse.emf.cdo.releng.tasks" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
 
 	<!-- Others -->
-	<feature id="org.eclipse.emf.cdo.explorer.product" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.server.product" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>
+	<!--feature id="org.eclipse.emf.cdo.explorer.product" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature-->
+	<!--feature id="org.eclipse.emf.cdo.server.product" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature-->
 	<feature id="org.eclipse.net4j.defs" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>
 	<feature id="org.eclipse.emf.cdo.defs" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>
 	<feature id="org.eclipse.emf.cdo.epp" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>

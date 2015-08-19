@@ -62,9 +62,9 @@
          id="org.eclipse.emf.cdo.examples.hibernate"
          version="0.0.0"/>
 
-   <includes
+   <!--includes
          id="org.eclipse.emf.cdo.explorer.product"
-         version="0.0.0"/>
+         version="0.0.0"/-->
 
    <includes
          id="org.eclipse.emf.cdo.sdk"
@@ -94,9 +94,9 @@
          id="org.eclipse.emf.cdo.server.objectivity"
          version="0.0.0"/>
 
-   <includes
+   <!--includes
          id="org.eclipse.emf.cdo.server.product"
-         version="0.0.0"/>
+         version="0.0.0"/-->
 
    <includes
          id="org.eclipse.emf.cdo.tests"

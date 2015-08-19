@@ -166,7 +166,7 @@
 
 		<!-- ORBIT -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-  		<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
+  		<rm:uri format="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
 		</rm:provider>
 
 		<!-- TENEO -->

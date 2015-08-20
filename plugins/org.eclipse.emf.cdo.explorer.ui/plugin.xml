@@ -13,8 +13,6 @@
 
 <plugin>
 
-   <extension-point id="editorOpeners" name="Editor Openers" schema="schema/editorOpeners.exsd"/>
-
   <extension id="app" point="org.eclipse.core.runtime.applications" name="%app.name">
       <application>
          <run class="org.eclipse.emf.cdo.explorer.ui.application.CDOExplorerApplication"/>

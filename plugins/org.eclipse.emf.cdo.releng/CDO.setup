@@ -148,7 +148,7 @@
       <repositoryList
           name="Neon">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
+            url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/core"/>
         <repository
@@ -199,7 +199,7 @@
       <repositoryList
           name="Mars">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-S"/>
+            url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/core"/>
         <repository

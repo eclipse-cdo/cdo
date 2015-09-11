@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.text.MessageFormat;
@@ -47,7 +46,7 @@ public final class LoadResourceAction extends AbstractViewAction
       resourcePath = dialog.getValue();
       if (!getView().hasResource(resourcePath))
       {
-        MessageDialog.openError(new Shell(), Messages.getString("LoadResourceAction.2"), MessageFormat.format( //$NON-NLS-1$
+        MessageDialog.openError(getShell(), Messages.getString("LoadResourceAction.2"), MessageFormat.format( //$NON-NLS-1$
             Messages.getString("LoadResourceAction.3"), resourcePath)); //$NON-NLS-1$
         cancel();
       }

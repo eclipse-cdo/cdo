@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class ImportResourceActionDelegate extends NewResourceActionDelegate
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
-    ImportResourceDialog dialog = new ImportResourceDialog(new Shell(),
+    ImportResourceDialog dialog = new ImportResourceDialog(getShell(),
         Messages.getString("ImportResourceToFolderAction_0"), SWT.OPEN); //$NON-NLS-1$
     if (dialog.open() == ImportResourceDialog.OK)
     {
@@ -66,7 +65,7 @@ public class ImportResourceActionDelegate extends NewResourceActionDelegate
         return transactionalObject;
       }
 
-      MessageDialog.openError(new Shell(), Messages.getString("ImportResourceActionDelegate.0"), //$NON-NLS-1$
+      MessageDialog.openError(getShell(), Messages.getString("ImportResourceActionDelegate.0"), //$NON-NLS-1$
           Messages.getString("ImportResourceToFolderAction_1")); //$NON-NLS-1$
       cancel();
     }

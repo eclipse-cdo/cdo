@@ -50,7 +50,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class SelectClassDialog extends TitleAreaDialog
 
   public SelectClassDialog(IWorkbenchPage page, String title, String message)
   {
-    super(new Shell(page.getWorkbenchWindow().getShell()));
+    super(page.getWorkbenchWindow().getShell());
     this.page = page;
     this.title = title;
     this.message = message;

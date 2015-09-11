@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.actions;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -104,7 +105,7 @@ public abstract class LongRunningAction extends SafeAction
       return page;
     }
 
-    IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+    IWorkbenchWindow window = UIUtil.getActiveWorkbenchWindow();
     if (window != null)
     {
       return window.getActivePage();
@@ -125,7 +126,7 @@ public abstract class LongRunningAction extends SafeAction
       return page.getWorkbenchWindow();
     }
 
-    return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+    return UIUtil.getActiveWorkbenchWindow();
   }
 
   /**
@@ -151,7 +152,7 @@ public abstract class LongRunningAction extends SafeAction
       return workbenchWindow.getShell();
     }
 
-    return new Shell();
+    return UIUtil.getShell();
   }
 
   /**

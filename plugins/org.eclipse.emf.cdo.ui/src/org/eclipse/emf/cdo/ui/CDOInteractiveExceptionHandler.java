@@ -114,7 +114,7 @@ public class CDOInteractiveExceptionHandler implements CDOSession.ExceptionHandl
 
   protected Shell getParentShell()
   {
-    return new Shell();
+    return UIUtil.getShell();
   }
 
   protected Dialog createDialog(CDOSession session, int attempt, Exception exception)

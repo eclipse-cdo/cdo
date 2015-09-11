@@ -22,7 +22,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -41,7 +40,7 @@ public class OpenDurableViewDialog extends TitleAreaDialog
 
   public OpenDurableViewDialog(IWorkbenchPage page)
   {
-    super(new Shell(page.getWorkbenchWindow().getShell()));
+    super(page.getWorkbenchWindow().getShell());
     this.page = page;
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
   }

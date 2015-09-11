@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Shell;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
-    ResourceDialog dialog = new ResourceDialog(new Shell(), Messages.getString("ExportSelectedResourceAction_1"), //$NON-NLS-1$
+    ResourceDialog dialog = new ResourceDialog(getShell(), Messages.getString("ExportSelectedResourceAction_1"), //$NON-NLS-1$
         SWT.SAVE);
     if (dialog.open() == ImportResourceDialog.OK)
     {
@@ -70,7 +69,7 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
         return transactionalObject;
       }
 
-      MessageDialog.openError(new Shell(), Messages.getString("ExportResourceActionDelegate.0"), //$NON-NLS-1$
+      MessageDialog.openError(getShell(), Messages.getString("ExportResourceActionDelegate.0"), //$NON-NLS-1$
           Messages.getString("ExportSelectedResourceAction_2")); //$NON-NLS-1$
       cancel();
     }

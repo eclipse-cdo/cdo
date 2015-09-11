@@ -83,10 +83,6 @@
       name="eclipse.target.platform"
       value="${cdo.target.platform}"/>
   <setupTask
-      xsi:type="jdt:JRETask"
-      version="JavaSE-1.7"
-      location="${jre.location-1.7}"/>
-  <setupTask
       xsi:type="pde:APIBaselineTask"
       name="CDO"
       version="${cdo.baseline.version}"
@@ -150,7 +146,7 @@
         <repository
             url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/core"/>
+            url="http://download.eclipse.org/modeling/emf/emf/updates/nightly/core"/>
         <repository
             url="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/milestones"/>
         <repository
@@ -316,7 +312,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.1 //@setupTasks.11/@workingSets.2 //@setupTasks.11/@workingSets.3 //@setupTasks.11/@workingSets.7 //@setupTasks.11/@workingSets.8"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.3 //@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.8"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -329,7 +325,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -348,7 +344,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -361,7 +357,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -374,7 +370,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.5 //@setupTasks.11/@workingSets.6 //@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.5 //@setupTasks.10/@workingSets.6 //@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -387,7 +383,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -409,7 +405,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -435,7 +431,7 @@
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
       </predicate>
     </workingSet>
   </setupTask>
@@ -581,6 +577,10 @@
         name="cdo.baseline.version"
         value="4.4"/>
     <setupTask
+        xsi:type="jdt:JRETask"
+        version="JavaSE-1.8"
+        location="${jre.location-1.8}"/>
+    <setupTask
         xsi:type="setup.workingsets:WorkingSetTask">
       <workingSet
           name="Infrastructure"
@@ -634,6 +634,10 @@
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
         value="4.4"/>
+    <setupTask
+        xsi:type="jdt:JRETask"
+        version="JavaSE-1.7"
+        location="${jre.location-1.7}"/>
   </stream>
   <stream name="4.3-maintenance"
       label="4.3 Maintenance">
@@ -666,5 +670,9 @@
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
         value="4.3"/>
+    <setupTask
+        xsi:type="jdt:JRETask"
+        version="JavaSE-1.7"
+        location="${jre.location-1.7}"/>
   </stream>
 </setup:Project>

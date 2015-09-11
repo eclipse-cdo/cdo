@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.internal.migrator.actions;
 import org.eclipse.emf.cdo.internal.messages.Messages;
 import org.eclipse.emf.cdo.internal.migrator.CDOMigratorUtil;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.EList;
@@ -33,7 +35,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IObjectActionDelegate;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
@@ -165,14 +166,13 @@ public class MigrateAction implements IObjectActionDelegate
         {
           try
           {
-            final Shell shell = new Shell(display);
             if (error)
             {
-              MessageDialog.openError(shell, Messages.getString("MigrateAction_10"), msg); //$NON-NLS-1$
+              MessageDialog.openError(UIUtil.getShell(), Messages.getString("MigrateAction_10"), msg); //$NON-NLS-1$
             }
             else
             {
-              MessageDialog.openInformation(shell, Messages.getString("MigrateAction_10"), msg); //$NON-NLS-1$
+              MessageDialog.openInformation(UIUtil.getShell(), Messages.getString("MigrateAction_10"), msg); //$NON-NLS-1$
             }
           }
           catch (RuntimeException ignore)

@@ -14,11 +14,12 @@ import org.eclipse.emf.cdo.examples.client.offline.nodes.Node;
 import org.eclipse.emf.cdo.examples.client.offline.nodes.NodeManager;
 import org.eclipse.emf.cdo.examples.client.offline.nodes.NodeManagerDialog;
 
+import org.eclipse.net4j.util.ui.UIUtil;
+
 import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
 
@@ -49,7 +50,7 @@ public class Application implements IApplication
       }
 
       NodeManager nodeManager = new NodeManager(new File(rootProperty));
-      NodeManagerDialog dialog = new NodeManagerDialog(new Shell(), nodeManager);
+      NodeManagerDialog dialog = new NodeManagerDialog(UIUtil.getShell(), nodeManager);
       if (dialog.open() != NodeManagerDialog.OK)
       {
         return IApplication.EXIT_OK;

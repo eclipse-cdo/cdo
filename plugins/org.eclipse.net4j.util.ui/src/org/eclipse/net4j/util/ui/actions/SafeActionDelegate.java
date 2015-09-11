@@ -73,8 +73,11 @@ public abstract class SafeActionDelegate implements IActionDelegate
     catch (Exception ex)
     {
       OM.LOG.error(ex);
-      MessageDialog.openError(null, getText(),
-          ex.getLocalizedMessage() + "\n" + Messages.getString("SafeActionDelegate_0")); //$NON-NLS-1$ //$NON-NLS-2$
+
+      Shell shell = getShell();
+      String text = getText();
+      String message = ex.getLocalizedMessage() + "\n" + Messages.getString("SafeActionDelegate_0"); //$NON-NLS-1$ //$NON-NLS-2$
+      MessageDialog.openError(shell, text, message);
     }
   }
 

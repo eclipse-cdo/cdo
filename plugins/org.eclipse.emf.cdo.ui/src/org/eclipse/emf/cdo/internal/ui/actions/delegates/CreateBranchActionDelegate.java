@@ -21,7 +21,6 @@ import org.eclipse.net4j.util.ui.actions.LongRunningActionDelegate;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Shell;
 
 /**
  * @author Eike Stepper
@@ -49,7 +48,7 @@ public class CreateBranchActionDelegate extends LongRunningActionDelegate
         base = (CDOBranchPoint)element;
         name = CreateBranchHandler.getValidChildName(base.getBranch());
 
-        CreateBranchDialog dialog = new CreateBranchDialog(new Shell(), base, name);
+        CreateBranchDialog dialog = new CreateBranchDialog(getShell(), base, name);
         if (dialog.open() == CreateBranchDialog.OK)
         {
           base = dialog.getBranchPoint();

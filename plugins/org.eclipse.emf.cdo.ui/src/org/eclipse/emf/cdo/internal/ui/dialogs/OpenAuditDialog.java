@@ -23,7 +23,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.util.Calendar;
@@ -46,7 +45,7 @@ public class OpenAuditDialog extends TitleAreaDialog
 
   public OpenAuditDialog(IWorkbenchPage page)
   {
-    super(new Shell(page.getWorkbenchWindow().getShell()));
+    super(page.getWorkbenchWindow().getShell());
     this.page = page;
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
   }

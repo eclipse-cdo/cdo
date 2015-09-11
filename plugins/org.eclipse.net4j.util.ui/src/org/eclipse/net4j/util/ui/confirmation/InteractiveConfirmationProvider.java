@@ -16,8 +16,6 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
 
 import java.util.Set;
 
@@ -46,19 +44,7 @@ public class InteractiveConfirmationProvider implements IConfirmationProvider
     {
       public void run()
       {
-        Shell shell;
-
-        try
-        {
-          IWorkbenchWindow window = UIUtil.getActiveWorkbenchWindow();
-          shell = window.getShell();
-        }
-        catch (Exception ex)
-        {
-          shell = new Shell(display);
-        }
-
-        confirmation[0] = ConfirmationDialog.openConfirm(shell, subject, message, acceptable, suggestion);
+        confirmation[0] = ConfirmationDialog.openConfirm(UIUtil.getShell(), subject, message, acceptable, suggestion);
       }
     });
 

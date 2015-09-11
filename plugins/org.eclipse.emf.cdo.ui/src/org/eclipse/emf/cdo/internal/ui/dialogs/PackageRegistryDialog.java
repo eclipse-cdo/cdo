@@ -45,7 +45,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.IWorkbenchPage;
@@ -77,7 +76,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
 
   public PackageRegistryDialog(IWorkbenchPage page, CDOSession session)
   {
-    super(new Shell(page.getWorkbenchWindow().getShell()));
+    super(page.getWorkbenchWindow().getShell());
     this.page = page;
     this.session = session;
     setShellStyle(getShellStyle() | SWT.APPLICATION_MODAL | SWT.MAX | SWT.TITLE | SWT.RESIZE);
@@ -147,21 +146,21 @@ public class PackageRegistryDialog extends TitleAreaDialog
     });
 
     createButton(parent, -1, Messages.getString("PackageRegistryDialog.7"), false) //$NON-NLS-1$
-    .addSelectionListener(new SelectionAdapter()
-    {
-      @Override
-      public void widgetSelected(SelectionEvent e)
-      {
-        new RegisterFilesystemPackagesAction(page, session)
+        .addSelectionListener(new SelectionAdapter()
         {
           @Override
-          protected void postRegistration(List<EPackage> ePackages)
+          public void widgetSelected(SelectionEvent e)
           {
-            refreshViewer();
+            new RegisterFilesystemPackagesAction(page, session)
+            {
+              @Override
+              protected void postRegistration(List<EPackage> ePackages)
+              {
+                refreshViewer();
+              }
+            }.run();
           }
-        }.run();
-      }
-    });
+        });
 
     CustomizeableComposite.customize(parent, IPluginContainer.INSTANCE, PRODUCT_GROUP, this);
 

@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.IDropActionDelegate;
@@ -81,7 +82,7 @@ public class RepositoryPluginDropAdapter implements IDropActionDelegate
       return false;
     }
 
-    Shell shell = new Shell();
+    Shell shell = UIUtil.getShell();
     return TransferDialog.open(shell, sourceElements, targetElement);
   }
 

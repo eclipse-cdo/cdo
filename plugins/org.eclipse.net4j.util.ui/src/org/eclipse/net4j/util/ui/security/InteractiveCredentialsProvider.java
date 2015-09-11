@@ -27,7 +27,6 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
 
 import java.text.MessageFormat;
 
@@ -62,19 +61,7 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
     {
       public void run()
       {
-        Shell shell;
-
-        try
-        {
-          IWorkbenchWindow window = UIUtil.getActiveWorkbenchWindow();
-          shell = window.getShell();
-        }
-        catch (Exception ex)
-        {
-          shell = new Shell(display);
-        }
-
-        CredentialsDialog dialog = new CredentialsDialog(shell, realm);
+        CredentialsDialog dialog = new CredentialsDialog(UIUtil.getShell(), realm);
         if (dialog.open() == CredentialsDialog.OK)
         {
           credentials[0] = dialog.getCredentials();
@@ -105,17 +92,7 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
     {
       public void run()
       {
-        Shell shell;
-
-        try
-        {
-          IWorkbenchWindow window = UIUtil.getActiveWorkbenchWindow();
-          shell = window.getShell();
-        }
-        catch (Exception ex)
-        {
-          shell = new Shell(display);
-        }
+        Shell shell = UIUtil.getShell();
 
         if (operation == CredentialsUpdateOperation.CHANGE_PASSWORD)
         {
@@ -134,11 +111,10 @@ public class InteractiveCredentialsProvider implements IPasswordCredentialsProvi
             final String newPassword = new String(update[0].getNewPassword());
 
             MessageDialog msg = new MessageDialog(shell, Messages.getString("InteractiveCredentialsProvider.0"), null, //$NON-NLS-1$
-                MessageFormat.format(
-                    Messages.getString("InteractiveCredentialsProvider.1"), //$NON-NLS-1$
+                MessageFormat.format(Messages.getString("InteractiveCredentialsProvider.1"), //$NON-NLS-1$
                     userID, newPassword),
                 MessageDialog.INFORMATION, new String[] { Messages.getString("InteractiveCredentialsProvider.2"), //$NON-NLS-1$
-              IDialogConstants.OK_LABEL },
+                    IDialogConstants.OK_LABEL },
                 0)
             {
 

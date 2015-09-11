@@ -15,11 +15,11 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-    <buildCommand>
-      <name>org.eclipse.pde.SchemaBuilder</name>
-      <arguments>
-      </arguments>
-    </buildCommand>
+		<buildCommand>
+			<name>org.eclipse.pde.SchemaBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.pde.api.tools.apiAnalysisBuilder</name>
 			<arguments>
@@ -28,6 +28,10 @@
 		<buildCommand>
 			<name>org.eclipse.oomph.version.VersionBuilder</name>
 			<arguments>
+				<dictionary>
+					<key>ignore.lower.bound.dependency.ranges</key>
+					<value>true</value>
+				</dictionary>
 				<dictionary>
 					<key>release.path</key>
 					<value>/org.eclipse.emf.cdo.releng.release/release.xml</value>

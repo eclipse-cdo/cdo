@@ -186,6 +186,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
     globalAction.install(viewer);
   }
 
+  @SuppressWarnings("unchecked")
   protected IAction createAddNewAction()
   {
     Command dummy = createCreateNewCommand();
@@ -237,7 +238,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
     Command dummy = createDeleteCommand(EcoreUtil.create(elementEClass));
 
     return new SelectionListenerAction<EObject>(dummy.getLabel(), SharedIcons.getDescriptor("etool16/delete.gif")) //$NON-NLS-1$
-        {
+    {
       @Override
       public void run()
       {
@@ -259,7 +260,7 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
       {
         return EObject.class;
       }
-        };
+    };
   }
 
   protected Command createDeleteCommand(EObject toDelete)
@@ -291,59 +292,59 @@ public abstract class TableSection<T extends EObject> extends AbstractSectionPar
   {
     viewer.addDropSupport(DND.DROP_LINK | DND.DROP_MOVE | DND.DROP_COPY,
         new Transfer[] { LocalSelectionTransfer.getTransfer() }, new ViewerDropAdapter(viewer)
-    {
-      {
-        // We don't want it to look like you can insert new elements, only drop onto existing elements
-        setFeedbackEnabled(false);
-      }
-
-      @Override
-      public boolean validateDrop(Object target, int operation, TransferData transferType)
-      {
-        boolean result = false;
-
-        if (target instanceof EObject && LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
         {
-          EObject objectToDrop = getObjectToDrop(transferType);
-          if (objectToDrop != null)
           {
-            result = getDropReference((EObject)target, objectToDrop) != null;
-
-            if (result && (getCurrentEvent().operations | DND.DROP_COPY) != 0)
-            {
-              overrideOperation(DND.DROP_COPY);
-            }
+            // We don't want it to look like you can insert new elements, only drop onto existing elements
+            setFeedbackEnabled(false);
           }
-        }
 
-        return result;
-      }
+          @Override
+          public boolean validateDrop(Object target, int operation, TransferData transferType)
+          {
+            boolean result = false;
 
-      @Override
-      public boolean performDrop(Object data)
-      {
-        IStructuredSelection selection = (IStructuredSelection)data;
-        EObject objectToDrop = UIUtil.getElement(selection, EObject.class);
-        EObject target = (EObject)getCurrentTarget();
+            if (target instanceof EObject && LocalSelectionTransfer.getTransfer().isSupportedType(transferType))
+            {
+              EObject objectToDrop = getObjectToDrop(transferType);
+              if (objectToDrop != null)
+              {
+                result = getDropReference((EObject)target, objectToDrop) != null;
 
-        Command command = AddCommand.create(getEditingDomain(), target, getDropReference(target, objectToDrop),
-            selection.toList());
+                if (result && (getCurrentEvent().operations | DND.DROP_COPY) != 0)
+                {
+                  overrideOperation(DND.DROP_COPY);
+                }
+              }
+            }
 
-        boolean result = execute(command);
-        if (result)
-        {
-          viewer.getControl().setFocus();
-          viewer.setSelection(new StructuredSelection(target));
-        }
+            return result;
+          }
 
-        return result;
-      }
+          @Override
+          public boolean performDrop(Object data)
+          {
+            IStructuredSelection selection = (IStructuredSelection)data;
+            EObject objectToDrop = UIUtil.getElement(selection, EObject.class);
+            EObject target = (EObject)getCurrentTarget();
 
-      private EObject getObjectToDrop(TransferData transferType)
-      {
-        return UIUtil.getElement(LocalSelectionTransfer.getTransfer().getSelection(), EObject.class);
-      }
-    });
+            Command command = AddCommand.create(getEditingDomain(), target, getDropReference(target, objectToDrop),
+                selection.toList());
+
+            boolean result = execute(command);
+            if (result)
+            {
+              viewer.getControl().setFocus();
+              viewer.setSelection(new StructuredSelection(target));
+            }
+
+            return result;
+          }
+
+          private EObject getObjectToDrop(TransferData transferType)
+          {
+            return UIUtil.getElement(LocalSelectionTransfer.getTransfer().getSelection(), EObject.class);
+          }
+        });
   }
 
   protected EReference getDropReference(EObject target, EObject objectToDrop)

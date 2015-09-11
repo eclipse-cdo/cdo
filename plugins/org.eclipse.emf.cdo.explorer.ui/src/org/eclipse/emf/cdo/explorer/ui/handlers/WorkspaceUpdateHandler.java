@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.internal.ui.Support;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
@@ -24,6 +25,7 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
@@ -47,9 +49,9 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    final OfflineCDOCheckout checkout = elements.get(0);
+    OfflineCDOCheckout checkout = elements.get(0);
 
-    final CDOWorkspace workspace = checkout.getWorkspace();
+    CDOWorkspace workspace = checkout.getWorkspace();
     if (workspace != null)
     {
       try
@@ -82,8 +84,13 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
           public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs)
               throws ConflictException
           {
-            remoteView.properties().put(CompareCDOMerger.PROP_COMPARISON_LABEL, "From remote");
-            localTransaction.properties().put(CompareCDOMerger.PROP_COMPARISON_LABEL, "To local");
+            IRegistry<String, Object> remoteProperties = remoteView.properties();
+            remoteProperties.put(CompareCDOMerger.PROP_COMPARISON_IMAGE, OM.getImage("icons/repository.gif"));
+            remoteProperties.put(CompareCDOMerger.PROP_COMPARISON_LABEL, "From remote");
+
+            IRegistry<String, Object> localProperties = localTransaction.properties();
+            localProperties.put(CompareCDOMerger.PROP_COMPARISON_IMAGE, OM.getImage("icons/checkout.gif"));
+            localProperties.put(CompareCDOMerger.PROP_COMPARISON_LABEL, "To local");
 
             super.merge(localTransaction, remoteView, affectedIDs);
           }
@@ -119,7 +126,7 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
     });
   }
 
-  private void mergeDefault(final OfflineCDOCheckout checkout, final CDOWorkspace workspace, IProgressMonitor monitor)
+  private void mergeDefault(OfflineCDOCheckout checkout, CDOWorkspace workspace, IProgressMonitor monitor)
       throws ConcurrentAccessException, CommitException
   {
     CDOTransaction transaction = workspace.update(new DefaultCDOMerger.PerFeature.ManyValued());

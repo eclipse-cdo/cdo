@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 
 /**
  * @author Eike Stepper

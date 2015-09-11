@@ -30,7 +30,6 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.operations.OperationHistoryFactory;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
@@ -83,6 +82,7 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
     dialog.open();
   }
 
+  @SuppressWarnings("deprecation")
   public static Resource createDiagram(URI diagramURI, URI modelURI, IProgressMonitor progressMonitor)
   {
     TransactionalEditingDomain editingDomain = DawnGMFEditingDomainFactory.getInstance().createEditingDomain();
@@ -152,9 +152,11 @@ public class DawnAcoreDiagramEditorUtil extends AcoreDiagramEditorUtil
         return CommandResult.newOKCommandResult();
       }
     };
+
     try
     {
-      OperationHistoryFactory.getOperationHistory().execute(command, new SubProgressMonitor(progressMonitor, 1), null);
+      OperationHistoryFactory.getOperationHistory().execute(command,
+          new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
     }
     catch (ExecutionException e)
     {

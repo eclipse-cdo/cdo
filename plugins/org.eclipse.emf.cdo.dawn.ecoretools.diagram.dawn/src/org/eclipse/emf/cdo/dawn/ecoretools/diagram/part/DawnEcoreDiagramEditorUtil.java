@@ -37,7 +37,6 @@ import org.eclipse.core.commands.operations.OperationHistoryFactory;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
@@ -88,6 +87,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
     dialog.open();
   }
 
+  @SuppressWarnings("deprecation")
   public static Resource createDiagram(URI diagramURI, URI modelURI, IProgressMonitor progressMonitor)
   {
     TransactionalEditingDomain editingDomain = DawnGMFEditingDomainFactory.getInstance().createEditingDomain();
@@ -157,14 +157,17 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
         return CommandResult.newOKCommandResult();
       }
     };
+
     try
     {
-      OperationHistoryFactory.getOperationHistory().execute(command, new SubProgressMonitor(progressMonitor, 1), null);
+      OperationHistoryFactory.getOperationHistory().execute(command,
+          new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
     }
     catch (ExecutionException e)
     {
       EcoreDiagramEditorPlugin.getInstance().logError("Unable to create model and diagram", e); //$NON-NLS-1$
     }
+
     setCharset(WorkspaceSynchronizer.getFile(modelResource));
     setCharset(WorkspaceSynchronizer.getFile(diagramResource));
     return diagramResource;
@@ -190,6 +193,7 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
     resource.getContents().add(model);
   }
 
+  @SuppressWarnings("deprecation")
   public static Resource createDiagramOnly(URI diagramURI, URI modelURI, EObject domainElement,
       final boolean initializeDiagram, IProgressMonitor progressMonitor)
   {
@@ -230,20 +234,23 @@ public class DawnEcoreDiagramEditorUtil extends EcoreDiagramEditorUtil
         }
         catch (IOException e)
         {
-
           EcoreDiagramEditorPlugin.getInstance().logError("Unable to store diagram resources", e); //$NON-NLS-1$
         }
+
         return CommandResult.newOKCommandResult();
       }
     };
+
     try
     {
-      OperationHistoryFactory.getOperationHistory().execute(command, new SubProgressMonitor(progressMonitor, 1), null);
+      OperationHistoryFactory.getOperationHistory().execute(command,
+          new org.eclipse.core.runtime.SubProgressMonitor(progressMonitor, 1), null);
     }
     catch (ExecutionException e)
     {
       EcoreDiagramEditorPlugin.getInstance().logError("Unable to create diagram", e); //$NON-NLS-1$
     }
+
     return diagramResource;
   }
 

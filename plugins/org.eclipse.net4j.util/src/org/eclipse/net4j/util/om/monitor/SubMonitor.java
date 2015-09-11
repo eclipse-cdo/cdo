@@ -21,7 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitorWithBlocking;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 
 /**
  * A {@link IProgressMonitorWithBlocking progress monitor} that uses a given amount of work ticks from a parent monitor.

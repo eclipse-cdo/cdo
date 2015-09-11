@@ -15,7 +15,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 
 import java.util.ArrayList;
 import java.util.Arrays;

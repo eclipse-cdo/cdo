@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.dawn.codegen.messages.Messages;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
@@ -47,7 +46,7 @@ public class GenerateGMFFragmentAction implements IObjectActionDelegate
     {
       window.run(true, true, new IRunnableWithProgress()
       {
-
+        @SuppressWarnings("deprecation")
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
           monitor.beginTask(Messages.GenerateClientCodeAction_0, 1000);
@@ -56,7 +55,7 @@ public class GenerateGMFFragmentAction implements IObjectActionDelegate
 
           for (Creator creator : creators)
           {
-            creator.create(new SubProgressMonitor(monitor, 1000 / creators.size()));
+            creator.create(new org.eclipse.core.runtime.SubProgressMonitor(monitor, 1000 / creators.size()));
           }
         }
       });

@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.dawn.codegen.messages.Messages;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
@@ -48,6 +47,7 @@ public class GenerateEMFFragmentAction implements IObjectActionDelegate
     {
       window.run(true, true, new IRunnableWithProgress()
       {
+        @SuppressWarnings("deprecation")
         public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException
         {
           monitor.beginTask(Messages.GenerateEMFFragmentAction_0, 1000);
@@ -56,7 +56,8 @@ public class GenerateEMFFragmentAction implements IObjectActionDelegate
 
           for (Creator creator : creators)
           {
-            SubProgressMonitor monitor2 = new SubProgressMonitor(monitor, 1000 / creators.size());
+            IProgressMonitor monitor2 = new org.eclipse.core.runtime.SubProgressMonitor(monitor,
+                1000 / creators.size());
             creator.create(monitor2);
             monitor2.done();
           }

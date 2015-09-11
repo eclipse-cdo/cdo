@@ -1444,12 +1444,15 @@ public class WorkspaceTest extends AbstractCDOTest
   {
     List<CDORevision> revisions = new ArrayList<CDORevision>();
 
-    MEMStore store = (MEMStore)workspace.getLocalRepository().getStore();
-    for (InternalCDORevision revision : store.getCurrentRevisions())
+    IStore store = workspace.getLocalRepository().getStore();
+    if (store instanceof MEMStore)
     {
-      if (containsID(dirtyRevisions, revision.getID()))
+      for (InternalCDORevision revision : ((MEMStore)store).getCurrentRevisions())
       {
-        revisions.add(revision);
+        if (containsID(dirtyRevisions, revision.getID()))
+        {
+          revisions.add(revision);
+        }
       }
     }
 

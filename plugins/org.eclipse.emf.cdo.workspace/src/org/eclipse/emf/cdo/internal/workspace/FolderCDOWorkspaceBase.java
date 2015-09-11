@@ -84,44 +84,18 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     return file.length() == 0;
   }
 
-  public void deleteAddedAndDetachedObjects(IStoreAccessor.Raw accessor, CDOBranch branch)
+  public void deleteAddedAndDetachedObjects(final IStoreAccessor.Raw accessor, final CDOBranch branch)
   {
-    if (!addedAndDetachedFile.exists())
+    handleAddedAndDetachedObjects(new AddedAndDetachedHandler()
     {
-      return;
-    }
-
-    FileReader fileReader = null;
-
-    try
-    {
-      fileReader = new FileReader(addedAndDetachedFile);
-
-      @SuppressWarnings("resource")
-      BufferedReader lineReader = new BufferedReader(fileReader);
-
-      String line;
-      while ((line = lineReader.readLine()) != null)
+      public void handleAddedAndDetachedHandler(CDOID id, int detachedVersion)
       {
-        String[] tokens = line.split("\t");
-
-        CDOID id = CDOIDUtil.read(tokens[0]);
-        int detachedVersion = Integer.parseInt(tokens[1]);
-
         for (int v = 1; v <= detachedVersion; v++)
         {
           accessor.rawDelete(id, v, branch, null, new Monitor());
         }
       }
-    }
-    catch (IOException ex)
-    {
-      throw new IllegalStateException("Could not read from " + addedAndDetachedFile, ex);
-    }
-    finally
-    {
-      IOUtil.close(fileReader);
-    }
+    });
   }
 
   @Override
@@ -215,6 +189,43 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     File file = getFile(id);
     file.delete();
     checkExists(file, false);
+  }
+
+  protected final void handleAddedAndDetachedObjects(AddedAndDetachedHandler handler)
+  {
+    if (!addedAndDetachedFile.exists())
+    {
+      return;
+    }
+
+    FileReader fileReader = null;
+
+    try
+    {
+      fileReader = new FileReader(addedAndDetachedFile);
+
+      @SuppressWarnings("resource")
+      BufferedReader lineReader = new BufferedReader(fileReader);
+
+      String line;
+      while ((line = lineReader.readLine()) != null)
+      {
+        String[] tokens = line.split("\t");
+
+        CDOID id = CDOIDUtil.read(tokens[0]);
+        int detachedVersion = Integer.parseInt(tokens[1]);
+
+        handler.handleAddedAndDetachedHandler(id, detachedVersion);
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IllegalStateException("Could not read from " + addedAndDetachedFile, ex);
+    }
+    finally
+    {
+      IOUtil.close(fileReader);
+    }
   }
 
   protected CDOID getCDOID(String filename)
@@ -328,6 +339,14 @@ public class FolderCDOWorkspaceBase extends AbstractCDOWorkspaceBase
     }
 
     return ids;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface AddedAndDetachedHandler
+  {
+    public void handleAddedAndDetachedHandler(CDOID id, int detachedVersion);
   }
 
   /**

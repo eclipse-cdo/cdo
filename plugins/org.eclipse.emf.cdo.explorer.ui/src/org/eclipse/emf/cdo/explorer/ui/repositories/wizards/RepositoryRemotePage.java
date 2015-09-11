@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.Vali
 import org.eclipse.emf.cdo.internal.explorer.repositories.RemoteCDORepository;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.widgets.Composite;
 
@@ -44,7 +45,21 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
       protected void validateController()
       {
         super.validateController();
-        validate();
+
+        if (controller != null)
+        {
+          validate();
+        }
+        else
+        {
+          UIUtil.getDisplay().asyncExec(new Runnable()
+          {
+            public void run()
+            {
+              validate();
+            }
+          });
+        }
       }
     };
   }

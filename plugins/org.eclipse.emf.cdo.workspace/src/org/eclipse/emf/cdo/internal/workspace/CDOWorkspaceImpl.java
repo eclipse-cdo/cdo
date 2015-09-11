@@ -65,6 +65,8 @@ import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler3;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
+import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
+import org.eclipse.emf.cdo.transaction.CDOMerger2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -192,8 +194,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   protected void checkout()
   {
     final OMMonitor monitor = new Monitor();
-    final IStoreAccessor.Raw accessor = getLocalWriter(null);
-    StoreThreadLocal.setAccessor(accessor);
+    final IStoreAccessor.Raw accessor = beginRawAccess(null);
 
     try
     {
@@ -526,129 +527,40 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         timeStamp = remoteSession.getLastUpdateTime();
       }
 
-      final long newTimeStamp = timeStamp;
+      long newTimeStamp = timeStamp;
 
-      final InternalCDOBranchManager branchManager = remoteSession.getBranchManager();
-      final CDOBranchPoint basePoint = branchManager.getBranch(this.branchPath).getPoint(this.timeStamp);
-      final CDOBranchPoint remotePoint = branchManager.getBranch(branchPath).getPoint(newTimeStamp);
+      InternalCDOBranchManager branchManager = remoteSession.getBranchManager();
+      CDOBranchPoint basePoint = branchManager.getBranch(this.branchPath).getPoint(this.timeStamp);
+      CDOBranchPoint remotePoint = branchManager.getBranch(branchPath).getPoint(newTimeStamp);
+      CDOBranchPointRange range = CDOBranchUtil.createRange(basePoint, remotePoint);
 
-      final CDOBranchPointRange range = CDOBranchUtil.createRange(basePoint, remotePoint);
+      CDOChangeSetData remoteData = remoteSession.getSessionProtocol().loadChangeSets(range)[0];
+      CDOChangeSetData localData = getLocalChanges();
 
-      final CDOChangeSetData remoteData = remoteSession.getSessionProtocol().loadChangeSets(range)[0];
-      final CDOChangeSetData localData = getLocalChanges();
-      final CDOChangeSetData result = getMergeResult(merger, basePoint, remotePoint, localData, remoteData);
+      InternalCDOTransaction transaction;
 
-      final InternalCDOTransaction transaction = (InternalCDOTransaction)getLocalSession().openTransaction();
-      initView(transaction);
-
-      transaction.applyChangeSet(result, new BaseRevisionProvider(), this, null, false);
-      transaction.addTransactionHandler(new CDODefaultTransactionHandler3()
+      if (merger instanceof CDOMerger2)
       {
-        @Override
-        public void rolledBackTransaction(CDOTransaction transaction)
-        {
-          closeRemoteSession(remoteSession);
-        }
+        CDOMerger2 merger2 = (CDOMerger2)merger;
 
-        @Override
-        public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext,
-            CDOCommitInfo result)
-        {
-          try
-          {
-            Set<CDOID> affectedIDs = getAffectedIDs(commitContext, remoteData);
+        Set<CDOID> affectedIDs = new HashSet<CDOID>();
+        addIDs(affectedIDs, remoteData);
+        addIDs(affectedIDs, localData);
 
-            CDORevisionProvider local = CDOWorkspaceImpl.this;
-            CDORevisionProvider remote = new ManagedRevisionProvider(remoteSession.getRevisionManager(), remotePoint);
+        transaction = openLocalTransaction(remoteSession, remoteData, remotePoint, newTimeStamp);
 
-            updateBase(affectedIDs, local, remote);
-            setTimeStamp(newTimeStamp);
+        InternalCDOBranch remoteBranch = remoteSession.getBranchManager().getBranch(branchPath);
+        CDOView remoteView = remoteSession.openView(remoteBranch);
 
-            fireEvent(new ObjectStatesChangedEventImpl(CDOWorkspaceImpl.this, affectedIDs));
-          }
-          finally
-          {
-            closeRemoteSession(remoteSession);
-          }
-        }
+        merger2.merge(transaction, remoteView, affectedIDs);
+      }
+      else
+      {
+        CDOChangeSetData result = getMergeResult(merger, basePoint, remotePoint, localData, remoteData);
 
-        private void updateBase(Set<CDOID> affectedIDs, CDORevisionProvider local, CDORevisionProvider remote)
-        {
-          for (CDOID id : affectedIDs)
-          {
-            CDORevision localRevision = getRevision(id, local);
-            CDORevision remoteRevision = getRevision(id, remote);
-            if (localRevision == null)
-            {
-              if (remoteRevision == null)
-              {
-                // Unchanged
-                base.deregisterObject(id);
-              }
-              else
-              {
-                // Detached
-                InternalCDORevision baseRevision = ((InternalCDORevision)remoteRevision).copy();
-                baseRevision.setBranchPoint(localSessionHead);
-
-                base.registerChangedOrDetachedObject(baseRevision);
-              }
-            }
-            else
-            {
-              if (remoteRevision == null)
-              {
-                // Added
-                base.registerAddedObject(id);
-              }
-              else
-              {
-                // Unchanged
-                base.deregisterObject(id);
-
-                CDORevisionDelta delta = localRevision.compare(remoteRevision);
-                if (!delta.isEmpty())
-                {
-                  // Changed
-                  InternalCDORevision baseRevision = ((InternalCDORevision)remoteRevision).copy();
-                  baseRevision.setBranchPoint(localSessionHead);
-
-                  base.registerChangedOrDetachedObject(baseRevision);
-                }
-              }
-            }
-          }
-        }
-
-        private Set<CDOID> getAffectedIDs(CDOCommitContext commitContext, final CDOChangeSetData remoteData)
-        {
-          Set<CDOID> affectedIDs = new HashSet<CDOID>();
-
-          // Base IDs
-          affectedIDs.addAll(base.getIDs());
-
-          // Remote IDs
-          affectedIDs.addAll(remoteData.getChangeKinds().keySet());
-
-          // Local IDs
-          affectedIDs.addAll(commitContext.getNewObjects().keySet());
-          affectedIDs.addAll(commitContext.getDirtyObjects().keySet());
-          affectedIDs.addAll(commitContext.getDetachedObjects().keySet());
-
-          return affectedIDs;
-        }
-
-        private CDORevision getRevision(CDOID id, CDORevisionProvider revisionProvider)
-        {
-          CDORevision revision = revisionProvider.getRevision(id);
-          if (revision instanceof DetachedCDORevision)
-          {
-            revision = null;
-          }
-
-          return revision;
-        }
-      });
+        transaction = openLocalTransaction(remoteSession, remoteData, remotePoint, newTimeStamp);
+        transaction.applyChangeSet(result, new BaseRevisionProvider(), this, null, false);
+      }
 
       if (saveBranchPoint)
       {
@@ -661,6 +573,10 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
       return transaction;
     }
+    catch (ConflictException ex)
+    {
+      return handleMergeConflict(ex);
+    }
     catch (RuntimeException ex)
     {
       closeRemoteSession(remoteSession);
@@ -671,6 +587,158 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       closeRemoteSession(remoteSession);
       throw ex;
     }
+  }
+
+  private InternalCDOTransaction openLocalTransaction(final InternalCDOSession remoteSession,
+      final CDOChangeSetData remoteData, final CDOBranchPoint remotePoint, final long newTimeStamp)
+  {
+    InternalCDOTransaction transaction = (InternalCDOTransaction)getLocalSession().openTransaction();
+    initView(transaction);
+
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler3()
+    {
+      @Override
+      public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext, CDOCommitInfo result)
+      {
+        Set<CDOID> affectedIDs = getAffectedIDs(commitContext, remoteData);
+
+        CDORevisionProvider local = CDOWorkspaceImpl.this;
+        CDORevisionProvider remote = new ManagedRevisionProvider(remoteSession.getRevisionManager(), remotePoint);
+
+        updateBase(local, remote, affectedIDs);
+        setDirtyFromBase();
+        setTimeStamp(newTimeStamp);
+
+        fireEvent(new ObjectStatesChangedEventImpl(CDOWorkspaceImpl.this, affectedIDs));
+      }
+
+      private void updateBase(CDORevisionProvider local, CDORevisionProvider remote, Set<CDOID> affectedIDs)
+      {
+        IStoreAccessor.Raw accessor = null;
+
+        try
+        {
+          for (CDOID id : affectedIDs)
+          {
+            InternalCDORevision localRevision = getRevision(id, local);
+            InternalCDORevision remoteRevision = getRevision(id, remote);
+            accessor = updateBase(localRevision, remoteRevision, id, accessor);
+          }
+        }
+        finally
+        {
+          finishRawAccess(accessor);
+        }
+      }
+
+      private IStoreAccessor.Raw updateBase(InternalCDORevision localRevision, InternalCDORevision remoteRevision,
+          CDOID id, IStoreAccessor.Raw accessor)
+      {
+        if (localRevision == null)
+        {
+          if (remoteRevision == null)
+          {
+            // Unchanged
+            base.deregisterObject(id);
+          }
+          else
+          {
+            // Detached
+            InternalCDORevision baseRevision = remoteRevision.copy();
+            baseRevision.setBranchPoint(localSessionHead);
+
+            base.registerChangedOrDetachedObject(baseRevision);
+          }
+        }
+        else
+        {
+          if (remoteRevision == null)
+          {
+            // Added
+            base.registerAddedObject(id);
+          }
+          else
+          {
+            InternalCDORevision baseRevision = null;
+            if (localRevision.getVersion() != remoteRevision.getVersion())
+            {
+              baseRevision = (InternalCDORevision)base.getRevision(id);
+            }
+
+            // Unchanged
+            base.deregisterObject(id);
+
+            CDORevisionDelta delta = localRevision.compare(remoteRevision);
+            if (!delta.isEmpty())
+            {
+              // Changed
+              baseRevision = remoteRevision.copy();
+              baseRevision.setBranchPoint(localSessionHead);
+
+              base.registerChangedOrDetachedObject(baseRevision);
+            }
+            else if (baseRevision != null)
+            {
+              // If the delta is empty but multiple local revisions exist replace them all by the remote revision.
+              // This compensates the missing checkin post processing as there is no base revision anymore.
+              accessor = beginRawAccess(accessor);
+
+              int version = Math.abs(localRevision.getVersion());
+              CDOBranch branch = localRevision.getBranch();
+              EClass eClass = localRevision.getEClass();
+
+              for (int v = baseRevision.getVersion(); v <= version; v++)
+              {
+                accessor.rawDelete(id, v, branch, eClass, new Monitor());
+              }
+
+              localRevision = remoteRevision.copy();
+              localRevision.setBranchPoint(localSessionHead);
+
+              accessor.rawStore(localRevision, new Monitor());
+            }
+          }
+        }
+
+        return accessor;
+      }
+
+      private Set<CDOID> getAffectedIDs(CDOCommitContext commitContext, final CDOChangeSetData remoteData)
+      {
+        Set<CDOID> affectedIDs = new HashSet<CDOID>();
+        addIDs(affectedIDs, base.getIDs()); // Base IDs
+        addIDs(affectedIDs, remoteData.getChangeKinds()); // Remote IDs
+        addIDs(affectedIDs, commitContext); // Local IDs
+        return affectedIDs;
+      }
+
+      private InternalCDORevision getRevision(CDOID id, CDORevisionProvider revisionProvider)
+      {
+        CDORevision revision = revisionProvider.getRevision(id);
+        if (revision instanceof DetachedCDORevision)
+        {
+          revision = null;
+        }
+
+        return (InternalCDORevision)revision;
+      }
+    });
+
+    transaction.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        closeRemoteSession(remoteSession);
+      }
+    });
+
+    return transaction;
+  }
+
+  private InternalCDOTransaction handleMergeConflict(ConflictException ex)
+  {
+    throw ex;
   }
 
   private CDOChangeSetData getMergeResult(CDOMerger merger, CDOBranchPoint basePoint, CDOBranchPoint remotePoint,
@@ -695,9 +763,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   public void revert(CDOChangeSetData revertData)
   {
     final CDOBranch localBranch = localSessionHead.getBranch();
-
-    IStoreAccessor.Raw accessor = getLocalWriter(null);
-    StoreThreadLocal.setAccessor(accessor);
+    IStoreAccessor.Raw accessor = beginRawAccess(null);
 
     final List<InternalCDORevision> changedRevisions = new ArrayList<InternalCDORevision>();
     for (CDORevisionKey key : revertData.getChangedObjects())
@@ -864,12 +930,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
         clearBase();
         setTimeStamp(info.getTimeStamp());
-
-        for (CDOIDAndVersion key : changes.getNewObjects())
-        {
-          ids.add(key.getID());
-        }
-
+        addIDs(ids, changes.getNewObjects());
         return info;
       }
       finally
@@ -911,23 +972,13 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
         for (int v = baseRevision.getVersion(); v < localSessionRevision.getVersion(); v++)
         {
-          if (accessor == null)
-          {
-            accessor = getLocalWriter(null);
-            StoreThreadLocal.setAccessor(accessor);
-          }
-
+          accessor = beginRawAccess(accessor);
           accessor.rawDelete(id, v, localSessionBranch, eClass, new Monitor());
         }
 
         if (localSessionRevision.getVersion() != remoteRevision.getVersion())
         {
-          if (accessor == null)
-          {
-            accessor = getLocalWriter(null);
-            StoreThreadLocal.setAccessor(accessor);
-          }
-
+          accessor = beginRawAccess(accessor);
           accessor.rawDelete(id, localSessionRevision.getVersion(), localSessionBranch, eClass, new Monitor());
 
           // Local session revisions are not cached and can directly be modified and stored in the local repository.
@@ -944,6 +995,17 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     }
 
     return ids;
+  }
+
+  private IStoreAccessor.Raw beginRawAccess(IStoreAccessor.Raw accessor)
+  {
+    if (accessor == null)
+    {
+      accessor = getLocalWriter(null);
+      StoreThreadLocal.setAccessor(accessor);
+    }
+
+    return accessor;
   }
 
   private void finishRawAccess(IStoreAccessor.Raw accessor)
@@ -1346,6 +1408,38 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     branchPath = props.get(PROP_BRANCH_PATH);
     timeStamp = Long.parseLong(props.get(PROP_TIME_STAMP));
     fixed = Boolean.parseBoolean(props.get(PROP_FIXED));
+  }
+
+  private void addIDs(Set<CDOID> result, Set<CDOID> ids)
+  {
+    result.addAll(ids);
+  }
+
+  private void addIDs(Set<CDOID> result, Map<CDOID, ?> map)
+  {
+    addIDs(result, map.keySet());
+  }
+
+  private void addIDs(Set<CDOID> ids, List<? extends CDOIDAndVersion> keys)
+  {
+    for (CDOIDAndVersion key : keys)
+    {
+      ids.add(key.getID());
+    }
+  }
+
+  private void addIDs(Set<CDOID> ids, CDOChangeSetData changeSetData)
+  {
+    addIDs(ids, changeSetData.getNewObjects());
+    addIDs(ids, changeSetData.getChangedObjects());
+    addIDs(ids, changeSetData.getDetachedObjects());
+  }
+
+  private void addIDs(Set<CDOID> result, CDOCommitContext commitContext)
+  {
+    addIDs(result, commitContext.getNewObjects());
+    addIDs(result, commitContext.getDirtyObjects());
+    addIDs(result, commitContext.getDetachedObjects());
   }
 
   /**

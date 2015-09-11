@@ -10,22 +10,29 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.compare.CDOCompareUtil;
+import org.eclipse.emf.cdo.compare.CDOComparisonScope;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
+import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
@@ -35,7 +42,9 @@ import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.util.TestSessionConfiguration;
+import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
+import org.eclipse.emf.cdo.transaction.CDOMerger2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -51,7 +60,14 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.compare.Comparison;
+import org.eclipse.emf.compare.Diff;
+import org.eclipse.emf.compare.merge.BatchMerger;
+import org.eclipse.emf.compare.merge.IBatchMerger;
+import org.eclipse.emf.compare.merge.IMerger;
+import org.eclipse.emf.compare.merge.IMerger.RegistryImpl;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
@@ -63,6 +79,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -1262,7 +1279,7 @@ public class WorkspaceTest extends AbstractCDOTest
     local.commit();
     local.close();
 
-    DefaultCDOMerger.PerFeature.ManyValued merger = new DefaultCDOMerger.PerFeature.ManyValued();
+    DefaultCDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
     local = workspace.update(merger);
     assertEquals(0, merger.getConflicts().size());
     assertEquals(false, local.isDirty());
@@ -1274,7 +1291,7 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(1, countModifiedProduct(view));
   }
 
-  public void testConflictMasterAndLocalModify() throws Exception
+  public void testConflictMasterAndLocalModify_DefaultMerger() throws Exception
   {
     CDOID id = CDOUtil.getCDOObject(products.get(1)).cdoID();
 
@@ -1289,7 +1306,7 @@ public class WorkspaceTest extends AbstractCDOTest
     local.commit();
     local.close();
 
-    DefaultCDOMerger.PerFeature.ManyValued merger = new DefaultCDOMerger.PerFeature.ManyValued();
+    DefaultCDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
 
     try
     {
@@ -1308,6 +1325,149 @@ public class WorkspaceTest extends AbstractCDOTest
 
     CDOView view = workspace.openView();
     assertEquals(1, countModifiedProduct(view));
+  }
+
+  public void testConflictMasterAndLocalModify_CompareMerger() throws Exception
+  {
+    disableLog4j();
+
+    @SuppressWarnings("unused")
+    CDOID id = CDOUtil.getCDOObject(products.get(1)).cdoID();
+
+    InternalCDOWorkspace workspace = checkout("MAIN", CDOBranchPoint.UNSPECIFIED_DATE);
+    assertNotSame(CDOBranchPoint.UNSPECIFIED_DATE, workspace.getTimeStamp());
+
+    @SuppressWarnings("unused")
+    InternalCDOWorkspaceBase base = workspace.getBase();
+
+    assertEquals(1, modifyProduct(transaction, 1, "MODIFIED_1_"));
+    transaction.commit();
+
+    CDOTransaction local = workspace.openTransaction();
+    assertEquals(1, modifyProduct(local, 1, "MODIFIED_2_"));
+    local.commit();
+
+    local.close();
+
+    CDOMerger merger = new CDOMerger2()
+    {
+      @Deprecated
+      public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws UnsupportedOperationException
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs)
+          throws ConflictException
+      {
+        CDOComparisonScope scope = new CDOComparisonScope.Minimal(remoteView, localTransaction, null, affectedIDs);
+        Comparison comparison = CDOCompareUtil.compare(scope);
+        EList<Diff> differences = comparison.getDifferences();
+
+        IMerger.Registry mergerRegistry = RegistryImpl.createStandaloneInstance();
+
+        IBatchMerger merger = new BatchMerger(mergerRegistry);
+        merger.copyAllLeftToRight(differences, new BasicMonitor());
+      }
+    };
+
+    local = workspace.update(merger);
+
+    List<CDORevision> dirtyRevisions = getDirtyRevisions(local);
+    dump("dirtyRevisions", dirtyRevisions);
+
+    List<CDORevision> storeRevisions = getStoreRevisions(workspace, dirtyRevisions);
+    dump("storeRevisions", storeRevisions);
+
+    List<CDORevision> baseRevisions = getBaseRevisions(workspace);
+    dump("baseRevisions", baseRevisions);
+
+    dump("COMMIT", null);
+    local.commit();
+
+    dirtyRevisions = getDirtyRevisions(local);
+    dump("dirtyRevisions", dirtyRevisions);
+
+    storeRevisions = getStoreRevisions(workspace, dirtyRevisions);
+    dump("storeRevisions", storeRevisions);
+
+    baseRevisions = getBaseRevisions(workspace);
+    dump("baseRevisions", baseRevisions);
+
+    local.close();
+
+    CDOCommitInfo commitInfo = workspace.checkin();
+    System.out.println(commitInfo);
+  }
+
+  private void dump(String label, List<CDORevision> revisions)
+  {
+    System.out.println();
+    System.out.println(label);
+
+    if (revisions != null)
+    {
+      for (CDORevision revision : revisions)
+      {
+        System.out.println("   " + revision);
+      }
+    }
+  }
+
+  private boolean containsID(List<CDORevision> revisions, CDOID id)
+  {
+    for (CDORevision revision : revisions)
+    {
+      if (revision.getID() == id)
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private List<CDORevision> getDirtyRevisions(CDOTransaction transaction)
+  {
+    List<CDORevision> revisions = new ArrayList<CDORevision>();
+
+    for (CDOObject dirtyObject : transaction.getDirtyObjects().values())
+    {
+      CDORevision revision = dirtyObject.cdoRevision(false);
+      revisions.add(revision);
+    }
+
+    return revisions;
+  }
+
+  private List<CDORevision> getStoreRevisions(InternalCDOWorkspace workspace, List<CDORevision> dirtyRevisions)
+  {
+    List<CDORevision> revisions = new ArrayList<CDORevision>();
+
+    MEMStore store = (MEMStore)workspace.getLocalRepository().getStore();
+    for (InternalCDORevision revision : store.getCurrentRevisions())
+    {
+      if (containsID(dirtyRevisions, revision.getID()))
+      {
+        revisions.add(revision);
+      }
+    }
+
+    return revisions;
+  }
+
+  private List<CDORevision> getBaseRevisions(InternalCDOWorkspace workspace)
+  {
+    List<CDORevision> revisions = new ArrayList<CDORevision>();
+
+    InternalCDOWorkspaceBase base = workspace.getBase();
+    for (CDOID id : base.getIDs())
+    {
+      CDORevision revision = base.getRevision(id);
+      revisions.add(revision);
+    }
+
+    return revisions;
   }
 
   public void testRevertNoTransaction() throws Exception

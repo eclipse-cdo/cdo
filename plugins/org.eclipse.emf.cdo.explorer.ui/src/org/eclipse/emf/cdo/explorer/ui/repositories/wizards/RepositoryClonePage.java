@@ -75,6 +75,11 @@ public class RepositoryClonePage extends AbstractRepositoryPage
   {
     super.doValidate(properties);
 
+    if (controller == null)
+    {
+      return;
+    }
+
     String connectorDescription = controller.getConnectorDescription();
     if (StringUtil.isEmpty(connectorDescription))
     {

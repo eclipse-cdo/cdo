@@ -33,6 +33,12 @@ import org.eclipse.net4j.util.om.log.PrintLogHandler;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.PrintTraceHandler;
 
+import org.apache.log4j.Appender;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Layout;
+import org.apache.log4j.spi.ErrorHandler;
+import org.apache.log4j.spi.Filter;
+import org.apache.log4j.spi.LoggingEvent;
 import org.junit.Assert;
 
 import java.io.File;
@@ -751,6 +757,65 @@ public abstract class AbstractOMTest extends TestCase
   public static void skipTest()
   {
     skipTest(true);
+  }
+
+  public static void disableLog4j()
+  {
+    BasicConfigurator.configure(new Appender()
+    {
+      public void setName(String arg0)
+      {
+      }
+
+      public void setLayout(Layout arg0)
+      {
+      }
+
+      public void setErrorHandler(ErrorHandler arg0)
+      {
+      }
+
+      public boolean requiresLayout()
+      {
+        return false;
+      }
+
+      public String getName()
+      {
+        return null;
+      }
+
+      public Layout getLayout()
+      {
+        return null;
+      }
+
+      public Filter getFilter()
+      {
+        return null;
+      }
+
+      public ErrorHandler getErrorHandler()
+      {
+        return null;
+      }
+
+      public void doAppend(LoggingEvent arg0)
+      {
+      }
+
+      public void close()
+      {
+      }
+
+      public void clearFilters()
+      {
+      }
+
+      public void addFilter(Filter arg0)
+      {
+      }
+    });
   }
 
   /**

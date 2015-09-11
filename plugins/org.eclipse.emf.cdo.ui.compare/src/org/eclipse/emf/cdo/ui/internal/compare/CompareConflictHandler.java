@@ -54,7 +54,7 @@ public class CompareConflictHandler implements ConflictHandler
     try
     {
       CDOCompareEditorUtil.setSuppressCommit(true);
-      return CDOCompareEditorUtil.openDialog(remoteView, transaction, null);
+      return CDOCompareEditorUtil.openDialog(remoteView, transaction, (CDOView[])null);
     }
     finally
     {

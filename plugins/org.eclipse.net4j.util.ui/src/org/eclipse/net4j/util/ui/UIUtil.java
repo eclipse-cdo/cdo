@@ -238,7 +238,18 @@ public final class UIUtil
    */
   public static IWorkbenchWindow getActiveWorkbenchWindow()
   {
-    IWorkbenchWindow window = getWorkbench().getActiveWorkbenchWindow();
+    IWorkbench workbench = getWorkbench();
+
+    IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
+    if (window == null)
+    {
+      IWorkbenchWindow[] windows = workbench.getWorkbenchWindows();
+      if (windows.length != 0)
+      {
+        window = windows[0];
+      }
+    }
+
     if (window == null)
     {
       throw new IllegalStateException("No active window available"); //$NON-NLS-1$
@@ -252,7 +263,18 @@ public final class UIUtil
    */
   public static IWorkbenchPage getActiveWorkbenchPage()
   {
-    IWorkbenchPage page = getActiveWorkbenchWindow().getActivePage();
+    IWorkbenchWindow window = getActiveWorkbenchWindow();
+
+    IWorkbenchPage page = window.getActivePage();
+    if (page == null)
+    {
+      IWorkbenchPage[] pages = window.getPages();
+      if (pages.length != 0)
+      {
+        page = pages[0];
+      }
+    }
+
     if (page == null)
     {
       throw new IllegalStateException("No active page available"); //$NON-NLS-1$

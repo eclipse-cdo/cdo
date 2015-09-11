@@ -23,7 +23,6 @@ import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("restriction")
 public class CompareConflictHandler implements ConflictHandler
 {
   public CompareConflictHandler()
@@ -54,7 +53,7 @@ public class CompareConflictHandler implements ConflictHandler
     try
     {
       CDOCompareEditorUtil.setSuppressCommit(true);
-      return CDOCompareEditorUtil.openDialog(remoteView, transaction, null);
+      return CDOCompareEditorUtil.openDialog(remoteView, transaction, (CDOView[])null);
     }
     finally
     {

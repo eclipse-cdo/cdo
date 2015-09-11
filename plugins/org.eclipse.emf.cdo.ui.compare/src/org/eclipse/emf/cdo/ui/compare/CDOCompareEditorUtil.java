@@ -18,20 +18,24 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
+import org.eclipse.emf.cdo.compare.CDOComparisonScope;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
+import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
+import org.eclipse.emf.cdo.ui.internal.compare.CompareCDOMerger;
 import org.eclipse.emf.cdo.ui.internal.compare.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -64,8 +68,10 @@ import org.eclipse.swt.widgets.Shell;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Static methods to open an EMF Compare dialog.
@@ -75,6 +81,8 @@ import java.util.Map;
  */
 public class CDOCompareEditorUtil
 {
+  private static final ThreadLocal<String> COMPARISON_TITLE = new ThreadLocal<String>();
+
   private static final ThreadLocal<Boolean> ACTIVATE_EDITOR = new ThreadLocal<Boolean>();
 
   private static final ThreadLocal<Boolean> SUPPRESS_COMMIT = new ThreadLocal<Boolean>();
@@ -152,6 +160,23 @@ public class CDOCompareEditorUtil
     try
     {
       return openDialog(leftView, rightView, originView);
+    }
+    finally
+    {
+      ACTIVATE_EDITOR.remove();
+    }
+  }
+
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public static boolean openEditor(CDOView leftView, CDOView rightView, Set<CDOID> affectedIDs, boolean activate)
+  {
+    ACTIVATE_EDITOR.set(activate);
+
+    try
+    {
+      return openDialog(leftView, rightView, affectedIDs);
     }
     finally
     {
@@ -249,11 +274,26 @@ public class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openDialog(CDOView leftView, final CDOView rightView, CDOView[] originView,
-      CDOViewOpener viewOpener)
+  public static boolean openDialog(CDOView leftView, CDOView rightView, CDOView[] originView, CDOViewOpener viewOpener)
   {
-    final Input input = createComparisonInput(leftView, rightView, originView, viewOpener);
+    Input input = createComparisonInput(leftView, rightView, originView, viewOpener);
+    return openDialog(input, rightView);
+  }
 
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public static boolean openDialog(CDOView leftView, CDOView rightView, Set<CDOID> affectedIDs)
+  {
+    Input input = createComparisonInput(leftView, rightView, affectedIDs);
+    return openDialog(input, rightView);
+  }
+
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public static boolean openDialog(final Input input, final CDOView rightView)
+  {
     if (input == null)
     {
       UIUtil.getDisplay().syncExec(new Runnable()
@@ -319,6 +359,18 @@ public class CDOCompareEditorUtil
       CDOViewOpener viewOpener)
   {
     Comparison comparison = CDOCompareUtil.compare(leftView, rightView, originView, viewOpener);
+    return createComparisonInput(leftView, rightView, comparison);
+  }
+
+  private static Input createComparisonInput(CDOView leftView, CDOView rightView, Set<CDOID> affectedIDs)
+  {
+    CDOComparisonScope scope = new CDOComparisonScope.Minimal(leftView, rightView, null, affectedIDs);
+    Comparison comparison = CDOCompareUtil.compare(scope);
+    return createComparisonInput(leftView, rightView, comparison);
+  }
+
+  private static Input createComparisonInput(CDOView leftView, CDOView rightView, Comparison comparison)
+  {
     if (comparison.getDifferences().isEmpty())
     {
       return null;
@@ -348,19 +400,54 @@ public class CDOCompareEditorUtil
       }
     };
 
-    Image leftImage = itemProvider.getImage(leftBranchPoint);
-    String leftLabel = itemProvider.getText(leftBranchPoint);
-    Image rightImage = itemProvider.getImage(rightBranchPoint);
-    String rightLabel = itemProvider.getText(rightBranchPoint);
+    IRegistry<String, Object> leftProperties = leftView.properties();
+    Image leftImage = (Image)leftProperties.get(CompareCDOMerger.PROP_COMPARISON_IMAGE);
+    if (leftImage == null)
+    {
+      leftImage = itemProvider.getImage(leftBranchPoint);
+    }
+
+    String leftLabel = (String)leftProperties.get(CompareCDOMerger.PROP_COMPARISON_LABEL);
+    if (leftLabel == null)
+    {
+      leftLabel = itemProvider.getText(leftBranchPoint);
+    }
+
+    IRegistry<String, Object> rightProperties = rightView.properties();
+    Image rightImage = (Image)rightProperties.get(CompareCDOMerger.PROP_COMPARISON_IMAGE);
+    if (rightImage == null)
+    {
+      rightImage = itemProvider.getImage(rightBranchPoint);
+    }
+
+    String rightLabel = (String)rightProperties.get(CompareCDOMerger.PROP_COMPARISON_LABEL);
+    if (rightLabel == null)
+    {
+      rightLabel = itemProvider.getText(rightBranchPoint);
+    }
+
     itemProvider.dispose();
 
     boolean leftEditable = !leftView.isReadOnly();
     boolean rightEditable = !rightView.isReadOnly();
-    boolean merge = leftEditable || rightEditable;
-    if (merge)
+
+    String title = COMPARISON_TITLE.get();
+    if (title == null)
     {
-      leftLabel = "From " + leftLabel;
-      rightLabel = "Into " + rightLabel;
+      String repositoryName = ((InternalCDOView)leftView).getRepositoryName();
+
+      boolean merge = leftEditable || rightEditable;
+      if (merge)
+      {
+        title = "Merge " + repositoryName + " from " + leftLabel + " into " + rightLabel;
+
+        leftLabel = "From " + leftLabel;
+        rightLabel = "Into " + rightLabel;
+      }
+      else
+      {
+        title = "Compare " + repositoryName + " between " + leftLabel + " and " + rightLabel;
+      }
     }
 
     CompareConfiguration configuration = new CompareConfiguration();
@@ -371,13 +458,26 @@ public class CDOCompareEditorUtil
     configuration.setRightLabel(rightLabel);
     configuration.setRightEditable(rightEditable);
 
-    String repositoryName = ((InternalCDOView)leftView).getRepositoryName();
-    String title = (merge ? "Merge " : "Compare ") + repositoryName + " " + leftLabel + (merge ? " into " : " and ")
-        + rightLabel;
-
     Input input = new Input(rightView, configuration, comparison, editingDomain, adapterFactory);
     input.setTitle(title);
     return input;
+  }
+
+  /**
+   * @noreference This method is not intended to be referenced by clients.
+   */
+  public static void runWithTitle(String title, Runnable runnable)
+  {
+    COMPARISON_TITLE.set(title);
+
+    try
+    {
+      runnable.run();
+    }
+    finally
+    {
+      COMPARISON_TITLE.remove();
+    }
   }
 
   /**
@@ -554,6 +654,8 @@ public class CDOCompareEditorUtil
           Collection<CDOObject> values = transaction.getNewObjects().values();
           if (!values.isEmpty())
           {
+            Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+
             CDOObject[] rightObjects = values.toArray(new CDOObject[values.size()]);
             for (CDOObject rightObject : rightObjects)
             {
@@ -563,23 +665,42 @@ public class CDOCompareEditorUtil
                 CDOObject leftObject = CDOUtil.getCDOObject(match.getLeft());
                 CDOID id = leftObject.cdoID();
 
+                idMappings.put(rightObject.cdoID(), id);
                 org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl.resurrectObject(rightObject, id);
               }
             }
-          }
 
-          try
-          {
-            if (!suppressCommit)
+            if (!idMappings.isEmpty())
             {
-              transaction.commit(monitor);
-              setDirty(false);
+              CDOIDMapper idMapper = new CDOIDMapper(idMappings);
+              // idMapper.setAllowUnmappedTempIDs(true);
+
+              for (CDOObject newObject : values)
+              {
+                InternalCDORevision revision = (InternalCDORevision)newObject.cdoRevision();
+                revision.adjustReferences(idMapper);
+              }
+
+              for (CDOObject dirtyObject : transaction.getDirtyObjects().values())
+              {
+                InternalCDORevision revision = (InternalCDORevision)dirtyObject.cdoRevision();
+                revision.adjustReferences(idMapper);
+              }
             }
           }
-          catch (Exception ex)
+        }
+
+        try
+        {
+          if (!suppressCommit)
           {
-            OM.BUNDLE.coreException(ex);
+            transaction.commit(monitor);
+            setDirty(false);
           }
+        }
+        catch (Exception ex)
+        {
+          OM.BUNDLE.coreException(ex);
         }
       }
     }

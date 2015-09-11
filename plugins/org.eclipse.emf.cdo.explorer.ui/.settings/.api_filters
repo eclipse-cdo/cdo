@@ -24,4 +24,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/explorer/ui/handlers/WorkspaceUpdateHandler.java" type="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceUpdateHandler">
+        <filter id="640712815">
+            <message_arguments>
+                <message_argument value="CDOCompareEditorUtil"/>
+                <message_argument value="WorkspaceUpdateHandler"/>
+                <message_argument value="runWithTitle(String, Runnable)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

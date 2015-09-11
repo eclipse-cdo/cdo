@@ -105,7 +105,15 @@ public class CDOLabelDecorator implements ILabelDecorator
 
   public Image decorateImage(Image image, Object element)
   {
-    return decorate(image, element);
+    try
+    {
+      image = decorate(image, element);
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+
+    return image;
   }
 
   public String decorateText(String text, Object element)

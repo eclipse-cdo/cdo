@@ -38,6 +38,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.UIUtil;
 
+import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -48,6 +50,7 @@ import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
 import org.eclipse.emf.compare.scope.IComparisonScope;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.EMFEditPlugin;
@@ -65,6 +68,7 @@ import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -460,7 +464,34 @@ public class CDOCompareEditorUtil
 
     Input input = new Input(rightView, configuration, comparison, editingDomain, adapterFactory);
     input.setTitle(title);
+
+    workaroundEMFCompareBug(leftView, leftLabel);
+    workaroundEMFCompareBug(rightView, rightLabel);
+
     return input;
+  }
+
+  /**
+   * See https://git.eclipse.org/r/#/c/55404/
+   */
+  private static void workaroundEMFCompareBug(CDOView view, String label)
+  {
+    try
+    {
+      Class<?> c = CommonPlugin.loadClass("org.eclipse.emf.compare.ide",
+          "org.eclipse.emf.compare.ide.internal.utils.StoragePathAdapter");
+      Constructor<?> constructor = c.getConstructor(String.class, boolean.class);
+      Adapter adapter = (Adapter)constructor.newInstance(label, false);
+
+      for (Resource resource : view.getResourceSet().getResources())
+      {
+        resource.eAdapters().add(adapter);
+      }
+    }
+    catch (Throwable ex)
+    {
+      //$FALL-THROUGH$
+    }
   }
 
   /**

@@ -53,6 +53,10 @@ public abstract class Signal implements Runnable
 
   private BufferOutputStream bufferOutputStream;
 
+  private InputStream wrappedInputStream;
+
+  private OutputStream wrappedOutputStream;
+
   private Object currentStream;
 
   /**
@@ -284,12 +288,12 @@ public abstract class Signal implements Runnable
     {
       if (closeInputStreamAfterMe())
       {
-        IOUtil.closeSilent(bufferInputStream);
+        IOUtil.closeSilent(wrappedInputStream != null ? wrappedInputStream : bufferInputStream);
       }
 
       if (closeOutputStreamAfterMe())
       {
-        IOUtil.closeSilent(bufferOutputStream);
+        IOUtil.closeSilent(wrappedOutputStream != null ? wrappedOutputStream : bufferOutputStream);
       }
 
       protocol.stopSignal(this, exception);
@@ -326,7 +330,7 @@ public abstract class Signal implements Runnable
       TRACER.format("================ {0}: {1}", getOutputMeaning(), this); //$NON-NLS-1$
     }
 
-    OutputStream wrappedOutputStream = wrapOutputStream(out);
+    wrappedOutputStream = wrapOutputStream(out);
     ExtendedDataOutputStream extended = ExtendedDataOutputStream.wrap(wrappedOutputStream);
 
     try
@@ -357,7 +361,7 @@ public abstract class Signal implements Runnable
       TRACER.format("================ {0}: {1}", getInputMeaning(), this); //$NON-NLS-1$
     }
 
-    InputStream wrappedInputStream = wrapInputStream(in);
+    wrappedInputStream = wrapInputStream(in);
     ExtendedDataInputStream extended = ExtendedDataInputStream.wrap(wrappedInputStream);
 
     try

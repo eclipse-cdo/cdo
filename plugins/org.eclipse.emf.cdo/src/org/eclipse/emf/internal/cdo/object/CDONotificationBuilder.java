@@ -14,6 +14,8 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -32,6 +34,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.impl.NotificationChainImpl;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -288,7 +291,26 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
   private CDODeltaNotificationImpl createNotification(int eventType, EStructuralFeature feature, Object oldValue,
       Object newValue, int position)
   {
-    Class<?> instanceClass = feature.getEType().getInstanceClass();
+    EClassifier eType = feature.getEType();
+
+    if (oldValue != null || newValue != null)
+    {
+      CDOType type = CDOModelUtil.getType(eType);
+      if (type != null)
+      {
+        if (oldValue != null)
+        {
+          oldValue = type.convertToEMF(eType, oldValue);
+        }
+
+        if (newValue != null)
+        {
+          newValue = type.convertToEMF(eType, newValue);
+        }
+      }
+    }
+
+    Class<?> instanceClass = eType.getInstanceClass();
     if (instanceClass.isPrimitive())
     {
       Object defaultValue = null;

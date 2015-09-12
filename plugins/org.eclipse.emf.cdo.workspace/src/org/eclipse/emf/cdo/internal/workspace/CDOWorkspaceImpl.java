@@ -693,7 +693,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
               }
 
               localRevision = remoteRevision.copy();
-              localRevision.setBranchPoint(localSessionHead);
+              localRevision.setBranchPoint(localRepositoryHead);
 
               accessor.rawStore(localRevision, new Monitor());
             }

@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
@@ -35,8 +37,8 @@ import org.eclipse.ui.IWorkbenchPart;
  */
 public class CDOModelEditorOpener extends CDOEditorOpener.Default
 {
-  private static final boolean INTERACTIVE_CONFLICT_RESOLUTION = "true"
-      .equalsIgnoreCase(System.getProperty("INTERACTIVE_CONFLICT_RESOLUTION"));
+  private static final boolean INTERACTIVE_CONFLICT_RESOLUTION = !"false"
+      .equalsIgnoreCase(System.getProperty("cdo.interactive.conflict.resolution"));
 
   public CDOModelEditorOpener()
   {
@@ -99,20 +101,9 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
     return editor;
   }
 
-  @SuppressWarnings("restriction")
   protected void configureTransaction(CDOTransaction transaction)
   {
-    if (INTERACTIVE_CONFLICT_RESOLUTION)
-    {
-      org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver conflictResolver = new org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver();
-      conflictResolver.setConflictHandlerSelector(new InteractiveConflictHandlerSelector());
-
-      transaction.options().addConflictResolver(conflictResolver);
-    }
-    else
-    {
-      transaction.options().addConflictResolver(new CDOMergingConflictResolver());
-    }
+    addConflictResolver(transaction);
   }
 
   private IEditorPart openEditor(IWorkbenchPage page, CDOView view, String resourcePath)
@@ -141,5 +132,20 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
     }
 
     return null;
+  }
+
+  public static void addConflictResolver(CDOTransaction transaction)
+  {
+    if (INTERACTIVE_CONFLICT_RESOLUTION)
+    {
+      CDOHandlingConflictResolver conflictResolver = new CDOHandlingConflictResolver();
+      conflictResolver.setConflictHandlerSelector(new InteractiveConflictHandlerSelector());
+
+      transaction.options().addConflictResolver(conflictResolver);
+    }
+    else
+    {
+      transaction.options().addConflictResolver(new CDOMergingConflictResolver());
+    }
   }
 }

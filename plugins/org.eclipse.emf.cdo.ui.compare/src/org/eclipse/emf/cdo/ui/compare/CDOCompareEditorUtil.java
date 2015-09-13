@@ -50,6 +50,7 @@ import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
 import org.eclipse.emf.compare.scope.IComparisonScope;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -693,11 +694,18 @@ public class CDOCompareEditorUtil
               Match match = comparison.getMatch(rightObject);
               if (match != null)
               {
-                CDOObject leftObject = CDOUtil.getCDOObject(match.getLeft());
-                CDOID id = leftObject.cdoID();
+                EObject left = match.getLeft();
+                if (left != null)
+                {
+                  CDOObject leftObject = CDOUtil.getCDOObject(left);
+                  if (leftObject != null)
+                  {
+                    CDOID id = leftObject.cdoID();
+                    idMappings.put(rightObject.cdoID(), id);
 
-                idMappings.put(rightObject.cdoID(), id);
-                org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl.resurrectObject(rightObject, id);
+                    org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl.resurrectObject(rightObject, id);
+                  }
+                }
               }
             }
 

@@ -412,7 +412,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public boolean hasConflict()
   {
     checkActive();
-    return conflict != 0;
+    return conflict > 0;
   }
 
   public void setConflict(InternalCDOObject object)
@@ -431,7 +431,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     synchronized (this)
     {
-      --conflict;
+      if (conflict > 0)
+      {
+        --conflict;
+      }
     }
   }
 

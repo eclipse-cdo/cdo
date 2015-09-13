@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
 import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
@@ -99,27 +98,9 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
         transaction.addTransactionHandler(new CDODefaultTransactionHandler2()
         {
           @Override
-          public void rolledBackTransaction(CDOTransaction transaction)
-          {
-            closeTransaction(transaction);
-          }
-
-          @Override
           public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
           {
             checkout.refresh();
-            closeTransaction(transaction);
-          }
-
-          private void closeTransaction(final CDOTransaction transaction)
-          {
-            UIUtil.getDisplay().asyncExec(new Runnable()
-            {
-              public void run()
-              {
-                transaction.close();
-              }
-            });
           }
         });
       }

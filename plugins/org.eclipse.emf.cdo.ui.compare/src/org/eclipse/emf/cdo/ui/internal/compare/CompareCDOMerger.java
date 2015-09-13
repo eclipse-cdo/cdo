@@ -18,15 +18,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.util.ui.UIUtil;
-
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPart;
-
 import java.util.Set;
 
 /**
@@ -47,65 +38,8 @@ public class CompareCDOMerger implements CDOMerger2
   public void merge(final CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs)
       throws ConflictException
   {
-    final IEditorPart[] result = { null };
-
-    final IWorkbenchPage page = UIUtil.getActiveWorkbenchPage();
-    final IPartListener listener = new IPartListener()
-    {
-      @SuppressWarnings("restriction")
-      public void partOpened(IWorkbenchPart part)
-      {
-        if (part instanceof org.eclipse.compare.internal.CompareEditor)
-        {
-          result[0] = (IEditorPart)part;
-        }
-      }
-
-      public void partDeactivated(IWorkbenchPart part)
-      {
-        // Do nothing.
-      }
-
-      public void partClosed(IWorkbenchPart part)
-      {
-        if (part == result[0])
-        {
-          localTransaction.close();
-          page.removePartListener(this);
-        }
-      }
-
-      public void partBroughtToTop(IWorkbenchPart part)
-      {
-        // Do nothing.
-      }
-
-      public void partActivated(IWorkbenchPart part)
-      {
-        // Do nothing.
-      }
-    };
-
-    page.addPartListener(listener);
-
-    localTransaction.addListener(new LifecycleEventAdapter()
-    {
-      @Override
-      protected void onDeactivated(ILifecycle lifecycle)
-      {
-        if (result[0] != null)
-        {
-          UIUtil.getDisplay().asyncExec(new Runnable()
-          {
-            public void run()
-            {
-              page.closeEditor(result[0], false);
-            }
-          });
-        }
-      }
-    });
-
+    CDOCompareEditorUtil.closeTransactionAfterCommit(localTransaction);
+    CDOCompareEditorUtil.closeEditorWithTransaction(localTransaction);
     CDOCompareEditorUtil.openEditor(remoteView, localTransaction, affectedIDs, true);
   }
 }

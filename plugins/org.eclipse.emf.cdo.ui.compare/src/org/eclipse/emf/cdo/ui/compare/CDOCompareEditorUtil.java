@@ -833,7 +833,6 @@ public class CDOCompareEditorUtil
             if (!idMappings.isEmpty())
             {
               CDOIDMapper idMapper = new CDOIDMapper(idMappings);
-              // idMapper.setAllowUnmappedTempIDs(true);
 
               for (CDOObject newObject : values)
               {

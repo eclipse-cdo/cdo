@@ -711,25 +711,32 @@ public class CDOCompareEditorUtil
       else
       {
         Match match = diff.getMatch();
-        InternalCDOObject left = (InternalCDOObject)CDOUtil.getCDOObject(match.getLeft());
-        InternalCDOObject right = (InternalCDOObject)CDOUtil.getCDOObject(match.getRight());
 
-        InternalCDORevision leftRevision = left.cdoRevision();
-        cleanRevisions.put(right, leftRevision);
-        int remoteVersion = leftRevision.getVersion();
+        EObject left = match.getLeft();
+        EObject right = match.getRight();
 
-        InternalCDORevision rightRevision = right.cdoRevision();
-        rightRevision.setBranchPoint(leftRevision);
-        rightRevision.setVersion(remoteVersion);
-
-        InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(rightRevision.getID());
-        if (revisionDelta != null)
+        if (left != null && right != null)
         {
-          revisionDelta.setVersion(remoteVersion);
-        }
+          InternalCDOObject leftObject = (InternalCDOObject)CDOUtil.getCDOObject(left);
+          InternalCDOObject rightObject = (InternalCDOObject)CDOUtil.getCDOObject(right);
 
-        transaction.removeConflict(right);
-        right.cdoInternalSetState(CDOState.DIRTY);
+          InternalCDORevision leftRevision = leftObject.cdoRevision();
+          cleanRevisions.put(rightObject, leftRevision);
+          int remoteVersion = leftRevision.getVersion();
+
+          InternalCDORevision rightRevision = rightObject.cdoRevision();
+          rightRevision.setBranchPoint(leftRevision);
+          rightRevision.setVersion(remoteVersion);
+
+          InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(rightRevision.getID());
+          if (revisionDelta != null)
+          {
+            revisionDelta.setVersion(remoteVersion);
+          }
+
+          transaction.removeConflict(rightObject);
+          rightObject.cdoInternalSetState(CDOState.DIRTY);
+        }
       }
     }
 

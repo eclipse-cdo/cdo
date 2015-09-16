@@ -1,7 +1,5 @@
 org.eclipse.net4j.util.doc
-org.eclipse.oomph.version.doc
-org.eclipse.net4j.db.doc
 org.eclipse.net4j.doc
-org.eclipse.emf.cdo.doc
-org.eclipse.emf.cdo.releng.setup.doc
 org.eclipse.emf.cdo.releng.help
+org.eclipse.net4j.db.doc
+org.eclipse.emf.cdo.doc

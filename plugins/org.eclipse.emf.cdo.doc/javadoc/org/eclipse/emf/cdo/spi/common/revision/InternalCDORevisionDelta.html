@@ -83,9 +83,10 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="InternalCDORevisionDelta.html" title="&#171;interface&#187; InternalCDORevisionDelta" alt="" coords="183,100,353,140"/>
+<area shape="rect" id="node1" href="InternalCDORevisionDelta.html" title="&#171;interface&#187; InternalCDORevisionDelta" alt="" coords="309,100,480,140"/>
 <area shape="rect" id="node2" href="../../../common/revision/delta/CDORevisionDelta.html" title="&#171;interface&#187; CDORevisionDelta (org.eclipse.emf.cdo.common.revision.delta)" alt="" coords="5,6,280,61"/>
 <area shape="rect" id="node3" href="CDOReferenceAdjustable.html" title="&#171;interface&#187; CDOReferenceAdjustable" alt="" coords="310,13,479,53"/>
+<area shape="rect" id="node4" href="../branch/CDOBranchAdjustable.html" title="&#171;interface&#187; CDOBranchAdjustable (org.eclipse.emf.cdo.spi.common.branch)" alt="" coords="509,6,771,61"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="InternalCDORevisionDelta.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
@@ -93,12 +94,12 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></dd>
+<dd><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">CDOBranchAdjustable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOIdentifiable.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIdentifiable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">InternalCDORevisionDelta</span>
-extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a></pre>
+extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a>, <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">CDOBranchAdjustable</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd>
@@ -150,17 +151,17 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">addFeatureDelta</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;delta)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
-<div class="block"><i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><code>addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)</code></a>.</i></div>
+<div class="block"><i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><code>addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)</code></a>.</i></div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)">addFeatureDelta</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;delta,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)">addFeatureDelta</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;delta,
                <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOOriginSizeProvider.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOOriginSizeProvider</a>&nbsp;originSizeProvider)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>,<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EStructuralFeature,<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#getFeatureDeltaMap()">getFeatureDeltaMap</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -181,7 +182,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.delta.<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a></h3>
-<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor)">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor, org.eclipse.net4j.util.Predicate)">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#apply(org.eclipse.emf.cdo.common.revision.CDORevision)">apply</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#copy()">copy</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getEClass()">getEClass</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDelta(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureDelta</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDeltas()">getFeatureDeltas</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getTarget()">getTarget</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#isEmpty()">isEmpty</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#size()">size</a></code></li>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor)">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#accept(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor,%20org.eclipse.net4j.util.Predicate)">accept</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#apply(org.eclipse.emf.cdo.common.revision.CDORevision)">apply</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#applyTo(org.eclipse.emf.cdo.common.revision.CDORevision)">applyTo</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#copy()">copy</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getEClass()">getEClass</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDelta(org.eclipse.emf.ecore.EStructuralFeature)">getFeatureDelta</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getFeatureDeltas()">getFeatureDeltas</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#getTarget()">getTarget</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#isEmpty()">isEmpty</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html#size()">size</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchVersion">
@@ -211,6 +212,13 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.revision.<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a></h3>
 <code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/CDOReferenceAdjustable.html#adjustReferences(org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster)">adjustReferences</a></code></li>
 </ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.branch.<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">CDOBranchAdjustable</a></h3>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/CDOBranchAdjustable.html#adjustBranches(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">adjustBranches</a></code></li>
+</ul>
 </li>
 </ul>
 </li>
@@ -231,7 +239,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/
 <ul class="blockList">
 <li class="blockList">
 <h4>getFeatureDeltaMap</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>,<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;&nbsp;getFeatureDeltaMap()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EStructuralFeature,<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&gt;&nbsp;getFeatureDeltaMap()</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd></dl>
 </li>
@@ -244,7 +252,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/
 <h4>addFeatureDelta</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 void&nbsp;addFeatureDelta(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;delta)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><code>addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)</code></a>.</i></div>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html#addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)"><code>addFeatureDelta(CDOFeatureDelta, CDOOriginSizeProvider)</code></a>.</i></div>
 </li>
 </ul>
 <a name="addFeatureDelta(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta, org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider)">
@@ -358,6 +366,6 @@ void&nbsp;addFeatureDelta(<a href="../../../../../../../org/eclipse/emf/cdo/comm
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -133,7 +133,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCl
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/common/AbstractQueryResult.html#AbstractQueryResult(org.eclipse.emf.cdo.common.CDOCommonView, org.eclipse.emf.cdo.common.util.CDOQueryInfo, int)">AbstractQueryResult</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&nbsp;view,
+<td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/common/AbstractQueryResult.html#AbstractQueryResult(org.eclipse.emf.cdo.common.CDOCommonView,%20org.eclipse.emf.cdo.common.util.CDOQueryInfo,%20int)">AbstractQueryResult</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&nbsp;view,
                    <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;queryInfo,
                    int&nbsp;queryID)</code>&nbsp;</td>
 </tr>
@@ -204,7 +204,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCl
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -241,6 +241,15 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCl
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getView()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getView</h4>
+<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&nbsp;getView()</pre>
+</li>
+</ul>
 <a name="getQueryInfo()">
 <!--   -->
 </a>
@@ -252,24 +261,6 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCl
   <dd>3.0</dd></dl>
 </li>
 </ul>
-<a name="getQueue()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getQueue</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getQueue()</pre>
-</li>
-</ul>
-<a name="getView()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getView</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&nbsp;getView()</pre>
-</li>
-</ul>
 <a name="getQueryID()">
 <!--   -->
 </a>
@@ -277,6 +268,15 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCl
 <li class="blockList">
 <h4>getQueryID</h4>
 <pre>public&nbsp;int&nbsp;getQueryID()</pre>
+</li>
+</ul>
+<a name="getQueue()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getQueue</h4>
+<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryQueue.html" title="class in org.eclipse.emf.cdo.common.util">CDOQueryQueue</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getQueue()</pre>
 </li>
 </ul>
 <a name="setQueryID(int)">
@@ -434,6 +434,6 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/common/util/BlockingCl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

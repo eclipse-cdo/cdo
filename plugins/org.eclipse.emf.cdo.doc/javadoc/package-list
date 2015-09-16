@@ -28,7 +28,6 @@ org.eclipse.emf.cdo.expressions
 org.eclipse.emf.cdo.expressions.impl
 org.eclipse.emf.cdo.expressions.provider
 org.eclipse.emf.cdo.expressions.util
-org.eclipse.emf.cdo.location
 org.eclipse.emf.cdo.net4j
 org.eclipse.emf.cdo.security
 org.eclipse.emf.cdo.security.impl
@@ -65,7 +64,6 @@ org.eclipse.emf.cdo.spi.common.revision
 org.eclipse.emf.cdo.spi.server
 org.eclipse.emf.cdo.spi.transfer
 org.eclipse.emf.cdo.spi.workspace
-org.eclipse.emf.cdo.team
 org.eclipse.emf.cdo.transaction
 org.eclipse.emf.cdo.transfer
 org.eclipse.emf.cdo.transfer.spi.repository
@@ -75,11 +73,9 @@ org.eclipse.emf.cdo.transfer.ui
 org.eclipse.emf.cdo.transfer.ui.swt
 org.eclipse.emf.cdo.ui
 org.eclipse.emf.cdo.ui.compare
-org.eclipse.emf.cdo.ui.ide
 org.eclipse.emf.cdo.ui.widgets
 org.eclipse.emf.cdo.util
 org.eclipse.emf.cdo.view
 org.eclipse.emf.cdo.workspace
-org.eclipse.emf.cdo.workspace.efs
 org.eclipse.emf.internal.cdo
 org.eclipse.emf.spi.cdo

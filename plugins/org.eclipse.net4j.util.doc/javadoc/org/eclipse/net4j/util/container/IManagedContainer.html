@@ -145,7 +145,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;</code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="type parameter in IContainer.Persistable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="type parameter in IContainer.Persistence">E</a>&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -174,7 +174,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor, boolean)">addPostProcessor</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor,%20boolean)">addPostProcessor</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
                 boolean&nbsp;processExistingElements)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -183,13 +183,13 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String, boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description,
           boolean&nbsp;activate)</code>&nbsp;</td>
@@ -204,12 +204,12 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElements(java.lang.String, java.lang.String)">getElements</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElements(java.lang.String,%20java.lang.String)">getElements</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactory(java.lang.String, java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactory(java.lang.String,%20java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -234,7 +234,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#putElement(java.lang.String, java.lang.String, java.lang.String, java.lang.Object)">putElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#putElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.Object)">putElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code>&nbsp;</td>
@@ -245,7 +245,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removeElement(java.lang.String, java.lang.String, java.lang.String)">removeElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removeElement(java.lang.String,%20java.lang.String,%20java.lang.String)">removeElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
@@ -567,6 +567,6 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

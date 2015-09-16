@@ -216,7 +216,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></td>
-<td class="colLast"><span class="strong">CDOLockUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long, org.eclipse.emf.cdo.common.lock.CDOLockOwner, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.common.lock.CDOLockState[])">createLockChangeInfo</a></strong>(long&nbsp;timestamp,
+<td class="colLast"><span class="strong">CDOLockUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long,%20org.eclipse.emf.cdo.common.lock.CDOLockOwner,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.common.lock.CDOLockState[])">createLockChangeInfo</a></strong>(long&nbsp;timestamp,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a>&nbsp;op,
@@ -225,7 +225,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">CDOLockState.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#isLocked(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.common.lock.CDOLockOwner, boolean)">isLocked</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+<td class="colLast"><span class="strong">CDOLockState.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#isLocked(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.common.lock.CDOLockOwner,%20boolean)">isLocked</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
         <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner,
         boolean&nbsp;others)</code>
 <div class="block">If the 'others' argument is <code>false</code>, this method returns <code>true</code> if this lock is currently
@@ -309,13 +309,17 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">InternalCDOLockState.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#removeReadLockOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">removeReadLockOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">InternalCDOLockState.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#removeOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">removeOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">InternalCDOLockState.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#removeReadLockOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">removeReadLockOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">InternalCDOLockState.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#setWriteLockOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">setWriteLockOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">InternalCDOLockState.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#setWriteOptionOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">setWriteOptionOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
 </tr>
@@ -510,6 +514,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

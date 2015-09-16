@@ -110,7 +110,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<td class="colLast"><span class="strong">IStoreAccessor.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)">readChangeSet</a></strong>(<a href="../../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
+<td class="colLast"><span class="strong">IStoreAccessor.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor,%20org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)">readChangeSet</a></strong>(<a href="../../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
              <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>...&nbsp;segments)</code>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
@@ -131,14 +131,14 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<td class="colLast"><span class="strong">IClassMapping.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><span class="strong">IClassMapping.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<td class="colLast"><span class="strong">IMappingStrategy.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><span class="strong">IMappingStrategy.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.net4j.util.om.monitor.OMMonitor,%20org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
              <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
@@ -160,7 +160,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]</code></td>
-<td class="colLast"><span class="strong">CDOChangeSetSegment.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#createFrom(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">createFrom</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
+<td class="colLast"><span class="strong">CDOChangeSetSegment.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html#createFrom(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">createFrom</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
           <a href="../../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -214,6 +214,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

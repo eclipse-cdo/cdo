@@ -123,7 +123,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDORemoteSessionManager.EventAdapter.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.EventAdapter.html#onMessageReceived(org.eclipse.emf.cdo.session.remote.CDORemoteSession, org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">onMessageReceived</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&nbsp;remoteSession,
+<td class="colLast"><span class="strong">CDORemoteSessionManager.EventAdapter.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.EventAdapter.html#onMessageReceived(org.eclipse.emf.cdo.session.remote.CDORemoteSession,%20org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">onMessageReceived</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&nbsp;remoteSession,
                  <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code>
 <div class="block">Called if the local session is <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#isSubscribed()"><code>subscribed</code></a> and a remote session has
  <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)"><code>sent</code></a> custom data to the local session.</div>
@@ -137,16 +137,16 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDORemoteSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage, org.eclipse.emf.cdo.session.remote.CDORemoteSession...)">sendMessage</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+<td class="colLast"><span class="strong">CDORemoteSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,%20org.eclipse.emf.cdo.session.remote.CDORemoteSession...)">sendMessage</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
            <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>...&nbsp;recipients)</code>
 <div class="block">Sends a multicast message to the subscribed recipients.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDORemoteSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage, java.util.Collection)">sendMessage</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+<td class="colLast"><span class="strong">CDORemoteSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,%20java.util.Collection)">sendMessage</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</code>
-<div class="block">Same as <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage, org.eclipse.emf.cdo.session.remote.CDORemoteSession...)"><code>CDORemoteSessionManager.sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a> but with a recipients <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>collection</code></a>.</div>
+<div class="block">Same as <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,%20org.eclipse.emf.cdo.session.remote.CDORemoteSession...)"><code>CDORemoteSessionManager.sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a> but with a recipients <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util"><code>collection</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -165,17 +165,17 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">ISessionProtocol.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession, org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">sendRemoteMessageNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<td class="colLast"><span class="strong">ISessionProtocol.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/ISessionProtocol.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,%20org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">sendRemoteMessageNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                              <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalSession.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession, org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">sendRemoteMessageNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<td class="colLast"><span class="strong">InternalSession.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,%20org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">sendRemoteMessageNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                              <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></td>
-<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession, org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage, int[])">sendRemoteMessageNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,%20org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,%20int[])">sendRemoteMessageNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                              <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
                              int[]&nbsp;recipients)</code>&nbsp;</td>
 </tr>
@@ -195,12 +195,12 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalCDORemoteSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionMessage(int, org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">handleRemoteSessionMessage</a></strong>(int&nbsp;sessionID,
+<td class="colLast"><span class="strong">InternalCDORemoteSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionMessage(int,%20org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">handleRemoteSessionMessage</a></strong>(int&nbsp;sessionID,
                           <a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOSessionProtocol.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage, java.util.List)">sendRemoteMessage</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+<td class="colLast"><span class="strong">CDOSessionProtocol.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,%20java.util.List)">sendRemoteMessage</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -254,6 +254,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -275,55 +275,60 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#doAfterActivate()">doAfterActivate</a></strong>()</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#doBeforeDeactivate()">doBeforeDeactivate</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#doDeactivate()">doDeactivate</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">IStreamWrapper</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#getStreamWrapper()">getStreamWrapper</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#getTimeout()">getTimeout</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Handles a given (incoming) buffer.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#handleChannelDeactivation()">handleChannelDeactivation</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#isSendingTimeoutChanges()">isSendingTimeoutChanges</a></strong>()</code>
 <div class="block">Returns <code>true</code> by default, override to change this behaviour.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#open(org.eclipse.net4j.connector.IConnector)">open</a></strong>(<a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#provideSignalReactor(short)">provideSignalReactor</a></strong>(short&nbsp;signalID)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)">setStreamWrapper</a></strong>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">IStreamWrapper</a>&nbsp;streamWrapper)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#setTimeout(long)">setTimeout</a></strong>(long&nbsp;timeout)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#setTimeout(long)">setTimeout</a></strong>(long&nbsp;timeout)</code>
+<div class="block">Equivalent to calling SignalProtocol.setTimeout(timeout, false).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html#setTimeout(long,%20boolean)">setTimeout</a></strong>(long&nbsp;timeout,
+          boolean&nbsp;useOldTimeoutToSendNewOne)</code>
+<div class="block">Update the timeout used for signal end of stream waiting time.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
@@ -346,21 +351,21 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkInactive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkInactive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkNull(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkNull</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deferredActivate(boolean)" title="class or interface in org.eclipse.net4j.util.lifecycle">deferredActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#dump()" title="class or interface in org.eclipse.net4j.util.lifecycle">dump</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isDeferredActivation()" title="class or interface in org.eclipse.net4j.util.lifecycle">isDeferredActivation</a></code></li>
+<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(boolean,%20java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(java.lang.Object,%20java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkInactive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkInactive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkNull(java.lang.Object,%20java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkNull</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(boolean,%20java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(java.lang.Object,%20java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deferredActivate(boolean)" title="class or interface in org.eclipse.net4j.util.lifecycle">deferredActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doAfterActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doAfterActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#dump()" title="class or interface in org.eclipse.net4j.util.lifecycle">dump</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isDeferredActivation()" title="class or interface in org.eclipse.net4j.util.lifecycle">isDeferredActivation</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent()" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent)" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireThrowable(java.lang.Throwable)" title="class or interface in org.eclipse.net4j.util.event">fireThrowable</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#firstListenerAdded()" title="class or interface in org.eclipse.net4j.util.event">firstListenerAdded</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getNotificationService()" title="class or interface in org.eclipse.net4j.util.event">getNotificationService</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#lastListenerRemoved()" title="class or interface in org.eclipse.net4j.util.event">lastListenerRemoved</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent()" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent)" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent,%20org.eclipse.net4j.util.event.IListener[])" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireThrowable(java.lang.Throwable)" title="class or interface in org.eclipse.net4j.util.event">fireThrowable</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#firstListenerAdded()" title="class or interface in org.eclipse.net4j.util.event">firstListenerAdded</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getNotificationService()" title="class or interface in org.eclipse.net4j.util.event">getNotificationService</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#lastListenerRemoved()" title="class or interface in org.eclipse.net4j.util.event">lastListenerRemoved</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.protocol.IProtocol">
@@ -500,11 +505,28 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <li class="blockList">
 <h4>setTimeout</h4>
 <pre>public&nbsp;void&nbsp;setTimeout(long&nbsp;timeout)</pre>
+<div class="block">Equivalent to calling SignalProtocol.setTimeout(timeout, false).</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html#setTimeout(long)">setTimeout</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a>&lt;<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="type parameter in SignalProtocol">INFRA_STRUCTURE</a>&gt;</code></dd>
 <dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
+</li>
+</ul>
+<a name="setTimeout(long, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTimeout</h4>
+<pre>public&nbsp;boolean&nbsp;setTimeout(long&nbsp;timeout,
+                 boolean&nbsp;useOldTimeoutToSendNewOne)</pre>
+<div class="block">Update the timeout used for signal end of stream waiting time.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>timeout</code> - the new timeout</dd><dd><code>useOldTimeoutToSendNewOne</code> - true to use the old timeout, false to use the new specified one to sent to server side the new specified timeout</dd>
+<dt><span class="strong">Returns:</span></dt><dd>true if the new specified timeout has correctly been sent
+
+ NOTE: this second parameter is useful mostly for test to be able to set a to small timeout</dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 <a name="getStreamWrapper()">
@@ -609,21 +631,6 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <dt><strong>Overrides:</strong></dt>
 <dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#toString()" title="class or interface in org.eclipse.net4j.util.lifecycle">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 </dl>
-</li>
-</ul>
-<a name="doAfterActivate()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>doAfterActivate</h4>
-<pre>protected&nbsp;void&nbsp;doAfterActivate()
-                        throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
-<dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doAfterActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doAfterActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd></dl>
 </li>
 </ul>
 <a name="doBeforeDeactivate()">
@@ -767,6 +774,6 @@ implements <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" t
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -98,7 +98,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&gt;, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</a></dd>
+<dd>org.eclipse.emf.common.notify.Adapter, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&gt;, org.eclipse.emf.ecore.EPackage.Descriptor</dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -107,12 +107,12 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">CDOPackageInfo</span>
-extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&gt;</pre>
-<div class="block">Describes a single <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package </code></a> instance of the nested package tree strucure represented by the
+extends org.eclipse.emf.common.notify.Adapter, org.eclipse.emf.ecore.EPackage.Descriptor, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&gt;</pre>
+<div class="block">Describes a single <code>package </code> instance of the nested package tree strucure represented by the
  containing <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.
  <p>
  While the containing package unit is in the <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html#PROXY"><code>PROXY</code></a> state this package info acts as
- a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package descriptor</code></a> in the associated <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a>. When that
+ a <code>package descriptor</code> in the associated <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a>. When that
  package unit is loaded all contained package infos/descriptors are resolved and replaced by their actual packages. At
  the same time the describing package info objects are attached as adapters to the resolved packages. This way the
  descriptive information is available before and after loading the packages.</div>
@@ -136,8 +136,8 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>org.eclipse.emf.common.notify.Adapter.Internal</code></li>
 </ul>
 </li>
 </ul>
@@ -154,9 +154,9 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EPackage</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html#getEPackage(boolean)">getEPackage</a></strong>(boolean&nbsp;loadOnDemand)</code>
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> described by this package info.</div>
+<div class="block">Returns the <code>package</code> described by this package info.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -174,7 +174,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html#getParentURI()">getParentURI</a></strong>()</code>
-<div class="block">Returns the namespace URI of the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESuperPackage()" title="class or interface in org.eclipse.emf.ecore"><code>super package</code></a> of the package described by this
+<div class="block">Returns the namespace URI of the <code>super package</code> of the package described by this
  package info.</div>
 </td>
 </tr>
@@ -211,15 +211,15 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#getTarget()" title="class or interface in org.eclipse.emf.common.notify">getTarget</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#isAdapterForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify">isAdapterForType</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#notifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">notifyChanged</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#setTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify">setTarget</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>getTarget, isAdapterForType, notifyChanged, setTarget</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.ecore.EPackage.Descriptor">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEFactory()" title="class or interface in org.eclipse.emf.ecore">getEFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEPackage()" title="class or interface in org.eclipse.emf.ecore">getEPackage</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.EPackage.Descriptor</h3>
+<code>getEFactory, getEPackage</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Comparable">
@@ -269,7 +269,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <li class="blockList">
 <h4>getParentURI</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getParentURI()</pre>
-<div class="block">Returns the namespace URI of the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESuperPackage()" title="class or interface in org.eclipse.emf.ecore"><code>super package</code></a> of the package described by this
+<div class="block">Returns the namespace URI of the <code>super package</code> of the package described by this
  package info.</div>
 </li>
 </ul>
@@ -279,8 +279,8 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getEPackage</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;getEPackage(boolean&nbsp;loadOnDemand)</pre>
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> described by this package info.</div>
+<pre>org.eclipse.emf.ecore.EPackage&nbsp;getEPackage(boolean&nbsp;loadOnDemand)</pre>
+<div class="block">Returns the <code>package</code> described by this package info.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>loadOnDemand</code> - If <code>true</code> and the containing <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> is not <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html#LOADED"><code>LOADED</code></a> the package unit is implicitely loaded. If <code>false</code> and this package unit is not
           <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html#LOADED"><code>LOADED</code></a> <code>null</code> is returned.</dd></dl>
 </li>
@@ -330,7 +330,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <div class="block">Returns <code>true</code> is this package info describes one of the models <i>Ecore</i>, <i>Eresource</i> or
  <i>Etypes</i>, <code>false</code> otherwise.
  <p>
- Note that the models <i>Ecore</i>, <i>Eresource</i> and <i>Etypes</i> are expected to present as generated
+ Note that the models <i>Eresource</i> and <i>Etypes</i> are expected to present as generated
  <a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html#NATIVE"><code>NATIVE</code></a> models in all deployments.</div>
 </li>
 </ul>
@@ -400,6 +400,6 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

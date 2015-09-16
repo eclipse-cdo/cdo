@@ -128,7 +128,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">IQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html#executeQuery(org.eclipse.emf.cdo.common.util.CDOQueryInfo, org.eclipse.emf.cdo.server.IQueryContext)">executeQuery</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
+<td class="colLast"><span class="strong">IQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/IQueryHandler.html#executeQuery(org.eclipse.emf.cdo.common.util.CDOQueryInfo,%20org.eclipse.emf.cdo.server.IQueryContext)">executeQuery</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
             <a href="../../../../../../../org/eclipse/emf/cdo/server/IQueryContext.html" title="interface in org.eclipse.emf.cdo.server">IQueryContext</a>&nbsp;context)</code>
 <div class="block">Executes the <a href="../../../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>query</code></a> represented by the specified <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util"><code>query info</code></a> by
  <a href="../../../../../../../org/eclipse/emf/cdo/server/IQueryContext.html#addResult(java.lang.Object)"><code>passing</code></a> the query results to the query execution engine represented by the
@@ -154,20 +154,20 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>protected org.eclipse.ocl.Query&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
-<td class="colLast"><span class="strong">OCLQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.html#createQuery(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.util.CDOQueryInfo, org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.ContextParameter, org.eclipse.ocl.OCL)">createQuery</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<td class="colFirst"><code>protected org.eclipse.ocl.Query&lt;org.eclipse.emf.ecore.EClassifier,org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EObject&gt;</code></td>
+<td class="colLast"><span class="strong">OCLQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.html#createQuery(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.common.util.CDOQueryInfo,%20org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.ContextParameter,%20org.eclipse.ocl.OCL)">createQuery</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
            <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
            <a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.ContextParameter.html" title="class in org.eclipse.emf.cdo.server.ocl">OCLQueryHandler.ContextParameter</a>&nbsp;contextParameter,
-           org.eclipse.ocl.OCL&lt;?,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>,?,?,?,?,?,?,?,org.eclipse.ocl.ecore.Constraint,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;ocl)</code>&nbsp;</td>
+           org.eclipse.ocl.OCL&lt;?,org.eclipse.emf.ecore.EClassifier,?,?,?,?,?,?,?,org.eclipse.ocl.ecore.Constraint,org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EObject&gt;&nbsp;ocl)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">OCLQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.html#executeQuery(org.eclipse.emf.cdo.common.util.CDOQueryInfo, org.eclipse.emf.cdo.server.IQueryContext)">executeQuery</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
+<td class="colLast"><span class="strong">OCLQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.html#executeQuery(org.eclipse.emf.cdo.common.util.CDOQueryInfo,%20org.eclipse.emf.cdo.server.IQueryContext)">executeQuery</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
             <a href="../../../../../../../org/eclipse/emf/cdo/server/IQueryContext.html" title="interface in org.eclipse.emf.cdo.server">IQueryContext</a>&nbsp;context)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.ContextParameter.html" title="class in org.eclipse.emf.cdo.server.ocl">OCLQueryHandler.ContextParameter</a></code></td>
-<td class="colLast"><span class="strong">OCLQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.html#getContextParameter(org.eclipse.emf.cdo.common.util.CDOQueryInfo, org.eclipse.emf.cdo.view.CDOView)">getContextParameter</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
+<td class="colLast"><span class="strong">OCLQueryHandler.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.html#getContextParameter(org.eclipse.emf.cdo.common.util.CDOQueryInfo,%20org.eclipse.emf.cdo.view.CDOView)">getContextParameter</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info,
                    <a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -179,7 +179,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.ContextParameter.html#OCLQueryHandler.ContextParameter(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.util.CDOQueryInfo)">OCLQueryHandler.ContextParameter</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/ocl/OCLQueryHandler.ContextParameter.html#OCLQueryHandler.ContextParameter(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.common.util.CDOQueryInfo)">OCLQueryHandler.ContextParameter</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
                                 <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -209,7 +209,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/AbstractQueryResult.html#AbstractQueryResult(org.eclipse.emf.cdo.common.CDOCommonView, org.eclipse.emf.cdo.common.util.CDOQueryInfo, int)">AbstractQueryResult</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&nbsp;view,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/AbstractQueryResult.html#AbstractQueryResult(org.eclipse.emf.cdo.common.CDOCommonView,%20org.eclipse.emf.cdo.common.util.CDOQueryInfo,%20int)">AbstractQueryResult</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&nbsp;view,
                    <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;queryInfo,
                    int&nbsp;queryID)</code>&nbsp;</td>
 </tr>
@@ -242,7 +242,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalQueryResult</a></code></td>
-<td class="colLast"><span class="strong">InternalQueryManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryManager.html#execute(org.eclipse.emf.cdo.spi.server.InternalView, org.eclipse.emf.cdo.common.util.CDOQueryInfo)">execute</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+<td class="colLast"><span class="strong">InternalQueryManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalQueryManager.html#execute(org.eclipse.emf.cdo.spi.server.InternalView,%20org.eclipse.emf.cdo.common.util.CDOQueryInfo)">execute</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
        <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;queryInfo)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -290,7 +290,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/AbstractQueryIterator.html#AbstractQueryIterator(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.common.util.CDOQueryInfo)">AbstractQueryIterator</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/AbstractQueryIterator.html#AbstractQueryIterator(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.common.util.CDOQueryInfo)">AbstractQueryIterator</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
                      <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;queryInfo)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -344,6 +344,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -61,7 +61,7 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_org.eclipse.emf.compare.match.DefaultMatchEngine">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
@@ -83,7 +83,7 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="DefaultMatchEngine ()" alt="" coords="41,5,180,45"/>
+<area shape="rect" id="node1" title="DefaultMatchEngine (org.eclipse.emf.compare.match)" alt="" coords="5,5,216,45"/>
 <area shape="rect" id="node2" href="CDOCompare.CDOMatchEngine.html" title="CDOCompare.CDOMatchEngine" alt="" coords="5,85,216,110"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOCompare.CDOMatchEngine.png" usemap="#APIVIZ" border="0"></div>
@@ -91,7 +91,7 @@
 <li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li>DefaultMatchEngine</li>
+<li>org.eclipse.emf.compare.match.DefaultMatchEngine</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.cdo.compare.CDOCompare.CDOMatchEngine</li>
@@ -104,14 +104,18 @@
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt>All Implemented Interfaces:</dt>
+<dd>org.eclipse.emf.compare.match.IMatchEngine</dd>
+</dl>
+<dl>
 <dt>Enclosing class:</dt>
 <dd><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public static class <span class="strong">CDOCompare.CDOMatchEngine</span>
-extends DefaultMatchEngine</pre>
-<div class="block">A <code>match engine</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObjects</code></a>.</div>
+extends org.eclipse.emf.compare.match.DefaultMatchEngine</pre>
+<div class="block">A <code>match engine</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
 </li>
 </ul>
 </div>
@@ -139,6 +143,21 @@ extends DefaultMatchEngine</pre>
 </table>
 </li>
 </ul>
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.compare.match.DefaultMatchEngine">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;org.eclipse.emf.compare.match.DefaultMatchEngine</h3>
+<code>DEFAULT_EOBJECT_URI_CACHE_MAX_SIZE</code></li>
+</ul>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -153,20 +172,27 @@ extends DefaultMatchEngine</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html#match(Comparison, IComparisonScope, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.util.Monitor)">match</a></strong>(Comparison&nbsp;comparison,
-     IComparisonScope&nbsp;scope,
-     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;left,
-     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;right,
-     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;origin,
-     <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/Monitor.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">Monitor</a>&nbsp;monitor)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html#match(org.eclipse.emf.compare.Comparison,%20org.eclipse.emf.compare.scope.IComparisonScope,%20org.eclipse.emf.common.notify.Notifier,%20org.eclipse.emf.common.notify.Notifier,%20org.eclipse.emf.common.notify.Notifier,%20org.eclipse.emf.common.util.Monitor)">match</a></strong>(org.eclipse.emf.compare.Comparison&nbsp;comparison,
+     org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope,
+     org.eclipse.emf.common.notify.Notifier&nbsp;left,
+     org.eclipse.emf.common.notify.Notifier&nbsp;right,
+     org.eclipse.emf.common.notify.Notifier&nbsp;origin,
+     org.eclipse.emf.common.util.Monitor&nbsp;monitor)</code>&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.compare.match.DefaultMatchEngine">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.compare.match.DefaultMatchEngine</h3>
+<code>create, create, createDefaultEObjectMatcher, createDefaultEObjectMatcher, createResourceMatcher, getEObjectMatcher, match, match, match, match</code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -182,18 +208,22 @@ extends DefaultMatchEngine</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="match(Comparison, IComparisonScope, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.util.Monitor)">
+<a name="match(org.eclipse.emf.compare.Comparison, org.eclipse.emf.compare.scope.IComparisonScope, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.notify.Notifier, org.eclipse.emf.common.util.Monitor)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>match</h4>
-<pre>protected&nbsp;void&nbsp;match(Comparison&nbsp;comparison,
-         IComparisonScope&nbsp;scope,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;left,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;right,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;origin,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/Monitor.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">Monitor</a>&nbsp;monitor)</pre>
+<pre>protected&nbsp;void&nbsp;match(org.eclipse.emf.compare.Comparison&nbsp;comparison,
+         org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope,
+         org.eclipse.emf.common.notify.Notifier&nbsp;left,
+         org.eclipse.emf.common.notify.Notifier&nbsp;right,
+         org.eclipse.emf.common.notify.Notifier&nbsp;origin,
+         org.eclipse.emf.common.util.Monitor&nbsp;monitor)</pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code>match</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.compare.match.DefaultMatchEngine</code></dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -247,7 +277,7 @@ extends DefaultMatchEngine</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields_inherited_from_class_org.eclipse.emf.compare.match.DefaultMatchEngine">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
@@ -262,6 +292,6 @@ extends DefaultMatchEngine</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

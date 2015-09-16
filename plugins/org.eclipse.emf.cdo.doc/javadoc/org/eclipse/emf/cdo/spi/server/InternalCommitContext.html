@@ -83,8 +83,9 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="InternalCommitContext.html" title="&#171;interface&#187; InternalCommitContext" alt="" coords="31,100,185,140"/>
+<area shape="rect" id="node1" href="InternalCommitContext.html" title="&#171;interface&#187; InternalCommitContext" alt="" coords="151,100,305,140"/>
 <area shape="rect" id="node2" href="../../server/IStoreAccessor.CommitContext.html" title="&#171;interface&#187; IStoreAccessor.CommitContext (org.eclipse.emf.cdo.server)" alt="" coords="5,6,211,61"/>
+<area shape="rect" id="node3" href="../../common/util/CDOTimeProvider.html" title="&#171;interface&#187; CDOTimeProvider (org.eclipse.emf.cdo.common.util)" alt="" coords="240,6,459,61"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="InternalCommitContext.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
@@ -92,12 +93,12 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a></dd>
+<dd><a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">InternalCommitContext</span>
-extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a></pre>
+extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>, <a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd>
@@ -144,7 +145,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Com
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#addIDMapping(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.id.CDOID)">addIDMapping</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#addIDMapping(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.id.CDOID)">addIDMapping</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID,
             <a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newID)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -200,7 +201,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Com
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#setDetachedObjectTypes(java.util.Map)">setDetachedObjectTypes</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&gt;&nbsp;detachedObjectTypes)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#setDetachedObjectTypes(java.util.Map)">setDetachedObjectTypes</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,org.eclipse.emf.ecore.EClass&gt;&nbsp;detachedObjectTypes)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -236,7 +237,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Com
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#setSecurityImpact(byte, java.util.Set)">setSecurityImpact</a></strong>(byte&nbsp;securityImpact,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#setSecurityImpact(byte,%20java.util.Set)">setSecurityImpact</a></strong>(byte&nbsp;securityImpact,
                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;impactedRules)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -257,7 +258,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Com
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#createCommitInfo()">createCommitInfo</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getBranchPoint()">getBranchPoint</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getCommitComment()">getCommitComment</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getData(java.lang.Object)">getData</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjects()">getDetachedObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjectTypes()">getDetachedObjectTypes</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjectVersions()">getDetachedObjectVersions</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjectDeltas()">getDirtyObjectDeltas</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjects()">getDirtyObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getIDMappings()">getIDMappings</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLastUpdateTime()">getLastUpdateTime</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLobs()">getLobs</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLocksOnNewObjects()">getLocksOnNewObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewObjects()">getNewObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewPackageUnits()">getNewPackageUnits</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPackageRegistry()">getPackageRegistry</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPostCommmitLockStates()">getPostCommmitLockStates</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPreviousTimeStamp()">getPreviousTimeStamp</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getRollbackMessage()">getRollbackMessage</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getRollbackReason()">getRollbackReason</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getSecurityImpact()">getSecurityImpact</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getUserID()">getUserID</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getXRefs()">getXRefs</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isAutoReleaseLocksEnabled()">isAutoReleaseLocksEnabled</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isClearResourcePathCache()">isClearResourcePathCache</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isUsingEcore()">isUsingEcore</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isUsingEtypes()">isUsingEtypes</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#setData(java.lang.Object, T)">setData</a></code></li>
+<code><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#createCommitInfo()">createCommitInfo</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getBranchPoint()">getBranchPoint</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getCommitComment()">getCommitComment</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getData(java.lang.Object)">getData</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjects()">getDetachedObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjectTypes()">getDetachedObjectTypes</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjectVersions()">getDetachedObjectVersions</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjectDeltas()">getDirtyObjectDeltas</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDirtyObjects()">getDirtyObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getIDMappings()">getIDMappings</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLastUpdateTime()">getLastUpdateTime</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLobs()">getLobs</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getLocksOnNewObjects()">getLocksOnNewObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewObjects()">getNewObjects</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getNewPackageUnits()">getNewPackageUnits</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPackageRegistry()">getPackageRegistry</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPostCommmitLockStates()">getPostCommmitLockStates</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getPreviousTimeStamp()">getPreviousTimeStamp</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getRollbackMessage()">getRollbackMessage</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getRollbackReason()">getRollbackReason</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getSecurityImpact()">getSecurityImpact</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getUserID()">getUserID</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getXRefs()">getXRefs</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isAutoReleaseLocksEnabled()">isAutoReleaseLocksEnabled</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isClearResourcePathCache()">isClearResourcePathCache</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isUsingEcore()">isUsingEcore</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isUsingEtypes()">isUsingEtypes</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#setData(java.lang.Object,%20T)">setData</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.revision.CDORevisionProvider">
@@ -320,7 +321,10 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Com
 <li class="blockList">
 <h4>getTimeStamp</h4>
 <pre>long&nbsp;getTimeStamp()</pre>
-<dl><dt><span class="strong">Since:</span></dt>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp()">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
+<dt><span class="strong">Since:</span></dt>
   <dd>4.2</dd></dl>
 </li>
 </ul>
@@ -477,7 +481,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Com
 <ul class="blockList">
 <li class="blockList">
 <h4>setDetachedObjectTypes</h4>
-<pre>void&nbsp;setDetachedObjectTypes(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&gt;&nbsp;detachedObjectTypes)</pre>
+<pre>void&nbsp;setDetachedObjectTypes(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,org.eclipse.emf.ecore.EClass&gt;&nbsp;detachedObjectTypes)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
 </li>
@@ -630,6 +634,6 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Com
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

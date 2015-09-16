@@ -211,19 +211,37 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static Comparison</code></td>
-<td class="colLast"><span class="strong">CDOCompareUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])">compare</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
+<td class="colFirst"><code>static org.eclipse.emf.compare.Comparison</code></td>
+<td class="colLast"><span class="strong">CDOCompareUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.view.CDOView[])">compare</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
        <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
        <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code>
-<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>.</div>
+<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static org.eclipse.emf.compare.Comparison</code></td>
+<td class="colLast"><span class="strong">CDOCompareUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compare(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.view.CDOView[],%20org.eclipse.emf.cdo.view.CDOViewOpener)">compare</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
+       <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+       <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+       <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code>
+<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</a></code></td>
+<td class="colLast"><span class="strong">CDOComparisonScope.AllContents.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html#create(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.view.CDOView[])">create</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
+      <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
+      <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code>
+<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</a></code></td>
-<td class="colLast"><span class="strong">CDOComparisonScope.AllContents.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html#create(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.view.CDOView[])">create</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
+<td class="colLast"><span class="strong">CDOComparisonScope.AllContents.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html#create(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.view.CDOView[],%20org.eclipse.emf.cdo.view.CDOViewOpener)">create</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
       <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
-      <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code>
-<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore"><code>content tree</code></a>.</div>
+      <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
+      <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code>
+<div class="block">Takes an arbitrary <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <code>content tree</code>.</div>
 </td>
 </tr>
 </tbody>
@@ -1060,17 +1078,17 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><span class="strong">ExpressionFilterImpl.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/security/impl/ExpressionFilterImpl.html#filter(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">filter</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">ExpressionFilterImpl.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/security/impl/ExpressionFilterImpl.html#filter(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">filter</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
       <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract boolean</code></td>
-<td class="colLast"><span class="strong">ObjectFilterImpl.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/security/impl/ObjectFilterImpl.html#filter(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">filter</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">ObjectFilterImpl.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/security/impl/ObjectFilterImpl.html#filter(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">filter</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
       <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract boolean</code></td>
-<td class="colLast"><span class="strong">ObjectPermissionImpl.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html#isApplicable(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isApplicable</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">ObjectPermissionImpl.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/security/impl/ObjectPermissionImpl.html#isApplicable(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">isApplicable</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
             <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
@@ -1099,7 +1117,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getObject(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getObject(org.eclipse.emf.cdo.common.id.CDOID,%20boolean)">getObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
          boolean&nbsp;loadOnDemand)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -1206,81 +1224,81 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
-<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)"><code>attachingObject()</code></a> method.</div>
+<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)"><code>attachingObject()</code></a> method.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is added.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
-<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)"><code>detachingObject()</code></a> method.</div>
+<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)"><code>detachingObject()</code></a> method.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is detached.</div>
 </td>
@@ -1291,39 +1309,39 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>
-<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><code>modifyingObject()</code></a> method.</div>
+<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><code>modifyingObject()</code></a> method.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAutoLocker.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAutoLocker.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>
 <div class="block">This implementation does nothing.</div>
@@ -1331,13 +1349,13 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</div>
@@ -1345,8 +1363,8 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#queryXRefs(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
+          org.eclipse.emf.ecore.EReference...&nbsp;sourceReferences)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
@@ -1365,30 +1383,30 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#lockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20long)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
            <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
            long&nbsp;timeout)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long, boolean)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#lockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20long,%20boolean)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
            <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
            long&nbsp;timeout,
            boolean&nbsp;recursive)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#queryXRefs(java.util.Set,%20org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
+          org.eclipse.emf.ecore.EReference...&nbsp;sourceReferences)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#queryXRefsAsync(java.util.Set,%20org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
+               org.eclipse.emf.ecore.EReference...&nbsp;sourceReferences)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOConflictResolver2.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver2.html#resolveConflicts(java.util.Map, java.util.List)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&gt;&nbsp;conflicts,
+<td class="colLast"><span class="strong">CDOConflictResolver2.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver2.html#resolveConflicts(java.util.Map,%20java.util.List)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&gt;&nbsp;conflicts,
                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&nbsp;allRemoteDeltas)</code>
 <div class="block">Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.</div>
 </td>
@@ -1401,12 +1419,12 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#unlockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
              <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#unlockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20boolean)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
              <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
              boolean&nbsp;recursive)</code>&nbsp;</td>
 </tr>
@@ -1425,12 +1443,20 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><span class="strong">CDOInvalidRootAgent.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/CDOInvalidRootAgent.html#createEmptyRoot(org.eclipse.emf.cdo.CDOObject)">createEmptyRoot</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;invalidRoot)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Color</a></code></td>
 <td class="colLast"><span class="strong">CDOLabelProvider.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/CDOLabelProvider.html#getColor(org.eclipse.emf.cdo.CDOObject)">getColor</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">CDOEventHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEventHandler.html#objectStateChanged(org.eclipse.emf.cdo.CDOObject)">objectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;cdoObject)</code>&nbsp;</td>
+</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDOEventHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEventHandler.html#viewConflict(org.eclipse.emf.cdo.CDOObject, boolean)">viewConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflictingObject,
+<td class="colLast"><span class="strong">CDOEventHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/CDOEventHandler.html#viewConflict(org.eclipse.emf.cdo.CDOObject,%20boolean)">viewConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflictingObject,
             boolean&nbsp;firstConflict)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -1475,7 +1501,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a></code></td>
-<td class="colLast"><span class="strong">CommitHistoryComposite.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.html#createHistory(org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.cdo.CDOObject)">createHistory</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+<td class="colLast"><span class="strong">CommitHistoryComposite.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.html#createHistory(org.eclipse.emf.cdo.session.CDOSession,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.cdo.CDOObject)">createHistory</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
              <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
              <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
@@ -1488,7 +1514,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.Input.html#CommitHistoryComposite.Input(org.eclipse.emf.cdo.session.CDOSession, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.cdo.CDOObject)">CommitHistoryComposite.Input</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/ui/widgets/CommitHistoryComposite.Input.html#CommitHistoryComposite.Input(org.eclipse.emf.cdo.session.CDOSession,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.cdo.CDOObject)">CommitHistoryComposite.Input</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
                             <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                             <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
@@ -1508,11 +1534,16 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
-<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getCDOObject(org.eclipse.emf.ecore.EObject)">getCDOObject</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getCDOObject(org.eclipse.emf.ecore.EObject)">getCDOObject</a></strong>(org.eclipse.emf.ecore.EObject&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
-<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject, org.eclipse.emf.cdo.view.CDOView)">wrapExternalObject</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getCDOObject(org.eclipse.emf.ecore.EObject,%20boolean)">getCDOObject</a></strong>(org.eclipse.emf.ecore.EObject&nbsp;object,
+            boolean&nbsp;adaptLegacy)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
+<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject,%20org.eclipse.emf.cdo.view.CDOView)">wrapExternalObject</a></strong>(org.eclipse.emf.ecore.EObject&nbsp;object,
                   <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -1525,14 +1556,18 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
-<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getRevisionByVersion(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.branch.CDOBranch, int)">getRevisionByVersion</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-                    <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                    int&nbsp;version)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a></code></td>
+<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getLifetime(org.eclipse.emf.cdo.CDOObject)">getLifetime</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
-<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getRevisionByVersion(org.eclipse.emf.cdo.CDOObject, int)">getRevisionByVersion</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getRevisionByVersion(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20int)">getRevisionByVersion</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+                    <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                    int&nbsp;version)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
+<td class="colLast"><span class="strong">CDOUtil.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#getRevisionByVersion(org.eclipse.emf.cdo.CDOObject,%20int)">getRevisionByVersion</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                     int&nbsp;version)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -1557,7 +1592,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID,%20boolean)">getObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
          boolean&nbsp;loadOnDemand)</code>
 <div class="block">Returns the object for the given CDOID.</div>
 </td>
@@ -1600,7 +1635,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOInvalidationPolicy.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html#handleInvalidation(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.CDORevisionKey)">handleInvalidation</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">CDOInvalidationPolicy.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html#handleInvalidation(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.CDORevisionKey)">handleInvalidation</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                   <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&nbsp;key)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -1609,33 +1644,40 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOObjectHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.CDOState, org.eclipse.emf.cdo.CDOState)">objectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<td class="colLast"><span class="strong">CDOObjectHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.CDOState,%20org.eclipse.emf.cdo.CDOState)">objectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
                   <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                   <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
                   <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOFeatureAnalyzer.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html#postTraverseFeature(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EStructuralFeature, int, java.lang.Object)">postTraverseFeature</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;revision,
-                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
-                   int&nbsp;index,
-                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">CDOStaleReferencePolicy.DynamicProxy.Enhanced.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.Enhanced.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.CDOState,%20org.eclipse.emf.cdo.CDOState)">objectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                  <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+                  <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
+                  <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOFeatureAnalyzer.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html#preTraverseFeature(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EStructuralFeature, int)">preTraverseFeature</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;revision,
-                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
-                  int&nbsp;index)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">CDOFeatureAnalyzer.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html#postTraverseFeature(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.ecore.EStructuralFeature,%20int,%20java.lang.Object)">postTraverseFeature</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;revision,
+                   org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
+                   int&nbsp;index,
+                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="strong">CDOFeatureAnalyzer.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html#preTraverseFeature(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.ecore.EStructuralFeature,%20int)">preTraverseFeature</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;revision,
+                  org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
+                  int&nbsp;index)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
+          org.eclipse.emf.ecore.EReference...&nbsp;sourceReferences)</code>
 <div class="block">Returns a list of <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to the specified
  target object.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#reload(org.eclipse.emf.cdo.CDOObject...)">reload</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>...&nbsp;objects)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
@@ -1654,7 +1696,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20long)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
            <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
            long&nbsp;timeout)</code>
 <div class="block">Locks the given objects.</div>
@@ -1662,37 +1704,37 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long, boolean)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20long,%20boolean)">lockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
            <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
            long&nbsp;timeout,
            boolean&nbsp;recursive)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set,%20org.eclipse.emf.ecore.EReference...)">queryXRefs</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
+          org.eclipse.emf.ecore.EReference...&nbsp;sourceReferences)</code>
 <div class="block">Returns a list of <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to the specified
  target objects.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set,%20org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
+               org.eclipse.emf.ecore.EReference...&nbsp;sourceReferences)</code>
 <div class="block">Returns an iterator over the <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to
  the specified target objects.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
              <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType)</code>
 <div class="block">Unlocks the given locked objects of this view.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20boolean)">unlockObjects</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
              <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
              boolean&nbsp;recursive)</code>&nbsp;</td>
 </tr>
@@ -1770,7 +1812,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#changeObject(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changeObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#changeObject(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changeObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
             <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;revisionDelta)</code>
 <div class="block">TODO See <code>CDOObjectMerger</code>!!!</div>
 </td>
@@ -1797,13 +1839,13 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">InternalCDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectLocked(org.eclipse.emf.cdo.CDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">isObjectLocked</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">InternalCDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectLocked(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20boolean)">isObjectLocked</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
               <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
               boolean&nbsp;byOthers)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">CDOSessionProtocol.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#isObjectLocked(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.CDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">isObjectLocked</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<td class="colLast"><span class="strong">CDOSessionProtocol.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#isObjectLocked(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20boolean)">isObjectLocked</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
               <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
               boolean&nbsp;byOthers)</code>&nbsp;</td>
@@ -1818,7 +1860,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.CDORevision,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;oldRemoteRevision,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;remoteDelta,
@@ -1828,7 +1870,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.CDORevision,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;oldRemoteRevision,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;remoteDelta,
@@ -1836,20 +1878,20 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta)</code>
 <div class="block">Resolves the conflict of a single object in the current transaction.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta,
                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&nbsp;remoteDeltas)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.MergeLocalChangesPerFeature.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.MergeLocalChangesPerFeature.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.MergeLocalChangesPerFeature.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.MergeLocalChangesPerFeature.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta,
                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&nbsp;remoteDeltas)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
@@ -1863,6 +1905,19 @@
 </div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">AbstractChangeSetsConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionAttachingObject(org.eclipse.emf.cdo.CDOObject)">transactionAttachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">AbstractChangeSetsConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionDetachingObject(org.eclipse.emf.cdo.CDOObject)">transactionDetachingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">AbstractChangeSetsConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionModifyingObject(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">transactionModifyingObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+                          <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>&nbsp;</td>
+</tr>
 </tbody>
 </table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
@@ -1874,12 +1929,12 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflicts(java.util.Map, java.util.List)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&gt;&nbsp;conflicts,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflicts(java.util.Map,%20java.util.List)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&gt;&nbsp;conflicts,
                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&nbsp;allRemoteDeltas)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges.html#resolveConflicts(java.util.Map, java.util.List)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&gt;&nbsp;conflicts,
+<td class="colLast"><span class="strong">AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges.html#resolveConflicts(java.util.Map,%20java.util.List)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&gt;&nbsp;conflicts,
                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&nbsp;allRemoteDeltas)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
@@ -1895,6 +1950,11 @@
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDOMergingConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#resolveConflicts(java.util.Set)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;conflicts)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">CDOMergingConflictResolver.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#resolveConflicts(java.util.Set,%20org.eclipse.emf.cdo.common.commit.CDOChangeSet)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;conflicts,
+                <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;remoteChangeSet)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -1947,6 +2007,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

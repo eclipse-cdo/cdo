@@ -92,7 +92,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
+<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDONameProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDONameProvider</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&gt;, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
 </dl>
 <hr>
 <br>
@@ -122,7 +122,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+<code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -138,6 +138,13 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 </a>
 <h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></h3>
 <code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#MAIN_BRANCH_ID">MAIN_BRANCH_ID</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#MAIN_BRANCH_NAME">MAIN_BRANCH_NAME</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#PATH_SEPARATOR">PATH_SEPARATOR</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#INVALID_DATE">INVALID_DATE</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE">UNSPECIFIED_DATE</a></code></li>
 </ul>
 </li>
 </ul>
@@ -158,52 +165,56 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#addChild(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">addChild</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#basicSetName(java.lang.String)">basicSetName</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#createBranch(java.lang.String)">createBranch</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
 <div class="block">Creates a sub branch of this branch with the given name, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>based</code></a> at the <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util"><code>current time</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#createBranch(java.lang.String, long)">createBranch</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#createBranch(java.lang.String,%20long)">createBranch</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
             long&nbsp;timeStamp)</code>
 <div class="block">Creates a sub branch of this branch with the given name, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>based</code></a> at the <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> in this branch with the given time stamp.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#getBranch(java.lang.String)">getBranch</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
 <div class="block">Returns the sub branch of this branch with the given relative path, or <code>null</code> if no sub branch with this
  path exists in this branch.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#getBranches()">getBranches</a></strong>()</code>
 <div class="block">Returns an array of the sub branches of this branch, never <code>null</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#getBranches(boolean)">getBranches</a></strong>(boolean&nbsp;loadOnDemand)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.BranchInfo.html" title="class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader.BranchInfo</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#getBranchInfo()">getBranchInfo</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#getBranchManager()">getBranchManager</a></strong>()</code>
 <div class="block">Returns the branch manager that manages this branch, never <code>null</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#isProxy()">isProxy</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#setBranchInfo(java.lang.String, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch, long)">setBranchInfo</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html#setBranchInfo(java.lang.String,%20org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,%20long)">setBranchInfo</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;baseBranch,
              long&nbsp;baseTimeStamp)</code>&nbsp;</td>
 </tr>
@@ -213,7 +224,14 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></h3>
-<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()">getBase</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBasePath()">getBasePath</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()">getHead</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getID()">getID</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getName()">getName</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getPathName()">getPathName</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getPoint(long)">getPoint</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getVersion(int)">getVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#isLocal()">isLocal</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#isMainBranch()">isMainBranch</a></code></li>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()">getBase</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBasePath()">getBasePath</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()">getHead</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getID()">getID</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getName()">getName</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getPathName()">getPathName</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getPoint(long)">getPoint</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getVersion(int)">getVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#isLocal()">isLocal</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#isMainBranch()">isMainBranch</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#rename(java.lang.String)">rename</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#setName(java.lang.String)">setName</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()">getBranch</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">getTimeStamp</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
@@ -235,6 +253,13 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 </a>
 <h3>Methods inherited from interface&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a></h3>
 <code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true#compareTo(T)" title="class or interface in java.lang">compareTo</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.core.runtime.IAdaptable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
 </ul>
 </li>
 </ul>
@@ -327,12 +352,12 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 <h4>createBranch</h4>
 <pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;createBranch(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
                              long&nbsp;timeStamp)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#createBranch(java.lang.String, long)">CDOBranch</a></code></strong></div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#createBranch(java.lang.String,%20long)">CDOBranch</a></code></strong></div>
 <div class="block">Creates a sub branch of this branch with the given name, <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>based</code></a> at the <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> in this branch with the given time stamp.
  <p></div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#createBranch(java.lang.String, long)">createBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></dd>
+<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#createBranch(java.lang.String,%20long)">createBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>name</code> - The name of the sub branch to be created. It must not contain the <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#PATH_SEPARATOR"><code>path separator</code></a>
           character (slash).</dd><dd><code>timeStamp</code> - The time stamp in this branch that the sub branch to be created is supposed to be <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>based
           at</code></a>. It must not be before the base time stamp of this branch and it must be different from the fixed
@@ -377,10 +402,21 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 <a name="addChild(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>addChild</h4>
 <pre>void&nbsp;addChild(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</pre>
+</li>
+</ul>
+<a name="basicSetName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>basicSetName</h4>
+<pre>void&nbsp;basicSetName(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 </li>
@@ -449,6 +485,6 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranc
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

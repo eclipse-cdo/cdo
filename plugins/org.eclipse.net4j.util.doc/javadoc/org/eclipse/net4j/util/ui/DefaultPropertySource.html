@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/net4j/util/ui/DefaultActionFilter.html" title="class in org.eclipse.net4j.util.ui"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.DelegatingPropertyDescriptor.html" title="class in org.eclipse.net4j.util.ui"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="class in org.eclipse.net4j.util.ui"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/net4j/util/ui/DefaultPropertySource.html" target="_top">Frames</a></li>
@@ -83,8 +83,9 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="&#171;interface&#187; IPropertySource (org.eclipse.ui.views.properties)" alt="" coords="5,6,208,61"/>
-<area shape="rect" id="node2" href="DefaultPropertySource.html" title="DefaultPropertySource" alt="" coords="31,101,183,126"/>
+<area shape="rect" id="node1" title="&#171;interface&#187; IPropertySource (org.eclipse.ui.views.properties)" alt="" coords="15,6,217,61"/>
+<area shape="rect" id="node2" href="DefaultPropertySource.Augmented.html" title="DefaultPropertySource.Augmented" alt="" coords="5,166,227,191"/>
+<area shape="rect" id="node3" href="DefaultPropertySource.html" title="DefaultPropertySource" alt="" coords="40,101,192,126"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="DefaultPropertySource.png" usemap="#APIVIZ" border="0"></div>
 <ul class="inheritance">
@@ -101,6 +102,10 @@
 <dl>
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertySource.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">IPropertySource</a></dd>
+</dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource.Augmented</a></dd>
 </dl>
 <hr>
 <br>
@@ -129,6 +134,10 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource.Augmented</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">RECEIVER</a>,<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="type parameter in DefaultPropertySource.Augmented">AUGMENTING_RECEIVER</a>&gt;</strong></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.DelegatingPropertyDescriptor.html" title="class in org.eclipse.net4j.util.ui">DefaultPropertySource.DelegatingPropertyDescriptor</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.DelegatingPropertyDescriptor.html" title="type parameter in DefaultPropertySource.DelegatingPropertyDescriptor">RECEIVER</a>&gt;</strong></code>&nbsp;</td>
 </tr>
 </table>
@@ -149,7 +158,7 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#DefaultPropertySource(RECEIVER)">DefaultPropertySource</a></strong>(<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&nbsp;receiver)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#DefaultPropertySource(RECEIVER, org.eclipse.net4j.util.properties.IPropertyProvider)">DefaultPropertySource</a></strong>(<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&nbsp;object,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#DefaultPropertySource(RECEIVER,%20org.eclipse.net4j.util.properties.IPropertyProvider)">DefaultPropertySource</a></strong>(<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&nbsp;object,
                      <a href="../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&gt;&nbsp;provider)</code>&nbsp;</td>
 </tr>
 </table>
@@ -168,51 +177,55 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#addDescriptor(org.eclipse.ui.views.properties.IPropertyDescriptor)">addDescriptor</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertyDescriptor.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">IPropertyDescriptor</a>&nbsp;descriptor)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/PropertyDescriptor.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">PropertyDescriptor</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#addDescriptor(java.lang.String, java.lang.Object, java.lang.String, java.lang.String)">addDescriptor</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;category,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#addDescriptor(java.lang.String,%20java.lang.Object,%20java.lang.String,%20java.lang.String)">addDescriptor</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;category,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;displayName,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#addDescriptors(org.eclipse.net4j.util.properties.IPropertyProvider)">addDescriptors</a></strong>(<a href="../../../../../org/eclipse/net4j/util/properties/IPropertyProvider.html" title="interface in org.eclipse.net4j.util.properties">IPropertyProvider</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&gt;&nbsp;provider)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#getEditableValue()">getEditableValue</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/properties/Property.html" title="class in org.eclipse.net4j.util.properties">Property</a>&lt;<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#getProperty(java.lang.Object)">getProperty</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertyDescriptor.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">IPropertyDescriptor</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#getPropertyDescriptor(java.lang.Object)">getPropertyDescriptor</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertyDescriptor.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">IPropertyDescriptor</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#getPropertyDescriptors()">getPropertyDescriptors</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#getPropertyValue(java.lang.Object)">getPropertyValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#getReceiver()">getReceiver</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#isPropertySet(java.lang.Object)">isPropertySet</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#resetPropertyValue(java.lang.Object)">resetPropertyValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#setPropertyValue(java.lang.Object, java.lang.Object)">setPropertyValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html#setPropertyValue(java.lang.Object,%20java.lang.Object)">setPropertyValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;id,
                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>&nbsp;</td>
 </tr>
 </table>
@@ -221,7 +234,7 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -275,6 +288,17 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <li class="blockList">
 <h4>getReceiver</h4>
 <pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.html" title="type parameter in DefaultPropertySource">RECEIVER</a>&nbsp;getReceiver()</pre>
+</li>
+</ul>
+<a name="addDescriptor(org.eclipse.ui.views.properties.IPropertyDescriptor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addDescriptor</h4>
+<pre>public&nbsp;boolean&nbsp;addDescriptor(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertyDescriptor.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">IPropertyDescriptor</a>&nbsp;descriptor)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="addDescriptor(java.lang.String, java.lang.Object, java.lang.String, java.lang.String)">
@@ -378,7 +402,7 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertySource.html?is-external=true#setPropertyValue(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.ui.views.properties">setPropertyValue</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertySource.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">IPropertySource</a></code></dd>
+<dd><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertySource.html?is-external=true#setPropertyValue(java.lang.Object,%20java.lang.Object)" title="class or interface in org.eclipse.ui.views.properties">setPropertyValue</a></code>&nbsp;in interface&nbsp;<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/views/properties/IPropertySource.html?is-external=true" title="class or interface in org.eclipse.ui.views.properties">IPropertySource</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -421,7 +445,7 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/net4j/util/ui/DefaultActionFilter.html" title="class in org.eclipse.net4j.util.ui"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.DelegatingPropertyDescriptor.html" title="class in org.eclipse.net4j.util.ui"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" title="class in org.eclipse.net4j.util.ui"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/net4j/util/ui/DefaultPropertySource.html" target="_top">Frames</a></li>
@@ -461,6 +485,6 @@ implements <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

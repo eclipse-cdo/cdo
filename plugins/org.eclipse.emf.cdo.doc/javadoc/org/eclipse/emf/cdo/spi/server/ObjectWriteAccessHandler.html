@@ -172,11 +172,11 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.Wri
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#getCommitContext()">getCommitContext</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EObject[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#getDirtyObjects()">getDirtyObjects</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.ecore.EObject[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#getNewObjects()">getNewObjects</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -189,7 +189,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.Wri
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#handleTransactionAfterCommitted(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionAfterCommitted</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#handleTransactionAfterCommitted(org.eclipse.emf.cdo.server.ITransaction,%20org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionAfterCommitted</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction,
                                <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
                                <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Provides a way to handle transactions after they have been committed to the backend store.</div>
@@ -201,7 +201,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.Wri
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionBeforeCommitting</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html#handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction,%20org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionBeforeCommitting</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction,
                                  <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
                                  <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Provides a way to handle transactions that are to be committed to the backend store.</div>
@@ -225,7 +225,7 @@ implements <a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.Wri
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -313,7 +313,7 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNewObjects</h4>
-<pre>protected final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]&nbsp;getNewObjects()</pre>
+<pre>protected final&nbsp;org.eclipse.emf.ecore.EObject[]&nbsp;getNewObjects()</pre>
 </li>
 </ul>
 <a name="getDirtyObjects()">
@@ -322,7 +322,7 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getDirtyObjects</h4>
-<pre>protected final&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>[]&nbsp;getDirtyObjects()</pre>
+<pre>protected final&nbsp;org.eclipse.emf.ecore.EObject[]&nbsp;getDirtyObjects()</pre>
 </li>
 </ul>
 <a name="handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">
@@ -335,11 +335,11 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
                                      <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
                                      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)
                                              throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">IRepository.WriteAccessHandler</a></code></strong></div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction,%20org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">IRepository.WriteAccessHandler</a></code></strong></div>
 <div class="block">Provides a way to handle transactions that are to be committed to the backend store.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionBeforeCommitting</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></code></dd>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionBeforeCommitting(org.eclipse.emf.cdo.server.ITransaction,%20org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionBeforeCommitting</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>transaction</code> - The transaction that is going to be committed.</dd><dd><code>commitContext</code> - The context of the commit operation that is to be executed against the backend store. The context can be
           used to introspect all aspects of the current commit operation. <b>Note that you must not alter the
           internal state of the commit context in any way!</b></dd><dd><code>monitor</code> - A monitor that should be used by the implementor to avoid timeouts.</dd>
@@ -360,11 +360,11 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
 <pre>public final&nbsp;void&nbsp;handleTransactionAfterCommitted(<a href="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction,
                                    <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
                                    <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionAfterCommitted(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">IRepository.WriteAccessHandler</a></code></strong></div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionAfterCommitted(org.eclipse.emf.cdo.server.ITransaction,%20org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">IRepository.WriteAccessHandler</a></code></strong></div>
 <div class="block">Provides a way to handle transactions after they have been committed to the backend store.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionAfterCommitted(org.eclipse.emf.cdo.server.ITransaction, org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionAfterCommitted</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></code></dd>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html#handleTransactionAfterCommitted(org.eclipse.emf.cdo.server.ITransaction,%20org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">handleTransactionAfterCommitted</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>transaction</code> - The transaction that has been committed.</dd><dd><code>commitContext</code> - The context of the commit operation that was executed against the backend store. The context can be used
           to introspect all aspects of the current commit operation. <b>Note that you must not alter the internal
           state of the commit context in any way!</b></dd><dd><code>monitor</code> - A monitor that should be used by the implementor to avoid timeouts.</dd></dl>
@@ -457,6 +457,6 @@ public final&nbsp;boolean&nbsp;isLegacyModeEnabled()</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -89,7 +89,7 @@
 <area shape="rect" id="node4" href="../../session/CDOSession.html" title="&#171;interface&#187; CDOSession (org.eclipse.emf.cdo.session)" alt="" coords="427,6,619,61"/>
 <area shape="rect" id="node5" href="CDOBranchManager.html" title="&#171;interface&#187; CDOBranchManager" alt="" coords="452,117,593,157"/>
 <area shape="rect" id="node6" href="CDOBranchHandler.html" title="&#171;interface&#187; CDOBranchHandler" alt="" coords="649,13,783,53"/>
-<area shape="rect" id="node7" href="CDOBranchCreatedEvent.html" title="&#171;interface&#187; CDOBranchCreatedEvent" alt="" coords="813,13,981,53"/>
+<area shape="rect" id="node7" href="CDOBranchChangedEvent.html" title="&#171;interface&#187; CDOBranchChangedEvent" alt="" coords="813,13,987,53"/>
 <area shape="rect" id="node8" href="CDOBranch.html" title="&#171;interface&#187; CDOBranch" alt="" coords="580,221,671,261"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOBranchManager.png" usemap="#APIVIZ" border="0"></div>
@@ -117,7 +117,7 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
  <p>
  A branch manager can fire the following events:
  <ul>
- <li> <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchCreatedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchCreatedEvent</code></a> after a new branch has been created.
+ <li> <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchChangedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchChangedEvent</code></a> after a new branch has been created, renamed or deleted.
  </ul>
  <p>
  Branch managers are usually associated with the following entities:
@@ -163,7 +163,7 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getBranches(int, int, org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">getBranches</a></strong>(int&nbsp;startID,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getBranches(int,%20int,%20org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">getBranches</a></strong>(int&nbsp;startID,
            int&nbsp;endID,
            <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchHandler.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchHandler</a>&nbsp;handler)</code>
 <div class="block">Passes all branches with IDs in the given range to the given <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchHandler.html#handleBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>branch
@@ -338,6 +338,6 @@ extends <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -112,7 +112,7 @@
 extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true" title="class or interface in java.lang.reflect">InvocationHandler</a></pre>
 <div class="block">The <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true" title="class or interface in java.lang.reflect"><code>invocation handler</code></a> of the <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/Proxy.html?is-external=true" title="class or interface in java.lang.reflect"><code>dynamic proxy</code></a> created in
- <a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#delegateLifecycle(java.lang.ClassLoader, T, org.eclipse.net4j.util.lifecycle.ILifecycle)"><code>LifecycleUtil.delegateLifecycle()</code></a>.</div>
+ <a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.html#delegateLifecycle(java.lang.ClassLoader,%20T,%20org.eclipse.net4j.util.lifecycle.ILifecycle)"><code>LifecycleUtil.delegateLifecycle()</code></a>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
 </li>
@@ -133,7 +133,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/r
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html#LifecycleUtil.Delegator(T, org.eclipse.net4j.util.lifecycle.ILifecycle)">LifecycleUtil.Delegator</a></strong>(<a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html" title="type parameter in LifecycleUtil.Delegator">T</a>&nbsp;pojo,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html#LifecycleUtil.Delegator(T,%20org.eclipse.net4j.util.lifecycle.ILifecycle)">LifecycleUtil.Delegator</a></strong>(<a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html" title="type parameter in LifecycleUtil.Delegator">T</a>&nbsp;pojo,
                        <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;delegate)</code>&nbsp;</td>
 </tr>
 </table>
@@ -153,13 +153,13 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/r
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html#invoke(java.lang.Object, java.lang.reflect.Method, java.lang.Object[])">invoke</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;proxy,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html#invoke(java.lang.Object,%20java.lang.reflect.Method,%20java.lang.Object[])">invoke</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;proxy,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/Method.html?is-external=true" title="class or interface in java.lang.reflect">Method</a>&nbsp;method,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]&nbsp;args)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html#newProxy(java.lang.ClassLoader, T, java.lang.Class, org.eclipse.net4j.util.lifecycle.ILifecycle)">newProxy</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;loader,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html#newProxy(java.lang.ClassLoader,%20T,%20java.lang.Class,%20org.eclipse.net4j.util.lifecycle.ILifecycle)">newProxy</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;loader,
         T&nbsp;pojo,
         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;pojoInterface,
         <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;delegate)</code>&nbsp;</td>
@@ -170,7 +170,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/r
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -218,7 +218,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/r
               throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true#invoke(java.lang.Object, java.lang.reflect.Method, java.lang.Object[])" title="class or interface in java.lang.reflect">invoke</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true" title="class or interface in java.lang.reflect">InvocationHandler</a></code></dd>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true#invoke(java.lang.Object,%20java.lang.reflect.Method,%20java.lang.Object[])" title="class or interface in java.lang.reflect">invoke</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/reflect/InvocationHandler.html?is-external=true" title="class or interface in java.lang.reflect">InvocationHandler</a></code></dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Throwable.html?is-external=true" title="class or interface in java.lang">Throwable</a></code></dd></dl>
 </li>
@@ -303,6 +303,6 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/r
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -135,7 +135,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;V&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;</code></td>
-<td class="colLast"><span class="strong">AuthenticationUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/AuthenticationUtil.html#authenticatingOperation(org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol, java.util.concurrent.Callable)">authenticatingOperation</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>&nbsp;authenticationProtocol,
+<td class="colLast"><span class="strong">AuthenticationUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/AuthenticationUtil.html#authenticatingOperation(org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol,%20java.util.concurrent.Callable)">authenticatingOperation</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>&nbsp;authenticationProtocol,
                        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/Callable.html?is-external=true" title="class or interface in java.util.concurrent">Callable</a>&lt;V&gt;&nbsp;operation)</code>
 <div class="block">Wrap an <code>operation</code> to make an authentication protocol <a href="../../../../../../../org/eclipse/emf/cdo/spi/server/AuthenticationUtil.html#getAuthenticationProtocol()">available</a>
  to the thread that invokes it, for the duration of the <code>operation</code>'s execution.</div>
@@ -143,7 +143,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#changeUserCredentials(org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol, java.lang.String)">changeUserCredentials</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>&nbsp;sessionProtocol,
+<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#changeUserCredentials(org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol,%20java.lang.String)">changeUserCredentials</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>&nbsp;sessionProtocol,
                      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>
 <div class="block">Initiates the change-credentials protocol with the client and processes the
  client response to update the user's credentials.</div>
@@ -151,7 +151,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#resetUserCredentials(org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol, java.lang.String)">resetUserCredentials</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>&nbsp;sessionProtocol,
+<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#resetUserCredentials(org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol,%20java.lang.String)">resetUserCredentials</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>&nbsp;sessionProtocol,
                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>
 <div class="block">Initiates the administrative reset-credentials protocol with the client and
  processes the client response to reset the specified <code>userID</code>'s credentials.</div>
@@ -219,6 +219,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

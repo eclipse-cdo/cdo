@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-	Copyright (c) 2006-2014 Eike Stepper (Berlin, Germany) and others.
+	Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.
 	All rights reserved. This program and the accompanying materials
 	are made available under the terms of the Eclipse Public License v1.0
 	which accompanies this distribution, and is available at
@@ -15,15 +15,14 @@
 	<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->
 	<!-- =========================================== -->
 
-	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.3.properties" />
-	<property name="path.tp" value=".buckminster/tp" />
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc.properties" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
+  <loadfile property="path.tp" srcfile="${tp.classpath.file}" />
 
 	<property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0" />
+	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.10" />
 	<property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
 	<property name="platform.api" location="plugins/org.eclipse.emf.cdo.releng.doc/package-lists/platform" />
-
 
 	<property name="project.path" value="plugins/org.eclipse.emf.cdo.doc" />
 	<property file="${project.path}/plugin.properties" />
@@ -35,12 +34,7 @@
 	<property name="article.sources" value="${project.path}/src" />
 
 	<path id="javadoc.classpath">
-		<fileset dir="${path.tp}/plugins">
-			<include name="**/*.jar" />
-			<exclude name="**/*carbon*" />
-			<exclude name="**/*.source_*" />
-			<exclude name="**/*.doc_*" />
-		</fileset>
+		<pathelement path="${path.tp}"/>
 		<fileset dir="plugins">
 			<include name="**/*.jar" />
 		</fileset>
@@ -91,7 +85,7 @@
 		         windowtitle="${javadoc.name}"
 		         doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
 		         overview="${project.path}/overview.html"
-		         bottom="&lt;i>Copyright (c) 2006-2014 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
+		         bottom="&lt;i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.&lt;/i>">
 
 			<doclet name="org.jboss.apiviz.APIviz" path="${path.supplemental}/bin">
 				<param name="-nopackagediagram" />
@@ -132,7 +126,6 @@
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/*.java" />
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/impl/*.java" />
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/util/*.java" />
-				<include name="org.eclipse.emf.cdo.location/src/org/eclipse/emf/cdo/location/*.java" />
 				<include name="org.eclipse.emf.cdo.net4j/src/org/eclipse/emf/cdo/net4j/*.java" />
 				<include name="org.eclipse.emf.cdo.security.edit/src/org/eclipse/emf/cdo/security/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.security.ui/src/org/eclipse/emf/cdo/security/ui/*.java" />
@@ -156,7 +149,6 @@
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/embedded/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/server/mem/*.java" />
 				<include name="org.eclipse.emf.cdo.server/src/org/eclipse/emf/cdo/spi/server/*.java" />
-				<include name="org.eclipse.emf.cdo.team/src/org/eclipse/emf/cdo/team/*.java" />
 				<include name="org.eclipse.emf.cdo.transfer.repository/src/org/eclipse/emf/cdo/transfer/spi/repository/*.java" />
 				<include name="org.eclipse.emf.cdo.transfer.ui/src/org/eclipse/emf/cdo/transfer/spi/ui/*.java" />
 				<include name="org.eclipse.emf.cdo.transfer.ui/src/org/eclipse/emf/cdo/transfer/ui/*.java" />
@@ -165,10 +157,8 @@
 				<include name="org.eclipse.emf.cdo.transfer/src/org/eclipse/emf/cdo/spi/transfer/*.java" />
 				<include name="org.eclipse.emf.cdo.transfer/src/org/eclipse/emf/cdo/transfer/*.java" />
 				<include name="org.eclipse.emf.cdo.ui.compare/src/org/eclipse/emf/cdo/ui/compare/*.java" />
-				<include name="org.eclipse.emf.cdo.ui.ide/src/org/eclipse/emf/cdo/ui/ide/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/*.java" />
 				<include name="org.eclipse.emf.cdo.ui/src/org/eclipse/emf/cdo/ui/widgets/*.java" />
-				<include name="org.eclipse.emf.cdo.workspace.efs/src/org/eclipse/emf/cdo/workspace/efs/*.java" />
 				<include name="org.eclipse.emf.cdo.workspace/src/org/eclipse/emf/cdo/spi/workspace/*.java" />
 				<include name="org.eclipse.emf.cdo.workspace/src/org/eclipse/emf/cdo/workspace/*.java" />
 				<include name="org.eclipse.emf.cdo/src/org/eclipse/emf/cdo/*.java" />
@@ -214,14 +204,8 @@
 				<package name="org.eclipse.emf.cdo.eresource.provider" />
 				<package name="org.eclipse.emf.cdo.etypes.provider" />
 			</group>
-			<group title="CDO Model Repository Client Location">
-				<package name="org.eclipse.emf.cdo.location" />
-			</group>
 			<group title="CDO Model Repository Client Net4j Support">
 				<package name="org.eclipse.emf.cdo.net4j" />
-			</group>
-			<group title="CDO Model Repository Client Team Support">
-				<package name="org.eclipse.emf.cdo.team" />
 			</group>
 			<group title="CDO Model Repository Client UI">
 				<package name="org.eclipse.emf.cdo.ui" />
@@ -230,15 +214,9 @@
 			<group title="CDO Model Repository Client UI Compare">
 				<package name="org.eclipse.emf.cdo.ui.compare" />
 			</group>
-			<group title="CDO Model Repository Client UI IDE">
-				<package name="org.eclipse.emf.cdo.ui.ide" />
-			</group>
 			<group title="CDO Model Repository Client Workspace">
 				<package name="org.eclipse.emf.cdo.spi.workspace" />
 				<package name="org.eclipse.emf.cdo.workspace" />
-			</group>
-			<group title="CDO Model Repository Client Workspace EFS">
-				<package name="org.eclipse.emf.cdo.workspace.efs" />
 			</group>
 			<group title="CDO Model Repository Common">
 				<package name="org.eclipse.emf.cdo.common" />
@@ -454,6 +432,7 @@
 		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="plugins/org.eclipse.emf.cdo.server/plugin.xml" />
 		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="plugins/org.eclipse.emf.cdo.server.db/plugin.xml" />
 		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="plugins/org.eclipse.emf.cdo.server.hibernate/plugin.xml" />
+		<pde.convertSchemaToHTML destination="${schemadoc.destdir}" manifest="plugins/org.eclipse.emf.cdo.ui/plugin.xml" />
 
 		<replaceregexp match="\.\./\.\./(.*?)\.css" replace="\1.css" byline="true">
 			<fileset dir="${schemadoc.destdir}">

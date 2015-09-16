@@ -170,7 +170,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#createBinary(org.eclipse.core.runtime.IPath, java.io.InputStream, org.eclipse.core.runtime.IProgressMonitor)">createBinary</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;path,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#createBinary(org.eclipse.core.runtime.IPath,%20java.io.InputStream,%20org.eclipse.core.runtime.IProgressMonitor)">createBinary</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;path,
             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;source,
             <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
@@ -180,7 +180,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#createText(org.eclipse.core.runtime.IPath, java.io.InputStream, java.lang.String, org.eclipse.core.runtime.IProgressMonitor)">createText</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;path,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#createText(org.eclipse.core.runtime.IPath,%20java.io.InputStream,%20java.lang.String,%20org.eclipse.core.runtime.IProgressMonitor)">createText</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;path,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;source,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;encoding,
           <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
@@ -191,7 +191,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#getElement(org.eclipse.emf.common.util.URI)">getElement</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#getElement(org.eclipse.emf.common.util.URI)">getElement</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a></code></td>
@@ -202,7 +202,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#getType()">getType</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.util.URI</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/transfer/FileSystemTransferSystem.html#getURI(org.eclipse.core.runtime.IPath)">getURI</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;path)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -223,14 +223,14 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.emf.cdo.transfer.<a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#createModel(org.eclipse.emf.ecore.resource.ResourceSet, org.eclipse.core.runtime.IPath)">createModel</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#getDefaultTransferType(org.eclipse.emf.cdo.transfer.CDOTransferElement)">getDefaultTransferType</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#getElement(java.lang.String)">getElement</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#isReadOnly()">isReadOnly</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#provideResourceSet()">provideResourceSet</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#saveModels(org.eclipse.emf.common.util.EList, org.eclipse.core.runtime.IProgressMonitor)">saveModels</a></code></li>
+<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#createModel(org.eclipse.emf.ecore.resource.ResourceSet,%20org.eclipse.core.runtime.IPath)">createModel</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#getDefaultTransferType(org.eclipse.emf.cdo.transfer.CDOTransferElement)">getDefaultTransferType</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#getElement(java.lang.String)">getElement</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#isReadOnly()">isReadOnly</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#provideResourceSet()">provideResourceSet</a>, <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#saveModels(org.eclipse.emf.common.util.EList,%20org.eclipse.core.runtime.IProgressMonitor)">saveModels</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -309,7 +309,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 <ul class="blockList">
 <li class="blockList">
 <h4>getURI</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;getURI(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;path)</pre>
+<pre>public&nbsp;org.eclipse.emf.common.util.URI&nbsp;getURI(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IPath.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IPath</a>&nbsp;path)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#getURI(org.eclipse.core.runtime.IPath)">getURI</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></code></dd>
@@ -335,7 +335,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 <ul class="blockList">
 <li class="blockList">
 <h4>getElement</h4>
-<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a>&nbsp;getElement(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre>public&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferElement</a>&nbsp;getElement(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#getElement(org.eclipse.emf.common.util.URI)">getElement</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></code></dd>
@@ -366,7 +366,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
                 <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#createBinary(org.eclipse.core.runtime.IPath, java.io.InputStream, org.eclipse.core.runtime.IProgressMonitor)">createBinary</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></code></dd>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#createBinary(org.eclipse.core.runtime.IPath,%20java.io.InputStream,%20org.eclipse.core.runtime.IProgressMonitor)">createBinary</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -382,7 +382,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
               <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#createText(org.eclipse.core.runtime.IPath, java.io.InputStream, java.lang.String, org.eclipse.core.runtime.IProgressMonitor)">createText</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></code></dd>
+<dd><code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html#createText(org.eclipse.core.runtime.IPath,%20java.io.InputStream,%20java.lang.String,%20org.eclipse.core.runtime.IProgressMonitor)">createText</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSystem.html" title="class in org.eclipse.emf.cdo.transfer">CDOTransferSystem</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -492,6 +492,6 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/transfer/CDOTransferSyste
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -128,7 +128,11 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#CDOSessionProtocol.OpenSessionResult(int, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.CDOCommonRepository.Type, org.eclipse.emf.cdo.common.CDOCommonRepository.State, java.lang.String, java.util.Set, long, long, org.eclipse.emf.cdo.common.id.CDOID, boolean, boolean, boolean, boolean, org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)">CDOSessionProtocol.OpenSessionResult</a></strong>(int&nbsp;sessionID,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#CDOSessionProtocol.OpenSessionResult(org.eclipse.emf.cdo.common.protocol.CDODataInput,%20int)">CDOSessionProtocol.OpenSessionResult</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+                                    int&nbsp;sessionID)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#CDOSessionProtocol.OpenSessionResult(int,%20java.lang.String,%20java.lang.String,%20org.eclipse.emf.cdo.common.CDOCommonRepository.Type,%20org.eclipse.emf.cdo.common.CDOCommonRepository.State,%20java.lang.String,%20java.util.Set,%20long,%20long,%20org.eclipse.emf.cdo.common.id.CDOID,%20boolean,%20boolean,%20boolean,%20boolean,%20org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)">CDOSessionProtocol.OpenSessionResult</a></strong>(int&nbsp;sessionID,
                                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
                                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
                                     <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;repositoryType,
@@ -142,7 +146,11 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
                                     boolean&nbsp;repositorySupportingBranches,
                                     boolean&nbsp;repositorySerializingCommits,
                                     boolean&nbsp;repositoryEnsuringReferentialIntegrity,
-                                    <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</code>&nbsp;</td>
+                                    <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>as of 4.4 use <code>#OpenSessionResult(CDODataInput, int)</code>.</i></div>
+</div>
+</td>
 </tr>
 </table>
 </li>
@@ -213,21 +221,25 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryEnsuringReferentialIntegrity()">isRepositoryEnsuringReferentialIntegrity</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryAuthenticating()">isRepositoryAuthenticating</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryEnsuringReferentialIntegrity()">isRepositoryEnsuringReferentialIntegrity</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySerializingCommits()">isRepositorySerializingCommits</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingAudits()">isRepositorySupportingAudits</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingBranches()">isRepositorySupportingBranches</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingEcore()">isRepositorySupportingEcore</a></strong>()</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
@@ -235,7 +247,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#setRepositoryTimeResult(org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult)">setRepositoryTimeResult</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;repositoryTimeResult)</code>&nbsp;</td>
 </tr>
@@ -245,7 +257,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -261,27 +273,43 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a name="CDOSessionProtocol.OpenSessionResult(org.eclipse.emf.cdo.common.protocol.CDODataInput, int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CDOSessionProtocol.OpenSessionResult</h4>
+<pre>public&nbsp;CDOSessionProtocol.OpenSessionResult(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+                                    int&nbsp;sessionID)
+                                     throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl><dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
 <a name="CDOSessionProtocol.OpenSessionResult(int, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.CDOCommonRepository.Type, org.eclipse.emf.cdo.common.CDOCommonRepository.State, java.lang.String, java.util.Set, long, long, org.eclipse.emf.cdo.common.id.CDOID, boolean, boolean, boolean, boolean, org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CDOSessionProtocol.OpenSessionResult</h4>
-<pre>public&nbsp;CDOSessionProtocol.OpenSessionResult(int&nbsp;sessionID,
-                                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
-                                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
-                                    <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;repositoryType,
-                                    <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;repositoryState,
-                                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;storeType,
-                                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes,
-                                    long&nbsp;repositoryCreationTime,
-                                    long&nbsp;lastUpdateTime,
-                                    <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID,
-                                    boolean&nbsp;repositorySupportingAudits,
-                                    boolean&nbsp;repositorySupportingBranches,
-                                    boolean&nbsp;repositorySerializingCommits,
-                                    boolean&nbsp;repositoryEnsuringReferentialIntegrity,
-                                    <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;CDOSessionProtocol.OpenSessionResult(int&nbsp;sessionID,
+                                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+                                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
+                                               <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;repositoryType,
+                                               <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;repositoryState,
+                                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;storeType,
+                                               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes,
+                                               long&nbsp;repositoryCreationTime,
+                                               long&nbsp;lastUpdateTime,
+                                               <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID,
+                                               boolean&nbsp;repositorySupportingAudits,
+                                               boolean&nbsp;repositorySupportingBranches,
+                                               boolean&nbsp;repositorySerializingCommits,
+                                               boolean&nbsp;repositoryEnsuringReferentialIntegrity,
+                                               <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>as of 4.4 use <code>#OpenSessionResult(CDODataInput, int)</code>.</i></div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.2</dd></dl>
 </li>
@@ -385,6 +413,17 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <li class="blockList">
 <h4>getRepositoryCreationTime</h4>
 <pre>public&nbsp;long&nbsp;getRepositoryCreationTime()</pre>
+</li>
+</ul>
+<a name="isRepositoryAuthenticating()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isRepositoryAuthenticating</h4>
+<pre>public&nbsp;boolean&nbsp;isRepositoryAuthenticating()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 <a name="isRepositorySupportingAudits()">
@@ -555,6 +594,6 @@ public&nbsp;boolean&nbsp;isRepositorySupportingEcore()</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

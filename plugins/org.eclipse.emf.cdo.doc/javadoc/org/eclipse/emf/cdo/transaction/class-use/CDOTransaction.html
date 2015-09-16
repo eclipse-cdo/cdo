@@ -133,12 +133,22 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code>static Comparison</code></td>
+<td class="colFirst"><code>static org.eclipse.emf.compare.Comparison</code></td>
 <td class="colLast"><span class="strong">CDOCompareUtil.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction)">compareUncommittedChanges</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static IComparisonScope</code></td>
+<td class="colFirst"><code>static org.eclipse.emf.compare.Comparison</code></td>
+<td class="colLast"><span class="strong">CDOCompareUtil.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/compare/CDOCompareUtil.html#compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.view.CDOViewOpener)">compareUncommittedChanges</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+                         <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static org.eclipse.emf.compare.scope.IComparisonScope</code></td>
 <td class="colLast"><span class="strong">CDOComparisonScope.Minimal.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#create(org.eclipse.emf.cdo.transaction.CDOTransaction)">create</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static org.eclipse.emf.compare.scope.IComparisonScope</code></td>
+<td class="colLast"><span class="strong">CDOComparisonScope.Minimal.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#create(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.view.CDOViewOpener)">create</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+      <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -156,7 +166,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">HomeFolderHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/spi/security/HomeFolderHandler.html#handleUser(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.security.Realm, org.eclipse.emf.cdo.security.Role, org.eclipse.emf.cdo.security.User)">handleUser</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">HomeFolderHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/spi/security/HomeFolderHandler.html#handleUser(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.security.Realm,%20org.eclipse.emf.cdo.security.Role,%20org.eclipse.emf.cdo.security.User)">handleUser</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
           <a href="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security">Realm</a>&nbsp;realm,
           <a href="../../../../../../org/eclipse/emf/cdo/security/Role.html" title="interface in org.eclipse.emf.cdo.security">Role</a>&nbsp;role,
           <a href="../../../../../../org/eclipse/emf/cdo/security/User.html" title="interface in org.eclipse.emf.cdo.security">User</a>&nbsp;user)</code>&nbsp;</td>
@@ -285,53 +295,53 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
 <td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()">openTransaction</a></strong>()</code>
-<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
 <td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranch)">openTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>
-<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
 <td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</code>
-<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<td class="colLast"><span class="strong">CDOTransactionOpener.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
+               org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+               org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block">Opens and returns a new <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
 <td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(java.lang.String)">openTransaction</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID)</code>
-<div class="block">Opens and returns a <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by resuming a
+<div class="block">Opens and returns a <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on a new EMF <code>resource set</code> by resuming a
  transaction that has previously been made durable by calling <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><code>CDOTransaction.enableDurableLocking(true)</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><span class="strong">CDOTransactionContainer.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by
+<td class="colLast"><span class="strong">CDOTransactionOpener.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html#openTransaction(java.lang.String,%20org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID,
+               org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block">Opens and returns a <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the given EMF <code>resource set</code> by
  resuming a transaction that has previously been made durable by calling
  <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><code>CDOTransaction.enableDurableLocking(true)</code></a>.</div>
 </td>
@@ -347,90 +357,90 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#attachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">attachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
-<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)"><code>attachingObject()</code></a> method.</div>
+<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)"><code>attachingObject()</code></a> method.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#attachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">attachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is added.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
-<div class="block">Synchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>committedTransaction()</code></a> method.</div>
+<div class="block">Synchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>committedTransaction()</code></a> method.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>after</b> it is being committed.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext, org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext,%20org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext,
                     <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;result)</code>
 <div class="block">This implementation does nothing.</div>
@@ -438,7 +448,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext, org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext,%20org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">committedTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                     <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext,
                     <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;result)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>after</b> it is being committed.</div>
@@ -446,40 +456,40 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                      <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
-<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>committingTransaction()</code></a> method.</div>
+<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)"><code>committingTransaction()</code></a> method.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                      <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                      <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                      <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                      <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#committingTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.transaction.CDOCommitContext)">committingTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                      <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> it is being committed.</div>
 </td>
@@ -490,135 +500,142 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">detachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
-<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)"><code>detachingObject()</code></a> method.</div>
+<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)"><code>detachingObject()</code></a> method.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#detachingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject)">detachingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is detached.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><span class="strong">CDOUndoDetector.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html#detectUndo(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.common.revision.CDORevision,%20org.eclipse.emf.cdo.common.revision.CDORevision,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">detectUndo</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+          <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;cleanRevision,
+          <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+          <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#handleDefault(org.eclipse.emf.cdo.transaction.CDOTransaction)">handleDefault</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
               <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+              <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+              org.eclipse.emf.common.notify.Notification&nbsp;msg)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.Default.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.common.notify.Notification)">modifiedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
-              <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a>&nbsp;msg)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>
-<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><code>modifyingObject()</code></a> method.</div>
+<div class="block">Asynchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)"><code>modifyingObject()</code></a> method.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+               <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+               <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAutoAttacher.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOAutoLocker.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOAutoLocker.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
-               <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-               <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDODefaultTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+<td class="colLast"><span class="strong">CDOTransactionHandler1.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject(org.eclipse.emf.cdo.transaction.CDOTransaction,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">modifyingObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDOAsyncTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>
 <div class="block">Synchronously executes the delegate handler's <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOAsyncTransactionHandler.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><code>rolledBackTransaction()</code></a> method.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDODefaultTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDODefaultTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDODefaultTransactionHandler3.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDOPostEventTransactionHandler.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDOTransactionHandler2.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html#rolledBackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">rolledBackTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>after</b> it is rolled back.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">CDOConflictResolver.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html#setTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">setTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>
 <div class="block">Sets the <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> this conflict resolver is to be associated with.</div>
@@ -639,11 +656,11 @@
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#CDOPushTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">CDOPushTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#CDOPushTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, java.io.File)">CDOPushTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#CDOPushTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20java.io.File)">CDOPushTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#CDOPushTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction, java.io.File, boolean)">CDOPushTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#CDOPushTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,%20java.io.File,%20boolean)">CDOPushTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
                   boolean&nbsp;reconstructSavepoints)</code>&nbsp;</td>
 </tr>
@@ -666,12 +683,12 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><span class="strong">CDOWorkspace.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#merge(org.eclipse.emf.cdo.transaction.CDOMerger, java.lang.String)">merge</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+<td class="colLast"><span class="strong">CDOWorkspace.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#merge(org.eclipse.emf.cdo.transaction.CDOMerger,%20java.lang.String)">merge</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;branchPath)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><span class="strong">CDOWorkspace.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#merge(org.eclipse.emf.cdo.transaction.CDOMerger, java.lang.String, long)">merge</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+<td class="colLast"><span class="strong">CDOWorkspace.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#merge(org.eclipse.emf.cdo.transaction.CDOMerger,%20java.lang.String,%20long)">merge</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;branchPath,
      long&nbsp;timeStamp)</code>&nbsp;</td>
 </tr>
@@ -681,7 +698,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
-<td class="colLast"><span class="strong">CDOWorkspace.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>&nbsp;</td>
+<td class="colLast"><span class="strong">CDOWorkspace.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></strong>(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
@@ -746,18 +763,22 @@
 <td class="colLast"><span class="strong">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><strong><a href="../../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">hookTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><span class="strong">CDOMergingConflictResolver.</span><code><strong><a href="../../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">hookTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="strong">AbstractConflictResolver.</span><code><strong><a href="../../../../../../org/eclipse/emf/spi/cdo/AbstractConflictResolver.html#setTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">setTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><span class="strong">AbstractChangeSetsConflictResolver.</span><code><strong><a href="../../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">unhookTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><span class="strong">AbstractConflictResolver.</span><code><strong><a href="../../../../../../org/eclipse/emf/spi/cdo/AbstractConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">unhookTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><span class="strong">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><strong><a href="../../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">unhookTransaction</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
@@ -812,6 +833,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

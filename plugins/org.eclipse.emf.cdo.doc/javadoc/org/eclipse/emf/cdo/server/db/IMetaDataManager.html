@@ -123,34 +123,34 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#getMetaID(org.eclipse.emf.ecore.EModelElement, long)">getMetaID</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a>&nbsp;modelElement,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#getMetaID(org.eclipse.emf.ecore.EModelElement,%20long)">getMetaID</a></strong>(org.eclipse.emf.ecore.EModelElement&nbsp;modelElement,
          long&nbsp;commitTime)</code>
-<div class="block">Returns the meta ID of the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EModelElement</code></a>.</div>
+<div class="block">Returns the meta ID of the given <code>EModelElement</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EModelElement</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#getMetaInstance(org.eclipse.emf.cdo.common.id.CDOID)">getMetaInstance</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EModelElement</code></a> referred to by the given ID.</div>
+<div class="block">Returns the <code>EModelElement</code> referred to by the given ID.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#loadPackageUnit(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colFirst"><code>org.eclipse.emf.ecore.EPackage[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#loadPackageUnit(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
                <a href="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code>
 <div class="block">Loads a package unit from the database.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#rawExport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataOutput, long, long)">rawExport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#rawExport(java.sql.Connection,%20org.eclipse.emf.cdo.common.protocol.CDODataOutput,%20long,%20long)">rawExport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
          <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
          long&nbsp;fromCommitTime,
          long&nbsp;toCommitTime)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#rawImport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataInput, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#rawImport(java.sql.Connection,%20org.eclipse.emf.cdo.common.protocol.CDODataInput,%20long,%20long,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
          <a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
          long&nbsp;fromCommitTime,
          long&nbsp;toCommitTime,
@@ -164,7 +164,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#writePackageUnits(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#writePackageUnits(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
                  <a href="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
                  <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Write package units to the database.</div>
@@ -191,9 +191,9 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getMetaID</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getMetaID(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a>&nbsp;modelElement,
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getMetaID(org.eclipse.emf.ecore.EModelElement&nbsp;modelElement,
               long&nbsp;commitTime)</pre>
-<div class="block">Returns the meta ID of the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EModelElement</code></a>. <code> getMetaID(getMetaInstance(x))</code> yields
+<div class="block">Returns the meta ID of the given <code>EModelElement</code>. <code> getMetaID(getMetaInstance(x))</code> yields
  <code>x</code></div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>modelElement</code> - the element</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the corresponding ID</dd><dt><span class="strong">Since:</span></dt>
@@ -206,8 +206,8 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getMetaInstance</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a>&nbsp;getMetaInstance(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EModelElement</code></a> referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
+<pre>org.eclipse.emf.ecore.EModelElement&nbsp;getMetaInstance(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<div class="block">Returns the <code>EModelElement</code> referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
  <code>m</code></div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
@@ -219,8 +219,8 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>loadPackageUnit</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;loadPackageUnit(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
-                         <a href="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
+<pre>org.eclipse.emf.ecore.EPackage[]&nbsp;loadPackageUnit(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+                                               <a href="../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
 <div class="block">Loads a package unit from the database.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>connection</code> - the DB connection to read from.</dd><dd><code>packageUnit</code> - the package unit to load.</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the loaded package unit.</dd><dt><span class="strong">Since:</span></dt>
@@ -248,7 +248,7 @@
 <div class="block">Reads information about package units present in the database.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>connection</code> - the DB connection to read from.</dd>
 <dt><span class="strong">Returns:</span></dt><dd>a collection of package unit information records which can be passed to
-         <a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#loadPackageUnit(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)"><code>loadPackageUnit(Connection, InternalCDOPackageUnit)</code></a> in order to read the EPackage.</dd><dt><span class="strong">Since:</span></dt>
+         <a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#loadPackageUnit(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)"><code>loadPackageUnit(Connection, InternalCDOPackageUnit)</code></a> in order to read the EPackage.</dd><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
 </li>
 </ul>
@@ -365,6 +365,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

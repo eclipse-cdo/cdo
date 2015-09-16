@@ -123,7 +123,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></td>
-<td class="colLast"><span class="strong">ISession.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/ISession.html#openView(int, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openView</a></strong>(int&nbsp;viewID,
+<td class="colLast"><span class="strong">ISession.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/ISession.html#openView(int,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openView</a></strong>(int&nbsp;viewID,
         <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -154,7 +154,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><span class="strong">CDOServerUtil.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView, boolean)">openView</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+<td class="colLast"><span class="strong">CDOServerUtil.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView,%20boolean)">openView</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
         boolean&nbsp;legacyModeEnabled)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
 <div class="block"><i>As of 4.2 the legacy mode is always enabled, use <a href="../../../../../../org/eclipse/emf/cdo/server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.IView)"><code>CDOServerUtil.openView(IView)</code></a>.</i></div>
@@ -198,7 +198,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#openView(org.eclipse.emf.cdo.server.ISession, int, boolean, java.lang.String)">openView</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#openView(org.eclipse.emf.cdo.server.ISession,%20int,%20boolean,%20java.lang.String)">openView</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
         int&nbsp;viewID,
         boolean&nbsp;readOnly,
         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID)</code>&nbsp;</td>
@@ -218,24 +218,28 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock2(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection, boolean, long)">lock2</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#getLockStates()">getLockStates</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock2(boolean,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.server.IView,%20java.util.Collection,%20boolean,%20long)">lock2</a></strong>(boolean&nbsp;explicit,
      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
      <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;objects,
      boolean&nbsp;recursive,
      long&nbsp;timeout)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection, boolean)">unlock2</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.server.IView,%20java.util.Collection,%20boolean)">unlock2</a></strong>(boolean&nbsp;explicit,
        <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
        <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;objects,
        boolean&nbsp;recursive)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean, org.eclipse.emf.cdo.server.IView)">unlock2</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean,%20org.eclipse.emf.cdo.server.IView)">unlock2</a></strong>(boolean&nbsp;explicit,
        <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -253,7 +257,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></code></td>
-<td class="colLast"><span class="strong">Store.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getWriterPool(org.eclipse.emf.cdo.server.IView, boolean)">getWriterPool</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+<td class="colLast"><span class="strong">Store.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getWriterPool(org.eclipse.emf.cdo.server.IView,%20boolean)">getWriterPool</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
              boolean&nbsp;forReleasing)</code>
 <div class="block">Returns a <a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server"><code>pool</code></a> that may contain <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> instances that are compatible with
  the given session.</div>
@@ -261,7 +265,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection, long)">lock</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock(boolean,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.server.IView,%20java.util.Collection,%20long)">lock</a></strong>(boolean&nbsp;explicit,
     <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
     <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;objects,
@@ -271,7 +275,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock2(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection, boolean, long)">lock2</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#lock2(boolean,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.server.IView,%20java.util.Collection,%20boolean,%20long)">lock2</a></strong>(boolean&nbsp;explicit,
      <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
      <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;objects,
@@ -280,7 +284,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection)">unlock</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.server.IView,%20java.util.Collection)">unlock</a></strong>(boolean&nbsp;explicit,
       <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
       <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;objects)</code>
@@ -289,14 +293,14 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean, org.eclipse.emf.cdo.server.IView)">unlock</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock(boolean,%20org.eclipse.emf.cdo.server.IView)">unlock</a></strong>(boolean&nbsp;explicit,
       <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.server.IView, java.util.Collection, boolean)">unlock2</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.server.IView,%20java.util.Collection,%20boolean)">unlock2</a></strong>(boolean&nbsp;explicit,
        <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
        <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;objects,
@@ -304,7 +308,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean, org.eclipse.emf.cdo.server.IView)">unlock2</a></strong>(boolean&nbsp;explicit,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock2(boolean,%20org.eclipse.emf.cdo.server.IView)">unlock2</a></strong>(boolean&nbsp;explicit,
        <a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -318,7 +322,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#setLockState(java.lang.Object, org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)">setLockState</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
+<td class="colLast"><span class="strong">InternalLockManager.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalLockManager.html#setLockState(java.lang.Object,%20org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)">setLockState</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
             <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="../../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;lockState)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -372,6 +376,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

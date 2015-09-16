@@ -10,6 +10,7 @@
         <topic label="org.eclipse.net4j.util.cache" href="javadoc/org/eclipse/net4j/util/cache/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.collection" href="javadoc/org/eclipse/net4j/util/collection/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.concurrent" href="javadoc/org/eclipse/net4j/util/concurrent/package-summary.html" icon="package" />
+        <topic label="org.eclipse.net4j.util.confirmation" href="javadoc/org/eclipse/net4j/util/confirmation/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.container" href="javadoc/org/eclipse/net4j/util/container/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.container.delegate" href="javadoc/org/eclipse/net4j/util/container/delegate/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.event" href="javadoc/org/eclipse/net4j/util/event/package-summary.html" icon="package" />
@@ -32,6 +33,7 @@
       <topic label="Net4j Utilities UI" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="plugin">
         <topic label="org.eclipse.net4j.util.ui" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.actions" href="javadoc/org/eclipse/net4j/util/ui/actions/package-summary.html" icon="package" />
+        <topic label="org.eclipse.net4j.util.ui.confirmation" href="javadoc/org/eclipse/net4j/util/ui/confirmation/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.container" href="javadoc/org/eclipse/net4j/util/ui/container/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.dnd" href="javadoc/org/eclipse/net4j/util/ui/dnd/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.util.ui.handlers" href="javadoc/org/eclipse/net4j/util/ui/handlers/package-summary.html" icon="package" />

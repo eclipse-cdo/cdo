@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBase.html" title="interface in org.eclipse.emf.cdo.workspace"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.ObjectStatesChangedEvent.html" title="interface in org.eclipse.emf.cdo.workspace"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/workspace/CDOWorkspace.DirtyStateChangedEvent.html" target="_top">Frames</a></li>
@@ -103,11 +103,13 @@
 <br>
 <pre>public static interface <span class="strong">CDOWorkspace.DirtyStateChangedEvent</span>
 extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a></pre>
-<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired when the overall state of the <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> changes between <i>dirty</i> and <i>clean</i>.
- fired.</div>
+<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired when the overall state of the <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> changes between <i>dirty</i> and <i>clean</i>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.1</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#isDirty()"><code>CDOWorkspace.isDirty()</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#isDirty()"><code>CDOWorkspace.isDirty()</code></a></dd><dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
 </li>
 </ul>
 </div>
@@ -127,17 +129,14 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspace</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.DirtyStateChangedEvent.html#getSource()">getSource</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.DirtyStateChangedEvent.html#isDirty()">isDirty</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.IEvent">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true#getSource()" title="class or interface in org.eclipse.net4j.util.event">getSource</a></code></li>
-</ul>
 </li>
 </ul>
 </li>
@@ -152,6 +151,20 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="getSource()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSource</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspace</a>&nbsp;getSource()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true#getSource()" title="class or interface in org.eclipse.net4j.util.event">getSource</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a></code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
 <a name="isDirty()">
 <!--   -->
 </a>
@@ -187,7 +200,7 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBase.html" title="interface in org.eclipse.emf.cdo.workspace"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.ObjectStatesChangedEvent.html" title="interface in org.eclipse.emf.cdo.workspace"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/workspace/CDOWorkspace.DirtyStateChangedEvent.html" target="_top">Frames</a></li>
@@ -227,6 +240,6 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

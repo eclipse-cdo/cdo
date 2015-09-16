@@ -187,26 +187,36 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#close()">close</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#closeChannel()">closeChannel</a></strong>()</code>
+<div class="block">Subclasses may override.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#ensureBuffer()">ensureBuffer</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/RuntimeException.html?is-external=true" title="class or interface in java.lang">RuntimeException</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#getException()">getException</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#getMillisBeforeTimeout()">getMillisBeforeTimeout</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#getMillisInterruptCheck()">getMillisInterruptCheck</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Handles an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> and optionally releases it.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#isCCAM()">isCCAM</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>int</code></td>
@@ -230,14 +240,14 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.io.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#available()" title="class or interface in java.io">available</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#mark(int)" title="class or interface in java.io">mark</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#markSupported()" title="class or interface in java.io">markSupported</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[])" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[], int, int)" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#reset()" title="class or interface in java.io">reset</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#skip(long)" title="class or interface in java.io">skip</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#available()" title="class or interface in java.io">available</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#mark(int)" title="class or interface in java.io">mark</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#markSupported()" title="class or interface in java.io">markSupported</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[])" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[],%20int,%20int)" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#reset()" title="class or interface in java.io">reset</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#skip(long)" title="class or interface in java.io">skip</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -308,6 +318,17 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="isCCAM()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isCCAM</h4>
+<pre>public&nbsp;boolean&nbsp;isCCAM()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
 <a name="getMillisBeforeTimeout()">
 <!--   -->
 </a>
@@ -426,13 +447,27 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <a name="ensureBuffer()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>ensureBuffer</h4>
 <pre>protected&nbsp;boolean&nbsp;ensureBuffer()
                         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <dl><dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+</li>
+</ul>
+<a name="closeChannel()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>closeChannel</h4>
+<pre>protected&nbsp;void&nbsp;closeChannel()</pre>
+<div class="block">Subclasses may override.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd>
+<dt><span class="strong">No Reference</span></dt>
+  <dd>This method is not intended to be referenced by clients.</dd></dl>
 </li>
 </ul>
 </li>
@@ -501,6 +536,6 @@ implements <a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" ti
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

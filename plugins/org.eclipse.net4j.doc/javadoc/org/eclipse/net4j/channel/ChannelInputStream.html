@@ -153,7 +153,7 @@ extends <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" ti
 <td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#ChannelInputStream(org.eclipse.net4j.channel.IChannel)">ChannelInputStream</a></strong>(<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#ChannelInputStream(org.eclipse.net4j.channel.IChannel, long)">ChannelInputStream</a></strong>(<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel,
+<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#ChannelInputStream(org.eclipse.net4j.channel.IChannel,%20long)">ChannelInputStream</a></strong>(<a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;channel,
                   long&nbsp;millisBeforeTimeout)</code>&nbsp;</td>
 </tr>
 </table>
@@ -184,14 +184,18 @@ extends <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" ti
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#getMillisInterruptCheck()">getMillisInterruptCheck</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#setMillisBeforeTimeout(long)">setMillisBeforeTimeout</a></strong>(long&nbsp;millisBeforeTimeout)</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#read()">read</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#setMillisInterruptCheck(long)">setMillisInterruptCheck</a></strong>(long&nbsp;millisInterruptCheck)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#setMillisBeforeTimeout(long)">setMillisBeforeTimeout</a></strong>(long&nbsp;millisBeforeTimeout)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#setMillisInterruptCheck(long)">setMillisInterruptCheck</a></strong>(long&nbsp;millisInterruptCheck)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/channel/ChannelInputStream.html#toString()">toString</a></strong>()</code>&nbsp;</td>
 </tr>
@@ -201,21 +205,21 @@ extends <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" ti
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.buffer.<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></h3>
-<code><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#close()">close</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#ensureBuffer()">ensureBuffer</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#getException()">getException</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#read()">read</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#restartTimeout()">restartTimeout</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#setException(org.eclipse.net4j.signal.RemoteException)">setException</a></code></li>
+<code><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#close()">close</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#closeChannel()">closeChannel</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#ensureBuffer()">ensureBuffer</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#getException()">getException</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#isCCAM()">isCCAM</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#restartTimeout()">restartTimeout</a>, <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#setException(org.eclipse.net4j.signal.RemoteException)">setException</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.io.InputStream">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.io.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#available()" title="class or interface in java.io">available</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#mark(int)" title="class or interface in java.io">mark</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#markSupported()" title="class or interface in java.io">markSupported</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[])" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[], int, int)" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#reset()" title="class or interface in java.io">reset</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#skip(long)" title="class or interface in java.io">skip</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#available()" title="class or interface in java.io">available</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#mark(int)" title="class or interface in java.io">mark</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#markSupported()" title="class or interface in java.io">markSupported</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[])" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#read(byte[],%20int,%20int)" title="class or interface in java.io">read</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#reset()" title="class or interface in java.io">reset</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true#skip(long)" title="class or interface in java.io">skip</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -311,6 +315,21 @@ extends <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" ti
 <pre>public&nbsp;void&nbsp;setMillisInterruptCheck(long&nbsp;millisInterruptCheck)</pre>
 </li>
 </ul>
+<a name="read()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>read</h4>
+<pre>public&nbsp;int&nbsp;read()
+         throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html#read()">read</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></code></dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd></dl>
+</li>
+</ul>
 <a name="toString()">
 <!--   -->
 </a>
@@ -390,6 +409,6 @@ extends <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" ti
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

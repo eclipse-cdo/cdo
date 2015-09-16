@@ -81,21 +81,33 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.net4j.util.confirmation">org.eclipse.net4j.util.confirmation</a></td>
+<td class="colLast">
+<div class="block">A framework for providing confirmation from users.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></td>
 <td class="colLast">
 <div class="block">A framework of notifying collections and wiring containers.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory</a></td>
 <td class="colLast">
 <div class="block">A framework for factory based instance creation.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></td>
 <td class="colLast">
 <div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.confirmation">org.eclipse.net4j.util.ui.confirmation</a></td>
+<td class="colLast">
+<div class="block">Confirmation dialogs.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -127,6 +139,24 @@
 </tbody>
 </table>
 </li>
+<li class="blockList"><a name="org.eclipse.net4j.util.confirmation">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a> in <a href="../../../../../../org/eclipse/net4j/util/confirmation/package-summary.html">org.eclipse.net4j.util.confirmation</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/confirmation/package-summary.html">org.eclipse.net4j.util.confirmation</a> that throw <a href="../../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><span class="strong">IConfirmationProvider.Factory.Default.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/confirmation/IConfirmationProvider.Factory.Default.html#create(java.lang.String)">create</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
 <li class="blockList"><a name="org.eclipse.net4j.util.container">
 <!--   -->
 </a>
@@ -140,32 +170,32 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#createElement(java.lang.String, java.lang.String, java.lang.String)">createElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#createElement(java.lang.String,%20java.lang.String,%20java.lang.String)">createElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="strong">IManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><span class="strong">IManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="strong">IManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String, boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><span class="strong">IManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description,
           boolean&nbsp;activate)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String, boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description,
           boolean&nbsp;activate)</code>&nbsp;</td>
@@ -217,6 +247,24 @@
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/security/Randomizer.html" title="class in org.eclipse.net4j.util.security">Randomizer</a></code></td>
 <td class="colLast"><span class="strong">RandomizerFactory.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/security/RandomizerFactory.html#create(java.lang.String)">create</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.ui.confirmation">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/package-summary.html">org.eclipse.net4j.util.ui.confirmation</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/package-summary.html">org.eclipse.net4j.util.ui.confirmation</a> that throw <a href="../../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
+<td class="colLast"><span class="strong">InteractiveConfirmationProvider.Factory.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/InteractiveConfirmationProvider.Factory.html#create(java.lang.String)">create</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -287,6 +335,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

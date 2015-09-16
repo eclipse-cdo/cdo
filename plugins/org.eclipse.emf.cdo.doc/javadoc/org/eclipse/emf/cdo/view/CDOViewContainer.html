@@ -83,10 +83,11 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="35,6,237,61"/>
-<area shape="rect" id="node2" href="CDOViewContainer.html" title="&#171;interface&#187; CDOViewContainer" alt="" coords="69,104,203,144"/>
-<area shape="rect" id="node3" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="5,208,91,248"/>
-<area shape="rect" id="node4" href="../transaction/CDOTransactionContainer.html" title="&#171;interface&#187; CDOTransactionContainer (org.eclipse.emf.cdo.transaction)" alt="" coords="120,201,331,255"/>
+<area shape="rect" id="node1" title="&#171;interface&#187; IContainer (org.eclipse.net4j.util.container)" alt="" coords="5,6,208,61"/>
+<area shape="rect" id="node2" href="CDOViewOpener.html" title="&#171;interface&#187; CDOViewOpener" alt="" coords="237,13,357,53"/>
+<area shape="rect" id="node3" href="CDOViewContainer.html" title="&#171;interface&#187; CDOViewContainer" alt="" coords="135,104,268,144"/>
+<area shape="rect" id="node4" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="71,208,156,248"/>
+<area shape="rect" id="node5" href="../transaction/CDOTransactionContainer.html" title="&#171;interface&#187; CDOTransactionContainer (org.eclipse.emf.cdo.transaction)" alt="" coords="185,201,396,255"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOViewContainer.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
@@ -94,7 +95,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -103,7 +104,7 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">CDOViewContainer</span>
-extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&gt;</pre>
+extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&gt;, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a></pre>
 <div class="block">Can open new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> and provide access to openend views.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.1</dd>
@@ -128,7 +129,7 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -163,68 +164,53 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()">openView</a></strong>()</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch, long)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
         long&nbsp;timeStamp)</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch, long, org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
         long&nbsp;timeStamp,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+        org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(long)">openView</a></strong>(long&nbsp;timeStamp)</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)">openView</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID)</code>
-<div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by resuming a view that has
- previously been made durable by calling <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><code>CDOView.enableDurableLocking(true)</code></a>.</div>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></strong>(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <code>resource set</code>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by resuming a view that
- has previously been made durable by calling <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><code>CDOView.enableDurableLocking(true)</code></a>.</div>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)">openView</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID)</code>
+<div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code> by resuming a view that has
+ previously been made durable by calling <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><code>CDOView.enableDurableLocking(true)</code></a>.</div>
 </td>
 </tr>
 </table>
@@ -241,6 +227,13 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
 <code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.view.CDOViewOpener">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.ecore.resource.ResourceSet)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html#openView(java.lang.String,%20org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></code></li>
 </ul>
 </li>
 </ul>
@@ -290,20 +283,6 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
   <dd>4.0</dd></dl>
 </li>
 </ul>
-<a name="openView(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.ecore.resource.ResourceSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()"><code>openView()</code></a></dd></dl>
-</li>
-</ul>
 <a name="openView(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
 <!--   -->
 </a>
@@ -311,7 +290,7 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <li class="blockList">
 <h4>openView</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd>
 <dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()"><code>openView()</code></a></dd></dl>
@@ -325,8 +304,8 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <h4>openView</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+               org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</pre>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <code>resource set</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd>
 <dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()"><code>openView()</code></a></dd></dl>
@@ -340,12 +319,12 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <h4>openView</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp)</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.
  <p>
  Same as calling <code>openView(new ResourceSetImpl())</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch, long, org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
 </li>
 </ul>
 <a name="openView(org.eclipse.emf.cdo.common.branch.CDOBranch)">
@@ -355,12 +334,12 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <li class="blockList">
 <h4>openView</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.
  <p>
  Same as calling <code>openView(new ResourceSetImpl())</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch, long, org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
 </li>
 </ul>
 <a name="openView(long)">
@@ -370,12 +349,12 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <li class="blockList">
 <h4>openView</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(long&nbsp;timeStamp)</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.
  <p>
  Same as calling <code>openView(new ResourceSetImpl())</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch, long, org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
 </li>
 </ul>
 <a name="openView(org.eclipse.emf.ecore.resource.ResourceSet)">
@@ -384,11 +363,11 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <ul class="blockList">
 <li class="blockList">
 <h4>openView</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.</div>
+<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</pre>
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <code>resource set</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch, long, org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
 </li>
 </ul>
 <a name="openView()">
@@ -398,41 +377,26 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <li class="blockList">
 <h4>openView</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView()</pre>
-<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>.
+<div class="block">Opens and returns a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code>.
  <p>
  Same as calling <code>openView(new ResourceSetImpl())</code>.</div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch, long, org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(CDOBranch, long, ResourceSet)</code></a></dd></dl>
 </li>
 </ul>
 <a name="openView(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>openView</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID)</pre>
-<div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by resuming a view that has
+<div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on a new EMF <code>resource set</code> by resuming a view that has
  previously been made durable by calling <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><code>CDOView.enableDurableLocking(true)</code></a>.
  <p>
  Same as calling <code>openView(durableLockingID, new ResourceSetImpl())</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)"><code>openView(String,ResourceSet)</code></a></dd></dl>
-</li>
-</ul>
-<a name="openView(java.lang.String, org.eclipse.emf.ecore.resource.ResourceSet)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>openView</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;durableLockingID,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</pre>
-<div class="block">Opens and returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the given EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> by resuming a view that
- has previously been made durable by calling <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)"><code>CDOView.enableDurableLocking(true)</code></a>.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)"><code>openView(String)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html#openView(java.lang.String,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>CDOViewOpener.openView(String,ResourceSet)</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -501,6 +465,6 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

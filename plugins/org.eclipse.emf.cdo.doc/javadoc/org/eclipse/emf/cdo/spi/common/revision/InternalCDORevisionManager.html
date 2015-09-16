@@ -107,7 +107,11 @@
 extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>, <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+  <dd>3.0</dd>
+<dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
 </li>
 </ul>
 </div>
@@ -133,6 +137,12 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></strong></code>
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></strong></code>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
@@ -170,7 +180,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean)">getRevision</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean)">getRevision</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
            <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
            int&nbsp;referenceChunk,
            int&nbsp;prefetchDepth,
@@ -181,7 +191,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean, org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">getRevision</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean,%20org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">getRevision</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
            <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
            int&nbsp;referenceChunk,
            int&nbsp;prefetchDepth,
@@ -190,7 +200,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, int, boolean)">getRevisionByVersion</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion,%20int,%20boolean)">getRevisionByVersion</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
                     int&nbsp;referenceChunk,
                     boolean&nbsp;loadOnDemand)</code>
@@ -208,7 +218,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean, org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">getRevisions</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean,%20org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">getRevisions</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
             <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
             int&nbsp;referenceChunk,
             int&nbsp;prefetchDepth,
@@ -225,14 +235,14 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranch)">reviseLatest</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranch)">reviseLatest</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
             <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>
 <div class="block">Called on client via postCommit when there is no version of detached objects available.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, long)">reviseVersion</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion,%20long)">reviseVersion</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
              <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
              long&nbsp;timeStamp)</code>&nbsp;</td>
 </tr>
@@ -266,7 +276,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></h3>
-<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#containsRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">containsRevision</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#containsRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">containsRevisionByVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisions(java.util.List, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean)">getRevisions</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#handleRevisions(org.eclipse.emf.ecore.EClass, org.eclipse.emf.cdo.common.branch.CDOBranch, boolean, long, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></code></li>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#containsRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">containsRevision</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#containsRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">containsRevisionByVersion</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getObjectLifetime</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisions(java.util.List,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean)">getRevisions</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#handleRevisions(org.eclipse.emf.ecore.EClass,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20boolean,%20long,%20boolean,%20org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder">
@@ -478,20 +488,20 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
                               int&nbsp;referenceChunk,
                               int&nbsp;prefetchDepth,
                               boolean&nbsp;loadOnDemand)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean)">CDORevisionManager</a></code></strong></div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean)">CDORevisionManager</a></code></strong></div>
 <div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch
  point</code></a> (branch + timestamp), optionally demand loading it if it is not already in the <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean)">getRevision</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
+<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean)">getRevision</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
 <dd><code>referenceChunk</code> - The number of target <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> to load for each many-valued reference in the returned revision, or
           <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#UNCHUNKED"><code>CDORevision.UNCHUNKED</code></a> for all such list elements (IDs).</dd><dd><code>prefetchDepth</code> - The number of nested containment levels to load revisions for in one round trip. Use the symbolic
           constants <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#DEPTH_INFINITE"><code>CDORevision.DEPTH_INFINITE</code></a> to prefetch all contained revisions or
           <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#DEPTH_NONE"><code>CDORevision.DEPTH_NONE</code></a> to not prefetch anything. Only the explicitely requested revision is
           returned by this method. If additional revisions are prefetched they are placed in the revision cache to
           speed up subsequent calls to this method.</dd><dd><code>loadOnDemand</code> - If the requested revision is not contained in the revision cache it depends on this parameter's value
-          whether the revision is loaded from the server or <code>null</code> is returned.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisions(java.util.List, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean)"><code>CDORevisionManager.getRevisions(List, CDOBranchPoint, int, int, boolean)</code></a>, 
-<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, int, boolean)"><code>CDORevisionManager.getRevisionByVersion(CDOID, CDOBranchVersion, int, boolean)</code></a></dd></dl>
+          whether the revision is loaded from the server or <code>null</code> is returned.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisions(java.util.List,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean)"><code>CDORevisionManager.getRevisions(List, CDOBranchPoint, int, int, boolean)</code></a>, 
+<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion,%20int,%20boolean)"><code>CDORevisionManager.getRevisionByVersion(CDOID, CDOBranchVersion, int, boolean)</code></a></dd></dl>
 </li>
 </ul>
 <a name="getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, int, boolean)">
@@ -504,7 +514,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
                                        <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
                                        int&nbsp;referenceChunk,
                                        boolean&nbsp;loadOnDemand)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, int, boolean)">CDORevisionManager</a></code></strong></div>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion,%20int,%20boolean)">CDORevisionManager</a></code></strong></div>
 <div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch version</code></a> (branch + version), optionally demand loading it if it is not already in the
  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.
  <p>
@@ -512,10 +522,10 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
  can not serve as a reasonable baseline criterium for a consistent graph of multiple revisions.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, int, boolean)">getRevisionByVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
+<dd><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion,%20int,%20boolean)">getRevisionByVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
 <dd><code>referenceChunk</code> - The number of target <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> to load for each many-valued reference in the returned revision, or
           <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html#UNCHUNKED"><code>CDORevision.UNCHUNKED</code></a> for all such list elements (IDs).</dd><dd><code>loadOnDemand</code> - If the requested revision is not contained in the revision cache it depends on this parameter's value
-          whether the revision is loaded from the server or <code>null</code> is returned.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, int, boolean)"><code>CDORevisionManager.getRevision(CDOID, CDOBranchPoint, int, int, boolean)</code></a></dd></dl>
+          whether the revision is loaded from the server or <code>null</code> is returned.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20int,%20boolean)"><code>CDORevisionManager.getRevision(CDOID, CDOBranchPoint, int, int, boolean)</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -584,6 +594,6 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORev
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -70,19 +70,24 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="&#171;exception&#187; RuntimeException (java.lang)" alt="" coords="23,695,151,750"/>
-<area shape="rect" id="node2" href="WrappedException.html" title="&#171;exception&#187; WrappedException" alt="" coords="198,703,330,743"/>
-<area shape="rect" id="node3" href="UUIDGenerator.html" title="UUIDGenerator" alt="" coords="32,646,141,671"/>
-<area shape="rect" id="node4" href="IErrorHandler.html" title="&#171;interface&#187; IErrorHandler" alt="" coords="38,581,135,621"/>
-<area shape="rect" id="node5" href="Predicate.html" title="&#171;interface&#187; Predicate" alt="" coords="44,517,129,557"/>
-<area shape="rect" id="node6" href="AdapterUtil.html" title="&#171;static&#187; AdapterUtil" alt="" coords="43,453,130,493"/>
-<area shape="rect" id="node7" href="ArrayUtil.html" title="&#171;static&#187; ArrayUtil" alt="" coords="51,389,123,429"/>
-<area shape="rect" id="node8" href="HexUtil.html" title="&#171;static&#187; HexUtil" alt="" coords="53,325,121,365"/>
-<area shape="rect" id="node9" href="ObjectUtil.html" title="&#171;static&#187; ObjectUtil" alt="" coords="47,261,126,301"/>
-<area shape="rect" id="node10" href="Predicates.html" title="&#171;static&#187; Predicates" alt="" coords="45,197,129,237"/>
-<area shape="rect" id="node11" href="ReflectUtil.html" title="&#171;static&#187; ReflectUtil" alt="" coords="46,133,127,173"/>
-<area shape="rect" id="node12" href="StringUtil.html" title="&#171;static&#187; StringUtil" alt="" coords="49,69,124,109"/>
-<area shape="rect" id="node13" href="ReflectUtil.PrimitiveType.html" title="&#171;enum&#187; ReflectUtil.PrimitiveType" alt="" coords="5,5,168,45"/>
+<area shape="rect" id="node1" title="&#171;exception&#187; RuntimeException (java.lang)" alt="" coords="23,859,151,914"/>
+<area shape="rect" id="node2" href="WrappedException.html" title="&#171;exception&#187; WrappedException" alt="" coords="230,867,362,907"/>
+<area shape="rect" id="node3" href="Predicates.ExcludedPredicate.html" title="Predicates.ExcludedPredicate" alt="" coords="197,718,395,743"/>
+<area shape="rect" id="node4" href="Predicates.IncludedPredicate.html" title="Predicates.IncludedPredicate" alt="" coords="201,767,391,793"/>
+<area shape="rect" id="node5" href="Predicates.UniquePredicate.html" title="Predicates.UniquePredicate" alt="" coords="205,817,387,842"/>
+<area shape="rect" id="node6" href="UUIDGenerator.html" title="UUIDGenerator" alt="" coords="32,710,141,735"/>
+<area shape="rect" id="node7" href="IErrorHandler.html" title="&#171;interface&#187; IErrorHandler" alt="" coords="38,645,135,685"/>
+<area shape="rect" id="node8" href="Predicate.html" title="&#171;interface&#187; Predicate" alt="" coords="44,760,129,800"/>
+<area shape="rect" id="node9" href="XMLUtil.ElementHandler.html" title="&#171;interface&#187; XMLUtil.ElementHandler" alt="" coords="5,581,168,621"/>
+<area shape="rect" id="node10" href="AdapterUtil.html" title="&#171;static&#187; AdapterUtil" alt="" coords="43,517,130,557"/>
+<area shape="rect" id="node11" href="ArrayUtil.html" title="&#171;static&#187; ArrayUtil" alt="" coords="51,453,123,493"/>
+<area shape="rect" id="node12" href="HexUtil.html" title="&#171;static&#187; HexUtil" alt="" coords="53,389,121,429"/>
+<area shape="rect" id="node13" href="ObjectUtil.html" title="&#171;static&#187; ObjectUtil" alt="" coords="47,325,126,365"/>
+<area shape="rect" id="node14" href="Predicates.html" title="&#171;static&#187; Predicates" alt="" coords="45,261,129,301"/>
+<area shape="rect" id="node15" href="ReflectUtil.html" title="&#171;static&#187; ReflectUtil" alt="" coords="46,197,127,237"/>
+<area shape="rect" id="node16" href="StringUtil.html" title="&#171;static&#187; StringUtil" alt="" coords="49,133,124,173"/>
+<area shape="rect" id="node17" href="XMLUtil.html" title="&#171;static&#187; XMLUtil" alt="" coords="53,69,121,109"/>
+<area shape="rect" id="node18" href="ReflectUtil.PrimitiveType.html" title="&#171;enum&#187; ReflectUtil.PrimitiveType" alt="" coords="5,5,168,45"/>
 </map>
 <div id="apivizContainer" style="text-align: center;margin-bottom: 1em;"><img src="package-summary.png" usemap="#APIVIZ" border="0"></div>
 <ul class="blockList">
@@ -104,6 +109,10 @@
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/util/Predicate.html" title="interface in org.eclipse.net4j.util">Predicate</a>&lt;T&gt;</td>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/util/XMLUtil.ElementHandler.html" title="interface in org.eclipse.net4j.util">XMLUtil.ElementHandler</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -118,7 +127,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/util/AdapterUtil.html" title="class in org.eclipse.net4j.util">AdapterUtil</a></td>
 <td class="colLast">
-<div class="block">Provides a single static <a href="../../../../org/eclipse/net4j/util/AdapterUtil.html#adapt(java.lang.Object, java.lang.Class)"><code>adapt()</code></a> method that conveniently and safely wraps the
+<div class="block">Provides a single static <a href="../../../../org/eclipse/net4j/util/AdapterUtil.html#adapt(java.lang.Object,%20java.lang.Class)"><code>adapt()</code></a> method that conveniently and safely wraps the
  Platform's adaptation framework.</div>
 </td>
 </tr>
@@ -151,22 +160,38 @@
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/util/Predicates.ExcludedPredicate.html" title="class in org.eclipse.net4j.util">Predicates.ExcludedPredicate</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/util/Predicates.IncludedPredicate.html" title="class in org.eclipse.net4j.util">Predicates.IncludedPredicate</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/util/Predicates.UniquePredicate.html" title="class in org.eclipse.net4j.util">Predicates.UniquePredicate</a>&lt;T&gt;</td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/util/ReflectUtil.html" title="class in org.eclipse.net4j.util">ReflectUtil</a></td>
 <td class="colLast">
 <div class="block">Various static helper methods for dealing with Java reflection.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/util/StringUtil.html" title="class in org.eclipse.net4j.util">StringUtil</a></td>
 <td class="colLast">
 <div class="block">Various static helper methods for dealing with strings.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/util/UUIDGenerator.html" title="class in org.eclipse.net4j.util">UUIDGenerator</a></td>
 <td class="colLast">
 <div class="block">Generates 16 byte UUID values and can encode them to Strings, decode from Strings respectively.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/util/XMLUtil.html" title="class in org.eclipse.net4j.util">XMLUtil</a></td>
+<td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -231,7 +256,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/util/ReflectUtil.ExcludeFromDump.html" title="annotation in org.eclipse.net4j.util">ReflectUtil.ExcludeFromDump</a></td>
 <td class="colLast">
-<div class="block">Annotates fields that are to be skipped in <a href="../../../../org/eclipse/net4j/util/ReflectUtil.html#collectFields(java.lang.Class, java.util.List)"><code>ReflectUtil.collectFields()</code></a> and <a href="../../../../org/eclipse/net4j/util/ReflectUtil.html#toString(java.lang.Object)"><code>ReflectUtil.toString()</code></a>.</div>
+<div class="block">Annotates fields that are to be skipped in <a href="../../../../org/eclipse/net4j/util/ReflectUtil.html#collectFields(java.lang.Class,%20java.util.List)"><code>ReflectUtil.collectFields()</code></a> and <a href="../../../../org/eclipse/net4j/util/ReflectUtil.html#toString(java.lang.Object)"><code>ReflectUtil.toString()</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -288,6 +313,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

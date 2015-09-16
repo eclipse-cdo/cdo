@@ -89,6 +89,23 @@
 <!--   -->
 </a>
 <h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a> in <a href="../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> that implement <a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.html" title="class in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy.DynamicProxy</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.Enhanced.html" title="class in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy.DynamicProxy.Enhanced</a></strong></code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing fields, and an explanation">
 <caption><span>Fields in <a href="../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> declared as <a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
@@ -103,13 +120,13 @@
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></code></td>
 <td class="colLast"><span class="strong">CDOStaleReferencePolicy.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html#EXCEPTION">EXCEPTION</a></strong></code>
-<div class="block">A default stale reference policy.</div>
+<div class="block">A stale reference policy that throws an <a href="../../../../../../org/eclipse/emf/cdo/util/ObjectNotFoundException.html" title="class in org.eclipse.emf.cdo.util"><code>ObjectNotFoundException</code></a> each time.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOStaleReferencePolicy</a></code></td>
 <td class="colLast"><span class="strong">CDOStaleReferencePolicy.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html#PROXY">PROXY</a></strong></code>
-<div class="block">Returns a proxy object with the appropriate EClass.</div>
+<div class="block">A stale reference policy that returns dynamic Java proxies with the appropriate EClasses.</div>
 </td>
 </tr>
 </tbody>
@@ -209,6 +226,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

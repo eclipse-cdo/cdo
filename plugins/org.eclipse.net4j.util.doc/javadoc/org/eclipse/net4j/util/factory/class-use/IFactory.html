@@ -81,21 +81,33 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.net4j.util.confirmation">org.eclipse.net4j.util.confirmation</a></td>
+<td class="colLast">
+<div class="block">A framework for providing confirmation from users.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.container">org.eclipse.net4j.util.container</a></td>
 <td class="colLast">
 <div class="block">A framework of notifying collections and wiring containers.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.factory">org.eclipse.net4j.util.factory</a></td>
 <td class="colLast">
 <div class="block">A framework for factory based instance creation.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.security">org.eclipse.net4j.util.security</a></td>
 <td class="colLast">
 <div class="block">Interfaces and classes for security, negotiation, authentication, authorization and cryptography.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.net4j.util.ui.confirmation">org.eclipse.net4j.util.ui.confirmation</a></td>
+<td class="colLast">
+<div class="block">Confirmation dialogs.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -131,6 +143,28 @@
 </tbody>
 </table>
 </li>
+<li class="blockList"><a name="org.eclipse.net4j.util.confirmation">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a> in <a href="../../../../../../org/eclipse/net4j/util/confirmation/package-summary.html">org.eclipse.net4j.util.confirmation</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/confirmation/package-summary.html">org.eclipse.net4j.util.confirmation</a> that implement <a href="../../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/confirmation/IConfirmationProvider.Factory.html" title="class in org.eclipse.net4j.util.confirmation">IConfirmationProvider.Factory</a></strong></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/confirmation/IConfirmationProvider.Factory.Default.html" title="class in org.eclipse.net4j.util.confirmation">IConfirmationProvider.Factory.Default</a></strong></code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
 <li class="blockList"><a name="org.eclipse.net4j.util.container">
 <!--   -->
 </a>
@@ -161,12 +195,12 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
-<td class="colLast"><span class="strong">IManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactory(java.lang.String, java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><span class="strong">IManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactory(java.lang.String,%20java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
-<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactory(java.lang.String, java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactory(java.lang.String,%20java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -303,6 +337,24 @@
 </tbody>
 </table>
 </li>
+<li class="blockList"><a name="org.eclipse.net4j.util.ui.confirmation">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a> in <a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/package-summary.html">org.eclipse.net4j.util.ui.confirmation</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/package-summary.html">org.eclipse.net4j.util.ui.confirmation</a> that implement <a href="../../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/confirmation/InteractiveConfirmationProvider.Factory.html" title="class in org.eclipse.net4j.util.ui.confirmation">InteractiveConfirmationProvider.Factory</a></strong></code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
 <li class="blockList"><a name="org.eclipse.net4j.util.ui.container">
 <!--   -->
 </a>
@@ -369,6 +421,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

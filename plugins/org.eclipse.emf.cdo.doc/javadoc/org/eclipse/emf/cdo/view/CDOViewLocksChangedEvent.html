@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" target="_top">Frames</a></li>
@@ -105,7 +105,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" titl
  <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)"><code>Lock
  notifications</code></a> must be enabled for this event to be fired.</div>
 <dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.1</dd></dl>
+  <dd>4.1</dd>
+<dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
 </li>
 </ul>
 </div>
@@ -155,6 +159,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" titl
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EObject[]</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html#getAffectedObjects()">getAffectedObjects</a></strong>()</code>
+<div class="block">Get <code>objects</code> affected by lock changes.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html#getSender()">getSender</a></strong>()</code>
 <div class="block">Returns the view that caused the lock changes if this view is local, or <code>null</code> if the view was remote.</div>
@@ -192,11 +202,23 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" titl
 <a name="getSender()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getSender</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;getSender()</pre>
 <div class="block">Returns the view that caused the lock changes if this view is local, or <code>null</code> if the view was remote.</div>
+</li>
+</ul>
+<a name="getAffectedObjects()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getAffectedObjects</h4>
+<pre>org.eclipse.emf.ecore.EObject[]&nbsp;getAffectedObjects()</pre>
+<div class="block">Get <code>objects</code> affected by lock changes.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 </li>
@@ -225,7 +247,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" titl
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" target="_top">Frames</a></li>
@@ -265,6 +287,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" titl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

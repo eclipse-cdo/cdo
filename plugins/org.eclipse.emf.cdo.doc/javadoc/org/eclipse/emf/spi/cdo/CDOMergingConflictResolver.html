@@ -155,10 +155,21 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
 <td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver()">CDOMergingConflictResolver</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver(boolean)">CDOMergingConflictResolver</a></strong>(boolean&nbsp;ensureRemoteNotifications)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver(org.eclipse.emf.cdo.transaction.CDOMerger)">CDOMergingConflictResolver</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver(org.eclipse.emf.cdo.transaction.CDOMerger,%20boolean)">CDOMergingConflictResolver</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+                          boolean&nbsp;ensureRemoteNotifications)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver(org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference)">CDOMergingConflictResolver</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a>&nbsp;resolutionPreference)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#CDOMergingConflictResolver(org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference,%20boolean)">CDOMergingConflictResolver</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a>&nbsp;resolutionPreference,
+                          boolean&nbsp;ensureRemoteNotifications)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -176,8 +187,24 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#getLastNonConflictTimeStamp()">getLastNonConflictTimeStamp</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#getMerger()">getMerger</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#handleConflict(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">handleConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">hookTransaction</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#isConflict()">isConflict</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -185,13 +212,26 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
 <div class="block">Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#resolveConflicts(java.util.Set,%20org.eclipse.emf.cdo.common.commit.CDOChangeSet)">resolveConflicts</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;conflicts,
+                <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;remoteChangeSet)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#transactionCommitted(org.eclipse.emf.cdo.transaction.CDOCommitContext)">transactionCommitted</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html#transactionRolledBack()">transactionRolledBack</a></strong>()</code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.spi.cdo.AbstractChangeSetsConflictResolver">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.emf.spi.cdo.<a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</a></h3>
-<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getLocalChangeSet()">getLocalChangeSet</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getLocalChangeSetData()">getLocalChangeSetData</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getRemoteChangeSet()">getRemoteChangeSet</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getRemoteChangeSetData()">getRemoteChangeSetData</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#handleNonConflict(long)">handleNonConflict</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">hookTransaction</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">unhookTransaction</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getLocalChangeSet()">getLocalChangeSet</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getLocalChangeSetData()">getLocalChangeSetData</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getRemoteChangeSet()">getRemoteChangeSet</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getRemoteChangeSetData()">getRemoteChangeSetData</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#getRemoteTimeStamp()">getRemoteTimeStamp</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#handleNonConflict(long)">handleNonConflict</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionAttachingObject(org.eclipse.emf.cdo.CDOObject)">transactionAttachingObject</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionCommitting(org.eclipse.emf.cdo.transaction.CDOCommitContext)">transactionCommitting</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionDetachingObject(org.eclipse.emf.cdo.CDOObject)">transactionDetachingObject</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionModifyingObject(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">transactionModifyingObject</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">unhookTransaction</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.spi.cdo.AbstractConflictResolver">
@@ -205,7 +245,7 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.transaction.CDOConflictResolver">
@@ -237,6 +277,18 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
 <pre>public&nbsp;CDOMergingConflictResolver(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</pre>
 </li>
 </ul>
+<a name="CDOMergingConflictResolver(org.eclipse.emf.cdo.transaction.CDOMerger, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CDOMergingConflictResolver</h4>
+<pre>public&nbsp;CDOMergingConflictResolver(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+                          boolean&nbsp;ensureRemoteNotifications)</pre>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>ensureRemoteNotifications</code> - boolean to disable the use of <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common"><code>CDOCommonSession.Options.PassiveUpdateMode</code></a> is enabled and in <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#CHANGES"><code>CDOCommonSession.Options.PassiveUpdateMode.CHANGES</code></a> or <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#ADDITIONS"><code>CDOCommonSession.Options.PassiveUpdateMode.ADDITIONS</code></a></dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
 <a name="CDOMergingConflictResolver(org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference)">
 <!--   -->
 </a>
@@ -248,13 +300,38 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
   <dd>4.2</dd></dl>
 </li>
 </ul>
+<a name="CDOMergingConflictResolver(org.eclipse.emf.spi.cdo.DefaultCDOMerger.ResolutionPreference, boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CDOMergingConflictResolver</h4>
+<pre>public&nbsp;CDOMergingConflictResolver(<a href="../../../../../org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" title="enum in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a>&nbsp;resolutionPreference,
+                          boolean&nbsp;ensureRemoteNotifications)</pre>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>ensureRemoteNotifications</code> - boolean to disable the use of <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common"><code>CDOCommonSession.Options.PassiveUpdateMode</code></a> is enabled and in <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#CHANGES"><code>CDOCommonSession.Options.PassiveUpdateMode.CHANGES</code></a> or <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#ADDITIONS"><code>CDOCommonSession.Options.PassiveUpdateMode.ADDITIONS</code></a></dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
 <a name="CDOMergingConflictResolver()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>CDOMergingConflictResolver</h4>
+<pre>public&nbsp;CDOMergingConflictResolver()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="CDOMergingConflictResolver(boolean)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CDOMergingConflictResolver</h4>
-<pre>public&nbsp;CDOMergingConflictResolver()</pre>
+<pre>public&nbsp;CDOMergingConflictResolver(boolean&nbsp;ensureRemoteNotifications)</pre>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>ensureRemoteNotifications</code> - boolean to disable the use of <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> to ensure remote changes reception for conflict resolution, true by default. Can be disabled to limit network traffic when <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common"><code>CDOCommonSession.Options.PassiveUpdateMode</code></a> is enabled and in <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#CHANGES"><code>CDOCommonSession.Options.PassiveUpdateMode.CHANGES</code></a> or <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#ADDITIONS"><code>CDOCommonSession.Options.PassiveUpdateMode.ADDITIONS</code></a></dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 </li>
@@ -274,15 +351,99 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
 <pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;getMerger()</pre>
 </li>
 </ul>
+<a name="getLastNonConflictTimeStamp()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastNonConflictTimeStamp</h4>
+<pre>public&nbsp;long&nbsp;getLastNonConflictTimeStamp()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="isConflict()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isConflict</h4>
+<pre>public&nbsp;boolean&nbsp;isConflict()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
 <a name="resolveConflicts(java.util.Set)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>resolveConflicts</h4>
 <pre>public&nbsp;void&nbsp;resolveConflicts(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;conflicts)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html#resolveConflicts(java.util.Set)">CDOConflictResolver</a></code></strong></div>
 <div class="block">Resolves conflicts after remote invalidations arrived for objects that are locally dirty or detached.</div>
+</li>
+</ul>
+<a name="resolveConflicts(java.util.Set, org.eclipse.emf.cdo.common.commit.CDOChangeSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resolveConflicts</h4>
+<pre>protected&nbsp;void&nbsp;resolveConflicts(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;conflicts,
+                    <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;remoteChangeSet)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="handleConflict(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>handleConflict</h4>
+<pre>protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;handleConflict(<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hookTransaction</h4>
+<pre>protected&nbsp;void&nbsp;hookTransaction(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">hookTransaction</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="transactionCommitted(org.eclipse.emf.cdo.transaction.CDOCommitContext)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>transactionCommitted</h4>
+<pre>protected&nbsp;void&nbsp;transactionCommitted(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a>&nbsp;commitContext)</pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionCommitted(org.eclipse.emf.cdo.transaction.CDOCommitContext)">transactionCommitted</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="transactionRolledBack()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>transactionRolledBack</h4>
+<pre>protected&nbsp;void&nbsp;transactionRolledBack()</pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html#transactionRolledBack()">transactionRolledBack</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</a></code></dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -351,6 +512,6 @@ extends <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractChangeSetsConfli
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

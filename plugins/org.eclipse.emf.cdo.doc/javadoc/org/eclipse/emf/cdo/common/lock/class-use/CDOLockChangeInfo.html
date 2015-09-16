@@ -138,7 +138,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></td>
-<td class="colLast"><span class="strong">CDOLockUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long, org.eclipse.emf.cdo.common.CDOCommonView, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.common.lock.CDOLockState[])">createLockChangeInfo</a></strong>(long&nbsp;timestamp,
+<td class="colLast"><span class="strong">CDOLockUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long,%20org.eclipse.emf.cdo.common.CDOCommonView,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.common.lock.CDOLockState[])">createLockChangeInfo</a></strong>(long&nbsp;timestamp,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>&nbsp;view,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;viewedBranch,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a>&nbsp;op,
@@ -147,7 +147,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></td>
-<td class="colLast"><span class="strong">CDOLockUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long, org.eclipse.emf.cdo.common.lock.CDOLockOwner, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.common.lock.CDOLockState[])">createLockChangeInfo</a></strong>(long&nbsp;timestamp,
+<td class="colLast"><span class="strong">CDOLockUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockChangeInfo(long,%20org.eclipse.emf.cdo.common.lock.CDOLockOwner,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation,%20org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.common.lock.CDOLockState[])">createLockChangeInfo</a></strong>(long&nbsp;timestamp,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo.Operation</a>&nbsp;op,
@@ -273,7 +273,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendLockNotification(org.eclipse.emf.cdo.spi.server.InternalSession, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">sendLockNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<td class="colLast"><span class="strong">InternalSessionManager.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#sendLockNotification(org.eclipse.emf.cdo.spi.server.InternalSession,%20org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">sendLockNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
                     <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -313,12 +313,12 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalCDOSession.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo, org.eclipse.emf.spi.cdo.InternalCDOView)">handleLockNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+<td class="colLast"><span class="strong">InternalCDOSession.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,%20org.eclipse.emf.spi.cdo.InternalCDOView)">handleLockNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
                       <a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalCDOView.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">handleLockNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
+<td class="colLast"><span class="strong">InternalCDOView.</span><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView,%20org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">handleLockNotification</a></strong>(<a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
                       <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -372,6 +372,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

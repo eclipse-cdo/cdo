@@ -129,7 +129,13 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></strong></code>
-<div class="block">A <code>match engine</code> that treats <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/Resource.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resources</code></a> as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EObjects</code></a>.</div>
+<div class="block">A <code>match engine</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOMatcher.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></strong></code>
+<div class="block">A <code>matcher</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
 </td>
 </tr>
 </table>
@@ -165,32 +171,32 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>Comparison</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#compare(IComparisonScope)">compare</a></strong>(IComparisonScope&nbsp;scope)</code>&nbsp;</td>
+<td class="colFirst"><code>org.eclipse.emf.compare.Comparison</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#compare(org.eclipse.emf.compare.scope.IComparisonScope)">compare</a></strong>(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected EMFCompare</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createComparator(IEObjectMatcher, IComparisonFactory)">createComparator</a></strong>(IEObjectMatcher&nbsp;matcher,
-                IComparisonFactory&nbsp;comparisonFactory)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.EMFCompare</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createComparator(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,%20org.eclipse.emf.compare.match.IComparisonFactory)">createComparator</a></strong>(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+                org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected IComparisonFactory</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createComparisonFactory(IEqualityHelperFactory)">createComparisonFactory</a></strong>(IEqualityHelperFactory&nbsp;equalityHelperFactory)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.match.IComparisonFactory</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createComparisonFactory(org.eclipse.emf.compare.match.IEqualityHelperFactory)">createComparisonFactory</a></strong>(org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;equalityHelperFactory)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected IConflictDetector</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.conflict.IConflictDetector</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createConflictDetector()">createConflictDetector</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected IDiffEngine</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.diff.IDiffEngine</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createDiffEngine()">createDiffEngine</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected IEqualityHelperFactory</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.match.IEqualityHelperFactory</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createEqualityHelperFactory()">createEqualityHelperFactory</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected IEquiEngine</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.equi.IEquiEngine</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createEquivalenceEngine()">createEquivalenceEngine</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -198,25 +204,25 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createIDFunction()">createIDFunction</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected IMatchEngine.Factory.Registry</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createMatchEngineFactoryRegistry(IEObjectMatcher, IComparisonFactory)">createMatchEngineFactoryRegistry</a></strong>(IEObjectMatcher&nbsp;matcher,
-                                IComparisonFactory&nbsp;comparisonFactory)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.match.IMatchEngine.Factory.Registry</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createMatchEngineFactoryRegistry(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,%20org.eclipse.emf.compare.match.IComparisonFactory)">createMatchEngineFactoryRegistry</a></strong>(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+                                org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected IdentifierEObjectMatcher</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createMatcher()">createMatcher</a></strong>(<any>&nbsp;idFunction)</code>&nbsp;</td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createMatcher(com.google.common.base.Function)">createMatcher</a></strong>(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;idFunction)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected <any></code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.postprocessor.IPostProcessor.Descriptor.Registry&lt;?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createPostProcessorRegistry()">createPostProcessorRegistry</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected IReqEngine</code></td>
+<td class="colFirst"><code>protected org.eclipse.emf.compare.req.IReqEngine</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#createRequirementEngine()">createRequirementEngine</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static IComparisonScope</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#getScope(Comparison)">getScope</a></strong>(Comparison&nbsp;comparison)</code>&nbsp;</td>
+<td class="colFirst"><code>static org.eclipse.emf.compare.scope.IComparisonScope</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.html#getScope(org.eclipse.emf.compare.Comparison)">getScope</a></strong>(org.eclipse.emf.compare.Comparison&nbsp;comparison)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -224,7 +230,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -257,13 +263,13 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="compare(IComparisonScope)">
+<a name="compare(org.eclipse.emf.compare.scope.IComparisonScope)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>compare</h4>
-<pre>public&nbsp;Comparison&nbsp;compare(IComparisonScope&nbsp;scope)</pre>
+<pre>public&nbsp;org.eclipse.emf.compare.Comparison&nbsp;compare(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</pre>
 </li>
 </ul>
 <a name="createIDFunction()">
@@ -275,13 +281,13 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <pre>protected&nbsp;<a href="../../../../../org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a>&nbsp;createIDFunction()</pre>
 </li>
 </ul>
-<a name="createMatcher()">
+<a name="createMatcher(com.google.common.base.Function)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createMatcher</h4>
-<pre>protected&nbsp;IdentifierEObjectMatcher&nbsp;createMatcher(<any>&nbsp;idFunction)</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher&nbsp;createMatcher(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;idFunction)</pre>
 </li>
 </ul>
 <a name="createEqualityHelperFactory()">
@@ -290,36 +296,36 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <ul class="blockList">
 <li class="blockList">
 <h4>createEqualityHelperFactory</h4>
-<pre>protected&nbsp;IEqualityHelperFactory&nbsp;createEqualityHelperFactory()</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;createEqualityHelperFactory()</pre>
 </li>
 </ul>
-<a name="createComparisonFactory(IEqualityHelperFactory)">
+<a name="createComparisonFactory(org.eclipse.emf.compare.match.IEqualityHelperFactory)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createComparisonFactory</h4>
-<pre>protected&nbsp;IComparisonFactory&nbsp;createComparisonFactory(IEqualityHelperFactory&nbsp;equalityHelperFactory)</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.match.IComparisonFactory&nbsp;createComparisonFactory(org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;equalityHelperFactory)</pre>
 </li>
 </ul>
-<a name="createComparator(IEObjectMatcher, IComparisonFactory)">
+<a name="createComparator(org.eclipse.emf.compare.match.eobject.IEObjectMatcher, org.eclipse.emf.compare.match.IComparisonFactory)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createComparator</h4>
-<pre>protected&nbsp;EMFCompare&nbsp;createComparator(IEObjectMatcher&nbsp;matcher,
-                          IComparisonFactory&nbsp;comparisonFactory)</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.EMFCompare&nbsp;createComparator(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+                                                  org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</pre>
 </li>
 </ul>
-<a name="createMatchEngineFactoryRegistry(IEObjectMatcher, IComparisonFactory)">
+<a name="createMatchEngineFactoryRegistry(org.eclipse.emf.compare.match.eobject.IEObjectMatcher, org.eclipse.emf.compare.match.IComparisonFactory)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createMatchEngineFactoryRegistry</h4>
-<pre>protected&nbsp;IMatchEngine.Factory.Registry&nbsp;createMatchEngineFactoryRegistry(IEObjectMatcher&nbsp;matcher,
-                                                             IComparisonFactory&nbsp;comparisonFactory)</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.match.IMatchEngine.Factory.Registry&nbsp;createMatchEngineFactoryRegistry(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+                                                                                           org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</pre>
 </li>
 </ul>
 <a name="createDiffEngine()">
@@ -328,7 +334,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <ul class="blockList">
 <li class="blockList">
 <h4>createDiffEngine</h4>
-<pre>protected&nbsp;IDiffEngine&nbsp;createDiffEngine()</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.diff.IDiffEngine&nbsp;createDiffEngine()</pre>
 </li>
 </ul>
 <a name="createRequirementEngine()">
@@ -337,7 +343,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <ul class="blockList">
 <li class="blockList">
 <h4>createRequirementEngine</h4>
-<pre>protected&nbsp;IReqEngine&nbsp;createRequirementEngine()</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.req.IReqEngine&nbsp;createRequirementEngine()</pre>
 </li>
 </ul>
 <a name="createEquivalenceEngine()">
@@ -346,7 +352,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <ul class="blockList">
 <li class="blockList">
 <h4>createEquivalenceEngine</h4>
-<pre>protected&nbsp;IEquiEngine&nbsp;createEquivalenceEngine()</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.equi.IEquiEngine&nbsp;createEquivalenceEngine()</pre>
 </li>
 </ul>
 <a name="createPostProcessorRegistry()">
@@ -355,7 +361,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <ul class="blockList">
 <li class="blockList">
 <h4>createPostProcessorRegistry</h4>
-<pre>protected&nbsp;<any>&nbsp;createPostProcessorRegistry()</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.postprocessor.IPostProcessor.Descriptor.Registry&lt;?&gt;&nbsp;createPostProcessorRegistry()</pre>
 </li>
 </ul>
 <a name="createConflictDetector()">
@@ -364,16 +370,16 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <ul class="blockList">
 <li class="blockList">
 <h4>createConflictDetector</h4>
-<pre>protected&nbsp;IConflictDetector&nbsp;createConflictDetector()</pre>
+<pre>protected&nbsp;org.eclipse.emf.compare.conflict.IConflictDetector&nbsp;createConflictDetector()</pre>
 </li>
 </ul>
-<a name="getScope(Comparison)">
+<a name="getScope(org.eclipse.emf.compare.Comparison)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getScope</h4>
-<pre>public static&nbsp;IComparisonScope&nbsp;getScope(Comparison&nbsp;comparison)</pre>
+<pre>public static&nbsp;org.eclipse.emf.compare.scope.IComparisonScope&nbsp;getScope(org.eclipse.emf.compare.Comparison&nbsp;comparison)</pre>
 </li>
 </ul>
 </li>
@@ -442,6 +448,6 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

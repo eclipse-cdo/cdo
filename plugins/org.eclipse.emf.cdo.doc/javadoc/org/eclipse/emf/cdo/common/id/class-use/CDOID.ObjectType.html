@@ -289,7 +289,7 @@ the order they are declared.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#Store(java.lang.String, java.util.Set, java.util.Set, java.util.Set, java.util.Set)">Store</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#Store(java.lang.String,%20java.util.Set,%20java.util.Set,%20java.util.Set,%20java.util.Set)">Store</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;type,
      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes,
      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/server/IStore.ChangeFormat.html" title="enum in org.eclipse.emf.cdo.server">IStore.ChangeFormat</a>&gt;&nbsp;supportedChangeFormats,
      <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/server/IStore.RevisionTemporality.html" title="enum in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a>&gt;&nbsp;supportedRevisionTemporalities,
@@ -322,7 +322,7 @@ the order they are declared.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#CDOSessionProtocol.OpenSessionResult(int, java.lang.String, java.lang.String, org.eclipse.emf.cdo.common.CDOCommonRepository.Type, org.eclipse.emf.cdo.common.CDOCommonRepository.State, java.lang.String, java.util.Set, long, long, org.eclipse.emf.cdo.common.id.CDOID, boolean, boolean, boolean, boolean, org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)">CDOSessionProtocol.OpenSessionResult</a></strong>(int&nbsp;sessionID,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#CDOSessionProtocol.OpenSessionResult(int,%20java.lang.String,%20java.lang.String,%20org.eclipse.emf.cdo.common.CDOCommonRepository.Type,%20org.eclipse.emf.cdo.common.CDOCommonRepository.State,%20java.lang.String,%20java.util.Set,%20long,%20long,%20org.eclipse.emf.cdo.common.id.CDOID,%20boolean,%20boolean,%20boolean,%20boolean,%20org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)">CDOSessionProtocol.OpenSessionResult</a></strong>(int&nbsp;sessionID,
                                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
                                     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
                                     <a href="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;repositoryType,
@@ -336,7 +336,11 @@ the order they are declared.</div>
                                     boolean&nbsp;repositorySupportingBranches,
                                     boolean&nbsp;repositorySerializingCommits,
                                     boolean&nbsp;repositoryEnsuringReferentialIntegrity,
-                                    <a href="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</code>&nbsp;</td>
+                                    <a href="../../../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;repositoryIDGenerationLocation)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>as of 4.4 use <code>#OpenSessionResult(CDODataInput, int)</code>.</i></div>
+</div>
+</td>
 </tr>
 </tbody>
 </table>
@@ -389,6 +393,6 @@ the order they are declared.</div>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

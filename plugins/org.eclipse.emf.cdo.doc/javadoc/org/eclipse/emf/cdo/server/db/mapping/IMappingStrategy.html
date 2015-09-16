@@ -180,14 +180,14 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createListMapping(org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EStructuralFeature)">createListMapping</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;containingClass,
-                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createListMapping(org.eclipse.emf.ecore.EClass,%20org.eclipse.emf.ecore.EStructuralFeature)">createListMapping</a></strong>(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+                 org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code>
 <div class="block">Factory for value mappings of multi-valued-attributes.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createMapping(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">createMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createMapping(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">createMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
              <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Create and initialize the mapping infrastructure for the given packages.</div>
@@ -195,37 +195,37 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">createValueMapping</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">createValueMapping</a></strong>(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code>
 <div class="block">Factory for value mappings of single-valued attributes.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getClassMapping(org.eclipse.emf.ecore.EClass)">getClassMapping</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getClassMapping(org.eclipse.emf.ecore.EClass)">getClassMapping</a></strong>(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code>
 <div class="block">Look up an existing class mapping for the given class.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EClass,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getClassMappings()">getClassMappings</a></strong>()</code>
 <div class="block">Returns all class mappings of this strategy.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EClass,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getClassMappings(boolean)">getClassMappings</a></strong>(boolean&nbsp;createOnDemand)</code>
 <div class="block">Returns all class mappings of this strategy.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getFieldName(org.eclipse.emf.ecore.EStructuralFeature)">getFieldName</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getFieldName(org.eclipse.emf.ecore.EStructuralFeature)">getFieldName</a></strong>(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code>
 <div class="block">Create a suitable column name which can be used to map the given element.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getListJoin(java.lang.String, java.lang.String)">getListJoin</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;attrTable,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getListJoin(java.lang.String,%20java.lang.String)">getListJoin</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;attrTable,
            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;listTable)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -240,21 +240,21 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getTableName(org.eclipse.emf.ecore.EClass, org.eclipse.emf.ecore.EStructuralFeature)">getTableName</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;containingClass,
-            <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getTableName(org.eclipse.emf.ecore.EClass,%20org.eclipse.emf.ecore.EStructuralFeature)">getTableName</a></strong>(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+            org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code>
 <div class="block">Create a suitable table name which can be used to map the given element.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getTableName(org.eclipse.emf.ecore.ENamedElement)">getTableName</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/ENamedElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">ENamedElement</a>&nbsp;element)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getTableName(org.eclipse.emf.ecore.ENamedElement)">getTableName</a></strong>(org.eclipse.emf.ecore.ENamedElement&nbsp;element)</code>
 <div class="block">Create a suitable table name which can be used to map the given element.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.ecore.EClass, org.eclipse.emf.cdo.common.branch.CDOBranch, long, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.emf.ecore.EClass,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20boolean,%20org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+               org.eclipse.emf.ecore.EClass&nbsp;eClass,
                <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
                boolean&nbsp;exactTime,
@@ -285,21 +285,21 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">queryResources</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">queryResources</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
               <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a>&nbsp;context)</code>
 <div class="block">Executes a resource query.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">queryXRefs</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">queryXRefs</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</code>
 <div class="block">Executes a cross reference query.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.protocol.CDODataOutput, int, int, long, long)">rawExport</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.emf.cdo.common.protocol.CDODataOutput,%20int,%20int,%20long,%20long)">rawExport</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
          <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
          int&nbsp;lastReplicatedBranchID,
          int&nbsp;lastBranchID,
@@ -308,7 +308,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.protocol.CDODataInput, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.emf.cdo.common.protocol.CDODataInput,%20long,%20long,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
          <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
          long&nbsp;fromCommitTime,
          long&nbsp;toCommitTime,
@@ -316,7 +316,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.net4j.util.om.monitor.OMMonitor,%20org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">readChangeSet</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
@@ -330,21 +330,21 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.id.CDOID)">readObjectType</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,%20org.eclipse.emf.cdo.common.id.CDOID)">readObjectType</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
               <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>
 <div class="block">Read the type (i.e. class) of the object referred to by a given ID.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#removeMapping(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[])">removeMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#removeMapping(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[])">removeMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits)</code>
 <div class="block">Remove the mapping infrastructure for the given packages.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#repairAfterCrash(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)">repairAfterCrash</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#repairAfterCrash(org.eclipse.net4j.db.IDBAdapter,%20java.sql.Connection)">repairAfterCrash</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html?is-external=true" title="class or interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>
 <div class="block">Return the maximum object id used in the store.</div>
 </td>
@@ -504,7 +504,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>createValueMapping</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&nbsp;createValueMapping(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&nbsp;createValueMapping(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Factory for value mappings of single-valued attributes.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>feature</code> - the feature for which a mapping should be created. It must hold <code>feature.isMany() == false</code>.</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the mapping created.</dd></dl>
@@ -516,8 +516,8 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>createListMapping</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&nbsp;createListMapping(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;containingClass,
-                             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&nbsp;createListMapping(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+                             org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Factory for value mappings of multi-valued-attributes.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>containingClass</code> - the class containing the feature.</dd><dd><code>feature</code> - the feature for which a mapping should be created. It must hold <code>feature.isMany() == true</code>.</dd></dl>
 </li>
@@ -528,7 +528,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getTableName</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getTableName(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/ENamedElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">ENamedElement</a>&nbsp;element)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getTableName(org.eclipse.emf.ecore.ENamedElement&nbsp;element)</pre>
 <div class="block">Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>element</code> - the element for which the name should be created. It must hold:
           <code>element instanceof EClass || element instanceof EPackage</code>.</dd>
@@ -541,8 +541,8 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getTableName</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getTableName(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;containingClass,
-                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getTableName(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
+                  org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.
  Should only be called by mapping classes.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>containingClass</code> - the class containeng the feature.</dd><dd><code>feature</code> - the feature for which the table name should be created.</dd>
@@ -555,7 +555,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getFieldName</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getFieldName(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getFieldName(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <div class="block">Create a suitable column name which can be used to map the given element. Should only be called by mapping classes.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>feature</code> - the feature for which the column name should be created.</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the created column name. It is guaranteed that the name is compatible with the chosen database.</dd></dl>
@@ -594,9 +594,9 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassMapping</h4>
-<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&nbsp;getClassMapping(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass)</pre>
+<pre><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&nbsp;getClassMapping(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
 <div class="block">Look up an existing class mapping for the given class. Before this method is called, the class mapping must have
- been initialized by calling <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createMapping(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>createMapping(Connection, InternalCDOPackageUnit[], OMMonitor)</code></a> on its
+ been initialized by calling <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createMapping(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>createMapping(Connection, InternalCDOPackageUnit[], OMMonitor)</code></a> on its
  containing package.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>eClass</code> - the class to look up.</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the class mapping.</dd></dl>
@@ -608,7 +608,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassMappings</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EClass,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings()</pre>
 <div class="block">Returns all class mappings of this strategy.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
@@ -620,7 +620,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassMappings</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings(boolean&nbsp;createOnDemand)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EClass,<a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings(boolean&nbsp;createOnDemand)</pre>
 <div class="block">Returns all class mappings of this strategy.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
@@ -759,7 +759,7 @@
 <li class="blockList">
 <h4>handleRevisions</h4>
 <pre>void&nbsp;handleRevisions(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+                   org.eclipse.emf.ecore.EClass&nbsp;eClass,
                    <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                    long&nbsp;timeStamp,
                    boolean&nbsp;exactTime,
@@ -789,7 +789,7 @@
  DetachedCDORevisions must also be considered!</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)"><code>IStoreAccessor.readChangeSet(OMMonitor, CDOChangeSetSegment...)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor,%20org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)"><code>IStoreAccessor.readChangeSet(OMMonitor, CDOChangeSetSegment...)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor, org.eclipse.emf.cdo.common.protocol.CDODataOutput, int, int, long, long)">
@@ -905,6 +905,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

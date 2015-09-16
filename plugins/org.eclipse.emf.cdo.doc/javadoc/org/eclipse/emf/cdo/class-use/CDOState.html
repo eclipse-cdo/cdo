@@ -121,12 +121,16 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a></code></td>
+<td class="colLast"><span class="strong">CDOElement.StateProvider.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/CDOElement.StateProvider.html#getState(java.lang.Object)">getState</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a></code></td>
 <td class="colLast"><span class="strong">CDOState.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/CDOState.html#valueOf(java.lang.String)">valueOf</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>[]</code></td>
 <td class="colLast"><span class="strong">CDOState.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/CDOState.html#values()">values</a></strong>()</code>
 <div class="block">Returns an array containing the constants of this enum type, in
@@ -149,7 +153,14 @@ the order they are declared.</div>
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">CDOObjectHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView, org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.CDOState, org.eclipse.emf.cdo.CDOState)">objectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<td class="colLast"><span class="strong">CDOObjectHandler.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.CDOState,%20org.eclipse.emf.cdo.CDOState)">objectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                  <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+                  <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
+                  <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="strong">CDOStaleReferencePolicy.DynamicProxy.Enhanced.</span><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.DynamicProxy.Enhanced.html#objectStateChanged(org.eclipse.emf.cdo.view.CDOView,%20org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.CDOState,%20org.eclipse.emf.cdo.CDOState)">objectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
                   <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                   <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
                   <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</code>&nbsp;</td>
@@ -243,7 +254,7 @@ the order they are declared.</div>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalCDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleObjectStateChanged(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.CDOState, org.eclipse.emf.cdo.CDOState)">handleObjectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+<td class="colLast"><span class="strong">InternalCDOView.</span><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleObjectStateChanged(org.eclipse.emf.spi.cdo.InternalCDOObject,%20org.eclipse.emf.cdo.CDOState,%20org.eclipse.emf.cdo.CDOState)">handleObjectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
                         <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
                         <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</code>&nbsp;</td>
 </tr>
@@ -256,7 +267,7 @@ the order they are declared.</div>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html#InternalCDOView.ViewAndState(org.eclipse.emf.spi.cdo.InternalCDOView, org.eclipse.emf.cdo.CDOState)">InternalCDOView.ViewAndState</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html#InternalCDOView.ViewAndState(org.eclipse.emf.spi.cdo.InternalCDOView,%20org.eclipse.emf.cdo.CDOState)">InternalCDOView.ViewAndState</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view,
                             <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;state)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -310,6 +321,6 @@ the order they are declared.</div>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

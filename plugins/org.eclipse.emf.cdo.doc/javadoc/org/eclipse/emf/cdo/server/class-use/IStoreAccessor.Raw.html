@@ -92,6 +92,12 @@
 <div class="block">Server concepts for dealing with Objectivity/DB stores and accessors.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></td>
+<td class="colLast">
+<div class="block">Server provider interfaces (SPI) for CDO <a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -132,7 +138,7 @@
 <td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/hibernate/IHibernateStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.hibernate">IHibernateStoreAccessor</a></strong></code>
 <div class="block">The Hibernate store accessor works with Hibernate <code>Session</code> instances
- to persist changes in the database, it obtains the <code>Session</code> from the 
+ to persist changes in the database, it obtains the <code>Session</code> from the
  <a href="../../../../../../org/eclipse/emf/cdo/server/hibernate/IHibernateStore.html" title="interface in org.eclipse.emf.cdo.server.hibernate"><code>IHibernateStore</code></a>.</div>
 </td>
 </tr>
@@ -155,6 +161,25 @@
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/server/objectivity/IObjectivityStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.objectivity">IObjectivityStoreAccessor</a></strong></code>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessor</code></a> for CDO's Objecivity back-end integration.</div>
 </td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.emf.cdo.spi.workspace">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</a> in <a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a> with parameters of type <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="strong">InternalCDOWorkspaceBase.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#deleteAddedAndDetachedObjects(org.eclipse.emf.cdo.server.IStoreAccessor.Raw,%20org.eclipse.emf.cdo.common.branch.CDOBranch)">deleteAddedAndDetachedObjects</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</a>&nbsp;accessor,
+                             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -207,6 +232,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

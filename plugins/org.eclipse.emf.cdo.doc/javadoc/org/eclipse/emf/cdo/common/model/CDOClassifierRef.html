@@ -108,7 +108,7 @@
 <pre>public final class <span class="strong">CDOClassifierRef</span>
 extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Serializable.html?is-external=true" title="class or interface in java.io">Serializable</a></pre>
-<div class="block">References an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EClassifier</code></a>.</div>
+<div class="block">References an <code>EClassifier</code>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd>
 <dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../serialized-form.html#org.eclipse.emf.cdo.common.model.CDOClassifierRef">Serialized Form</a></dd></dl>
@@ -176,13 +176,13 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Ser
 <td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#CDOClassifierRef(org.eclipse.emf.cdo.common.protocol.CDODataInput)">CDOClassifierRef</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#CDOClassifierRef(org.eclipse.emf.ecore.EClassifier)">CDOClassifierRef</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>&nbsp;classifier)</code>&nbsp;</td>
+<td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#CDOClassifierRef(org.eclipse.emf.ecore.EClassifier)">CDOClassifierRef</a></strong>(org.eclipse.emf.ecore.EClassifier&nbsp;classifier)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#CDOClassifierRef(java.lang.String)">CDOClassifierRef</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;uri)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#CDOClassifierRef(java.lang.String, java.lang.String)">CDOClassifierRef</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI,
+<td class="colOne"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#CDOClassifierRef(java.lang.String,%20java.lang.String)">CDOClassifierRef</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI,
                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;classifierName)</code>&nbsp;</td>
 </tr>
 </table>
@@ -221,8 +221,8 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Ser
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#hashCode()">hashCode</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#resolve(org.eclipse.emf.ecore.EPackage.Registry)">resolve</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Registry</a>&nbsp;packageRegistry)</code>&nbsp;</td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClassifier</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html#resolve(org.eclipse.emf.ecore.EPackage.Registry)">resolve</a></strong>(org.eclipse.emf.ecore.EPackage.Registry&nbsp;packageRegistry)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
@@ -238,7 +238,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Ser
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -287,7 +287,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Ser
 <ul class="blockList">
 <li class="blockList">
 <h4>CDOClassifierRef</h4>
-<pre>public&nbsp;CDOClassifierRef(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>&nbsp;classifier)</pre>
+<pre>public&nbsp;CDOClassifierRef(org.eclipse.emf.ecore.EClassifier&nbsp;classifier)</pre>
 </li>
 </ul>
 <a name="CDOClassifierRef(java.lang.String, java.lang.String)">
@@ -380,7 +380,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Ser
 <ul class="blockList">
 <li class="blockList">
 <h4>resolve</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClassifier.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClassifier</a>&nbsp;resolve(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Registry</a>&nbsp;packageRegistry)</pre>
+<pre>public&nbsp;org.eclipse.emf.ecore.EClassifier&nbsp;resolve(org.eclipse.emf.ecore.EPackage.Registry&nbsp;packageRegistry)</pre>
 </li>
 </ul>
 <a name="equals(java.lang.Object)">
@@ -488,6 +488,6 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Ser
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

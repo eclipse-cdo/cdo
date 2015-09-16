@@ -217,8 +217,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#createChunkReader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.emf.ecore.EStructuralFeature)">createChunkReader</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#createChunkReader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,%20org.eclipse.emf.ecore.EStructuralFeature)">createChunkReader</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+                 org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
@@ -241,13 +241,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleLobs(long, long, org.eclipse.emf.cdo.common.lob.CDOLobHandler)">handleLobs</a></strong>(long&nbsp;fromTime,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleLobs(long,%20long,%20org.eclipse.emf.cdo.common.lob.CDOLobHandler)">handleLobs</a></strong>(long&nbsp;fromTime,
           long&nbsp;toTime,
           <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobHandler.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobHandler</a>&nbsp;handler)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleRevisions(org.eclipse.emf.ecore.EClass, org.eclipse.emf.cdo.common.branch.CDOBranch, long, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleRevisions(org.eclipse.emf.ecore.EClass,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20boolean,%20org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></strong>(org.eclipse.emf.ecore.EClass&nbsp;eClass,
                <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
                boolean&nbsp;exactTime,
@@ -267,14 +267,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadLob(byte[], java.io.OutputStream)">loadLob</a></strong>(byte[]&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadLob(byte[],%20java.io.OutputStream)">loadLob</a></strong>(byte[]&nbsp;id,
        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)</code>
 <div class="block">Serializes the content of the large object identified by the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID()"><code>ID</code></a> to the given
  <i>stream</i>.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EPackage[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadPackageUnit(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code>
 <div class="block">Demand loads a given package proxy that has been created on startup of the repository.</div>
 </td>
@@ -296,7 +296,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)">readChangeSet</a></strong>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor,%20org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)">readChangeSet</a></strong>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
              <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>...&nbsp;segments)</code>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
@@ -307,7 +307,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">readResourceID</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID,%20java.lang.String,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">readResourceID</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
               <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>
 <div class="block">Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
@@ -316,7 +316,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevision</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevision</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
             <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
             int&nbsp;listChunk,
             <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;cache)</code>
@@ -325,7 +325,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, int, org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevisionByVersion</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion,%20int,%20org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevisionByVersion</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                      <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
                      int&nbsp;listChunk,
                      <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;cache)</code>
@@ -339,20 +339,20 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()">rollback</a></strong>()</code>
-<div class="block"><b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()"><code>rollback()</code></a>
+<div class="block"><b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()"><code>rollback()</code></a>
  could be called from different threads.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">write</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">write</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
      <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Called before committing.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#writePackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#writePackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
                  <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
 </table>
@@ -368,14 +368,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.branch.<a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)">createBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranch(int)">loadBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranches(int, int, org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">loadBranches</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadSubBranches(int)">loadSubBranches</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int,%20org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)">createBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranch(int)">loadBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranches(int,%20int,%20org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">loadBranches</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadSubBranches(int)">loadSubBranches</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.commit.<a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitData(long)">loadCommitData</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch, long, long, org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">loadCommitInfos</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitData(long)">loadCommitData</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20long,%20org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">loadCommitInfos</a></code></li>
 </ul>
 </li>
 </ul>
@@ -446,7 +446,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <li class="blockList">
 <h4>createChunkReader</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a>&nbsp;createChunkReader(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-                                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+                                  org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
 </li>
@@ -468,7 +468,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <ul class="blockList">
 <li class="blockList">
 <h4>loadPackageUnit</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;loadPackageUnit(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
+<pre>org.eclipse.emf.ecore.EPackage[]&nbsp;loadPackageUnit(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
 <div class="block">Demand loads a given package proxy that has been created on startup of the repository.
  <p>
  This method must only load the given package, <b>not</b> possible contained packages.</div>
@@ -512,7 +512,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRevisions</h4>
-<pre>void&nbsp;handleRevisions(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<pre>void&nbsp;handleRevisions(org.eclipse.emf.ecore.EClass&nbsp;eClass,
                    <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                    long&nbsp;timeStamp,
                    boolean&nbsp;exactTime,
@@ -661,9 +661,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <div class="block">Called before committing. An instance of this accessor represents an instance of a back-end transaction. Could be
  called multiple times before commit it called. <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit(OMMonitor)</code></a> or
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()"><code>rollback()</code></a> will be called after any numbers of
- <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a>.
+ <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a>.
  <p>
- <b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and
+ <b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit(OMMonitor)</code></a> could be called from different threads.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd></dl>
@@ -678,7 +678,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <pre>void&nbsp;commit(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</pre>
 <div class="block">Flushes to the back-end and makes available the data for others.
  <p>
- <b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and
+ <b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit(OMMonitor)</code></a> could be called from different threads.
  <p>
  <b>Note</b>: Implementors should detect if dirty write occurred. In this case it should throw an exception.
@@ -701,7 +701,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <li class="blockList">
 <h4>rollback</h4>
 <pre>void&nbsp;rollback()</pre>
-<div class="block"><b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()"><code>rollback()</code></a>
+<div class="block"><b>Note</b>: <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>write(InternalCommitContext, OMMonitor)</code></a> and <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()"><code>rollback()</code></a>
  could be called from different threads.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
@@ -782,6 +782,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -81,9 +81,21 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></td>
+<td class="colLast">
+<div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></td>
 <td class="colLast">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></td>
+<td class="colLast">
+<div class="block">Client service provider interfaces and useful base implementations.</div>
 </td>
 </tr>
 </tbody>
@@ -129,10 +141,41 @@
 </tbody>
 </table>
 </li>
+<li class="blockList"><a name="org.eclipse.emf.cdo.transaction">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a> in <a href="../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> that return <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></code></td>
+<td class="colLast"><span class="strong">CDOPushTransaction.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#getProvider()">getProvider</a></strong>()</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
 <li class="blockList"><a name="org.eclipse.emf.cdo.view">
 <!--   -->
 </a>
 <h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a> in <a href="../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing subinterfaces, and an explanation">
+<caption><span>Subinterfaces of <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a> in <a href="../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Interface and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></strong></code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
 <caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> that implement <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
@@ -162,8 +205,14 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></code></td>
+<td class="colLast"><span class="strong">CDOView.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html#getProvider()">getProvider</a></strong>()</code>
+<div class="block">Returns the <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>provider</code></a> that has opened this view.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>[]</code></td>
-<td class="colLast"><span class="strong">CDOViewProviderRegistry.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#getViewProviders(org.eclipse.emf.common.util.URI)">getViewProviders</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
+<td class="colLast"><span class="strong">CDOViewProviderRegistry.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#getViewProviders(org.eclipse.emf.common.util.URI)">getViewProviders</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri)</code>
 <div class="block">Returns an array of <code>CDOViewProvider</code> instances, determined and ordered by certain criteria based on the
  argument URI.</div>
 </td>
@@ -179,10 +228,11 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>,<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDOViewProviderRegistry.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideViewWithInfo(org.eclipse.emf.common.util.URI, org.eclipse.emf.ecore.resource.ResourceSet)">provideViewWithInfo</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri,
-                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Returns a <a href="../../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> that serves the given URI in the given <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a>, or
- <code>null</code> if no <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> in this registry can provide such a view.</div>
+<td class="colLast"><span class="strong">CDOViewProviderRegistry.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideViewWithInfo(org.eclipse.emf.common.util.URI,%20org.eclipse.emf.ecore.resource.ResourceSet)">provideViewWithInfo</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri,
+                   org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>As of 4.4. use <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideView(org.eclipse.emf.common.util.URI,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>CDOViewProviderRegistry.provideView(URI, ResourceSet)</code></a>.getProvider().</i></div>
+</div>
 </td>
 </tr>
 </tbody>
@@ -212,6 +262,24 @@
 <td class="colLast"><span class="strong">CDOViewProviderRegistry.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#removeViewProvider(org.eclipse.emf.cdo.view.CDOViewProvider)">removeViewProvider</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&nbsp;viewProvider)</code>
 <div class="block">Removes the given view provider instance from this registry.</div>
 </td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.emf.spi.cdo">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a> in <a href="../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="strong">InternalCDOView.</span><code><strong><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setProvider(org.eclipse.emf.cdo.view.CDOViewProvider)">setProvider</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&nbsp;provider)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -264,6 +332,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -92,7 +92,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;</dd>
+<dd><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;</dd>
 </dl>
 <hr>
 <br>
@@ -139,77 +139,81 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#copy()">copy</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#dispose()">dispose</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#getPackageInfo(java.lang.String)">getPackageInfo</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI)</code>
-<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
+<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <code>package</code> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#getPackageInfos()">getPackageInfos</a></strong>()</code>
 <div class="block">Returns all <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> objects of the nested package tree structure described by this
  package unit in depth-first traversal order.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#getPackageRegistry()">getPackageRegistry</a></strong>()</code>
 <div class="block">Returns the package registry this package unit is managed by.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#getTopLevelPackageInfo()">getTopLevelPackageInfo</a></strong>()</code>
-<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> of the
+<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <code>package</code> of the
  nested package tree structure described by this package unit.</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#init(org.eclipse.emf.ecore.EPackage)">init</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</code>&nbsp;</td>
-</tr>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#init(org.eclipse.emf.ecore.EPackage)">init</a></strong>(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#load(boolean)">load</a></strong>(boolean&nbsp;resolve)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#load(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader, boolean)">load</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;packageLoader,
-    boolean&nbsp;resolve)</code>&nbsp;</td>
-</tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput, org.eclipse.emf.ecore.resource.ResourceSet)">read</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
-    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#load(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader,%20boolean)">load</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>&nbsp;packageLoader,
+    boolean&nbsp;resolve)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput,%20org.eclipse.emf.ecore.resource.ResourceSet)">read</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+    org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#setOriginalType(org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type)">setOriginalType</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a>&nbsp;originalType)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#setPackageInfos(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo[])">setPackageInfos</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>[]&nbsp;packageInfos)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#setPackageRegistry(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry)">setPackageRegistry</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a>&nbsp;packageRegistry)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#setState(org.eclipse.emf.cdo.common.model.CDOPackageUnit.State)">setState</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a>&nbsp;state)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#setTimeStamp(long)">setTimeStamp</a></strong>(long&nbsp;timeStamp)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput, boolean)">write</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,%20boolean)">write</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
      boolean&nbsp;withPackages)</code>&nbsp;</td>
 </tr>
 </table>
@@ -300,7 +304,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <h4>getTopLevelPackageInfo</h4>
 <pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getTopLevelPackageInfo()</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html#getTopLevelPackageInfo()">CDOPackageUnit</a></code></strong></div>
-<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> of the
+<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the top level <code>package</code> of the
  nested package tree structure described by this package unit.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
@@ -316,7 +320,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <h4>getPackageInfo</h4>
 <pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;getPackageInfo(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html#getPackageInfo(java.lang.String)">CDOPackageUnit</a></code></strong></div>
-<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>package</code></a> with the given
+<div class="block">Returns the <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <code>package</code> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
@@ -393,11 +397,22 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <li class="blockList">
 <h4>read</h4>
 <pre>void&nbsp;read(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
-        <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)
+        org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)
           throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <dl><dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="copy()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>copy</h4>
+<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;copy()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 <a name="init(org.eclipse.emf.ecore.EPackage)">
@@ -406,7 +421,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <ul class="blockList">
 <li class="blockList">
 <h4>init</h4>
-<pre>void&nbsp;init(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</pre>
+<pre>void&nbsp;init(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 </li>
 </ul>
 <a name="dispose()">
@@ -484,6 +499,6 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

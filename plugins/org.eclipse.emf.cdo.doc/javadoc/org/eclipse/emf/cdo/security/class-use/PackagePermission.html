@@ -119,10 +119,10 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a></code></td>
-<td class="colLast"><span class="strong">SecurityFactory.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createPackagePermission(org.eclipse.emf.ecore.EPackage, org.eclipse.emf.cdo.security.Access)">createPackagePermission</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage,
+<td class="colLast"><span class="strong">SecurityFactory.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createPackagePermission(org.eclipse.emf.ecore.EPackage,%20org.eclipse.emf.cdo.security.Access)">createPackagePermission</a></strong>(org.eclipse.emf.ecore.EPackage&nbsp;ePackage,
                        <a href="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
-<div class="block"><i>As of 4.3 use <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createFilterPermission(org.eclipse.emf.cdo.security.Access, org.eclipse.emf.cdo.security.PermissionFilter...)"><code>SecurityFactory.createFilterPermission(Access, PermissionFilter...)</code></a> and <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createPackageFilter(org.eclipse.emf.ecore.EPackage)"><code>SecurityFactory.createPackageFilter(EPackage)</code></a>.</i></div>
+<div class="block"><i>As of 4.3 use <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createFilterPermission(org.eclipse.emf.cdo.security.Access,%20org.eclipse.emf.cdo.security.PermissionFilter...)"><code>SecurityFactory.createFilterPermission(Access, PermissionFilter...)</code></a> and <a href="../../../../../../org/eclipse/emf/cdo/security/SecurityFactory.html#createPackageFilter(org.eclipse.emf.ecore.EPackage)"><code>SecurityFactory.createPackageFilter(EPackage)</code></a>.</i></div>
 </div>
 </td>
 </tr>
@@ -163,7 +163,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a></code></td>
-<td class="colLast"><span class="strong">SecurityFactoryImpl.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createPackagePermission(org.eclipse.emf.ecore.EPackage, org.eclipse.emf.cdo.security.Access)">createPackagePermission</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage,
+<td class="colLast"><span class="strong">SecurityFactoryImpl.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/security/impl/SecurityFactoryImpl.html#createPackagePermission(org.eclipse.emf.ecore.EPackage,%20org.eclipse.emf.cdo.security.Access)">createPackagePermission</a></strong>(org.eclipse.emf.ecore.EPackage&nbsp;ePackage,
                        <a href="../../../../../../org/eclipse/emf/cdo/security/Access.html" title="enum in org.eclipse.emf.cdo.security">Access</a>&nbsp;access)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 </td>
@@ -190,8 +190,8 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><span class="strong">SecurityValidator.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecurityValidator.html#validatePackagePermission(org.eclipse.emf.cdo.security.PackagePermission, org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)">validatePackagePermission</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a>&nbsp;packagePermission,
-                         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/DiagnosticChain.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">DiagnosticChain</a>&nbsp;diagnostics,
+<td class="colLast"><span class="strong">SecurityValidator.</span><code><strong><a href="../../../../../../org/eclipse/emf/cdo/security/util/SecurityValidator.html#validatePackagePermission(org.eclipse.emf.cdo.security.PackagePermission,%20org.eclipse.emf.common.util.DiagnosticChain,%20java.util.Map)">validatePackagePermission</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/security/PackagePermission.html" title="interface in org.eclipse.emf.cdo.security">PackagePermission</a>&nbsp;packagePermission,
+                         org.eclipse.emf.common.util.DiagnosticChain&nbsp;diagnostics,
                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;context)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -245,6 +245,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

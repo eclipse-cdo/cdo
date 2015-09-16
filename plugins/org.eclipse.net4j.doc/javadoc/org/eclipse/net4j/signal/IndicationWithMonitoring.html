@@ -83,9 +83,10 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="IndicationWithResponse.html" title="IndicationWithResponse" alt="" coords="31,6,193,31"/>
-<area shape="rect" id="node2" href="IndicationWithMonitoring.html" title="IndicationWithMonitoring" alt="" coords="30,71,193,97"/>
-<area shape="rect" id="node3" href="security/AuthenticationIndication.html" title="AuthenticationIndication (org.eclipse.net4j.signal.security)" alt="" coords="5,136,219,176"/>
+<area shape="rect" id="node1" href="IndicationWithResponse.html" title="IndicationWithResponse" alt="" coords="169,6,332,31"/>
+<area shape="rect" id="node2" href="IndicationWithMonitoring.html" title="IndicationWithMonitoring" alt="" coords="169,71,332,97"/>
+<area shape="rect" id="node3" href="confirmation/ConfirmationIndication.html" title="ConfirmationIndication (org.eclipse.net4j.signal.confirmation)" alt="" coords="5,136,243,176"/>
+<area shape="rect" id="node4" href="security/AuthenticationIndication.html" title="AuthenticationIndication (org.eclipse.net4j.signal.security)" alt="" coords="272,136,485,176"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="IndicationWithMonitoring.png" usemap="#APIVIZ" border="0"></div>
 <ul class="inheritance">
@@ -120,7 +121,7 @@
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../../org/eclipse/net4j/signal/security/AuthenticationIndication.html" title="class in org.eclipse.net4j.signal.security">AuthenticationIndication</a></dd>
+<dd><a href="../../../../org/eclipse/net4j/signal/security/AuthenticationIndication.html" title="class in org.eclipse.net4j.signal.security">AuthenticationIndication</a>, <a href="../../../../org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationIndication</a></dd>
 </dl>
 <hr>
 <br>
@@ -162,15 +163,15 @@ extends <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.htm
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#IndicationWithMonitoring(org.eclipse.net4j.signal.SignalProtocol, java.lang.Enum)">IndicationWithMonitoring</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#IndicationWithMonitoring(org.eclipse.net4j.signal.SignalProtocol,%20java.lang.Enum)">IndicationWithMonitoring</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&nbsp;literal)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#IndicationWithMonitoring(org.eclipse.net4j.signal.SignalProtocol, short)">IndicationWithMonitoring</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#IndicationWithMonitoring(org.eclipse.net4j.signal.SignalProtocol,%20short)">IndicationWithMonitoring</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
                         short&nbsp;signalID)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#IndicationWithMonitoring(org.eclipse.net4j.signal.SignalProtocol, short, java.lang.String)">IndicationWithMonitoring</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#IndicationWithMonitoring(org.eclipse.net4j.signal.SignalProtocol,%20short,%20java.lang.String)">IndicationWithMonitoring</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
                         short&nbsp;id,
                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
 </tr>
@@ -191,7 +192,7 @@ extends <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#execute(org.eclipse.net4j.buffer.BufferInputStream, org.eclipse.net4j.buffer.BufferOutputStream)">execute</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#execute(org.eclipse.net4j.buffer.BufferInputStream,%20org.eclipse.net4j.buffer.BufferOutputStream)">execute</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
        <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -208,7 +209,7 @@ extends <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#indicating(org.eclipse.net4j.util.io.ExtendedDataInputStream, org.eclipse.net4j.util.om.monitor.OMMonitor)">indicating</a></strong>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</a>&nbsp;in,
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#indicating(org.eclipse.net4j.util.io.ExtendedDataInputStream,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">indicating</a></strong>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataInputStream</a>&nbsp;in,
           <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -220,7 +221,7 @@ extends <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.htm
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#responding(org.eclipse.net4j.util.io.ExtendedDataOutputStream, org.eclipse.net4j.util.om.monitor.OMMonitor)">responding</a></strong>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataOutputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataOutputStream</a>&nbsp;out,
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/IndicationWithMonitoring.html#responding(org.eclipse.net4j.util.io.ExtendedDataOutputStream,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">responding</a></strong>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/ExtendedDataOutputStream.html?is-external=true" title="class or interface in org.eclipse.net4j.util.io">ExtendedDataOutputStream</a>&nbsp;out,
           <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
 </table>
@@ -229,21 +230,21 @@ extends <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.htm
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.signal.<a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal">IndicationWithResponse</a></h3>
-<code><a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html#getExceptionMessage(java.lang.Throwable)">getExceptionMessage</a></code></li>
+<code><a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html#closeChannelAfterException()">closeChannelAfterException</a>, <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html#getExceptionMessage(java.lang.Throwable)">getExceptionMessage</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.signal.Signal">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.signal.<a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a></h3>
-<code><a href="../../../../org/eclipse/net4j/signal/Signal.html#finishInputStream(java.io.InputStream)">finishInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#finishOutputStream(java.io.OutputStream)">finishOutputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#flush()">flush</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferInputStream()">getBufferInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferOutputStream()">getBufferOutputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getCorrelationID()">getCorrelationID</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentInputStream()">getCurrentInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentOutputStream()">getCurrentOutputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getID()">getID</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getName()">getName</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol()">getProtocol</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#run()">run</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#toString()">toString</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapInputStream(java.io.InputStream)">wrapInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapOutputStream(java.io.OutputStream)">wrapOutputStream</a></code></li>
+<code><a href="../../../../org/eclipse/net4j/signal/Signal.html#closeChannelAfterMe()">closeChannelAfterMe</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#closeInputStreamAfterMe()">closeInputStreamAfterMe</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#closeOutputStreamAfterMe()">closeOutputStreamAfterMe</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#finishInputStream(java.io.InputStream)">finishInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#finishOutputStream(java.io.OutputStream)">finishOutputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#flush()">flush</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferInputStream()">getBufferInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferOutputStream()">getBufferOutputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getCorrelationID()">getCorrelationID</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentInputStream()">getCurrentInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentOutputStream()">getCurrentOutputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getID()">getID</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getName()">getName</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol()">getProtocol</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#run()">run</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#toString()">toString</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapInputStream(java.io.InputStream)">wrapInputStream</a>, <a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapOutputStream(java.io.OutputStream)">wrapOutputStream</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -315,7 +316,7 @@ extends <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.htm
                 throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
 <dl>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html#execute(org.eclipse.net4j.buffer.BufferInputStream, org.eclipse.net4j.buffer.BufferOutputStream)">execute</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal">IndicationWithResponse</a></code></dd>
+<dd><code><a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html#execute(org.eclipse.net4j.buffer.BufferInputStream,%20org.eclipse.net4j.buffer.BufferOutputStream)">execute</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal">IndicationWithResponse</a></code></dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd></dl>
 </li>
@@ -465,6 +466,6 @@ extends <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.htm
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

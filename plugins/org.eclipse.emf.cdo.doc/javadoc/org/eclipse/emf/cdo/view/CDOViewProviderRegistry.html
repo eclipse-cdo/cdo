@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -123,7 +123,7 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -166,7 +166,7 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#getViewProviders(org.eclipse.emf.common.util.URI)">getViewProviders</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#getViewProviders(org.eclipse.emf.common.util.URI)">getViewProviders</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri)</code>
 <div class="block">Returns an array of <code>CDOViewProvider</code> instances, determined and ordered by certain criteria based on the
  argument URI.</div>
 </td>
@@ -180,18 +180,19 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideView(org.eclipse.emf.common.util.URI, org.eclipse.emf.ecore.resource.ResourceSet)">provideView</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri,
-           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;viewSet)</code>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideView(org.eclipse.emf.common.util.URI,%20org.eclipse.emf.ecore.resource.ResourceSet)">provideView</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri,
+           org.eclipse.emf.ecore.resource.ResourceSet&nbsp;viewSet)</code>
 <div class="block">Returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> that serves the given URI in the given <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a>, or
  <code>null</code> if no <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> in this registry can provide such a view.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>,<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideViewWithInfo(org.eclipse.emf.common.util.URI, org.eclipse.emf.ecore.resource.ResourceSet)">provideViewWithInfo</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri,
-                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>
-<div class="block">Returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> that serves the given URI in the given <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a>, or
- <code>null</code> if no <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> in this registry can provide such a view.</div>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideViewWithInfo(org.eclipse.emf.common.util.URI,%20org.eclipse.emf.ecore.resource.ResourceSet)">provideViewWithInfo</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri,
+                   org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code>
+<div class="block"><strong>Deprecated.</strong>&nbsp;
+<div class="block"><i>As of 4.4. use <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideView(org.eclipse.emf.common.util.URI,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>provideView(URI, ResourceSet)</code></a>.getProvider().</i></div>
+</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -252,8 +253,8 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <ul class="blockList">
 <li class="blockList">
 <h4>provideView</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;provideView(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri,
-                  <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;viewSet)</pre>
+<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;provideView(org.eclipse.emf.common.util.URI&nbsp;uri,
+                  org.eclipse.emf.ecore.resource.ResourceSet&nbsp;viewSet)</pre>
 <div class="block">Returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> that serves the given URI in the given <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a>, or
  <code>null</code> if no <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> in this registry can provide such a view.</div>
 </li>
@@ -264,8 +265,10 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <ul class="blockList">
 <li class="blockList">
 <h4>provideViewWithInfo</h4>
-<pre><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>,<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&gt;&nbsp;provideViewWithInfo(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri,
-                                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Pair</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>,<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&gt;&nbsp;provideViewWithInfo(org.eclipse.emf.common.util.URI&nbsp;uri,
+                                                           org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</pre>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.4. use <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideView(org.eclipse.emf.common.util.URI,%20org.eclipse.emf.ecore.resource.ResourceSet)"><code>provideView(URI, ResourceSet)</code></a>.getProvider().</i></div>
 <div class="block">Returns a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> that serves the given URI in the given <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a>, or
  <code>null</code> if no <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> in this registry can provide such a view. The
  returned <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Pair.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection"><code>pair</code></a> contains the provider that provided the view or null if the view was already present in
@@ -280,7 +283,7 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewProviders</h4>
-<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>[]&nbsp;getViewProviders(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>[]&nbsp;getViewProviders(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
 <div class="block">Returns an array of <code>CDOViewProvider</code> instances, determined and ordered by certain criteria based on the
  argument URI.</div>
 </li>
@@ -343,7 +346,7 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewRegistry.html" title="interface in org.eclipse.emf.cdo.view"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -384,6 +387,6 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

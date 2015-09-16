@@ -28,33 +28,22 @@
     <packages name="org.eclipse.emf.cdo.eresource.provider"/>
     <packages name="org.eclipse.emf.cdo.etypes.provider"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.location" label="CDO Model Repository Client Location">
-    <packages name="org.eclipse.emf.cdo.location"/>
-  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.net4j" label="CDO Model Repository Client Net4j Support">
     <packages name="org.eclipse.emf.cdo.net4j"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.team" label="CDO Model Repository Client Team Support">
-    <packages name="org.eclipse.emf.cdo.team"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui" label="CDO Model Repository Client UI">
     <packages name="org.eclipse.emf.cdo.ui"/>
     <packages name="org.eclipse.emf.cdo.ui.widgets"/>
+    <extensionPoints name="editorOpeners"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui.admin" label="CDO Model Repository Client UI Admin"/>
   <article:Plugin name="org.eclipse.emf.cdo.ui.compare" label="CDO Model Repository Client UI Compare">
     <packages name="org.eclipse.emf.cdo.ui.compare"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.ui.ide" label="CDO Model Repository Client UI IDE">
-    <packages name="org.eclipse.emf.cdo.ui.ide"/>
-  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui.team" label="CDO Model Repository Client UI Team"/>
   <article:Plugin name="org.eclipse.emf.cdo.workspace" label="CDO Model Repository Client Workspace">
     <packages name="org.eclipse.emf.cdo.spi.workspace"/>
     <packages name="org.eclipse.emf.cdo.workspace"/>
-  </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.workspace.efs" label="CDO Model Repository Client Workspace EFS">
-    <packages name="org.eclipse.emf.cdo.workspace.efs"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.common" label="CDO Model Repository Common">
     <packages name="org.eclipse.emf.cdo.common"/>

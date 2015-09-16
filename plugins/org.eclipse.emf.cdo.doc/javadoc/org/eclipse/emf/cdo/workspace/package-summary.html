@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">Prev Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/workspace/efs/package-summary.html">Next Package</a></li>
+<li><a href="../../../../../org/eclipse/emf/internal/cdo/package-summary.html">Next Package</a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/workspace/package-summary.html" target="_top">Frames</a></li>
@@ -70,16 +70,18 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../common/revision/CDORevisionProvider.html" title="&#171;interface&#187; CDORevisionProvider (org.eclipse.emf.cdo.common.revision)" alt="" coords="6,370,250,425"/>
-<area shape="rect" id="node2" href="CDOWorkspace.html" title="&#171;interface&#187; CDOWorkspace" alt="" coords="353,299,469,339"/>
-<area shape="rect" id="node3" href="CDOWorkspace.DirtyStateChangedEvent.html" title="&#171;interface&#187; CDOWorkspace.DirtyStateChangedEvent" alt="" coords="280,141,541,181"/>
-<area shape="rect" id="node4" href="CDOWorkspaceBase.html" title="&#171;interface&#187; CDOWorkspaceBase" alt="" coords="337,377,484,417"/>
-<area shape="rect" id="node5" href="CDOWorkspaceBase2.html" title="&#171;interface&#187; CDOWorkspaceBase2" alt="" coords="571,377,725,417"/>
-<area shape="rect" id="node6" href="CDOWorkspaceConfiguration.html" title="&#171;interface&#187; CDOWorkspaceConfiguration" alt="" coords="33,69,223,109"/>
-<area shape="rect" id="node7" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="25,213,231,267"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="38,134,218,189"/>
-<area shape="rect" id="node9" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="38,291,218,346"/>
-<area shape="rect" id="node10" href="CDOWorkspaceUtil.html" title="&#171;static&#187; CDOWorkspaceUtil" alt="" coords="61,5,195,45"/>
+<area shape="rect" id="node1" href="../CDOElement.StateProvider.html" title="&#171;interface&#187; CDOElement.StateProvider (org.eclipse.emf.cdo)" alt="" coords="39,213,217,267"/>
+<area shape="rect" id="node2" href="../common/revision/CDORevisionProvider.html" title="&#171;interface&#187; CDORevisionProvider (org.eclipse.emf.cdo.common.revision)" alt="" coords="6,449,250,503"/>
+<area shape="rect" id="node3" href="CDOWorkspace.html" title="&#171;interface&#187; CDOWorkspace" alt="" coords="362,339,478,379"/>
+<area shape="rect" id="node4" href="CDOWorkspace.DirtyStateChangedEvent.html" title="&#171;interface&#187; CDOWorkspace.DirtyStateChangedEvent" alt="" coords="289,109,551,149"/>
+<area shape="rect" id="node5" href="CDOWorkspace.ObjectStatesChangedEvent.html" title="&#171;interface&#187; CDOWorkspace.ObjectStatesChangedEvent" alt="" coords="281,173,559,213"/>
+<area shape="rect" id="node6" href="CDOWorkspaceBase.html" title="&#171;interface&#187; CDOWorkspaceBase" alt="" coords="347,456,493,496"/>
+<area shape="rect" id="node7" href="CDOWorkspaceBase2.html" title="&#171;interface&#187; CDOWorkspaceBase2" alt="" coords="590,456,743,496"/>
+<area shape="rect" id="node8" href="CDOWorkspaceConfiguration.html" title="&#171;interface&#187; CDOWorkspaceConfiguration" alt="" coords="33,69,223,109"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; Closeable (org.eclipse.net4j.util.collection)" alt="" coords="25,291,231,346"/>
+<area shape="rect" id="node10" title="&#171;interface&#187; IEvent (org.eclipse.net4j.util.event)" alt="" coords="38,134,218,189"/>
+<area shape="rect" id="node11" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="38,370,218,425"/>
+<area shape="rect" id="node12" href="CDOWorkspaceUtil.html" title="&#171;static&#187; CDOWorkspaceUtil" alt="" coords="61,5,195,45"/>
 </map>
 <div id="apivizContainer" style="text-align: center;margin-bottom: 1em;"><img src="package-summary.png" usemap="#APIVIZ" border="0"></div>
 <ul class="blockList">
@@ -104,21 +106,27 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.ObjectStatesChangedEvent.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspace.ObjectStatesChangedEvent</a></td>
+<td class="colLast">
+<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired when the state of objects in the <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> change between <i>new</i>, <i>dirty</i> and <i>clean</i>.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBase.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase</a></td>
 <td class="colLast">
 <div class="block">Represents the local state of a <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> directly after the initial
  <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#checkout()"><code>checkout</code></a> operation or any subsequent
  <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#update(org.eclipse.emf.cdo.transaction.CDOMerger)"><code>update</code></a> and
- <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#replace(java.lang.String, long)"><code>replace</code></a> operations.</div>
+ <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html#replace(java.lang.String,%20long)"><code>replace</code></a> operations.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBase2.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase2</a></td>
 <td class="colLast">
 <div class="block">Adds <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBase2.html#isEmpty()"><code>CDOWorkspaceBase2.isEmpty()</code></a> and <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBase2.html#containsID(org.eclipse.emf.cdo.common.id.CDOID)"><code>CDOWorkspaceBase2.containsID(CDOID)</code></a> methods.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspaceConfiguration</a></td>
 <td class="colLast">
 <div class="block">Checks out new <a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> or opens existing ones.</div>
@@ -170,7 +178,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/view/package-summary.html">Prev Package</a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/workspace/efs/package-summary.html">Next Package</a></li>
+<li><a href="../../../../../org/eclipse/emf/internal/cdo/package-summary.html">Next Package</a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/workspace/package-summary.html" target="_top">Frames</a></li>
@@ -195,6 +203,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -154,7 +154,7 @@ implements <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerI
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#addChild(java.util.Collection, java.lang.Object)">addChild</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;children,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#addChild(java.util.Collection,%20java.lang.Object)">addChild</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;&nbsp;children,
         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -166,12 +166,20 @@ implements <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerI
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#dispose()">dispose</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#disposeChildren()">disposeChildren</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#getParent()">getParent</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#getTreePath()">getTreePath</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.AbstractNode.html#hasChildren()">hasChildren</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -187,7 +195,7 @@ implements <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerI
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.ui.views.ContainerItemProvider.Node">
@@ -227,6 +235,19 @@ implements <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerI
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="isDisposed()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDisposed</h4>
+<pre>public&nbsp;boolean&nbsp;isDisposed()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#isDisposed()">isDisposed</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
+</dl>
+</li>
+</ul>
 <a name="dispose()">
 <!--   -->
 </a>
@@ -240,17 +261,18 @@ implements <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerI
 </dl>
 </li>
 </ul>
-<a name="isDisposed()">
+<a name="disposeChildren()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>isDisposed</h4>
-<pre>public&nbsp;boolean&nbsp;isDisposed()</pre>
+<h4>disposeChildren</h4>
+<pre>public&nbsp;void&nbsp;disposeChildren()</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#isDisposed()">isDisposed</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
-</dl>
+<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#disposeChildren()">disposeChildren</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="toString()">
@@ -290,6 +312,20 @@ implements <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerI
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#getTreePath()">getTreePath</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
 </dl>
+</li>
+</ul>
+<a name="hasChildren()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasChildren</h4>
+<pre>public&nbsp;boolean&nbsp;hasChildren()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#hasChildren()">hasChildren</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="checkNotDisposed()">
@@ -377,6 +413,6 @@ implements <a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerI
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

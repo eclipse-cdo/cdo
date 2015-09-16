@@ -142,9 +142,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html#addXRef(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.ecore.EReference, int)">addXRef</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;targetID,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html#addXRef(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.ecore.EReference,%20int)">addXRef</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;targetID,
        <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;sourceID,
-       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;sourceReference,
+       org.eclipse.emf.ecore.EReference&nbsp;sourceReference,
        int&nbsp;sourceIndex)</code>
 <div class="block">Adds the data of one cross reference to the results of the underlying query.</div>
 </td>
@@ -157,15 +157,15 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&gt;&gt;</code></td>
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EClass,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;org.eclipse.emf.ecore.EReference&gt;&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html#getSourceCandidates()">getSourceCandidates</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>[]</code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EReference[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html#getSourceReferences()">getSourceReferences</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,org.eclipse.emf.ecore.EClass&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html#getTargetObjects()">getTargetObjects</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
@@ -196,7 +196,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint
 <ul class="blockList">
 <li class="blockList">
 <h4>getTargetObjects</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&gt;&nbsp;getTargetObjects()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,org.eclipse.emf.ecore.EClass&gt;&nbsp;getTargetObjects()</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
 </li>
@@ -207,7 +207,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint
 <ul class="blockList">
 <li class="blockList">
 <h4>getSourceReferences</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>[]&nbsp;getSourceReferences()</pre>
+<pre>org.eclipse.emf.ecore.EReference[]&nbsp;getSourceReferences()</pre>
 </li>
 </ul>
 <a name="getSourceCandidates()">
@@ -216,7 +216,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint
 <ul class="blockList">
 <li class="blockList">
 <h4>getSourceCandidates</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&gt;&gt;&nbsp;getSourceCandidates()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;org.eclipse.emf.ecore.EClass,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;org.eclipse.emf.ecore.EReference&gt;&gt;&nbsp;getSourceCandidates()</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
 </li>
@@ -240,7 +240,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint
 <h4>addXRef</h4>
 <pre>boolean&nbsp;addXRef(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;targetID,
               <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;sourceID,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;sourceReference,
+              org.eclipse.emf.ecore.EReference&nbsp;sourceReference,
               int&nbsp;sourceIndex)</pre>
 <div class="block">Adds the data of one cross reference to the results of the underlying query.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd><code>true</code> to indicate that more results can be passed subsequently, <code>false</code> otherwise
@@ -313,6 +313,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

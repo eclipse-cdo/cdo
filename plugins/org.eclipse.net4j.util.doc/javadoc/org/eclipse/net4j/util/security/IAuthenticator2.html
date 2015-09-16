@@ -127,7 +127,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#resetPassword(java.lang.String, char[], java.lang.String, char[])">resetPassword</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;adminID,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#resetPassword(java.lang.String,%20char[],%20java.lang.String,%20char[])">resetPassword</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;adminID,
              char[]&nbsp;adminPassword,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
              char[]&nbsp;newPassword)</code>
@@ -136,7 +136,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#updatePassword(java.lang.String, char[], char[])">updatePassword</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator2.html#updatePassword(java.lang.String,%20char[],%20char[])">updatePassword</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
               char[]&nbsp;oldPassword,
               char[]&nbsp;newPassword)</code>
 <div class="block">Updates the password <em>stored</em> for the user identified by <code>userID</code>.</div>
@@ -148,7 +148,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String, char[])">authenticate</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String,%20char[])">authenticate</a></code></li>
 </ul>
 </li>
 </ul>
@@ -174,7 +174,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
                   char[]&nbsp;oldPassword,
                   char[]&nbsp;newPassword)</pre>
 <div class="block">Updates the password <em>stored</em> for the user identified by <code>userID</code>.  The <code>oldPassword</code> is authenticated
- <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String, char[])">as per usual</a> and is replaced by the <code>newPassword</code> only
+ <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String,%20char[])">as per usual</a> and is replaced by the <code>newPassword</code> only
  (and atomically) on success.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>userID</code> - the ID of the user whose password is to be updated</dd><dd><code>oldPassword</code> - the user's current password attempt to verify against the <em>stored</em> password</dd><dd><code>newPassword</code> - the new password to replace the <code>oldPassword</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -192,7 +192,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
                  char[]&nbsp;newPassword)</pre>
 <div class="block">Performs an administrative resets of the password <em>stored</em> for the user identified by <code>userID</code>.
- The <code>adminID</code> and <code>adminPassword</code> must <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String, char[])">authenticate</a>
+ The <code>adminID</code> and <code>adminPassword</code> must <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.html#authenticate(java.lang.String,%20char[])">authenticate</a>
  to permit the <code>userID</code>'s password to be set to the <code>newPassword</code>.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>adminID</code> - the ID of the administrator requesting the reset</dd><dd><code>adminPassword</code> - the administrator's password</dd><dd><code>userID</code> - the ID of the user whose password is to be reset</dd><dd><code>newPassword</code> - the new password to replace the user's old password</dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -277,6 +277,6 @@ extends <a href="../../../../../org/eclipse/net4j/util/security/IAuthenticator.h
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

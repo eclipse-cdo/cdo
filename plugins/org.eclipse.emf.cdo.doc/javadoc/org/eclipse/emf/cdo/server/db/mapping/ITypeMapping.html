@@ -162,13 +162,13 @@
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable)">createDBField</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
-<div class="block"><i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)"><code>createDBField(IDBTable, String)</code></a>.</i></div>
+<div class="block"><i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable,%20java.lang.String)"><code>createDBField(IDBTable, String)</code></a>.</i></div>
 </div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)">createDBField</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable,%20java.lang.String)">createDBField</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
 <div class="block">Creates the DBField and adds it to the given table.</div>
 </td>
@@ -178,7 +178,7 @@
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#getDBType()">getDBType</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EStructuralFeature</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#getFeature()">getFeature</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -193,7 +193,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#readValueToRevision(java.sql.ResultSet, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">readValueToRevision</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#readValueToRevision(java.sql.ResultSet,%20org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">readValueToRevision</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
                    <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code>
 <div class="block">Read a value from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql"><code>ResultSet</code></a>, convert it from the DB to the CDO representation and set it to the feature
  of the revision.</div>
@@ -201,7 +201,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setDBField(org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)">setDBField</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setDBField(org.eclipse.net4j.db.ddl.IDBTable,%20java.lang.String)">setDBField</a></strong>(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fieldName)</code>
 <div class="block">Sets the DBField.</div>
 </td>
@@ -212,7 +212,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setDefaultValue(java.sql.PreparedStatement, int)">setDefaultValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setDefaultValue(java.sql.PreparedStatement,%20int)">setDefaultValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
                int&nbsp;index)</code>
 <div class="block">Set the feature's default value to the JDBC <a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><code>IDBPreparedStatement</code></a> using an appropriate <code>setXxx</code>
  method.</div>
@@ -220,7 +220,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setFeature(org.eclipse.emf.ecore.EStructuralFeature)">setFeature</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setFeature(org.eclipse.emf.ecore.EStructuralFeature)">setFeature</a></strong>(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -228,7 +228,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValue(java.sql.PreparedStatement, int, java.lang.Object)">setValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValue(java.sql.PreparedStatement,%20int,%20java.lang.Object)">setValue</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
         int&nbsp;index,
         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
 <div class="block">Set the given value to the JDBC <a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><code>IDBPreparedStatement</code></a> using an appropriate <code>setXxx</code> method.</div>
@@ -236,7 +236,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValueFromRevision(java.sql.PreparedStatement, int, org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">setValueFromRevision</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValueFromRevision(java.sql.PreparedStatement,%20int,%20org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">setValueFromRevision</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;stmt,
                     int&nbsp;index,
                     <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;value)</code>
 <div class="block">Set a value of the given revision to the JDBC <a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html?is-external=true" title="class or interface in org.eclipse.net4j.db"><code>IDBPreparedStatement</code></a> using an appropriate <code>setXxx</code>
@@ -264,7 +264,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>getFeature</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;getFeature()</pre>
+<pre>org.eclipse.emf.ecore.EStructuralFeature&nbsp;getFeature()</pre>
 <dl><dt><span class="strong">Returns:</span></dt><dd>The feature which is associated with this mapping.</dd></dl>
 </li>
 </ul>
@@ -306,7 +306,7 @@
 <ul class="blockList">
 <li class="blockList">
 <h4>setFeature</h4>
-<pre>void&nbsp;setFeature(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+<pre>void&nbsp;setFeature(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
 </li>
@@ -330,7 +330,7 @@
 <h4>createDBField</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 void&nbsp;createDBField(<a href="../../../../../../../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBTable.html?is-external=true" title="class or interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)"><code>createDBField(IDBTable, String)</code></a>.</i></div>
+<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2 use <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#createDBField(org.eclipse.net4j.db.ddl.IDBTable,%20java.lang.String)"><code>createDBField(IDBTable, String)</code></a>.</i></div>
 </li>
 </ul>
 <a name="createDBField(org.eclipse.net4j.db.ddl.IDBTable, java.lang.String)">
@@ -510,6 +510,6 @@ void&nbsp;createDBField(<a href="../../../../../../../../../org.eclipse.net4j.db
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

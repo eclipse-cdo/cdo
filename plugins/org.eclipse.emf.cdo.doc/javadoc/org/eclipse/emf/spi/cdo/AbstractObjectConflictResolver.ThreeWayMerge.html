@@ -221,15 +221,15 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.htm
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#isValid(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">isValid</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object,
-       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#isValid(org.eclipse.emf.ecore.EObject,%20org.eclipse.emf.common.notify.Adapter)">isValid</a></strong>(org.eclipse.emf.ecore.EObject&nbsp;object,
+       org.eclipse.emf.common.notify.Adapter&nbsp;adapter)</code>
 <div class="block">Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behaviour,
  <code>false</code> otherwise.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.CDORevision,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;oldRemoteRevision,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;remoteDelta,
@@ -239,7 +239,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.htm
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">resolveConflict</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;conflict,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta,
                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&nbsp;remoteDeltas)</code>&nbsp;</td>
 </tr>
@@ -259,7 +259,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.htm
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.emf.spi.cdo.<a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver</a></h3>
-<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#changeObject(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changeObject</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#readObject(org.eclipse.emf.cdo.CDOObject)">readObject</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">resolveConflict</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflicts(java.util.Map, java.util.List)">resolveConflicts</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)">rollbackObject</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#changeObject(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changeObject</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#readObject(org.eclipse.emf.cdo.CDOObject)">readObject</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">resolveConflict</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflicts(java.util.Map,%20java.util.List)">resolveConflicts</a>, <a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)">rollbackObject</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.spi.cdo.AbstractConflictResolver">
@@ -273,7 +273,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.htm
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.transaction.CDOConflictResolver">
@@ -319,14 +319,14 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.htm
 <ul class="blockList">
 <li class="blockList">
 <h4>isValid</h4>
-<pre>public&nbsp;boolean&nbsp;isValid(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object,
-              <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#isValid(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">CDOAdapterPolicy</a></code></strong></div>
+<pre>public&nbsp;boolean&nbsp;isValid(org.eclipse.emf.ecore.EObject&nbsp;object,
+              org.eclipse.emf.common.notify.Adapter&nbsp;adapter)</pre>
+<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#isValid(org.eclipse.emf.ecore.EObject,%20org.eclipse.emf.common.notify.Adapter)">CDOAdapterPolicy</a></code></strong></div>
 <div class="block">Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behaviour,
  <code>false</code> otherwise.</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#isValid(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">isValid</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#isValid(org.eclipse.emf.ecore.EObject,%20org.eclipse.emf.common.notify.Adapter)">isValid</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></code></dd>
 <dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>CDOView.Options.addChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a>, 
 <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)"><code>CDOView.Options.setStrongReferencePolicy(CDOAdapterPolicy)</code></a></dd></dl>
 </li>
@@ -385,13 +385,13 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.htm
                    <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;localDelta,
                    <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;remoteDelta,
                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;&nbsp;allRemoteDeltas)</pre>
-<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">AbstractObjectConflictResolver</a></code></strong></div>
+<div class="block"><strong>Description copied from class:&nbsp;<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.CDORevision,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">AbstractObjectConflictResolver</a></code></strong></div>
 <div class="block">Resolves the conflict of a single object in the current transaction. Depending on the decision taken to resolve the
  conflict, it may be necessary to adjust the notification that will be sent to the adapters in the current
  transaction. This can be achieved by adjusting the <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>CDORevisionDelta</code></a> in <code>deltas</code>.</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.cdo.common.revision.CDORevision, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta, java.util.List)">resolveConflict</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#resolveConflict(org.eclipse.emf.cdo.CDOObject,%20org.eclipse.emf.cdo.common.revision.CDORevision,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,%20java.util.List)">resolveConflict</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -472,6 +472,6 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.htm
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

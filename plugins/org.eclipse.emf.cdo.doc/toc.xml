@@ -41,14 +41,8 @@
         <topic label="org.eclipse.emf.cdo.eresource.provider" href="javadoc/org/eclipse/emf/cdo/eresource/provider/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.etypes.provider" href="javadoc/org/eclipse/emf/cdo/etypes/provider/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Client Location" href="javadoc/org/eclipse/emf/cdo/location/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.location" href="javadoc/org/eclipse/emf/cdo/location/package-summary.html" icon="package" />
-      </topic>
       <topic label="CDO Model Repository Client Net4j Support" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.net4j" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="package" />
-      </topic>
-      <topic label="CDO Model Repository Client Team Support" href="javadoc/org/eclipse/emf/cdo/team/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.team" href="javadoc/org/eclipse/emf/cdo/team/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Client UI" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.ui" href="javadoc/org/eclipse/emf/cdo/ui/package-summary.html" icon="package" />
@@ -57,15 +51,9 @@
       <topic label="CDO Model Repository Client UI Compare" href="javadoc/org/eclipse/emf/cdo/ui/compare/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.ui.compare" href="javadoc/org/eclipse/emf/cdo/ui/compare/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Model Repository Client UI IDE" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.ui.ide" href="javadoc/org/eclipse/emf/cdo/ui/ide/package-summary.html" icon="package" />
-      </topic>
       <topic label="CDO Model Repository Client Workspace" href="javadoc/org/eclipse/emf/cdo/spi/workspace/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.spi.workspace" href="javadoc/org/eclipse/emf/cdo/spi/workspace/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.workspace" href="javadoc/org/eclipse/emf/cdo/workspace/package-summary.html" icon="package" />
-      </topic>
-      <topic label="CDO Model Repository Client Workspace EFS" href="javadoc/org/eclipse/emf/cdo/workspace/efs/package-summary.html" icon="plugin">
-        <topic label="org.eclipse.emf.cdo.workspace.efs" href="javadoc/org/eclipse/emf/cdo/workspace/efs/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.common" href="javadoc/org/eclipse/emf/cdo/common/package-summary.html" icon="package" />
@@ -169,6 +157,9 @@
     <topic label="Extension Point Reference" href="html/reference/schema/index.html">
       <topic label="CDO Model Repository Client" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html" icon="plugin">
         <topic label="viewProviders" href="schemadoc/org_eclipse_emf_cdo_viewProviders.html" icon="extpoint" />
+      </topic>
+      <topic label="CDO Model Repository Client UI" href="schemadoc/org_eclipse_emf_cdo_ui_editorOpeners.html" icon="plugin">
+        <topic label="editorOpeners" href="schemadoc/org_eclipse_emf_cdo_ui_editorOpeners.html" icon="extpoint" />
       </topic>
       <topic label="CDO Model Repository Server" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html" icon="plugin">
         <topic label="appExtensions" href="schemadoc/org_eclipse_emf_cdo_server_appExtensions.html" icon="extpoint" />

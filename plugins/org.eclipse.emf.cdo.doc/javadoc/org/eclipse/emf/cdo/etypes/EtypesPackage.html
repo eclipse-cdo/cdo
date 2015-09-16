@@ -98,7 +98,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/ENamedElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">ENamedElement</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a></dd>
+<dd>org.eclipse.emf.ecore.EModelElement, org.eclipse.emf.ecore.ENamedElement, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EPackage, org.eclipse.emf.common.notify.Notifier</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -107,8 +107,9 @@
 <hr>
 <br>
 <pre>public interface <span class="strong">EtypesPackage</span>
-extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a></pre>
-<div class="block"><!-- begin-user-doc --> The <b>Package</b> for the model. It contains accessors for the meta objects to represent
+extends org.eclipse.emf.ecore.EPackage</pre>
+<div class="block"><!-- begin-user-doc -->
+ The <b>Package</b> for the model. It contains accessors for the meta objects to represent
  <ul>
  <li>each class,</li>
  <li>each feature of each class,</li>
@@ -120,7 +121,8 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <dt><span class="strong">Model</span></dt>
   <dd>kind="package"</dd>
 <dt><span class="strong">No Implement</span></dt>
-  <dd>This interface is not intended to be implemented by clients. <!-- end-user-doc --></dd>
+  <dd>This interface is not intended to be implemented by clients.
+ <!-- end-user-doc --></dd>
 <dt><span class="strong">No Extend</span></dt>
   <dd>This interface is not intended to be extended by clients.</dd></dl>
 </li>
@@ -158,8 +160,8 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.ecore.EPackage">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Registry.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Registry</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.ecore.EPackage</h3>
+<code>org.eclipse.emf.ecore.EPackage.Descriptor, org.eclipse.emf.ecore.EPackage.Registry</code></li>
 </ul>
 </li>
 </ul>
@@ -261,26 +263,38 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#INPUT_STREAM">INPUT_STREAM</a></strong></code>
+<div class="block">The meta object id for the '<em>Input Stream</em>' data type</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#LOB">LOB</a></strong></code>
 <div class="block">The meta object id for the '<em>Lob</em>' data type</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#MODEL_ELEMENT">MODEL_ELEMENT</a></strong></code>
 <div class="block">The meta object id for the '<a href="../../../../../org/eclipse/emf/cdo/etypes/impl/ModelElementImpl.html" title="class in org.eclipse.emf.cdo.etypes.impl"><code><em>Model Element</em></code></a>' class</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#MODEL_ELEMENT__ANNOTATIONS">MODEL_ELEMENT__ANNOTATIONS</a></strong></code>
 <div class="block">The feature id for the '<em><b>Annotations</b></em>' containment reference list</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#MODEL_ELEMENT_FEATURE_COUNT">MODEL_ELEMENT_FEATURE_COUNT</a></strong></code>
 <div class="block">The number of structural features of the '<em>Model Element</em>' class. <!</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#READER">READER</a></strong></code>
+<div class="block">The meta object id for the '<em>Reader</em>' data type</div>
 </td>
 </tr>
 </table>
@@ -299,49 +313,49 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EReference</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getAnnotation_Contents()">getAnnotation_Contents</a></strong>()</code>
 <div class="block">Returns the meta object for the containment reference list '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getContents()"><code><em>Contents</em></code></a>'</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EReference</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getAnnotation_Details()">getAnnotation_Details</a></strong>()</code>
 <div class="block">Returns the meta object for the map '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getDetails()"><code><em>Details</em></code></a>'</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EReference</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getAnnotation_ModelElement()">getAnnotation_ModelElement</a></strong>()</code>
 <div class="block">Returns the meta object for the container reference '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getModelElement()"><code><em>Model Element</em></code></a>'</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EReference</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getAnnotation_References()">getAnnotation_References</a></strong>()</code>
 <div class="block">Returns the meta object for the reference list '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getReferences()"><code><em>References</em></code></a>'</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EAttribute</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getAnnotation_Source()">getAnnotation_Source</a></strong>()</code>
 <div class="block">Returns the meta object for the attribute '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getSource()"><code><em>Source</em></code></a>'</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getAnnotation()">getAnnotation</a></strong>()</code>
 <div class="block">Returns the meta object for class '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Annotation</em></code></a>'. <!</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EDataType</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getBlob()">getBlob</a></strong>()</code>
 <div class="block">Returns the meta object for data type '<a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><code><em>Blob</em></code></a>'. <!</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EDataType</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getClob()">getClob</a></strong>()</code>
 <div class="block">Returns the meta object for data type '<a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><code><em>Clob</em></code></a>'. <!</div>
 </td>
@@ -353,21 +367,33 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EDataType</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getInputStream()">getInputStream</a></strong>()</code>
+<div class="block">Returns the meta object for data type '<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code><em>Input Stream</em></code></a>'</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EDataType</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getLob()">getLob</a></strong>()</code>
 <div class="block">Returns the meta object for data type '<a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><code><em>Lob</em></code></a>'. <!</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a></code></td>
+<tr class="rowColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EReference</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getModelElement_Annotations()">getModelElement_Annotations</a></strong>()</code>
 <div class="block">Returns the meta object for the containment reference list '<a href="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html#getAnnotations()"><code><em>Annotations</em></code></a>'</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a></code></td>
+<tr class="altColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EClass</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getModelElement()">getModelElement</a></strong>()</code>
 <div class="block">Returns the meta object for class '<a href="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Model Element</em></code></a>'. <!</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>org.eclipse.emf.ecore.EDataType</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/etypes/EtypesPackage.html#getReader()">getReader</a></strong>()</code>
+<div class="block">Returns the meta object for data type '<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code><em>Reader</em></code></a>'</div>
 </td>
 </tr>
 </table>
@@ -375,36 +401,36 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.ecore.EPackage">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getEClassifier(java.lang.String)" title="class or interface in org.eclipse.emf.ecore">getEClassifier</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getEClassifiers()" title="class or interface in org.eclipse.emf.ecore">getEClassifiers</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getEFactoryInstance()" title="class or interface in org.eclipse.emf.ecore">getEFactoryInstance</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESubpackages()" title="class or interface in org.eclipse.emf.ecore">getESubpackages</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getESuperPackage()" title="class or interface in org.eclipse.emf.ecore">getESuperPackage</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getNsPrefix()" title="class or interface in org.eclipse.emf.ecore">getNsPrefix</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#getNsURI()" title="class or interface in org.eclipse.emf.ecore">getNsURI</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#setEFactoryInstance(org.eclipse.emf.ecore.EFactory)" title="class or interface in org.eclipse.emf.ecore">setEFactoryInstance</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#setNsPrefix(java.lang.String)" title="class or interface in org.eclipse.emf.ecore">setNsPrefix</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true#setNsURI(java.lang.String)" title="class or interface in org.eclipse.emf.ecore">setNsURI</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.EPackage</h3>
+<code>getEClassifier, getEClassifiers, getEFactoryInstance, getESubpackages, getESuperPackage, getNsPrefix, getNsURI, setEFactoryInstance, setNsPrefix, setNsURI</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.ecore.ENamedElement">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/ENamedElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">ENamedElement</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/ENamedElement.html?is-external=true#getName()" title="class or interface in org.eclipse.emf.ecore">getName</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/ENamedElement.html?is-external=true#setName(java.lang.String)" title="class or interface in org.eclipse.emf.ecore">setName</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.ENamedElement</h3>
+<code>getName, setName</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.ecore.EModelElement">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EModelElement</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true#getEAnnotation(java.lang.String)" title="class or interface in org.eclipse.emf.ecore">getEAnnotation</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EModelElement.html?is-external=true#getEAnnotations()" title="class or interface in org.eclipse.emf.ecore">getEAnnotations</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.EModelElement</h3>
+<code>getEAnnotation, getEAnnotations</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.ecore.EObject">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore">eAllContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore">eClass</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore">eContainer</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore">eContainingFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore">eContainmentFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore">eContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore">eCrossReferences</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore">eInvoke</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore">eIsProxy</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eIsSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore">eResource</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore">eSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eUnset</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.EObject</h3>
+<code>eAllContents, eClass, eContainer, eContainingFeature, eContainmentFeature, eContents, eCrossReferences, eGet, eGet, eInvoke, eIsProxy, eIsSet, eResource, eSet, eUnset</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.common.notify.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify">eAdapters</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify">eDeliver</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">eNotify</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify">eSetDeliver</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Notifier</h3>
+<code>eAdapters, eDeliver, eNotify, eSetDeliver</code></li>
 </ul>
 </li>
 </ul>
@@ -674,7 +700,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <a name="LOB">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>LOB</h4>
 <pre>static final&nbsp;int LOB</pre>
@@ -685,6 +711,42 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>CDOLob</code></a>, 
 <a href="../../../../../org/eclipse/emf/cdo/etypes/impl/EtypesPackageImpl.html#getLob()"><code>EtypesPackageImpl.getLob()</code></a>, 
 <a href="../../../../../constant-values.html#org.eclipse.emf.cdo.etypes.EtypesPackage.LOB">Constant Field Values</a></dd><dt><span class="strong">Generated</span></dt>
+  <dd></dd></dl>
+</li>
+</ul>
+<a name="INPUT_STREAM">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>INPUT_STREAM</h4>
+<pre>static final&nbsp;int INPUT_STREAM</pre>
+<div class="block">The meta object id for the '<em>Input Stream</em>' data type.
+ <!-- begin-user-doc --></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.3
+ <!-- end-user-doc --></dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code>InputStream</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/etypes/impl/EtypesPackageImpl.html#getInputStream()"><code>EtypesPackageImpl.getInputStream()</code></a>, 
+<a href="../../../../../constant-values.html#org.eclipse.emf.cdo.etypes.EtypesPackage.INPUT_STREAM">Constant Field Values</a></dd><dt><span class="strong">Generated</span></dt>
+  <dd></dd></dl>
+</li>
+</ul>
+<a name="READER">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>READER</h4>
+<pre>static final&nbsp;int READER</pre>
+<div class="block">The meta object id for the '<em>Reader</em>' data type.
+ <!-- begin-user-doc --></div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.3
+ <!-- end-user-doc --></dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/etypes/impl/EtypesPackageImpl.html#getReader()"><code>EtypesPackageImpl.getReader()</code></a>, 
+<a href="../../../../../constant-values.html#org.eclipse.emf.cdo.etypes.EtypesPackage.READER">Constant Field Values</a></dd><dt><span class="strong">Generated</span></dt>
   <dd></dd></dl>
 </li>
 </ul>
@@ -702,7 +764,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getModelElement</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;getModelElement()</pre>
+<pre>org.eclipse.emf.ecore.EClass&nbsp;getModelElement()</pre>
 <div class="block">Returns the meta object for class '<a href="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Model Element</em></code></a>'. <!--
  begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for class '<em>Model Element</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes"><code>ModelElement</code></a></dd><dt><span class="strong">Generated</span></dt>
@@ -715,7 +777,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getModelElement_Annotations</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;getModelElement_Annotations()</pre>
+<pre>org.eclipse.emf.ecore.EReference&nbsp;getModelElement_Annotations()</pre>
 <div class="block">Returns the meta object for the containment reference list '<a href="../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html#getAnnotations()"><code><em>Annotations</em></code></a>'.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
@@ -730,7 +792,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getAnnotation</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;getAnnotation()</pre>
+<pre>org.eclipse.emf.ecore.EClass&nbsp;getAnnotation()</pre>
 <div class="block">Returns the meta object for class '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Annotation</em></code></a>'. <!--
  begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for class '<em>Annotation</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes"><code>Annotation</code></a></dd><dt><span class="strong">Generated</span></dt>
@@ -743,7 +805,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getAnnotation_Source</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EAttribute.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EAttribute</a>&nbsp;getAnnotation_Source()</pre>
+<pre>org.eclipse.emf.ecore.EAttribute&nbsp;getAnnotation_Source()</pre>
 <div class="block">Returns the meta object for the attribute '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getSource()"><code><em>Source</em></code></a>'.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for the attribute '<em>Source</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getSource()"><code>Annotation.getSource()</code></a>, 
@@ -757,7 +819,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getAnnotation_Details</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;getAnnotation_Details()</pre>
+<pre>org.eclipse.emf.ecore.EReference&nbsp;getAnnotation_Details()</pre>
 <div class="block">Returns the meta object for the map '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getDetails()"><code><em>Details</em></code></a>'.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for the map '<em>Details</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getDetails()"><code>Annotation.getDetails()</code></a>, 
@@ -771,7 +833,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getAnnotation_ModelElement</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;getAnnotation_ModelElement()</pre>
+<pre>org.eclipse.emf.ecore.EReference&nbsp;getAnnotation_ModelElement()</pre>
 <div class="block">Returns the meta object for the container reference '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getModelElement()"><code><em>Model Element</em></code></a>'.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for the container reference '<em>Model Element</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getModelElement()"><code>Annotation.getModelElement()</code></a>, 
@@ -785,7 +847,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getAnnotation_Contents</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;getAnnotation_Contents()</pre>
+<pre>org.eclipse.emf.ecore.EReference&nbsp;getAnnotation_Contents()</pre>
 <div class="block">Returns the meta object for the containment reference list '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getContents()"><code><em>Contents</em></code></a>'.
  <!-- begin-user-doc --> <!--
  end-user-doc --></div>
@@ -800,7 +862,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getAnnotation_References</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>&nbsp;getAnnotation_References()</pre>
+<pre>org.eclipse.emf.ecore.EReference&nbsp;getAnnotation_References()</pre>
 <div class="block">Returns the meta object for the reference list '<a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getReferences()"><code><em>References</em></code></a>'.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for the reference list '<em>References</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/etypes/Annotation.html#getReferences()"><code>Annotation.getReferences()</code></a>, 
@@ -814,7 +876,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getBlob</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</a>&nbsp;getBlob()</pre>
+<pre>org.eclipse.emf.ecore.EDataType&nbsp;getBlob()</pre>
 <div class="block">Returns the meta object for data type '<a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><code><em>Blob</em></code></a>'. <!--
  begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for data type '<em>Blob</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>CDOBlob</code></a></dd><dt><span class="strong">Generated</span></dt>
@@ -829,7 +891,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getClob</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</a>&nbsp;getClob()</pre>
+<pre>org.eclipse.emf.ecore.EDataType&nbsp;getClob()</pre>
 <div class="block">Returns the meta object for data type '<a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><code><em>Clob</em></code></a>'. <!--
  begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for data type '<em>Clob</em>'.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>CDOClob</code></a></dd><dt><span class="strong">Generated</span></dt>
@@ -844,7 +906,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>getLob</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EDataType.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EDataType</a>&nbsp;getLob()</pre>
+<pre>org.eclipse.emf.ecore.EDataType&nbsp;getLob()</pre>
 <div class="block">Returns the meta object for data type '<a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLob.html" title="class in org.eclipse.emf.cdo.common.lob"><code><em>Lob</em></code></a>'. <!--
  begin-user-doc --></div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for data type '<em>Lob</em>'.</dd><dt><span class="strong">Since:</span></dt>
@@ -853,6 +915,42 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
   <dd></dd>
 <dt><span class="strong">Model</span></dt>
   <dd>instanceClass="org.eclipse.emf.cdo.common.lob.CDOLob"</dd></dl>
+</li>
+</ul>
+<a name="getInputStream()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getInputStream</h4>
+<pre>org.eclipse.emf.ecore.EDataType&nbsp;getInputStream()</pre>
+<div class="block">Returns the meta object for data type '<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code><em>Input Stream</em></code></a>'.
+ <!-- begin-user-doc --></div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for data type '<em>Input Stream</em>'.</dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.3
+ <!-- end-user-doc --></dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io"><code>InputStream</code></a></dd><dt><span class="strong">Generated</span></dt>
+  <dd></dd>
+<dt><span class="strong">Model</span></dt>
+  <dd>instanceClass="java.io.InputStream" serializeable="false"</dd></dl>
+</li>
+</ul>
+<a name="getReader()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getReader</h4>
+<pre>org.eclipse.emf.ecore.EDataType&nbsp;getReader()</pre>
+<div class="block">Returns the meta object for data type '<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code><em>Reader</em></code></a>'.
+ <!-- begin-user-doc --></div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>the meta object for data type '<em>Reader</em>'.</dd><dt><span class="strong">Since:</span></dt>
+  <dd>4.3
+ <!-- end-user-doc --></dd>
+<dt><span class="strong">See Also:</span></dt><dd><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io"><code>Reader</code></a></dd><dt><span class="strong">Generated</span></dt>
+  <dd></dd>
+<dt><span class="strong">Model</span></dt>
+  <dd>instanceClass="java.io.Reader" serializeable="false"</dd></dl>
 </li>
 </ul>
 <a name="getEtypesFactory()">
@@ -934,6 +1032,6 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

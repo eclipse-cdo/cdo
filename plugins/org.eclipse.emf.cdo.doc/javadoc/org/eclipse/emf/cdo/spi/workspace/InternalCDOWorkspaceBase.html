@@ -146,15 +146,24 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBas
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#deregisterObject(org.eclipse.emf.cdo.common.id.CDOID)">deregisterObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#deleteAddedAndDetachedObjects(org.eclipse.emf.cdo.server.IStoreAccessor.Raw,%20org.eclipse.emf.cdo.common.branch.CDOBranch)">deleteAddedAndDetachedObjects</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</a>&nbsp;accessor,
+                             <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#deregisterObject(org.eclipse.emf.cdo.common.id.CDOID)">deregisterObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspace.html" title="interface in org.eclipse.emf.cdo.spi.workspace">InternalCDOWorkspace</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#getWorkspace()">getWorkspace</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#init(org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace)">init</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspace.html" title="interface in org.eclipse.emf.cdo.spi.workspace">InternalCDOWorkspace</a>&nbsp;workspace)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#registerAddedAndDetachedObject(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">registerAddedAndDetachedObject</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -257,6 +266,17 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBas
   <dd>4.1</dd></dl>
 </li>
 </ul>
+<a name="registerAddedAndDetachedObject(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>registerAddedAndDetachedObject</h4>
+<pre>void&nbsp;registerAddedAndDetachedObject(<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
 <a name="registerAddedObject(org.eclipse.emf.cdo.common.id.CDOID)">
 <!--   -->
 </a>
@@ -288,6 +308,18 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBas
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 void&nbsp;updateAfterCommit(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
+</li>
+</ul>
+<a name="deleteAddedAndDetachedObjects(org.eclipse.emf.cdo.server.IStoreAccessor.Raw, org.eclipse.emf.cdo.common.branch.CDOBranch)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>deleteAddedAndDetachedObjects</h4>
+<pre>void&nbsp;deleteAddedAndDetachedObjects(<a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.Raw</a>&nbsp;accessor,
+                                 <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
 </li>
 </ul>
 <a name="clear()">
@@ -365,6 +397,6 @@ void&nbsp;updateAfterCommit(<a href="../../../../../../org/eclipse/emf/cdo/trans
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

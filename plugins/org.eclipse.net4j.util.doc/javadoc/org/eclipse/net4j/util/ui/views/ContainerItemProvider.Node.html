@@ -36,7 +36,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html" title="class in org.eclipse.net4j.util.ui.views"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerNameSorter.html" title="class in org.eclipse.net4j.util.ui.views"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.SlowElement.html" title="class in org.eclipse.net4j.util.ui.views"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" target="_top">Frames</a></li>
@@ -101,6 +101,10 @@
 <hr>
 <br>
 <pre>public static interface <span class="strong">ContainerItemProvider.Node</span></pre>
+<dl><dt><span class="strong">No Implement</span></dt>
+  <dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="strong">No Extend</span></dt>
+  <dd>This interface is not intended to be extended by clients.</dd></dl>
 </li>
 </ul>
 </div>
@@ -124,20 +128,28 @@
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#dispose()">dispose</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#disposeChildren()">disposeChildren</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#getChildren()">getChildren</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#getElement()">getElement</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#getParent()">getParent</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreePath.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">TreePath</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#getTreePath()">getTreePath</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html#hasChildren()">hasChildren</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -158,6 +170,15 @@
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="isDisposed()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDisposed</h4>
+<pre>boolean&nbsp;isDisposed()</pre>
+</li>
+</ul>
 <a name="dispose()">
 <!--   -->
 </a>
@@ -167,13 +188,15 @@
 <pre>void&nbsp;dispose()</pre>
 </li>
 </ul>
-<a name="isDisposed()">
+<a name="disposeChildren()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>isDisposed</h4>
-<pre>boolean&nbsp;isDisposed()</pre>
+<h4>disposeChildren</h4>
+<pre>void&nbsp;disposeChildren()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="getElement()">
@@ -192,6 +215,17 @@
 <li class="blockList">
 <h4>getParent</h4>
 <pre><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" title="interface in org.eclipse.net4j.util.ui.views">ContainerItemProvider.Node</a>&nbsp;getParent()</pre>
+</li>
+</ul>
+<a name="hasChildren()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hasChildren</h4>
+<pre>boolean&nbsp;hasChildren()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="getChildren()">
@@ -238,7 +272,7 @@
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.LeafNode.html" title="class in org.eclipse.net4j.util.ui.views"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerNameSorter.html" title="class in org.eclipse.net4j.util.ui.views"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/net4j/util/ui/views/ContainerItemProvider.SlowElement.html" title="class in org.eclipse.net4j.util.ui.views"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" target="_top">Frames</a></li>
@@ -278,6 +312,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

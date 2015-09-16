@@ -135,7 +135,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><span class="strong">CDOServerImporter.Handler.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handlePackageUnit(java.lang.String, org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type, long, java.lang.String)">handlePackageUnit</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id,
+<td class="colLast"><span class="strong">CDOServerImporter.Handler.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.Handler.html#handlePackageUnit(java.lang.String,%20org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type,%20long,%20java.lang.String)">handlePackageUnit</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id,
                  <a href="../../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a>&nbsp;type,
                  long&nbsp;time,
                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;data)</code>&nbsp;</td>
@@ -163,14 +163,14 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
+<td class="colFirst"><code>org.eclipse.emf.ecore.EPackage[]</code></td>
 <td class="colLast"><span class="strong">IStoreAccessor.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadPackageUnit(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code>
 <div class="block">Demand loads a given package proxy that has been created on startup of the repository.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">IStoreAccessor.Raw.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+<td class="colLast"><span class="strong">IStoreAccessor.Raw.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
         <a href="../../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Stores the given <a href="../../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package units</code></a> in the backend represented by this
  <a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> without going through a regular
@@ -179,7 +179,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">IStoreAccessor.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#writePackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+<td class="colLast"><span class="strong">IStoreAccessor.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#writePackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
                  <a href="../../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -198,7 +198,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></td>
-<td class="colLast"><span class="strong">IMetaDataManager.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#rawImport(java.sql.Connection, org.eclipse.emf.cdo.common.protocol.CDODataInput, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><span class="strong">IMetaDataManager.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#rawImport(java.sql.Connection,%20org.eclipse.emf.cdo.common.protocol.CDODataInput,%20long,%20long,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
          <a href="../../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
          long&nbsp;fromCommitTime,
          long&nbsp;toCommitTime,
@@ -220,15 +220,15 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
-<td class="colLast"><span class="strong">IMetaDataManager.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#loadPackageUnit(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colFirst"><code>org.eclipse.emf.ecore.EPackage[]</code></td>
+<td class="colLast"><span class="strong">IMetaDataManager.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#loadPackageUnit(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
                <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code>
 <div class="block">Loads a package unit from the database.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">IMetaDataManager.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#writePackageUnits(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><span class="strong">IMetaDataManager.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html#writePackageUnits(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
                  <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
                  <a href="../../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Write package units to the database.</div>
@@ -250,7 +250,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">IMappingStrategy.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createMapping(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">createMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><span class="strong">IMappingStrategy.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#createMapping(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">createMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
              <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
              <a href="../../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Create and initialize the mapping infrastructure for the given packages.</div>
@@ -258,7 +258,7 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">IMappingStrategy.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#removeMapping(java.sql.Connection, org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[])">removeMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><span class="strong">IMappingStrategy.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#removeMapping(java.sql.Connection,%20org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[])">removeMapping</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
              <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits)</code>
 <div class="block">Remove the mapping infrastructure for the given packages.</div>
 </td>
@@ -279,43 +279,47 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#createPackageUnit()">createPackageUnit</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><span class="strong">InternalCDOPackageUnit.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html#copy()">copy</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
+<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#createPackageUnit()">createPackageUnit</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
 <td class="colLast"><span class="strong">InternalCDOPackageInfo.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#getPackageUnit()">getPackageUnit</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><span class="strong">DelegatingCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/DelegatingCDOPackageRegistry.html#getPackageUnit(org.eclipse.emf.ecore.EPackage)">getPackageUnit</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</code>
+<td class="colLast"><span class="strong">DelegatingCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/DelegatingCDOPackageRegistry.html#getPackageUnit(org.eclipse.emf.ecore.EPackage)">getPackageUnit</a></strong>(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
-<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnit(org.eclipse.emf.ecore.EPackage)">getPackageUnit</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</code>&nbsp;</td>
-</tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
+<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnit(org.eclipse.emf.ecore.EPackage)">getPackageUnit</a></strong>(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
 <td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnit(java.lang.String)">getPackageUnit</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
 <td class="colLast"><span class="strong">DelegatingCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/DelegatingCDOPackageRegistry.html#getPackageUnits()">getPackageUnits</a></strong>()</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
 <td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnits()">getPackageUnits</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
 <td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnits(boolean)">getPackageUnits</a></strong>(boolean&nbsp;withSystemPackages)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]</code></td>
-<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnits(long, long)">getPackageUnits</a></strong>(long&nbsp;startTime,
+<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#getPackageUnits(long,%20long)">getPackageUnits</a></strong>(long&nbsp;startTime,
                long&nbsp;endTime)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -339,7 +343,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#putPackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.emf.cdo.common.model.CDOPackageUnit.State)">putPackageUnits</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+<td class="colLast"><span class="strong">InternalCDOPackageRegistry.</span><code><strong><a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html#putPackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.emf.cdo.common.model.CDOPackageUnit.State)">putPackageUnits</a></strong>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
                <a href="../../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.State.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a>&nbsp;state)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -433,6 +437,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -9,6 +9,7 @@ org.eclipse.net4j.http.server
 org.eclipse.net4j.jvm
 org.eclipse.net4j.protocol
 org.eclipse.net4j.signal
+org.eclipse.net4j.signal.confirmation
 org.eclipse.net4j.signal.heartbeat
 org.eclipse.net4j.signal.security
 org.eclipse.net4j.signal.wrapping

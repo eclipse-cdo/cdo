@@ -93,7 +93,7 @@
 <li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
-<li><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</a></li>
+<li>org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</li>
 <li>
 <ul class="inheritance">
 <li>org.eclipse.emf.cdo.etypes.util.EtypesAdapterFactory</li>
@@ -107,7 +107,7 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</a></dd>
+<dd>org.eclipse.emf.common.notify.AdapterFactory</dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -116,7 +116,7 @@
 <hr>
 <br>
 <pre>public class <span class="strong">EtypesAdapterFactory</span>
-extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterFactoryImpl</a></pre>
+extends org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</pre>
 <div class="block"><!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  method for each class of the model.</div>
 <dl><dt><span class="strong">Since:</span></dt>
@@ -148,7 +148,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesSwitch.html" title="class in org.eclipse.emf.cdo.etypes.util">EtypesSwitch</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&gt;</code></td>
+<td class="colFirst"><code>protected <a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesSwitch.html" title="class in org.eclipse.emf.cdo.etypes.util">EtypesSwitch</a>&lt;org.eclipse.emf.common.notify.Adapter&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesAdapterFactory.html#modelSwitch">modelSwitch</a></strong></code>
 <div class="block">The switch that delegates to the <code>createXXX</code> methods</div>
 </td>
@@ -188,25 +188,25 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesAdapterFactory.html#createAdapter(org.eclipse.emf.common.notify.Notifier)">createAdapter</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;target)</code>
+<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesAdapterFactory.html#createAdapter(org.eclipse.emf.common.notify.Notifier)">createAdapter</a></strong>(org.eclipse.emf.common.notify.Notifier&nbsp;target)</code>
 <div class="block">Creates an adapter for the <code>target</code></div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesAdapterFactory.html#createAnnotationAdapter()">createAnnotationAdapter</a></strong>()</code>
 <div class="block">Creates a new adapter for an object of class '<a href="../../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Annotation</em></code></a>'</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesAdapterFactory.html#createEObjectAdapter()">createEObjectAdapter</a></strong>()</code>
 <div class="block">Creates a new adapter for the default case</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></code></td>
+<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesAdapterFactory.html#createModelElementAdapter()">createModelElementAdapter</a></strong>()</code>
 <div class="block">Creates a new adapter for an object of class '<a href="../../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Model Element</em></code></a>'</div>
 </td>
@@ -222,15 +222,15 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.common.notify.impl.AdapterFactoryImpl">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.common.notify.impl.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterFactoryImpl</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adapt(org.eclipse.emf.common.notify.Notifier, java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl">adapt</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adapt(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl">adapt</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adaptAllNew(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl">adaptAllNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#adaptNew(org.eclipse.emf.common.notify.Notifier, java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl">adaptNew</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#associate(org.eclipse.emf.common.notify.Adapter, org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl">associate</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#createAdapter(org.eclipse.emf.common.notify.Notifier, java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl">createAdapter</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#resolve(java.lang.Object, java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl">resolve</a></code></li>
+<h3>Methods inherited from class&nbsp;org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</h3>
+<code>adapt, adapt, adaptAllNew, adaptNew, associate, createAdapter, resolve</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -265,7 +265,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockListLast">
 <li class="blockList">
 <h4>modelSwitch</h4>
-<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesSwitch.html" title="class in org.eclipse.emf.cdo.etypes.util">EtypesSwitch</a>&lt;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&gt; modelSwitch</pre>
+<pre>protected&nbsp;<a href="../../../../../../org/eclipse/emf/cdo/etypes/util/EtypesSwitch.html" title="class in org.eclipse.emf.cdo.etypes.util">EtypesSwitch</a>&lt;org.eclipse.emf.common.notify.Adapter&gt; modelSwitch</pre>
 <div class="block">The switch that delegates to the <code>createXXX</code> methods.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl><dt><span class="strong">Generated</span></dt>
@@ -314,9 +314,9 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
  end-user-doc --></div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true#isFactoryForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify">isFactoryForType</a></code>&nbsp;in interface&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/AdapterFactory.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">AdapterFactory</a></code></dd>
+<dd><code>isFactoryForType</code>&nbsp;in interface&nbsp;<code>org.eclipse.emf.common.notify.AdapterFactory</code></dd>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#isFactoryForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl">isFactoryForType</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterFactoryImpl</a></code></dd>
+<dd><code>isFactoryForType</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</code></dd>
 <dt><span class="strong">Returns:</span></dt><dd>whether this factory is applicable for the type of the object.</dd><dt><span class="strong">Generated</span></dt>
   <dd></dd></dl>
 </li>
@@ -327,12 +327,12 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>createAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createAdapter(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a>&nbsp;target)</pre>
+<pre>public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createAdapter(org.eclipse.emf.common.notify.Notifier&nbsp;target)</pre>
 <div class="block">Creates an adapter for the <code>target</code>.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true#createAdapter(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl">createAdapter</a></code>&nbsp;in class&nbsp;<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify.impl">AdapterFactoryImpl</a></code></dd>
+<dd><code>createAdapter</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</code></dd>
 <dt><span class="strong">Parameters:</span></dt><dd><code>target</code> - the object to adapt.</dd>
 <dt><span class="strong">Returns:</span></dt><dd>the adapter for the <code>target</code>.</dd><dt><span class="strong">Generated</span></dt>
   <dd></dd></dl>
@@ -344,7 +344,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>createModelElementAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createModelElementAdapter()</pre>
+<pre>public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createModelElementAdapter()</pre>
 <div class="block">Creates a new adapter for an object of class '<a href="../../../../../../org/eclipse/emf/cdo/etypes/ModelElement.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Model Element</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can easily
  ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc --></div>
@@ -358,7 +358,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockList">
 <li class="blockList">
 <h4>createAnnotationAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createAnnotationAdapter()</pre>
+<pre>public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createAnnotationAdapter()</pre>
 <div class="block">Creates a new adapter for an object of class '<a href="../../../../../../org/eclipse/emf/cdo/etypes/Annotation.html" title="interface in org.eclipse.emf.cdo.etypes"><code><em>Annotation</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can easily ignore cases; it's useful to
  ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc --></div>
@@ -372,7 +372,7 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <ul class="blockListLast">
 <li class="blockList">
 <h4>createEObjectAdapter</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;createEObjectAdapter()</pre>
+<pre>public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createEObjectAdapter()</pre>
 <div class="block">Creates a new adapter for the default case.
  <!-- begin-user-doc --> This default implementation returns null. <!--
  end-user-doc --></div>
@@ -446,6 +446,6 @@ extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

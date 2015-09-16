@@ -170,17 +170,17 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawCommit</a></strong>(double&nbsp;commitWork,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawCommit</a></strong>(double&nbsp;commitWork,
          <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Atomically commits the accumulated backend changes resulting from previous calls to the rawStore() methods.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawDelete(org.eclipse.emf.cdo.common.id.CDOID, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.ecore.EClass, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawDelete</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawDelete(org.eclipse.emf.cdo.common.id.CDOID,%20int,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.ecore.EClass,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawDelete</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
          int&nbsp;version,
          <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+         org.eclipse.emf.ecore.EClass&nbsp;eClass,
          <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Deletes the revision identified by the given <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>key</code></a> from the backend represented by this
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> without going through a regular
@@ -189,31 +189,31 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int, int, long, long)">rawExport</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport(org.eclipse.emf.cdo.common.protocol.CDODataOutput,%20int,%20int,%20long,%20long)">rawExport</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
          int&nbsp;fromBranchID,
          int&nbsp;toBranchID,
          long&nbsp;fromCommitTime,
          long&nbsp;toCommitTime)</code>
 <div class="block">Serializes all backend data within the given ranges such that it can be deserialized by the
- <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport(org.eclipse.emf.cdo.common.protocol.CDODataInput, int, int, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawImport()</code></a> method of a different instance of
+ <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport(org.eclipse.emf.cdo.common.protocol.CDODataInput,%20int,%20int,%20long,%20long,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawImport()</code></a> method of a different instance of
  the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport(org.eclipse.emf.cdo.common.protocol.CDODataInput, int, int, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport(org.eclipse.emf.cdo.common.protocol.CDODataInput,%20int,%20int,%20long,%20long,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
          int&nbsp;fromBranchID,
          int&nbsp;toBranchID,
          long&nbsp;fromCommitTime,
          long&nbsp;toCommitTime,
          <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
-<div class="block">Deserializes backend data that has been serialized by the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int, int, long, long)"><code>rawExport()</code></a> method of a different instance of the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
+<div class="block">Deserializes backend data that has been serialized by the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport(org.eclipse.emf.cdo.common.protocol.CDODataOutput,%20int,%20int,%20long,%20long)"><code>rawExport()</code></a> method of a different instance of the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
  accessor</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[], long, java.io.InputStream)">rawStore</a></strong>(byte[]&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[],%20long,%20java.io.InputStream)">rawStore</a></strong>(byte[]&nbsp;id,
         long&nbsp;size,
         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;inputStream)</code>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>blob</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
@@ -222,7 +222,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[], long, java.io.Reader)">rawStore</a></strong>(byte[]&nbsp;id,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[],%20long,%20java.io.Reader)">rawStore</a></strong>(byte[]&nbsp;id,
         long&nbsp;size,
         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/Reader.html?is-external=true" title="class or interface in java.io">Reader</a>&nbsp;reader)</code>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>clob</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
@@ -231,7 +231,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.common.branch.CDOBranch, long, long, java.lang.String, java.lang.String, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20long,%20java.lang.String,%20java.lang.String,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
         long&nbsp;timeStamp,
         long&nbsp;previousTimeStamp,
         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID,
@@ -243,7 +243,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
         <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package units</code></a> in the backend represented by this
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> without going through a regular
@@ -252,7 +252,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">rawStore</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
         <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>
 <div class="block">Stores the given <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw
  store accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit</code></a>.</div>
@@ -264,7 +264,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)">commit</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#createChunkReader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.emf.ecore.EStructuralFeature)">createChunkReader</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#getSession()">getSession</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#getStore()">getStore</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#getTransaction()">getTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleLobs(long, long, org.eclipse.emf.cdo.common.lob.CDOLobHandler)">handleLobs</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleRevisions(org.eclipse.emf.ecore.EClass, org.eclipse.emf.cdo.common.branch.CDOBranch, long, boolean, org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#isReader()">isReader</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadLob(byte[], java.io.OutputStream)">loadLob</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadPackageUnit(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryLobs(java.util.List)">queryLobs</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">queryResources</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryXRefs(org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">queryXRefs</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor, org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)">readChangeSet</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readPackageUnits()">readPackageUnits</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID, java.lang.String, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">readResourceID</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevision(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, int, org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevision</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID, org.eclipse.emf.cdo.common.branch.CDOBranchVersion, int, org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevisionByVersion</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#release()">release</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()">rollback</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext, org.eclipse.net4j.util.om.monitor.OMMonitor)">write</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#writePackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)">commit</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#createChunkReader(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,%20org.eclipse.emf.ecore.EStructuralFeature)">createChunkReader</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#getSession()">getSession</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#getStore()">getStore</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#getTransaction()">getTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleLobs(long,%20long,%20org.eclipse.emf.cdo.common.lob.CDOLobHandler)">handleLobs</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleRevisions(org.eclipse.emf.ecore.EClass,%20org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20boolean,%20org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#isReader()">isReader</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadLob(byte[],%20java.io.OutputStream)">loadLob</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadPackageUnit(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">loadPackageUnit</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryLobs(java.util.List)">queryLobs</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">queryResources</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#queryXRefs(org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">queryXRefs</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor,%20org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)">readChangeSet</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readPackageUnits()">readPackageUnits</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID,%20java.lang.String,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">readResourceID</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevision(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20int,%20org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevision</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#readRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,%20org.eclipse.emf.cdo.common.branch.CDOBranchVersion,%20int,%20org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)">readRevisionByVersion</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#release()">release</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#rollback()">rollback</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#write(org.eclipse.emf.cdo.spi.server.InternalCommitContext,%20org.eclipse.net4j.util.om.monitor.OMMonitor)">write</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#writePackageUnits(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)">writePackageUnits</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.server.IQueryHandlerProvider">
@@ -278,14 +278,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.branch.<a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int, org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)">createBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranch(int)">loadBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranches(int, int, org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">loadBranches</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadSubBranches(int)">loadSubBranches</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#createBranch(int,%20org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo)">createBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranch(int)">loadBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadBranches(int,%20int,%20org.eclipse.emf.cdo.common.branch.CDOBranchHandler)">loadBranches</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html#loadSubBranches(int)">loadSubBranches</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.spi.common.commit.<a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitData(long)">loadCommitData</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch, long, long, org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">loadCommitInfos</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitData(long)">loadCommitData</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html#loadCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20long,%20org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">loadCommitInfos</a></code></li>
 </ul>
 </li>
 </ul>
@@ -314,7 +314,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
              long&nbsp;toCommitTime)
                throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block">Serializes all backend data within the given ranges such that it can be deserialized by the
- <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport(org.eclipse.emf.cdo.common.protocol.CDODataInput, int, int, long, long, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawImport()</code></a> method of a different instance of
+ <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawImport(org.eclipse.emf.cdo.common.protocol.CDODataInput,%20int,%20int,%20long,%20long,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawImport()</code></a> method of a different instance of
  the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.
  <p>
  <b>Implementation note:</b> The implementor of this method is free to choose a serialization format as it only
@@ -347,7 +347,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
              long&nbsp;toCommitTime,
              <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)
                throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Deserializes backend data that has been serialized by the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport(org.eclipse.emf.cdo.common.protocol.CDODataOutput, int, int, long, long)"><code>rawExport()</code></a> method of a different instance of the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
+<div class="block">Deserializes backend data that has been serialized by the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawExport(org.eclipse.emf.cdo.common.protocol.CDODataOutput,%20int,%20int,%20long,%20long)"><code>rawExport()</code></a> method of a different instance of the same implementation of <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
  accessor</code></a>.
  <p>
  <b>Implementation note:</b> The implementor of this method is free to choose a serialization format as it only
@@ -382,12 +382,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
  operation.
  <p>
  <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
- this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
+ this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
  where the accumulated backend changes can be committed atomically.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>packageUnits</code> - the package units to be stored in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
           accessor</code></a>.</dd><dd><code>monitor</code> - a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
           <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
-          to prevent timeouts from expiring in the caller.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
+          to prevent timeouts from expiring in the caller.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)">
@@ -404,12 +404,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
  stamps</code></a>, which is not desired in the context of a replication operation.
  <p>
  <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
- this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
+ this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
  where the accumulated backend changes can be committed atomically.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>revision</code> - the revision to be stored in the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store
           accessor</code></a>.</dd><dd><code>monitor</code> - a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
           <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
-          to prevent timeouts from expiring in the caller.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
+          to prevent timeouts from expiring in the caller.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rawStore(byte[], long, java.io.InputStream)">
@@ -426,14 +426,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
  accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit</code></a>.
  <p>
  <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
- this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
+ this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
  where the accumulated backend changes can be committed atomically.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>id</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID()"><code>ID</code></a> of the blob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>size</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getSize()"><code>size</code></a> of the blob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>inputStream</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html#getContents()"><code>contents</code></a> of the blob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rawStore(byte[], long, java.io.Reader)">
@@ -450,14 +450,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
  accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit</code></a>.
  <p>
  <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
- this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
+ this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
  where the accumulated backend changes can be committed atomically.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>id</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID()"><code>ID</code></a> of the clob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>size</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getSize()"><code>size</code></a> of the clob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>reader</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html#getContents()"><code>contents</code></a> of the clob to be stored in the backend represented by this
           <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd>
 <dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rawStore(org.eclipse.emf.cdo.common.branch.CDOBranch, long, long, java.lang.String, java.lang.String, org.eclipse.net4j.util.om.monitor.OMMonitor)">
@@ -476,14 +476,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
  store accessor</code></a> without going through a regular <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit</code></a>.
  <p>
  <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
- this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
+ this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
  where the accumulated backend changes can be committed atomically.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>branch</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a> of the commit info to be stored in the backend represented
           by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>timeStamp</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><code>time stamp</code></a> of the commit info to be stored in the backend
           represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>previousTimeStamp</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getPreviousTimeStamp()"><code>previous time stamp</code></a> of the commit info to be stored in
           the backend represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>userID</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getUserID()"><code>user ID</code></a> of the commit info to be stored in the backend represented
           by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dd><code>comment</code> - the <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html#getComment()"><code>comment</code></a> of the commit info to be stored in the backend
-          represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
+          represented by this <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a>.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rawDelete(org.eclipse.emf.cdo.common.id.CDOID, int, org.eclipse.emf.cdo.common.branch.CDOBranch, org.eclipse.emf.ecore.EClass, org.eclipse.net4j.util.om.monitor.OMMonitor)">
@@ -495,16 +495,16 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <pre>void&nbsp;rawDelete(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
              int&nbsp;version,
              <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+             org.eclipse.emf.ecore.EClass&nbsp;eClass,
              <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</pre>
 <div class="block">Deletes the revision identified by the given <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>key</code></a> from the backend represented by this
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw store accessor</code></a> without going through a regular
  <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit</code></a>.
  <p>
  <b>Implementation note:</b> The implementor of this method may rely on the fact that multiple subsequent calls to
- this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
+ this method are followed by a single final call to the <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit()</code></a> method
  where the accumulated backend changes can be committed atomically.</div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
+<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawCommit(double,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawCommit(double, OMMonitor)</code></a></dd></dl>
 </li>
 </ul>
 <a name="rawCommit(double, org.eclipse.net4j.util.om.monitor.OMMonitor)">
@@ -518,11 +518,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <div class="block">Atomically commits the accumulated backend changes resulting from previous calls to the rawStore() methods.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>commitWork</code> - the amount of work to use up from the monitor while executing the commit.</dd><dd><code>monitor</code> - a progress monitor that <b>may be</b> used to report proper progress of this operation to the caller and
           <b>may be</b> used to react to cancelation requests of the caller and <b>must be</b> touched regularly
-          to prevent timeouts from expiring in the caller.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[], org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawStore(InternalCDOPackageUnit[], OMMonitor)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawStore(InternalCDORevision, OMMonitor)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[], long, java.io.InputStream)"><code>rawStore(byte[], long, InputStream)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[], long, java.io.Reader)"><code>rawStore(byte[], long, Reader)</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.common.branch.CDOBranch, long, long, java.lang.String, java.lang.String, org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawStore(CDOBranch, long, long, String, String, OMMonitor)</code></a></dd></dl>
+          to prevent timeouts from expiring in the caller.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawStore(InternalCDOPackageUnit[], OMMonitor)</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawStore(InternalCDORevision, OMMonitor)</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[],%20long,%20java.io.InputStream)"><code>rawStore(byte[], long, InputStream)</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(byte[],%20long,%20java.io.Reader)"><code>rawStore(byte[], long, Reader)</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html#rawStore(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20long,%20java.lang.String,%20java.lang.String,%20org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>rawStore(CDOBranch, long, long, String, String, OMMonitor)</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -591,6 +591,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" 
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

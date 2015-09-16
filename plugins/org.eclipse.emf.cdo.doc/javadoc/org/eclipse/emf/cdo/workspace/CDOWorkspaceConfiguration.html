@@ -145,40 +145,48 @@
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getBase()">getBase</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getBranchID()">getBranchID</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getBranchPath()">getBranchPath</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getIDGenerationLocation()">getIDGenerationLocation</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getIDGenerator()">getIDGenerator</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getLocalRepositoryName()">getLocalRepositoryName</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getRemote()">getRemote</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getStore()">getStore</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#getTimeStamp()">getTimeStamp</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspace</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#open()">open</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#setBase(org.eclipse.emf.cdo.workspace.CDOWorkspaceBase)">setBase</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceBase.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase</a>&nbsp;base)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#setBranchID(int)">setBranchID</a></strong>(int&nbsp;branchPath)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -311,6 +319,28 @@
 <li class="blockList">
 <h4>setRemote</h4>
 <pre>void&nbsp;setRemote(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a>&nbsp;remote)</pre>
+</li>
+</ul>
+<a name="getBranchID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBranchID</h4>
+<pre>int&nbsp;getBranchID()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
+</li>
+</ul>
+<a name="setBranchID(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setBranchID</h4>
+<pre>void&nbsp;setBranchID(int&nbsp;branchPath)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.2</dd></dl>
 </li>
 </ul>
 <a name="getBranchPath()">
@@ -469,6 +499,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

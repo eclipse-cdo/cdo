@@ -140,19 +140,31 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#adaptElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)">adaptElement</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#adaptElement(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)">adaptElement</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>
-<div class="block">Like <a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)"><code>getElement(ISelection, Class)</code></a> except that it attempts to adapt
+<div class="block">Like <a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)"><code>getElement(ISelection, Class)</code></a> except that it attempts to adapt
  <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#addDecorationMargin(org.eclipse.swt.widgets.Control)">addDecorationMargin</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;control)</code>&nbsp;</td>
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#adaptElements(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)">adaptElements</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
+             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>
+<div class="block">Like <a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElements(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)"><code>getElements(ISelection, Class)</code></a> except that it attempts to adapt
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#copyToClipboard(org.eclipse.swt.widgets.Display, java.lang.String)">copyToClipboard</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</a>&nbsp;display,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#addDecorationMargin(org.eclipse.swt.widgets.Control)">addDecorationMargin</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;control)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#addDragSupport(org.eclipse.jface.viewers.StructuredViewer)">addDragSupport</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</a>&nbsp;viewer)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#copyToClipboard(org.eclipse.swt.widgets.Display,%20java.lang.String)">copyToClipboard</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</a>&nbsp;display,
                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -161,7 +173,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridComposite(org.eclipse.swt.widgets.Composite, int)">createGridComposite</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridComposite(org.eclipse.swt.widgets.Composite,%20int)">createGridComposite</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Composite</a>&nbsp;parent,
                    int&nbsp;columns)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -170,12 +182,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridData(boolean, boolean)">createGridData</a></strong>(boolean&nbsp;grabHorizontal,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridData(boolean,%20boolean)">createGridData</a></strong>(boolean&nbsp;grabHorizontal,
               boolean&nbsp;grabVertical)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html?is-external=true" title="class or interface in org.eclipse.swt.layout">GridData</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridData(int, int)">createGridData</a></strong>(int&nbsp;horizontalSpan,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#createGridData(int,%20int)">createGridData</a></strong>(int&nbsp;horizontalSpan,
               int&nbsp;verticalSpan)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -224,7 +236,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)">getElement</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)">getElement</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -232,13 +244,21 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElementIfOne(org.eclipse.jface.viewers.ISelection)">getElementIfOne</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElements(org.eclipse.jface.viewers.ISelection, java.lang.Class)">getElements</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
-           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
+<td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElements(org.eclipse.jface.viewers.ISelection)">getElements</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static &lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElements(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)">getElements</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
+           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Font</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getItalicFont(org.eclipse.swt.widgets.Control)">getItalicFont</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;control)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getShell()">getShell</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html?is-external=true" title="class or interface in org.eclipse.ui">IWorkbench</a></code></td>
@@ -246,12 +266,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#preserveViewerState(org.eclipse.jface.viewers.Viewer, java.lang.Runnable)">preserveViewerState</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</a>&nbsp;viewer,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#preserveViewerState(org.eclipse.jface.viewers.Viewer,%20java.lang.Runnable)">preserveViewerState</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">Viewer</a>&nbsp;viewer,
                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>&nbsp;runnable)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#refreshElement(org.eclipse.jface.viewers.StructuredViewer, java.lang.Object, boolean)">refreshElement</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</a>&nbsp;viewer,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#refreshElement(org.eclipse.jface.viewers.StructuredViewer,%20java.lang.Object,%20boolean)">refreshElement</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</a>&nbsp;viewer,
               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element,
               boolean&nbsp;updateLabels)</code>&nbsp;</td>
 </tr>
@@ -265,7 +285,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setIndentation(org.eclipse.swt.widgets.Control, int, int)">setIndentation</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;control,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setIndentation(org.eclipse.swt.widgets.Control,%20int,%20int)">setIndentation</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;control,
               int&nbsp;horizontalIndent,
               int&nbsp;verticalIndent)</code>
 <div class="block">Adds indentation to the control. if indent value is < 0, the control indentation is left unchanged.</div>
@@ -273,15 +293,20 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setStatusBarMessage(java.lang.String, org.eclipse.swt.graphics.Image)">setStatusBarMessage</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setStatusBarMessage(java.lang.String,%20org.eclipse.swt.graphics.Image)">setStatusBarMessage</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message,
                    <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html?is-external=true" title="class or interface in org.eclipse.swt.graphics">Image</a>&nbsp;image)</code>
 <div class="block">Shows a message in the StatusBar.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setValidationContext(org.eclipse.swt.widgets.Control, org.eclipse.net4j.util.ui.ValidationContext)">setValidationContext</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;control,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#setValidationContext(org.eclipse.swt.widgets.Control,%20org.eclipse.net4j.util.ui.ValidationContext)">setValidationContext</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Control</a>&nbsp;control,
                     <a href="../../../../../org/eclipse/net4j/util/ui/ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</a>&nbsp;context)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#updateElements(org.eclipse.jface.viewers.StructuredViewer,%20java.lang.Object)">updateElements</a></strong>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</a>&nbsp;viewer,
+              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -289,7 +314,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -393,6 +418,17 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Display</a>&nbsp;getDisplay()</pre>
 </li>
 </ul>
+<a name="getShell()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getShell</h4>
+<pre>public static&nbsp;<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html?is-external=true" title="class or interface in org.eclipse.swt.widgets">Shell</a>&nbsp;getShell()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
 <a name="getWorkbench()">
 <!--   -->
 </a>
@@ -471,18 +507,15 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
   <dd>2.0</dd></dl>
 </li>
 </ul>
-<a name="adaptElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)">
+<a name="getElements(org.eclipse.jface.viewers.ISelection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>adaptElement</h4>
-<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;adaptElement(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</pre>
-<div class="block">Like <a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)"><code>getElement(ISelection, Class)</code></a> except that it attempts to adapt
- <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+<h4>getElements</h4>
+<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;getElements(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.4</dd></dl>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="getElements(org.eclipse.jface.viewers.ISelection, java.lang.Class)">
@@ -495,6 +528,34 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
                       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
+</li>
+</ul>
+<a name="adaptElement(org.eclipse.jface.viewers.ISelection, java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>adaptElement</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;adaptElement(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
+                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</pre>
+<div class="block">Like <a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElement(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)"><code>getElement(ISelection, Class)</code></a> except that it attempts to adapt
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.4</dd></dl>
+</li>
+</ul>
+<a name="adaptElements(org.eclipse.jface.viewers.ISelection, java.lang.Class)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>adaptElements</h4>
+<pre>public static&nbsp;&lt;T&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;adaptElements(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">ISelection</a>&nbsp;selection,
+                        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;T&gt;&nbsp;type)</pre>
+<div class="block">Like <a href="../../../../../org/eclipse/net4j/util/ui/UIUtil.html#getElements(org.eclipse.jface.viewers.ISelection,%20java.lang.Class)"><code>getElements(ISelection, Class)</code></a> except that it attempts to adapt
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="setValidationContext(org.eclipse.swt.widgets.Control, org.eclipse.net4j.util.ui.ValidationContext)">
@@ -649,10 +710,22 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
   <dd>3.3</dd></dl>
 </li>
 </ul>
+<a name="updateElements(org.eclipse.jface.viewers.StructuredViewer, java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateElements</h4>
+<pre>public static&nbsp;void&nbsp;updateElements(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</a>&nbsp;viewer,
+                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
 <a name="setStatusBarMessage(java.lang.String, org.eclipse.swt.graphics.Image)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setStatusBarMessage</h4>
 <pre>public static&nbsp;void&nbsp;setStatusBarMessage(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message,
@@ -660,6 +733,17 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <div class="block">Shows a message in the StatusBar. Image can be omitted by passing a null parameter</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
+</li>
+</ul>
+<a name="addDragSupport(org.eclipse.jface.viewers.StructuredViewer)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>addDragSupport</h4>
+<pre>public static&nbsp;void&nbsp;addDragSupport(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html?is-external=true" title="class or interface in org.eclipse.jface.viewers">StructuredViewer</a>&nbsp;viewer)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 </li>
@@ -728,6 +812,6 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

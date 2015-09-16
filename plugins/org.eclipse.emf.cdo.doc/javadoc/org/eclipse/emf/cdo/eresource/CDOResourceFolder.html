@@ -94,7 +94,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>, <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a></dd>
+<dd><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>, <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a>, org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Notifier</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -170,7 +170,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.ht
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html#addTextResource(java.lang.String)">addTextResource</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;</code></td>
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html#getNode(java.lang.String)">getNode</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>org.eclipse.emf.common.util.EList&lt;<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceFolder.html#getNodes()">getNodes</a></strong>()</code>
 <div class="block">Returns the value of the '<em><b>Nodes</b></em>' containment reference list.</div>
 </td>
@@ -181,7 +185,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.ht
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.eresource.<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#delete(java.util.Map)">delete</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getFolder()">getFolder</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getName()">getName</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getPath()">getPath</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getURI()">getURI</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#isRoot()">isRoot</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#setFolder(org.eclipse.emf.cdo.eresource.CDOResourceFolder)">setFolder</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#setName(java.lang.String)">setName</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#setPath(java.lang.String)">setPath</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#delete(java.util.Map)">delete</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getExtension()">getExtension</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getFolder()">getFolder</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getName()">getName</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getPath()">getPath</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getURI()">getURI</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#isRoot()">isRoot</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#setFolder(org.eclipse.emf.cdo.eresource.CDOResourceFolder)">setFolder</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#setName(java.lang.String)">setName</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#setPath(java.lang.String)">setPath</a>, <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#trimExtension()">trimExtension</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.CDOObject">
@@ -194,15 +198,15 @@ extends <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.ht
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.ecore.EObject">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eAllContents()" title="class or interface in org.eclipse.emf.ecore">eAllContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eClass()" title="class or interface in org.eclipse.emf.ecore">eClass</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainer()" title="class or interface in org.eclipse.emf.ecore">eContainer</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore">eContainingFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore">eContainmentFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eContents()" title="class or interface in org.eclipse.emf.ecore">eContents</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore">eCrossReferences</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eGet(org.eclipse.emf.ecore.EStructuralFeature, boolean)" title="class or interface in org.eclipse.emf.ecore">eGet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eInvoke(org.eclipse.emf.ecore.EOperation, org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore">eInvoke</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsProxy()" title="class or interface in org.eclipse.emf.ecore">eIsProxy</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eIsSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eResource()" title="class or interface in org.eclipse.emf.ecore">eResource</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eSet(org.eclipse.emf.ecore.EStructuralFeature, java.lang.Object)" title="class or interface in org.eclipse.emf.ecore">eSet</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore">eUnset</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.EObject</h3>
+<code>eAllContents, eClass, eContainer, eContainingFeature, eContainmentFeature, eContents, eCrossReferences, eGet, eGet, eInvoke, eIsProxy, eIsSet, eResource, eSet, eUnset</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.common.notify.Notifier">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notifier</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eAdapters()" title="class or interface in org.eclipse.emf.common.notify">eAdapters</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eDeliver()" title="class or interface in org.eclipse.emf.common.notify">eDeliver</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">eNotify</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notifier.html?is-external=true#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify">eSetDeliver</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Notifier</h3>
+<code>eAdapters, eDeliver, eNotify, eSetDeliver</code></li>
 </ul>
 </li>
 </ul>
@@ -224,7 +228,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.ht
 <ul class="blockList">
 <li class="blockList">
 <h4>getNodes</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/EList.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">EList</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;&nbsp;getNodes()</pre>
+<pre>org.eclipse.emf.common.util.EList&lt;<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;&nbsp;getNodes()</pre>
 <div class="block">Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
  The list contents are of type <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceNode</code></a>.
  It is bidirectional and its opposite is '<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html#getFolder()"><code><em>Folder</em></code></a>'.
@@ -239,6 +243,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.ht
   <dd></dd>
 <dt><span class="strong">Model</span></dt>
   <dd>opposite="folder" containment="true"</dd></dl>
+</li>
+</ul>
+<a name="getNode(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNode</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&nbsp;getNode(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd>
+<dt><span class="strong">Added</span></dt>
+  <dd></dd></dl>
 </li>
 </ul>
 <a name="addResourceFolder(java.lang.String)">
@@ -373,6 +390,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.ht
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

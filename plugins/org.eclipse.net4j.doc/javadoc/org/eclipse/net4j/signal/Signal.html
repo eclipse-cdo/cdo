@@ -151,15 +151,15 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol, java.lang.Enum)">Signal</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol,%20java.lang.Enum)">Signal</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&nbsp;literal)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol, short)">Signal</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol,%20short)">Signal</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
       short&nbsp;id)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol, short, java.lang.String)">Signal</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
+<td class="colOne"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol,%20short,%20java.lang.String)">Signal</a></strong>(<a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;&nbsp;protocol,
       short&nbsp;id,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name)</code>
 <div class="block">Both implementation classes of a logical signal must have the same signalID.</div>
@@ -181,70 +181,82 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>protected abstract void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#execute(org.eclipse.net4j.buffer.BufferInputStream, org.eclipse.net4j.buffer.BufferOutputStream)">execute</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
-       <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;out)</code>&nbsp;</td>
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#closeChannelAfterMe()">closeChannelAfterMe</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#closeInputStreamAfterMe()">closeInputStreamAfterMe</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#closeOutputStreamAfterMe()">closeOutputStreamAfterMe</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected abstract void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#execute(org.eclipse.net4j.buffer.BufferInputStream,%20org.eclipse.net4j.buffer.BufferOutputStream)">execute</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a>&nbsp;in,
+       <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a>&nbsp;out)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#finishInputStream(java.io.InputStream)">finishInputStream</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#finishOutputStream(java.io.OutputStream)">finishOutputStream</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#flush()">flush</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferInputStream()">getBufferInputStream</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferOutputStream()">getBufferOutputStream</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCorrelationID()">getCorrelationID</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentInputStream()">getCurrentInputStream</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentOutputStream()">getCurrentOutputStream</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>short</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getID()">getID</a></strong>()</code>
 <div class="block">Returns the short integer ID of this signal that is unique among all signals of the associated
  <a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol()"><code>protocol</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getName()">getName</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol()">getProtocol</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#run()">run</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#toString()">toString</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapInputStream(java.io.InputStream)">wrapInputStream</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapOutputStream(java.io.OutputStream)">wrapOutputStream</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
@@ -254,7 +266,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -315,7 +327,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
       short&nbsp;id)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol, short, java.lang.String)"><code>Signal(SignalProtocol, short, String)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol,%20short,%20java.lang.String)"><code>Signal(SignalProtocol, short, String)</code></a></dd></dl>
 </li>
 </ul>
 <a name="Signal(org.eclipse.net4j.signal.SignalProtocol, java.lang.Enum)">
@@ -328,7 +340,7 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Enum.html?is-external=true" title="class or interface in java.lang">Enum</a>&lt;?&gt;&nbsp;literal)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol, short, java.lang.String)"><code>Signal(SignalProtocol, short, String)</code></a></dd></dl>
+<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/net4j/signal/Signal.html#Signal(org.eclipse.net4j.signal.SignalProtocol,%20short,%20java.lang.String)"><code>Signal(SignalProtocol, short, String)</code></a></dd></dl>
 </li>
 </ul>
 </li>
@@ -439,6 +451,39 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
 <dl><dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
+</li>
+</ul>
+<a name="closeChannelAfterMe()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>closeChannelAfterMe</h4>
+<pre>protected&nbsp;boolean&nbsp;closeChannelAfterMe()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="closeInputStreamAfterMe()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>closeInputStreamAfterMe</h4>
+<pre>protected&nbsp;boolean&nbsp;closeInputStreamAfterMe()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="closeOutputStreamAfterMe()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>closeOutputStreamAfterMe</h4>
+<pre>protected&nbsp;boolean&nbsp;closeOutputStreamAfterMe()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 <a name="getCurrentInputStream()">
@@ -590,6 +635,6 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

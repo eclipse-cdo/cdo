@@ -87,18 +87,24 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="#org.eclipse.net4j.signal.confirmation">org.eclipse.net4j.signal.confirmation</a></td>
+<td class="colLast">
+<div class="block">Reusable implementation of a server-to-client confirmation signal and related API.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.signal.heartbeat">org.eclipse.net4j.signal.heartbeat</a></td>
 <td class="colLast">
 <div class="block">A signal protocol implementation that realizes a configurable heart beat protocol.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.signal.security">org.eclipse.net4j.signal.security</a></td>
 <td class="colLast">
 <div class="block">Reusable implementation of a server-to-client authentication signal and related API.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.signal.wrapping">org.eclipse.net4j.signal.wrapping</a></td>
 <td class="colLast">
 <div class="block">Some container injectors for use with signal protocols.</div>
@@ -134,18 +140,28 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/Indication.html#org.eclipse.net4j.signal">Indication</a>
+<div class="block">Represents the receiver side of a one-way <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>, i.e., one with no response.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/IndicationWithResponse.html#org.eclipse.net4j.signal">IndicationWithResponse</a>
 <div class="block">Represents the receiver side of a two-way <a href="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>, i.e., one with a response.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/ISignalProtocol.html#org.eclipse.net4j.signal">ISignalProtocol</a>
 <div class="block">A <a href="../../../../org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><code>protocol</code></a> that consists of a number of stream-based <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signals</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/RemoteException.html#org.eclipse.net4j.signal">RemoteException</a>
 <div class="block">An exception that wraps an exception that has been thrown during the execution of a remote <a href="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/Request.html#org.eclipse.net4j.signal">Request</a>
+<div class="block">Represents the sender side of a one-way <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>, i.e., one with no response.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -170,6 +186,58 @@
 </tr>
 <tr class="rowColor">
 <td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/SignalReactor.html#org.eclipse.net4j.signal">SignalReactor</a>
+<div class="block">Represents the receiver side of a <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.signal.confirmation">
+<!--   -->
+</a>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a> used by <a href="../../../../org/eclipse/net4j/signal/confirmation/package-summary.html">org.eclipse.net4j.signal.confirmation</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/IndicationWithMonitoring.html#org.eclipse.net4j.signal.confirmation">IndicationWithMonitoring</a>
+<div class="block">Represents the receiver side of a two-way <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a> with additional support for remote progress monitoring.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/IndicationWithResponse.html#org.eclipse.net4j.signal.confirmation">IndicationWithResponse</a>
+<div class="block">Represents the receiver side of a two-way <a href="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>, i.e., one with a response.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/RequestWithConfirmation.html#org.eclipse.net4j.signal.confirmation">RequestWithConfirmation</a>
+<div class="block">Represents the sender side of a two-way <a href="../../../../org/eclipse/net4j/signal/SignalActor.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>, i.e., one with a response.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/RequestWithMonitoring.html#org.eclipse.net4j.signal.confirmation">RequestWithMonitoring</a>
+<div class="block">Represents the sender side of a two-way <a href="../../../../org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a> with additional support for remote progress monitoring.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/Signal.html#org.eclipse.net4j.signal.confirmation">Signal</a>
+<div class="block">Represents a single communications use-case in the scope of a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/SignalActor.html#org.eclipse.net4j.signal.confirmation">SignalActor</a>
+<div class="block">Represents the sender side of a <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/SignalProtocol.html#org.eclipse.net4j.signal.confirmation">SignalProtocol</a>
+<div class="block">The default implementation of a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../org/eclipse/net4j/signal/class-use/SignalReactor.html#org.eclipse.net4j.signal.confirmation">SignalReactor</a>
 <div class="block">Represents the receiver side of a <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>.</div>
 </td>
 </tr>
@@ -323,6 +391,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

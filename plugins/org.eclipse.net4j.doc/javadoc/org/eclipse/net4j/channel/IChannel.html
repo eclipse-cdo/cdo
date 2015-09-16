@@ -128,24 +128,24 @@ extends <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="inter
  <p>
  An example for opening a channel on an <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> and sending an <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a>:
  <p>
- 
+
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  // Open a channel
  IChannel channel = connector.openChannel();
  short channelID = channel.getIndex();
- 
+
  // Fill a buffer
  Buffer buffer = bufferProvider.getBuffer();
  ByteBuffer byteBuffer = buffer.startPutting(channelID);
  byteBuffer.putDouble(15.47);
- 
+
  // Let the channel send the buffer without blocking
  channel.sendBuffer(buffer);
  </pre>
  <p>
  An example for receiving <a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a>s from channels on an <a href="../../../../org/eclipse/net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a>:
  <p>
- 
+
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  // Create a receive handler
  final IBufferHandler receiveHandler = new IBufferHandler()
@@ -157,7 +157,7 @@ extends <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="inter
      buffer.release();
    }
  };
- 
+
  // Set the receive handler to all new channels
  connector.addListener(new ContainerEventAdapter()
  {
@@ -407,6 +407,6 @@ extends <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="inter
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

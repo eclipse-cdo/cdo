@@ -83,7 +83,7 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDOViewProvider.html" title="&#171;interface&#187; CDOViewProvider" alt="" coords="154,5,277,45"/>
+<area shape="rect" id="node1" href="CDOViewProvider.CDOViewProvider2.html" title="&#171;interface&#187; CDOViewProvider.CDOViewProvider2" alt="" coords="97,5,335,45"/>
 <area shape="rect" id="node2" href="ManagedContainerViewProvider.html" title="ManagedContainerViewProvider" alt="" coords="5,157,208,182"/>
 <area shape="rect" id="node3" href="../net4j/CDONet4jViewProvider.html" title="CDONet4jViewProvider (org.eclipse.emf.cdo.net4j)" alt="" coords="237,149,413,189"/>
 <area shape="rect" id="node4" href="AbstractCDOViewProvider.html" title="AbstractCDOViewProvider" alt="" coords="129,85,303,110"/>
@@ -102,7 +102,7 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></dd>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -112,7 +112,7 @@
 <br>
 <pre>public abstract class <span class="strong">AbstractCDOViewProvider</span>
 extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
-implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></pre>
+implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></pre>
 <div class="block">Base logic to handle CDOViewProvider priority and regular expression.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd></dl>
@@ -122,6 +122,21 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested_class_summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.cdo.view.CDOViewProvider">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- =========== FIELD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="field_summary">
@@ -155,7 +170,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html
 <td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#AbstractCDOViewProvider(java.lang.String)">AbstractCDOViewProvider</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regex)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#AbstractCDOViewProvider(java.lang.String, int)">AbstractCDOViewProvider</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regex,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#AbstractCDOViewProvider(java.lang.String,%20int)">AbstractCDOViewProvider</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regex,
                        int&nbsp;priority)</code>&nbsp;</td>
 </tr>
 </table>
@@ -174,35 +189,51 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getPath(org.eclipse.emf.common.util.URI)">getPath</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri)</code>
+<div class="block">Should be overwritten for non-canonical URI formats!</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getPriority()">getPriority</a></strong>()</code>
 <div class="block">Returns the priority of this provider.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getRegex()">getRegex</a></strong>()</code>
 <div class="block">Returns the regular expression that determines if the provider can handle certain URI</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getResourceURI(org.eclipse.emf.cdo.view.CDOView, java.lang.String)">getResourceURI</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<tr class="rowColor">
+<td class="colFirst"><code>org.eclipse.emf.common.util.URI</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getResourceURI(org.eclipse.emf.cdo.view.CDOView,%20java.lang.String)">getResourceURI</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
 <div class="block">Must be overwritten for non-canonical URI formats!</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>org.eclipse.emf.common.util.URI</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)">getViewURI</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
+</tr>
 <tr class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#matchesRegex(org.eclipse.emf.common.util.URI)">matchesRegex</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
-<div class="block">Checks if the URI matches with the regular expression of this provider</div>
+<td class="colFirst"><code>org.eclipse.emf.common.util.URI</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#getViewURI(org.eclipse.emf.common.util.URI)">getViewURI</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri)</code>
+<div class="block">Should be overwritten for non-canonical URI formats!</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#matchesRegex(org.eclipse.emf.common.util.URI)">matchesRegex</a></strong>(org.eclipse.emf.common.util.URI&nbsp;uri)</code>
+<div class="block">Checks if the URI matches with the regular expression of this provider</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#setPriority(int)">setPriority</a></strong>(int&nbsp;priority)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/view/AbstractCDOViewProvider.html#setRegex(java.lang.String)">setRegex</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;regex)</code>&nbsp;</td>
 </tr>
@@ -212,14 +243,14 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.view.CDOViewProvider">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#getView(org.eclipse.emf.common.util.URI, org.eclipse.emf.ecore.resource.ResourceSet)">getView</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#getView(org.eclipse.emf.common.util.URI,%20org.eclipse.emf.ecore.resource.ResourceSet)">getView</a></code></li>
 </ul>
 </li>
 </ul>
@@ -326,7 +357,7 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html
 <ul class="blockList">
 <li class="blockList">
 <h4>matchesRegex</h4>
-<pre>public&nbsp;boolean&nbsp;matchesRegex(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre>public&nbsp;boolean&nbsp;matchesRegex(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
 <div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#matchesRegex(org.eclipse.emf.common.util.URI)">CDOViewProvider</a></code></strong></div>
 <div class="block">Checks if the URI matches with the regular expression of this provider</div>
 <dl>
@@ -338,17 +369,61 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html
 <a name="getResourceURI(org.eclipse.emf.cdo.view.CDOView, java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getResourceURI</h4>
-<pre>public&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;getResourceURI(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<pre>public&nbsp;org.eclipse.emf.common.util.URI&nbsp;getResourceURI(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 <div class="block">Must be overwritten for non-canonical URI formats!</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#getResourceURI(org.eclipse.emf.cdo.view.CDOView, java.lang.String)">getResourceURI</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html#getResourceURI(org.eclipse.emf.cdo.view.CDOView,%20java.lang.String)">getResourceURI</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a></code></dd>
 <dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="getViewURI(org.eclipse.emf.cdo.view.CDOView)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getViewURI</h4>
+<pre>public final&nbsp;org.eclipse.emf.common.util.URI&nbsp;getViewURI(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)">getViewURI</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="getViewURI(org.eclipse.emf.common.util.URI)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getViewURI</h4>
+<pre>public&nbsp;org.eclipse.emf.common.util.URI&nbsp;getViewURI(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
+<div class="block">Should be overwritten for non-canonical URI formats!</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.common.util.URI)">getViewURI</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="getPath(org.eclipse.emf.common.util.URI)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getPath</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getPath(org.eclipse.emf.common.util.URI&nbsp;uri)</pre>
+<div class="block">Should be overwritten for non-canonical URI formats!</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html#getPath(org.eclipse.emf.common.util.URI)">getPath</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.CDOViewProvider2.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider.CDOViewProvider2</a></code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 </li>
@@ -417,6 +492,6 @@ implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

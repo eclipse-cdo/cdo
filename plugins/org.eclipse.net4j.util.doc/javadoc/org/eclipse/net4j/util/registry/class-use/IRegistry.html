@@ -81,6 +81,14 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.net4j.util.properties">org.eclipse.net4j.util.properties</a></td>
+<td class="colLast">
+<div class="block">A framework to describe and access properties of POJOs and to support Eclipse
+ <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/expressions/PropertyTester.html?is-external=true" title="class or interface in org.eclipse.core.expressions"><code>property testers</code></a> and
+ <code>IPropertySources</code> in a uniform way.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.net4j.util.registry">org.eclipse.net4j.util.registry</a></td>
 <td class="colLast">
 <div class="block">Interfaces and classes for general purpose registries.</div>
@@ -113,6 +121,24 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/factory/IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>,<a href="../../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&gt;</code></td>
 <td class="colLast"><span class="strong">ManagedContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactoryRegistry()">getFactoryRegistry</a></strong>()</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.net4j.util.properties">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a> in <a href="../../../../../../org/eclipse/net4j/util/properties/package-summary.html">org.eclipse.net4j.util.properties</a></h3>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/net4j/util/properties/package-summary.html">org.eclipse.net4j.util.properties</a> that return <a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;</code></td>
+<td class="colLast"><span class="strong">IPropertiesContainer.</span><code><strong><a href="../../../../../../org/eclipse/net4j/util/properties/IPropertiesContainer.html#properties()">properties</a></strong>()</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -190,23 +216,23 @@
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html#DelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry)">DelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="type parameter in DelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="type parameter in DelegatingRegistry">V</a>&gt;&nbsp;delegate)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html#DelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry, boolean)">DelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="type parameter in DelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="type parameter in DelegatingRegistry">V</a>&gt;&nbsp;delegate,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html#DelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry,%20boolean)">DelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="type parameter in DelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/DelegatingRegistry.html" title="type parameter in DelegatingRegistry">V</a>&gt;&nbsp;delegate,
                   boolean&nbsp;autoCommit)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html#HashMapDelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry)">HashMapDelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;delegate)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html#HashMapDelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry, int)">HashMapDelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;delegate,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html#HashMapDelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry,%20int)">HashMapDelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;delegate,
                          int&nbsp;initialCapacity)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html#HashMapDelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry, int, float)">HashMapDelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;delegate,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html#HashMapDelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry,%20int,%20float)">HashMapDelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;delegate,
                          int&nbsp;initialCapacity,
                          float&nbsp;loadFactor)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html#HashMapDelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry, java.util.Map)">HashMapDelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;delegate,
+<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html#HashMapDelegatingRegistry(org.eclipse.net4j.util.registry.IRegistry,%20java.util.Map)">HashMapDelegatingRegistry</a></strong>(<a href="../../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,<a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;delegate,
                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;? extends <a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">K</a>,? extends <a href="../../../../../../org/eclipse/net4j/util/registry/HashMapDelegatingRegistry.html" title="type parameter in HashMapDelegatingRegistry">V</a>&gt;&nbsp;m)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -263,6 +289,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

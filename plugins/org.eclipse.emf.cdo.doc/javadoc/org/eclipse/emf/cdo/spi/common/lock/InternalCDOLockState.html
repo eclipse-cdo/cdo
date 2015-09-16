@@ -111,6 +111,21 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockSta
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.common.lock.CDOLockState">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.lock.<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></h3>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#DEPTH_INFINITE">DEPTH_INFINITE</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#DEPTH_NONE">DEPTH_NONE</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_summary">
@@ -133,19 +148,23 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockSta
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#removeReadLockOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">removeReadLockOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#removeOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">removeOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#setWriteLockOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">setWriteLockOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#removeReadLockOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">removeReadLockOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#setWriteOptionOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">setWriteOptionOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#setWriteLockOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">setWriteLockOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#updateFrom(java.lang.Object, org.eclipse.emf.cdo.common.lock.CDOLockState)">updateFrom</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#setWriteOptionOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">setWriteOptionOwner</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#updateFrom(java.lang.Object,%20org.eclipse.emf.cdo.common.lock.CDOLockState)">updateFrom</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;object,
           <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&nbsp;source)</code>&nbsp;</td>
 </tr>
 </table>
@@ -154,7 +173,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockSta
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.lock.<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></h3>
-<code><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getLockedObject()">getLockedObject</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getReadLockOwners()">getReadLockOwners</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getWriteLockOwner()">getWriteLockOwner</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getWriteOptionOwner()">getWriteOptionOwner</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#isLocked(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, org.eclipse.emf.cdo.common.lock.CDOLockOwner, boolean)">isLocked</a></code></li>
+<code><a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getLockedObject()">getLockedObject</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getReadLockOwners()">getReadLockOwners</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getWriteLockOwner()">getWriteLockOwner</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#getWriteOptionOwner()">getWriteOptionOwner</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html#isLocked(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,%20org.eclipse.emf.cdo.common.lock.CDOLockOwner,%20boolean)">isLocked</a></code></li>
 </ul>
 </li>
 </ul>
@@ -204,6 +223,17 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockSta
 <li class="blockList">
 <h4>setWriteOptionOwner</h4>
 <pre>void&nbsp;setWriteOptionOwner(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</pre>
+</li>
+</ul>
+<a name="removeOwner(org.eclipse.emf.cdo.common.lock.CDOLockOwner)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeOwner</h4>
+<pre>boolean&nbsp;removeOwner(<a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 <a name="updateFrom(java.lang.Object, org.eclipse.emf.cdo.common.lock.CDOLockState)">
@@ -295,6 +325,6 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockSta
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

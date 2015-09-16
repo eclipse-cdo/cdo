@@ -219,27 +219,27 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></td>
+<td class="colLast">
+<div class="block">Server provider interfaces (SPI) for CDO <a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></td>
 <td class="colLast">
 <div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui</a></td>
 <td class="colLast">
 <div class="block">Reusable UI components specific to the CDO Model Repository.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.ui.compare">org.eclipse.emf.cdo.ui.compare</a></td>
 <td class="colLast">
 <div class="block">Classes that help to open EMF Compare user interfaces on CDO models.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><a href="#org.eclipse.emf.cdo.ui.ide">org.eclipse.emf.cdo.ui.ide</a></td>
-<td class="colLast">
-<div class="block">Reusable UI IDE components specific to the CDO Model Repository.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -299,6 +299,15 @@
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.cdo.common.branch">CDOBranch</a>
 <div class="block">Represents a <i>stream of changes</i> that is isolated from other streams of changes.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchChangedEvent.html#org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent</a>
+<div class="block">An <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a> when a new <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> has
+ been created.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchChangedEvent.ChangeKind.html#org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchHandler.html#org.eclipse.emf.cdo.common.branch">CDOBranchHandler</a>
@@ -443,6 +452,13 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPointRange.html#org.eclipse.emf.cdo.common.revision">CDOBranchPointRange</a>
+<div class="block">A range between the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>base</code></a> of the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><code>main branch</code></a> and
+ the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><code>head</code></a> of any branch that is demarkated by a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getStartPoint()"><code>start point</code></a> and
+ an <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getEndPoint()"><code>end point</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchVersion.html#org.eclipse.emf.cdo.common.revision">CDOBranchVersion</a>
 <div class="block">A pair of a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch()"><code>branch</code></a> and an integer <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion()"><code>version</code></a> number.</div>
 </td>
@@ -694,28 +710,31 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchChangedEvent.ChangeKind.html#org.eclipse.emf.cdo.spi.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchHandler.html#org.eclipse.emf.cdo.spi.common.branch">CDOBranchHandler</a>
 <div class="block">A call-back interface that indicates the ability to <i>handle</i> branches that are passed from other entities.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchManager.html#org.eclipse.emf.cdo.spi.common.branch">CDOBranchManager</a>
 <div class="block">Manages a tree of <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branches</code></a> and notifies about changes in this branch tree.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.common.branch">CDOBranchPoint</a>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><code>point in time</code></a> in a particular <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPointRange.html#org.eclipse.emf.cdo.spi.common.branch">CDOBranchPointRange</a>
 <div class="block">A range between the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>base</code></a> of the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><code>main branch</code></a> and
  the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><code>head</code></a> of any branch that is demarkated by a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getStartPoint()"><code>start point</code></a> and
  an <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getEndPoint()"><code>end point</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchVersion.html#org.eclipse.emf.cdo.spi.common.branch">CDOBranchVersion</a>
 <div class="block">A pair of a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch()"><code>branch</code></a> and an integer <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion()"><code>version</code></a> number.</div>
 </td>
@@ -792,8 +811,20 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchManager.html#org.eclipse.emf.cdo.spi.common.revision">CDOBranchManager</a>
+<div class="block">Manages a tree of <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branches</code></a> and notifies about changes in this branch tree.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.common.revision">CDOBranchPoint</a>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><code>point in time</code></a> in a particular <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPointRange.html#org.eclipse.emf.cdo.spi.common.revision">CDOBranchPointRange</a>
+<div class="block">A range between the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>base</code></a> of the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><code>main branch</code></a> and
+ the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><code>head</code></a> of any branch that is demarkated by a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getStartPoint()"><code>start point</code></a> and
+ an <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getEndPoint()"><code>end point</code></a>.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -819,18 +850,38 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchChangedEvent.ChangeKind.html#org.eclipse.emf.cdo.spi.server">CDOBranchChangedEvent.ChangeKind</a>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchHandler.html#org.eclipse.emf.cdo.spi.server">CDOBranchHandler</a>
 <div class="block">A call-back interface that indicates the ability to <i>handle</i> branches that are passed from other entities.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.spi.server">CDOBranchPoint</a>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><code>point in time</code></a> in a particular <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchVersion.html#org.eclipse.emf.cdo.spi.server">CDOBranchVersion</a>
 <div class="block">A pair of a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getBranch()"><code>branch</code></a> and an integer <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#getVersion()"><code>version</code></a> number.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.emf.cdo.spi.workspace">
+<!--   -->
+</a>
+<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
+<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</a> used by <a href="../../../../../../org/eclipse/emf/cdo/spi/workspace/package-summary.html">org.eclipse.emf.cdo.spi.workspace</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Class and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.cdo.spi.workspace">CDOBranch</a>
+<div class="block">Represents a <i>stream of changes</i> that is isolated from other streams of changes.</div>
 </td>
 </tr>
 </tbody>
@@ -892,23 +943,6 @@
 </tbody>
 </table>
 </li>
-<li class="blockList"><a name="org.eclipse.emf.cdo.ui.ide">
-<!--   -->
-</a>
-<table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing classes, and an explanation">
-<caption><span>Classes in <a href="../../../../../../org/eclipse/emf/cdo/common/branch/package-summary.html">org.eclipse.emf.cdo.common.branch</a> used by <a href="../../../../../../org/eclipse/emf/cdo/ui/ide/package-summary.html">org.eclipse.emf.cdo.ui.ide</a></span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colOne" scope="col">Class and Description</th>
-</tr>
-<tbody>
-<tr class="altColor">
-<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranch.html#org.eclipse.emf.cdo.ui.ide">CDOBranch</a>
-<div class="block">Represents a <i>stream of changes</i> that is isolated from other streams of changes.</div>
-</td>
-</tr>
-</tbody>
-</table>
-</li>
 <li class="blockList"><a name="org.eclipse.emf.cdo.ui.widgets">
 <!--   -->
 </a>
@@ -948,6 +982,13 @@
 <tr class="rowColor">
 <td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPoint.html#org.eclipse.emf.cdo.util">CDOBranchPoint</a>
 <div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()"><code>point in time</code></a> in a particular <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="../../../../../../org/eclipse/emf/cdo/common/branch/class-use/CDOBranchPointRange.html#org.eclipse.emf.cdo.util">CDOBranchPointRange</a>
+<div class="block">A range between the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()"><code>base</code></a> of the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()"><code>main branch</code></a> and
+ the <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()"><code>head</code></a> of any branch that is demarkated by a <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getStartPoint()"><code>start point</code></a> and
+ an <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPointRange.html#getEndPoint()"><code>end point</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -1050,6 +1091,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

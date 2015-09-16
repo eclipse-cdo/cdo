@@ -129,8 +129,8 @@
 </dl>
 <hr>
 <div class="block"><strong>Deprecated.</strong>&nbsp;
-<div class="block"><i>As of 4.2 call <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)"><code>DBUtil.createSchema(String)</code></a>, <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, org.eclipse.net4j.db.ddl.IDBSchema)"><code>DBUtil.readSchema(IDBAdapter, Connection, IDBSchema)</code></a>,
-    <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection, java.lang.String)"><code>DBUtil.readSchema(IDBAdapter, Connection, String)</code></a> or <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#copySchema(org.eclipse.net4j.db.ddl.IDBSchema)"><code>DBUtil.copySchema(IDBSchema)</code></a>.</i></div>
+<div class="block"><i>As of 4.2 call <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)"><code>DBUtil.createSchema(String)</code></a>, <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,%20java.sql.Connection,%20org.eclipse.net4j.db.ddl.IDBSchema)"><code>DBUtil.readSchema(IDBAdapter, Connection, IDBSchema)</code></a>,
+    <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,%20java.sql.Connection,%20java.lang.String)"><code>DBUtil.readSchema(IDBAdapter, Connection, String)</code></a> or <a href="../../../../../org/eclipse/net4j/db/DBUtil.html#copySchema(org.eclipse.net4j.db.ddl.IDBSchema)"><code>DBUtil.copySchema(IDBSchema)</code></a>.</i></div>
 </div>
 <br>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
@@ -161,7 +161,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
 </ul>
 </li>
 </ul>
@@ -246,63 +246,63 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)">create</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,%20java.sql.Connection)">create</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, javax.sql.DataSource)">create</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,%20javax.sql.DataSource)">create</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider)">create</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,%20org.eclipse.net4j.db.IDBConnectionProvider)">create</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
       <a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)">drop</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,%20java.sql.Connection)">drop</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
     <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, javax.sql.DataSource)">drop</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,%20javax.sql.DataSource)">drop</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
     <a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider)">drop</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,%20org.eclipse.net4j.db.IDBConnectionProvider)">drop</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;dbAdapter,
     <a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export(java.sql.Connection, java.io.PrintStream)">export</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export(java.sql.Connection,%20java.io.PrintStream)">export</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</a>&nbsp;out)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export(javax.sql.DataSource, java.io.PrintStream)">export</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export(javax.sql.DataSource,%20java.io.PrintStream)">export</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html?is-external=true" title="class or interface in javax.sql">DataSource</a>&nbsp;dataSource,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</a>&nbsp;out)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider, java.io.PrintStream)">export</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider,%20java.io.PrintStream)">export</a></strong>(<a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
       <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/PrintStream.html?is-external=true" title="class or interface in java.io">PrintStream</a>&nbsp;out)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
@@ -327,7 +327,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])">fireEvent</a></strong>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/spi/db/DBSchema.html#fireEvent(org.eclipse.net4j.util.event.IEvent,%20org.eclipse.net4j.util.event.IListener[])">fireEvent</a></strong>(<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event,
          <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</a>[]&nbsp;listeners)</code>
 <div class="block"><strong>Deprecated.</strong>&nbsp;</div>
 &nbsp;</td>
@@ -462,7 +462,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.spi.db.ddl.InternalDBSchemaElement">
@@ -476,7 +476,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.db.ddl.<a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#accept(org.eclipse.net4j.db.ddl.IDBSchemaVisitor)">accept</a>, <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getElement(java.lang.Class, java.lang.String)">getElement</a>, <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#setName(java.lang.String)">setName</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#accept(org.eclipse.net4j.db.ddl.IDBSchemaVisitor)">accept</a>, <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#getElement(java.lang.Class,%20java.lang.String)">getElement</a>, <a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchemaElement.html#setName(java.lang.String)">setName</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
@@ -727,7 +727,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)">create</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,%20java.sql.Connection)">create</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>create</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -746,7 +746,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, javax.sql.DataSource)">create</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,%20javax.sql.DataSource)">create</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>create</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -765,7 +765,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider)">create</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,%20org.eclipse.net4j.db.IDBConnectionProvider)">create</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>create</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -784,7 +784,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, java.sql.Connection)">drop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,%20java.sql.Connection)">drop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>drop</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -803,7 +803,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, javax.sql.DataSource)">drop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,%20javax.sql.DataSource)">drop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>drop</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -822,7 +822,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter, org.eclipse.net4j.db.IDBConnectionProvider)">drop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,%20org.eclipse.net4j.db.IDBConnectionProvider)">drop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>drop</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -841,7 +841,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#export(java.sql.Connection, java.io.PrintStream)">export</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#export(java.sql.Connection,%20java.io.PrintStream)">export</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>export</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -860,7 +860,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#export(javax.sql.DataSource, java.io.PrintStream)">export</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#export(javax.sql.DataSource,%20java.io.PrintStream)">export</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>export</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -879,7 +879,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider, java.io.PrintStream)">export</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider,%20java.io.PrintStream)">export</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></dd>
 <dt><strong>Overrides:</strong></dt>
 <dd><code>export</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.internal.db.ddl.DBSchema</code></dd>
 <dt><span class="strong">Throws:</span></dt>
@@ -1019,7 +1019,7 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
 <dl>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</a></code></dd>
+<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent,%20org.eclipse.net4j.util.event.IListener[])" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -1161,6 +1161,6 @@ extends org.eclipse.net4j.internal.db.ddl.DBSchema</pre>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

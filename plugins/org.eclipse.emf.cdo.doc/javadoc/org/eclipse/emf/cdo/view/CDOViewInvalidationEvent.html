@@ -83,12 +83,13 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDOViewInvalidationEvent.html" title="&#171;interface&#187; CDOViewInvalidationEvent" alt="" coords="261,117,435,157"/>
+<area shape="rect" id="node1" href="CDOViewInvalidationEvent.html" title="&#171;interface&#187; CDOViewInvalidationEvent" alt="" coords="403,117,576,157"/>
 <area shape="rect" id="node2" href="CDOViewEvent.html" title="&#171;interface&#187; CDOViewEvent" alt="" coords="5,13,115,53"/>
-<area shape="rect" id="node3" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="305,213,391,253"/>
-<area shape="rect" id="node4" href="../session/CDOSessionInvalidationEvent.html" title="&#171;interface&#187; CDOSessionInvalidationEvent (org.eclipse.emf.cdo.session)" alt="" coords="145,6,337,61"/>
-<area shape="rect" id="node5" href="../CDOInvalidationNotification.html" title="&#171;interface&#187; CDOInvalidationNotification (org.eclipse.emf.cdo)" alt="" coords="367,6,544,61"/>
-<area shape="rect" id="node6" href="CDOAdapterPolicy.html" title="&#171;interface&#187; CDOAdapterPolicy" alt="" coords="575,13,705,53"/>
+<area shape="rect" id="node3" href="CDOView.html" title="&#171;interface&#187; CDOView" alt="" coords="447,213,532,253"/>
+<area shape="rect" id="node4" href="../common/util/CDOTimeProvider.html" title="&#171;interface&#187; CDOTimeProvider (org.eclipse.emf.cdo.common.util)" alt="" coords="145,6,364,61"/>
+<area shape="rect" id="node5" href="../session/CDOSessionInvalidationEvent.html" title="&#171;interface&#187; CDOSessionInvalidationEvent (org.eclipse.emf.cdo.session)" alt="" coords="393,6,585,61"/>
+<area shape="rect" id="node6" href="../CDOInvalidationNotification.html" title="&#171;interface&#187; CDOInvalidationNotification (org.eclipse.emf.cdo)" alt="" coords="615,6,792,61"/>
+<area shape="rect" id="node7" href="CDOAdapterPolicy.html" title="&#171;interface&#187; CDOAdapterPolicy" alt="" coords="823,13,953,53"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOViewInvalidationEvent.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
@@ -96,12 +97,12 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewEvent</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a></dd>
+<dd><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewEvent</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">CDOViewInvalidationEvent</span>
-extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewEvent</a></pre>
+extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></pre>
 <div class="block">A <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view event</code></a> fired when passive updates (commit notifications) are being received from a remote
  repository. <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><code>Passive updates</code></a> must be enabled for this event to be
  fired.</div>
@@ -187,6 +188,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" titl
 <pre>long&nbsp;getTimeStamp()</pre>
 <div class="block">Returns the time stamp of the server transaction if this event was sent as a result of a successfully committed
  transaction or <code>LOCAL_ROLLBACK</code> if this event was sent due to a local rollback.</div>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp()">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
+</dl>
 </li>
 </ul>
 <a name="getDirtyObjects()">
@@ -288,6 +293,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEvent.html" titl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

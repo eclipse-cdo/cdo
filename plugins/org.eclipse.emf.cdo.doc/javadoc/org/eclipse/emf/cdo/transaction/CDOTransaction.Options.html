@@ -61,13 +61,13 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
@@ -84,8 +84,9 @@
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
 <area shape="rect" id="node1" href="../view/CDOView.Options.html" title="&#171;interface&#187; CDOView.Options (org.eclipse.emf.cdo.view)" alt="" coords="5,6,176,61"/>
-<area shape="rect" id="node2" href="CDOTransaction.Options.html" title="&#171;interface&#187; CDOTransaction.Options" alt="" coords="101,117,267,157"/>
-<area shape="rect" id="node3" href="CDOConflictResolver.html" title="&#171;interface&#187; CDOConflictResolver" alt="" coords="206,13,348,53"/>
+<area shape="rect" id="node2" href="CDOUndoDetector.html" title="&#171;interface&#187; CDOUndoDetector" alt="" coords="119,213,248,253"/>
+<area shape="rect" id="node3" href="CDOTransaction.Options.html" title="&#171;interface&#187; CDOTransaction.Options" alt="" coords="101,117,267,157"/>
+<area shape="rect" id="node4" href="CDOConflictResolver.html" title="&#171;interface&#187; CDOConflictResolver" alt="" coords="206,13,348,53"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOTransaction.Options.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
@@ -140,6 +141,20 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
  <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addConflictResolver(org.eclipse.emf.cdo.transaction.CDOConflictResolver)"><code>conflict resolvers</code></a> option has changed.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.StaleReferenceCleanerEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.StaleReferenceCleanerEvent</a></strong></code>
+<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setStaleReferenceCleaner(org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner)"><code>stale reference cleaner</code></a> option has changed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.UndoDetectorEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.UndoDetectorEvent</a></strong></code>
+<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options()"><code>options</code></a> when the
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setUndoDetector(org.eclipse.emf.cdo.transaction.CDOUndoDetector)"><code>undo detector</code></a> option has changed.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.cdo.view.CDOView.Options">
@@ -163,6 +178,17 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#DEFAULT_UNDO_DETECTOR">DEFAULT_UNDO_DETECTOR</a></strong></code>&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.view.CDOView.Options">
 <!--   -->
@@ -203,6 +229,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getStaleReferenceCleaner()">getStaleReferenceCleaner</a></strong>()</code>
+<div class="block">Get the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+ remote changes on invalidation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getUndoDetector()">getUndoDetector</a></strong>()</code>
+<div class="block">Returns the undo detector of this transaction.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled()">isAutoReleaseLocksEnabled</a></strong>()</code>
 <div class="block">Returns true if locks in this view will be removes when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><code>CDOUserTransaction.commit()</code></a> or
@@ -226,6 +265,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setConflictResolvers(org.eclipse.emf.cdo.transaction.CDOConflictResolver[])">setConflictResolvers</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;resolvers)</code>
 <div class="block">Sets the conflict resolver list of this transaction.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setStaleReferenceCleaner(org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner)">setStaleReferenceCleaner</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;staleReferenceCleaner)</code>
+<div class="block">Set the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+ remote changes on invalidation.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setUndoDetector(org.eclipse.emf.cdo.transaction.CDOUndoDetector)">setUndoDetector</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;undoDetector)</code>
+<div class="block">Sets the undo detector of this transaction.</div>
 </td>
 </tr>
 </table>
@@ -258,6 +310,25 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field_detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="DEFAULT_UNDO_DETECTOR">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DEFAULT_UNDO_DETECTOR</h4>
+<pre>static final&nbsp;<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a> DEFAULT_UNDO_DETECTOR</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.3</dd></dl>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method_detail">
@@ -279,6 +350,30 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true#getContainer()" title="class or interface in org.eclipse.net4j.util.options">getContainer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptions.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptions</a></code></dd>
 <dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
+</li>
+</ul>
+<a name="getUndoDetector()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getUndoDetector</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;getUndoDetector()</pre>
+<div class="block">Returns the undo detector of this transaction.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.3</dd></dl>
+</li>
+</ul>
+<a name="setUndoDetector(org.eclipse.emf.cdo.transaction.CDOUndoDetector)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setUndoDetector</h4>
+<pre>void&nbsp;setUndoDetector(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;undoDetector)</pre>
+<div class="block">Sets the undo detector of this transaction.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.3</dd></dl>
 </li>
 </ul>
 <a name="getConflictResolvers()">
@@ -319,6 +414,32 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <h4>removeConflictResolver</h4>
 <pre>void&nbsp;removeConflictResolver(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</pre>
 <div class="block">Removes a conflict resolver from the list of conflict resolvers of this transaction.</div>
+</li>
+</ul>
+<a name="getStaleReferenceCleaner()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getStaleReferenceCleaner</h4>
+<pre><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;getStaleReferenceCleaner()</pre>
+<div class="block">Get the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+ remote changes on invalidation.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="setStaleReferenceCleaner(org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setStaleReferenceCleaner</h4>
+<pre>void&nbsp;setStaleReferenceCleaner(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;staleReferenceCleaner)</pre>
+<div class="block">Set the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
+ remote changes on invalidation.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 <a name="isAutoReleaseLocksEnabled()">
@@ -400,13 +521,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method_detail">Method</a></li>
 </ul>
@@ -415,6 +536,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

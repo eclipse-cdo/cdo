@@ -157,7 +157,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IContainerEv
 <td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#ContainerEvent(org.eclipse.net4j.util.container.IContainer)">ContainerEvent</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;&nbsp;container)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#ContainerEvent(org.eclipse.net4j.util.container.IContainer, java.util.List)">ContainerEvent</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;&nbsp;container,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#ContainerEvent(org.eclipse.net4j.util.container.IContainer,%20java.util.List)">ContainerEvent</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;&nbsp;container,
               <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;&gt;&nbsp;deltas)</code>&nbsp;</td>
 </tr>
 </table>
@@ -181,7 +181,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IContainerEv
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#addDelta(E, org.eclipse.net4j.util.container.IContainerDelta.Kind)">addDelta</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&nbsp;element,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#addDelta(E,%20org.eclipse.net4j.util.container.IContainerDelta.Kind)">addDelta</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&nbsp;element,
         <a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html" title="enum in org.eclipse.net4j.util.container">IContainerDelta.Kind</a>&nbsp;kind)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -189,32 +189,32 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IContainerEv
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#addDelta(org.eclipse.net4j.util.container.IContainerDelta)">addDelta</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;&nbsp;delta)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#formatAdditionalParameters()">formatAdditionalParameters</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#getDelta()">getDelta</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#getDeltaElement()">getDeltaElement</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.Kind.html" title="enum in org.eclipse.net4j.util.container">IContainerDelta.Kind</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#getDeltaKind()">getDeltaKind</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/IContainerDelta.html" title="interface in org.eclipse.net4j.util.container">IContainerDelta</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#getDeltas()">getDeltas</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html" title="type parameter in ContainerEvent">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#getSource()">getSource</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#isEmpty()">isEmpty</a></strong>()</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ContainerEvent.html#toString()">toString</a></strong>()</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -222,14 +222,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IContainerEv
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Event.html#formatAdditionalParameters()">formatAdditionalParameters</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/event/Event.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -395,16 +395,16 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IContainerEv
 </dl>
 </li>
 </ul>
-<a name="toString()">
+<a name="formatAdditionalParameters()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>toString</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
+<h4>formatAdditionalParameters</h4>
+<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;formatAdditionalParameters()</pre>
 <dl>
 <dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/event/Event.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/event/Event.html#formatAdditionalParameters()">formatAdditionalParameters</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -474,6 +474,6 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IContainerEv
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

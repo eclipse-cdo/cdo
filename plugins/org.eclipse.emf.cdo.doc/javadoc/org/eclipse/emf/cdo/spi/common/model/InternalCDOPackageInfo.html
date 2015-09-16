@@ -93,12 +93,12 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</a>, <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&gt;, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</a></dd>
+<dd>org.eclipse.emf.common.notify.Adapter, org.eclipse.emf.common.notify.Adapter.Internal, <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&gt;, org.eclipse.emf.ecore.EPackage.Descriptor</dd>
 </dl>
 <hr>
 <br>
 <pre>public interface <span class="strong">InternalCDOPackageInfo</span>
-extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</a></pre>
+extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>, org.eclipse.emf.common.notify.Adapter.Internal</pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>2.0</dd>
@@ -122,8 +122,8 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</a></code></li>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>org.eclipse.emf.common.notify.Adapter.Internal</code></li>
 </ul>
 </li>
 </ul>
@@ -140,32 +140,36 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#copy()">copy</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#getPackageUnit()">getPackageUnit</a></strong>()</code>
 <div class="block">Returns the package unit containing this package info.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput)">read</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#setEPackage(org.eclipse.emf.ecore.EPackage)">setEPackage</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</code>&nbsp;</td>
-</tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#setEPackage(org.eclipse.emf.ecore.EPackage)">setEPackage</a></strong>(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#setPackageUnit(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)">setPackageUnit</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#setPackageURI(java.lang.String)">setPackageURI</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;packageURI)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#setParentURI(java.lang.String)">setParentURI</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;parentURI)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput)">write</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
@@ -181,8 +185,8 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.ecore.EPackage.Descriptor">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage.Descriptor</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEFactory()" title="class or interface in org.eclipse.emf.ecore">getEFactory</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.Descriptor.html?is-external=true#getEPackage()" title="class or interface in org.eclipse.emf.ecore">getEPackage</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.ecore.EPackage.Descriptor</h3>
+<code>getEFactory, getEPackage</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Comparable">
@@ -195,15 +199,15 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.common.notify.Adapter.Internal">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter.Internal</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.Internal.html?is-external=true#unsetTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify">unsetTarget</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter.Internal</h3>
+<code>unsetTarget</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.common.notify.Adapter">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#getTarget()" title="class or interface in org.eclipse.emf.common.notify">getTarget</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#isAdapterForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify">isAdapterForType</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#notifyChanged(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">notifyChanged</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true#setTarget(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify">setTarget</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.Adapter</h3>
+<code>getTarget, isAdapterForType, notifyChanged, setTarget</code></li>
 </ul>
 </li>
 </ul>
@@ -267,7 +271,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <ul class="blockList">
 <li class="blockList">
 <h4>setEPackage</h4>
-<pre>void&nbsp;setEPackage(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>&nbsp;ePackage)</pre>
+<pre>void&nbsp;setEPackage(org.eclipse.emf.ecore.EPackage&nbsp;ePackage)</pre>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.2</dd></dl>
 </li>
@@ -288,7 +292,7 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <a name="read(org.eclipse.emf.cdo.common.protocol.CDODataInput)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>read</h4>
 <pre>void&nbsp;read(<a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)
@@ -296,6 +300,17 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <dl><dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd><dt><span class="strong">Since:</span></dt>
   <dd>3.0</dd></dl>
+</li>
+</ul>
+<a name="copy()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>copy</h4>
+<pre><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a>&nbsp;copy()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 </li>
@@ -364,6 +379,6 @@ extends <a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOPackag
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

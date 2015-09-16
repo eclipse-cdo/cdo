@@ -97,7 +97,7 @@
 <br>
 <pre>public static interface <span class="strong">InternalCDOClassInfo.PersistenceFilter</span></pre>
 <div class="block">Encapsulation of a rule for filtering the persistent values
- of a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">feature</a> in some model element.
+ of a feature in some model element.
  Some models (such as UML's Activity metaclass) require partial persistence
  of features, persisting a subset of the values in a feature that are also
  in some other feature (the filtering feature). Other models may apply other
@@ -123,7 +123,7 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.PersistenceFilter.html#getPersistableValue(org.eclipse.emf.ecore.EObject, java.lang.Object)">getPersistableValue</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;owner,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOClassInfo.PersistenceFilter.html#getPersistableValue(org.eclipse.emf.ecore.EObject,%20java.lang.Object)">getPersistableValue</a></strong>(org.eclipse.emf.ecore.EObject&nbsp;owner,
                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</code>
 <div class="block">Get a subset or other transformation of the specified <code>value</code> of
  a persistable feature, based on its dependencies.</div>
@@ -150,7 +150,7 @@
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getPersistableValue</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;getPersistableValue(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;owner,
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;getPersistableValue(org.eclipse.emf.ecore.EObject&nbsp;owner,
                          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;value)</pre>
 <div class="block">Get a subset or other transformation of the specified <code>value</code> of
  a persistable feature, based on its dependencies.</div>
@@ -226,6 +226,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

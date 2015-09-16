@@ -161,9 +161,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,org.eclipse.emf.ecore.EClass&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getDetachedObjectTypes()">getDetachedObjectTypes</a></strong>()</code>
-<div class="block">Returns a map with an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EClass</code></a> value per <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> type.</div>
+<div class="block">Returns a map with an <code>EClass</code> value per <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> type.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -281,7 +281,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&lt;T&gt;&nbsp;T</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#setData(java.lang.Object, T)">setData</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#setData(java.lang.Object,%20T)">setData</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;key,
        T&nbsp;data)</code>&nbsp;</td>
 </tr>
 </table>
@@ -518,8 +518,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
 <ul class="blockList">
 <li class="blockList">
 <h4>getDetachedObjectTypes</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&gt;&nbsp;getDetachedObjectTypes()</pre>
-<div class="block">Returns a map with an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>EClass</code></a> value per <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> type.</div>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,org.eclipse.emf.ecore.EClass&gt;&nbsp;getDetachedObjectTypes()</pre>
+<div class="block">Returns a map with an <code>EClass</code> value per <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> type.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>4.0</dd></dl>
 </li>
@@ -554,9 +554,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/DataInputStream.html?is-external=true#readLong()" title="class or interface in java.io"><code>long</code></a>: the size of the lob. The foollowing interpretation applies:
  <ul>
  <li>A positive size indicates a <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>blob</code></a> and means the number of bytes that can be
- <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyBinary(java.io.InputStream, java.io.OutputStream)" title="class or interface in org.eclipse.net4j.util.io"><code>read</code></a>.
+ <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyBinary(java.io.InputStream,%20java.io.OutputStream)" title="class or interface in org.eclipse.net4j.util.io"><code>read</code></a>.
  <li>A negative size indicates a <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOClob.html" title="class in org.eclipse.emf.cdo.common.lob"><code>clob</code></a> and means the number of characters that can be
- <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyCharacter(java.io.Reader, java.io.Writer)" title="class or interface in org.eclipse.net4j.util.io"><code>read</code></a>.
+ <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/io/IOUtil.html?is-external=true#copyCharacter(java.io.Reader,%20java.io.Writer)" title="class or interface in org.eclipse.net4j.util.io"><code>read</code></a>.
  </ul>
  </ol>
  </ol></div>
@@ -721,6 +721,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionP
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

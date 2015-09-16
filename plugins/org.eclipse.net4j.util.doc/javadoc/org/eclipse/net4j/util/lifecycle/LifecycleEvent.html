@@ -169,11 +169,11 @@ implements <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEv
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html#LifecycleEvent(org.eclipse.net4j.util.lifecycle.ILifecycle, org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind)">LifecycleEvent</a></strong>(<a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html#LifecycleEvent(org.eclipse.net4j.util.lifecycle.ILifecycle,%20org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind)">LifecycleEvent</a></strong>(<a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>&nbsp;lifecycle,
               <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle">ILifecycleEvent.Kind</a>&nbsp;kind)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html#LifecycleEvent(org.eclipse.net4j.util.lifecycle.Lifecycle, org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind)">LifecycleEvent</a></strong>(<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>&nbsp;lifecycle,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html#LifecycleEvent(org.eclipse.net4j.util.lifecycle.Lifecycle,%20org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind)">LifecycleEvent</a></strong>(<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>&nbsp;lifecycle,
               <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle">ILifecycleEvent.Kind</a>&nbsp;kind)</code>&nbsp;</td>
 </tr>
 </table>
@@ -192,10 +192,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEv
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html#formatAdditionalParameters()">formatAdditionalParameters</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle">ILifecycleEvent.Kind</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html#getKind()">getKind</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/lifecycle/LifecycleEvent.html#getSource()">getSource</a></strong>()</code>&nbsp;</td>
 </tr>
@@ -205,14 +209,14 @@ implements <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEv
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Event.html#formatAdditionalParameters()">formatAdditionalParameters</a>, <a href="../../../../../org/eclipse/net4j/util/event/Event.html#toString()">toString</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/event/Event.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -279,13 +283,26 @@ implements <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEv
 <a name="getKind()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getKind</h4>
 <pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" title="enum in org.eclipse.net4j.util.lifecycle">ILifecycleEvent.Kind</a>&nbsp;getKind()</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html#getKind()">getKind</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycleEvent</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="formatAdditionalParameters()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>formatAdditionalParameters</h4>
+<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;formatAdditionalParameters()</pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/event/Event.html#formatAdditionalParameters()">formatAdditionalParameters</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/event/Event.html" title="class in org.eclipse.net4j.util.event">Event</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -355,6 +372,6 @@ implements <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycleEv
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

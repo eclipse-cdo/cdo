@@ -143,7 +143,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;</code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="type parameter in IContainer.Persistable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="type parameter in IContainer.Persistence">E</a>&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -208,7 +208,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor, boolean)">addPostProcessor</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor,%20boolean)">addPostProcessor</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IElementProcessor.html" title="interface in org.eclipse.net4j.util.container">IElementProcessor</a>&nbsp;postProcessor,
                 boolean&nbsp;processExistingElements)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -217,7 +217,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#createElement(java.lang.String, java.lang.String, java.lang.String)">createElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#createElement(java.lang.String,%20java.lang.String,%20java.lang.String)">createElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
@@ -243,13 +243,13 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String, boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20boolean)">getElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description,
           boolean&nbsp;activate)</code>&nbsp;</td>
@@ -280,12 +280,12 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElements(java.lang.String, java.lang.String)">getElements</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getElements(java.lang.String,%20java.lang.String)">getElements</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactory(java.lang.String, java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#getFactory(java.lang.String,%20java.lang.String)">getFactory</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -314,19 +314,19 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#postProcessElement(java.lang.String, java.lang.String, java.lang.String, java.lang.Object)">postProcessElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#postProcessElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.Object)">postProcessElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description,
                   <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#putElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey, java.lang.Object)">putElement</a></strong>(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#putElement(org.eclipse.net4j.util.container.ManagedContainer.ElementKey,%20java.lang.Object)">putElement</a></strong>(org.eclipse.net4j.util.container.ManagedContainer.ElementKey&nbsp;key,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#putElement(java.lang.String, java.lang.String, java.lang.String, java.lang.Object)">putElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#putElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.Object)">putElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</code>&nbsp;</td>
@@ -341,7 +341,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#removeElement(java.lang.String, java.lang.String, java.lang.String)">removeElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/ManagedContainer.html#removeElement(java.lang.String,%20java.lang.String,%20java.lang.String)">removeElement</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;productGroup,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType,
              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</code>&nbsp;</td>
 </tr>
@@ -363,21 +363,21 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(boolean, java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(java.lang.Object, java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull(java.lang.Object, java.lang.String)">checkNull</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(boolean, java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(java.lang.Object, java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(boolean,%20java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(java.lang.Object,%20java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull(java.lang.Object,%20java.lang.String)">checkNull</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(boolean,%20java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(java.lang.Object,%20java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners()">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,%20org.eclipse.net4j.util.event.IListener[])">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners()">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -473,7 +473,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
                     boolean&nbsp;processExistingElements)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor, boolean)">addPostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#addPostProcessor(org.eclipse.net4j.util.container.IElementProcessor,%20boolean)">addPostProcessor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -540,7 +540,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
                     throws <a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactory(java.lang.String, java.lang.String)">getFactory</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getFactory(java.lang.String,%20java.lang.String)">getFactory</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd></dl>
 </li>
@@ -607,7 +607,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;factoryType)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElements(java.lang.String, java.lang.String)">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElements(java.lang.String,%20java.lang.String)">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -624,7 +624,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
                          <a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String)">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String)">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd></dl>
@@ -644,7 +644,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
                          <a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String, java.lang.String, java.lang.String, boolean)">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#getElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20boolean)">getElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 <dt><span class="strong">Throws:</span></dt>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
 <dd><code><a href="../../../../../org/eclipse/net4j/util/factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd><dt><span class="strong">Since:</span></dt>
@@ -674,7 +674,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;element)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#putElement(java.lang.String, java.lang.String, java.lang.String, java.lang.Object)">putElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#putElement(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.Object)">putElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -699,7 +699,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;description)</pre>
 <dl>
 <dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removeElement(java.lang.String, java.lang.String, java.lang.String)">removeElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html#removeElement(java.lang.String,%20java.lang.String,%20java.lang.String)">removeElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -960,6 +960,6 @@ implements <a href="../../../../../org/eclipse/net4j/util/container/IManagedCont
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

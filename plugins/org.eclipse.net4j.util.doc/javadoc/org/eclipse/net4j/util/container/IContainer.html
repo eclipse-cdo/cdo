@@ -35,7 +35,7 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/container/FileContainerPersistence.html" title="class in org.eclipse.net4j.util.container"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -86,14 +86,15 @@
 <area shape="rect" id="node1" title="Object (java.lang)" alt="" coords="645,5,725,45"/>
 <area shape="rect" id="node2" href="delegate/AbstractDelegator.html" title="AbstractDelegator (org.eclipse.net4j.util.container.delegate)" alt="" coords="557,64,813,104"/>
 <area shape="rect" id="node3" href="Container.html" title="Container" alt="" coords="647,123,724,149"/>
-<area shape="rect" id="node4" href="IContainer.html" title="&#171;interface&#187; IContainer" alt="" coords="323,201,408,241"/>
+<area shape="rect" id="node4" href="IContainer.html" title="&#171;interface&#187; IContainer" alt="" coords="323,227,408,267"/>
 <area shape="rect" id="node5" href="IContainer.Modifiable.html" title="&#171;interface&#187; IContainer.Modifiable" alt="" coords="614,168,757,208"/>
-<area shape="rect" id="node6" href="delegate/IContainerCollection.html" title="&#171;interface&#187; IContainerCollection (org.eclipse.net4j.util.container.delegate)" alt="" coords="557,227,813,282"/>
-<area shape="rect" id="node7" href="IContainerEvent.html" title="&#171;interface&#187; IContainerEvent" alt="" coords="40,168,152,208"/>
-<area shape="rect" id="node8" href="delegate/IContainerMap.html" title="&#171;interface&#187; IContainerMap (org.eclipse.net4j.util.container.delegate)" alt="" coords="557,301,813,355"/>
-<area shape="rect" id="node9" href="IManagedContainer.html" title="&#171;interface&#187; IManagedContainer" alt="" coords="619,375,752,415"/>
-<area shape="rect" id="node10" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="6,227,186,282"/>
-<area shape="rect" id="node11" href="../registry/IRegistry.html" title="&#171;interface&#187; IRegistry (org.eclipse.net4j.util.registry)" alt="" coords="589,434,782,489"/>
+<area shape="rect" id="node6" href="IContainer.Persistable.html" title="&#171;interface&#187; IContainer.Persistable" alt="" coords="611,227,760,267"/>
+<area shape="rect" id="node7" href="delegate/IContainerCollection.html" title="&#171;interface&#187; IContainerCollection (org.eclipse.net4j.util.container.delegate)" alt="" coords="557,286,813,341"/>
+<area shape="rect" id="node8" href="IContainerEvent.html" title="&#171;interface&#187; IContainerEvent" alt="" coords="40,193,152,233"/>
+<area shape="rect" id="node9" href="delegate/IContainerMap.html" title="&#171;interface&#187; IContainerMap (org.eclipse.net4j.util.container.delegate)" alt="" coords="557,359,813,414"/>
+<area shape="rect" id="node10" href="IManagedContainer.html" title="&#171;interface&#187; IManagedContainer" alt="" coords="619,433,752,473"/>
+<area shape="rect" id="node11" href="../event/INotifier.html" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="6,253,186,307"/>
+<area shape="rect" id="node12" href="../registry/IRegistry.html" title="&#171;interface&#187; IRegistry (org.eclipse.net4j.util.registry)" alt="" coords="589,493,782,547"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="IContainer.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
@@ -105,7 +106,7 @@
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerBlockingQueue.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerBlockingQueue</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerCollection.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerCollection</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerList.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerList</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerMap.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerMap</a>&lt;K,V&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerQueue.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerQueue</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSet</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerSortedSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSortedSet</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>, <a href="../../../../../org/eclipse/net4j/util/container/IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a>, <a href="../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;K,V&gt;</dd>
+<dd><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerBlockingQueue.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerBlockingQueue</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerCollection.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerCollection</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerList.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerList</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerMap.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerMap</a>&lt;K,V&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerQueue.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerQueue</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSet</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/delegate/IContainerSortedSet.html" title="interface in org.eclipse.net4j.util.container.delegate">IContainerSortedSet</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>, <a href="../../../../../org/eclipse/net4j/util/container/IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a>, <a href="../../../../../org/eclipse/net4j/util/registry/IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;K,V&gt;</dd>
 </dl>
 <dl>
 <dt>All Known Implementing Classes:</dt>
@@ -144,6 +145,16 @@ extends <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" tit
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;</strong></code>
 <div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="type parameter in IContainer.Persistable">E</a>&gt;</strong></code>
+<div class="block">A <a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="type parameter in IContainer.Persistence">E</a>&gt;</strong></code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -233,7 +244,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" tit
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/net4j/util/container/FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../org/eclipse/net4j/util/container/FileContainerPersistence.html" title="class in org.eclipse.net4j.util.container"><span class="strong">Prev Class</span></a></li>
 <li><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -274,6 +285,6 @@ extends <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" tit
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

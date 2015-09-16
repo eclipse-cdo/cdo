@@ -133,28 +133,28 @@
  <p>
  An example for <b>putting</b> values into a buffer and writing it to a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a>:
  <p>
- 
+
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  // Obtain a fresh buffer
  Buffer buffer = bufferProvider.getBuffer(); // Start filling the buffer for channelID 4711 ByteBuffer byteBuffer =
  buffer.startPutting(4711); byteBuffer.putDouble(15.47); // Write the contents of the Buffer to a // SocketChannel
  without blocking while (!buffer.write(socketChannel)) { // Do something else }
  </pre>
- 
+
  An example for reading a buffer from a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/channels/SocketChannel.html?is-external=true" title="class or interface in java.nio.channels"><code>SocketChannel</code></a> and <b>getting</b> values from it:
  <p>
- 
+
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
  // Obtain a fresh buffer
  Buffer buffer = bufferProvider.getBuffer();
- 
+
  // Read the contents of the Buffer from a SocketChannel without blocking
  ByteBuffer byteBuffer;
  while ((byteBuffer = buffer.startGetting(socketChannel)) == null)
  {
    // Do something else
  }
- 
+
  // Access the contents of the buffer and release it to its provider
  double value = byteBuffer.getDouble();
  buffer.release();
@@ -271,20 +271,32 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isEOS()">isEOS</a></strong>()</code>
-<div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isCCAM()">isCCAM</a></strong>()</code>
+<div class="block">Returns the <em>Close Channel After Me</em> flag.</div>
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#isEOS()">isEOS</a></strong>()</code>
+<div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#release()">release</a></strong>()</code>
 <div class="block">Releases this buffer to its original <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setCCAM(boolean)">setCCAM</a></strong>(boolean&nbsp;ccam)</code>
+<div class="block">Sets the <em>Close Channel After Me</em> flag.</div>
+</td>
+</tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#setEOS(boolean)">setEOS</a></strong>(boolean&nbsp;eos)</code>
-<div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+<div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -447,7 +459,7 @@
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get()" title="class or interface in java.nio"><code>ByteBuffer.get()</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(byte[])" title="class or interface in java.nio"><code>ByteBuffer.get(byte[])</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(int)" title="class or interface in java.nio"><code>ByteBuffer.get(int)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(byte[], int, int)" title="class or interface in java.nio"><code>ByteBuffer.get(byte[], int, int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#get(byte[],%20int,%20int)" title="class or interface in java.nio"><code>ByteBuffer.get(byte[], int, int)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getChar()" title="class or interface in java.nio"><code>ByteBuffer.getChar()</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getChar(int)" title="class or interface in java.nio"><code>ByteBuffer.getChar(int)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#getDouble()" title="class or interface in java.nio"><code>ByteBuffer.getDouble()</code></a>
@@ -490,20 +502,20 @@
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte)" title="class or interface in java.nio"><code>ByteBuffer.put(byte)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte[])" title="class or interface in java.nio"><code>ByteBuffer.put(byte[])</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(java.nio.ByteBuffer)" title="class or interface in java.nio"><code>ByteBuffer.put(ByteBuffer)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(int, byte)" title="class or interface in java.nio"><code>ByteBuffer.put(int, byte)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte[], int, int)" title="class or interface in java.nio"><code>ByteBuffer.put(byte[], int, int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(int,%20byte)" title="class or interface in java.nio"><code>ByteBuffer.put(int, byte)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#put(byte[],%20int,%20int)" title="class or interface in java.nio"><code>ByteBuffer.put(byte[], int, int)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putChar(char)" title="class or interface in java.nio"><code>ByteBuffer.putChar(char)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putChar(int, char)" title="class or interface in java.nio"><code>ByteBuffer.putChar(int, char)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putChar(int,%20char)" title="class or interface in java.nio"><code>ByteBuffer.putChar(int, char)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putDouble(double)" title="class or interface in java.nio"><code>ByteBuffer.putDouble(double)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putDouble(int, double)" title="class or interface in java.nio"><code>ByteBuffer.putDouble(int, double)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putDouble(int,%20double)" title="class or interface in java.nio"><code>ByteBuffer.putDouble(int, double)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putFloat(float)" title="class or interface in java.nio"><code>ByteBuffer.putFloat(float)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putFloat(int, float)" title="class or interface in java.nio"><code>ByteBuffer.putFloat(int, float)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putFloat(int,%20float)" title="class or interface in java.nio"><code>ByteBuffer.putFloat(int, float)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putInt(int)" title="class or interface in java.nio"><code>ByteBuffer.putInt(int)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putInt(int, int)" title="class or interface in java.nio"><code>ByteBuffer.putInt(int, int)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putInt(int,%20int)" title="class or interface in java.nio"><code>ByteBuffer.putInt(int, int)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putLong(long)" title="class or interface in java.nio"><code>ByteBuffer.putLong(long)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putLong(int, long)" title="class or interface in java.nio"><code>ByteBuffer.putLong(int, long)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putLong(int,%20long)" title="class or interface in java.nio"><code>ByteBuffer.putLong(int, long)</code></a>
  <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putShort(short)" title="class or interface in java.nio"><code>ByteBuffer.putShort(short)</code></a>
- <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putShort(int, short)" title="class or interface in java.nio"><code>ByteBuffer.putShort(int, short)</code></a>
+ <li> <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/ByteBuffer.html?is-external=true#putShort(int,%20short)" title="class or interface in java.nio"><code>ByteBuffer.putShort(int, short)</code></a>
  <li>all other methods that do not influence <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#position()" title="class or interface in java.nio"><code>Buffer.position()</code></a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#limit()" title="class or interface in java.nio"><code>Buffer.limit()</code></a> and
  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/nio/Buffer.html?is-external=true#capacity()" title="class or interface in java.nio"><code>Buffer.capacity()</code></a>
  </ul></div>
@@ -570,7 +582,7 @@
 <li class="blockList">
 <h4>isEOS</h4>
 <pre>boolean&nbsp;isEOS()</pre>
-<div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+<div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </li>
 </ul>
 <a name="setEOS(boolean)">
@@ -580,7 +592,31 @@
 <li class="blockList">
 <h4>setEOS</h4>
 <pre>void&nbsp;setEOS(boolean&nbsp;eos)</pre>
-<div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream of buffers.</div>
+<div class="block">Sets the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
+</li>
+</ul>
+<a name="isCCAM()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isCCAM</h4>
+<pre>boolean&nbsp;isCCAM()</pre>
+<div class="block">Returns the <em>Close Channel After Me</em> flag.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
+</li>
+</ul>
+<a name="setCCAM(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCCAM</h4>
+<pre>void&nbsp;setCCAM(boolean&nbsp;ccam)</pre>
+<div class="block">Sets the <em>Close Channel After Me</em> flag.</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>4.4</dd></dl>
 </li>
 </ul>
 <a name="release()">
@@ -700,6 +736,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

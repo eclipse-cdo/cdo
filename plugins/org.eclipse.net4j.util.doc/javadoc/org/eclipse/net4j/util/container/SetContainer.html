@@ -83,10 +83,12 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="delegate/IContainerSortedSet.html" title="&#171;interface&#187; IContainerSortedSet (org.eclipse.net4j.util.container.delegate)" alt="" coords="5,158,261,213"/>
-<area shape="rect" id="node2" href="delegate/IContainerSet.html" title="&#171;interface&#187; IContainerSet (org.eclipse.net4j.util.container.delegate)" alt="" coords="291,158,547,213"/>
-<area shape="rect" id="node3" href="Container.html" title="Container" alt="" coords="237,6,315,31"/>
-<area shape="rect" id="node4" href="SetContainer.html" title="SetContainer" alt="" coords="227,75,324,101"/>
+<area shape="rect" id="node1" href="delegate/IContainerSortedSet.html" title="&#171;interface&#187; IContainerSortedSet (org.eclipse.net4j.util.container.delegate)" alt="" coords="5,171,261,226"/>
+<area shape="rect" id="node2" href="delegate/IContainerSet.html" title="&#171;interface&#187; IContainerSet (org.eclipse.net4j.util.container.delegate)" alt="" coords="291,171,547,226"/>
+<area shape="rect" id="node3" href="IContainer.Persistable.html" title="&#171;interface&#187; IContainer.Persistable" alt="" coords="25,5,175,45"/>
+<area shape="rect" id="node4" href="IContainer.Modifiable.html" title="&#171;interface&#187; IContainer.Modifiable" alt="" coords="205,5,347,45"/>
+<area shape="rect" id="node5" href="Container.html" title="Container" alt="" coords="377,13,455,38"/>
+<area shape="rect" id="node6" href="SetContainer.html" title="SetContainer" alt="" coords="227,89,324,114"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="SetContainer.png" usemap="#APIVIZ" border="0"></div>
 <ul class="inheritance">
@@ -122,12 +124,13 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></dd>
+<dd><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public class <span class="strong">SetContainer&lt;E&gt;</span>
-extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html" title="class in org.eclipse.net4j.util.container">Container</a>&lt;E&gt;</pre>
+extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html" title="class in org.eclipse.net4j.util.container">Container</a>&lt;E&gt;
+implements <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;E&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;E&gt;</pre>
 <div class="block">An implementation of a <a href="../../../../../org/eclipse/net4j/util/container/Container.html" title="class in org.eclipse.net4j.util.container"><code>container</code></a> that stores its <a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#getElements()"><code>elements</code></a> in a <a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#getSet()"><code>set</code></a>.</div>
 <dl><dt><span class="strong">Since:</span></dt>
   <dd>3.2</dd>
@@ -150,7 +153,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;</code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="type parameter in IContainer.Modifiable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="type parameter in IContainer.Persistable">E</a>&gt;, <a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="type parameter in IContainer.Persistence">E</a>&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
@@ -191,7 +194,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#SetContainer(java.lang.Class)">SetContainer</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;componentType)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#SetContainer(java.lang.Class, java.util.Set)">SetContainer</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;componentType,
+<td class="colOne"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#SetContainer(java.lang.Class,%20java.util.Set)">SetContainer</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;componentType,
             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;set)</code>&nbsp;</td>
 </tr>
 </table>
@@ -211,11 +214,41 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#addElement(E)">addElement</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#addAllElements(java.util.Collection)">addAllElements</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;elements)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#addElement(E)">addElement</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#clear()">clear</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#containerModified()">containerModified</a></strong>()</code>
+<div class="block">Called outside synchronized(this).</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#doActivate()">doActivate</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#doDeactivate()">doDeactivate</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#elementAdded(E)">elementAdded</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</code>
+<div class="block">Called inside synchronized(this).</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#elementRemoved(E)">elementRemoved</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</code>
+<div class="block">Called inside synchronized(this).</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></td>
@@ -226,24 +259,52 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#getElements()">getElements</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#getPersistence()">getPersistence</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#getSet()">getSet</a></strong>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#isEmpty()">isEmpty</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#isSavedWhenModified()">isSavedWhenModified</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#load()">load</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#removeAllElements(java.util.Collection)">removeAllElements</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;elements)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#removeElement(E)">removeElement</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#save()">save</a></strong>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#setPersistence(org.eclipse.net4j.util.container.IContainer.Persistence)">setPersistence</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;persistence)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#sortElements(E[])">sortElements</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>[]&nbsp;array)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#sortElements(E[])">sortElements</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>[]&nbsp;array)</code>
+<div class="block">Called outside synchronized(this).</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#validateElement(E)">validateElement</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</code>&nbsp;</td>
+<td class="colLast"><code><strong><a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html#validateElement(E)">validateElement</a></strong>(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</code>
+<div class="block">Called outside synchronized(this).</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -251,28 +312,28 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../org/eclipse/net4j/util/container/Container.html" title="class in org.eclipse.net4j.util.container">Container</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireContainerEvent(E[], org.eclipse.net4j.util.container.IContainerDelta.Kind)">fireContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireContainerEvent(E, org.eclipse.net4j.util.container.IContainerDelta.Kind)">fireContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireContainerEvent(java.util.List)">fireContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementAddedEvent(E)">fireElementAddedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementRemovedEvent(E)">fireElementRemovedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementsAddedEvent(E[])">fireElementsAddedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementsRemovedEvent(E[])">fireElementsRemovedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#newContainerEvent()">newContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#newContainerEvent(E, org.eclipse.net4j.util.container.IContainerDelta.Kind)">newContainerEvent</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireContainerEvent(E[],%20org.eclipse.net4j.util.container.IContainerDelta.Kind)">fireContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireContainerEvent(E,%20org.eclipse.net4j.util.container.IContainerDelta.Kind)">fireContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireContainerEvent(java.util.List)">fireContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementAddedEvent(E)">fireElementAddedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementRemovedEvent(E)">fireElementRemovedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementsAddedEvent(E[])">fireElementsAddedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireElementsRemovedEvent(E[])">fireElementsRemovedEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#newContainerEvent()">newContainerEvent</a>, <a href="../../../../../org/eclipse/net4j/util/container/Container.html#newContainerEvent(E,%20org.eclipse.net4j.util.container.IContainerDelta.Kind)">newContainerEvent</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(boolean, java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(java.lang.Object, java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull(java.lang.Object, java.lang.String)">checkNull</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(boolean, java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(java.lang.Object, java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doActivate()">doActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doDeactivate()">doDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString()">toString</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(boolean,%20java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkArg(java.lang.Object,%20java.lang.String)">checkArg</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkNull(java.lang.Object,%20java.lang.String)">checkNull</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(boolean,%20java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#checkState(java.lang.Object,%20java.lang.String)">checkState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a>, <a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../org/eclipse/net4j/util/event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners()">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
+<code><a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,%20org.eclipse.net4j.util.event.IListener[])">fireEvent</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getListeners()">getListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../../../../../org/eclipse/net4j/util/event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long,%20int)" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier">
@@ -331,6 +392,45 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <pre>public final&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;getComponentType()</pre>
 </li>
 </ul>
+<a name="getPersistence()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPersistence</h4>
+<pre>public final&nbsp;<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;getPersistence()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html#getPersistence()">getPersistence</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
+<a name="setPersistence(org.eclipse.net4j.util.container.IContainer.Persistence)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setPersistence</h4>
+<pre>public final&nbsp;void&nbsp;setPersistence(<a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistence.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;persistence)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html#setPersistence(org.eclipse.net4j.util.container.IContainer.Persistence)">setPersistence</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
+<a name="isSavedWhenModified()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSavedWhenModified</h4>
+<pre>public&nbsp;boolean&nbsp;isSavedWhenModified()</pre>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
 <a name="isEmpty()">
 <!--   -->
 </a>
@@ -353,15 +453,10 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <li class="blockList">
 <h4>getElements</h4>
 <pre>public&nbsp;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>[]&nbsp;getElements()</pre>
-</li>
-</ul>
-<a name="clear()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clear</h4>
-<pre>public&nbsp;void&nbsp;clear()</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html#getElements()">getElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+</dl>
 </li>
 </ul>
 <a name="addElement(java.lang.Object)">
@@ -373,6 +468,24 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <li class="blockList">
 <h4>addElement</h4>
 <pre>public&nbsp;boolean&nbsp;addElement(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html#addElement(E)">addElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="addAllElements(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addAllElements</h4>
+<pre>public&nbsp;boolean&nbsp;addAllElements(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;elements)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html#addAllElements(java.util.Collection)">addAllElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 <a name="removeElement(java.lang.Object)">
@@ -384,6 +497,95 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <li class="blockList">
 <h4>removeElement</h4>
 <pre>public&nbsp;boolean&nbsp;removeElement(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html#removeElement(E)">removeElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="removeAllElements(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeAllElements</h4>
+<pre>public&nbsp;boolean&nbsp;removeAllElements(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;&nbsp;elements)</pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html#removeAllElements(java.util.Collection)">removeAllElements</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+<dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
+<a name="clear()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear</h4>
+<pre>public&nbsp;void&nbsp;clear()</pre>
+</li>
+</ul>
+<a name="load()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>load</h4>
+<pre>public&nbsp;void&nbsp;load()
+          throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html#load()">load</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
+<a name="save()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>save</h4>
+<pre>public&nbsp;void&nbsp;save()
+          throws <a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
+<dl>
+<dt><strong>Specified by:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html#save()">save</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/container/IContainer.Persistable.html" title="interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&gt;</code></dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/io/IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
+<a name="doActivate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>doActivate</h4>
+<pre>protected&nbsp;void&nbsp;doActivate()
+                   throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doActivate()">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd></dl>
+</li>
+</ul>
+<a name="doDeactivate()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>doDeactivate</h4>
+<pre>protected&nbsp;void&nbsp;doDeactivate()
+                     throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
+<dl>
+<dt><strong>Overrides:</strong></dt>
+<dd><code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html#doDeactivate()">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/eclipse/net4j/util/lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dt><span class="strong">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd></dl>
 </li>
 </ul>
 <a name="getSet()">
@@ -404,6 +606,7 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <li class="blockList">
 <h4>sortElements</h4>
 <pre>protected&nbsp;<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>[]&nbsp;sortElements(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>[]&nbsp;array)</pre>
+<div class="block">Called outside synchronized(this).</div>
 </li>
 </ul>
 <a name="validateElement(java.lang.Object)">
@@ -411,10 +614,51 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 </a><a name="validateElement(E)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>validateElement</h4>
 <pre>protected&nbsp;boolean&nbsp;validateElement(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</pre>
+<div class="block">Called outside synchronized(this).</div>
+</li>
+</ul>
+<a name="containerModified()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>containerModified</h4>
+<pre>protected&nbsp;void&nbsp;containerModified()</pre>
+<div class="block">Called outside synchronized(this).</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
+<a name="elementAdded(java.lang.Object)">
+<!--   -->
+</a><a name="elementAdded(E)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>elementAdded</h4>
+<pre>protected&nbsp;void&nbsp;elementAdded(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</pre>
+<div class="block">Called inside synchronized(this).</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
+</li>
+</ul>
+<a name="elementRemoved(java.lang.Object)">
+<!--   -->
+</a><a name="elementRemoved(E)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>elementRemoved</h4>
+<pre>protected&nbsp;void&nbsp;elementRemoved(<a href="../../../../../org/eclipse/net4j/util/container/SetContainer.html" title="type parameter in SetContainer">E</a>&nbsp;element)</pre>
+<div class="block">Called inside synchronized(this).</div>
+<dl><dt><span class="strong">Since:</span></dt>
+  <dd>3.5</dd></dl>
 </li>
 </ul>
 </li>
@@ -483,6 +727,6 @@ extends <a href="../../../../../org/eclipse/net4j/util/container/Container.html"
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

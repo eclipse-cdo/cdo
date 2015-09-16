@@ -2,6 +2,7 @@ org.eclipse.net4j.util
 org.eclipse.net4j.util.cache
 org.eclipse.net4j.util.collection
 org.eclipse.net4j.util.concurrent
+org.eclipse.net4j.util.confirmation
 org.eclipse.net4j.util.container
 org.eclipse.net4j.util.container.delegate
 org.eclipse.net4j.util.event
@@ -22,6 +23,7 @@ org.eclipse.net4j.util.security
 org.eclipse.net4j.util.transaction
 org.eclipse.net4j.util.ui
 org.eclipse.net4j.util.ui.actions
+org.eclipse.net4j.util.ui.confirmation
 org.eclipse.net4j.util.ui.container
 org.eclipse.net4j.util.ui.dnd
 org.eclipse.net4j.util.ui.handlers

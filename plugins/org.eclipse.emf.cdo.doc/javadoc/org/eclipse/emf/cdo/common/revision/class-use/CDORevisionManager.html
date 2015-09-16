@@ -140,6 +140,10 @@
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></td>
 <td class="colLast"><span class="strong">CDORevisionUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createRevisionManager(org.eclipse.emf.cdo.common.revision.CDORevisionCache)">createRevisionManager</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a>&nbsp;cache)</code>&nbsp;</td>
 </tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></td>
+<td class="colLast"><span class="strong">CDORevisionsLoadedEvent.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionsLoadedEvent.html#getSource()">getSource</a></strong>()</code>&nbsp;</td>
+</tr>
 </tbody>
 </table>
 <table border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
@@ -151,7 +155,7 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><span class="strong">CDORevisionUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createChangeSetData(java.util.Set, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.revision.CDORevisionManager)">createChangeSetData</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+<td class="colLast"><span class="strong">CDORevisionUtil.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#createChangeSetData(java.util.Set,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.cdo.common.revision.CDORevisionManager)">createChangeSetData</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
                    <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
                    <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
                    <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager)</code>&nbsp;</td>
@@ -318,7 +322,7 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/ManagedRevisionProvider.html#ManagedRevisionProvider(org.eclipse.emf.cdo.common.revision.CDORevisionManager, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">ManagedRevisionProvider</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
+<td class="colLast"><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/ManagedRevisionProvider.html#ManagedRevisionProvider(org.eclipse.emf.cdo.common.revision.CDORevisionManager,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">ManagedRevisionProvider</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
                        <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -337,10 +341,10 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<td class="colLast"><span class="strong">CDORevisionPrefetchingPolicy.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html#loadAhead(org.eclipse.emf.cdo.common.revision.CDORevisionManager, org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EStructuralFeature, org.eclipse.emf.cdo.common.revision.CDOList, int, org.eclipse.emf.cdo.common.id.CDOID)">loadAhead</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
+<td class="colLast"><span class="strong">CDORevisionPrefetchingPolicy.</span><code><strong><a href="../../../../../../../org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html#loadAhead(org.eclipse.emf.cdo.common.revision.CDORevisionManager,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.ecore.EObject,%20org.eclipse.emf.ecore.EStructuralFeature,%20org.eclipse.emf.cdo.common.revision.CDOList,%20int,%20org.eclipse.emf.cdo.common.id.CDOID)">loadAhead</a></strong>(<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
          <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;targetObject,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature,
+         org.eclipse.emf.ecore.EObject&nbsp;targetObject,
+         org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature,
          <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;list,
          int&nbsp;accessIndex,
          <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;accessID)</code>&nbsp;</td>
@@ -396,6 +400,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

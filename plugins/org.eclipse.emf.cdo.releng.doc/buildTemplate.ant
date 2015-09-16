@@ -13,15 +13,14 @@
 
 	<!-- GENERATION WARNING -->
 
-	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.3.properties" />
-	<property name="path.tp" value=".buckminster/tp" />
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc.properties" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
+  <loadfile property="path.tp" srcfile="${tp.classpath.file}" />
 
 	<property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0" />
+	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
 	<property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
 	<property name="platform.api" location="plugins/org.eclipse.emf.cdo.releng.doc/package-lists/platform" />
-
 
 	<property name="project.path" value="plugins/${PROJECT-NAME}" />
 	<property file="${project.path}/plugin.properties" />
@@ -36,12 +35,7 @@
 	<!-- ARTICLE SKIP -->
 
 	<path id="javadoc.classpath">
-		<fileset dir="${path.tp}/plugins">
-			<include name="**/*.jar" />
-			<exclude name="**/*carbon*" />
-			<exclude name="**/*.source_*" />
-			<exclude name="**/*.doc_*" />
-		</fileset>
+		<pathelement path="${path.tp}"/>
 		<fileset dir="plugins">
 			<include name="**/*.jar" />
 		</fileset>

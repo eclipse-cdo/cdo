@@ -11,9 +11,9 @@
 -->
 <project name="JavaDoc" default="build" basedir="../..">
 
-	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.1.properties" />
-	<property name="path.tp" value=".buckminster/tp" />
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc.properties" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
+	<loadfile property="path.tp" srcfile="${tp.classpath.file}" />
 
 	<property name="root" location="${basedir}" />
 	<echo message="Root: ${root}" />
@@ -22,13 +22,9 @@
 
 	<target name="assemble.scripts">
 		<java classname="org.eclipse.emf.cdo.releng.doc.AssembleScripts" failonerror="true">
+			<classpath path="${path.tp}" />
 			<classpath path="${releng.project}/bin" />
 			<classpath path="${path.supplemental}/tools.jar" />
-			<classpath>
-				<fileset dir="${path.tp}/plugins">
-					<include name="**/*.jar" />
-				</fileset>
-			</classpath>
 			<arg file="${root}" />
 		</java>
 	</target>

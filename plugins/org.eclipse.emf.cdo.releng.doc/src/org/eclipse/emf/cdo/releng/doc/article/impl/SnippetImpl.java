@@ -519,7 +519,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     {
       if (callout < size)
       {
-        Tag tag = callouts.get(size).getTag();
+        Tag tag = callouts.get(callout).getTag();
         String link = ArticleUtil.makeConsoleLink(tag.holder(), tag.position());
         System.err.println("Too many callout descriptions: " + link);
       }
@@ -546,7 +546,7 @@ public class SnippetImpl extends EmbeddableElementImpl implements Snippet
     alt = alt.replaceAll("\"", "&quot;");
 
     return "<a name=\"" + name + nameSuffix + "\" href=\"#" + name + hrefSuffix + "\" alt=\"" + alt + "\" title=\""
-    + alt + "\">" + image + "</a>";
+        + alt + "\">" + image + "</a>";
   }
 
 } // SnippetImpl

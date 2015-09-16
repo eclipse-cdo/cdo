@@ -172,11 +172,12 @@ function windowTitle()
             &nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;}<br/>
             <br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>multiplexChannel(InternalChannel&nbsp;<a name="callout_JMSConnector_1_code" href="#callout_JMSConnector_1" alt="The channel must not be null." title="The channel must not be null."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;channel)<br/>
+            &nbsp;&nbsp;&hellip;<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>registerChannelWithPeer(<font color="#7f0055"><b>short&nbsp;</b></font>channelID,&nbsp;<font color="#7f0055"><b>long&nbsp;</b></font>timeout,&nbsp;IProtocol&lt;?&gt;&nbsp;protocol)&nbsp;<font color="#7f0055"><b>throws&nbsp;</b></font>ChannelException<br/>
             &nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;&hellip;<br/>
             }
           </code>
         </div>
@@ -212,6 +213,6 @@ function windowTitle()
 <p align="right">
 <a href="ConnectingToRepositories.html" title="Backward to Connecting To Repositories"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="XmlSnippets.html" title="Forward to Embedding XML Snippets"><img src="../../../images/forward.png" border="0"></a></p>
 <HR>
-<i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>
 </HTML>

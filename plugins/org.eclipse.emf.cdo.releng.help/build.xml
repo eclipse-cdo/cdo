@@ -15,15 +15,14 @@
 	<!-- THIS FILE HAS BEEN GENERATED, DO NOT CHANGE -->
 	<!-- =========================================== -->
 
-	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc_4.3.properties" />
-	<property name="path.tp" value=".buckminster/tp" />
+	<property file="${user.home}/org.eclipse.emf.cdo.releng.doc.properties" />
 	<property name="path.supplemental" value="${user.home}/git/local/org.eclipse.emf.cdo.releng.doc.supplemental" />
+  <loadfile property="path.tp" srcfile="${tp.classpath.file}" />
 
 	<property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0" />
+	<property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
 	<property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
 	<property name="platform.api" location="plugins/org.eclipse.emf.cdo.releng.doc/package-lists/platform" />
-
 
 	<property name="project.path" value="plugins/org.eclipse.emf.cdo.releng.help" />
 	<property file="${project.path}/plugin.properties" />
@@ -33,15 +32,11 @@
 	<property name="schemadoc.destdir" value="${project.path}/schemadoc" />
 	<property name="article.destdir" value="${project.path}/html" />
 	<property name="article.sources" value="${project.path}/src" />
+	<property name="java.skip" value="true" />
 	<property name="schema.skip" value="true" />
 
 	<path id="javadoc.classpath">
-		<fileset dir="${path.tp}/plugins">
-			<include name="**/*.jar" />
-			<exclude name="**/*carbon*" />
-			<exclude name="**/*.source_*" />
-			<exclude name="**/*.doc_*" />
-		</fileset>
+		<pathelement path="${path.tp}"/>
 		<fileset dir="plugins">
 			<include name="**/*.jar" />
 		</fileset>
@@ -101,56 +96,8 @@
 			</doclet>
 
 			<fileset dir="plugins" defaultexcludes="yes">
-				<include name="org.eclipse.emf.cdo.releng.predicates.edit/src/org/eclipse/emf/cdo/releng/predicates/provider/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.predicates/src/org/eclipse/emf/cdo/releng/predicates/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.predicates/src/org/eclipse/emf/cdo/releng/predicates/impl/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.predicates/src/org/eclipse/emf/cdo/releng/predicates/util/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.preferences.edit/src/org/eclipse/emf/cdo/releng/preferences/provider/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.preferences/src/org/eclipse/emf/cdo/releng/preferences/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.preferences/src/org/eclipse/emf/cdo/releng/preferences/impl/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.preferences/src/org/eclipse/emf/cdo/releng/preferences/util/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.projectconfig.edit/src/org/eclipse/emf/cdo/releng/projectconfig/provider/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.projectconfig/src/org/eclipse/emf/cdo/releng/projectconfig/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.projectconfig/src/org/eclipse/emf/cdo/releng/projectconfig/impl/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.projectconfig/src/org/eclipse/emf/cdo/releng/projectconfig/util/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.workingsets.edit/src/org/eclipse/emf/cdo/releng/workingsets/provider/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.workingsets/src/org/eclipse/emf/cdo/releng/workingsets/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.workingsets/src/org/eclipse/emf/cdo/releng/workingsets/impl/*.java" />
-				<include name="org.eclipse.emf.cdo.releng.workingsets/src/org/eclipse/emf/cdo/releng/workingsets/util/*.java" />
 			</fileset>
 
-			<group title="Dynamic Working Sets">
-				<package name="org.eclipse.emf.cdo.releng.workingsets" />
-				<package name="org.eclipse.emf.cdo.releng.workingsets.impl" />
-				<package name="org.eclipse.emf.cdo.releng.workingsets.util" />
-			</group>
-			<group title="Dynamic Working Sets Edit Support">
-				<package name="org.eclipse.emf.cdo.releng.workingsets.provider" />
-			</group>
-			<group title="Preference Management">
-				<package name="org.eclipse.emf.cdo.releng.preferences" />
-				<package name="org.eclipse.emf.cdo.releng.preferences.impl" />
-				<package name="org.eclipse.emf.cdo.releng.preferences.util" />
-			</group>
-			<group title="Preference Management Edit Support">
-				<package name="org.eclipse.emf.cdo.releng.preferences.provider" />
-			</group>
-			<group title="Project Configuration">
-				<package name="org.eclipse.emf.cdo.releng.projectconfig" />
-				<package name="org.eclipse.emf.cdo.releng.projectconfig.impl" />
-				<package name="org.eclipse.emf.cdo.releng.projectconfig.util" />
-			</group>
-			<group title="Project Configuration Edit Support">
-				<package name="org.eclipse.emf.cdo.releng.projectconfig.provider" />
-			</group>
-			<group title="Project Predicates">
-				<package name="org.eclipse.emf.cdo.releng.predicates" />
-				<package name="org.eclipse.emf.cdo.releng.predicates.impl" />
-				<package name="org.eclipse.emf.cdo.releng.predicates.util" />
-			</group>
-			<group title="Project Predicates Edit Support">
-				<package name="org.eclipse.emf.cdo.releng.predicates.provider" />
-			</group>
 
 			<link href="${jdk.link}" />
 			<link href="${emf.link}" />
@@ -329,16 +276,6 @@
 			<package name="org.eclipse.emf.cdo.releng.help.writer.authoring" />
 			<package name="org.eclipse.emf.cdo.releng.help.writer.building" />
 			<package name="org.eclipse.emf.cdo.releng.help.writer.examples" />
-			<package name="org.eclipse.net4j.doc" />
-			<package name="org.eclipse.net4j.doc.online" />
-			<package name="org.eclipse.net4j.doc.reference" />
-			<package name="org.eclipse.net4j.doc.reference.api" />
-			<package name="org.eclipse.net4j.doc.reference.schema" />
-			<package name="org.eclipse.net4j.util.doc" />
-			<package name="org.eclipse.net4j.util.doc.online" />
-			<package name="org.eclipse.net4j.util.doc.reference" />
-			<package name="org.eclipse.net4j.util.doc.reference.api" />
-			<package name="org.eclipse.net4j.util.doc.reference.schema" />
 		</javadoc>
 	</target>
 

@@ -6,21 +6,34 @@
 <title>CDOURIUtil (CDO Model Repository Documentation)</title>
 <meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<script type="text/javascript" src="../../../../../script.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
-    if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CDOURIUtil (CDO Model Repository Documentation)";
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="CDOURIUtil (CDO Model Repository Documentation)";
+        }
+    }
+    catch(err) {
     }
 //-->
+var methods = {"i0":9,"i1":9,"i2":9,"i3":41,"i4":9,"i5":41,"i6":41,"i7":9,"i8":9,"i9":9,"i10":41};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar_top">
+<div class="topNav"><a name="navbar.top">
 <!--   -->
-</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -35,15 +48,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/util/CDOURIUtil.html" target="_top">Frames</a></li>
-<li><a href="CDOURIUtil.html" target="_top">No Frames</a></li>
+<li><a href="CDOURIUtil.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -61,18 +74,18 @@
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_top">
+<a name="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -99,9 +112,9 @@
 <li class="blockList">
 <hr>
 <br>
-<pre>public final class <span class="strong">CDOURIUtil</span>
+<pre>public final class <span class="typeNameLabel">CDOURIUtil</span>
 extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block">Various static methods that may help with CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URIs</code></a>.
+<div class="block">Various static methods that may help with CDO-specific <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URIs</code></a>.
  <p>
  CDO URIs are in one of two different formats, either canonical or connection-aware. The canonical format is:
 
@@ -111,7 +124,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
  The non-terminals being:
  <p>
  <ul>
- <li><i>RepositoryUUID</i>: the <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()"><code>UUID</code></a> of the repository. By default it's generated when a repository is first started.
+ <li><i>RepositoryUUID</i>: the <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID--"><code>UUID</code></a> of the repository. By default it's generated when a repository is first started.
  If the default format is not adequate the UUID value can be overridden in the repository setup with the <code>overrideUUID</code> property.
  <li><i>ResourcePath</i>: the full path of the <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> within the repository, segments separated by slashes, no leading slash.
  <li><i>Param</i>: one of the following
@@ -120,15 +133,17 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
  </ul>
  </ul>
 
- URIs in the canonical form to resolve to <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a> properly require the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> to be
+ URIs in the canonical form to resolve to <a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resources</code></a> properly require the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> to be
  configured <i>externally</i> so that the connection to the correct repository can be established, for example:
  <blockquote><code>session.openView(resourceSet);</code></blockquote>
 
  Note that resources preserve their original URI in the scope of the managing <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>, that is not necessarily in canonical format.
  <p>
  For a description of the connection-aware URI format refer to <a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><code>CDOURIData</code></a>.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>2.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>2.0</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -137,11 +152,11 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_summary">
+<li class="blockList"><a name="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
 <caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -149,42 +164,42 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#PROTOCOL_NAME">PROTOCOL_NAME</a></strong></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#PROTOCOL_NAME">PROTOCOL_NAME</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#SEGMENT_SEPARATOR">SEGMENT_SEPARATOR</a></strong></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#SEGMENT_SEPARATOR">SEGMENT_SEPARATOR</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static char</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#SEGMENT_SEPARATOR_CHAR">SEGMENT_SEPARATOR_CHAR</a></strong></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#SEGMENT_SEPARATOR_CHAR">SEGMENT_SEPARATOR_CHAR</a></span></code>&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_summary">
+<li class="blockList"><a name="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
-<tr class="altColor">
+<tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#analyzePath(java.lang.String)">analyzePath</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#analyzePath-java.lang.String-">analyzePath</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#analyzePath(org.eclipse.emf.common.util.URI)">analyzePath</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#analyzePath-org.eclipse.emf.common.util.URI-">analyzePath</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#convertExternalCDOID(org.eclipse.emf.common.util.URI, org.eclipse.emf.cdo.common.id.CDOID)">convertExternalCDOID</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;baseURI,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#convertExternalCDOID-org.eclipse.emf.common.util.URI-org.eclipse.emf.cdo.common.id.CDOID-">convertExternalCDOID</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;baseURI,
                     <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newCDOID)</code>
 <div class="block">Converting temporary CDOID to External CDOID <br>
  e.g.: <br>
@@ -193,55 +208,60 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
  return = cdo://2a57dfcf-8f97-4d39-8e17-9d99ae5c4b3c/resB#1/2</div>
 </td>
 </tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI(org.eclipse.emf.cdo.session.CDOSession, java.lang.String)">createResourceURI</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI(org.eclipse.emf.cdo.view.CDOView, java.lang.String)">createResourceURI</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI(java.lang.String, java.lang.String)">createResourceURI</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI-org.eclipse.emf.cdo.session.CDOSession-java.lang.String-">createResourceURI</a></span>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
                  <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
-<div class="block">
- cdo://repositoryUUID/path
- 
- The path is added at the end of "cdo://repositoryUUID".</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">This method is subject to removal in a future release.</span></div>
+</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#extractRepositoryUUID(org.eclipse.emf.common.util.URI)">extractRepositoryUUID</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI-org.eclipse.emf.cdo.view.CDOView-java.lang.String-">createResourceURI</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI-java.lang.String-java.lang.String-">createResourceURI</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
+                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">This method is subject to removal in a future release.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#extractRepositoryUUID-org.eclipse.emf.common.util.URI-">extractRepositoryUUID</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#extractResourceFolderAndName(org.eclipse.emf.common.util.URI)">extractResourceFolderAndName</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#extractResourceFolderAndName-org.eclipse.emf.common.util.URI-">extractResourceFolderAndName</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#extractResourcePath(org.eclipse.emf.common.util.URI)">extractResourcePath</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#extractResourcePath-org.eclipse.emf.common.util.URI-">extractResourcePath</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#getParameters(java.lang.String)">getParameters</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;query)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#getParameters-java.lang.String-">getParameters</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;query)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#validateURI(org.eclipse.emf.common.util.URI)">validateURI</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;&nbsp;</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIUtil.html#validateURI-org.eclipse.emf.common.util.URI-">validateURI</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString()" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
 </ul>
@@ -253,7 +273,7 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_detail">
+<li class="blockList"><a name="field.detail">
 <!--   -->
 </a>
 <h3>Field Detail</h3>
@@ -264,9 +284,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <li class="blockList">
 <h4>PROTOCOL_NAME</h4>
 <pre>public static final&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> PROTOCOL_NAME</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.util.CDOURIUtil.PROTOCOL_NAME">Constant Field Values</a></dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.0</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.util.CDOURIUtil.PROTOCOL_NAME">Constant Field Values</a></dd>
+</dl>
 </li>
 </ul>
 <a name="SEGMENT_SEPARATOR_CHAR">
@@ -276,7 +299,10 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <li class="blockList">
 <h4>SEGMENT_SEPARATOR_CHAR</h4>
 <pre>public static final&nbsp;char SEGMENT_SEPARATOR_CHAR</pre>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.util.CDOURIUtil.SEGMENT_SEPARATOR_CHAR">Constant Field Values</a></dd></dl>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.util.CDOURIUtil.SEGMENT_SEPARATOR_CHAR">Constant Field Values</a></dd>
+</dl>
 </li>
 </ul>
 <a name="SEGMENT_SEPARATOR">
@@ -292,65 +318,75 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_detail">
+<li class="blockList"><a name="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="validateURI(org.eclipse.emf.common.util.URI)">
+<a name="validateURI-org.eclipse.emf.common.util.URI-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>validateURI</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
-public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)
-                        throws <a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i></i></div>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd></dl>
+public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)
+                                     throws <a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd>
+</dl>
 </li>
 </ul>
-<a name="extractRepositoryUUID(org.eclipse.emf.common.util.URI)">
+<a name="extractRepositoryUUID-org.eclipse.emf.common.util.URI-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>extractRepositoryUUID</h4>
-<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;extractRepositoryUUID(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;extractRepositoryUUID(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
-<a name="extractResourceFolderAndName(org.eclipse.emf.common.util.URI)">
+<a name="extractResourceFolderAndName-org.eclipse.emf.common.util.URI-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>extractResourceFolderAndName</h4>
-<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;extractResourceFolderAndName(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)
+<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;extractResourceFolderAndName(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)
                                              throws <a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd></dl>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd>
+</dl>
 </li>
 </ul>
-<a name="extractResourcePath(org.eclipse.emf.common.util.URI)">
+<a name="extractResourcePath-org.eclipse.emf.common.util.URI-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>extractResourcePath</h4>
-<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;extractResourcePath(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)
+<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;extractResourcePath(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)
                                   throws <a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></pre>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd></dl>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/InvalidURIException.html" title="class in org.eclipse.emf.cdo.util">InvalidURIException</a></code></dd>
+</dl>
 </li>
 </ul>
-<a name="createResourceURI(java.lang.String, java.lang.String)">
+<a name="createResourceURI-java.lang.String-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createResourceURI</h4>
-<pre>public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
-                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryUUID,
+                                                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">This method is subject to removal in a future release.</span></div>
 <div class="block"><p>
  cdo://repositoryUUID/path
  <p>
@@ -361,34 +397,36 @@ public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/mo
  path = /resA</div>
 </li>
 </ul>
-<a name="createResourceURI(org.eclipse.emf.cdo.view.CDOView, java.lang.String)">
+<a name="createResourceURI-org.eclipse.emf.cdo.view.CDOView-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createResourceURI</h4>
-<pre>public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
-                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<pre>public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+                                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 </li>
 </ul>
-<a name="createResourceURI(org.eclipse.emf.cdo.session.CDOSession, java.lang.String)">
+<a name="createResourceURI-org.eclipse.emf.cdo.session.CDOSession-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>createResourceURI</h4>
-<pre>public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
-                    <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public static&nbsp;<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+                                                 <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">This method is subject to removal in a future release.</span></div>
 </li>
 </ul>
-<a name="convertExternalCDOID(org.eclipse.emf.common.util.URI, org.eclipse.emf.cdo.common.id.CDOID)">
+<a name="convertExternalCDOID-org.eclipse.emf.common.util.URI-org.eclipse.emf.cdo.common.id.CDOID-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertExternalCDOID</h4>
-<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;convertExternalCDOID(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;baseURI,
-                         <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newCDOID)</pre>
+<pre>public static&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;convertExternalCDOID(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;baseURI,
+                                         <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;newCDOID)</pre>
 <div class="block">Converting temporary CDOID to External CDOID <br>
  e.g.: <br>
  baseURI = cdo://2a57dfcf-8f97-4d39-8e17-9d99ae5c4b3c/resB#5/2<br>
@@ -396,16 +434,16 @@ public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/mo
  return = cdo://2a57dfcf-8f97-4d39-8e17-9d99ae5c4b3c/resB#1/2</div>
 </li>
 </ul>
-<a name="analyzePath(org.eclipse.emf.common.util.URI)">
+<a name="analyzePath-org.eclipse.emf.common.util.URI-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>analyzePath</h4>
-<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;analyzePath(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
+<pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;analyzePath(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;uri)</pre>
 </li>
 </ul>
-<a name="analyzePath(java.lang.String)">
+<a name="analyzePath-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -414,15 +452,17 @@ public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/mo
 <pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;analyzePath(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 </li>
 </ul>
-<a name="getParameters(java.lang.String)">
+<a name="getParameters-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getParameters</h4>
 <pre>public static&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getParameters(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;query)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.0</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -433,9 +473,11 @@ public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/mo
 </div>
 <!-- ========= END OF CLASS DATA ========= -->
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar_bottom">
+<div class="bottomNav"><a name="navbar.bottom">
 <!--   -->
-</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -450,15 +492,15 @@ public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/mo
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html" title="class in org.eclipse.emf.cdo.util"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/util/CDOURIUtil.html" target="_top">Frames</a></li>
-<li><a href="CDOURIUtil.html" target="_top">No Frames</a></li>
+<li><a href="CDOURIUtil.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -476,21 +518,21 @@ public static&nbsp;void&nbsp;validateURI(<a href="http://download.eclipse.org/mo
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field_summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field_detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_bottom">
+<a name="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

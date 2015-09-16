@@ -6,21 +6,34 @@
 <title>InternalCDOView (CDO Model Repository Documentation)</title>
 <meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<script type="text/javascript" src="../../../../../script.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
-    if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="InternalCDOView (CDO Model Repository Documentation)";
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="InternalCDOView (CDO Model Repository Documentation)";
+        }
+    }
+    catch(err) {
     }
 //-->
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":38,"i24":6,"i25":6,"i26":6,"i27":6,"i28":6,"i29":38,"i30":6,"i31":38,"i32":6,"i33":6,"i34":6,"i35":6,"i36":6,"i37":6,"i38":6,"i39":6,"i40":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar_top">
+<div class="topNav"><a name="navbar.top">
 <!--   -->
-</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -35,15 +48,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOView.html" target="_top">Frames</a></li>
-<li><a href="InternalCDOView.html" target="_top">No Frames</a></li>
+<li><a href="InternalCDOView.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -60,19 +73,19 @@
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_top">
+<a name="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -95,7 +108,7 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../org/eclipse/emf/cdo/CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</a>&gt;, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>, <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>, <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</a></dd>
+<dd><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<a href="../../../../../org/eclipse/emf/cdo/CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</a>&gt;, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a>, <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>, <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a>, <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.properties">IPropertiesContainer</a></dd>
 </dl>
 <dl>
 <dt>All Known Subinterfaces:</dt>
@@ -103,15 +116,17 @@
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">InternalCDOView</span>
+<pre>public interface <span class="typeNameLabel">InternalCDOView</span>
 extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>, <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>2.0</dd>
-<dt><span class="strong">No Implement</span></dt>
-  <dd>This interface is not intended to be implemented by clients.</dd>
-<dt><span class="strong">No Extend</span></dt>
-  <dd>This interface is not intended to be extended by clients.</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>2.0</dd>
+<dt><span class="simpleTagLabel">No Implement</span></dt>
+<dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="simpleTagLabel">No Extend</span></dt>
+<dd>This interface is not intended to be extended by clients.</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -120,11 +135,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
+<li class="blockList"><a name="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -132,27 +147,27 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</a></strong></code>
-<div class="block">Optimizes the storage of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView()"><code>CDOObject.cdoView()</code></a> and <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState()"><code>CDOObject.cdoState()</code></a>.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</a></span></code>
+<div class="block">Optimizes the storage of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView--"><code>CDOObject.cdoView()</code></a> and <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState--"><code>CDOObject.cdoState()</code></a>.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.emf.cdo.view.CDOView">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.view.CDOView">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></h3>
 <code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Modifiable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistable</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer.Persistence</a>&lt;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">E</a>&gt;</code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
@@ -162,26 +177,33 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 </ul>
 <!-- =========== FIELD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_summary">
+<li class="blockList"><a name="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.view.CDOView">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#PROP_TIME_MACHINE_DISABLED">PROP_TIME_MACHINE_DISABLED</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
 <code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#INVALID_DATE">INVALID_DATE</a>, <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE">UNSPECIFIED_DATE</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.util.CDOUpdatable">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.util.CDOUpdatable">
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.util.<a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></h3>
 <code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#NO_TIMEOUT">NO_TIMEOUT</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.common.id.CDOIDProvider">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.common.id.CDOIDProvider">
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.common.id.<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a></h3>
@@ -191,131 +213,141 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 </ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_summary">
+<li class="blockList"><a name="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
-<tr class="altColor">
+<tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#attachResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">attachResource</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#attachResource-org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl-">attachResource</a></span>(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">clearResourcePathCacheIfNecessary</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#clearResourcePathCacheIfNecessary-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">clearResourcePathCacheIfNecessary</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#collectViewedRevisions(java.util.Map)">collectViewedRevisions</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;revisions)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#collectViewedRevisions-java.util.Map-">collectViewedRevisions</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;revisions)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertIDToObject(java.lang.Object)">convertIDToObject</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialID)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertIDToObject-java.lang.Object-">convertIDToObject</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialID)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID(java.lang.Object)">convertObjectToID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialObject)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID-java.lang.Object-">convertObjectToID</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialObject)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID(java.lang.Object, boolean)">convertObjectToID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialObject,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#convertObjectToID-java.lang.Object-boolean-">convertObjectToID</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialObject,
                  boolean&nbsp;onlyPersistedID)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#deregisterObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">deregisterObject</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#deregisterObject-org.eclipse.emf.spi.cdo.InternalCDOObject-">deregisterObject</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer()">getFeatureAnalyzer</a></strong>()</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer--">getFeatureAnalyzer</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getLockStates(java.util.Collection)">getLockStates</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getLockStates-java.util.Collection-">getLockStates</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code>
+<div class="block">Get an array of <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock states</code></a> corresponding to the specified collection of <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ids</code></a>.</div>
+</td>
 </tr>
-<tr class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getObjects()">getObjects</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getObjects--">getObjects</a></span>()</code>
 <div class="block">Returns an unmodifiable map of the objects managed by this view.</div>
 </td>
 </tr>
-<tr class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getResourceNodeID(java.lang.String)">getResourceNodeID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>&nbsp;</td>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getObjectsList--">getObjectsList</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getRepositoryName--">getRepositoryName</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getResourceNodeID-java.lang.String-">getResourceNodeID</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getRevision</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getRevision-org.eclipse.emf.cdo.common.id.CDOID-boolean-">getRevision</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
            boolean&nbsp;loadOnDemand)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getSession()">getSession</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getSession--">getSession</a></span>()</code>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> this view was opened by.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/CDOStore.html" title="interface in org.eclipse.emf.spi.cdo">CDOStore</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getStore()">getStore</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getStore--">getStore</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getViewAndState(org.eclipse.emf.cdo.CDOState)">getViewAndState</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;state)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getViewAndState-org.eclipse.emf.cdo.CDOState-">getViewAndState</a></span>(<a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;state)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getViewSet()">getViewSet</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#getViewSet--">getViewSet</a></span>()</code>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a> this view is associated with.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleAddAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">handleAddAdapter</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleAddAdapter-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.common.notify.Adapter-">handleAddAdapter</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
+                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">handleLockNotification</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleLockNotification-org.eclipse.emf.spi.cdo.InternalCDOView-org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo-">handleLockNotification</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
                       <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleObjectStateChanged(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.CDOState, org.eclipse.emf.cdo.CDOState)">handleObjectStateChanged</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleObjectStateChanged-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.cdo.CDOState-org.eclipse.emf.cdo.CDOState-">handleObjectStateChanged</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
                         <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
                         <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleRemoveAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">handleRemoveAdapter</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleRemoveAdapter-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.common.notify.Adapter-">handleRemoveAdapter</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
+                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#hasSubscription(org.eclipse.emf.cdo.common.id.CDOID)">hasSubscription</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#hasSubscription-org.eclipse.emf.cdo.common.id.CDOID-">hasSubscription</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean)">invalidate</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.List-java.util.List-java.util.Map-boolean-">invalidate</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
           long&nbsp;lastUpdateTime,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
           boolean&nbsp;async)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;
-<div class="block"><i>As of 4.2. use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)"><code>invalidate(CDOBranch, long, List, List, Map, boolean, boolean)</code></a></i></div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.2. use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.List-java.util.List-java.util.Map-boolean-boolean-"><code>invalidate(CDOBranch, long, List, List, Map, boolean, boolean)</code></a></span></div>
 </div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)">invalidate</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.List-java.util.List-java.util.Map-boolean-boolean-">invalidate</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
           long&nbsp;lastUpdateTime,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
@@ -323,160 +355,179 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
           boolean&nbsp;async,
           boolean&nbsp;clearResourcePathCache)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectLocked(org.eclipse.emf.cdo.CDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">isObjectLocked</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectLocked-org.eclipse.emf.cdo.CDOObject-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-boolean-">isObjectLocked</a></span>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
               <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
               boolean&nbsp;byOthers)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectNew(org.eclipse.emf.cdo.common.id.CDOID)">isObjectNew</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectNew-org.eclipse.emf.cdo.common.id.CDOID-">isObjectNew</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID, int)">prefetchRevisions</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#prefetchRevisions-org.eclipse.emf.cdo.common.id.CDOID-int-">prefetchRevisions</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                  int&nbsp;depth)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">registerObject</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerObject-org.eclipse.emf.spi.cdo.InternalCDOObject-">registerObject</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerProxyResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">registerProxyResource</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#remapObject(org.eclipse.emf.cdo.common.id.CDOID)">remapObject</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">setFeatureAnalyzer</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</code>
-<div class="block"><strong>Deprecated.</strong>&nbsp;</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerProxyResource-org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl-">registerProxyResource</a></span>(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">No longer supported.</span></div>
+</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setLastUpdateTime(long)">setLastUpdateTime</a></strong>(long&nbsp;lastUpdateTime)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#remapObject-org.eclipse.emf.cdo.common.id.CDOID-">remapObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setSession(org.eclipse.emf.spi.cdo.InternalCDOSession)">setSession</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;session)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">setFeatureAnalyzer</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
-<tr class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewID(int)">setViewID</a></strong>(int&nbsp;viewId)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setLastUpdateTime-long-">setLastUpdateTime</a></span>(long&nbsp;lastUpdateTime)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewSet(org.eclipse.emf.spi.cdo.InternalCDOViewSet)">setViewSet</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a>&nbsp;viewSet)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setProvider-org.eclipse.emf.cdo.view.CDOViewProvider-">setProvider</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&nbsp;provider)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#subscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">subscribe</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setRepositoryName-java.lang.String-">setRepositoryName</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i35" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setSession-org.eclipse.emf.spi.cdo.InternalCDOSession-">setSession</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;session)</code>&nbsp;</td>
+</tr>
+<tr id="i36" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewID-int-">setViewID</a></span>(int&nbsp;viewId)</code>&nbsp;</td>
+</tr>
+<tr id="i37" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewSet-org.eclipse.emf.spi.cdo.InternalCDOViewSet-">setViewSet</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a>&nbsp;viewSet)</code>&nbsp;</td>
+</tr>
+<tr id="i38" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#subscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">subscribe</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+</tr>
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#toTransaction()">toTransaction</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#toTransaction--">toTransaction</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#unsubscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">unsubscribe</a></strong>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#unsubscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">unsubscribe</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.view.CDOView">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.view.CDOView">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#addObjectHandler(org.eclipse.emf.cdo.view.CDOObjectHandler)">addObjectHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compareRevisions</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String, java.lang.String)">createQuery</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String, java.lang.String, java.lang.Object)">createQuery</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)">disableDurableLocking</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()">enableDurableLocking</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)">enableDurableLocking</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getBinaryResource(java.lang.String)">getBinaryResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID)">getObject</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID, boolean)">getObject</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject(T)">getObject</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObjectHandlers()">getObjectHandlers</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String)">getResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String, boolean)">getResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceFolder(java.lang.String)">getResourceFolder</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceNode(java.lang.String)">getResourceNode</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceSet()">getResourceSet</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource()">getRootResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getTextResource(java.lang.String)">getTextResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getURIHandler()">getURIHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasConflict()">hasConflict</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasResource(java.lang.String)">hasResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isDirty()">isDirty</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isInvalidationRunnerActive()">isInvalidationRunnerActive</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isLegacyModeEnabled()">isLegacyModeEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isObjectRegistered(org.eclipse.emf.cdo.common.id.CDOID)">isObjectRegistered</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long)">lockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, long, boolean)">lockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options()">options</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstances(org.eclipse.emf.ecore.EClass)">queryInstances</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstancesAsync(org.eclipse.emf.ecore.EClass)">queryInstancesAsync</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResources(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)">queryResources</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResourcesAsync(org.eclipse.emf.cdo.eresource.CDOResourceFolder, java.lang.String, boolean)">queryResourcesAsync</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject, org.eclipse.emf.ecore.EReference...)">queryXRefs</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefs</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync(java.util.Set, org.eclipse.emf.ecore.EReference...)">queryXRefsAsync</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#reload(org.eclipse.emf.cdo.CDOObject...)">reload</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#removeObjectHandler(org.eclipse.emf.cdo.view.CDOObjectHandler)">removeObjectHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">setBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranch, long)">setBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">setBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setResourcePathCache(java.util.Map)">setResourcePathCache</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setTimeStamp(long)">setTimeStamp</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects()">unlockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">unlockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">unlockObjects</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#addObjectHandler-org.eclipse.emf.cdo.view.CDOObjectHandler-">addObjectHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#compareRevisions-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">compareRevisions</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery-java.lang.String-java.lang.String-">createQuery</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createQuery-java.lang.String-java.lang.String-java.lang.Object-">createQuery</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createResourceURI-java.lang.String-">createResourceURI</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking-boolean-">disableDurableLocking</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking--">enableDurableLocking</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking-boolean-">enableDurableLocking</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getBinaryResource-java.lang.String-">getBinaryResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject-org.eclipse.emf.cdo.common.id.CDOID-">getObject</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject-org.eclipse.emf.cdo.common.id.CDOID-boolean-">getObject</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject-T-">getObject</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObjectHandlers--">getObjectHandlers</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getProvider--">getProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource-java.lang.String-">getResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource-java.lang.String-boolean-">getResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceFolder-java.lang.String-">getResourceFolder</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceNode-java.lang.String-">getResourceNode</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceSet--">getResourceSet</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getRootResource--">getRootResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getTextResource-java.lang.String-">getTextResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getURIHandler--">getURIHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasConflict--">hasConflict</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#hasResource-java.lang.String-">hasResource</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isDirty--">isDirty</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isInvalidationRunnerActive--">isInvalidationRunnerActive</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isLegacyModeEnabled--">isLegacyModeEnabled</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#isObjectRegistered-org.eclipse.emf.cdo.common.id.CDOID-">isObjectRegistered</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects-java.util.Collection-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-long-">lockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#lockObjects-java.util.Collection-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-long-boolean-">lockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#options--">options</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstances-org.eclipse.emf.ecore.EClass-">queryInstances</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstancesAsync-org.eclipse.emf.ecore.EClass-">queryInstancesAsync</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResources-org.eclipse.emf.cdo.eresource.CDOResourceFolder-java.lang.String-boolean-">queryResources</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryResourcesAsync-org.eclipse.emf.cdo.eresource.CDOResourceFolder-java.lang.String-boolean-">queryResourcesAsync</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.ecore.EReference...-">queryXRefs</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs-java.util.Set-org.eclipse.emf.ecore.EReference...-">queryXRefs</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync-java.util.Set-org.eclipse.emf.ecore.EReference...-">queryXRefsAsync</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#reload-org.eclipse.emf.cdo.CDOObject...-">reload</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#removeObjectHandler-org.eclipse.emf.cdo.view.CDOObjectHandler-">removeObjectHandler</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-">setBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranch-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.core.runtime.IProgressMonitor-">setBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranch-long-">setBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranch-long-org.eclipse.core.runtime.IProgressMonitor-">setBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">setBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.core.runtime.IProgressMonitor-">setBranchPoint</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setResourcePathCache-java.util.Map-">setResourcePathCache</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setTimeStamp-long-">setTimeStamp</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#setTimeStamp-long-org.eclipse.core.runtime.IProgressMonitor-">setTimeStamp</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects--">unlockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects-java.util.Collection-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-">unlockObjects</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#unlockObjects-java.util.Collection-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-boolean-">unlockObjects</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonView">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonView">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getDurableLockingID()">getDurableLockingID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getViewID()">getViewID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#isReadOnly()">isReadOnly</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getDurableLockingID--">getDurableLockingID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getViewID--">getViewID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#isReadOnly--">isReadOnly</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.lock.CDOLockOwner">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.lock.CDOLockOwner">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.lock.<a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getSessionID()">getSessionID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#isDurableView()">isDurableView</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#getSessionID--">getSessionID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html#isDurableView--">isDurableView</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.branch.CDOBranchPoint">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()">getBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()">getTimeStamp</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch--">getBranch</a>, <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp--">getTimeStamp</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.revision.CDORevisionProvider">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.revision.CDORevisionProvider">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID)">getRevision</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html#getRevision-org.eclipse.emf.cdo.common.id.CDOID-">getRevision</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.core.runtime.IAdaptable">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.properties.IPropertiesContainer">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.properties.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.properties">IPropertiesContainer</a></h3>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html?is-external=true#properties--" title="class or interface in org.eclipse.net4j.util.properties">properties</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.runtime.IAdaptable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.collection.Closeable">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.collection.Closeable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.collection.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close--" title="class or interface in org.eclipse.net4j.util.collection">close</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed--" title="class or interface in org.eclipse.net4j.util.collection">isClosed</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.util.CDOUpdatable">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.util.CDOUpdatable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.util.<a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#getLastUpdateTime()">getLastUpdateTime</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#runAfterUpdate(long, java.lang.Runnable)">runAfterUpdate</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long)">waitForUpdate</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long, long)">waitForUpdate</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#getLastUpdateTime--">getLastUpdateTime</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#runAfterUpdate-long-java.lang.Runnable-">runAfterUpdate</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-">waitForUpdate</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-long-">waitForUpdate</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.commit.CDOCommitHistory.Provider">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.commit.CDOCommitHistory.Provider">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html#getHistory()">getHistory</a>, <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html#getHistory(KEY)">getHistory</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html#getHistory--">getHistory</a>, <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html#getHistory-KEY-">getHistory</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements--" title="class or interface in org.eclipse.net4j.util.container">getElements</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty--" title="class or interface in org.eclipse.net4j.util.container">isEmpty</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.id.CDOIDProvider">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.id.CDOIDProvider">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.id.<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html#provideCDOID(java.lang.Object)">provideCDOID</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDProvider.html#provideCDOID-java.lang.Object-">provideCDOID</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate--" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState--" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a></code></li>
 </ul>
 </li>
 </ul>
@@ -488,11 +539,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_detail">
+<li class="blockList"><a name="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="setViewID(int)">
+<a name="setViewID-int-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -501,27 +552,70 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <pre>void&nbsp;setViewID(int&nbsp;viewId)</pre>
 </li>
 </ul>
-<a name="getSession()">
+<a name="setProvider-org.eclipse.emf.cdo.view.CDOViewProvider-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setProvider</h4>
+<pre>void&nbsp;setProvider(<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&nbsp;provider)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
+</dl>
+</li>
+</ul>
+<a name="getRepositoryName--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRepositoryName</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getRepositoryName()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
+</dl>
+</li>
+</ul>
+<a name="setRepositoryName-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRepositoryName</h4>
+<pre>void&nbsp;setRepositoryName(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
+</dl>
+</li>
+</ul>
+<a name="getSession--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSession</h4>
 <pre><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;getSession()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getSession()">CDOView</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getSession--">CDOView</a></code></span></div>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> this view was opened by.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getSession()">getSession</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a></code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getSession()">getSession</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></dd>
-<dt><span class="strong">Returns:</span></dt><dd>The session this view was opened by, or <code>null</code> if this view is closed.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection"><code>Closeable.close()</code></a>, 
-<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection"><code>Closeable.isClosed()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()"><code>CDOViewContainer.openView()</code></a>, 
-<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()"><code>CDOTransactionContainer.openTransaction()</code></a></dd></dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html#getSession--">getSession</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getSession--">getSession</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The session this view was opened by, or <code>null</code> if this view is closed.</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close--" title="class or interface in org.eclipse.net4j.util.collection"><code>Closeable.close()</code></a>, 
+<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed--" title="class or interface in org.eclipse.net4j.util.collection"><code>Closeable.isClosed()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView--"><code>CDOViewContainer.openView()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction--"><code>CDOTransactionContainer.openTransaction()</code></a></dd>
+</dl>
 </li>
 </ul>
-<a name="setSession(org.eclipse.emf.spi.cdo.InternalCDOSession)">
+<a name="setSession-org.eclipse.emf.spi.cdo.InternalCDOSession-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -530,22 +624,26 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <pre>void&nbsp;setSession(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;session)</pre>
 </li>
 </ul>
-<a name="getViewSet()">
+<a name="getViewSet--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewSet</h4>
 <pre><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a>&nbsp;getViewSet()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getViewSet()">CDOView</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getViewSet--">CDOView</a></code></span></div>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a> this view is associated with.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getViewSet()">getViewSet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></dd>
-<dt><span class="strong">Returns:</span></dt><dd>The view set this view is associated with, never <code>null</code>.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html#getViews()"><code>CDOViewSet.getViews()</code></a></dd></dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getViewSet--">getViewSet</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view set this view is associated with, never <code>null</code>.</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html#getViews--"><code>CDOViewSet.getViews()</code></a></dd>
+</dl>
 </li>
 </ul>
-<a name="setViewSet(org.eclipse.emf.spi.cdo.InternalCDOViewSet)">
+<a name="setViewSet-org.eclipse.emf.spi.cdo.InternalCDOViewSet-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -554,7 +652,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <pre>void&nbsp;setViewSet(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a>&nbsp;viewSet)</pre>
 </li>
 </ul>
-<a name="getFeatureAnalyzer()">
+<a name="getFeatureAnalyzer--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -562,10 +660,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <h4>getFeatureAnalyzer</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 <a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;getFeatureAnalyzer()</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
-<a name="setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">
+<a name="setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -573,10 +671,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <h4>setFeatureAnalyzer</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 void&nbsp;setFeatureAnalyzer(<a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
-<a name="getObjects()">
+<a name="getObjects--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -584,22 +682,39 @@ void&nbsp;setFeatureAnalyzer(<a href="../../../../../org/eclipse/emf/cdo/view/CD
 <h4>getObjects</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;&nbsp;getObjects()</pre>
 <div class="block">Returns an unmodifiable map of the objects managed by this view.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getStore()">
+<a name="getObjectsList--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getObjectsList</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;&nbsp;getObjectsList()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.3</dd>
+</dl>
+</li>
+</ul>
+<a name="getStore--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getStore</h4>
 <pre><a href="../../../../../org/eclipse/emf/spi/cdo/CDOStore.html" title="interface in org.eclipse.emf.spi.cdo">CDOStore</a>&nbsp;getStore()</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.0</dd>
+</dl>
 </li>
 </ul>
-<a name="toTransaction()">
+<a name="toTransaction--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -608,7 +723,7 @@ void&nbsp;setFeatureAnalyzer(<a href="../../../../../org/eclipse/emf/cdo/view/CD
 <pre><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;toTransaction()</pre>
 </li>
 </ul>
-<a name="attachResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">
+<a name="attachResource-org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -617,20 +732,22 @@ void&nbsp;setFeatureAnalyzer(<a href="../../../../../org/eclipse/emf/cdo/view/CD
 <pre>void&nbsp;attachResource(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</pre>
 </li>
 </ul>
-<a name="handleObjectStateChanged(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.cdo.CDOState, org.eclipse.emf.cdo.CDOState)">
+<a name="handleObjectStateChanged-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.cdo.CDOState-org.eclipse.emf.cdo.CDOState-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleObjectStateChanged</h4>
 <pre>void&nbsp;handleObjectStateChanged(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
-                            <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
-                            <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+                              <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;oldState,
+                              <a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;newState)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean)">
+<a name="invalidate-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.List-java.util.List-java.util.Map-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -638,54 +755,60 @@ void&nbsp;setFeatureAnalyzer(<a href="../../../../../org/eclipse/emf/cdo/view/CD
 <h4>invalidate</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                         long&nbsp;lastUpdateTime,
-                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
-                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
-                         <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
-                         boolean&nbsp;async)</pre>
-<div class="block"><span class="strong">Deprecated.</span>&nbsp;<i>As of 4.2. use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)"><code>invalidate(CDOBranch, long, List, List, Map, boolean, boolean)</code></a></i></div>
+                             long&nbsp;lastUpdateTime,
+                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
+                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
+                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
+                             boolean&nbsp;async)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2. use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.List-java.util.List-java.util.Map-boolean-boolean-"><code>invalidate(CDOBranch, long, List, List, Map, boolean, boolean)</code></a></span></div>
 </li>
 </ul>
-<a name="invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch, long, java.util.List, java.util.List, java.util.Map, boolean, boolean)">
+<a name="invalidate-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.List-java.util.List-java.util.Map-boolean-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>invalidate</h4>
 <pre>void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-              long&nbsp;lastUpdateTime,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
-              <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
-              boolean&nbsp;async,
-              boolean&nbsp;clearResourcePathCache)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.2</dd></dl>
+                long&nbsp;lastUpdateTime,
+                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
+                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
+                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
+                boolean&nbsp;async,
+                boolean&nbsp;clearResourcePathCache)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.2</dd>
+</dl>
 </li>
 </ul>
-<a name="setLastUpdateTime(long)">
+<a name="setLastUpdateTime-long-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLastUpdateTime</h4>
 <pre>void&nbsp;setLastUpdateTime(long&nbsp;lastUpdateTime)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="collectViewedRevisions(java.util.Map)">
+<a name="collectViewedRevisions-java.util.Map-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>collectViewedRevisions</h4>
 <pre>void&nbsp;collectViewedRevisions(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;revisions)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="remapObject(org.eclipse.emf.cdo.common.id.CDOID)">
+<a name="remapObject-org.eclipse.emf.cdo.common.id.CDOID-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -694,18 +817,20 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <pre>void&nbsp;remapObject(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID)</pre>
 </li>
 </ul>
-<a name="clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">
+<a name="clearResourcePathCacheIfNecessary-org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>clearResourcePathCacheIfNecessary</h4>
 <pre>void&nbsp;clearResourcePathCacheIfNecessary(<a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.2</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.2</dd>
+</dl>
 </li>
 </ul>
-<a name="getResourceNodeID(java.lang.String)">
+<a name="getResourceNodeID-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -714,16 +839,18 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getResourceNodeID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 </li>
 </ul>
-<a name="registerProxyResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">
+<a name="registerProxyResource-org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>registerProxyResource</h4>
-<pre>void&nbsp;registerProxyResource(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+void&nbsp;registerProxyResource(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">No longer supported.</span></div>
 </li>
 </ul>
-<a name="registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">
+<a name="registerObject-org.eclipse.emf.spi.cdo.InternalCDOObject-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -732,7 +859,7 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <pre>void&nbsp;registerObject(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</pre>
 </li>
 </ul>
-<a name="deregisterObject(org.eclipse.emf.spi.cdo.InternalCDOObject)">
+<a name="deregisterObject-org.eclipse.emf.spi.cdo.InternalCDOObject-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -741,29 +868,31 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <pre>void&nbsp;deregisterObject(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</pre>
 </li>
 </ul>
-<a name="getRevision(org.eclipse.emf.cdo.common.id.CDOID, boolean)">
+<a name="getRevision-org.eclipse.emf.cdo.common.id.CDOID-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRevision</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;getRevision(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
-                              boolean&nbsp;loadOnDemand)</pre>
+                                boolean&nbsp;loadOnDemand)</pre>
 </li>
 </ul>
-<a name="prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID, int)">
+<a name="prefetchRevisions-org.eclipse.emf.cdo.common.id.CDOID-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>prefetchRevisions</h4>
 <pre>void&nbsp;prefetchRevisions(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
-                     int&nbsp;depth)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+                       int&nbsp;depth)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="convertObjectToID(java.lang.Object)">
+<a name="convertObjectToID-java.lang.Object-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -772,17 +901,17 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;convertObjectToID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialObject)</pre>
 </li>
 </ul>
-<a name="convertObjectToID(java.lang.Object, boolean)">
+<a name="convertObjectToID-java.lang.Object-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>convertObjectToID</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;convertObjectToID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialObject,
-                       boolean&nbsp;onlyPersistedID)</pre>
+                         boolean&nbsp;onlyPersistedID)</pre>
 </li>
 </ul>
-<a name="convertIDToObject(java.lang.Object)">
+<a name="convertIDToObject-java.lang.Object-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -791,71 +920,75 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;convertIDToObject(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;potentialID)</pre>
 </li>
 </ul>
-<a name="isObjectLocked(org.eclipse.emf.cdo.CDOObject, org.eclipse.net4j.util.concurrent.IRWLockManager.LockType, boolean)">
+<a name="isObjectLocked-org.eclipse.emf.cdo.CDOObject-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isObjectLocked</h4>
 <pre>boolean&nbsp;isObjectLocked(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
-                     <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
-                     boolean&nbsp;byOthers)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+                       <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+                       boolean&nbsp;byOthers)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="isObjectNew(org.eclipse.emf.cdo.common.id.CDOID)">
+<a name="isObjectNew-org.eclipse.emf.cdo.common.id.CDOID-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isObjectNew</h4>
 <pre>boolean&nbsp;isObjectNew(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.1</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.1</dd>
+</dl>
 </li>
 </ul>
-<a name="handleAddAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">
+<a name="handleAddAdapter-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.common.notify.Adapter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleAddAdapter</h4>
 <pre>void&nbsp;handleAddAdapter(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
-<a name="handleRemoveAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject, org.eclipse.emf.common.notify.Adapter)">
+<a name="handleRemoveAdapter-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.common.notify.Adapter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRemoveAdapter</h4>
 <pre>void&nbsp;handleRemoveAdapter(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                       <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+                         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
-<a name="subscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">
+<a name="subscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>subscribe</h4>
-<pre>void&nbsp;subscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+<pre>void&nbsp;subscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
-<a name="unsubscribe(org.eclipse.emf.ecore.EObject, org.eclipse.emf.common.notify.Adapter)">
+<a name="unsubscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>unsubscribe</h4>
-<pre>void&nbsp;unsubscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+<pre>void&nbsp;unsubscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
-<a name="hasSubscription(org.eclipse.emf.cdo.common.id.CDOID)">
+<a name="hasSubscription-org.eclipse.emf.cdo.common.id.CDOID-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -864,38 +997,47 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <pre>boolean&nbsp;hasSubscription(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
 </li>
 </ul>
-<a name="handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView, org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">
+<a name="handleLockNotification-org.eclipse.emf.spi.cdo.InternalCDOView-org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>handleLockNotification</h4>
 <pre>void&nbsp;handleLockNotification(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
-                          <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.1</dd></dl>
+                            <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.1</dd>
+</dl>
 </li>
 </ul>
-<a name="getLockStates(java.util.Collection)">
+<a name="getLockStates-java.util.Collection-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLockStates</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;getLockStates(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.1</dd></dl>
+<div class="block">Get an array of <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock states</code></a> corresponding to the specified collection of <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ids</code></a>.
+
+ If the collection of <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ids</code></a> is empty, <a href="../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock states</code></a> of all locked objects are returned.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.1</dd>
+</dl>
 </li>
 </ul>
-<a name="getViewAndState(org.eclipse.emf.cdo.CDOState)">
+<a name="getViewAndState-org.eclipse.emf.cdo.CDOState-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getViewAndState</h4>
 <pre><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</a>&nbsp;getViewAndState(<a href="../../../../../org/eclipse/emf/cdo/CDOState.html" title="enum in org.eclipse.emf.cdo">CDOState</a>&nbsp;state)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.2</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.2</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -906,9 +1048,11 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 </div>
 <!-- ========= END OF CLASS DATA ========= -->
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar_bottom">
+<div class="bottomNav"><a name="navbar.bottom">
 <!--   -->
-</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -923,15 +1067,15 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/spi/cdo/InternalCDOView.html" target="_top">Frames</a></li>
-<li><a href="InternalCDOView.html" target="_top">No Frames</a></li>
+<li><a href="InternalCDOView.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -948,22 +1092,22 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_bottom">
+<a name="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

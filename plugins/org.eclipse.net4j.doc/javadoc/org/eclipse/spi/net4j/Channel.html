@@ -6,21 +6,34 @@
 <title>Channel (Net4j Signalling Platform Documentation)</title>
 <meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<script type="text/javascript" src="../../../../script.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
-    if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Channel (Net4j Signalling Platform Documentation)";
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="Channel (Net4j Signalling Platform Documentation)";
+        }
+    }
+    catch(err) {
     }
 //-->
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar_top">
+<div class="topNav"><a name="navbar.top">
 <!--   -->
-</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -35,15 +48,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/eclipse/spi/net4j/AcceptorFactory.html" title="class in org.eclipse.spi.net4j"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/eclipse/spi/net4j/AcceptorFactory.html" title="class in org.eclipse.spi.net4j"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/spi/net4j/Channel.html" target="_top">Frames</a></li>
-<li><a href="Channel.html" target="_top">No Frames</a></li>
+<li><a href="Channel.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -60,19 +73,19 @@
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_top">
+<a name="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -83,9 +96,10 @@
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="InternalChannel.html" title="&#171;interface&#187; InternalChannel" alt="" coords="5,5,115,45"/>
-<area shape="rect" id="node2" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="145,5,343,45"/>
-<area shape="rect" id="node3" href="Channel.html" title="Channel" alt="" coords="117,85,187,110"/>
+<area shape="rect" id="node1" href="InternalChannel.html" title="&#171;interface&#187; InternalChannel" alt="" coords="5,13,115,53"/>
+<area shape="rect" id="node2" title="&#171;interface&#187; IExecutorServiceProvider (org.eclipse.net4j.util.concurrent)" alt="" coords="145,6,356,61"/>
+<area shape="rect" id="node3" title="Lifecycle (org.eclipse.net4j.util.lifecycle)" alt="" coords="385,13,583,53"/>
+<area shape="rect" id="node4" href="Channel.html" title="Channel" alt="" coords="216,101,285,126"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="Channel.png" usemap="#APIVIZ" border="0"></div>
 <ul class="inheritance">
@@ -111,16 +125,18 @@
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a>, <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>, <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>, <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a>, <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></dd>
+<dd><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a>, <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>, <a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>, <a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IExecutorServiceProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IExecutorServiceProvider</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a>, <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public class <span class="strong">Channel</span>
+<pre>public class <span class="typeNameLabel">Channel</span>
 extends <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
-implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></pre>
+implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IExecutorServiceProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IExecutorServiceProvider</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>2.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>2.0</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -129,11 +145,11 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
+<li class="blockList"><a name="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -141,46 +157,48 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a></strong></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a></span></code>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiveSerializer.html" title="class in org.eclipse.spi.net4j">Channel.ReceiveSerializer</a></strong></code>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiveSerializer.html" title="class in org.eclipse.spi.net4j">Channel.ReceiveSerializer</a></span></code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.4 use <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>ExecutorWorkSerializer</code></a>.</span></div>
+</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected class&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.SendQueue.html" title="class in org.eclipse.spi.net4j">Channel.SendQueue</a></strong></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.SendQueue.html" title="class in org.eclipse.spi.net4j">Channel.SendQueue</a></span></code>
 <div class="block">A queue that holds buffers that shall be sent.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.spi.net4j.InternalChannel">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.spi.net4j.InternalChannel">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.spi.net4j.<a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></h3>
 <code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.SendQueueEvent.html" title="interface in org.eclipse.spi.net4j">InternalChannel.SendQueueEvent</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.ILocationAware">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.ILocationAware">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.<a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></h3>
 <code><a href="../../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.buffer.IBufferProvider">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.buffer.IBufferProvider">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.buffer.<a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></h3>
 <code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
@@ -190,12 +208,12 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </ul>
 <!-- =========== FIELD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_summary">
+<li class="blockList"><a name="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
@@ -205,214 +223,218 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
-<li class="blockList"><a name="constructor_summary">
+<li class="blockList"><a name="constructor.summary">
 <!--   -->
 </a>
 <h3>Constructor Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#Channel()">Channel</a></strong>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#Channel--">Channel</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 </li>
 </ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_summary">
+<li class="blockList"><a name="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
-<tr class="altColor">
+<tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#close()">close</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#close--">close</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#createReceiverWork(org.eclipse.net4j.buffer.IBuffer)">createReceiverWork</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#createReceiverWork-org.eclipse.net4j.buffer.IBuffer-">createReceiverWork</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#doActivate()">doActivate</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#doActivate--">doActivate</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#doBeforeActivate()">doBeforeActivate</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#doBeforeActivate--">doBeforeActivate</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#doDeactivate()">doDeactivate</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#doDeactivate--">doDeactivate</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getBufferCapacity()">getBufferCapacity</a></strong>()</code>
-<div class="block">Returns the capacity of the buffers provided by <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()"><code>IBufferProvider.provideBuffer()</code></a> .</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getBufferCapacity--">getBufferCapacity</a></span>()</code>
+<div class="block">Returns the capacity of the buffers provided by <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer--"><code>IBufferProvider.provideBuffer()</code></a> .</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getExecutorService--">getExecutorService</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>short</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getID()">getID</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getID--">getID</a></span>()</code>
 <div class="block">Returns the ID of this channel.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getLocation()">getLocation</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getLocation--">getLocation</a></span>()</code>
 <div class="block">Returns the location of this object in a <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getMultiplexer()">getMultiplexer</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getMultiplexer--">getMultiplexer</a></span>()</code>
 <div class="block">Returns the multiplexer this channel is associated with.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceivedBuffers()">getReceivedBuffers</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceivedBuffers--">getReceivedBuffers</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceiveExecutor()">getReceiveExecutor</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceiveExecutor--">getReceiveExecutor</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceiveHandler()">getReceiveHandler</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getReceiveHandler--">getReceiveHandler</a></span>()</code>
 <div class="block">Returns the <code>IBufferHandler</code> that handles buffers received from the peer channel.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getSendQueue()">getSendQueue</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getSendQueue--">getSendQueue</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getSentBuffers()">getSentBuffers</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getSentBuffers--">getSentBuffers</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#getUserID()">getUserID</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#getUserID--">getUserID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Handles the given buffer.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#handleBufferFromMultiplexer(org.eclipse.net4j.buffer.IBuffer)">handleBufferFromMultiplexer</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#handleBufferFromMultiplexer-org.eclipse.net4j.buffer.IBuffer-">handleBufferFromMultiplexer</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Handles a buffer sent by the multiplexer.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#isClient()">isClient</a></strong>()</code>
-<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#isClient--">isClient</a></span>()</code>
+<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation--"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#isClosed()">isClosed</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#isClosed--">isClosed</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#isServer()">isServer</a></strong>()</code>
-<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#isServer--">isServer</a></span>()</code>
+<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation--"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#provideBuffer()">provideBuffer</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#provideBuffer--">provideBuffer</a></span>()</code>
 <div class="block">Provides a buffer from this <code>BufferProvider</code>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#retainBuffer-org.eclipse.net4j.buffer.IBuffer-">retainBuffer</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Retains a buffer to this <code>BufferProvider</code>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)">sendBuffer</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#sendBuffer-org.eclipse.net4j.buffer.IBuffer-">sendBuffer</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code>
 <div class="block">Asynchronously sends the given buffer to the receive handler of the peer channel.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#setID(short)">setID</a></strong>(short&nbsp;id)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#setID-short-">setID</a></span>(short&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#setMultiplexer(org.eclipse.net4j.channel.IChannelMultiplexer)">setMultiplexer</a></strong>(<a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a>&nbsp;channelMultiplexer)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#setMultiplexer-org.eclipse.net4j.channel.IChannelMultiplexer-">setMultiplexer</a></span>(<a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a>&nbsp;channelMultiplexer)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#setReceiveExecutor(java.util.concurrent.ExecutorService)">setReceiveExecutor</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;receiveExecutor)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;receiveExecutor)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)">setReceiveHandler</a></strong>(<a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a>&nbsp;receiveHandler)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#setReceiveHandler-org.eclipse.net4j.buffer.IBufferHandler-">setReceiveHandler</a></span>(<a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a>&nbsp;receiveHandler)</code>
 <div class="block">Sets the <code>IBufferHandler</code> to handle buffers received from the peer channel.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#setUserID(java.lang.String)">setUserID</a></strong>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#setUserID-java.lang.String-">setUserID</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#toString()">toString</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><strong><a href="../../../../org/eclipse/spi/net4j/Channel.html#unregisterFromMultiplexer()">unregisterFromMultiplexer</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/spi/net4j/Channel.html#unregisterFromMultiplexer--">unregisterFromMultiplexer</a></span>()</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
-<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkInactive()" title="class or interface in org.eclipse.net4j.util.lifecycle">checkInactive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkNull(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkNull</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(boolean, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState(java.lang.Object, java.lang.String)" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deferredActivate(boolean)" title="class or interface in org.eclipse.net4j.util.lifecycle">deferredActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doAfterActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doAfterActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeDeactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeDeactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#dump()" title="class or interface in org.eclipse.net4j.util.lifecycle">dump</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isDeferredActivation()" title="class or interface in org.eclipse.net4j.util.lifecycle">isDeferredActivation</a></code></li>
+<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#activate--" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkActive--" title="class or interface in org.eclipse.net4j.util.lifecycle">checkActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg-boolean-java.lang.String-" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkArg-java.lang.Object-java.lang.String-" title="class or interface in org.eclipse.net4j.util.lifecycle">checkArg</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkInactive--" title="class or interface in org.eclipse.net4j.util.lifecycle">checkInactive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkNull-java.lang.Object-java.lang.String-" title="class or interface in org.eclipse.net4j.util.lifecycle">checkNull</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState-boolean-java.lang.String-" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#checkState-java.lang.Object-java.lang.String-" title="class or interface in org.eclipse.net4j.util.lifecycle">checkState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#deferredActivate-boolean-" title="class or interface in org.eclipse.net4j.util.lifecycle">deferredActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doAfterActivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">doAfterActivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeDeactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeDeactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#dump--" title="class or interface in org.eclipse.net4j.util.lifecycle">dump</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#getLifecycleState--" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#isDeferredActivation--" title="class or interface in org.eclipse.net4j.util.lifecycle">isDeferredActivation</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.Notifier">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">Notifier</a></h3>
-<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent()" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent)" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent(org.eclipse.net4j.util.event.IEvent, org.eclipse.net4j.util.event.IListener[])" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireThrowable(java.lang.Throwable)" title="class or interface in org.eclipse.net4j.util.event">fireThrowable</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#firstListenerAdded()" title="class or interface in org.eclipse.net4j.util.event">firstListenerAdded</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getNotificationService()" title="class or interface in org.eclipse.net4j.util.event">getNotificationService</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#lastListenerRemoved()" title="class or interface in org.eclipse.net4j.util.event">lastListenerRemoved</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent--" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent-org.eclipse.net4j.util.event.IEvent-" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireEvent-org.eclipse.net4j.util.event.IEvent-org.eclipse.net4j.util.event.IListener:A-" title="class or interface in org.eclipse.net4j.util.event">fireEvent</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#fireThrowable-java.lang.Throwable-" title="class or interface in org.eclipse.net4j.util.event">fireThrowable</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#firstListenerAdded--" title="class or interface in org.eclipse.net4j.util.event">firstListenerAdded</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#getNotificationService--" title="class or interface in org.eclipse.net4j.util.event">getNotificationService</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#lastListenerRemoved--" title="class or interface in org.eclipse.net4j.util.event">lastListenerRemoved</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_java.lang.Object">
+<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
-<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone()" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals(java.lang.Object)" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize()" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass()" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode()" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify()" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll()" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait()" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long)" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait(long, int)" title="class or interface in java.lang">wait</a></code></li>
+<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.lifecycle.ILifecycle">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h3>
-<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate()" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState()" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive()" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a></code></li>
+<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#activate--" title="class or interface in org.eclipse.net4j.util.lifecycle">activate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#deactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">deactivate</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#getLifecycleState--" title="class or interface in org.eclipse.net4j.util.lifecycle">getLifecycleState</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html?is-external=true#isActive--" title="class or interface in org.eclipse.net4j.util.lifecycle">isActive</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
 </ul>
 </li>
 </ul>
@@ -424,11 +446,11 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
-<li class="blockList"><a name="constructor_detail">
+<li class="blockList"><a name="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Channel()">
+<a name="Channel--">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -441,11 +463,11 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </ul>
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_detail">
+<li class="blockList"><a name="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getUserID()">
+<a name="getUserID--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -453,12 +475,12 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>getUserID</h4>
 <pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getUserID()</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true#getUserID()" title="class or interface in org.eclipse.net4j.util.security">getUserID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true#getUserID--" title="class or interface in org.eclipse.net4j.util.security">getUserID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="setUserID(java.lang.String)">
+<a name="setUserID-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -466,73 +488,73 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>setUserID</h4>
 <pre>public&nbsp;void&nbsp;setUserID(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;userID)</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setUserID(java.lang.String)">setUserID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setUserID-java.lang.String-">setUserID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getLocation()">
+<a name="getLocation--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getLocation</h4>
 <pre>public&nbsp;<a href="../../../../org/eclipse/net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a>&nbsp;getLocation()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()">ILocationAware</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation--">ILocationAware</a></code></span></div>
 <div class="block">Returns the location of this object in a <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()">getLocation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation--">getLocation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="isClient()">
+<a name="isClient--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isClient</h4>
 <pre>public&nbsp;boolean&nbsp;isClient()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isClient()">ILocationAware</a></code></strong></div>
-<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isClient--">ILocationAware</a></code></span></div>
+<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation--"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isClient()">isClient</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isClient--">isClient</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="isServer()">
+<a name="isServer--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>isServer</h4>
 <pre>public&nbsp;boolean&nbsp;isServer()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isServer()">ILocationAware</a></code></strong></div>
-<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isServer--">ILocationAware</a></code></span></div>
+<div class="block">Same as <code><a href="../../../../org/eclipse/net4j/ILocationAware.html#getLocation--"><code>ILocationAware.getLocation()</code></a> == <a href="../../../../org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isServer()">isServer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/ILocationAware.html#isServer--">isServer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getMultiplexer()">
+<a name="getMultiplexer--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getMultiplexer</h4>
 <pre>public&nbsp;<a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a>&nbsp;getMultiplexer()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getMultiplexer()">IChannel</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getMultiplexer--">IChannel</a></code></span></div>
 <div class="block">Returns the multiplexer this channel is associated with. This channel multiplexer can be used, for example, to open
  additional channels that will be multiplexed through the same transport medium.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getMultiplexer()">getMultiplexer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getMultiplexer--">getMultiplexer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="setMultiplexer(org.eclipse.net4j.channel.IChannelMultiplexer)">
+<a name="setMultiplexer-org.eclipse.net4j.channel.IChannelMultiplexer-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -540,28 +562,28 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>setMultiplexer</h4>
 <pre>public&nbsp;void&nbsp;setMultiplexer(<a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a>&nbsp;channelMultiplexer)</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setMultiplexer(org.eclipse.net4j.channel.IChannelMultiplexer)">setMultiplexer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setMultiplexer-org.eclipse.net4j.channel.IChannelMultiplexer-">setMultiplexer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getID()">
+<a name="getID--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getID</h4>
 <pre>public&nbsp;short&nbsp;getID()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getID()">IChannel</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getID--">IChannel</a></code></span></div>
 <div class="block">Returns the ID of this channel. The ID is unique at any time among all channels of the associated
  <a href="../../../../org/eclipse/net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel"><code>multiplexer</code></a>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getID()">getID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getID--">getID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="setID(short)">
+<a name="setID-short-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -569,12 +591,27 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>setID</h4>
 <pre>public&nbsp;void&nbsp;setID(short&nbsp;id)</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setID(short)">setID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setID-short-">setID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getReceiveExecutor()">
+<a name="getExecutorService--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getExecutorService</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;getExecutorService()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IExecutorServiceProvider.html?is-external=true#getExecutorService--" title="class or interface in org.eclipse.net4j.util.concurrent">getExecutorService</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IExecutorServiceProvider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IExecutorServiceProvider</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="getReceiveExecutor--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -582,12 +619,12 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>getReceiveExecutor</h4>
 <pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;getReceiveExecutor()</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor()">getReceiveExecutor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceiveExecutor--">getReceiveExecutor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="setReceiveExecutor(java.util.concurrent.ExecutorService)">
+<a name="setReceiveExecutor-java.util.concurrent.ExecutorService-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -595,42 +632,42 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>setReceiveExecutor</h4>
 <pre>public&nbsp;void&nbsp;setReceiveExecutor(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/ExecutorService.html?is-external=true" title="class or interface in java.util.concurrent">ExecutorService</a>&nbsp;receiveExecutor)</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor(java.util.concurrent.ExecutorService)">setReceiveExecutor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#setReceiveExecutor-java.util.concurrent.ExecutorService-">setReceiveExecutor</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getReceiveHandler()">
+<a name="getReceiveHandler--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getReceiveHandler</h4>
 <pre>public&nbsp;<a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a>&nbsp;getReceiveHandler()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceiveHandler()">IChannel</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceiveHandler--">IChannel</a></code></span></div>
 <div class="block">Returns the <code>IBufferHandler</code> that handles buffers received from the peer channel.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceiveHandler()">getReceiveHandler</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#getReceiveHandler--">getReceiveHandler</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)">
+<a name="setReceiveHandler-org.eclipse.net4j.buffer.IBufferHandler-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setReceiveHandler</h4>
 <pre>public&nbsp;void&nbsp;setReceiveHandler(<a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a>&nbsp;receiveHandler)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)">IChannel</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#setReceiveHandler-org.eclipse.net4j.buffer.IBufferHandler-">IChannel</a></code></span></div>
 <div class="block">Sets the <code>IBufferHandler</code> to handle buffers received from the peer channel.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)">setReceiveHandler</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#setReceiveHandler-org.eclipse.net4j.buffer.IBufferHandler-">setReceiveHandler</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getSentBuffers()">
+<a name="getSentBuffers--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -638,13 +675,14 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>getSentBuffers</h4>
 <pre>public&nbsp;long&nbsp;getSentBuffers()</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getSentBuffers()">getSentBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
-<dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getSentBuffers--">getSentBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getReceivedBuffers()">
+<a name="getReceivedBuffers--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -652,13 +690,14 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>getReceivedBuffers</h4>
 <pre>public&nbsp;long&nbsp;getReceivedBuffers()</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceivedBuffers()">getReceivedBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
-<dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getReceivedBuffers--">getReceivedBuffers</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getSendQueue()">
+<a name="getSendQueue--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -666,27 +705,27 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>getSendQueue</h4>
 <pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Queue.html?is-external=true" title="class or interface in java.util">Queue</a>&lt;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&gt;&nbsp;getSendQueue()</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getSendQueue()">getSendQueue</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#getSendQueue--">getSendQueue</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="sendBuffer(org.eclipse.net4j.buffer.IBuffer)">
+<a name="sendBuffer-org.eclipse.net4j.buffer.IBuffer-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>sendBuffer</h4>
 <pre>public&nbsp;void&nbsp;sendBuffer(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)">IChannel</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#sendBuffer-org.eclipse.net4j.buffer.IBuffer-">IChannel</a></code></span></div>
 <div class="block">Asynchronously sends the given buffer to the receive handler of the peer channel.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)">sendBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/channel/IChannel.html#sendBuffer-org.eclipse.net4j.buffer.IBuffer-">sendBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="handleBuffer(org.eclipse.net4j.buffer.IBuffer)">
+<a name="handleBuffer-org.eclipse.net4j.buffer.IBuffer-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -696,14 +735,18 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <div class="block">Handles the given buffer. Ensures it is in the PUTTING state (otherwise ignores it) and sends it on behalf of the
  send queue.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></dd>
-<dt><span class="strong">Parameters:</span></dt><dd><code>buffer</code> - The buffer to be handled and otionally released.</dd><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState()"><code>IBuffer.getState()</code></a>, 
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html#handleBuffer-org.eclipse.net4j.buffer.IBuffer-">handleBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>buffer</code> - The buffer to be handled and otionally released.</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../org/eclipse/net4j/buffer/IBuffer.html#getState--"><code>IBuffer.getState()</code></a>, 
 <a href="../../../../org/eclipse/net4j/buffer/BufferState.html#PUTTING"><code>BufferState.PUTTING</code></a>, 
-<a href="../../../../org/eclipse/spi/net4j/Channel.html#sendQueue"><code>sendQueue</code></a></dd></dl>
+<a href="../../../../org/eclipse/spi/net4j/Channel.html#sendQueue"><code>sendQueue</code></a></dd>
+</dl>
 </li>
 </ul>
-<a name="handleBufferFromMultiplexer(org.eclipse.net4j.buffer.IBuffer)">
+<a name="handleBufferFromMultiplexer-org.eclipse.net4j.buffer.IBuffer-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -712,14 +755,16 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <pre>public&nbsp;void&nbsp;handleBufferFromMultiplexer(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
 <div class="block">Handles a buffer sent by the multiplexer. Adds work to the receive queue or releases the buffer.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#handleBufferFromMultiplexer(org.eclipse.net4j.buffer.IBuffer)">handleBufferFromMultiplexer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html#multiplexChannel(org.eclipse.spi.net4j.InternalChannel)"><code>InternalChannelMultiplexer.multiplexChannel(org.eclipse.spi.net4j.InternalChannel)</code></a>, 
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html#handleBufferFromMultiplexer-org.eclipse.net4j.buffer.IBuffer-">handleBufferFromMultiplexer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../org/eclipse/spi/net4j/InternalChannelMultiplexer.html#multiplexChannel-org.eclipse.spi.net4j.InternalChannel-"><code>InternalChannelMultiplexer.multiplexChannel(org.eclipse.spi.net4j.InternalChannel)</code></a>, 
 <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IWorkSerializer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>IWorkSerializer</code></a>, 
-<a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j"><code>Channel.ReceiverWork</code></a></dd></dl>
+<a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j"><code>Channel.ReceiverWork</code></a></dd>
+</dl>
 </li>
 </ul>
-<a name="createReceiverWork(org.eclipse.net4j.buffer.IBuffer)">
+<a name="createReceiverWork-org.eclipse.net4j.buffer.IBuffer-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -728,52 +773,52 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <pre>protected&nbsp;<a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j">Channel.ReceiverWork</a>&nbsp;createReceiverWork(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
 </li>
 </ul>
-<a name="getBufferCapacity()">
+<a name="getBufferCapacity--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBufferCapacity</h4>
 <pre>public&nbsp;short&nbsp;getBufferCapacity()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity()">IBufferProvider</a></code></strong></div>
-<div class="block">Returns the capacity of the buffers provided by <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()"><code>IBufferProvider.provideBuffer()</code></a> .</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity--">IBufferProvider</a></code></span></div>
+<div class="block">Returns the capacity of the buffers provided by <a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer--"><code>IBufferProvider.provideBuffer()</code></a> .</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity()">getBufferCapacity</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#getBufferCapacity--">getBufferCapacity</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="provideBuffer()">
+<a name="provideBuffer--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>provideBuffer</h4>
 <pre>public&nbsp;<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;provideBuffer()</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()">IBufferProvider</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer--">IBufferProvider</a></code></span></div>
 <div class="block">Provides a buffer from this <code>BufferProvider</code>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer()">provideBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#provideBuffer--">provideBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="retainBuffer(org.eclipse.net4j.buffer.IBuffer)">
+<a name="retainBuffer-org.eclipse.net4j.buffer.IBuffer-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>retainBuffer</h4>
 <pre>public&nbsp;void&nbsp;retainBuffer(<a href="../../../../org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
-<div class="block"><strong>Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">IBufferProvider</a></code></strong></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#retainBuffer-org.eclipse.net4j.buffer.IBuffer-">IBufferProvider</a></code></span></div>
 <div class="block">Retains a buffer to this <code>BufferProvider</code>.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html#retainBuffer-org.eclipse.net4j.buffer.IBuffer-">retainBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../org/eclipse/net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="toString()">
+<a name="toString--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -781,12 +826,12 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>toString</h4>
 <pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
 <dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#toString()" title="class or interface in org.eclipse.net4j.util.lifecycle">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#toString--" title="class or interface in org.eclipse.net4j.util.lifecycle">toString</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="doBeforeActivate()">
+<a name="doBeforeActivate--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -795,13 +840,14 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <pre>protected&nbsp;void&nbsp;doBeforeActivate()
                          throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
 <dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd></dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doBeforeActivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">doBeforeActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd>
+</dl>
 </li>
 </ul>
-<a name="doActivate()">
+<a name="doActivate--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -810,13 +856,14 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <pre>protected&nbsp;void&nbsp;doActivate()
                    throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
 <dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doActivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd></dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doActivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">doActivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd>
+</dl>
 </li>
 </ul>
-<a name="doDeactivate()">
+<a name="doDeactivate--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -825,13 +872,14 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <pre>protected&nbsp;void&nbsp;doDeactivate()
                      throws <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></pre>
 <dl>
-<dt><strong>Overrides:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doDeactivate()" title="class or interface in org.eclipse.net4j.util.lifecycle">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
-<dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd></dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true#doDeactivate--" title="class or interface in org.eclipse.net4j.util.lifecycle">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html?is-external=true" title="class or interface in org.eclipse.net4j.util.lifecycle">Lifecycle</a></code></dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code></dd>
+</dl>
 </li>
 </ul>
-<a name="unregisterFromMultiplexer()">
+<a name="unregisterFromMultiplexer--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -840,7 +888,7 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <pre>protected&nbsp;void&nbsp;unregisterFromMultiplexer()</pre>
 </li>
 </ul>
-<a name="close()">
+<a name="close--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -848,12 +896,12 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>close</h4>
 <pre>public&nbsp;void&nbsp;close()</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close--" title="class or interface in org.eclipse.net4j.util.collection">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="isClosed()">
+<a name="isClosed--">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -861,8 +909,8 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <h4>isClosed</h4>
 <pre>public&nbsp;boolean&nbsp;isClosed()</pre>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed--" title="class or interface in org.eclipse.net4j.util.collection">isClosed</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -874,9 +922,11 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </div>
 <!-- ========= END OF CLASS DATA ========= -->
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar_bottom">
+<div class="bottomNav"><a name="navbar.bottom">
 <!--   -->
-</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -891,15 +941,15 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/eclipse/spi/net4j/AcceptorFactory.html" title="class in org.eclipse.spi.net4j"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/eclipse/spi/net4j/AcceptorFactory.html" title="class in org.eclipse.spi.net4j"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/spi/net4j/Channel.ReceiverWork.html" title="class in org.eclipse.spi.net4j"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/spi/net4j/Channel.html" target="_top">Frames</a></li>
-<li><a href="Channel.html" target="_top">No Frames</a></li>
+<li><a href="Channel.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -916,22 +966,22 @@ implements <a href="../../../../org/eclipse/spi/net4j/InternalChannel.html" titl
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields_inherited_from_class_org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor_summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor_detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_bottom">
+<a name="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

@@ -6,21 +6,34 @@
 <title>CDOChangeSetData (CDO Model Repository Documentation)</title>
 <meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
+<script type="text/javascript" src="../../../../../../script.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
-    if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CDOChangeSetData (CDO Model Repository Documentation)";
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="CDOChangeSetData (CDO Model Repository Documentation)";
+        }
+    }
+    catch(err) {
     }
 //-->
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar_top">
+<div class="topNav"><a name="navbar.top">
 <!--   -->
-</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -35,15 +48,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" target="_top">Frames</a></li>
-<li><a href="CDOChangeSetData.html" target="_top">No Frames</a></li>
+<li><a href="CDOChangeSetData.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -63,16 +76,16 @@
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_top">
+<a name="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -103,16 +116,18 @@
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">CDOChangeSetData</span>
+<pre>public interface <span class="typeNameLabel">CDOChangeSetData</span>
 extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</a></pre>
-<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change kind provider</code></a> with detailed information about <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()"><code>new</code></a>,
- <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()"><code>changed</code></a> and <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()"><code>detached</code></a> objects.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd>
-<dt><span class="strong">No Implement</span></dt>
-  <dd>This interface is not intended to be implemented by clients.</dd>
-<dt><span class="strong">No Extend</span></dt>
-  <dd>This interface is not intended to be extended by clients.</dd></dl>
+<div class="block">A <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>change kind provider</code></a> with detailed information about <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects--"><code>new</code></a>,
+ <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects--"><code>changed</code></a> and <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects--"><code>detached</code></a> objects.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+<dt><span class="simpleTagLabel">No Implement</span></dt>
+<dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="simpleTagLabel">No Extend</span></dt>
+<dd>This interface is not intended to be extended by clients.</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -121,65 +136,65 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 <li class="blockList">
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_summary">
+<li class="blockList"><a name="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
-<tr class="altColor">
+<tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#copy()">copy</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#copy--">copy</a></span>()</code>
 <div class="block">Returns a deep copy of this change set data.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects()">getChangedObjects</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangedObjects--">getChangedObjects</a></span>()</code>
 <div class="block">Returns a collection of revision keys denoting which (original) revisions have been changed in the context of a
  commit operation.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKind.html" title="enum in org.eclipse.emf.cdo.common.commit">CDOChangeKind</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangeKinds()">getChangeKinds</a></strong>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getChangeKinds--">getChangeKinds</a></span>()</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects()">getDetachedObjects</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getDetachedObjects--">getDetachedObjects</a></span>()</code>
 <div class="block">Returns a collection of keys denoting which revisions have been revised (corresponds to detached objects) in the
  context of a commit operation.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects()">getNewObjects</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#getNewObjects--">getNewObjects</a></span>()</code>
 <div class="block">Returns a collection of keys denoting which revisions have been added in the context of a commit operation.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#isEmpty()">isEmpty</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#isEmpty--">isEmpty</a></span>()</code>
 <div class="block">Returns <code>true</code>, if this change set data does not contain any changes, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">merge</a></strong>(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html#merge-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">merge</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</code>
 <div class="block">Changes the internal state of this change set data by adding the changes of the given change set data.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.commit.CDOChangeKindProvider">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.commit.CDOChangeKindProvider">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html#getChangeKind(org.eclipse.emf.cdo.common.id.CDOID)">getChangeKind</a></code></li>
+<code><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKindProvider.html#getChangeKind-org.eclipse.emf.cdo.common.id.CDOID-">getChangeKind</a></code></li>
 </ul>
 </li>
 </ul>
@@ -191,11 +206,11 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_detail">
+<li class="blockList"><a name="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="isEmpty()">
+<a name="isEmpty--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -205,7 +220,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 <div class="block">Returns <code>true</code>, if this change set data does not contain any changes, <code>false</code> otherwise.</div>
 </li>
 </ul>
-<a name="copy()">
+<a name="copy--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -213,11 +228,13 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 <h4>copy</h4>
 <pre><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;copy()</pre>
 <div class="block">Returns a deep copy of this change set data.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.0</dd>
+</dl>
 </li>
 </ul>
-<a name="merge(org.eclipse.emf.cdo.common.commit.CDOChangeSetData)">
+<a name="merge-org.eclipse.emf.cdo.common.commit.CDOChangeSetData-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -225,11 +242,13 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 <h4>merge</h4>
 <pre>void&nbsp;merge(<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData)</pre>
 <div class="block">Changes the internal state of this change set data by adding the changes of the given change set data.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getNewObjects()">
+<a name="getNewObjects--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -240,7 +259,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
  Depending on various conditions like change subscriptions particular elements can also be full <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
 </li>
 </ul>
-<a name="getChangedObjects()">
+<a name="getChangedObjects--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -252,7 +271,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
  <a href="../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>revision deltas</code></a>.</div>
 </li>
 </ul>
-<a name="getDetachedObjects()">
+<a name="getDetachedObjects--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -264,15 +283,17 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
  <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html#UNSPECIFIED_VERSION"><code>unspecified</code></a>.</div>
 </li>
 </ul>
-<a name="getChangeKinds()">
+<a name="getChangeKinds--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getChangeKinds</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKind.html" title="enum in org.eclipse.emf.cdo.common.commit">CDOChangeKind</a>&gt;&nbsp;getChangeKinds()</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.1</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.1</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -283,9 +304,11 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 </div>
 <!-- ========= END OF CLASS DATA ========= -->
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar_bottom">
+<div class="bottomNav"><a name="navbar.bottom">
 <!--   -->
-</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -300,15 +323,15 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../index.html?org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" target="_top">Frames</a></li>
-<li><a href="CDOChangeSetData.html" target="_top">No Frames</a></li>
+<li><a href="CDOChangeSetData.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -328,19 +351,19 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeKi
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_bottom">
+<a name="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

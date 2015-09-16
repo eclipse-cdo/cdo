@@ -13,6 +13,7 @@
         <topic label="org.eclipse.net4j.connector" href="javadoc/org/eclipse/net4j/connector/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.protocol" href="javadoc/org/eclipse/net4j/protocol/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.signal" href="javadoc/org/eclipse/net4j/signal/package-summary.html" icon="package" />
+        <topic label="org.eclipse.net4j.signal.confirmation" href="javadoc/org/eclipse/net4j/signal/confirmation/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.signal.heartbeat" href="javadoc/org/eclipse/net4j/signal/heartbeat/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.signal.security" href="javadoc/org/eclipse/net4j/signal/security/package-summary.html" icon="package" />
         <topic label="org.eclipse.net4j.signal.wrapping" href="javadoc/org/eclipse/net4j/signal/wrapping/package-summary.html" icon="package" />

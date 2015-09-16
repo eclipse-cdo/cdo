@@ -6,11 +6,16 @@
 <title>org.eclipse.net4j.signal (Net4j Signalling Platform Documentation)</title>
 <meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<script type="text/javascript" src="../../../../script.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
-    if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="org.eclipse.net4j.signal (Net4j Signalling Platform Documentation)";
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="org.eclipse.net4j.signal (Net4j Signalling Platform Documentation)";
+        }
+    }
+    catch(err) {
     }
 //-->
 </script>
@@ -18,9 +23,11 @@
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar_top">
+<div class="topNav"><a name="navbar.top">
 <!--   -->
-</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -35,15 +42,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/protocol/package-summary.html">Prev Package</a></li>
-<li><a href="../../../../org/eclipse/net4j/signal/heartbeat/package-summary.html">Next Package</a></li>
+<li><a href="../../../../org/eclipse/net4j/protocol/package-summary.html">Prev&nbsp;Package</a></li>
+<li><a href="../../../../org/eclipse/net4j/signal/confirmation/package-summary.html">Next&nbsp;Package</a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/net4j/signal/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No Frames</a></li>
+<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -57,7 +64,7 @@
   //-->
 </script>
 </div>
-<a name="skip-navbar_top">
+<a name="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -66,38 +73,42 @@
 <div class="docSummary">
 <div class="block">A framework for request/response based communication on top of the Net4j transport layer.</div>
 </div>
-<p>See:&nbsp;<a href="#package_description">Description</a></p>
+<p>See:&nbsp;<a href="#package.description">Description</a></p>
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="RemoteException.html" title="&#171;exception&#187; RemoteException" alt="" coords="273,531,399,571"/>
-<area shape="rect" id="node2" title="&#171;exception&#187; RuntimeException (java.lang)" alt="" coords="32,523,160,578"/>
-<area shape="rect" id="node3" title="Event (org.eclipse.net4j.util.event)" alt="" coords="6,424,186,464"/>
-<area shape="rect" id="node4" href="SignalCounter.html" title="SignalCounter" alt="" coords="285,333,387,358"/>
-<area shape="rect" id="node5" href="SignalFinishedEvent.html" title="SignalFinishedEvent" alt="" coords="267,382,405,407"/>
-<area shape="rect" id="node6" href="SignalProtocol.html" title="SignalProtocol" alt="" coords="485,174,592,199"/>
-<area shape="rect" id="node7" href="SignalProtocol.TimeoutChangedEvent.html" title="SignalProtocol.TimeoutChangedEvent" alt="" coords="217,431,455,457"/>
-<area shape="rect" id="node8" href="SignalScheduledEvent.html" title="SignalScheduledEvent" alt="" coords="261,481,411,506"/>
-<area shape="rect" id="node9" href="Indication.html" title="Indication" alt="" coords="667,103,746,129"/>
-<area shape="rect" id="node10" href="IndicationWithMonitoring.html" title="IndicationWithMonitoring" alt="" coords="822,153,986,178"/>
-<area shape="rect" id="node11" href="IndicationWithResponse.html" title="IndicationWithResponse" alt="" coords="625,153,788,178"/>
-<area shape="rect" id="node12" href="../../spi/net4j/Protocol.html" title="Protocol (org.eclipse.spi.net4j)" alt="" coords="263,145,409,185"/>
-<area shape="rect" id="node13" href="Request.html" title="Request" alt="" coords="671,5,742,30"/>
-<area shape="rect" id="node14" href="RequestWithConfirmation.html" title="RequestWithConfirmation" alt="" coords="621,54,792,79"/>
-<area shape="rect" id="node15" href="RequestWithMonitoring.html" title="RequestWithMonitoring" alt="" coords="826,54,982,79"/>
-<area shape="rect" id="node16" href="Signal.html" title="Signal" alt="" coords="307,75,365,101"/>
-<area shape="rect" id="node17" href="SignalActor.html" title="SignalActor" alt="" coords="494,54,583,79"/>
-<area shape="rect" id="node18" href="SignalReactor.html" title="SignalReactor" alt="" coords="487,103,590,129"/>
-<area shape="rect" id="node19" title="&#171;interface&#187; IListener (org.eclipse.net4j.util.event)" alt="" coords="6,318,186,373"/>
-<area shape="rect" id="node20" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="6,161,186,215"/>
-<area shape="rect" id="node21" href="../protocol/IProtocol.html" title="&#171;interface&#187; IProtocol (org.eclipse.net4j.protocol)" alt="" coords="9,239,183,294"/>
-<area shape="rect" id="node22" href="ISignalProtocol.html" title="&#171;interface&#187; ISignalProtocol" alt="" coords="281,209,391,249"/>
-<area shape="rect" id="node23" title="&#171;interface&#187; Runnable (java.lang)" alt="" coords="53,61,139,115"/>
+<area shape="rect" id="node1" href="RemoteException.html" title="&#171;exception&#187; RemoteException" alt="" coords="273,471,399,511"/>
+<area shape="rect" id="node2" title="&#171;exception&#187; RuntimeException (java.lang)" alt="" coords="32,463,160,518"/>
+<area shape="rect" id="node3" title="Event (org.eclipse.net4j.util.event)" alt="" coords="6,364,186,404"/>
+<area shape="rect" id="node4" href="MonitorCanceledIndication.html" title="MonitorCanceledIndication" alt="" coords="822,297,997,322"/>
+<area shape="rect" id="node5" href="MonitorCanceledRequest.html" title="MonitorCanceledRequest" alt="" coords="826,149,993,174"/>
+<area shape="rect" id="node6" href="MonitorProgressIndication.html" title="MonitorProgressIndication" alt="" coords="823,346,995,371"/>
+<area shape="rect" id="node7" href="MonitorProgressRequest.html" title="MonitorProgressRequest" alt="" coords="827,198,992,223"/>
+<area shape="rect" id="node8" href="SignalCounter.html" title="SignalCounter" alt="" coords="285,194,387,219"/>
+<area shape="rect" id="node9" href="SignalFinishedEvent.html" title="SignalFinishedEvent" alt="" coords="267,322,405,347"/>
+<area shape="rect" id="node10" href="SignalProtocol.html" title="SignalProtocol" alt="" coords="485,45,592,70"/>
+<area shape="rect" id="node11" href="SignalProtocol.TimeoutChangedEvent.html" title="SignalProtocol.TimeoutChangedEvent" alt="" coords="217,371,455,397"/>
+<area shape="rect" id="node12" href="SignalScheduledEvent.html" title="SignalScheduledEvent" alt="" coords="261,421,411,446"/>
+<area shape="rect" id="node13" href="Indication.html" title="Indication" alt="" coords="667,322,746,347"/>
+<area shape="rect" id="node14" href="IndicationWithMonitoring.html" title="IndicationWithMonitoring" alt="" coords="827,395,991,421"/>
+<area shape="rect" id="node15" href="IndicationWithResponse.html" title="IndicationWithResponse" alt="" coords="625,371,788,397"/>
+<area shape="rect" id="node16" href="../../spi/net4j/Protocol.html" title="Protocol (org.eclipse.spi.net4j)" alt="" coords="263,5,409,45"/>
+<area shape="rect" id="node17" href="Request.html" title="Request" alt="" coords="671,198,742,223"/>
+<area shape="rect" id="node18" href="RequestWithConfirmation.html" title="RequestWithConfirmation" alt="" coords="621,247,792,273"/>
+<area shape="rect" id="node19" href="RequestWithMonitoring.html" title="RequestWithMonitoring" alt="" coords="831,247,987,273"/>
+<area shape="rect" id="node20" href="Signal.html" title="Signal" alt="" coords="307,273,365,298"/>
+<area shape="rect" id="node21" href="SignalActor.html" title="SignalActor" alt="" coords="494,247,583,273"/>
+<area shape="rect" id="node22" href="SignalReactor.html" title="SignalReactor" alt="" coords="487,322,590,347"/>
+<area shape="rect" id="node23" title="&#171;interface&#187; IListener (org.eclipse.net4j.util.event)" alt="" coords="6,179,186,234"/>
+<area shape="rect" id="node24" title="&#171;interface&#187; INotifier (org.eclipse.net4j.util.event)" alt="" coords="6,22,186,77"/>
+<area shape="rect" id="node25" href="../protocol/IProtocol.html" title="&#171;interface&#187; IProtocol (org.eclipse.net4j.protocol)" alt="" coords="9,101,183,155"/>
+<area shape="rect" id="node26" href="ISignalProtocol.html" title="&#171;interface&#187; ISignalProtocol" alt="" coords="281,69,391,109"/>
+<area shape="rect" id="node27" title="&#171;interface&#187; Runnable (java.lang)" alt="" coords="53,258,139,313"/>
 </map>
 <div id="apivizContainer" style="text-align: center;margin-bottom: 1em;"><img src="package-summary.png" usemap="#APIVIZ" border="0"></div>
 <ul class="blockList">
 <li class="blockList">
-<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Interface Summary table, listing interfaces, and an explanation">
 <caption><span>Interface Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Interface</th>
@@ -114,7 +125,7 @@
 </table>
 </li>
 <li class="blockList">
-<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Class Summary table, listing classes, and an explanation">
 <caption><span>Class Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Class</th>
@@ -138,6 +149,22 @@
 <td class="colLast">
 <div class="block">Represents the receiver side of a two-way <a href="../../../../org/eclipse/net4j/signal/SignalReactor.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>, i.e., one with a response.</div>
 </td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/MonitorCanceledIndication.html" title="class in org.eclipse.net4j.signal">MonitorCanceledIndication</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/MonitorCanceledRequest.html" title="class in org.eclipse.net4j.signal">MonitorCanceledRequest</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/MonitorProgressIndication.html" title="class in org.eclipse.net4j.signal">MonitorProgressIndication</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/MonitorProgressRequest.html" title="class in org.eclipse.net4j.signal">MonitorProgressRequest</a></td>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/Request.html" title="class in org.eclipse.net4j.signal">Request</a></td>
@@ -173,14 +200,14 @@
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html" title="class in org.eclipse.net4j.signal">SignalCounter</a></td>
 <td class="colLast">
 <div class="block">Provides <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a> execution counts  when
- <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event"><code>attached</code></a> to a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a>.</div>
+ <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/Notifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event"><code>attached</code></a> to a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a>.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/SignalFinishedEvent.html" title="class in org.eclipse.net4j.signal">SignalFinishedEvent</a>&lt;INFRA_STRUCTURE&gt;</td>
 <td class="colLast">
 <div class="block">An <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a> when
- the local execution of a scheduled <a href="../../../../org/eclipse/net4j/signal/SignalFinishedEvent.html#getSignal()"><code>signal</code></a> has finished.</div>
+ the local execution of a scheduled <a href="../../../../org/eclipse/net4j/signal/SignalFinishedEvent.html#getSignal--"><code>signal</code></a> has finished.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -192,7 +219,7 @@
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</a></td>
 <td class="colLast">
-<div class="block">An <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a> when the protocol <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html#setTimeout(long)"><code>timeout</code></a>
+<div class="block">An <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a> when the protocol <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html#setTimeout-long-"><code>timeout</code></a>
  has been changed.</div>
 </td>
 </tr>
@@ -206,14 +233,14 @@
 <td class="colFirst"><a href="../../../../org/eclipse/net4j/signal/SignalScheduledEvent.html" title="class in org.eclipse.net4j.signal">SignalScheduledEvent</a>&lt;INFRA_STRUCTURE&gt;</td>
 <td class="colLast">
 <div class="block">An <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="../../../../org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a> when
- a <a href="../../../../org/eclipse/net4j/signal/SignalScheduledEvent.html#getSignal()"><code>signal</code></a> has been scheduled for local execution.</div>
+ a <a href="../../../../org/eclipse/net4j/signal/SignalScheduledEvent.html#getSignal--"><code>signal</code></a> has been scheduled for local execution.</div>
 </td>
 </tr>
 </tbody>
 </table>
 </li>
 <li class="blockList">
-<table class="packageSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
+<table class="typeSummary" border="0" cellpadding="3" cellspacing="0" summary="Exception Summary table, listing exceptions, and an explanation">
 <caption><span>Exception Summary</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Exception</th>
@@ -230,7 +257,7 @@
 </table>
 </li>
 </ul>
-<a name="package_description">
+<a name="package.description">
 <!--   -->
 </a>
 <h2 title="Package org.eclipse.net4j.signal Description">Package org.eclipse.net4j.signal Description</h2>
@@ -239,9 +266,11 @@
  <img src="doc-files/signals.png" title="Diagram Signals" border="0"/></div>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar_bottom">
+<div class="bottomNav"><a name="navbar.bottom">
 <!--   -->
-</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -256,15 +285,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/eclipse/net4j/protocol/package-summary.html">Prev Package</a></li>
-<li><a href="../../../../org/eclipse/net4j/signal/heartbeat/package-summary.html">Next Package</a></li>
+<li><a href="../../../../org/eclipse/net4j/protocol/package-summary.html">Prev&nbsp;Package</a></li>
+<li><a href="../../../../org/eclipse/net4j/signal/confirmation/package-summary.html">Next&nbsp;Package</a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/net4j/signal/package-summary.html" target="_top">Frames</a></li>
-<li><a href="package-summary.html" target="_top">No Frames</a></li>
+<li><a href="package-summary.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -278,10 +307,10 @@
   //-->
 </script>
 </div>
-<a name="skip-navbar_bottom">
+<a name="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

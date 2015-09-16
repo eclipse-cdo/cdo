@@ -5,5 +5,4 @@
   <article:Plugin name="org.eclipse.emf.cdo.releng.doc" label="Documentation Generator"/>
   <article:Plugin name="org.eclipse.emf.cdo.releng.tasks" label="Mylyn Task Overview"/>
   <article:Plugin name="org.eclipse.emf.cdo.releng.relativepaths" label="Relative Path Creator"/>
-  <article:Plugin name="org.eclipse.emf.cdo.releng.ui" label="Version Management UI"/>
 </xmi:XMI>

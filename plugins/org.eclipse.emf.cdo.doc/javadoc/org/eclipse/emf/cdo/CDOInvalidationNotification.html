@@ -6,11 +6,16 @@
 <title>CDOInvalidationNotification (CDO Model Repository Documentation)</title>
 <meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
+<script type="text/javascript" src="../../../../script.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
-    if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CDOInvalidationNotification (CDO Model Repository Documentation)";
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="CDOInvalidationNotification (CDO Model Repository Documentation)";
+        }
+    }
+    catch(err) {
     }
 //-->
 </script>
@@ -18,9 +23,11 @@
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar_top">
+<div class="topNav"><a name="navbar.top">
 <!--   -->
-</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -35,15 +42,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/eclipse/emf/cdo/CDODeltaNotification.html" title="interface in org.eclipse.emf.cdo"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/eclipse/emf/cdo/CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/emf/cdo/CDOInvalidationNotification.html" target="_top">Frames</a></li>
-<li><a href="CDOInvalidationNotification.html" target="_top">No Frames</a></li>
+<li><a href="CDOInvalidationNotification.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -72,7 +79,7 @@
 <li>Method</li>
 </ul>
 </div>
-<a name="skip-navbar_top">
+<a name="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -95,22 +102,26 @@
 <li class="blockList">
 <dl>
 <dt>All Superinterfaces:</dt>
-<dd><a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="interface in org.eclipse.emf.cdo">CDONotification</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a></dd>
+<dd><a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="interface in org.eclipse.emf.cdo">CDONotification</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a></dd>
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">CDOInvalidationNotification</span>
+<pre>public interface <span class="typeNameLabel">CDOInvalidationNotification</span>
 extends <a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="interface in org.eclipse.emf.cdo">CDONotification</a></pre>
-<div class="block">A custom EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>notification</code></a> that is emitted to <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> of the objects in a
- <a href="../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> if <a href="../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled(boolean)"><code>invalidation notification</code></a> is
+<div class="block">A custom EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>notification</code></a> that is emitted to <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> of the objects in a
+ <a href="../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> if <a href="../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled-boolean-"><code>invalidation notification</code></a> is
  enabled for the view. Since the notifications are constructed out of the information in a
  <a href="../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a> (i.e. <a href="../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOIDs</code></a>) they don't carry detailed change deltas. All the
  methods related to change deltas throw <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang"><code>UnsupportedOperationExceptions</code></a>.</div>
-<dl><dt><span class="strong">See Also:</span></dt><dd><a href="../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a>, 
-<a href="../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a></dd><dt><span class="strong">No Implement</span></dt>
-  <dd>This interface is not intended to be implemented by clients.</dd>
-<dt><span class="strong">No Extend</span></dt>
-  <dd>This interface is not intended to be extended by clients.</dd></dl>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a>, 
+<a href="../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a></dd>
+<dt><span class="simpleTagLabel">No Implement</span></dt>
+<dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="simpleTagLabel">No Extend</span></dt>
+<dd>This interface is not intended to be extended by clients.</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -119,38 +130,38 @@ extends <a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="in
 <li class="blockList">
 <!-- =========== FIELD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_summary">
+<li class="blockList"><a name="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.CDONotification">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.CDONotification">
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.<a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="interface in org.eclipse.emf.cdo">CDONotification</a></h3>
 <code><a href="../../../../org/eclipse/emf/cdo/CDONotification.html#DETACH_OBJECT">DETACH_OBJECT</a>, <a href="../../../../org/eclipse/emf/cdo/CDONotification.html#EVENT_TYPE_CDO_START">EVENT_TYPE_CDO_START</a>, <a href="../../../../org/eclipse/emf/cdo/CDONotification.html#INVALIDATE">INVALIDATE</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.common.notify.Notification">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.common.notify.Notification">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#ADD" title="class or interface in org.eclipse.emf.common.notify">ADD</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#ADD_MANY" title="class or interface in org.eclipse.emf.common.notify">ADD_MANY</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#CREATE" title="class or interface in org.eclipse.emf.common.notify">CREATE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#EVENT_TYPE_COUNT" title="class or interface in org.eclipse.emf.common.notify">EVENT_TYPE_COUNT</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#MOVE" title="class or interface in org.eclipse.emf.common.notify">MOVE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#NO_FEATURE_ID" title="class or interface in org.eclipse.emf.common.notify">NO_FEATURE_ID</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#NO_INDEX" title="class or interface in org.eclipse.emf.common.notify">NO_INDEX</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#REMOVE" title="class or interface in org.eclipse.emf.common.notify">REMOVE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#REMOVE_MANY" title="class or interface in org.eclipse.emf.common.notify">REMOVE_MANY</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#REMOVING_ADAPTER" title="class or interface in org.eclipse.emf.common.notify">REMOVING_ADAPTER</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#RESOLVE" title="class or interface in org.eclipse.emf.common.notify">RESOLVE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#SET" title="class or interface in org.eclipse.emf.common.notify">SET</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#UNSET" title="class or interface in org.eclipse.emf.common.notify">UNSET</a></code></li>
+<h3>Fields inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#ADD" title="class or interface in org.eclipse.emf.common.notify">ADD</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#ADD_MANY" title="class or interface in org.eclipse.emf.common.notify">ADD_MANY</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#CREATE" title="class or interface in org.eclipse.emf.common.notify">CREATE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#EVENT_TYPE_COUNT" title="class or interface in org.eclipse.emf.common.notify">EVENT_TYPE_COUNT</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#MOVE" title="class or interface in org.eclipse.emf.common.notify">MOVE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#NO_FEATURE_ID" title="class or interface in org.eclipse.emf.common.notify">NO_FEATURE_ID</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#NO_INDEX" title="class or interface in org.eclipse.emf.common.notify">NO_INDEX</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#REMOVE" title="class or interface in org.eclipse.emf.common.notify">REMOVE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#REMOVE_MANY" title="class or interface in org.eclipse.emf.common.notify">REMOVE_MANY</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#REMOVING_ADAPTER" title="class or interface in org.eclipse.emf.common.notify">REMOVING_ADAPTER</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#RESOLVE" title="class or interface in org.eclipse.emf.common.notify">RESOLVE</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#SET" title="class or interface in org.eclipse.emf.common.notify">SET</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#UNSET" title="class or interface in org.eclipse.emf.common.notify">UNSET</a></code></li>
 </ul>
 </li>
 </ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_summary">
+<li class="blockList"><a name="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.common.notify.Notification">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.common.notify.Notification">
 <!--   -->
 </a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a></h3>
-<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getEventType()" title="class or interface in org.eclipse.emf.common.notify">getEventType</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getFeature()" title="class or interface in org.eclipse.emf.common.notify">getFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getFeatureID(java.lang.Class)" title="class or interface in org.eclipse.emf.common.notify">getFeatureID</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewBooleanValue()" title="class or interface in org.eclipse.emf.common.notify">getNewBooleanValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewByteValue()" title="class or interface in org.eclipse.emf.common.notify">getNewByteValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewCharValue()" title="class or interface in org.eclipse.emf.common.notify">getNewCharValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewDoubleValue()" title="class or interface in org.eclipse.emf.common.notify">getNewDoubleValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewFloatValue()" title="class or interface in org.eclipse.emf.common.notify">getNewFloatValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewIntValue()" title="class or interface in org.eclipse.emf.common.notify">getNewIntValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewLongValue()" title="class or interface in org.eclipse.emf.common.notify">getNewLongValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewShortValue()" title="class or interface in org.eclipse.emf.common.notify">getNewShortValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewStringValue()" title="class or interface in org.eclipse.emf.common.notify">getNewStringValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewValue()" title="class or interface in org.eclipse.emf.common.notify">getNewValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNotifier()" title="class or interface in org.eclipse.emf.common.notify">getNotifier</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldBooleanValue()" title="class or interface in org.eclipse.emf.common.notify">getOldBooleanValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldByteValue()" title="class or interface in org.eclipse.emf.common.notify">getOldByteValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldCharValue()" title="class or interface in org.eclipse.emf.common.notify">getOldCharValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldDoubleValue()" title="class or interface in org.eclipse.emf.common.notify">getOldDoubleValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldFloatValue()" title="class or interface in org.eclipse.emf.common.notify">getOldFloatValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldIntValue()" title="class or interface in org.eclipse.emf.common.notify">getOldIntValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldLongValue()" title="class or interface in org.eclipse.emf.common.notify">getOldLongValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldShortValue()" title="class or interface in org.eclipse.emf.common.notify">getOldShortValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldStringValue()" title="class or interface in org.eclipse.emf.common.notify">getOldStringValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldValue()" title="class or interface in org.eclipse.emf.common.notify">getOldValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#getPosition()" title="class or interface in org.eclipse.emf.common.notify">getPosition</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#isReset()" title="class or interface in org.eclipse.emf.common.notify">isReset</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#isTouch()" title="class or interface in org.eclipse.emf.common.notify">isTouch</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#merge(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify">merge</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Notification.html?is-external=true#wasSet()" title="class or interface in org.eclipse.emf.common.notify">wasSet</a></code></li>
+<h3>Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Notification</a></h3>
+<code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getEventType--" title="class or interface in org.eclipse.emf.common.notify">getEventType</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getFeature--" title="class or interface in org.eclipse.emf.common.notify">getFeature</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getFeatureID-java.lang.Class-" title="class or interface in org.eclipse.emf.common.notify">getFeatureID</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewBooleanValue--" title="class or interface in org.eclipse.emf.common.notify">getNewBooleanValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewByteValue--" title="class or interface in org.eclipse.emf.common.notify">getNewByteValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewCharValue--" title="class or interface in org.eclipse.emf.common.notify">getNewCharValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewDoubleValue--" title="class or interface in org.eclipse.emf.common.notify">getNewDoubleValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewFloatValue--" title="class or interface in org.eclipse.emf.common.notify">getNewFloatValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewIntValue--" title="class or interface in org.eclipse.emf.common.notify">getNewIntValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewLongValue--" title="class or interface in org.eclipse.emf.common.notify">getNewLongValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewShortValue--" title="class or interface in org.eclipse.emf.common.notify">getNewShortValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewStringValue--" title="class or interface in org.eclipse.emf.common.notify">getNewStringValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNewValue--" title="class or interface in org.eclipse.emf.common.notify">getNewValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getNotifier--" title="class or interface in org.eclipse.emf.common.notify">getNotifier</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldBooleanValue--" title="class or interface in org.eclipse.emf.common.notify">getOldBooleanValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldByteValue--" title="class or interface in org.eclipse.emf.common.notify">getOldByteValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldCharValue--" title="class or interface in org.eclipse.emf.common.notify">getOldCharValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldDoubleValue--" title="class or interface in org.eclipse.emf.common.notify">getOldDoubleValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldFloatValue--" title="class or interface in org.eclipse.emf.common.notify">getOldFloatValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldIntValue--" title="class or interface in org.eclipse.emf.common.notify">getOldIntValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldLongValue--" title="class or interface in org.eclipse.emf.common.notify">getOldLongValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldShortValue--" title="class or interface in org.eclipse.emf.common.notify">getOldShortValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldStringValue--" title="class or interface in org.eclipse.emf.common.notify">getOldStringValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getOldValue--" title="class or interface in org.eclipse.emf.common.notify">getOldValue</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#getPosition--" title="class or interface in org.eclipse.emf.common.notify">getPosition</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#isReset--" title="class or interface in org.eclipse.emf.common.notify">isReset</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#isTouch--" title="class or interface in org.eclipse.emf.common.notify">isTouch</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#merge-org.eclipse.emf.common.notify.Notification-" title="class or interface in org.eclipse.emf.common.notify">merge</a>, <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html?is-external=true#wasSet--" title="class or interface in org.eclipse.emf.common.notify">wasSet</a></code></li>
 </ul>
 </li>
 </ul>
@@ -160,9 +171,11 @@ extends <a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="in
 </div>
 <!-- ========= END OF CLASS DATA ========= -->
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar_bottom">
+<div class="bottomNav"><a name="navbar.bottom">
 <!--   -->
-</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -177,15 +190,15 @@ extends <a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="in
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../org/eclipse/emf/cdo/CDODeltaNotification.html" title="interface in org.eclipse.emf.cdo"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../org/eclipse/emf/cdo/CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../index.html?org/eclipse/emf/cdo/CDOInvalidationNotification.html" target="_top">Frames</a></li>
-<li><a href="CDOInvalidationNotification.html" target="_top">No Frames</a></li>
+<li><a href="CDOInvalidationNotification.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -214,10 +227,10 @@ extends <a href="../../../../org/eclipse/emf/cdo/CDONotification.html" title="in
 <li>Method</li>
 </ul>
 </div>
-<a name="skip-navbar_bottom">
+<a name="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011, 2012 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i>Copyright (c) 2011-2014 Eike Stepper (Berlin, Germany) and others.</i></small></p>
 </body>
 </html>

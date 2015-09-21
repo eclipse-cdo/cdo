@@ -19,9 +19,6 @@
     </detail>
   </annotation>
   <setupTask
-      xsi:type="setup:InstallationTask"
-      id="installation"/>
-  <setupTask
       xsi:type="setup.p2:P2Task"
       label="${scope.product.label}">
     <requirement

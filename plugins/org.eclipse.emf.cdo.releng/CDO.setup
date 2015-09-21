@@ -233,11 +233,11 @@
         <repository
             url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/compare/updates/nightly/latest"/>
+            url="http://download.eclipse.org/modeling/emf/compare/updates/nightly/streams/3.1.x/latest"/>
         <repository
             url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.eclipse.org/ecp/rt/150_MS3"/>
+            url="http://download.eclipse.org/ecp/rt/170_RC2"/>
         <repository
             url="http://www.elver.org/eclipse/2.1.0/update"/>
         <repository
@@ -312,7 +312,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.3 //@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.8"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.3 //@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.8 //@streams[name='master']/@setupTasks.7/@workingSets.0"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -431,7 +431,7 @@
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.10/@workingSets.7 //@streams[name='master']/@setupTasks.7/@workingSets.0"/>
       </predicate>
     </workingSet>
   </setupTask>

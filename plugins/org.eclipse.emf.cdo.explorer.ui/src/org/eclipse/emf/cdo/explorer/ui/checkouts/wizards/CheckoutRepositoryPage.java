@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryItemProvider;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
@@ -135,6 +136,17 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
         validate();
       }
     });
+
+    if (repository == null)
+    {
+      CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
+      CDORepository[] repositories = repositoryManager.getRepositories();
+      if (repositories.length != 0)
+      {
+        setRepository(repositories[0]);
+        tableViewer.setSelection(new StructuredSelection(repositories[0]));
+      }
+    }
 
     tableViewer.addDoubleClickListener(new IDoubleClickListener()
     {

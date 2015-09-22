@@ -56,12 +56,6 @@
       xsi:type="setup:EclipseIniTask"
       option="-console"/>
   <setupTask
-      xsi:type="setup:VariableTask"
-      type="FOLDER"
-      name="database.folder"
-      storageURI="scope://Installation"
-      label="Database Folder"/>
-  <setupTask
       xsi:type="setup:TextModifyTask"
       url="${installation.location|uri}/${installation.relativeProductFolder}/configuration/config.ini"
       encoding="ISO-8859-1">

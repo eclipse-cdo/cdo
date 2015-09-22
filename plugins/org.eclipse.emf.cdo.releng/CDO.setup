@@ -540,7 +540,7 @@
     </setupTask>
   </setupTask>
   <stream name="master"
-      label="Master">
+      label="4.5 Integration (Neon)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -604,7 +604,7 @@
     </setupTask>
   </stream>
   <stream name="4.4-maintenance"
-      label="4.4 Maintenance">
+      label="4.4 Maintenance (Mars)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -640,7 +640,7 @@
         location="${jre.location-1.7}"/>
   </stream>
   <stream name="4.3-maintenance"
-      label="4.3 Maintenance">
+      label="4.3 Maintenance (Luna)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement

@@ -35,7 +35,7 @@ public class SwitchToActionProvider extends AbstractBranchPointActionProvider
   @Override
   protected void fillSubMenu(IWorkbenchPage page, IMenuManager subMenu, CDOCheckout checkout)
   {
-    if (checkout.isOnline())
+    if (CDOCheckout.TYPE_ONLINE_TRANSACTIONAL.equals(checkout.getType()))
     {
       subMenu.add(new SwitchToNewBranchAction(page, checkout));
     }

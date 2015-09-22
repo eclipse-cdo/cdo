@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Working with Branches (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Working with Branches (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Working with Branches</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc02_ManagingRepositories.html" title="Backward to Managing Repositories"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_CheckingOut.html" title="Forward to Checking Out from Repositories"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>Branches</code></a> are a very powerful concept in CDO. They allow to isolate a sequence of commits from other
+ sequences of commits, as well as all the locks on the objects that are involved. A branch is represented by a
+ <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>base point</code></a> and a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>name</code></a>. The base point of a branch X is the
+ <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>timestamp</code></a> in the <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>parent branch</code></a> where the
+ branch X forks off. As such all branches of a repository form a tree that is rooted at the
+ <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>main branch</code></a>, which itself has no proper base point (the base branch is
+ <code>null</code> and the base time is identical to the <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>creation time</code></a> of the repository).
+ <p>
+ The branch tree of a repository is displayed under that repository in the <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>. The main branch
+ is always represented by the repository node itself. The displayed branch tree is updated in real-time even when other users
+ create new branches or modify existing branches on their workstations.
+ <p>
+ Each repository has at least a main branch, but, to be able to work with branches in a meaningful way, the <i>versioning mode</i>
+ of a repository must be set to <i>branching</i>. See <a href="../operators/Doc01_ConfiguringRepositories.html#Property_supportingBranches" title="Chapter in CDO Model Repository Documentation">Property supportingBranches</a>
+ for instructions on how to do this for
+ remote repositories or <a href="Doc02_ManagingRepositories.html#Doc_LocalRepositories" title="Chapter in CDO Model Repository Documentation">Creating Local Repositories</a> for instructions on how to do this for local repositories.
+ <p>
+ Note that the branching mode does usually not add much overhead in terms of storage consumption or processing time, but the
+ branching mode always includes the functionality and the characteristics of the auditing mode; and that mode may significantly
+ increase the size of the underlying database. In other words, using the auditing mode instead of the normal mode makes a big difference;
+ using the branching mode instead of the auditing mode not.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_CreatingBranches" title="Chapter in CDO Model Repository Documentation">Creating Branches</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_RenamingBranches" title="Chapter in CDO Model Repository Documentation">Renaming Branches</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_DeletingBranches" title="Chapter in CDO Model Repository Documentation">Deleting Branches</a></td></tr>
+<tr><td>4&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_BranchShowInHistory" title="Chapter in CDO Model Repository Documentation">Showing Branches in the History View</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Doc_CreatingBranches"></a>1&nbsp;&nbsp;Creating Branches</h2>
+<p>
+ There exist several ways to create new branches. The most explicit way is to use <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>,
+ select a repository (with versioning mode set to branching) or an existing branch under that repository,
+ open the context menu on that repository or branch and select the New Branch action. The following dialog will pop up:
+ <p align="center"><img src="branch-create.png"></p>
+
+ <p>
+ The upper part of the dialog shows the current branch tree of the targeted repository.
+ The <b>base branch</b> of the new branch can be changed if needed.
+ <p>
+ The <b>base time stamp</b> must be specified. Three different options exist:
+ <ul>
+ <li> <b>Base</b> refers to the time stamp of the base point of the branch selected in the upper branch tree.
+      That means the resulting new branch  will fork of the selected base branch at the same time when that base branch was forked off
+      of its own base branch.
+ <li> <b>Time</b> allows to enter any valid time stamp. Invalid time stamps are those that are before the creation of the base branch
+      or after the current time.
+ <li> <b>Head</b> refers to the current time. Note that the <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>head</code></a> of a branch is a floating branch point,
+      i.e., it always point to the current time in a branch. Nevertheless selecting this option will set the base time stamp of the
+      new branch to the fixed point in time on the server when the branch is actually created.
+ </ul>
+ <p>
+ The <b>name</b> of the new branch must be unique among the child branches of the selected base branch.
+ <p>
+ Other ways to create branches are explained in <a href="Doc05_UsingCheckouts.html#Doc_SwitchNewBranch" title="Chapter in CDO Model Repository Documentation">Switching to a New Branch</a> and <a href="Doc01_UserInterface.html#Doc_HistoryIntegration" title="Chapter in CDO Model Repository Documentation">History Integration</a>.
+
+<h2><a name="Doc_RenamingBranches"></a>2&nbsp;&nbsp;Renaming Branches</h2>
+<p>
+ Existing branches can be renamed at any point in time. The main branch of a repository can not be renamed.
+ <p>
+ To rename a branch select it in the <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>, press the F2 key or open the context menu on
+ that branch and select the Rename action. The following dialog will pop up: <p align="center"><img src="branch-rename.png"></p>
+
+ <p>
+ The entered new name for the selected branch is validated to be unique among the other child branches of the
+ selected branch's base branch.
+
+<h2><a name="Doc_DeletingBranches"></a>3&nbsp;&nbsp;Deleting Branches</h2>
+<p>
+ Deleting branches is not yet supported.
+
+<h2><a name="Doc_BranchShowInHistory"></a>4&nbsp;&nbsp;Showing Branches in the History View</h2>
+<p>
+ All branches can be shown in the <a href="Doc01_UserInterface.html#Doc_HistoryIntegration" title="Chapter in CDO Model Repository Documentation">History view</a>: <p align="center"><img src="history.png"></p>
+
+ <p>
+ This is particularly useful if the "Link with Editor and Selection" button in the toolbar of the History view
+ is not enabled and the history page does not automatically adjust to the workbench selection.
+
+<p align="right">
+<a href="Doc02_ManagingRepositories.html" title="Backward to Managing Repositories"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_CheckingOut.html" title="Forward to Checking Out from Repositories"><img src="../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

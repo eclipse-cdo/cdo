@@ -3,10 +3,27 @@
 
 <toc label="CDO Model Repository Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
+  <topic label="User's Guide" href="html/users/index.html">
+    <topic label="Elements of the User Interface" href="html/users/Doc01_UserInterface.html" />
+    <topic label="Managing Repositories" href="html/users/Doc02_ManagingRepositories.html" />
+    <topic label="Working with Branches" href="html/users/Doc03_UsingBranches.html" />
+    <topic label="Checking Out from Repositories" href="html/users/Doc04_CheckingOut.html" />
+    <topic label="Working with Checkouts" href="html/users/Doc05_UsingCheckouts.html" />
+    <topic label="Working with Folders and Resources" href="html/users/Doc06_UsingResources.html" />
+    <topic label="Working with Models and Model Elements" href="html/users/Doc07_UsingModels.html" />
+    <topic label="Understanding the Technical Background" href="html/users/Doc08_TechnicalBackground.html" />
+  </topic>
+  <topic label="Operator's Guide" href="html/operators/index.html">
+    <topic label="Operating a CDO Server" href="html/operators/Doc00_OperatingServer.html" />
+    <topic label="Configuring Repositories" href="html/operators/Doc01_ConfiguringRepositories.html" />
+    <topic label="Configuring Acceptors" href="html/operators/Doc02_ConfiguringAcceptors.html" />
+    <topic label="Managing Security" href="http://wiki.eclipse.org/CDO/Security_Manager" icon="external" />
+  </topic>
   <topic label="Programmer's Guide" href="html/programmers/index.html">
     <topic label="Developing Client Applications" href="html/programmers/client/index.html">
-      <topic label="Understanding the Architecture of a Client Application" href="html/programmers/client/Architecture.html" />
-      <topic label="View Providers" href="html/programmers/client/ViewProviders.html" />
+      <topic label="Understanding the Architecture of a Client Application" href="html/programmers/client/Doc01_Architecture.html" />
+      <topic label="Preparing EMF Models for CDO" href="html/programmers/client/Doc02_PreparingModels.html" />
+      <topic label="View Providers" href="html/programmers/client/Doc03_ViewProviders.html" />
     </topic>
     <topic label="Dealing with Servers" href="html/programmers/server/index.html">
       <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" />
@@ -79,6 +96,11 @@
         <topic label="org.eclipse.emf.cdo.spi.common.model" href="javadoc/org/eclipse/emf/cdo/spi/common/model/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.spi.common.protocol" href="javadoc/org/eclipse/emf/cdo/spi/common/protocol/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.spi.common.revision" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Explorer" href="javadoc/org/eclipse/emf/cdo/explorer/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.explorer" href="javadoc/org/eclipse/emf/cdo/explorer/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.explorer.checkouts" href="javadoc/org/eclipse/emf/cdo/explorer/checkouts/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.explorer.repositories" href="javadoc/org/eclipse/emf/cdo/explorer/repositories/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Expressions" href="javadoc/org/eclipse/emf/cdo/expressions/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.expressions" href="javadoc/org/eclipse/emf/cdo/expressions/package-summary.html" icon="package" />
@@ -177,8 +199,12 @@
     <topic label="DBStore Mapping Strategies" href="html/reference/MappingStrategies.html" />
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
-    <topic label="Homepage" href="http://www.eclipse.org/cdo" icon="external" />
-    <topic label="Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />
+    <topic label="CDO Homepage" href="http://www.eclipse.org/cdo" icon="external" />
+    <topic label="CDO Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />
+    <topic label="CDO Scalability" href="http://thegordian.blogspot.de/2008/11/how-scalable-are-my-models.html" icon="external" />
+    <topic label="EMF Developer Guide" href="http://help.eclipse.org/mars/nav/21" icon="external" />
+    <topic label="EMF Compare Guide" href="http://www.eclipse.org/emf/compare/documentation/latest/user/user-guide.html" icon="external" />
+    <topic label="EMF Forms Guide" href="http://www.eclipse.org/ecp/documentation.html" icon="external" />
   </topic>
   <topic label="Legal" href="about.html" />
 </toc>

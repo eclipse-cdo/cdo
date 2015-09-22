@@ -1,0 +1,232 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Managing Repositories (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Managing Repositories (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Managing Repositories</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_UserInterface.html" title="Backward to Elements of the User Interface"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_UsingBranches.html" title="Forward to Working with Branches"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ CDO stores models and meta models in repositories. These repositories need to be created or,
+ if they already exist on a remote server, connected before they can be used in Eclipse.
+ The management of these repository connections happens in the <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>.
+ <p>
+ Currently CDO supports two different types of repository connections:
+ <ul>
+ <li>Connections to existing remote repositories, as explained in <a href="Doc02_ManagingRepositories.html#Doc_RemoteRepositories" title="Chapter in CDO Model Repository Documentation">Connecting to Remote Repositories</a>.
+ <li>Connections to newly created local repositories, as explained in <a href="Doc02_ManagingRepositories.html#Doc_LocalRepositories" title="Chapter in CDO Model Repository Documentation">Creating Local Repositories</a>.
+ </ul>
+ Please note that the term <a href="../../javadoc/org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="Interface in org.eclipse.emf.cdo.explorer.repositories"><code>repository</code></a> in the context of the CDO Explorer user interface refers to a <i>connection</i>
+ to a core-level <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a>, as opposed to referring to the <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a> itself. Information on
+ operating a CDO server and on creating and managing an <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a> can be found in the <a href="../operators/index.html" title="Category in CDO Model Repository Documentation">Operator's Guide</a>.
+ <p>
+ The following sections explain how to create, rename, connect, disconnect, or delete repositories and how to work with branches.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="4"><a href="Doc02_ManagingRepositories.html#Doc_CreatingRepositories" title="Chapter in CDO Model Repository Documentation">Creating Repositories and Connections</a></td></tr>
+<tr><td></td><td>1.1&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_RemoteRepositories" title="Chapter in CDO Model Repository Documentation">Connecting to Remote Repositories</a></td></tr>
+<tr><td></td><td>1.2&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_CloneRepositories" title="Chapter in CDO Model Repository Documentation">Cloning Master Repositories</a></td></tr>
+<tr><td></td><td>1.3&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_LocalRepositories" title="Chapter in CDO Model Repository Documentation">Creating Local Repositories</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="4"><a href="Doc02_ManagingRepositories.html#Doc_RenamingConnections" title="Chapter in CDO Model Repository Documentation">Renaming Repository Connections</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="4"><a href="Doc02_ManagingRepositories.html#Doc_DeletingConnections" title="Chapter in CDO Model Repository Documentation">Deleting Repository Connections</a></td></tr>
+<tr><td>4&nbsp;</td><td colspan="4"><a href="Doc02_ManagingRepositories.html#Doc_ConnectingDisconnecting" title="Chapter in CDO Model Repository Documentation">Connecting and Disconnecting Repositories</a></td></tr>
+<tr><td>5&nbsp;</td><td colspan="4"><a href="Doc02_ManagingRepositories.html#Doc_RepositoryShowIn" title="Chapter in CDO Model Repository Documentation">Showing Repositories in Other Views</a></td></tr>
+<tr><td></td><td>5.1&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_RepositoryShowInSessions" title="Chapter in CDO Model Repository Documentation">Showing Repositories in the CDO Sessions View</a></td></tr>
+<tr><td></td><td>5.2&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_RepositoryShowInServerBrowser" title="Chapter in CDO Model Repository Documentation">Showing Repositories in the CDO Server Browser</a></td></tr>
+<tr><td></td><td>5.3&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_RepositoryShowInProperties" title="Chapter in CDO Model Repository Documentation">Showing Repositories in the Properties View</a></td></tr>
+<tr><td></td><td>5.4&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_RepositoryShowInHistory" title="Chapter in CDO Model Repository Documentation">Showing Repositories in the History View</a></td></tr>
+<tr><td></td><td>5.5&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_RepositoryShowInProjectExplorer" title="Chapter in CDO Model Repository Documentation">Showing Repositories in the Project Explorer</a></td></tr>
+<tr><td></td><td>5.6&nbsp;</td><td colspan="3"><a href="Doc02_ManagingRepositories.html#Doc_RepositoryShowInSystemExplorer" title="Chapter in CDO Model Repository Documentation">Showing Repositories in the System Explorer</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Doc_CreatingRepositories"></a>1&nbsp;&nbsp;Creating Repositories and Connections</h2>
+<p>
+ The <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a> provides a uniform way to work with different types of CDO repositories.
+ Only at creation or connection time the differences between the repository types become apparent.
+ <p>
+ The following sections explain how to use the different repository creation or connection wizards. Each of them
+ can be started by clicking on the green plus button on the CDO Repositories view's toolbar:
+ <p align="center"><img src="repositories-view.png"></p>
+
+
+<h3><a name="Doc_RemoteRepositories"></a>1.1&nbsp;&nbsp;Connecting to Remote Repositories</h3>
+<p>
+ To create an online connection to an existing remote repository the first type option must be selected on the first wizard page:
+ <p align="center"><img src="repo-wizard-type-remote.png"></p>
+
+ <p>
+ A double-click on the type option or a single click on the Next button advances to the next wizard page, on which the label
+ of the new connection and information about the remote server, the repository on that server, and optionally login credentials need
+ to be entered:
+ <p align="center"><img src="repo-wizard-remote.png"></p>
+
+ <p>
+ The <b>label</b> identifies the connection to the remote repository. It must be unique among all
+ configured connections in the current workspace. It can also be changed later, see <a href="Doc02_ManagingRepositories.html#Doc_RenamingConnections" title="Chapter in CDO Model Repository Documentation">Renaming Repository Connections</a>.
+ <p>
+ The <b>host</b> and <b>port</b> fields specify the server of the repository to connect to, more exactly the <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html" title="Interface in org.eclipse.net4j.acceptor"><code>IAcceptor</code></a>
+ on that server that accepts connection requests for the targeted repository. See <a href="../operators/Doc02_ConfiguringAcceptors.html" title="Article in CDO Model Repository Documentation">Configuring Acceptors</a> for operator details.
+ <p>
+ The <b>repositories</b> list shows the repositories that are discovered on the targeted server. Selecting a discovered repository
+ in this list copies the name of the selected repository into the repository name field.
+ <p>
+ The <b>repository name</b> field identifies the targeted repository on the specified CDO server.
+ See <a href="../operators/Doc01_ConfiguringRepositories.html#Element_repository" title="Chapter in CDO Model Repository Documentation">Element repository</a> on how to configure repository names on a CDO server.
+ <p>
+ The <b>user name</b> and <b>password</b> fields are only enabled if the targeted repository supports authentication.
+ See <a href="http://wiki.eclipse.org/CDO/Security_Manager" title="Article in CDO Model Repository Documentation">Managing Security</a> on how to configure authentication and authorization in CDO repositories.
+
+<h3><a name="Doc_CloneRepositories"></a>1.2&nbsp;&nbsp;Cloning Master Repositories</h3>
+<p>
+ Cloning master repositories is not yet supported in the user interface.
+
+<h3><a name="Doc_LocalRepositories"></a>1.3&nbsp;&nbsp;Creating Local Repositories</h3>
+<p>
+ To create a new local repository and add an online connection to it the third type option must be selected on the first wizard page:
+ <p align="center"><img src="repo-wizard-type-local.png"></p>
+
+ <p>
+ A double-click on the type option or a single click on the Next button advances to the next wizard page, on which the label
+ of the new connection and information about the new local repository need to be entered:
+ <p align="center"><img src="repo-wizard-local.png"></p>
+
+ <p>
+ The <b>label</b> identifies the connection to the new local repository. It must be unique among all
+ configured connections in the current workspace. It can also be changed later, see <a href="Doc02_ManagingRepositories.html#Doc_RenamingConnections" title="Chapter in CDO Model Repository Documentation">Renaming Repository Connections</a>.
+ <p>
+ The <b>repository name</b> field specifies the name of the new local repository. It must be unique among all local repositories
+ in the current workspace. The name of the repository can, in contrast to the label of the connection, not be changed anymore,
+ once the repository is created.
+ <p>
+ The <b>versioning mode</b> determines whether the history of changed models is preserved (for example to be used in
+ <a href="Doc04_CheckingOut.html#Doc_HistoricalCheckouts" title="Chapter in CDO Model Repository Documentation">Online Historical Checkouts</a> and with the <a href="Doc01_UserInterface.html#Doc_TimeMachineView" title="Chapter in CDO Model Repository Documentation">CDO Time Machine View</a>) and whether branches are supported.
+ The versioning mode of the repository can not be changed anymore, once the repository is created.
+ <p>
+ The <b>ID generation</b> determines where (server or client) and how (counters or UUIDs) IDs for new model elements are generated.
+ Server-side counter IDs are the more efficient option, but they prevent the repository to be used in replicated scenarios, such as
+ <a href="Doc02_ManagingRepositories.html#Doc_CloneRepositories" title="Chapter in CDO Model Repository Documentation">offline clone repositories</a> or <a href="Doc04_CheckingOut.html#Doc_OfflineCheckouts" title="Chapter in CDO Model Repository Documentation">offline checkouts</a>. For those scenarios
+ client-side UUIDs should be selected.
+ The ID generation of the repository can not be changed anymore, once the repository is created.
+ <p>
+ The optional <b>TCP port</b> field specifies on what port a <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html" title="Interface in org.eclipse.net4j.tcp"><code>ITCPAcceptor</code></a> will accept incoming connection requests.
+ By default this option is disabled because local repositories run in the same Java VM as the hosting Eclipse IDE, and are
+ always accepting connection requests from there through an implicit <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html" title="Interface in org.eclipse.net4j.jvm"><code>IJVMAcceptor</code></a>, too.
+
+<h2><a name="Doc_RenamingConnections"></a>2&nbsp;&nbsp;Renaming Repository Connections</h2>
+<p>
+ CDO supports renaming an existing repository connection, i.e., changing its label, at any time, even when checkouts from
+ that repository already exist. A repository connection can be renamed by selecting it and pressing the F2 key or
+ selecting the Rename action in the context menu. The following dialog will pop up: <p align="center"><img src="repo-rename.png"></p>
+
+ <p>
+ The dialog can only be finished with the OK button if the repository label is either unchanged or changed to a not existing label.
+
+<h2><a name="Doc_DeletingConnections"></a>3&nbsp;&nbsp;Deleting Repository Connections</h2>
+<p>
+ An existing repository connection can be deleted by selecting that repository connection and pressing the Del key or selecting
+ the Delete action in the context menu. The following dialog will pop up: <p align="center"><img src="repo-delete.png"></p>
+
+ <p>
+ If checkouts exist for the repository connection to be deleted the following warning dialog will pop up <b>first</b>:
+ <p align="center"><img src="repo-delete-checkouts.png"></p>
+
+ <p>
+ If the deletion of the existing checkouts is confirmed the checkout deletion dialog is popped up as explained in <a href="Doc05_UsingCheckouts.html#Doc_DeletingCheckouts" title="Chapter in CDO Model Repository Documentation">Deleting Checkouts</a>.
+
+<h2><a name="Doc_ConnectingDisconnecting"></a>4&nbsp;&nbsp;Connecting and Disconnecting Repositories</h2>
+<p>
+ To work with a configured repository, e.g. to create branches (see <a href="Doc03_UsingBranches.html#Doc_CreatingBranches" title="Chapter in CDO Model Repository Documentation">Creating Branches</a>) or checkouts
+ (see <a href="Doc04_CheckingOut.html" title="Article in CDO Model Repository Documentation">Checking Out from Repositories</a>, the repository must be in <i>connected</i> state. Directly after creation a repository is
+ connected. Directly after the startup of Eclipse all repositories are in <i>disconnected</i> state.
+ <p>
+ If a repository is disconnected it can be connected by double-clicking it or by selecting Connect in its context menu.
+ It is automatically connected when an existing checkout from this repository is opened.
+ <p>
+ If a repository is connected it can be disconnected by selecting Disconnect in its context menu.
+ It is automatically disconnected when the <a href="Doc01_UserInterface.html#Doc_PreferencePages" title="Chapter in CDO Model Repository Documentation">configured timeout period</a> has elapsed
+ and the repository wasn't used during that period.
+
+<h2><a name="Doc_RepositoryShowIn"></a>5&nbsp;&nbsp;Showing Repositories in Other Views</h2>
+<p>
+ Repositories can be shown in a number of other views depending on the type of the repository
+ by selecting them, opening their context menu, opening the Show In sub menu, and selecting one of the Show In actions.
+ <p>
+ Local repositories can be shown in the following views: <p align="center"><img src="repository-local-showin.png"></p>
+
+ <p>
+ Remote repositories can be shown in the following views: <p align="center"><img src="repository-remote-showin.png"></p>
+
+
+<h3><a name="Doc_RepositoryShowInSessions"></a>5.1&nbsp;&nbsp;Showing Repositories in the CDO Sessions View</h3>
+<p>
+ All repositories can be shown in the <a href="Doc01_UserInterface.html#Doc_SessionsView" title="Chapter in CDO Model Repository Documentation">CDO Sessions view</a>: <p align="center"><img src="sessions-view.png"></p>
+
+ <p>
+ A new <a href="../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a> with the same target repository as the selected repository is opened in the CDO Sessions view.
+
+<h3><a name="Doc_RepositoryShowInServerBrowser"></a>5.2&nbsp;&nbsp;Showing Repositories in the CDO Server Browser</h3>
+<p>
+ Local repositories can be shown in the CDO Server Browser: <p align="center"><img src="server-browser.png"></p>
+
+ <p>
+ The CDO Server Browser allows to introspect the internal data of the local repository
+ in a web browser. It is only meant to be used for test and debug purposes.
+ It is <b>not</b> meant to be a production tool that would scale to arbitrary repository sizes!
+
+<h3><a name="Doc_RepositoryShowInProperties"></a>5.3&nbsp;&nbsp;Showing Repositories in the Properties View</h3>
+<p>
+ All repositories can be shown in the <a href="Doc01_UserInterface.html#Doc_PropertySheetIntegration" title="Chapter in CDO Model Repository Documentation">Properties view</a>: <p align="center"><img src="property-sheet.png"></p>
+
+
+<h3><a name="Doc_RepositoryShowInHistory"></a>5.4&nbsp;&nbsp;Showing Repositories in the History View</h3>
+<p>
+ All repositories can be shown in the <a href="Doc01_UserInterface.html#Doc_HistoryIntegration" title="Chapter in CDO Model Repository Documentation">History view</a>: <p align="center"><img src="history.png"></p>
+
+ <p>
+ This is particularly useful if the "Link with Editor and Selection" button in the toolbar of the History view
+ is not enabled and the history page does not automatically adjust to the workbench selection.
+
+<h3><a name="Doc_RepositoryShowInProjectExplorer"></a>5.5&nbsp;&nbsp;Showing Repositories in the Project Explorer</h3>
+<p>
+ All repositories can be shown in the <a href="Doc01_UserInterface.html#Doc_ProjectExplorerIntegration" title="Chapter in CDO Model Repository Documentation">Project Explorer</a>, which means that all
+ configured checkouts from the selected repository will be selected.
+
+<h3><a name="Doc_RepositoryShowInSystemExplorer"></a>5.6&nbsp;&nbsp;Showing Repositories in the System Explorer</h3>
+<p>
+ All repositories can be shown in the System Explorer: <p align="center"><img src="system-explorer-repository.png"></p>
+
+ <p>
+ Each repository owns a dedicated directory under .metadata of the current workspace. This directory contains
+ the repository.properties file that contains the configuration of the repository. Local repositories also store the database
+ of the local repository in this directory.
+
+<p align="right">
+<a href="Doc01_UserInterface.html" title="Backward to Elements of the User Interface"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_UsingBranches.html" title="Forward to Working with Branches"><img src="../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

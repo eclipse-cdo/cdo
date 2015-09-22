@@ -1,0 +1,340 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Preparing EMF Models for CDO (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Preparing EMF Models for CDO (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Preparing EMF Models for CDO</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_Architecture.html" title="Backward to Understanding the Architecture of a Client Application"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_ViewProviders.html" title="Forward to View Providers"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="3"><a href="Doc02_PreparingModels.html#Doc_CreatingEcore" title="Chapter in CDO Model Repository Documentation">Creating an Ecore Model</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="3"><a href="Doc02_PreparingModels.html#Doc_UsingImporter" title="Chapter in CDO Model Repository Documentation">Using the CDO Model Importer</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="3"><a href="Doc02_PreparingModels.html#Doc_UsingMigrator" title="Chapter in CDO Model Repository Documentation">Using the CDO Model Migrator</a></td></tr>
+<tr><td>4&nbsp;</td><td colspan="3"><a href="Doc02_PreparingModels.html#Doc_MigratingManually" title="Chapter in CDO Model Repository Documentation">Migrating a GenModel Manually</a></td></tr>
+<tr><td>5&nbsp;</td><td colspan="3"><a href="Doc02_PreparingModels.html#Doc_GeneratingModel" title="Chapter in CDO Model Repository Documentation">Generating a Model</a></td></tr>
+<tr><td>6&nbsp;</td><td colspan="3"><a href="Doc02_PreparingModels.html#Doc_ModifyingGeneratedCode" title="Chapter in CDO Model Repository Documentation">Modifying Generated Getters and Setters</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Doc_CreatingEcore"></a>1&nbsp;&nbsp;Creating an Ecore Model</h2>
+<p>
+ There's really not much to say about this step. The .ecore file for CDO models is the same as for pure EMF models.
+ Use the Empty EMF Project New Wizard to create an initial project for your model:
+ <p align="center"><img src="EmptyEMFProject.png"></p>
+
+ <p>
+ Create an ordinary Ecore model file in the models folder.
+ The model1 example model in the usual Ecore model editor looks like follows:
+ <p align="center"><img src="Model1Ecore.png"></p>
+
+ <p>
+ The XML representation of this Ecore model is:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_companyEcoreModel"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><img src="../../../images/editor-top-left-xml.png"></td>
+      <td style="background-image:url(../../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">company.ecore</font></td>
+      <td width="1px"><img src="../../../images/editor-close.png"></td>
+      <td style="background-image:url(../../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
+      <td><img src="../../../images/editor-top-right.png"></td>
+    </tr>
+    <tr>
+      <td style="background-image:url(../../../images/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td colspan="3" align="left" valign="top" nowrap>
+        <div style="margin:10px 0px 10px 0px;">
+          <code>
+<font color="#0000e1">&lt;?xml version=<font color="#000080">'1.0'</font> encoding=<font color="#000080">'UTF-8'</font>?&gt;</font><br/>
+<font color="#0000e1">&lt;ecore:EPackage&nbsp;xmi:version<font color="#000080">="2.0"</font>&nbsp;xmlns:xmi<font color="#000080">="http://www.omg.org/XMI"</font>&nbsp;xmlns:xsi<font color="#000080">="http://www.w3.org/2001/XMLSchema-instance"</font>&nbsp;xmlns:ecore<font color="#000080">="http://www.eclipse.org/emf/2002/Ecore"</font>&nbsp;name<font color="#000080">="company"</font>&nbsp;nsURI<font color="#000080">="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"</font>&nbsp;nsPrefix<font color="#000080">="company"</font>&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eAnnotations&nbsp;source<font color="#000080">="teneo.jpa"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;details&nbsp;key<font color="#000080">="value"</font>&nbsp;value<font color="#000080">="@hbGenericGenerators({@GenericGenerator(name="system-uuid", strategy = "org.eclipse.emf.cdo.examples.hibernate.server.CDOExampleUUIDHexGenerator")})"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eAnnotations&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="Addressable"</font>&nbsp;abstract<font color="#000080">="true"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="name"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="street"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="city"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="Company"</font>&nbsp;eSuperTypes<font color="#000080">="#//Addressable"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="categories"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//Category"</font>&nbsp;containment<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="suppliers"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//Supplier"</font>&nbsp;containment<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="customers"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//Customer"</font>&nbsp;containment<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="purchaseOrders"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//PurchaseOrder"</font>&nbsp;containment<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="salesOrders"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//SalesOrder"</font>&nbsp;containment<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="Supplier"</font>&nbsp;eSuperTypes<font color="#000080">="#//Addressable"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="purchaseOrders"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//PurchaseOrder"</font>&nbsp;eOpposite<font color="#000080">="#//PurchaseOrder/supplier"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="preferred"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"</font>&nbsp;defaultValueLiteral<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="Customer"</font>&nbsp;eSuperTypes<font color="#000080">="#//Addressable"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="salesOrders"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//SalesOrder"</font>&nbsp;eOpposite<font color="#000080">="#//SalesOrder/customer"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="Order"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eAnnotations&nbsp;source<font color="#000080">="teneo.jpa"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;details&nbsp;key<font color="#000080">="value"</font>&nbsp;value<font color="#000080">="@Entity(name="BaseOrder")"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/eAnnotations&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="orderDetails"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//OrderDetail"</font>&nbsp;containment<font color="#000080">="true"</font>&nbsp;eOpposite<font color="#000080">="#//OrderDetail/order"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="OrderDetail"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="order"</font>&nbsp;lowerBound<font color="#000080">="1"</font>&nbsp;eType<font color="#000080">="#//Order"</font>&nbsp;eOpposite<font color="#000080">="#//Order/orderDetails"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="product"</font>&nbsp;eType<font color="#000080">="#//Product"</font>&nbsp;eOpposite<font color="#000080">="#//Product/orderDetails"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="price"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="PurchaseOrder"</font>&nbsp;eSuperTypes<font color="#000080">="#//Order"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="date"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="supplier"</font>&nbsp;lowerBound<font color="#000080">="1"</font>&nbsp;eType<font color="#000080">="#//Supplier"</font>&nbsp;eOpposite<font color="#000080">="#//Supplier/purchaseOrders"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="SalesOrder"</font>&nbsp;eSuperTypes<font color="#000080">="#//Order"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="id"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="customer"</font>&nbsp;lowerBound<font color="#000080">="1"</font>&nbsp;eType<font color="#000080">="#//Customer"</font>&nbsp;eOpposite<font color="#000080">="#//Customer/salesOrders"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="Category"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="name"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eAnnotations&nbsp;source<font color="#000080">="teneo.jpa"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;details&nbsp;key<font color="#000080">="value"</font>&nbsp;value<font color="#000080">="@Id @GeneratedValue(generator="system-uuid")"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/eAnnotations&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/eStructuralFeatures&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="categories"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//Category"</font>&nbsp;containment<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="products"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//Product"</font>&nbsp;containment<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EClass"</font>&nbsp;name<font color="#000080">="Product"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="name"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eAnnotations&nbsp;source<font color="#000080">="teneo.jpa"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;details&nbsp;key<font color="#000080">="value"</font>&nbsp;value<font color="#000080">="@Id"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/eAnnotations&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/eStructuralFeatures&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EReference"</font>&nbsp;name<font color="#000080">="orderDetails"</font>&nbsp;upperBound<font color="#000080">="-1"</font>&nbsp;eType<font color="#000080">="#//OrderDetail"</font>&nbsp;eOpposite<font color="#000080">="#//OrderDetail/product"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="vat"</font>&nbsp;eType<font color="#000080">="#//VAT"</font>&nbsp;defaultValueLiteral<font color="#000080">="vat15"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eAnnotations&nbsp;source<font color="#000080">="teneo.jpa"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;details&nbsp;key<font color="#000080">="value"</font>&nbsp;value<font color="#000080">="@Basic(optional=false)
+@Column(nullable=false)"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/eAnnotations&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/eStructuralFeatures&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="description"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"</font>&nbsp;transient<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eStructuralFeatures&nbsp;xsi:type<font color="#000080">="ecore:EAttribute"</font>&nbsp;name<font color="#000080">="price"</font>&nbsp;eType<font color="#000080">="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;eClassifiers&nbsp;xsi:type<font color="#000080">="ecore:EEnum"</font>&nbsp;name<font color="#000080">="VAT"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eLiterals&nbsp;name<font color="#000080">="vat0"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eLiterals&nbsp;name<font color="#000080">="vat7"</font>&nbsp;value<font color="#000080">="7"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;eLiterals&nbsp;name<font color="#000080">="vat15"</font>&nbsp;value<font color="#000080">="15"</font>/&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/eClassifiers&gt;</font><br/>
+<font color="#0000e1">&lt;/ecore:EPackage&gt;</font>
+          </code>
+        </div>
+      </td>
+      <td style="background-image:url(../../../images/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="../../../images/editor-bottom-left.png"></td>
+      <td style="background-image:url(../../../images/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
+      <td><img src="../../../images/editor-bottom-right.png"></td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ The model project should look similar to this, now:
+ <p align="center"><img src="Model1Project.png"></p>
+
+
+<h2><a name="Doc_UsingImporter"></a>2&nbsp;&nbsp;Using the CDO Model Importer</h2>
+<p>
+ The easiest way to create a CDO enabled GenModel is to use the CDO Migrator utility that is shipped with the CDO SDK.
+ It includes a special Ecore Model Importer that adjusts all the GenModel properties needed to generated CDO native models.
+ Right-click the Ecore model file and select New and Other... and choose the EMF Generator Model New Wizard:
+ <p align="center"><img src="Migrator0.png"></p>
+
+ <p align="center"><img src="Migrator1.png"></p>
+
+ <p>
+ On the next page, the Select a Model Importer page, select the Ecore model (CDO native) importer:
+ <p align="center"><img src="Migrator2.png"></p>
+
+ <p>
+ On the next page, the Ecore Import page, click the Load button:
+ <p align="center"><img src="Migrator3.png"></p>
+
+ <p>
+ On the next page, the Package Selection page, adjust the settings depending on your model and its referenced models:
+ <p align="center"><img src="Migrator4.png"></p>
+
+ <p>
+ After clicking the Finish button your model project should look similar to this (please note that the CDO marker
+ file META-INF/CDO.MF has also been created by the importer):
+ <p align="center"><img src="Migrator5.png"></p>
+
+
+<h2><a name="Doc_UsingMigrator"></a>3&nbsp;&nbsp;Using the CDO Model Migrator</h2>
+<p>
+ If you don't want to use the CDO Model Importer to automatically let a proper GenModel be created for you it
+ is still rather easy to migrate an existing GenModel with the CDO Migrator:
+ <p align="center"><img src="Migrator6.png"></p>
+
+ <p>
+ In case the generator model was successfully migrated to CDO the following dialog box will appear:
+ <p align="center"><img src="Migrator7.png"></p>
+
+ <p>
+ Proceed with Generate The Model.
+
+<h2><a name="Doc_MigratingManually"></a>4&nbsp;&nbsp;Migrating a GenModel Manually</h2>
+<p>
+ If you don't want to use the CDO Model Importer to automatically let a proper GenModel be created for you
+ it is still rather easy to migrate an existing GenModel by hand.
+ <p>
+ The EMF generator model for your Ecore model is much like a usual GenModel except for the following four differences:
+ <ul>
+ <li> The <i>Feature Delegation</i> property <b>must be</b> set to <code>Reflective</code>
+ <li> The <i>Model Plug-in Variables</i> property <b>should be</b> set to <code>CDO=org.eclipse.emf.cdo</code>
+ <li> The <i>Root Extends Class</i> property <b>must be</b> set to <a href="../../../javadoc/org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="Class in org.eclipse.emf.internal.cdo"><code>org.eclipse.emf.internal.cdo.CDOObjectImpl</code></a>
+ <li> The <i>Root Extends Interface</i> property <b>can be</b> set to <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>org.eclipse.emf.cdo.CDOObject</code></a>
+ </ul>
+ <p align="center"><img src="GenModel.png"></p>
+
+ <p>
+ Note that you do not need to generate an editor if you want to use your model with the <a href="../../users/Doc01_UserInterface.html" title="Article in CDO Model Repository Documentation">CDO User Interface</a>
+ A dedicated <a href="../../users/Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chapter in CDO Model Repository Documentation">model editor</a> is only needed if you plan to use your model with normal XML based files as well.
+ Even in this scenario it could be simpler to use the EMF Reflective Model Editor though.
+ <p>
+ The XML representation of this GenModel is:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_companyGenModel"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><img src="../../../images/editor-top-left-xml.png"></td>
+      <td style="background-image:url(../../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">company.genmodel</font></td>
+      <td width="1px"><img src="../../../images/editor-close.png"></td>
+      <td style="background-image:url(../../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
+      <td><img src="../../../images/editor-top-right.png"></td>
+    </tr>
+    <tr>
+      <td style="background-image:url(../../../images/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td colspan="3" align="left" valign="top" nowrap>
+        <div style="margin:10px 0px 10px 0px;">
+          <code>
+<font color="#0000e1">&lt;?xml version=<font color="#000080">'1.0'</font> encoding=<font color="#000080">'UTF-8'</font>?&gt;</font><br/>
+<font color="#0000e1">&lt;genmodel:GenModel&nbsp;xmi:version<font color="#000080">="2.0"</font>&nbsp;xmlns:xmi<font color="#000080">="http://www.omg.org/XMI"</font>&nbsp;xmlns:ecore<font color="#000080">="http://www.eclipse.org/emf/2002/Ecore"</font>&nbsp;xmlns:genmodel<font color="#000080">="http://www.eclipse.org/emf/2002/GenModel"</font>&nbsp;modelDirectory<font color="#000080">="/org.eclipse.emf.cdo.examples.company/src"</font>&nbsp;creationIcons<font color="#000080">="false"</font>&nbsp;editDirectory<font color="#000080">="/org.eclipse.emf.cdo.examples.company.edit/src"</font>&nbsp;editorDirectory<font color="#000080">=""</font>&nbsp;modelPluginID<font color="#000080">="org.eclipse.emf.cdo.examples.company"</font>&nbsp;modelName<font color="#000080">="Company"</font>&nbsp;editPluginClass<font color="#000080">="org.eclipse.emf.cdo.examples.company.provider.CompanyEditPlugin"</font>&nbsp;editorPluginClass<font color="#000080">=""</font>&nbsp;updateClasspath<font color="#000080">="false"</font>&nbsp;rootExtendsClass<font color="#000080">="org.eclipse.emf.internal.cdo.CDOObjectImpl"</font>&nbsp;reflectiveDelegation<font color="#000080">="true"</font>&nbsp;codeFormatting<font color="#000080">="true"</font>&nbsp;testsDirectory<font color="#000080">=""</font>&nbsp;testSuiteClass<font color="#000080">="org.eclipse.emf.cdo.examples.company.tests.CompanyAllTests"</font>&nbsp;importerID<font color="#000080">="org.eclipse.emf.importer.ecore"</font>&nbsp;featureDelegation<font color="#000080">="Reflective"</font>&nbsp;complianceLevel<font color="#000080">="5.0"</font>&nbsp;providerRootExtendsClass<font color="#000080">="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"</font>&nbsp;editPluginID<font color="#000080">="org.eclipse.emf.cdo.examples.company.edit"</font>&nbsp;editorPluginID<font color="#000080">="org.eclipse.emf.cdo.examples.company.editor"</font>&nbsp;testsPluginID<font color="#000080">="org.eclipse.emf.cdo.examples.company.editor"</font>&nbsp;optimizedHasChildren<font color="#000080">="true"</font>&nbsp;colorProviders<font color="#000080">="true"</font>&nbsp;fontProviders<font color="#000080">="true"</font>&nbsp;runtimeVersion<font color="#000080">="2.6"</font>&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;foreignModel&gt;</font>company.ecore<font color="#0000e1">&lt;/foreignModel&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;modelPluginVariables&gt;</font>CDO=org.eclipse.emf.cdo<font color="#0000e1">&lt;/modelPluginVariables&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;genPackages&nbsp;prefix<font color="#000080">="Company"</font>&nbsp;basePackage<font color="#000080">="org.eclipse.emf.cdo.examples"</font>&nbsp;disposableProviderFactory<font color="#000080">="true"</font>&nbsp;extensibleProviderFactory<font color="#000080">="true"</font>&nbsp;childCreationExtenders<font color="#000080">="true"</font>&nbsp;ecorePackage<font color="#000080">="company.ecore#/"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genEnums&nbsp;typeSafeEnumCompatible<font color="#000080">="false"</font>&nbsp;ecoreEnum<font color="#000080">="company.ecore#//VAT"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genEnumLiterals&nbsp;ecoreEnumLiteral<font color="#000080">="company.ecore#//VAT/vat0"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genEnumLiterals&nbsp;ecoreEnumLiteral<font color="#000080">="company.ecore#//VAT/vat7"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genEnumLiterals&nbsp;ecoreEnumLiteral<font color="#000080">="company.ecore#//VAT/vat15"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genEnums&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;image<font color="#000080">="false"</font>&nbsp;ecoreClass<font color="#000080">="company.ecore#//Addressable"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Addressable/name"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Addressable/street"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Addressable/city"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//Company"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Company/categories"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Company/suppliers"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Company/customers"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Company/purchaseOrders"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Company/salesOrders"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//Supplier"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;notify<font color="#000080">="false"</font>&nbsp;createChild<font color="#000080">="false"</font>&nbsp;propertySortChoices<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Supplier/purchaseOrders"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Supplier/preferred"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//Customer"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;notify<font color="#000080">="false"</font>&nbsp;createChild<font color="#000080">="false"</font>&nbsp;propertySortChoices<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Customer/salesOrders"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//Order"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Order/orderDetails"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//OrderDetail"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;notify<font color="#000080">="false"</font>&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//OrderDetail/order"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;notify<font color="#000080">="false"</font>&nbsp;createChild<font color="#000080">="false"</font>&nbsp;propertySortChoices<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//OrderDetail/product"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//OrderDetail/price"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//PurchaseOrder"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//PurchaseOrder/date"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;notify<font color="#000080">="false"</font>&nbsp;createChild<font color="#000080">="false"</font>&nbsp;propertySortChoices<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//PurchaseOrder/supplier"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//SalesOrder"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//SalesOrder/id"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;notify<font color="#000080">="false"</font>&nbsp;createChild<font color="#000080">="false"</font>&nbsp;propertySortChoices<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//SalesOrder/customer"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//Category"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Category/name"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Category/categories"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;property<font color="#000080">="None"</font>&nbsp;children<font color="#000080">="true"</font>&nbsp;createChild<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Category/products"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genClasses&nbsp;ecoreClass<font color="#000080">="company.ecore#//Product"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Product/name"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;notify<font color="#000080">="false"</font>&nbsp;createChild<font color="#000080">="false"</font>&nbsp;propertySortChoices<font color="#000080">="true"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EReference company.ecore#//Product/orderDetails"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Product/vat"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Product/description"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;genFeatures&nbsp;createChild<font color="#000080">="false"</font>&nbsp;ecoreFeature<font color="#000080">="ecore:EAttribute company.ecore#//Product/price"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/genClasses&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/genPackages&gt;</font><br/>
+<font color="#0000e1">&lt;/genmodel:GenModel&gt;</font>
+          </code>
+        </div>
+      </td>
+      <td style="background-image:url(../../../images/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="../../../images/editor-bottom-left.png"></td>
+      <td style="background-image:url(../../../images/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
+      <td><img src="../../../images/editor-bottom-right.png"></td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Doc_GeneratingModel"></a>5&nbsp;&nbsp;Generating a Model</h2>
+<p>
+ Generate the Java code for your model as you are used to do it:
+ <p align="center"><img src="GenerateTheModel.png"></p>
+
+ <p>
+ The result of the generation can look similar to this (some artifacts are hidden to remove noise from the Package Explorer):
+ <p align="center"><img src="GeneratorResults.png"></p>
+
+
+<h2><a name="Doc_ModifyingGeneratedCode"></a>6&nbsp;&nbsp;Modifying Generated Getters and Setters</h2>
+<p>
+ If you want to modify the behavior of generated getters and setters (or have already done so in existing models)
+ you might want to try <i>dynamic feature delegation</i> (introduced in EMF 2.5). With this pattern, the reflective methods like eGet still
+ call your generated method like getX() and then that calls the dynamic reflective method like eDynamicGet. It effectively produces
+ the same behavior as "Reflective" delegating but does so by delegating through your generated accessors allowing you to specialize
+ those as you could when you used "None"...
+
+<p align="right">
+<a href="Doc01_Architecture.html" title="Backward to Understanding the Architecture of a Client Application"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_ViewProviders.html" title="Forward to View Providers"><img src="../../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

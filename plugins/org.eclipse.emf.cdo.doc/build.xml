@@ -122,6 +122,9 @@
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/edit/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/eresource/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/etypes/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.explorer/src/org/eclipse/emf/cdo/explorer/*.java" />
+				<include name="org.eclipse.emf.cdo.explorer/src/org/eclipse/emf/cdo/explorer/checkouts/*.java" />
+				<include name="org.eclipse.emf.cdo.explorer/src/org/eclipse/emf/cdo/explorer/repositories/*.java" />
 				<include name="org.eclipse.emf.cdo.expressions.edit/src/org/eclipse/emf/cdo/expressions/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/*.java" />
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/impl/*.java" />
@@ -242,6 +245,11 @@
 				<package name="org.eclipse.emf.cdo.spi.common.model" />
 				<package name="org.eclipse.emf.cdo.spi.common.protocol" />
 				<package name="org.eclipse.emf.cdo.spi.common.revision" />
+			</group>
+			<group title="CDO Model Repository Explorer">
+				<package name="org.eclipse.emf.cdo.explorer" />
+				<package name="org.eclipse.emf.cdo.explorer.checkouts" />
+				<package name="org.eclipse.emf.cdo.explorer.repositories" />
 			</group>
 			<group title="CDO Model Repository Expressions">
 				<package name="org.eclipse.emf.cdo.expressions" />
@@ -490,12 +498,14 @@
 
 			<package name="org.eclipse.emf.cdo.doc" />
 			<package name="org.eclipse.emf.cdo.doc.online" />
+			<package name="org.eclipse.emf.cdo.doc.operators" />
 			<package name="org.eclipse.emf.cdo.doc.programmers" />
 			<package name="org.eclipse.emf.cdo.doc.programmers.client" />
 			<package name="org.eclipse.emf.cdo.doc.programmers.server" />
 			<package name="org.eclipse.emf.cdo.doc.reference" />
 			<package name="org.eclipse.emf.cdo.doc.reference.api" />
 			<package name="org.eclipse.emf.cdo.doc.reference.schema" />
+			<package name="org.eclipse.emf.cdo.doc.users" />
 			<package name="org.eclipse.net4j.db.doc" />
 			<package name="org.eclipse.net4j.db.doc.online" />
 			<package name="org.eclipse.net4j.db.doc.reference" />

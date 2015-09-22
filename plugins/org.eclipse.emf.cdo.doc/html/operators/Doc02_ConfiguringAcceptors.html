@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Configuring Acceptors (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Configuring Acceptors (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Configuring Acceptors</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_ConfiguringRepositories.html" title="Backward to Configuring Repositories"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="http://wiki.eclipse.org/CDO/Security_Manager" title="Forward to Managing Security"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ The acceptors of a CDO Server are configured in the cdo-server.xml file. Here's an example:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_cdoServerXML"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><img src="../../images/editor-top-left-xml.png"></td>
+      <td style="background-image:url(../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">cdo&#8209;server.xml</font></td>
+      <td width="1px"><img src="../../images/editor-close.png"></td>
+      <td style="background-image:url(../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
+      <td><img src="../../images/editor-top-right.png"></td>
+    </tr>
+    <tr>
+      <td style="background-image:url(../../images/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td colspan="3" align="left" valign="top" nowrap>
+        <div style="margin:10px 0px 10px 0px;">
+          <code>
+<font color="#0000e1">&lt;?xml version=<font color="#000080">'1.0'</font> encoding=<font color="#000080">'UTF-8'</font>?&gt;</font><br/>
+<font color="#0000e1">&lt;cdoServer&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;acceptor&nbsp;type<font color="#000080">="tcp"</font>&nbsp;listenAddr<font color="#000080">="0.0.0.0"</font>&nbsp;port<font color="#000080">="2036"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;other&nbsp;acceptors&nbsp;and&nbsp;repositories&nbsp;--&gt;</font><br/>
+<br/>
+<font color="#0000e1">&lt;/cdoServer&gt;</font>
+          </code>
+        </div>
+      </td>
+      <td style="background-image:url(../../images/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="../../images/editor-bottom-left.png"></td>
+      <td style="background-image:url(../../images/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
+      <td><img src="../../images/editor-bottom-right.png"></td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ The following sections describe the various elements and properties.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="3"><a href="Doc02_ConfiguringAcceptors.html#Element_acceptor" title="Chapter in CDO Model Repository Documentation">Element acceptor</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="3"><a href="Doc02_ConfiguringAcceptors.html#Element_negotiator" title="Chapter in CDO Model Repository Documentation">Element negotiator</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Element_acceptor"></a>1&nbsp;&nbsp;Element acceptor</h2>
+<p>
+ Defines an <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/acceptor/IAcceptor.html" title="Interface in org.eclipse.net4j.acceptor"><code>IAcceptor</code></a> instance.
+ Please refer to the Net4j Signalling Platform documentation for details about acceptors and connectors.
+ <p>
+ The <code>type</code> attribute corresponds to the type of an acceptor factory that is contributed via the
+ <code>org.eclipse.net4j.util.factories</code> extension point with a product group of
+ <code>org.eclipse.net4j.acceptors</code>.
+ <p>
+ The remaining attributes depend on the specified <code>type</code> attribute value.
+ The following values are possible with the shipped distribution (subject to user-supplied extension):
+ <ul>
+ <li> <b>tcp</b>: <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html" title="Interface in org.eclipse.net4j.tcp"><code>ITCPAcceptor</code></a> for fast, new I/O based socket connections. The following additional attributes are recognized:
+      <ul>
+      <li> <b>listenAddr</b>: The network address the server socket shall be bound to.
+           A value of <code>"0.0.0.0"</code> is the default (whole attribute can be omitted) and
+           tells the socket to listen on <b>all</b> available addresses.
+      <li> <b>port</b>: The network port the server socket shall be bound to.
+           A value of <code>2036</code> is the default (whole attribute can be omitted).
+      </ul>
+ <li> <b>ssl</b>: Similar to tcp but with transport-level security (TLS).
+ <li> <b>jvm</b>: <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html" title="Interface in org.eclipse.net4j.jvm"><code>IJVMAcceptor</code></a> for JVM internal (non-socket based ) connections.
+ <li> <b>http</b>: Experimental <a href="../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/http/server/IHTTPAcceptor.html" title="Interface in org.eclipse.net4j.http.server"><code>IHTTPAcceptor</code></a>.
+ </ul>
+
+<h2><a name="Element_negotiator"></a>2&nbsp;&nbsp;Element negotiator</h2>
+<p>
+ Defines an <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/INegotiator.html" title="Interface in org.eclipse.net4j.util.security"><code>INegotiator</code></a> instance to be used by the enclosing <a href="Doc02_ConfiguringAcceptors.html#Element_acceptor" title="Chapter in CDO Model Repository Documentation">acceptor</a> element.
+ Please refer to the Net4j Signalling Platform documentation for details about negotiators and the pluggable security concept
+ that can be used for authentication and authorization on the transport-level.
+ <p>
+ The <code>type</code> attribute corresponds to the type of a negotiator factory that is contributed via the
+ <code>org.eclipse.net4j.util.factories</code> extension point with a product group of <code>org.eclipse.net4j.negotiators</code>.
+ <p>
+ The remaining attributes depend on the specified type attribute value.
+ The following values are possible with the shipped distribution (subject to user-supplied extension):
+ <ul>
+ <li> <b>challenge</b>: Negotiator for simple yet effective and cryptographically secure challenge/response-based negotiations.
+      The following additional attributes are recognized:
+      <ul>
+      <li> <b>description</b>: The absolute path to a file in the local file system that contains
+           the credentials of the users in the form <code>user-id: password</code>.
+      </ul>
+ </ul>
+
+<p align="right">
+<a href="Doc01_ConfiguringRepositories.html" title="Backward to Configuring Repositories"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="http://wiki.eclipse.org/CDO/Security_Manager" title="Forward to Managing Security"><img src="../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

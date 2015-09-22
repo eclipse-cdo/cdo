@@ -24,6 +24,9 @@ org.eclipse.emf.cdo.etypes
 org.eclipse.emf.cdo.etypes.impl
 org.eclipse.emf.cdo.etypes.provider
 org.eclipse.emf.cdo.etypes.util
+org.eclipse.emf.cdo.explorer
+org.eclipse.emf.cdo.explorer.checkouts
+org.eclipse.emf.cdo.explorer.repositories
 org.eclipse.emf.cdo.expressions
 org.eclipse.emf.cdo.expressions.impl
 org.eclipse.emf.cdo.expressions.provider

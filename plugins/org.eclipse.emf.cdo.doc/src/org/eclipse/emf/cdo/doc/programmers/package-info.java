@@ -8,6 +8,6 @@
 /**
  * Programmer's Guide
  *
- * @number 1
+ * @number 30
  */
 package org.eclipse.emf.cdo.doc.programmers;

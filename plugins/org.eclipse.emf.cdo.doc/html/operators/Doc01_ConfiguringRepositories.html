@@ -1,0 +1,442 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Configuring Repositories (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Configuring Repositories (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Configuring Repositories</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc00_OperatingServer.html" title="Backward to Operating a CDO Server"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ConfiguringAcceptors.html" title="Forward to Configuring Acceptors"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ The repositories of a CDO Server are configured in the cdo-server.xml file. Here's an example:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_cdoServerXML"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><img src="../../images/editor-top-left-xml.png"></td>
+      <td style="background-image:url(../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">cdo&#8209;server.xml</font></td>
+      <td width="1px"><img src="../../images/editor-close.png"></td>
+      <td style="background-image:url(../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
+      <td><img src="../../images/editor-top-right.png"></td>
+    </tr>
+    <tr>
+      <td style="background-image:url(../../images/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td colspan="3" align="left" valign="top" nowrap>
+        <div style="margin:10px 0px 10px 0px;">
+          <code>
+<font color="#0000e1">&lt;?xml version=<font color="#000080">'1.0'</font> encoding=<font color="#000080">'UTF-8'</font>?&gt;</font><br/>
+<font color="#0000e1">&lt;cdoServer&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;repository&nbsp;name<font color="#000080">="repo1"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="overrideUUID"</font>&nbsp;value<font color="#000080">=""</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingAudits"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingBranches"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="ensureReferentialIntegrity"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="allowInterruptRunningQueries"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="idGenerationLocation"</font>&nbsp;value<font color="#000080">="STORE"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="serializeCommits"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="optimisticLockingTimeout"</font>&nbsp;value<font color="#000080">="10000"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;store&nbsp;type<font color="#000080">="db"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="connectionKeepAlivePeriod"</font>&nbsp;value<font color="#000080">="60"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="readerPoolCapacity"</font>&nbsp;value<font color="#000080">="20"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="writerPoolCapacity"</font>&nbsp;value<font color="#000080">="20"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;mappingStrategy&nbsp;type<font color="#000080">="horizontal"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="qualifiedNames"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/mappingStrategy&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;dbAdapter&nbsp;name<font color="#000080">="h2"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;dataSource&nbsp;class<font color="#000080">="org.h2.jdbcx.JdbcDataSource"</font>&nbsp;URL<font color="#000080">="jdbc:h2:database/repo1"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/store&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/repository&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;other&nbsp;acceptors&nbsp;and&nbsp;repositories&nbsp;--&gt;</font><br/>
+<br/>
+<font color="#0000e1">&lt;/cdoServer&gt;</font>
+          </code>
+        </div>
+      </td>
+      <td style="background-image:url(../../images/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="../../images/editor-bottom-left.png"></td>
+      <td style="background-image:url(../../images/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
+      <td><img src="../../images/editor-bottom-right.png"></td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ The following sections describe the various elements and properties.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_repository" title="Chapter in CDO Model Repository Documentation">Element repository</a></td></tr>
+<tr><td></td><td>1.1&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_overrideUUID" title="Chapter in CDO Model Repository Documentation">Property overrideUUID</a></td></tr>
+<tr><td></td><td>1.2&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_supportingAudits" title="Chapter in CDO Model Repository Documentation">Property supportingAudits</a></td></tr>
+<tr><td></td><td>1.3&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_supportingBranches" title="Chapter in CDO Model Repository Documentation">Property supportingBranches</a></td></tr>
+<tr><td></td><td>1.4&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_supportingEcore" title="Chapter in CDO Model Repository Documentation">Property supportingEcore</a></td></tr>
+<tr><td></td><td>1.5&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_serializeCommits" title="Chapter in CDO Model Repository Documentation">Property serializeCommits</a></td></tr>
+<tr><td></td><td>1.6&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_ensureReferentialIntegrity" title="Chapter in CDO Model Repository Documentation">Property ensureReferentialIntegrity</a></td></tr>
+<tr><td></td><td>1.7&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_allowInterruptRunningQueries" title="Chapter in CDO Model Repository Documentation">Property_allowInterruptRunningQueries</a></td></tr>
+<tr><td></td><td>1.8&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_idGenerationLocation" title="Chapter in CDO Model Repository Documentation">Property idGenerationLocation</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_securityManager" title="Chapter in CDO Model Repository Documentation">Element securityManager</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_authenticator" title="Chapter in CDO Model Repository Documentation">Element authenticator</a></td></tr>
+<tr><td>4&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_initialPackage" title="Chapter in CDO Model Repository Documentation">Element initialPackage</a></td></tr>
+<tr><td>5&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">Element store</a></td></tr>
+<tr><td></td><td>5.1&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionKeepAlivePeriod" title="Chapter in CDO Model Repository Documentation">Property connectionKeepAlivePeriod</a></td></tr>
+<tr><td></td><td>5.2&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_readerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property readerPoolCapacity</a></td></tr>
+<tr><td></td><td>5.3&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_writerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property writerPoolCapacity</a></td></tr>
+<tr><td>6&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_mappingStrategy" title="Chapter in CDO Model Repository Documentation">Element mappingStrategy</a></td></tr>
+<tr><td></td><td>6.1&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_toManyReferences" title="Chapter in CDO Model Repository Documentation">Property toManyReferences</a></td></tr>
+<tr><td></td><td>6.2&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_maxTableNameLength" title="Chapter in CDO Model Repository Documentation">Property maxTableNameLength</a></td></tr>
+<tr><td></td><td>6.3&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_maxFieldNameLength" title="Chapter in CDO Model Repository Documentation">Property maxFieldNameLength</a></td></tr>
+<tr><td></td><td>6.4&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_tableNamePrefix" title="Chapter in CDO Model Repository Documentation">Property tableNamePrefix</a></td></tr>
+<tr><td></td><td>6.5&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_qualifiedNames" title="Chapter in CDO Model Repository Documentation">Property qualifiedNames</a></td></tr>
+<tr><td></td><td>6.6&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_forceNamesWithID" title="Chapter in CDO Model Repository Documentation">Property forceNamesWithID</a></td></tr>
+<tr><td></td><td>6.7&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_fieldConstructionTracking" title="Chapter in CDO Model Repository Documentation">Property fieldConstructionTracking</a></td></tr>
+<tr><td></td><td>6.8&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_objectTypeCacheSize" title="Chapter in CDO Model Repository Documentation">Property objectTypeCacheSize</a></td></tr>
+<tr><td></td><td>6.9&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_columnTypeModifier" title="Chapter in CDO Model Repository Documentation">Property columnTypeModifier</a></td></tr>
+<tr><td></td><td>6.10&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_forceIndexes" title="Chapter in CDO Model Repository Documentation">Property forceIndexes</a></td></tr>
+<tr><td>7&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_dbAdapter" title="Chapter in CDO Model Repository Documentation">Element dbAdapter</a></td></tr>
+<tr><td>8&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">Element dataSource</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Element_repository"></a>1&nbsp;&nbsp;Element repository</h2>
+<p>
+ Defines an <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a> instance.
+ <p>
+ The <code>name</code> attribute uniquely identifies a repository in the scope of a repository configurator.
+ <p>
+ The <code>repository</code> element can contain several property elements (see below) and must contain exactly one <a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">store</a> element.
+
+<h3><a name="Property_overrideUUID"></a>1.1&nbsp;&nbsp;Property overrideUUID</h3>
+<p>
+ Specifies a constant UUID for the repository. If omitted the repository will be created with a random UUID.
+ The format of an override UUID is not further specified but should respect the file naming conventions of the used operating system.
+ <p>
+ Overriding the default random UUID can be useful if you have scripts that operate on the file system folder
+ that is created on the server for each repository and named after the repository UUID.
+
+<h3><a name="Property_supportingAudits"></a>1.2&nbsp;&nbsp;Property supportingAudits</h3>
+<p>
+ Specifies whether the repository will support audit views or not. Please note that a repository can only support audit views
+ if its <a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">store</a> supports audit views, as well:
+ <p>
+ <table border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="background-color:#a8c7ff;border-top:2px solid;border-right:1px solid;font-weight:bold;border-left:2px solid;vertical-align:top;border-bottom:2px solid;text-align:center;font:12px Arial;">Store Type</td>
+    <td style="background-color:#a8c7ff;border-top:2px solid;border-right:1px solid;font-weight:bold;border-left:none;vertical-align:top;border-bottom:2px solid;text-align:center;font:12px Arial;">Allowed Values</td>
+    <td style="background-color:#a8c7ff;border-top:2px solid;border-right:2px solid;font-weight:bold;border-left:none;vertical-align:top;border-bottom:2px solid;text-align:center;font:12px Arial;">Default Value</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">MEMStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">DBStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true, if the used mapping strategy supports audits</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">HibernateStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">ObjectivityStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">DB4OStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">MongoDBStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true</td>
+  </tr>
+</table>
+
+ <p>
+ The shipped DBStore does support audit views.
+ Note also that it will not delete or update rows for modified objects if audits are supported.
+ All revised state of the repository will be kept in the DB which can result in databases growing very large!
+
+<h3><a name="Property_supportingBranches"></a>1.3&nbsp;&nbsp;Property supportingBranches</h3>
+<p>
+ Specifies whether the repository will support the creation and usage of branches below the always existing main branch or not.
+ Please note that a repository can only support branches if its <a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">store</a> supports branches, as well:
+ <p>
+ <table border="0" cellspacing="0" cellpadding="4">
+  <tr>
+    <td style="background-color:#a8c7ff;border-top:2px solid;border-right:1px solid;font-weight:bold;border-left:2px solid;vertical-align:top;border-bottom:2px solid;text-align:center;font:12px Arial;">Store Type</td>
+    <td style="background-color:#a8c7ff;border-top:2px solid;border-right:1px solid;font-weight:bold;border-left:none;vertical-align:top;border-bottom:2px solid;text-align:center;font:12px Arial;">Allowed Values</td>
+    <td style="background-color:#a8c7ff;border-top:2px solid;border-right:2px solid;font-weight:bold;border-left:none;vertical-align:top;border-bottom:2px solid;text-align:center;font:12px Arial;">Default Value</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">MEMStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">DBStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true, if the used mapping strategy supports branches</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">HibernateStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">ObjectivityStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">DB4OStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true / false</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">false</td>
+  </tr>
+  <tr>
+    <td style="background-color:#e0ebff;border-top:none;border-right:1px solid;border-left:1px solid;vertical-align:top;border-bottom:1px solid;text-align:left;font:12px Arial;">MongoDBStore</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true</td>
+    <td style="border-top:none;border-right:1px solid;border-left:none;vertical-align:top;border-bottom:1px solid;text-align:center;font:12px Arial;">true</td>
+  </tr>
+</table>
+
+ <p>
+ Also note that branching support always <b>requires</b> <a href="Doc01_ConfiguringRepositories.html#Property_supportingAudits" title="Chapter in CDO Model Repository Documentation">auditing support</a>, too.
+
+<h3><a name="Property_supportingEcore"></a>1.4&nbsp;&nbsp;Property supportingEcore</h3>
+<p>
+ Specifies whether the repository will support the storage of instances of the Ecore (meta meta) model or not.
+ <p>
+ With the advent of the <a href="../users/Doc08_TechnicalBackground.html#Doc_BackgroundLegacyModels" title="Chapter in CDO Model Repository Documentation">legacy mode</a> in CDO 3.0 you can store instances of any model in CDO repositories.
+ Whether these models have been generated for CDO or not only influences their characteristics (scalability, performance, etc.).
+ As a consequence you can also store instances of the Ecore (meta meta) model in CDO Repositories.
+ Since Ecore is always registered in all package registries the legacy mode would lead to the creation of mapped tables in many types of stores,
+ even if you never planned to store instances of Ecore.
+ <p>
+ Valid values: <code>false</code> (default) or <code>true</code>.
+
+<h3><a name="Property_serializeCommits"></a>1.5&nbsp;&nbsp;Property serializeCommits</h3>
+<p>
+ Specifies whether the repository will serialize commit operations by utilizing a lock or not.
+ <p>
+ Some stores, such as the LissomeStore, require commit operations to be serialized.
+ <p>
+ Valid values: <code>false</code> (default) or <code>true</code>.
+
+<h3><a name="Property_ensureReferentialIntegrity"></a>1.6&nbsp;&nbsp;Property ensureReferentialIntegrity</h3>
+<p>
+ Specifies whether the repository will detect and reject commits that would leave stale references in the object graph.
+ <p>
+ Valid values: <code>false</code> (default) or <code>true</code>.
+
+<h3><a name="Property_allowInterruptRunningQueries"></a>1.7&nbsp;&nbsp;Property_allowInterruptRunningQueries</h3>
+<p>
+ Specifies whether the repository will cancel a scheduled query job if it is already running.
+ Some underlying stores (e.g. DBStore with a Derby database) might not be able to deal with this cleanly.
+ For such stores, this parameter can be set to <code>false</code>.
+ <p>
+ Valid values: <code>false</code> (default) or <code>true</code>.
+
+<h3><a name="Property_idGenerationLocation"></a>1.8&nbsp;&nbsp;Property idGenerationLocation</h3>
+<p>
+ Specifies whether the repository will expect clients to generate IDs for new objects or whether it will ask the backend store to generate them.
+ <p>
+ Valid values: <code>STORE</code> (default) or <code>CLIENT</code>.
+
+<h2><a name="Element_securityManager"></a>2&nbsp;&nbsp;Element securityManager</h2>
+<p>
+ Example: &lt;securityManager type="default" description="/security:annotation:home(/home)"/>
+ <p>
+ See also: <a href="http://wiki.eclipse.org/CDO/Security_Manager">http://wiki.eclipse.org/CDO/Security_Manager</a>
+
+<h2><a name="Element_authenticator"></a>3&nbsp;&nbsp;Element authenticator</h2>
+<p>
+ Example: &lt;authenticator type="file" description="_database/repo1.users"/>
+ <p>
+ See also: <a href="http://bugs.eclipse.org/302775">http://bugs.eclipse.org/302775</a>
+
+<h2><a name="Element_initialPackage"></a>4&nbsp;&nbsp;Element initialPackage</h2>
+<p>
+ Example: &lt;initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
+ <p>
+ See also: <a href="http://bugs.eclipse.org/345431">http://bugs.eclipse.org/345431</a>
+
+<h2><a name="Element_store"></a>5&nbsp;&nbsp;Element store</h2>
+<p>
+ Defines an <a href="../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a> instance.
+ <p>
+ The <code>type</code> attribute corresponds to the type of a store factory that is contributed via the
+ <code>org.eclipse.emf.cdo.server.storeFactory</code> extension point.
+ The remaining attributes depend on the specified <code>type</code> attribute value.
+ The following values are possible with the shipped distribution (subject to user-supplied extension):
+ <ul>
+ <li> <b>mem</b>: Store without real persistence. A repository with a MEMStore can function properly as long as the the server is not restarted.
+      No additional attributes are recognized.
+ <li> <b>db</b>: Store that connects via JDBC to a relational database and manages persistent revisions and models
+      through a built-in O/R mapper, see [[CDO/DB Store]]. A DBStore element can contain the following nested elements:
+      <ul>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Element_mappingStrategy" title="Chapter in CDO Model Repository Documentation">Element mappingStrategy</a>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Element_dbAdapter" title="Chapter in CDO Model Repository Documentation">Element dbAdapter</a>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">Element dataSource</a>
+      </ul>
+ <li> <b>hibernate:</b> Store that uses Teneo/Hibernate, see [[CDO/Hibernate Store]].
+ <li> <b>objectivity:</b> Store that uses Objectivity/DB, see [[CDO/Objectivity Store]].
+ <li> <b>mongodb:</b> Store that uses MongoDB, see [[CDO/MongoDB Store]].
+ <li> <b>db4o:</b> Store that uses DB4O, see [[CDO/DB4O Store]].
+ </ul>
+
+<h3><a name="Property_connectionKeepAlivePeriod"></a>5.1&nbsp;&nbsp;Property connectionKeepAlivePeriod</h3>
+<p>
+ Specifies, if the store is a DBStore, at what interval the store will issue an SQL statement to keep the connection to the database alive.
+
+<h3><a name="Property_readerPoolCapacity"></a>5.2&nbsp;&nbsp;Property readerPoolCapacity</h3>
+<p>
+ Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the reader pool.
+ <p>
+ The default value is 15.
+
+<h3><a name="Property_writerPoolCapacity"></a>5.3&nbsp;&nbsp;Property writerPoolCapacity</h3>
+<p>
+ Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the writer pool.
+ <p>
+ The default value is 15.
+
+<h2><a name="Element_mappingStrategy"></a>6&nbsp;&nbsp;Element mappingStrategy</h2>
+<p>
+ This element is recognized by DBStores and defines the overall <a href="../../javadoc/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="Interface in org.eclipse.emf.cdo.server.db.mapping"><code>mapping strategy</code></a> of the built-in O/R mapper.
+ <p>
+ The <code>type</code> attribute corresponds to the type of a mapping strategy factory that is contributed via the
+ <code>org.eclipse.emf.cdo.server.db.mappingStrategies</code> extension point.
+ The following values are possible with the shipped distribution (subject to user-supplied extension):
+ <ul>
+ <li> <b>horizontal</b>: Mapping strategy that creates one DB table per concrete model class.
+      The following nested property elements are recognized:
+      <ul>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Property_toManyReferences" title="Chapter in CDO Model Repository Documentation">Property toManyReferences</a>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Property_maxTableNameLength" title="Chapter in CDO Model Repository Documentation">Property maxTableNameLength</a>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Property_maxFieldNameLength" title="Chapter in CDO Model Repository Documentation">Property maxFieldNameLength</a>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Property_tableNamePrefix" title="Chapter in CDO Model Repository Documentation">Property tableNamePrefix</a>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Property_qualifiedNames" title="Chapter in CDO Model Repository Documentation">Property qualifiedNames</a>
+        <li> <a href="Doc01_ConfiguringRepositories.html#Property_forceNamesWithID" title="Chapter in CDO Model Repository Documentation">Property forceNamesWithID</a>
+      </ul>
+ </ul>
+
+<h3><a name="Property_toManyReferences"></a>6.1&nbsp;&nbsp;Property toManyReferences</h3>
+<p>
+ Specifies how the built-in O/R mapper will handle to-many references (collections). The following values are recognized:
+ <ul>
+ <li> <b>ONE_TABLE_PER_REFERENCE</b>: Each to-many reference of the model will get its own DB table.
+ <li> <b>ONE_TABLE_PER_CLASS</b>: All to-many references of a model class will share a single DB table.
+ <li> <b>ONE_TABLE_PER_PACKAGE</b>: All to-many references of a model package will share a single DB table.
+ <li> <b>ONE_TABLE_PER_REPOSITORY</b>: All to-many references of all model classes i the repository will share a single DB table.
+ </ul>
+
+<h3><a name="Property_maxTableNameLength"></a>6.2&nbsp;&nbsp;Property maxTableNameLength</h3>
+<p>
+ Enables you to override the default value of the chosen DB adapter for the maximum length of table names.
+
+<h3><a name="Property_maxFieldNameLength"></a>6.3&nbsp;&nbsp;Property maxFieldNameLength</h3>
+<p>
+ Enables you to override the default value of the chosen DB adapter for the maximum length of column names.
+
+<h3><a name="Property_tableNamePrefix"></a>6.4&nbsp;&nbsp;Property tableNamePrefix</h3>
+<p>
+ Specifies a common fixed prefix for all table names generated by this mapping strategy.
+
+<h3><a name="Property_qualifiedNames"></a>6.5&nbsp;&nbsp;Property qualifiedNames</h3>
+<p>
+ Specifies whether generated package or class table names are qualified or not.
+
+<h3><a name="Property_forceNamesWithID"></a>6.6&nbsp;&nbsp;Property forceNamesWithID</h3>
+<p>
+ Specifies whether generated names are always suffixed with an internal ID or only in cases where the generated name absolutely needs mangling.
+
+<h3><a name="Property_fieldConstructionTracking"></a>6.7&nbsp;&nbsp;Property fieldConstructionTracking</h3>
+<p>
+ Specifies whether you want <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/ddl/IDBField.html" title="Interface in org.eclipse.net4j.db.ddl"><code>IDBField</code></a> construction stacktrace on schema update to have the origin of the nullable index field.
+
+<h3><a name="Property_objectTypeCacheSize"></a>6.8&nbsp;&nbsp;Property objectTypeCacheSize</h3>
+<p>
+ Specifies the size of the object type in-memory cache. Possible configuration values are:
+ <ul>
+ <li> 0 (zero): Don't use memory caching.
+ <li> &gt;0: Use memory caching with the cache size given.
+ </ul>
+ The default is a memory cache size of 10,000,000.
+
+<h3><a name="Property_columnTypeModifier"></a>6.9&nbsp;&nbsp;Property columnTypeModifier</h3>
+<p>
+ Specifies the name of a <a href="../../javadoc/org/eclipse/emf/cdo/server/db/mapping/ColumnTypeModifier.html" title="Class in org.eclipse.emf.cdo.server.db.mapping"><code>ColumnTypeModifier</code></a>.
+
+<h3><a name="Property_forceIndexes"></a>6.10&nbsp;&nbsp;Property forceIndexes</h3>
+<p>
+ Specifies on what types of structural features additional indexes are to be created.
+ The value is either empty or a &#124; (pipe) separated list of the following tokens:
+ <ul>
+ <li> NONE (default)
+ <li> ALL (equal to ATTRIBUTE&#124;REFERENCE)
+ <li> ATTRIBUTE
+ <li> REFERENCE (equal to CONTAINER&#124;CONTAINMENT&#124;XREF)
+ <li> CONTAINER
+ <li> CONTAINMENT
+ <li> XREF
+ </ul>
+
+<h2><a name="Element_dbAdapter"></a>7&nbsp;&nbsp;Element dbAdapter</h2>
+<p>
+ Defines the <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> instance of the store that interprets the SQL dialect of the used database.
+ <p>
+ The <code>type</code> attribute corresponds to the name of a DB adapter factory that is contributed via the
+ <code>org.eclipse.net4j.db.dbAdapters</code> extension point. No additional attributes are recognized.
+ <p>
+ The DB adapter must match the database specified in the <a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">dataSource</a> element.
+
+<h2><a name="Element_dataSource"></a>8&nbsp;&nbsp;Element dataSource</h2>
+<p>
+ Defines the <a href="http://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html" title="Interface in javax.sql"><code>DataSource</code></a> instance of the store.
+ <p>
+ The <code>class</code> attribute corresponds to the fully qualified name of the data source class.
+ Please refer to your DB manual for details about the supported data sources and their attributes.
+
+<p align="right">
+<a href="Doc00_OperatingServer.html" title="Backward to Operating a CDO Server"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ConfiguringAcceptors.html" title="Forward to Configuring Acceptors"><img src="../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

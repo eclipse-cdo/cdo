@@ -139,9 +139,9 @@ public class Overview
     /**
      * Client Architecture
      * <p>
-     * {@link org.eclipse.emf.cdo.doc.programmers.client.Architecture !!inline!!}
+     * {@link org.eclipse.emf.cdo.doc.programmers.client.Doc01_Architecture !!inline!!}
      *
-     * @see org.eclipse.emf.cdo.doc.programmers.client.Architecture
+     * @see org.eclipse.emf.cdo.doc.programmers.client.Doc01_Architecture
      */
     public class Client
     {

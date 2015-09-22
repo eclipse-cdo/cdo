@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cdoServer>
+
+  <acceptor type="tcp" listenAddr="0.0.0.0" port="2036"/>
+
+  <repository name="repo1">
+    <property name="overrideUUID" value=""/>
+    <property name="supportingAudits" value="true"/>
+    <property name="supportingBranches" value="true"/>
+    <property name="ensureReferentialIntegrity" value="false"/>
+    <property name="allowInterruptRunningQueries" value="true"/>
+    <property name="idGenerationLocation" value="STORE"/>
+    <property name="serializeCommits" value="false"/>
+    <property name="optimisticLockingTimeout" value="10000"/>
+
+    <store type="db">
+      <property name="connectionKeepAlivePeriod" value="60"/>
+      <property name="readerPoolCapacity" value="20"/>
+      <property name="writerPoolCapacity" value="20"/>
+
+      <mappingStrategy type="horizontal">
+        <property name="qualifiedNames" value="true"/>
+      </mappingStrategy>
+
+      <dbAdapter name="h2"/>
+
+      <dataSource
+        class="org.h2.jdbcx.JdbcDataSource"
+        URL="jdbc:h2:database/repo1"/>
+    </store>
+  </repository>
+
+</cdoServer>

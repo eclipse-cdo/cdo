@@ -1,0 +1,192 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Checking Out from Repositories (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Checking Out from Repositories (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Checking Out from Repositories</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc03_UsingBranches.html" title="Backward to Working with Branches"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_UsingCheckouts.html" title="Forward to Working with Checkouts"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ To be able to work with the models in a CDO repository they need to be checked out from that repository.
+ A checkout represents a <i>named</i> combination of the following pieces of information:
+ <ul>
+ <li> A configured repository (see <a href="Doc02_ManagingRepositories.html#Doc_CreatingRepositories" title="Chapter in CDO Model Repository Documentation">Creating Repositories and Connections</a> for details on how to create and configure repositories),
+ <li> a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> that determines from what <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and from
+      what <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>time</code></a> the models of the checkout are shown, and
+ <li> an object to be used as the root object of the checkout's model tree. By default this is the
+      <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>root resource</code></a> of the repository.
+ </ul>
+ <p>
+ The most obvious way to start the checkout process is to select a repository or branch in the <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>,
+ open the context menu and select the Checkout action or the Checkout As action. Other ways are explained in <a href="Doc01_UserInterface.html#Doc_CheckoutWizard" title="Chapter in CDO Model Repository Documentation">CDO Checkout Wizard</a>,
+ <a href="Doc05_UsingCheckouts.html#Doc_DuplicatingCheckouts" title="Chapter in CDO Model Repository Documentation">Duplicating Checkouts</a>, and <a href="Doc01_UserInterface.html#Doc_HistoryIntegration" title="Chapter in CDO Model Repository Documentation">History Integration</a>.
+ <p>
+ The Checkout action involves no further dialog interaction, but immediately creates a <a href="Doc04_CheckingOut.html#Doc_TransactionalCheckouts" title="Chapter in CDO Model Repository Documentation">transactional</a> checkout
+ with default values for all settings. The following sections describe the different <a href="Doc01_UserInterface.html#Doc_CheckoutWizard" title="Chapter in CDO Model Repository Documentation">checkout wizard</a> pages in detail.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="4"><a href="Doc04_CheckingOut.html#Doc_CheckoutRepository" title="Chapter in CDO Model Repository Documentation">Selecting a Repository</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="4"><a href="Doc04_CheckingOut.html#Doc_CheckoutType" title="Chapter in CDO Model Repository Documentation">Selecting the Checkout Type</a></td></tr>
+<tr><td></td><td>2.1&nbsp;</td><td colspan="3"><a href="Doc04_CheckingOut.html#Doc_TransactionalCheckouts" title="Chapter in CDO Model Repository Documentation">Online Transactional Checkouts</a></td></tr>
+<tr><td></td><td>2.2&nbsp;</td><td colspan="3"><a href="Doc04_CheckingOut.html#Doc_HistoricalCheckouts" title="Chapter in CDO Model Repository Documentation">Online Historical Checkouts</a></td></tr>
+<tr><td></td><td>2.3&nbsp;</td><td colspan="3"><a href="Doc04_CheckingOut.html#Doc_OfflineCheckouts" title="Chapter in CDO Model Repository Documentation">Offline Checkouts</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="4"><a href="Doc04_CheckingOut.html#Doc_CheckoutBranchPoint" title="Chapter in CDO Model Repository Documentation">Selecting the Branch Point</a></td></tr>
+<tr><td>4&nbsp;</td><td colspan="4"><a href="Doc04_CheckingOut.html#Doc_CheckoutRootObject" title="Chapter in CDO Model Repository Documentation">Selecting the Root Object</a></td></tr>
+<tr><td>5&nbsp;</td><td colspan="4"><a href="Doc04_CheckingOut.html#Doc_CheckoutName" title="Chapter in CDO Model Repository Documentation">Naming the Checkout</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Doc_CheckoutRepository"></a>1&nbsp;&nbsp;Selecting a Repository</h2>
+<p>
+ The first page of the checkout wizard shows the list of the repositories that are configured in the current workspace.
+ The New Repository button opens the repository wizard that is explained in <a href="Doc02_ManagingRepositories.html#Doc_CreatingRepositories" title="Chapter in CDO Model Repository Documentation">Creating Repositories and Connections</a>.
+ <p align="center"><img src="checkout-wizard-repository.png"></p>
+
+ <p>
+ Note that this first wizard page is automatically skipped if the workbench selection implied a specific repository
+ at the time the wizard was opened, such as a repository or branch being selected in the <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>.
+ In this case the Back button goes back to the repository selection page and allows to change the original selection.
+ <p>
+ After selecting or creating the repository to check out from pressing the Next button or double-clicking
+ the selected repository advances to <a href="Doc04_CheckingOut.html#Doc_CheckoutType" title="Chapter in CDO Model Repository Documentation">Selecting the Checkout Type</a>.
+
+<h2><a name="Doc_CheckoutType"></a>2&nbsp;&nbsp;Selecting the Checkout Type</h2>
+<p>
+ The second page of the checkout wizard allows to select the type of the checkout to create: <p align="center"><img src="checkout-wizard-type.png"></p>
+
+ <p>
+ After selecting the desired checkout type pressing the Next button or double-clicking
+ the selected checkout type advances to <a href="Doc04_CheckingOut.html#Doc_CheckoutBranchPoint" title="Chapter in CDO Model Repository Documentation">Selecting the Branch Point</a>.
+ <p>
+ The following sections describe the different types of checkouts and under what conditions they are avilable.
+
+<h3><a name="Doc_TransactionalCheckouts"></a>2.1&nbsp;&nbsp;Online Transactional Checkouts</h3>
+<p>
+ An online transactional checkout is based on an online <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> to a repository and supports
+ the modification of the repository's resource tree and model elements in the <a href="Doc01_UserInterface.html#Doc_ProjectExplorerIntegration" title="Chapter in CDO Model Repository Documentation">Project Explorer</a>,
+ as well as the modification of model resources in the supported model editors. This type of checkout always operates
+ on the floating <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>head</code></a> of the configured branch and displays the changes that other users commit
+ to that branch in real-time.
+ <p>
+ Online transactional checkouts can be created for any type of repository. The term "online" reflects the fact that this type
+ of checkout requires a <a href="Doc02_ManagingRepositories.html#Doc_ConnectingDisconnecting" title="Chapter in CDO Model Repository Documentation">connected</a> repository. Online checkouts do not store model state
+ locally in any form. If the associated repository is disconnected the online checkout is closed, as well.
+ <p>
+ This is the default checkout type that provides CDO's unprecedented real-time model collaboration functionality.<p><b>See Also:</b></p>
+<ul>
+	<li><a href="Doc05_UsingCheckouts.html#Doc_SwitchingBranch" title="Chapter in CDO Model Repository Documentation">Switching the Branch of a Checkout</a></li>
+</ul>
+
+
+<h3><a name="Doc_HistoricalCheckouts"></a>2.2&nbsp;&nbsp;Online Historical Checkouts</h3>
+<p>
+ An online historical checkout is based on an online <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>view</code></a> to a repository and supports
+ the auditing of the repository's resource tree and model elements via the <a href="Doc01_UserInterface.html#Doc_TimeMachineView" title="Chapter in CDO Model Repository Documentation">CDO Time Machine View</a>.
+ This type of checkout always operates on the configured time stamp of the configured branch. As the historical state of
+ the models at that time stamp is immutable the changes that other users commit
+ to that branch are not displayed.
+ <p>
+ Online historical checkouts can only be created for repositories with the <a href="Doc02_ManagingRepositories.html#Doc_CreatingRepositories" title="Chapter in CDO Model Repository Documentation">versioning modes</a>
+ <b>auditing</b> or <b>branching</b>. The term "online" reflects the fact that this type of checkout requires a
+ <a href="Doc02_ManagingRepositories.html#Doc_ConnectingDisconnecting" title="Chapter in CDO Model Repository Documentation">connected</a> repository. Online checkouts do not store model state
+ locally in any form. If the associated repository is disconnected the online checkout is closed, as well.
+ <p>
+ This is the checkout type that provides CDO's unprecedented real-time time travel functionality.<p><b>See Also:</b></p>
+<ul>
+	<li><a href="Doc05_UsingCheckouts.html#Doc_SwitchingBranchPoint" title="Chapter in CDO Model Repository Documentation">Switching the Time Stamp of a Checkout</a></li>
+</ul>
+
+
+<h3><a name="Doc_OfflineCheckouts"></a>2.3&nbsp;&nbsp;Offline Checkouts</h3>
+<p>
+ An offline checkout is based on a <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on the local replication of a repository and supports
+ the modification of the repository's resource tree and model elements in the <a href="Doc01_UserInterface.html#Doc_ProjectExplorerIntegration" title="Chapter in CDO Model Repository Documentation">Project Explorer</a>,
+ as well as the modification of model resources in the supported model editors.
+ This type of checkout always operates on the floating <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>head</code></a> of the configured branch.
+ The changes that other users commit to that branch are not displayed until an <a href="Doc05_UsingCheckouts.html#Doc_OfflineUpdate" title="Chapter in CDO Model Repository Documentation">update operation</a> is performed.
+ <p>
+ Offline checkouts can only be created for repositories with the <a href="Doc02_ManagingRepositories.html#Doc_CreatingRepositories" title="Chapter in CDO Model Repository Documentation">ID generation</a>
+ option <b>UUIDs</b>. The term "offline" reflects the fact that this type of checkout does not require a
+ <a href="Doc02_ManagingRepositories.html#Doc_ConnectingDisconnecting" title="Chapter in CDO Model Repository Documentation">connected</a> repository. Offline checkouts replicate the model state into a
+ local database. If the associated repository is disconnected the offline checkout stays fully functional (except for
+ operations such as Checkin or Update, which require an active repository connection).
+ <p>
+ This is the checkout type that provides CDO's unprecedented offline modeling functionality.<p><b>See Also:</b></p>
+<ul>
+	<li><a href="Doc05_UsingCheckouts.html#Doc_UsingOfflineCheckouts" title="Chapter in CDO Model Repository Documentation">Working with Offline Checkouts</a></li>
+</ul>
+
+
+<h2><a name="Doc_CheckoutBranchPoint"></a>3&nbsp;&nbsp;Selecting the Branch Point</h2>
+<p>
+ A repository may contain the states of models and model elements from many different branches and time stamps. The third page of the
+ checkout wizard allows to select the branch point of the checkout to create: <p align="center"><img src="checkout-wizard-branchpoint.png"></p>
+
+ <p>
+ For <a href="Doc04_CheckingOut.html#Doc_TransactionalCheckouts" title="Chapter in CDO Model Repository Documentation">transactional checkouts</a> the time stamp is implied to be the <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>head</code></a>
+ of the selected branch, so the wizard page is reduced to: <p align="center"><img src="checkout-wizard-branch.png"></p>
+
+ <p>
+ After selecting the desired branch and optionally the desired time stamp pressing the Next button or double-clicking
+ the selected branch advances to <a href="Doc04_CheckingOut.html#Doc_CheckoutRootObject" title="Chapter in CDO Model Repository Documentation">Selecting the Root Object</a>.<p><b>See Also:</b></p>
+<ul>
+	<li><a href="Doc05_UsingCheckouts.html#Doc_SwitchingBranchPoint" title="Chapter in CDO Model Repository Documentation">Switching the Time Stamp of a Checkout</a></li>
+	<li><a href="Doc05_UsingCheckouts.html#Doc_SwitchingBranch" title="Chapter in CDO Model Repository Documentation">Switching the Branch of a Checkout</a></li>
+	<li><a href="Doc05_UsingCheckouts.html#Doc_SwitchNewBranch" title="Chapter in CDO Model Repository Documentation">Switching to a New Branch</a></li>
+</ul>
+
+
+<h2><a name="Doc_CheckoutRootObject"></a>4&nbsp;&nbsp;Selecting the Root Object</h2>
+<p>
+ CDO does <b>not</b> support the concept of <i>partial checkouts</i>, i.e., all actions will always operate on all models and model elements in the
+ repository. But by selecting a root object different from the <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>root resource</code></a> of the repository
+ the folders, resources, and model elements displayed under the checkout in the <a href="Doc01_UserInterface.html#Doc_ProjectExplorerIntegration" title="Chapter in CDO Model Repository Documentation">Project Explorer</a>
+ can be limited to the children of this root object. Visually the checkout node is equivalent to the selected root object:
+ <p align="center"><img src="checkout-wizard-rootobject.png"></p>
+
+ <p>
+ After selecting the desired root object pressing the Next button or double-clicking
+ the selected root object advances to <a href="Doc04_CheckingOut.html#Doc_CheckoutName" title="Chapter in CDO Model Repository Documentation">Naming the Checkout</a>.
+
+<h2><a name="Doc_CheckoutName"></a>5&nbsp;&nbsp;Naming the Checkout</h2>
+<p>
+ The fifth and last page of the checkout allows to review the choices of the previous pages and to change the proposed name/label
+ of the checkout to create: <p align="center"><img src="checkout-wizard-name.png"></p>
+
+ <p>
+ Pressing the Finish button will close the wizard and create the new checkout as specified.<p><b>See Also:</b></p>
+<ul>
+	<li><a href="Doc05_UsingCheckouts.html#Doc_RenamingCheckouts" title="Chapter in CDO Model Repository Documentation">Renaming Checkouts</a></li>
+	<li><a href="Doc05_UsingCheckouts.html" title="Article in CDO Model Repository Documentation">Working with Checkouts</a></li>
+</ul>
+
+
+<p align="right">
+<a href="Doc03_UsingBranches.html" title="Backward to Working with Branches"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_UsingCheckouts.html" title="Forward to Working with Checkouts"><img src="../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

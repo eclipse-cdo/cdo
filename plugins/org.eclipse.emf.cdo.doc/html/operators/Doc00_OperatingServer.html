@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Operating a CDO Server (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Operating a CDO Server (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Operating a CDO Server</h1></td>
+		<td align="right" valign="middle" nowrap><a href="index.html" title="Backward to Operator's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc01_ConfiguringRepositories.html" title="Forward to Configuring Repositories"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="3"><a href="Doc00_OperatingServer.html#Doc_ServerDeploy" title="Chapter in CDO Model Repository Documentation">Deploying a CDO Server</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="3"><a href="Doc00_OperatingServer.html#Doc_ServerStart" title="Chapter in CDO Model Repository Documentation">Starting a CDO Server</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="3"><a href="Doc00_OperatingServer.html#Doc_ServerStop" title="Chapter in CDO Model Repository Documentation">Stopping a CDO Server</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Doc_ServerDeploy"></a>1&nbsp;&nbsp;Deploying a CDO Server</h2>
+<p>
+ The easiest way to deploy a stand-alone CDO Server is to download the latest
+ <a href="http://wiki.eclipse.org/Eclipse_Installer">Eclipse Installer</a> for the target environment:
+ <ul>
+ <li><a href="http://www.eclipse.org/downloads/download.php?file=/oomph/products/latest/eclipse-inst-win64.exe">Windows 64 Bit</a> (self-extracting exe)
+ <li><a href="http://www.eclipse.org/downloads/download.php?file=/oomph/products/latest/eclipse-inst-win32.exe">Windows 32 Bit</a> (self-extracting exe)
+ <li><a href="http://www.eclipse.org/downloads/download.php?file=/oomph/products/latest/eclipse-inst-mac64.tar.gz">Mac OS 64 Bit</a> (tar.gz)
+ <li><a href="http://www.eclipse.org/downloads/download.php?file=/oomph/products/latest/eclipse-inst-linux64.tar.gz">Linux 64 Bit</a> (tar.gz)
+ <li><a href="http://www.eclipse.org/downloads/download.php?file=/oomph/products/latest/eclipse-inst-linux32.tar.gz">Linux 32 Bit</a> (tar.gz)
+ </ul>
+ <p>
+ When the Eclipse Installer is started, select the "CDO Server" application:
+ <p align="center"><img src="eclipse-installer.png"></p>
+
+ <p>
+ On the second page make sure you select the product version (of the CDO Server) that matches your clients' versions:
+ <p align="center"><img src="eclipse-installer.png"></p>
+
+ <p>
+ When the installation has finished the "eclipse" folder under the installation folder contains the <b>cdo-server.xml</b>
+ configuration file, which looks similar to this:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_cdoServerXML"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><img src="../../images/editor-top-left-xml.png"></td>
+      <td style="background-image:url(../../images/editor-top1.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">cdo&#8209;server.xml</font></td>
+      <td width="1px"><img src="../../images/editor-close.png"></td>
+      <td style="background-image:url(../../images/editor-top2.png); background-repeat:repeat-x;">&nbsp;</td>
+      <td><img src="../../images/editor-top-right.png"></td>
+    </tr>
+    <tr>
+      <td style="background-image:url(../../images/editor-left.png); background-repeat:repeat-y;">&nbsp;</td>
+      <td colspan="3" align="left" valign="top" nowrap>
+        <div style="margin:10px 0px 10px 0px;">
+          <code>
+<font color="#0000e1">&lt;?xml version=<font color="#000080">'1.0'</font> encoding=<font color="#000080">'UTF-8'</font>?&gt;</font><br/>
+<font color="#0000e1">&lt;cdoServer&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;acceptor&nbsp;type<font color="#000080">="tcp"</font>&nbsp;listenAddr<font color="#000080">="0.0.0.0"</font>&nbsp;port<font color="#000080">="2036"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;repository&nbsp;name<font color="#000080">="repo1"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="overrideUUID"</font>&nbsp;value<font color="#000080">=""</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingAudits"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingBranches"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="ensureReferentialIntegrity"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="allowInterruptRunningQueries"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="idGenerationLocation"</font>&nbsp;value<font color="#000080">="STORE"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="serializeCommits"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="optimisticLockingTimeout"</font>&nbsp;value<font color="#000080">="10000"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;store&nbsp;type<font color="#000080">="db"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="connectionKeepAlivePeriod"</font>&nbsp;value<font color="#000080">="60"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="readerPoolCapacity"</font>&nbsp;value<font color="#000080">="20"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="writerPoolCapacity"</font>&nbsp;value<font color="#000080">="20"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;mappingStrategy&nbsp;type<font color="#000080">="horizontal"</font>&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="qualifiedNames"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/mappingStrategy&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;dbAdapter&nbsp;name<font color="#000080">="h2"</font>/&gt;</font><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;dataSource&nbsp;class<font color="#000080">="org.h2.jdbcx.JdbcDataSource"</font>&nbsp;URL<font color="#000080">="jdbc:h2:database/repo1"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/store&gt;</font><br/>
+&nbsp;&nbsp;<font color="#0000e1">&lt;/repository&gt;</font><br/>
+<br/>
+<font color="#0000e1">&lt;/cdoServer&gt;</font>
+          </code>
+        </div>
+      </td>
+      <td style="background-image:url(../../images/editor-right.png); background-repeat:repeat-y;">&nbsp;</td>
+    </tr>
+    <tr>
+      <td><img src="../../images/editor-bottom-left.png"></td>
+      <td style="background-image:url(../../images/editor-bottom.png); background-repeat:repeat-x;" colspan="3">&nbsp;</td>
+      <td><img src="../../images/editor-bottom-right.png"></td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Please note that many <a href="../users/Doc02_ManagingRepositories.html" title="Article in CDO Model Repository Documentation">repository configuration options</a> can <b>not</b> be changed anymore after the repository
+ has been started the first time.<p><b>See Also:</b></p>
+<ul>
+	<li><a href="Doc01_ConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Configuring Repositories</a></li>
+	<li><a href="Doc02_ConfiguringAcceptors.html" title="Article in CDO Model Repository Documentation">Configuring Acceptors</a></li>
+	<li><a href="http://wiki.eclipse.org/CDO/Security_Manager" title="Article in CDO Model Repository Documentation">Managing Security</a></li>
+</ul>
+
+
+<h2><a name="Doc_ServerStart"></a>2&nbsp;&nbsp;Starting a CDO Server</h2>
+<p>
+ Starting a CDO Server differs a little bit depending on the target environment:
+ <ul>
+ <li> On <b>Windows</b> double-click the <code>eclipsec.exe</code> file (mind the last "c").
+ <li> On <b>Mac OS</b> start the <code>Eclipse.app/Contents/MacOS/eclipse</code> executable from a terminal window.
+ <li> On <b>Linux</b> start the normal <code>eclipse</code> executable from a terminal window.
+ </ul>
+ <p>
+ After successful start of the server the console should look similar to this:
+ <p align="center"><img src="server-start.png"></p>
+
+ <p>
+ Please note that many <a href="../users/Doc02_ManagingRepositories.html" title="Article in CDO Model Repository Documentation">repository configuration options</a> can <b>not</b> be changed anymore after the repository
+ has been started the first time.<p><b>See Also:</b></p>
+<ul>
+	<li><a href="Doc01_ConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Configuring Repositories</a></li>
+</ul>
+
+
+<h2><a name="Doc_ServerStop"></a>3&nbsp;&nbsp;Stopping a CDO Server</h2>
+<p>
+ To gracefully shut down a running CDO server enter the command "<code>close</code>" into the console and confirm with "<code>yes</code>":
+ <p align="center"><img src="server-stop.png"></p>
+
+ <p>
+ Please note that the <a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">DBStore</a> supports automatic crash detection and recovery at startup time.
+ Other store may or may not support similar functionality.
+
+<p align="right">
+<a href="index.html" title="Backward to Operator's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc01_ConfiguringRepositories.html" title="Forward to Configuring Repositories"><img src="../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

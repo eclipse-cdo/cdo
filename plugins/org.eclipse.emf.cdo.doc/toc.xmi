@@ -70,6 +70,11 @@
     <packages name="org.eclipse.emf.cdo.spi.common.protocol"/>
     <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.explorer" label="CDO Model Repository Explorer">
+    <packages name="org.eclipse.emf.cdo.explorer"/>
+    <packages name="org.eclipse.emf.cdo.explorer.checkouts"/>
+    <packages name="org.eclipse.emf.cdo.explorer.repositories"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.expressions" label="CDO Model Repository Expressions">
     <packages name="org.eclipse.emf.cdo.expressions"/>
     <packages name="org.eclipse.emf.cdo.expressions.impl"/>

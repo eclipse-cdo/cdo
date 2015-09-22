@@ -88,42 +88,48 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.explorer.checkouts">org.eclipse.emf.cdo.explorer.checkouts</a></td>
+<td class="colLast">
+<div class="block">Interfaces for working with <a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></td>
 <td class="colLast">
 <div class="block">Server provider interfaces (SPI) for the server integration of the <a href="../../../../../../org/eclipse/emf/cdo/security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></td>
 <td class="colLast">
 <div class="block">Client concepts for dealing with sessions to CDO repositories.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.workspace">org.eclipse.emf.cdo.spi.workspace</a></td>
 <td class="colLast">
 <div class="block">Server provider interfaces (SPI) for CDO <a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></td>
 <td class="colLast">
 <div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.ui.compare">org.eclipse.emf.cdo.ui.compare</a></td>
 <td class="colLast">
 <div class="block">Classes that help to open EMF Compare user interfaces on CDO models.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></td>
 <td class="colLast">
 <div class="block">Concepts to checkout, open and further operate CDO <a href="../../../../../../org/eclipse/emf/cdo/workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></td>
 <td class="colLast">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
@@ -162,6 +168,28 @@
 <td class="colFirst"><code>static org.eclipse.emf.compare.scope.IComparisonScope</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOComparisonScope.Minimal.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html#create-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.view.CDOViewOpener-">create</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
       <a href="../../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.emf.cdo.explorer.checkouts">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a> in <a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/package-summary.html">org.eclipse.emf.cdo.explorer.checkouts</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/package-summary.html">org.eclipse.emf.cdo.explorer.checkouts</a> that return <a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOCheckout.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html#openTransaction--">openTransaction</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOCheckout.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html#openTransaction-org.eclipse.emf.ecore.resource.ResourceSet-">openTransaction</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;resourceSet)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

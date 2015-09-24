@@ -51,7 +51,14 @@
 			</rm:uri>
 		</rm:provider>
 
-    <!-- UML2 -->
+    <!-- PLATFORM -->
+    <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+      <rm:uri format="http://download.eclipse.org/eclipse/updates/4.5">
+        <bc:propertyRef key="platform.version"/>
+      </rm:uri>
+    </rm:provider>
+
+        <!-- UML2 -->
     <rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
       <rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x"/>
     </rm:provider>

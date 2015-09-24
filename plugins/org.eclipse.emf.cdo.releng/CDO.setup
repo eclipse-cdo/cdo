@@ -195,53 +195,21 @@
       <repositoryList
           name="Mars">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
+            url="http://download.eclipse.org/releases/mars"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/core"/>
-        <repository
-            url="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/transaction/updates/interim"/>
-        <repository
-            url="http://download.eclipse.org/tools/gef/updates/interim"/>
-        <repository
-            url="http://download.eclipse.org/graphiti/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/technology/swtbot/snapshots"/>
-        <repository
-            url="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"/>
+            url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.4"/>
-        <repository
             url="http://download.eclipse.org/technology/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/validation/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/compare/updates/nightly/streams/3.1.x/latest"/>
+            url="http://download.eclipse.org/tools/buckminster/updates-4.4"/>
         <repository
             url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.eclipse.org/ecp/rt/170_RC2"/>
+            url="http://download.oracle.com/otn_software/oepe/luna"/>
         <repository
             url="http://www.elver.org/eclipse/2.1.0/update"/>
-        <repository
-            url="http://download.oracle.com/otn_software/oepe/luna"/>
       </repositoryList>
       <repositoryList
           name="Luna">

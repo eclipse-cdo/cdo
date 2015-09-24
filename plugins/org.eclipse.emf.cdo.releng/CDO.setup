@@ -146,7 +146,17 @@
         <repository
             url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/nightly/core"/>
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.12milestones/core"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/transaction/updates/milestones"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/validation/updates/milestones"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/compare/updates/milestones/3.2"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>
         <repository
             url="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/milestones"/>
         <repository
@@ -154,39 +164,29 @@
         <repository
             url="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/milestones"/>
         <repository
-            url="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>
-        <repository
             url="http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/transaction/updates/interim"/>
-        <repository
-            url="http://download.eclipse.org/tools/gef/updates/interim"/>
-        <repository
-            url="http://download.eclipse.org/graphiti/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/technology/swtbot/snapshots"/>
         <repository
             url="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
-        <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.4"/>
-        <repository
-            url="http://download.eclipse.org/technology/nebula/snapshot"/>
-        <repository
             url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/validation/updates/milestones"/>
         <repository
             url="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
         <repository
-            url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/compare/updates/nightly/latest"/>
-        <repository
             url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.eclipse.org/ecp/rt/150_MS3"/>
+            url="http://download.eclipse.org/graphiti/updates/milestones"/>
+        <repository
+            url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
+        <repository
+            url="http://download.eclipse.org/tools/gef/updates/interim"/>
+        <repository
+            url="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
+        <repository
+            url="http://download.eclipse.org/technology/swtbot/snapshots"/>
+        <repository
+            url="http://download.eclipse.org/technology/nebula/snapshot"/>
+        <repository
+            url="http://download.eclipse.org/ecp/rt/170"/>
         <repository
             url="http://www.elver.org/eclipse/2.1.0/update"/>
         <repository
@@ -196,6 +196,8 @@
           name="Mars">
         <repository
             url="http://download.eclipse.org/releases/mars"/>
+        <repository
+            url="http://download.eclipse.org/eclipse/updates/4.5"/>
         <repository
             url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x"/>
         <repository

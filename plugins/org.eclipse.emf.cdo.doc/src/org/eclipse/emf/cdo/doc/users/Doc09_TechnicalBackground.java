@@ -59,7 +59,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  *
  * @author Eike Stepper
  */
-public class Doc08_TechnicalBackground
+public class Doc09_TechnicalBackground
 {
   /**
    * Technical Background of Model Elements

@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.doc.operators;
 
-import org.eclipse.emf.cdo.doc.users.Doc08_TechnicalBackground.Doc_BackgroundModelElements.Doc_BackgroundLegacyModels;
+import org.eclipse.emf.cdo.doc.users.Doc09_TechnicalBackground.Doc_BackgroundModelElements.Doc_BackgroundLegacyModels;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.mapping.ColumnTypeModifier;

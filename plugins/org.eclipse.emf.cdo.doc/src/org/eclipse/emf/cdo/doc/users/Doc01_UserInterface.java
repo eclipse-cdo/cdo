@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.doc.users.Doc04_CheckingOut.Doc_CheckoutType.Doc_Offl
 import org.eclipse.emf.cdo.doc.users.Doc04_CheckingOut.Doc_CheckoutType.Doc_TransactionalCheckouts;
 import org.eclipse.emf.cdo.doc.users.Doc05_UsingCheckouts.Doc_ComparingCheckouts;
 import org.eclipse.emf.cdo.doc.users.Doc07_UsingModels.Doc_EditingModelElements;
-import org.eclipse.emf.cdo.doc.users.Doc08_TechnicalBackground.Doc_BackgroundCompare;
+import org.eclipse.emf.cdo.doc.users.Doc09_TechnicalBackground.Doc_BackgroundCompare;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.view.CDOView.Options;
 

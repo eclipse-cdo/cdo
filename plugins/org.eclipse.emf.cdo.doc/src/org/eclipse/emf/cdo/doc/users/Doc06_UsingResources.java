@@ -12,7 +12,7 @@ package org.eclipse.emf.cdo.doc.users;
 
 import org.eclipse.emf.cdo.doc.users.Doc01_UserInterface.Doc_ProjectExplorerIntegration;
 import org.eclipse.emf.cdo.doc.users.Doc04_CheckingOut.Doc_CheckoutType.Doc_HistoricalCheckouts;
-import org.eclipse.emf.cdo.doc.users.Doc08_TechnicalBackground.Doc_BackgroundTransactions;
+import org.eclipse.emf.cdo.doc.users.Doc09_TechnicalBackground.Doc_BackgroundTransactions;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;

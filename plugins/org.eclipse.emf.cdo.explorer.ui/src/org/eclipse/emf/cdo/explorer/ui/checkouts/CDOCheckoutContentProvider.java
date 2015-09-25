@@ -529,106 +529,112 @@ public class CDOCheckoutContentProvider implements ICommonContentProvider, IProp
         }
       }
 
+      boolean firstLoad;
       synchronized (LOADING_OBJECTS)
       {
-        LOADING_OBJECTS.add(originalObject);
+        firstLoad = LOADING_OBJECTS.add(originalObject);
       }
 
-      new Job("Load " + finalObject)
+      if (firstLoad || finalOpeningCheckout == null)
       {
-        @Override
-        protected IStatus run(IProgressMonitor monitor)
+        Job job = new Job("Load " + finalObject)
         {
-          try
+          @Override
+          protected IStatus run(IProgressMonitor monitor)
           {
-            if (finalOpeningCheckout != null)
+            try
             {
-              finalOpeningCheckout.open();
-              determineChildRevisions(finalObject, loadedRevisions, missingIDs);
-            }
-
-            if (!missingIDs.isEmpty())
-            {
-              CDOObject cdoObject = getCDOObject((EObject)finalObject);
-              CDOView view = cdoObject.cdoView();
-              CDORevisionManager revisionManager = view.getSession().getRevisionManager();
-
-              List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED,
-                  CDORevision.DEPTH_NONE, true);
-              loadedRevisions.addAll(revisions);
-            }
-
-            Object[] children = contentProvider.getChildren(finalObject);
-
-            // Adjust possible legacy adapters.
-            for (int i = 0; i < children.length; i++)
-            {
-              Object child = children[i];
-              if (child instanceof InternalCDOObject)
+              if (finalOpeningCheckout != null)
               {
-                InternalCDOObject cdoObject = (InternalCDOObject)child;
-                InternalEObject instance = cdoObject.cdoInternalInstance();
-                if (instance != cdoObject)
+                finalOpeningCheckout.open();
+                determineChildRevisions(finalObject, loadedRevisions, missingIDs);
+              }
+
+              if (!missingIDs.isEmpty())
+              {
+                CDOObject cdoObject = getCDOObject((EObject)finalObject);
+                CDOView view = cdoObject.cdoView();
+                CDORevisionManager revisionManager = view.getSession().getRevisionManager();
+
+                List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, CDORevision.UNCHUNKED,
+                    CDORevision.DEPTH_NONE, true);
+                loadedRevisions.addAll(revisions);
+              }
+
+              Object[] children = contentProvider.getChildren(finalObject);
+
+              // Adjust possible legacy adapters.
+              for (int i = 0; i < children.length; i++)
+              {
+                Object child = children[i];
+                if (child instanceof InternalCDOObject)
                 {
-                  children[i] = instance;
+                  InternalCDOObject cdoObject = (InternalCDOObject)child;
+                  InternalEObject instance = cdoObject.cdoInternalInstance();
+                  if (instance != cdoObject)
+                  {
+                    children[i] = instance;
+                  }
                 }
               }
+
+              children = CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(finalObject, children);
+              childrenCache.put(originalObject, children);
             }
-
-            children = CDOCheckoutContentModifier.Registry.INSTANCE.modifyChildren(finalObject, children);
-            childrenCache.put(originalObject, children);
-          }
-          catch (final Exception ex)
-          {
-            childrenCache.remove(originalObject);
-
-            if (finalOpeningCheckout != null)
+            catch (final Exception ex)
             {
-              finalOpeningCheckout.close();
-            }
+              childrenCache.remove(originalObject);
 
-            OM.LOG.error(ex);
-
-            final Control control = viewer.getControl();
-            if (!control.isDisposed())
-            {
-              UIUtil.getDisplay().asyncExec(new Runnable()
+              if (finalOpeningCheckout != null)
               {
-                public void run()
+                finalOpeningCheckout.close();
+              }
+
+              OM.LOG.error(ex);
+
+              final Control control = viewer.getControl();
+              if (!control.isDisposed())
+              {
+                UIUtil.getDisplay().asyncExec(new Runnable()
                 {
-                  try
+                  public void run()
                   {
-                    if (!control.isDisposed())
+                    try
                     {
-                      Shell shell = control.getShell();
-                      String title = (finalOpeningCheckout != null ? "Open" : "Load") + " Error";
-                      MessageDialog.openError(shell, title, ex.getMessage());
+                      if (!control.isDisposed())
+                      {
+                        Shell shell = control.getShell();
+                        String title = (finalOpeningCheckout != null ? "Open" : "Load") + " Error";
+                        MessageDialog.openError(shell, title, ex.getMessage());
+                      }
+                    }
+                    catch (Exception ex)
+                    {
+                      OM.LOG.error(ex);
                     }
                   }
-                  catch (Exception ex)
-                  {
-                    OM.LOG.error(ex);
-                  }
-                }
-              });
-            }
-          }
-
-          CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
-          viewerRefresh.addNotification(originalObject, true, true, new Runnable()
-          {
-            public void run()
-            {
-              synchronized (LOADING_OBJECTS)
-              {
-                LOADING_OBJECTS.remove(originalObject);
+                });
               }
             }
-          });
 
-          return Status.OK_STATUS;
-        }
-      }.schedule();
+            CDOCheckoutViewerRefresh viewerRefresh = stateManager.getViewerRefresh();
+            viewerRefresh.addNotification(originalObject, true, true, new Runnable()
+            {
+              public void run()
+              {
+                synchronized (LOADING_OBJECTS)
+                {
+                  LOADING_OBJECTS.remove(originalObject);
+                }
+              }
+            });
+
+            return Status.OK_STATUS;
+          }
+        };
+
+        job.schedule();
+      }
 
       if (FIND_ITEM_METHOD != null)
       {

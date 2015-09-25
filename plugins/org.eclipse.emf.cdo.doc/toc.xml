@@ -11,7 +11,8 @@
     <topic label="Working with Checkouts" href="html/users/Doc05_UsingCheckouts.html" />
     <topic label="Working with Folders and Resources" href="html/users/Doc06_UsingResources.html" />
     <topic label="Working with Models and Model Elements" href="html/users/Doc07_UsingModels.html" />
-    <topic label="Understanding the Technical Background" href="html/users/Doc08_TechnicalBackground.html" />
+    <topic label="Collaborating in Real-Time" href="html/users/Doc08_Collaborating.html" />
+    <topic label="Understanding the Technical Background" href="html/users/Doc09_TechnicalBackground.html" />
   </topic>
   <topic label="Operator's Guide" href="html/operators/index.html">
     <topic label="Operating a CDO Server" href="html/operators/Doc00_OperatingServer.html" />

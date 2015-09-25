@@ -29,7 +29,7 @@ import org.eclipse.emf.cdo.doc.users.Doc03_UsingBranches.Doc_CreatingBranches;
 import org.eclipse.emf.cdo.doc.users.Doc04_CheckingOut.Doc_CheckoutType.Doc_HistoricalCheckouts;
 import org.eclipse.emf.cdo.doc.users.Doc04_CheckingOut.Doc_CheckoutType.Doc_OfflineCheckouts;
 import org.eclipse.emf.cdo.doc.users.Doc04_CheckingOut.Doc_CheckoutType.Doc_TransactionalCheckouts;
-import org.eclipse.emf.cdo.doc.users.Doc08_TechnicalBackground.Doc_BackgroundCompare;
+import org.eclipse.emf.cdo.doc.users.Doc09_TechnicalBackground.Doc_BackgroundCompare;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;

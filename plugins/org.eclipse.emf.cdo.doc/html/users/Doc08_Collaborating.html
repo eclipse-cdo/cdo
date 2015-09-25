@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+
+<HEAD>
+<TITLE>Collaborating in Real-Time (CDO Model Repository Documentation)</TITLE>
+
+<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+
+<SCRIPT type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Collaborating in Real-Time (CDO Model Repository Documentation)";
+    }
+}
+</SCRIPT>
+<NOSCRIPT></NOSCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Collaborating in Real-Time</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc07_UsingModels.html" title="Backward to Working with Models and Model Elements"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc09_TechnicalBackground.html" title="Forward to Understanding the Technical Background"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ CDO supports real-time collaboration on models by transferring the changes that one user
+ <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>commits</code></a> to the repository to all
+ other users connected to the same repository and transparently weaving those changes into their model copies.
+ <p align="center"><img src="collaborating.png"></p>
+
+ <p>
+ With CDO the local model copies (in particular with <a href="Doc04_CheckingOut.html#Doc_TransactionalCheckouts" title="Chapter in CDO Model Repository Documentation">online transactional checkouts</a>) do not need to be
+ <i>updated</i> manually; they are automatically updated (almost) at the time they are changed by other users.
+ <p>
+ As real-time collaboration relies on committing a <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> it applies only to
+ online transactional checkouts and the <a href="Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chapter in CDO Model Repository Documentation">editors</a>
+ opened on online transactional models. Saving a model editor commits the underlying transaction.
+ <p>
+ The data integrity of the models and model elements in a repository is guaranteed by <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="Class in org.eclipse.net4j.util.concurrent.IRWLockManager"><code>write locks</code></a>
+ that are acquired <b>per model element</b>. <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="Class in org.eclipse.net4j.util.concurrent.IRWLockManager"><code>Read locks</code></a> and <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="Class in org.eclipse.net4j.util.concurrent.IRWLockManager"><code>write options</code></a>,
+ as well as <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>durable locks</code></a> are supported by the core-level APIs
+ but not by the CDO Explorer's user interface.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td colspan="4"><a href="Doc08_Collaborating.html#Doc_OptimisticLocking" title="Chapter in CDO Model Repository Documentation">Optimistic Locking</a></td></tr>
+<tr><td></td><td>1.1&nbsp;</td><td colspan="3"><a href="Doc08_Collaborating.html#Doc_EarlyConflictDetection" title="Chapter in CDO Model Repository Documentation">Early Conflict Detection</a></td></tr>
+<tr><td></td><td>1.2&nbsp;</td><td colspan="3"><a href="Doc08_Collaborating.html#Doc_AutomaticConflictResolution" title="Chapter in CDO Model Repository Documentation">Automatic Conflict Resolution</a></td></tr>
+<tr><td></td><td>1.3&nbsp;</td><td colspan="3"><a href="Doc08_Collaborating.html#Doc_InteractiveConflictResolution" title="Chapter in CDO Model Repository Documentation">Interactive Conflict Resolution</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="4"><a href="Doc08_Collaborating.html#Doc_PessimisticLocking" title="Chapter in CDO Model Repository Documentation">Pessimistic Locking</a></td></tr>
+<tr><td></td><td>2.1&nbsp;</td><td colspan="3"><a href="Doc08_Collaborating.html#Doc_TreeLocking" title="Chapter in CDO Model Repository Documentation">Tree Locking</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="4"><a href="Doc08_Collaborating.html#Doc_AutomaticLocking" title="Chapter in CDO Model Repository Documentation">Automatic Locking</a></td></tr>
+<tr><td>4&nbsp;</td><td colspan="4"><a href="Doc08_Collaborating.html#Doc_AutomaticCommitting" title="Chapter in CDO Model Repository Documentation">Automatic Committing</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Doc_OptimisticLocking"></a>1&nbsp;&nbsp;Optimistic Locking</h2>
+<p>
+ By default model elements are locked optimistically, that is, the CDO server <i>implicitly</i> acquires and releases locks while executing
+ a commit operation. These implicit locks are not visible to the committing user or any other user of the same repository.
+ <p>
+ Optimistic locking provides for the highest possible degree of concurrency but it also comes with a non-zero risk of commit conflicts
+ that are only detected when a commit operation is executed by the CDO server and, as a consequence, rejected. Because of
+ <a href="Doc08_Collaborating.html#Doc_EarlyConflictDetection" title="Chapter in CDO Model Repository Documentation">Early Conflict Detection</a> the risk of conflicts that are detected that late in the commit process is generally much lower
+ than, for example, in pure database-based applications.
+ <p>
+ To completely eliminate the risk of commit conflicts <a href="Doc08_Collaborating.html#Doc_PessimisticLocking" title="Chapter in CDO Model Repository Documentation">Pessimistic Locking</a> must be used.
+
+<h3><a name="Doc_EarlyConflictDetection"></a>1.1&nbsp;&nbsp;Early Conflict Detection</h3>
+<p>
+ As the local model copies of a user are automatically updated (almost) at the time they are changed by other users
+ CDO can anticipate the conflict potential of the local changes early, in particular before an attempt to commit these changes is even made.
+ The <a href="Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chapter in CDO Model Repository Documentation">CDO Model Editor</a> decorates such conflicting model elements with a red-colored font,
+ indicating that the underlying <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> can not be successfully committed anymore.
+ <p align="center"><img src="early-conflict.png"></p>
+
+ <p>
+ <a href="Doc08_Collaborating.html#Doc_AutomaticConflictResolution" title="Chapter in CDO Model Repository Documentation">Automatic Conflict Resolution</a> and <a href="Doc08_Collaborating.html#Doc_InteractiveConflictResolution" title="Chapter in CDO Model Repository Documentation">Interactive Conflict Resolution</a>, if enabled, may have an impact on what exact types
+ of changes are considered a conflict.
+
+<h3><a name="Doc_AutomaticConflictResolution"></a>1.2&nbsp;&nbsp;Automatic Conflict Resolution</h3>
+<p>
+ Each time a local transaction is notified of a remote change by the CDO server and local conflicts are detected (see <a href="Doc08_Collaborating.html#Doc_EarlyConflictDetection" title="Chapter in CDO Model Repository Documentation">Early Conflict Detection</a>)
+ these conflicts are categorized as being either <i>trivial</i> conflicts or <i>non-trivial</i> conflicts. Trivial conflicts are:
+ <ul>
+ <li> Changes to multi-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> on both sides (local and remote) of the same model element.
+ <li> Changes to different single-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> on both sides (local and remote) of the same model element.
+ </ul>
+ <p>
+ Trivial conflicts are merged automatically into the local transaction, i.e., no user interaction is involved.
+ <p>
+ When non-trivial changes are detected, i.e., changes to the same single-valued <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Interface in org.eclipse.emf.ecore"><code>feature</code></a> on both sides (local and remote)
+ of the same model element, automatic conflict resolution is suspended for all model elements until the next local commit operation.
+ During this period all incoming change notifications are accumulated and remembered for possible <a href="Doc08_Collaborating.html#Doc_InteractiveConflictResolution" title="Chapter in CDO Model Repository Documentation">Interactive Conflict Resolution</a>
+ at commit time.
+
+<h3><a name="Doc_InteractiveConflictResolution"></a>1.3&nbsp;&nbsp;Interactive Conflict Resolution</h3>
+<p>
+ If <a href="Doc08_Collaborating.html#Doc_AutomaticConflictResolution" title="Chapter in CDO Model Repository Documentation">Automatic Conflict Resolution</a> has detected non-trivial conflicts in a local <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and
+ an attempt is made to commit this transaction the following dialog pops up:
+ <p align="center"><img src="late-conflict.png"></p>
+
+ <p>
+ The dialog shows an overview of how many local model elements are added, changed, and removed. One of several conflict resolution
+ actions has to be selected by the user:
+ <ul>
+ <li> If the Merge action is selected an EMF Merge editor is opened with the left side showing the remote changes and
+      the right side showing the local changes:
+      <p align="center"><img src="merge.png"></p>
+
+      <p>
+      Saving this merge editor commits the merged local transaction. Note that new non-trivial conflicts may have been detected
+      in the meantime, in which case interactive conflict resolution is triggered again.
+ <li> If the Rollback action is selected the local transaction is <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>rolled back</code></a> and the local model copies
+      are automatically updated to their latest remote versions. As a result all local changes will be lost and eventually need to be
+      re-applied and committed again.
+ </ul>
+
+<h2><a name="Doc_PessimisticLocking"></a>2&nbsp;&nbsp;Pessimistic Locking</h2>
+<p>
+ Sometimes it seems not desirable to risk commit conflicts as they can occur with <a href="Doc08_Collaborating.html#Doc_OptimisticLocking" title="Chapter in CDO Model Repository Documentation">Optimistic Locking</a>.
+ In these cases CDO supports the acquisition of <i>explicit</i> locks on selected models (see <a href="Doc08_Collaborating.html#Doc_TreeLocking" title="Chapter in CDO Model Repository Documentation">Tree Locking</a>) and model elements.
+ <p>
+ Pessimistic locking support consists of:
+ <ul>
+ <li> Lock and unlock actions
+ <li> Lock state visualization
+ </ul>
+ <p>
+ Whether custom user interface components, such as model editors or views, support local actions and/or lock state visualization depends
+ on the implementation of those components. The CDO Model Editor's context menu offers lock actions for model elements that are not locked
+ by anyone and unlock actions for model elements that are locked by the current user. Both the CDO Model Editor and the
+ <a href="Doc01_UserInterface.html#Doc_ProjectExplorerIntegration" title="Chapter in CDO Model Repository Documentation">Project Explorer Integration</a> support lock state visualization by decorating model elements that are locked by the current user
+ with a green lock icon (indicating that they can be modified) and model elements that are locked by other users with a red lock icon
+ (indicating that they can not be modified):
+ <p align="center"><img src="pessimistic-locking.png"></p>
+
+ <p>
+ Note that a CDO editor generally operates in the context of a separate transaction, in particular not in the context of the
+ <a href="../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>read-only view</code></a> of the associated checkout, which explains why, in the screen shot above, both checkouts show the
+ locked model elements with a red lock icon decoration. In other words, while a model element is locked in a CDO editor it can not be
+ modified directly in the associated checkout via the Project Explorer.
+
+<h3><a name="Doc_TreeLocking"></a>2.1&nbsp;&nbsp;Tree Locking</h3>
+<p>
+ Sometimes it is desirable to lock not just a single model element but to atomically lock the tree of model elements rooted at the
+ selected model element. The CDO Model Editor's context menu offers a Lock Tree action for model elements that are not locked by
+ anyone and an Unlock Tree action for model elements that are locked by the current user.
+
+<h2><a name="Doc_AutomaticLocking"></a>3&nbsp;&nbsp;Automatic Locking</h2>
+<p>
+ With automatic locking turned on for a particular <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> write locks are automatically acquired
+ for model elements at the time these model elements are modified the first time.
+ <p>
+ Automatic locking is not yet supported for checkouts.
+
+<h2><a name="Doc_AutomaticCommitting"></a>4&nbsp;&nbsp;Automatic Committing</h2>
+<p>
+ With automatic committing turned on for a particular <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> that transaction is automatically committed
+ each time a model element is modified. This can be very useful when the primary purpose of a repository is to support real-time
+ collaboration between a number of users.
+ <p>
+ On the other hand with automatic committing multiple logically related changes are no longer
+ isolated in single composed commits. This  can be especially undesirable in repositories with auditing or branching support
+ because the databases of these types of repositories monotonously grow with the number of commits.
+ <p>
+ Automatic committing is not yet supported for checkouts.
+
+<p align="right">
+<a href="Doc07_UsingModels.html" title="Backward to Working with Models and Model Elements"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc09_TechnicalBackground.html" title="Forward to Understanding the Technical Background"><img src="../../images/forward.png" border="0"></a></p>
+<HR>
+<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
+</BODY>
+</HTML>

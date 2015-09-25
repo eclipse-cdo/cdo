@@ -23,7 +23,7 @@ function windowTitle()
 <table border="0">
 	<tr>
 		<td width="100%"><h1>Understanding the Technical Background</h1></td>
-		<td align="right" valign="middle" nowrap><a href="Doc07_UsingModels.html" title="Backward to Working with Models and Model Elements"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></td>
+		<td align="right" valign="middle" nowrap><a href="Doc08_Collaborating.html" title="Backward to Collaborating in Real-Time"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
 <p class="author">Author: Eike Stepper</p>
@@ -35,16 +35,16 @@ function windowTitle()
  <p>
  <b>Table of Contents</b> <p>
 <table border="0">
-<tr><td>1&nbsp;</td><td colspan="4"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundModelElements" title="Chapter in CDO Model Repository Documentation">Technical Background of Model Elements</a></td></tr>
-<tr><td></td><td>1.1&nbsp;</td><td colspan="3"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">Native Models</a></td></tr>
-<tr><td></td><td>1.2&nbsp;</td><td colspan="3"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundLegacyModels" title="Chapter in CDO Model Repository Documentation">Legacy Models</a></td></tr>
-<tr><td></td><td>1.3&nbsp;</td><td colspan="3"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundDynamicModels" title="Chapter in CDO Model Repository Documentation">Dynamic Models</a></td></tr>
-<tr><td>2&nbsp;</td><td colspan="4"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundRepositories" title="Chapter in CDO Model Repository Documentation">Technical Background of Repositories</a></td></tr>
-<tr><td>3&nbsp;</td><td colspan="4"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundCheckouts" title="Chapter in CDO Model Repository Documentation">Technical Background of Checkouts</a></td></tr>
-<tr><td>4&nbsp;</td><td colspan="4"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></td></tr>
-<tr><td>5&nbsp;</td><td colspan="4"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundViews" title="Chapter in CDO Model Repository Documentation">Technical Background of Views</a></td></tr>
-<tr><td>6&nbsp;</td><td colspan="4"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundTransactions" title="Chapter in CDO Model Repository Documentation">Technical Background of Transactions</a></td></tr>
-<tr><td>7&nbsp;</td><td colspan="4"><a href="Doc08_TechnicalBackground.html#Doc_BackgroundCompare" title="Chapter in CDO Model Repository Documentation">Technical Background of the Compare Integration</a></td></tr>
+<tr><td>1&nbsp;</td><td colspan="4"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundModelElements" title="Chapter in CDO Model Repository Documentation">Technical Background of Model Elements</a></td></tr>
+<tr><td></td><td>1.1&nbsp;</td><td colspan="3"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">Native Models</a></td></tr>
+<tr><td></td><td>1.2&nbsp;</td><td colspan="3"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundLegacyModels" title="Chapter in CDO Model Repository Documentation">Legacy Models</a></td></tr>
+<tr><td></td><td>1.3&nbsp;</td><td colspan="3"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundDynamicModels" title="Chapter in CDO Model Repository Documentation">Dynamic Models</a></td></tr>
+<tr><td>2&nbsp;</td><td colspan="4"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundRepositories" title="Chapter in CDO Model Repository Documentation">Technical Background of Repositories</a></td></tr>
+<tr><td>3&nbsp;</td><td colspan="4"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundCheckouts" title="Chapter in CDO Model Repository Documentation">Technical Background of Checkouts</a></td></tr>
+<tr><td>4&nbsp;</td><td colspan="4"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></td></tr>
+<tr><td>5&nbsp;</td><td colspan="4"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundViews" title="Chapter in CDO Model Repository Documentation">Technical Background of Views</a></td></tr>
+<tr><td>6&nbsp;</td><td colspan="4"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundTransactions" title="Chapter in CDO Model Repository Documentation">Technical Background of Transactions</a></td></tr>
+<tr><td>7&nbsp;</td><td colspan="4"><a href="Doc09_TechnicalBackground.html#Doc_BackgroundCompare" title="Chapter in CDO Model Repository Documentation">Technical Background of the Compare Integration</a></td></tr>
 </table>
 </p>
 
@@ -84,7 +84,7 @@ function windowTitle()
 <h3><a name="Doc_BackgroundLegacyModels"></a>1.2&nbsp;&nbsp;Legacy Models</h3>
 <p>
  Generating or regenerating an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Interface in org.eclipse.emf.ecore"><code>EPackage</code></a> with the CDO-specific <a href="../programmers/client/Doc02_PreparingModels.html#Doc_MigratingManually" title="Chapter in CDO Model Repository Documentation">options</a>
- (as explained in <a href="Doc08_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">Native Models</a>) is not always possible, for example if an EPackage has already
+ (as explained in <a href="Doc09_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">Native Models</a>) is not always possible, for example if an EPackage has already
  been generated by a third party. In these cases the original generated EPackage can still be used with CDO;
  and is then referred to as a "legacy model".
  <p>
@@ -100,7 +100,7 @@ function windowTitle()
  <p>
  Technically dynamic model elements are instances of the Java class DynamicCDOObjectImpl.
  <p>
- Dynamic model elements share the characteristics of <a href="Doc08_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">native</a> model elements
+ Dynamic model elements share the characteristics of <a href="Doc09_TechnicalBackground.html#Doc_BackgroundNativeModels" title="Chapter in CDO Model Repository Documentation">native</a> model elements
  with respect to enhanced scalability and performance,
 
 <h2><a name="Doc_BackgroundRepositories"></a>2&nbsp;&nbsp;Technical Background of Repositories</h2>
@@ -122,7 +122,7 @@ function windowTitle()
  from that CDORepository.<p><b>See Also:</b></p>
 <ul>
 	<li><a href="Doc02_ManagingRepositories.html" title="Article in CDO Model Repository Documentation">Managing Repositories</a></li>
-	<li><a href="Doc08_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></li>
+	<li><a href="Doc09_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></li>
 </ul>
 
 
@@ -155,8 +155,8 @@ function windowTitle()
 <p><b>See Also:</b></p>
 <ul>
 	<li><a href="Doc01_UserInterface.html#Doc_SessionsView" title="Chapter in CDO Model Repository Documentation">CDO Sessions View</a></li>
-	<li><a href="Doc08_TechnicalBackground.html#Doc_BackgroundViews" title="Chapter in CDO Model Repository Documentation">Technical Background of Views</a></li>
-	<li><a href="Doc08_TechnicalBackground.html#Doc_BackgroundTransactions" title="Chapter in CDO Model Repository Documentation">Technical Background of Transactions</a></li>
+	<li><a href="Doc09_TechnicalBackground.html#Doc_BackgroundViews" title="Chapter in CDO Model Repository Documentation">Technical Background of Views</a></li>
+	<li><a href="Doc09_TechnicalBackground.html#Doc_BackgroundTransactions" title="Chapter in CDO Model Repository Documentation">Technical Background of Transactions</a></li>
 </ul>
 
 
@@ -168,8 +168,8 @@ function windowTitle()
  <p align="center"><img src="tech-views.png"></p>
 <p><b>See Also:</b></p>
 <ul>
-	<li><a href="Doc08_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></li>
-	<li><a href="Doc08_TechnicalBackground.html#Doc_BackgroundCheckouts" title="Chapter in CDO Model Repository Documentation">Technical Background of Checkouts</a></li>
+	<li><a href="Doc09_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></li>
+	<li><a href="Doc09_TechnicalBackground.html#Doc_BackgroundCheckouts" title="Chapter in CDO Model Repository Documentation">Technical Background of Checkouts</a></li>
 </ul>
 
 
@@ -183,8 +183,8 @@ function windowTitle()
  <p align="center"><img src="tech-transactions.png"></p>
 <p><b>See Also:</b></p>
 <ul>
-	<li><a href="Doc08_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></li>
-	<li><a href="Doc08_TechnicalBackground.html#Doc_BackgroundCheckouts" title="Chapter in CDO Model Repository Documentation">Technical Background of Checkouts</a></li>
+	<li><a href="Doc09_TechnicalBackground.html#Doc_BackgroundSessions" title="Chapter in CDO Model Repository Documentation">Technical Background of Sessions</a></li>
+	<li><a href="Doc09_TechnicalBackground.html#Doc_BackgroundCheckouts" title="Chapter in CDO Model Repository Documentation">Technical Background of Checkouts</a></li>
 </ul>
 
 
@@ -199,7 +199,7 @@ function windowTitle()
  (i.e., the number of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a>).
 
 <p align="right">
-<a href="Doc07_UsingModels.html" title="Backward to Working with Models and Model Elements"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></p>
+<a href="Doc08_Collaborating.html" title="Backward to Collaborating in Real-Time"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></p>
 <HR>
 <i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
 </BODY>

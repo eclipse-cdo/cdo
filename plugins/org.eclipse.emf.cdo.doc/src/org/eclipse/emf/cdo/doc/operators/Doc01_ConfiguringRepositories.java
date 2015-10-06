@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.doc.operators;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.doc.operators.Doc01_ConfiguringRepositories.Element_repository.Property_supportingAudits;
+import org.eclipse.emf.cdo.doc.operators.Doc01_ConfiguringRepositories.Element_repository.Property_supportingBranches;
 import org.eclipse.emf.cdo.doc.users.Doc09_TechnicalBackground.Doc_BackgroundModelElements.Doc_BackgroundLegacyModels;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
@@ -18,6 +22,8 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import javax.sql.DataSource;
 
@@ -385,6 +391,63 @@ public class Doc01_ConfiguringRepositories
      * </ul>
      */
     public class Property_forceIndexes
+    {
+    }
+
+    /**
+     * Property withRanges
+     * <p>
+     * Specifies whether new {@link CDORevision revisions} create entire new copies of all their list {@link EStructuralFeature features}
+     * or whether just the list deltas are stored.
+     * <p>
+     * Possible configuration values are:
+     * <ul>
+     * <li> <code>false</code> (store new copies of all lists of a revision; default value)
+     * <li> <code>true</code> (store only list deltas/ranges of a revision)
+     * </ul>
+     * <p>
+     * This property is only applicable to horizontal mapping strategies in {@link Property_supportingAudits auditing}
+     * or {@link Property_supportingBranches branching} repositories.
+     */
+    public class Property_withRanges
+    {
+    }
+
+    /**
+     * Property copyOnBranch
+     * <p>
+     * Specifies whether <b>the first</b> new {@link CDORevision revisions} in a {@link CDOBranch branch} create entire new copies
+     * of all their list {@link EStructuralFeature features} or whether just the list deltas (relative to the base revisions in the parent branch) are stored.
+     * <p>
+     * Possible configuration values are:
+     * <ul>
+     * <li> <code>false</code> (store only list deltas/ranges of the first revision in a branch; default value)
+     * <li> <code>true</code> (store new copies of all lists of the first revision in a branch)
+     * </ul>
+     * <p>
+     * This property is only applicable to {@link Property_withRanges range-based} horizontal mapping strategies in
+     * {@link Property_supportingBranches branching} repositories.
+     */
+    public class Property_copyOnBranch
+    {
+    }
+
+    /**
+     * Property forceZeroBasedIndex
+     * <p>
+     * Specifies whether element removals from the beginning of list {@link EStructuralFeature features} adjust the
+     * list indexes of all following elements or whether the first element is allowed to have a non-zero list index.
+     * <p>
+     * Possible configuration values are:
+     * <ul>
+     * <li> <code>false</code> (allow non-zero list index for the first list elements; default value)
+     * <li> <code>true</code> (force zero list indexes for the first list elements)
+     * </ul>
+     * <p>
+     * This property is only applicable to {@link Property_withRanges range-based} horizontal mapping strategies in
+     * {@link Property_supportingAudits auditing} or {@link Property_supportingBranches branching} repositories.
+     */
+    public class Property_forceZeroBasedIndex
     {
     }
   }

@@ -1143,7 +1143,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
-   * Specializing the behaviour of {@link #hashCode()} is not permitted as per {@link EObject} specification.
+   * Specializing the behavior of {@link #hashCode()} is not permitted as per {@link EObject} specification.
    */
   @Override
   public final int hashCode()
@@ -1152,7 +1152,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
-   * Specializing the behaviour of {@link #equals(Object)} is not permitted as per {@link EObject} specification.
+   * Specializing the behavior of {@link #equals(Object)} is not permitted as per {@link EObject} specification.
    */
   @Override
   public final boolean equals(Object obj)

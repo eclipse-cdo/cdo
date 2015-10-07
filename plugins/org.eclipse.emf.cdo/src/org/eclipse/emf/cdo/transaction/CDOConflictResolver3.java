@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.transaction;
 
 /**
- * A strategy used to customize the default conflict resolution behaviour of {@link CDOTransaction transactions}.
+ * A strategy used to customize the default conflict resolution behavior of {@link CDOTransaction transactions}.
  *
  * @author Eike Stepper
  * @since 4.4

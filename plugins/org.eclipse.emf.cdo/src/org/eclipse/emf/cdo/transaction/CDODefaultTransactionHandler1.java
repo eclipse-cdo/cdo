@@ -26,7 +26,7 @@ public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
   }
 
   /**
-   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   * This implementation does nothing. Clients may override to provide specialized behavior.
    */
   public void attachingObject(CDOTransaction transaction, CDOObject object)
   {
@@ -34,7 +34,7 @@ public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
   }
 
   /**
-   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   * This implementation does nothing. Clients may override to provide specialized behavior.
    */
   public void detachingObject(CDOTransaction transaction, CDOObject object)
   {
@@ -42,7 +42,7 @@ public class CDODefaultTransactionHandler1 implements CDOTransactionHandler1
   }
 
   /**
-   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   * This implementation does nothing. Clients may override to provide specialized behavior.
    */
   public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
   {

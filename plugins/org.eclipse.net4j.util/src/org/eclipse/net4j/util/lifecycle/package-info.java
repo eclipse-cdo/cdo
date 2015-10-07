@@ -7,7 +7,7 @@
 
 /**
  * A framework for components with a simple lifecycle.
- * Interfaces that describe the behaviour of objects with respect to their lifecycle.
+ * Interfaces that describe the behavior of objects with respect to their lifecycle.
  * A utility class to interact with such objects and an abstract class that can be
  * used to implement such objects are provided as well.
  */

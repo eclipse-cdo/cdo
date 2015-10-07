@@ -339,7 +339,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy--">getStrongReferencePolicy</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy--">getStrongReferencePolicy</a></span>()</code>
+<div class="block">Returns the strong reference policy in use.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -432,7 +434,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">setStrongReferencePolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</code>
-<div class="block">Sets the reference type to be used when an adapter is used to an object.</div>
+<div class="block">Sets the policy that determines what object/adapter pairs of this <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
+ are supposed to be protected against garbage collection.</div>
 </td>
 </tr>
 </table>
@@ -675,11 +678,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
  By activating this feature, each object having at least one adapter that matches the current policy will be
  registered with the server and will be notified for each change occurring in the scope of any other transaction.
  <p>
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#NONE"><code>CDOAdapterPolicy.NONE</code></a> - Ignored. <br>
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a> - Enabled for all adapters used.<br>
- <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#CDO"><code>CDOAdapterPolicy.CDO</code></a> - Enabled only for adapters that implement <a href="../../../../../org/eclipse/emf/cdo/CDOAdapter.html" title="interface in org.eclipse.emf.cdo"><code>CDOAdapter</code></a>. <br>
- Any other class that implement <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> will enable for whatever rules defined in that class.
- <br>
+ <ul>
+ <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#NONE"><code>CDOAdapterPolicy.NONE</code></a> - Ignored.
+ <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a> - Enabled for all adapters used.
+ <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#CDO"><code>CDOAdapterPolicy.CDO</code></a> - Enabled only for adapters that implement <a href="../../../../../org/eclipse/emf/cdo/CDOAdapter.html" title="interface in org.eclipse.emf.cdo"><code>CDOAdapter</code></a>.
+ <li>Any other class that implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> will enable for whatever rules defined in that class.
+ </ul>
  <p>
  If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be
  registered with the server and you will receive all changes from other transaction.
@@ -746,6 +750,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <li class="blockList">
 <h4>getStrongReferencePolicy</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;getStrongReferencePolicy()</pre>
+<div class="block">Returns the strong reference policy in use.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-"><code>setStrongReferencePolicy(CDOAdapterPolicy)</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="setStrongReferencePolicy-org.eclipse.emf.cdo.view.CDOAdapterPolicy-">
@@ -755,11 +764,32 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.Options
 <li class="blockList">
 <h4>setStrongReferencePolicy</h4>
 <pre>void&nbsp;setStrongReferencePolicy(<a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a>&nbsp;policy)</pre>
-<div class="block">Sets the reference type to be used when an adapter is used to an object.
+<div class="block">Sets the policy that determines what object/adapter pairs of this <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
+ are supposed to be protected against garbage collection.
  <p>
- When <code>CDOView.setStrongReference(CDOAdapterPolicy.ALL)</code> is used, it is possible that the target object
- will be GC. In that case, the adapter will never received notifications. By Default the value is at
- <code>CDOAdapterPolicy.ALL</code></div>
+ A view uses references of the type determined by <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getCacheReferenceType--"><code>getCacheReferenceType()</code></a> to hold on to loaded objects.
+ If this type is <b>not</b> <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html?is-external=true#STRONG" title="class or interface in org.eclipse.net4j.util.ref"><code>STRONG</code></a> and the application does <b>not</b> hold other strong
+ references to an object then this object and possibly any adapters attached to this object are subject to garbage collection.
+ <p>
+ To avoid automatic garbage collection while specific adapters are attached to an object this view calls the
+ <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#isValid-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-"><code>CDOAdapterPolicy.isValid()</code></a>
+ method for all adapters that are attached to this object.
+ An extra strong reference to this object is maintained if any of these calls return <code>true</code>.
+ <p>
+ The following adapter policies can be used as strong reference policies:
+ <ul>
+ <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#NONE"><code>CDOAdapterPolicy.NONE</code></a> - No adapter will prevent GC.
+ <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a> - Any adapter prevent GC.
+ <li><a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#CDO"><code>CDOAdapterPolicy.CDO</code></a> - Only adapters that implement <a href="../../../../../org/eclipse/emf/cdo/CDOAdapter.html" title="interface in org.eclipse.emf.cdo"><code>CDOAdapter</code></a> will prevent GC.
+ <li>Any other class that implements <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> will prevent GC according to whatever rules defined
+     in that class.
+ </ul>
+ <p>
+ The default strong reference policy is <a href="../../../../../org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL"><code>CDOAdapterPolicy.ALL</code></a>, preventing garbage collection for all adapted objects.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy--"><code>getStrongReferencePolicy()</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="getStaleReferenceBehaviour--">

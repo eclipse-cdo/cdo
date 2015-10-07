@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A strategy used to customize the default conflict resolution behaviour of {@link CDOTransaction transactions}.
+ * A strategy used to customize the default conflict resolution behavior of {@link CDOTransaction transactions}.
  *
  * @author Eike Stepper
  * @since 4.0
@@ -38,7 +38,7 @@ public interface CDOConflictResolver2 extends CDOConflictResolver
    *          A map that contains the local objects with conflicts as the keys. Each value in this map is a {@link Pair
    *          pair} that <b>optionally</b> contains the old local revision (<i>ancestor</i>) as element1 and the remote
    *          delta as element2. Any of the pair elements can be <code>null</code> if it is not possible to determine it
-   *          locally (depends on local revision caching and server behaviour regarding transmission of deltas instead
+   *          locally (depends on local revision caching and server behavior regarding transmission of deltas instead
    *          of invalidations).
    */
   public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts,

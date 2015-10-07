@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import java.util.Set;
 
 /**
- * A strategy used to customize the default conflict resolution behaviour of {@link CDOTransaction transactions}.
+ * A strategy used to customize the default conflict resolution behavior of {@link CDOTransaction transactions}.
  *
  * @see CDOTransaction.Options#addConflictResolver(CDOConflictResolver)
  * @author Eike Stepper

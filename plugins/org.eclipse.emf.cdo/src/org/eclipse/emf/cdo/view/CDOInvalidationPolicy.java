@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.view.CDOView.Options;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 /**
- * A strategy interface to customize the invalidation behaviour of a {@link CDOView view}.
+ * A strategy interface to customize the invalidation behavior of a {@link CDOView view}.
  *
  * @see Options#setInvalidationPolicy(CDOInvalidationPolicy)
  * @author Eike Stepper

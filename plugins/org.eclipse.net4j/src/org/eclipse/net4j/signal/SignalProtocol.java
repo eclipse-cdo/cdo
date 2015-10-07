@@ -381,7 +381,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   }
 
   /**
-   * Returns <code>true</code> by default, override to change this behaviour.
+   * Returns <code>true</code> by default, override to change this behavior.
    *
    * @since 4.1
    */

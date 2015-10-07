@@ -661,11 +661,12 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
      * By activating this feature, each object having at least one adapter that matches the current policy will be
      * registered with the server and will be notified for each change occurring in the scope of any other transaction.
      * <p>
-     * {@link CDOAdapterPolicy#NONE} - Ignored. <br>
-     * {@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.<br>
-     * {@link CDOAdapterPolicy#CDO} - Enabled only for adapters that implement {@link CDOAdapter}. <br>
-     * Any other class that implement {@link CDOAdapterPolicy} will enable for whatever rules defined in that class.
-     * <br>
+     * <ul>
+     * <li>{@link CDOAdapterPolicy#NONE} - Ignored.
+     * <li>{@link CDOAdapterPolicy#ALL} - Enabled for all adapters used.
+     * <li>{@link CDOAdapterPolicy#CDO} - Enabled only for adapters that implement {@link CDOAdapter}.
+     * <li>Any other class that implements {@link CDOAdapterPolicy} will enable for whatever rules defined in that class.
+     * </ul>
      * <p>
      * If <code>myAdapter</code> in the above example matches the current policy, <code>eObject</code> will be
      * registered with the server and you will receive all changes from other transaction.
@@ -706,15 +707,38 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
      */
     public boolean setCacheReferenceType(ReferenceType referenceType);
 
-    // TODO
+    /**
+     * Returns the strong reference policy in use.
+     *
+     * @see #setStrongReferencePolicy(CDOAdapterPolicy)
+     */
     public CDOAdapterPolicy getStrongReferencePolicy();
 
     /**
-     * Sets the reference type to be used when an adapter is used to an object.
+     * Sets the policy that determines what object/adapter pairs of this {@link CDOView view}
+     * are supposed to be protected against garbage collection.
      * <p>
-     * When <code>CDOView.setStrongReference(CDOAdapterPolicy.ALL)</code> is used, it is possible that the target object
-     * will be GC. In that case, the adapter will never received notifications. By Default the value is at
-     * <code>CDOAdapterPolicy.ALL</code>
+     * A view uses references of the type determined by {@link #getCacheReferenceType()} to hold on to loaded objects.
+     * If this type is <b>not</b> {@link ReferenceType#STRONG STRONG} and the application does <b>not</b> hold other strong
+     * references to an object then this object and possibly any adapters attached to this object are subject to garbage collection.
+     * <p>
+     * To avoid automatic garbage collection while specific adapters are attached to an object this view calls the
+     * {@link CDOAdapterPolicy#isValid(EObject, org.eclipse.emf.common.notify.Adapter) CDOAdapterPolicy.isValid()}
+     * method for all adapters that are attached to this object.
+     * An extra strong reference to this object is maintained if any of these calls return <code>true</code>.
+     * <p>
+     * The following adapter policies can be used as strong reference policies:
+     * <ul>
+     * <li>{@link CDOAdapterPolicy#NONE} - No adapter will prevent GC.
+     * <li>{@link CDOAdapterPolicy#ALL} - Any adapter prevent GC.
+     * <li>{@link CDOAdapterPolicy#CDO} - Only adapters that implement {@link CDOAdapter} will prevent GC.
+     * <li>Any other class that implements {@link CDOAdapterPolicy} will prevent GC according to whatever rules defined
+     *     in that class.
+     * </ul>
+     * <p>
+     * The default strong reference policy is {@link CDOAdapterPolicy#ALL}, preventing garbage collection for all adapted objects.
+     *
+     * @see #getStrongReferencePolicy()
      */
     public void setStrongReferencePolicy(CDOAdapterPolicy policy);
 

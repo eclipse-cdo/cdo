@@ -39,7 +39,7 @@ import org.eclipse.net4j.util.tests.ConcurrentRunner;
 import java.util.List;
 
 /**
- * An abstract superclass that may be subclassed to test behaviour common to all CDORevisionCaches
+ * An abstract superclass that may be subclassed to test behavior common to all CDORevisionCaches
  *
  * @author Andre Dietisheim
  * @see CDORevisionCache

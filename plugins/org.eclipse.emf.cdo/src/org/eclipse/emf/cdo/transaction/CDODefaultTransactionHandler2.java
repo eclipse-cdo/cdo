@@ -23,7 +23,7 @@ public class CDODefaultTransactionHandler2 implements CDOTransactionHandler2
   }
 
   /**
-   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   * This implementation does nothing. Clients may override to provide specialized behavior.
    */
   public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {
@@ -31,7 +31,7 @@ public class CDODefaultTransactionHandler2 implements CDOTransactionHandler2
   }
 
   /**
-   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   * This implementation does nothing. Clients may override to provide specialized behavior.
    */
   public void rolledBackTransaction(CDOTransaction transaction)
   {
@@ -39,7 +39,7 @@ public class CDODefaultTransactionHandler2 implements CDOTransactionHandler2
   }
 
   /**
-   * This implementation does nothing. Clients may override to provide specialized behaviour.
+   * This implementation does nothing. Clients may override to provide specialized behavior.
    */
   public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
   {

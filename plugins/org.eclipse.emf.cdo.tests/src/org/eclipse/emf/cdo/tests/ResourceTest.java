@@ -1920,7 +1920,7 @@ public class ResourceTest extends AbstractCDOTest
   /**
    * Bug 393164: Test the support for {@code XMLResource}-like
    * {@link org.eclipse.emf.ecore.resource.Resource.Internal#isLoading()}
-   * behaviour in {@link CDOResource}s for legacy models.
+   * behavior in {@link CDOResource}s for legacy models.
    */
   @Requires(ModelConfig.CAPABILITY_LEGACY)
   public void testResourceIsLoading_legacy() throws Exception
@@ -1973,7 +1973,7 @@ public class ResourceTest extends AbstractCDOTest
 
   /**
    * Bug 397629: Test the {@link org.eclipse.emf.ecore.resource.Resource.Internal#isLoading()}
-   * behaviour in {@link CDOResource}s for legacy models when resolving cross-document references
+   * behavior in {@link CDOResource}s for legacy models when resolving cross-document references
    * (bottom-up resource loading).
    */
   @Requires(ModelConfig.CAPABILITY_LEGACY)

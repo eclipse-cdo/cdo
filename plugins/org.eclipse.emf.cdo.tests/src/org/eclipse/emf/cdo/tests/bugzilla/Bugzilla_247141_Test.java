@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.util.EContentAdapter;
  */
 public class Bugzilla_247141_Test extends AbstractCDOTest
 {
-  public void testContentAdapterBehaviour() throws Exception
+  public void testContentAdapterBehavior() throws Exception
   {
     CDOID id1 = null;
     CDOID id2 = null;
@@ -99,7 +99,7 @@ public class Bugzilla_247141_Test extends AbstractCDOTest
     assertEquals(false, resource1.eAdapters().contains(adapter));
   }
 
-  public void testBehaviourOnUncommittedObjects() throws Exception
+  public void testBehaviorOnUncommittedObjects() throws Exception
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();

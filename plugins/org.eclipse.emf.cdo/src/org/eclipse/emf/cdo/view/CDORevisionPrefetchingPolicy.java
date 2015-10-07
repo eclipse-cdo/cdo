@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * A strategy interface to customize the {@link CDORevision revision} prefetching behaviour of a {@link CDOView view}.
+ * A strategy interface to customize the {@link CDORevision revision} prefetching behavior of a {@link CDOView view}.
  *
  * @see Options#setRevisionPrefetchingPolicy(CDORevisionPrefetchingPolicy)
  * @author Simon McDuff

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface CDOAdapterPolicy
 {
   /**
-   * A default adapter policy that never triggers any special behaviour.
+   * A default adapter policy that never triggers any special behavior.
    */
   public static final CDOAdapterPolicy NONE = new CDOAdapterPolicy()
   {
@@ -49,7 +49,7 @@ public interface CDOAdapterPolicy
   };
 
   /**
-   * A default adapter policy that only triggers special behaviour if the adapter under test implements
+   * A default adapter policy that only triggers special behavior if the adapter under test implements
    * {@link CDOAdapter}.
    */
   public static final CDOAdapterPolicy CDO = new CDOAdapterPolicy()
@@ -70,7 +70,7 @@ public interface CDOAdapterPolicy
   };
 
   /**
-   * A default adapter policy that always triggers special behaviour.
+   * A default adapter policy that always triggers special behavior.
    */
   public static final CDOAdapterPolicy ALL = new CDOAdapterPolicy()
   {
@@ -90,7 +90,7 @@ public interface CDOAdapterPolicy
   };
 
   /**
-   * Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behaviour,
+   * Returns <code>true</code> if the given adapter on the given object should trigger a certain operation or behavior,
    * <code>false</code> otherwise.
    *
    * @see CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)

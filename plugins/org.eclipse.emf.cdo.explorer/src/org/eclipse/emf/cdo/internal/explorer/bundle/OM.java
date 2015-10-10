@@ -40,9 +40,16 @@ public abstract class OM
 
   private static final String STATE_LOCATION = System.getProperty("org.eclipse.emf.cdo.explorer.stateLocation");
 
+  private static String stateLocation;
+
   private static CDORepositoryManagerImpl repositoryManager;
 
   private static CDOCheckoutManagerImpl checkoutManager;
+
+  public static String getStateLocation()
+  {
+    return stateLocation;
+  }
 
   public static void initializeManagers(File stateLocation)
   {
@@ -95,7 +102,7 @@ public abstract class OM
     {
       super.doStart();
 
-      String stateLocation = STATE_LOCATION != null ? STATE_LOCATION : BUNDLE.getStateLocation();
+      stateLocation = STATE_LOCATION != null ? STATE_LOCATION : BUNDLE.getStateLocation();
       initializeManagers(new File(stateLocation));
     }
 

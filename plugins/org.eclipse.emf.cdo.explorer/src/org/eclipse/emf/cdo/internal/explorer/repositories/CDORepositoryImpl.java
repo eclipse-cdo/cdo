@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.UUIDGenerator;
 import org.eclipse.net4j.util.container.ContainerEvent;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -48,12 +49,18 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.PasswordCredentials;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.equinox.security.storage.ISecurePreferences;
+import org.eclipse.equinox.security.storage.SecurePreferencesFactory;
+import org.eclipse.equinox.security.storage.provider.IProviderHints;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -176,11 +183,53 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public IPasswordCredentials getCredentials(String realm)
   {
+    try
+    {
+      ISecurePreferences securePreferences = getSecurePreferences();
+      if (securePreferences != null)
+      {
+        String path = getSecurePath(securePreferences);
+        if (securePreferences.nodeExists(path))
+        {
+          ISecurePreferences node = securePreferences.node(path);
+          String userID = node.get("username", null);
+
+          if (!StringUtil.isEmpty(userID))
+          {
+            String password = node.get("password", null);
+            return new PasswordCredentials(userID, password);
+          }
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+
     return null;
   }
 
   public void setCredentials(IPasswordCredentials credentials)
   {
+    try
+    {
+      ISecurePreferences securePreferences = getSecurePreferences();
+      if (securePreferences != null)
+      {
+        String path = getSecurePath(securePreferences);
+        ISecurePreferences node = securePreferences.node(path);
+
+        node.put("uri", getURI(), false);
+        node.put("username", credentials.getUserID(), false);
+        node.put("password", new String(credentials.getPassword()), true);
+        node.flush();
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
   }
 
   public boolean isInteractive()
@@ -670,5 +719,21 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   protected void closeSession()
   {
     session.close();
+  }
+
+  private String getSecurePath(ISecurePreferences securePreferences)
+  {
+    String stateLocation = OM.getStateLocation().replace('/', '\\');
+    String id = getID().replace('/', '_');
+
+    return "CDO/" + stateLocation + "/" + id;
+  }
+
+  private static ISecurePreferences getSecurePreferences() throws IOException
+  {
+    Map<Object, Object> options = new HashMap<Object, Object>();
+    options.put(IProviderHints.PROMPT_USER, Boolean.FALSE);
+
+    return SecurePreferencesFactory.open(null, options);
   }
 }

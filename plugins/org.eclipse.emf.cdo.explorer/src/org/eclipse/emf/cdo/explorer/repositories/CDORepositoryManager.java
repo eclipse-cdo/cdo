@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 import java.util.Properties;
 
@@ -40,6 +41,11 @@ public interface CDORepositoryManager extends CDOExplorerManager<CDORepository>
   public CDORepository[] getRepositories();
 
   public CDORepository addRepository(Properties properties);
+
+  /**
+   * @since 4.5
+   */
+  public CDORepository addRepository(Properties properties, IPasswordCredentials credentials);
 
   /**
    * @author Eike Stepper

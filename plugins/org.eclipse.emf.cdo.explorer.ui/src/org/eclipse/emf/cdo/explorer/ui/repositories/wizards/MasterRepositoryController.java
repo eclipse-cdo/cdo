@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -35,6 +36,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
+import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
@@ -228,14 +230,14 @@ public class MasterRepositoryController
     return repositoryName;
   }
 
-  public final String getUserName()
+  public final IPasswordCredentials getCredentials()
   {
-    return userName;
-  }
+    if (userNameText.isEnabled() && !StringUtil.isEmpty(userName))
+    {
+      return new PasswordCredentials(userName, password);
+    }
 
-  public final String getPassword()
-  {
-    return password;
+    return null;
   }
 
   public final VersioningMode getVersioningMode()

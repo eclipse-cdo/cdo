@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
 
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -65,6 +67,11 @@ public abstract class AbstractRepositoryPage extends WizardPage implements Selec
   public Properties getProperties()
   {
     return properties;
+  }
+
+  public IPasswordCredentials getCredentials()
+  {
+    return null;
   }
 
   public void createControl(Composite parent)

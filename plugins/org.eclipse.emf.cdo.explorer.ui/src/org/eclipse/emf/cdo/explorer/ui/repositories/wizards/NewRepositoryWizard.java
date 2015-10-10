@@ -14,6 +14,9 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryManagerImpl;
+
+import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -84,9 +87,11 @@ public class NewRepositoryWizard extends Wizard
   {
     AbstractRepositoryPage page = typePage.getNextPage();
     Properties properties = page.getProperties();
+    IPasswordCredentials credentials = page.getCredentials();
 
     CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
-    final CDORepository repository = repositoryManager.addRepository(properties);
+    final CDORepository repository = ((CDORepositoryManagerImpl)repositoryManager).addRepository(properties,
+        credentials);
 
     new Job("Connect")
     {

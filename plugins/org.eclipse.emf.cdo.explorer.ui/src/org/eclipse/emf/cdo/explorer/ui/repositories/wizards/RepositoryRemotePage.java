@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.Vali
 import org.eclipse.emf.cdo.internal.explorer.repositories.RemoteCDORepository;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.swt.widgets.Composite;
@@ -34,6 +35,12 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
     super("remote", "Remote Repository");
     setTitle("New Remote Repository");
     setMessage("Enter label and connection parameters of the new remote location.");
+  }
+
+  @Override
+  public IPasswordCredentials getCredentials()
+  {
+    return controller.getCredentials();
   }
 
   @Override

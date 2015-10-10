@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.internal.explorer.AbstractManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
 
 import java.io.File;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Eike Stepper
  */
-public class CDORepositoryManagerImpl extends AbstractManager<CDORepository>implements CDORepositoryManager
+public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> implements CDORepositoryManager
 {
   public static final String SECURE_STORE_PATH = "/CDO/repositories";
 
@@ -66,7 +67,18 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository>impl
 
   public CDORepository addRepository(Properties properties)
   {
-    return newElement(properties);
+    return addRepository(properties, null);
+  }
+
+  public CDORepository addRepository(Properties properties, IPasswordCredentials credentials)
+  {
+    CDORepository repository = newElement(properties);
+    if (repository != null && credentials != null)
+    {
+      repository.setCredentials(credentials);
+    }
+
+    return repository;
   }
 
   public void disconnectUnusedRepositories()

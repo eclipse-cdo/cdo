@@ -10,9 +10,11 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Order;
@@ -23,6 +25,7 @@ import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOQuery;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -128,7 +131,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithNameParameter() throws Exception
   {
-    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name=myname)", getModel1Package().getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.name=myname)",
+        getModel1Package().getProduct1());
     query.setParameter("myname", "1");
 
     List<Product1> products = query.getResult();
@@ -137,8 +141,8 @@ public class OCLQueryTest extends AbstractCDOTest
 
   public void testAllProductsWithVAT() throws Exception
   {
-    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.vat=VAT::vat15)", getModel1Package()
-        .getProduct1());
+    CDOQuery query = createQuery("Product1.allInstances()->select(p | p.vat=VAT::vat15)",
+        getModel1Package().getProduct1());
 
     List<Product1> products = query.getResult();
     assertEquals(10, products.size());
@@ -263,7 +267,7 @@ public class OCLQueryTest extends AbstractCDOTest
     assertEquals(numOfProducts, products.size());
   }
 
-  public void testAuditWithDetachedObject() throws Exception
+  public void testTransactionWithDetachedObject() throws Exception
   {
     Product1 p1 = getModel1Factory().createProduct1();
     p1.setName("p1");
@@ -277,6 +281,27 @@ public class OCLQueryTest extends AbstractCDOTest
 
     List<Product1> products = query.getResult();
     assertEquals(NUM_OF_PRODUCTS, products.size());
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
+  public void testAuditWithDetachedObject() throws Exception
+  {
+    assertEquals(NUM_OF_PRODUCTS, products.size());
+
+    Product1 p1 = getModel1Factory().createProduct1();
+    p1.setName("p1");
+    resource.getContents().add(0, p1);
+    CDOCommitInfo commitInfo = transaction.commit();
+
+    resource.getContents().remove(0);
+    transaction.commit();
+
+    CDOView audit = transaction.getSession().openView(commitInfo);
+    CDOQuery query = audit.createQuery("ocl", "Product1.allInstances()", getModel1Package().getProduct1());
+    query.setParameter("cdoLazyExtents", useLazyExtents());
+
+    List<Product1> result = query.getResult();
+    assertEquals(NUM_OF_PRODUCTS + 1, result.size());
   }
 
   public void testMultipleQueries() throws Exception

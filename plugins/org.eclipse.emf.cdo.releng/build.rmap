@@ -120,7 +120,7 @@
 
 		<!-- QVTO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
+			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones/3.6.0/S201509241112"/>
 		</rm:provider>
 
 		<!-- EcoreTools -->
@@ -163,7 +163,7 @@
 
 		<!-- EMF Client Platform -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/ecp/rt/170"/>
+			<rm:uri format="http://download.eclipse.org/ecp/releases/preview"/>
 		</rm:provider>
 
 		<!-- EVLER.ORG -->

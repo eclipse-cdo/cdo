@@ -170,7 +170,7 @@
         <repository
             url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1milestones"/>
         <repository
-            url="http://download.eclipse.org/mmt/qvto/updates/milestones"/>
+            url="http://download.eclipse.org/mmt/qvto/updates/milestones/3.6.0/S201509241112"/>
         <repository
             url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
@@ -186,7 +186,7 @@
         <repository
             url="http://download.eclipse.org/technology/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/ecp/rt/170"/>
+            url="http://download.eclipse.org/ecp/releases/preview"/>
         <repository
             url="http://www.elver.org/eclipse/2.1.0/update"/>
         <repository

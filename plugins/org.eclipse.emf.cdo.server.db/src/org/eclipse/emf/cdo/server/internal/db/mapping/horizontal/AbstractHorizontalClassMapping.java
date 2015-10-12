@@ -609,10 +609,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(ATTRIBUTES_CREATED);
-          builder.append(">=?"); //$NON-NLS-1$
+          builder.append("<=?"); //$NON-NLS-1$
           builder.append(" AND ("); //$NON-NLS-1$
           builder.append(ATTRIBUTES_REVISED);
-          builder.append("<=? OR "); //$NON-NLS-1$
+          builder.append(">=? OR "); //$NON-NLS-1$
           builder.append(ATTRIBUTES_REVISED);
           builder.append("="); //$NON-NLS-1$
           builder.append(CDOBranchPoint.UNSPECIFIED_DATE);

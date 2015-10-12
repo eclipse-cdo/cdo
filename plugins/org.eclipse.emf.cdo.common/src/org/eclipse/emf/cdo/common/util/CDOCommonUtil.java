@@ -53,6 +53,11 @@ import java.util.regex.Pattern;
 public final class CDOCommonUtil
 {
   /**
+   * @since 4.5
+   */
+  public static final String UNSPECIFIED_DATE_STRING = "*";
+
+  /**
    * @since 4.0
    */
   public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss'.'SSS");
@@ -226,7 +231,7 @@ public final class CDOCommonUtil
   {
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      return "*";
+      return UNSPECIFIED_DATE_STRING;
     }
 
     synchronized (DATE_FORMAT)
@@ -242,7 +247,7 @@ public final class CDOCommonUtil
   {
     String trimmed = timeStamp.trim();
 
-    if ("*".equals(trimmed))
+    if (UNSPECIFIED_DATE_STRING.equals(trimmed))
     {
       return CDORevision.UNSPECIFIED_DATE;
     }

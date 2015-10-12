@@ -418,6 +418,21 @@ public class CDOServerBrowser extends Worker
   }
 
   /**
+   * @since 4.5
+   */
+  public static String formatTimeStamp(long timeStamp)
+  {
+    String str = CDOCommonUtil.formatTimeStamp(timeStamp);
+    if (!CDOCommonUtil.UNSPECIFIED_DATE_STRING.equals(str))
+    {
+      str += " - " + timeStamp;
+      str = str.replaceAll(" ", "&nbsp;");
+    }
+
+    return str;
+  }
+
+  /**
    * A {@link CDOServerBrowser server browser} for the repositories in a {@link IManagedContainer managed container}.
    *
    * @author Eike Stepper
@@ -897,7 +912,7 @@ public class CDOServerBrowser extends Worker
       className = StringUtil.replace(className, new String[] { "(", ")", "," }, new String[] { "<br>", "", "<br>" });
       className = className.substring("<br>".length() + 1);
 
-      String created = CDOCommonUtil.formatTimeStamp(revision.getTimeStamp());
+      String created = formatTimeStamp(revision.getTimeStamp());
       String commitInfo = browser.href(created, HistoryPage.NAME, "time", String.valueOf(revision.getTimeStamp()));
 
       pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
@@ -907,7 +922,7 @@ public class CDOServerBrowser extends Worker
       showKeyValue(pout, true, "branch", revision.getBranch().getName() + "[" + revision.getBranch().getID() + "]");
       showKeyValue(pout, true, "version", revision.getVersion());
       showKeyValue(pout, true, "created", commitInfo);
-      showKeyValue(pout, true, "revised", CDOCommonUtil.formatTimeStamp(revision.getRevised()));
+      showKeyValue(pout, true, "revised", formatTimeStamp(revision.getRevised()));
       if (revision instanceof SyntheticCDORevision)
       {
         if (revision instanceof PointerCDORevision)
@@ -1329,7 +1344,7 @@ public class CDOServerBrowser extends Worker
       String timeStamp = String.valueOf(commitInfo.getTimeStamp());
       boolean selected = timeStamp.equals(param);
 
-      String formatted = CDOCommonUtil.formatTimeStamp(commitInfo.getTimeStamp()).replaceAll(" ", "&nbsp;");
+      String formatted = formatTimeStamp(commitInfo.getTimeStamp());
       String label = formatted;
       if (!selected && auditing)
       {

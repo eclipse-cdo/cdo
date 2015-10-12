@@ -612,16 +612,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           builder.append(ATTRIBUTES_REVISED);
           builder.append(">=? OR "); //$NON-NLS-1$
           builder.append(ATTRIBUTES_REVISED);
-          builder.append("="); //$NON-NLS-1$
-          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
-          builder.append(")"); //$NON-NLS-1$
+          builder.append("=0)"); //$NON-NLS-1$
           timeParameters = 2;
         }
         else
         {
           builder.append(ATTRIBUTES_REVISED);
-          builder.append("="); //$NON-NLS-1$
-          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
+          builder.append("=0"); //$NON-NLS-1$
         }
       }
     }
@@ -688,9 +685,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       builder.append(ATTRIBUTES_REVISED);
       builder.append("<=? OR "); //$NON-NLS-1$
       builder.append(ATTRIBUTES_REVISED);
-      builder.append("="); //$NON-NLS-1$
-      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
-      builder.append(")"); //$NON-NLS-1$
+      builder.append("=0)"); //$NON-NLS-1$
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();

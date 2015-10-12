@@ -838,8 +838,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         else
         {
           builder.append(ATTRIBUTES_REVISED);
-          builder.append("="); //$NON-NLS-1$
-          builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
+          builder.append("=0"); //$NON-NLS-1$
         }
       }
     }
@@ -928,9 +927,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       builder.append(ATTRIBUTES_REVISED);
       builder.append("<=? OR "); //$NON-NLS-1$
       builder.append(ATTRIBUTES_REVISED);
-      builder.append("="); //$NON-NLS-1$
-      builder.append(CDOBranchPoint.UNSPECIFIED_DATE);
-      builder.append(")"); //$NON-NLS-1$
+      builder.append("=0)"); //$NON-NLS-1$
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();

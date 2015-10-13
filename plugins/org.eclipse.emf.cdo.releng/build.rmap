@@ -115,12 +115,12 @@
 
 		<!-- UML2 -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1milestones"/>
+			<rm:uri format="http://download.eclipse.org/modeling/mdt/uml2/updates/5.1milestones"/>
 		</rm:provider>
 
 		<!-- QVTO -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones/3.6.0/S201509241112"/>
+			<rm:uri format="http://download.eclipse.org/mmt/qvto/updates/milestones/3.6.0"/>
 		</rm:provider>
 
 		<!-- EcoreTools -->
@@ -166,17 +166,17 @@
 			<rm:uri format="http://download.eclipse.org/ecp/releases/preview"/>
 		</rm:provider>
 
+		<!-- ORACLE.COM -->
+		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
+			<rm:uri format="http://download.oracle.com/otn_software/oepe/12.1.3.6/mars/repository"/>
+		</rm:provider>
+
 		<!-- EVLER.ORG -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
 			<!-- ############################################################### -->
 			<!-- ## Do not forget to adjust hibernate feature.properties (3x) ## -->
 			<!-- ############################################################### -->
 			<rm:uri format="http://www.elver.org/eclipse/2.1.0/update"/>
-		</rm:provider>
-
-		<!-- ORACLE.COM -->
-		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.oracle.com/otn_software/oepe/12.1.3.6/mars/repository"/>
 		</rm:provider>
 
 	</rm:searchPath>

@@ -27,6 +27,7 @@ import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
@@ -36,7 +37,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer>implements IAuthenticationProtocol
+public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> implements IAuthenticationProtocol
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 
@@ -110,7 +111,7 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer>implem
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
     return new AuthenticationRequest(this, CDOAdminProtocolConstants.SIGNAL_AUTHENTICATION, challenge)
-        .send(negotiationTimeout);
+        .send(negotiationTimeout, new Monitor());
   }
 
   public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)

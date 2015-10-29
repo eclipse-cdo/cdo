@@ -808,6 +808,10 @@
             <arg value="http://download.eclipse.org/tools/buckminster/headless-4.4" />
             <arg value="-r" />
             <arg value="http://download.eclipse.org/releases/mars" />
+            <arg value="-r" />
+            <arg value="http://download.eclipse.org/oomph/updates/latest" />
+            <arg value="-r" />
+            <arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
             <arg value="-d" />
             <arg value="${tools}/buckminster" />
             <arg value="-p" />
@@ -824,29 +828,12 @@
             <arg value="org.eclipse.ant.launching" />
             <arg value="-i" />
             <arg value="org.eclipse.pde.api.tools.ee.feature.feature.group" />
-          </args>
-        </eclipse>
-      	<!--
-        <eclipse app="director">
-          <properties>
-            <sysproperty key="org.eclipse.update.jarprocessor.pack200" value="/shared/common/jdk1.6.0-latest/bin" />
-            <sysproperty key="eclipse.p2.mirrors" value="false" />
-            <sysproperty key="eclipse.p2.MD5Check" value="false" />
-          </properties>
-          <args>
-            <arg value="-r" />
-            <arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
-            <arg value="-d" />
-            <arg value="${tools}/buckminster" />
-            <arg value="-p" />
-            <arg value="Buckminster" />
             <arg value="-i" />
             <arg value="org.eclipse.oomph.version.headless.feature.group" />
             <arg value="-i" />
             <arg value="org.eclipse.emf.cdo.releng.apireports.feature.group" />
           </args>
         </eclipse>
--->
 
         <!-- See http://wiki.eclipse.org/Hudson#Configuring_a_proxy_for_the_p2_director -->
         <copy file="${releng}/${build.location}/org.eclipse.core.net.prefs"

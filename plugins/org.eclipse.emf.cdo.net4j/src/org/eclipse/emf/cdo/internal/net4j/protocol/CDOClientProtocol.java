@@ -61,6 +61,7 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.PerfTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
@@ -83,7 +84,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl>implements CDOSessionProtocol2
+public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl> implements CDOSessionProtocol2
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDOClientProtocol.class);
 
@@ -114,7 +115,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
       PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode)
   {
     return send(new OpenSessionRequest(this, repositoryName, userID, passiveUpdateEnabled, passiveUpdateMode,
-        lockNotificationMode));
+        lockNotificationMode), new Monitor());
   }
 
   public void disablePassiveUpdate()
@@ -622,11 +623,11 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
 
   public void requestChangeCredentials()
   {
-    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.CHANGE_PASSWORD, null));
+    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.CHANGE_PASSWORD, null), new Monitor());
   }
 
   public void requestResetCredentials(String userID)
   {
-    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID));
+    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID), new Monitor());
   }
 }

@@ -34,6 +34,7 @@ import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.io.StringCompressor;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
@@ -42,7 +43,7 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 /**
  * @author Eike Stepper
  */
-public class CDOServerProtocol extends SignalProtocol<InternalSession>implements ISessionProtocol
+public class CDOServerProtocol extends SignalProtocol<InternalSession> implements ISessionProtocol
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 
@@ -101,13 +102,13 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession>implements
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
     return new AuthenticationRequest(this, CDOProtocolConstants.SIGNAL_AUTHENTICATION, challenge)
-        .send(negotiationTimeout);
+        .send(negotiationTimeout, new Monitor());
   }
 
   public Response sendCredentialsChallenge(Challenge challenge, String userID, CredentialsUpdateOperation operation)
       throws Exception
   {
-    return new CredentialsChallengeRequest(this, challenge, userID, operation).send(negotiationTimeout);
+    return new CredentialsChallengeRequest(this, challenge, userID, operation).send(negotiationTimeout, new Monitor());
   }
 
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType)

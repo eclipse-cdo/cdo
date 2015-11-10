@@ -784,6 +784,12 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       newLockState.updateFrom(oldLockState);
       lockStates.put(object, newLockState);
     }
+    else if (options().isLockStatePrefetchEnabled())
+    {
+      Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
+      CDOLockState newLockState = CDOLockUtil.createLockState(lockedObject);
+      lockStates.put(object, newLockState);
+    }
 
     super.remapObject(oldID);
   }
@@ -2089,8 +2095,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private boolean lockNotificationsEnabled;
 
-    private boolean lockStatePrefetchEnabled;
-
     private CDOLockStateLoadingPolicy lockStateLoadingPolicy = new CDODefaultLockStateLoadingPolicy();
 
     private LockStatePrefetcher lockStatePrefetcher;
@@ -2241,7 +2245,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     public boolean isLockStatePrefetchEnabled()
     {
-      return lockStatePrefetchEnabled;
+      return lockStatePrefetcher != null;
     }
 
     public void setLockStatePrefetchEnabled(boolean enabled)
@@ -2251,20 +2255,22 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       IEvent event = null;
       synchronized (CDOViewImpl.this)
       {
-        if (enabled != lockStatePrefetchEnabled)
+        if (enabled)
         {
-          lockStatePrefetchEnabled = enabled;
-          if (enabled)
+          if (lockStatePrefetcher == null)
           {
             lockStatePrefetcher = new LockStatePrefetcher();
+            event = new LockStatePrefetchEventImpl();
           }
-          else
+        }
+        else
+        {
+          if (lockStatePrefetcher != null)
           {
             lockStatePrefetcher.dispose();
             lockStatePrefetcher = null;
+            event = new LockStatePrefetchEventImpl();
           }
-
-          event = new LockStatePrefetchEventImpl();
         }
       }
 

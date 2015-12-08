@@ -560,6 +560,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     config.setUserID(SYSTEM_USER_ID);
 
     systemSession = config.openNet4jSession();
+    systemSession.options().setGeneratedPackageEmulationEnabled(true);
     systemSession.addListener(systemListener);
 
     CDOTransaction initialTransaction = systemSession.openTransaction();
@@ -987,7 +988,9 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       {
         public CDOView createView(CDORevisionProvider revisionProvider)
         {
-          return CDOServerUtil.openView(session, securityContext, revisionProvider);
+          CDOView view = CDOServerUtil.openView(session, securityContext, revisionProvider);
+          view.getSession().options().setGeneratedPackageEmulationEnabled(true);
+          return view;
         }
       });
 

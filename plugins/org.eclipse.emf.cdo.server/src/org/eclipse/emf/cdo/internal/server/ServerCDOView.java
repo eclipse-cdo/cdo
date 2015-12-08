@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
@@ -73,6 +74,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult.Provider;
@@ -465,7 +467,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   /**
    * @author Eike Stepper
    */
-  private final class ServerCDOSession extends PlatformObject implements InternalCDOSession, CDORepositoryInfo
+  private final class ServerCDOSession extends PlatformObject
+      implements InternalCDOSession, CDORepositoryInfo, org.eclipse.emf.cdo.session.CDOSession.Options
   {
     private final IRegistry<String, Object> properties = new HashMapRegistry<String, Object>()
     {
@@ -475,6 +478,8 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
         throw new UnsupportedOperationException();
       }
     };
+
+    private boolean generatedPackageEmulationEnabled;
 
     private InternalSession internalSession;
 
@@ -820,7 +825,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     public Options options()
     {
-      throw new UnsupportedOperationException();
+      return this;
     }
 
     public CDOView openView(String durableLockingID)
@@ -1142,6 +1147,81 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase,
         boolean computeChangeSets)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isPassiveUpdateEnabled()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setPassiveUpdateEnabled(boolean enabled)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public PassiveUpdateMode getPassiveUpdateMode()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setPassiveUpdateMode(PassiveUpdateMode mode)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public LockNotificationMode getLockNotificationMode()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setLockNotificationMode(LockNotificationMode mode)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOSession getContainer()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isGeneratedPackageEmulationEnabled()
+    {
+      return generatedPackageEmulationEnabled;
+    }
+
+    public void setGeneratedPackageEmulationEnabled(boolean generatedPackageEmulationEnabled)
+    {
+      this.generatedPackageEmulationEnabled = generatedPackageEmulationEnabled;
+    }
+
+    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOLobStore getLobCache()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setLobCache(CDOLobStore lobCache)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public CDOPermissionUpdater getPermissionUpdater()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater)
     {
       throw new UnsupportedOperationException();
     }

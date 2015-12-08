@@ -103,6 +103,12 @@
                 <message_argument value="ServerCDOSession"/>
             </message_arguments>
         </filter>
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="ServerCDOSession"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/Session.java" type="org.eclipse.emf.cdo.internal.server.Session">
         <filter id="574660632">

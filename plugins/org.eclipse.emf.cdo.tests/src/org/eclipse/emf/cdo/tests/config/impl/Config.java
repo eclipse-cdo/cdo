@@ -26,7 +26,9 @@ public abstract class Config implements IConfig
 {
   private static final long serialVersionUID = 1L;
 
-  protected static ExecutorService executorService = ThreadPool.create("test", 20, 100, 30);
+  private static final int MAXIMUM_POOL_SIZE = Integer.MAX_VALUE;
+
+  protected static ExecutorService executorService = ThreadPool.create("test", 20, MAXIMUM_POOL_SIZE, 30);
 
   private String name;
 

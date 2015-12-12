@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
@@ -31,7 +32,9 @@ public class SignalMonitorTest extends AbstractTransportTest
 {
   public static final String PROTOCOL_TYPE = "protocol"; //$NON-NLS-1$
 
-  public static final short SIGNAL_ID = 1;
+  public static final short SIGNAL_1 = 1;
+
+  public static final short SIGNAL_2 = 2;
 
   @Override
   protected IManagedContainer createContainer()
@@ -48,8 +51,8 @@ public class SignalMonitorTest extends AbstractTransportTest
           {
             switch (signalID)
             {
-            case SIGNAL_ID:
-              return new IndicationWithMonitoring(this, SIGNAL_ID)
+            case SIGNAL_1:
+              return new IndicationWithMonitoring(this, SIGNAL_1)
               {
                 @Override
                 protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
@@ -90,6 +93,44 @@ public class SignalMonitorTest extends AbstractTransportTest
                 }
               };
 
+            case SIGNAL_2:
+              return new IndicationWithMonitoring(this, SIGNAL_2)
+              {
+                @Override
+                protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
+                {
+                  monitor.begin();
+
+                  try
+                  {
+                    Async async = in.readBoolean() ? monitor.forkAsync() : null;
+
+                    try
+                    {
+                      long sleep = in.readLong();
+                      Thread.sleep(sleep);
+                    }
+                    finally
+                    {
+                      if (async != null)
+                      {
+                        async.stop();
+                      }
+                    }
+                  }
+                  finally
+                  {
+                    monitor.done();
+                  }
+                }
+
+                @Override
+                protected void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
+                {
+                  out.writeBoolean(true);
+                }
+              };
+
             default:
               return super.createSignalReactor(signalID);
             }
@@ -107,7 +148,7 @@ public class SignalMonitorTest extends AbstractTransportTest
     SignalProtocol<Object> protocol = new ClientProtocol();
     protocol.open(getConnector());
 
-    RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<Boolean>(protocol, SIGNAL_ID)
+    RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<Boolean>(protocol, SIGNAL_1)
     {
       @Override
       protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
@@ -148,6 +189,36 @@ public class SignalMonitorTest extends AbstractTransportTest
     protocol.close();
   }
 
+  public void _testMonitorProgressAsync() throws Exception
+  {
+    startTransport();
+
+    SignalProtocol<Object> protocol = new ClientProtocol();
+    protocol.open(getConnector());
+    sleep(500);
+    protocol.setTimeout(2000L);
+
+    RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<Boolean>(protocol, SIGNAL_2)
+    {
+      @Override
+      protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
+      {
+        out.writeBoolean(true); // Async.
+        out.writeLong(30000L); // Sleep.
+      }
+
+      @Override
+      protected Boolean confirming(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
+      {
+        return in.readBoolean();
+      }
+    };
+
+    request.send(2000L, new TestMonitor());
+    sleep(200);
+    protocol.close();
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -177,6 +248,24 @@ public class SignalMonitorTest extends AbstractTransportTest
     {
       super.worked(work);
       System.out.println("work: " + getWork()); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class JVM extends SignalMonitorTest
+  {
+    @Override
+    protected boolean useJVMTransport()
+    {
+      return true;
+    }
+
+    @Override
+    protected boolean useSSLTransport()
+    {
+      return false;
     }
   }
 

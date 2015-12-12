@@ -120,8 +120,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
    * Update the timeout used for signal end of stream waiting time.
    *
    * @param timeout the new timeout
-   * @param useOldTimeoutToSendNewOne true to use the old timeout, false to use the new specified one to sent to server side the new specified timeout
-   * @return true if the new specified timeout has correctly been sent
+   * @param useOldTimeoutToSendNewOne <code>true</code> to use the old timeout, <code>false</code> to use the new specified one to sent to server side the new specified timeout
+   * @return <code>true</code> if the new specified timeout has correctly been sent
    *
    * NOTE: this second parameter is useful mostly for test to be able to set a to small timeout
    * @since 4.4

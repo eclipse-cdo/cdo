@@ -116,10 +116,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
 
+  public static final String PROP_TEST_ENABLE_SERVER_BROWSER = "test.repository.EnableServerBrowser";
+
   private static final boolean LOG_MULTI_VIEW_COMMIT = false;
 
-  private static final Boolean enableServerBrowser = Boolean.valueOf(
-      System.getProperty("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser", "false"));
+  private static final Boolean enableServerBrowser = Boolean
+      .getBoolean("org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser");
 
   private static final long serialVersionUID = 1L;
 
@@ -460,7 +462,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       }
     });
 
-    if (enableServerBrowser)
+    if (enableServerBrowser || Boolean.TRUE.equals(getTestProperty(PROP_TEST_ENABLE_SERVER_BROWSER)))
     {
       serverBrowser = new CDOServerBrowser(repositories);
       serverBrowser.activate();

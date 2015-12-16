@@ -34,7 +34,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
   public static final int DEFAULT_CORE_POOL_SIZE = 10;
 
-  public static final int DEFAULT_MAXIMUM_POOL_SIZE = 100;
+  public static final int DEFAULT_MAXIMUM_POOL_SIZE = Integer.MAX_VALUE;
 
   public static final long DEFAULT_KEEP_ALIVE_SECONDS = 60;
 
@@ -193,7 +193,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   /**
    * @author Eike Stepper
    */
-  private static final class WorkQueueJRE15 extends LinkedBlockingQueue<Runnable>implements WorkQueue
+  private static final class WorkQueueJRE15 extends LinkedBlockingQueue<Runnable> implements WorkQueue
   {
     private static final long serialVersionUID = 1L;
 
@@ -228,7 +228,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   /**
    * @author Eike Stepper
    */
-  private static final class WorkQueueJRE16 extends AbstractQueue<Runnable>implements WorkQueue
+  private static final class WorkQueueJRE16 extends AbstractQueue<Runnable> implements WorkQueue
   {
     private final BlockingQueue<Runnable> delegate = createDelegate();
 

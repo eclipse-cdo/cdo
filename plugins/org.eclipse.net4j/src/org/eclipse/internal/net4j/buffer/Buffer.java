@@ -37,7 +37,7 @@ import java.text.MessageFormat;
  */
 public class Buffer implements InternalBuffer
 {
-  public static final int FLAGS_OFFSET = 1;
+  public static final int MAKE_PAYLOAD_SIZE_NON_ZERO = 1;
 
   private static final byte FLAG_EOS = 1 << 0;
 
@@ -211,7 +211,7 @@ public class Buffer implements InternalBuffer
           payloadSize = (short)-payloadSize;
         }
 
-        payloadSize -= FLAGS_OFFSET;
+        payloadSize -= MAKE_PAYLOAD_SIZE_NON_ZERO;
 
         byteBuffer.clear();
 
@@ -335,7 +335,7 @@ public class Buffer implements InternalBuffer
           throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
-        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + FLAGS_OFFSET;
+        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
 
         boolean eos = isEOS();
         if (eos)
@@ -526,7 +526,7 @@ public class Buffer implements InternalBuffer
       eos = true;
     }
 
-    payloadSize -= FLAGS_OFFSET;
+    payloadSize -= MAKE_PAYLOAD_SIZE_NON_ZERO;
 
     System.out.println("channelID:     " + channelID);
     System.out.println("payloadSize:   " + payloadSize);

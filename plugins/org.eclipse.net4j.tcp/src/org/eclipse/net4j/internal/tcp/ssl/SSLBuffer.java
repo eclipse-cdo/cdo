@@ -90,7 +90,7 @@ public class SSLBuffer extends Buffer
         payloadSize = (short)-payloadSize;
       }
 
-      payloadSize -= FLAGS_OFFSET;
+      payloadSize -= MAKE_PAYLOAD_SIZE_NON_ZERO;
 
       byteBuffer.position(IBuffer.HEADER_SIZE);
       setState(BufferState.READING_HEADER);
@@ -149,7 +149,7 @@ public class SSLBuffer extends Buffer
           throw new IllegalStateException("channelID == NO_CHANNEL"); //$NON-NLS-1$
         }
 
-        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + FLAGS_OFFSET;
+        int payloadSize = byteBuffer.position() - IBuffer.HEADER_SIZE + MAKE_PAYLOAD_SIZE_NON_ZERO;
         if (isEOS())
         {
           payloadSize = -payloadSize;

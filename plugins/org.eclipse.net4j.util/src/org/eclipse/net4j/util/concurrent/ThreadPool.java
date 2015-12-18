@@ -216,8 +216,11 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     @Override
     public boolean offer(Runnable runnable)
     {
-      if (threadPool.getPoolSize() < threadPool.getMaximumPoolSize())
+      int poolSize = threadPool.getPoolSize();
+      if (poolSize < threadPool.getMaximumPoolSize() && poolSize == threadPool.getActiveCount())
       {
+        // Do not enqueue the new runnable command if we can create a new worker thread and there's currently no idle
+        // thread.
         return false;
       }
 
@@ -259,8 +262,11 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
     public boolean offer(Runnable r)
     {
-      if (threadPool.getPoolSize() < threadPool.getMaximumPoolSize())
+      int poolSize = threadPool.getPoolSize();
+      if (poolSize < threadPool.getMaximumPoolSize() && poolSize == threadPool.getActiveCount())
       {
+        // Do not enqueue the new runnable command if we can create a new worker thread and there's currently no idle
+        // thread.
         return false;
       }
 

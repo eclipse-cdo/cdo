@@ -214,7 +214,28 @@ public class Buffer implements InternalBuffer
         payloadSize -= FLAGS_OFFSET;
 
         byteBuffer.clear();
-        byteBuffer.limit(payloadSize);
+
+        try
+        {
+          byteBuffer.limit(payloadSize);
+        }
+        catch (IllegalArgumentException ex)
+        {
+          if (payloadSize < 0)
+          {
+            throw new IllegalArgumentException("New limit " + payloadSize + " is < 0" + (isEOS() ? " (EOS)" : ""), ex);
+          }
+
+          int capacity = byteBuffer.capacity();
+          if (payloadSize > capacity)
+          {
+            throw new IllegalArgumentException(
+                "New limit " + payloadSize + " is > " + capacity + (isEOS() ? " (EOS)" : ""), ex);
+          }
+
+          throw ex;
+        }
+
         state = BufferState.READING_BODY;
       }
 

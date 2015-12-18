@@ -11,7 +11,9 @@
  */
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.ITransportConfigAware;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.tests.data.HugeData;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
@@ -44,6 +46,33 @@ public abstract class ChannelTest extends AbstractProtocolTest
 
   public ChannelTest()
   {
+  }
+
+  public void testAllBufferSizes() throws Exception
+  {
+    disableConsole();
+
+    TestSignalProtocol protocol = openTestSignalProtocol();
+    assertActive(protocol);
+
+    byte[] data = HugeData.getBytes();
+    assertEquals(true,
+        data.length > 2 * ((ITransportConfigAware)getConnector()).getConfig().getBufferProvider().getBufferCapacity());
+
+    for (int i = 1; i < data.length; i++)
+    {
+      // System.out.println(i);
+
+      byte[] dataToSend = new byte[i];
+      System.arraycopy(data, 0, dataToSend, 0, i);
+
+      byte[] result = new ArrayRequest(protocol, dataToSend).send();
+      assertEquals(true, Arrays.equals(dataToSend, result));
+    }
+
+    protocol.close();
+    assertInactive(protocol);
+    enableConsole();
   }
 
   public void testSingleThreadNoData() throws Exception
@@ -318,12 +347,12 @@ public abstract class ChannelTest extends AbstractProtocolTest
   /**
    * @author Eike Stepper
    */
-  public static final class TCP extends ChannelTest
+  public static final class JVM extends ChannelTest
   {
     @Override
     protected boolean useJVMTransport()
     {
-      return false;
+      return true;
     }
 
     @Override
@@ -336,12 +365,12 @@ public abstract class ChannelTest extends AbstractProtocolTest
   /**
    * @author Eike Stepper
    */
-  public static final class JVM extends ChannelTest
+  public static final class TCP extends ChannelTest
   {
     @Override
     protected boolean useJVMTransport()
     {
-      return true;
+      return false;
     }
 
     @Override

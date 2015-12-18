@@ -50,7 +50,7 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
 
     if (!latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
     {
-      throw new TimeoutException("Not all actory finished in time");
+      throw new TimeoutException("Not all actors finished in time");
     }
   }
 

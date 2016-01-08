@@ -160,22 +160,36 @@ public class XRefsQueryHandler implements IQueryHandler
   public static void collectSourceCandidates(EClass eClass, EReference eReference, Collection<EClass> concreteTypes,
       Map<EClass, List<EReference>> sourceCandidates)
   {
-    if (!eClass.isAbstract() && !eClass.isInterface())
+    if (eClass.isAbstract())
     {
-      if (!eReference.isContainer() && !eReference.isContainment())
-      {
-        if (canReference(eReference.getEReferenceType(), concreteTypes))
-        {
-          List<EReference> list = sourceCandidates.get(eClass);
-          if (list == null)
-          {
-            list = new ArrayList<EReference>();
-            sourceCandidates.put(eClass, list);
-          }
+      return;
+    }
 
-          list.add(eReference);
-        }
+    if (eClass.isInterface())
+    {
+      return;
+    }
+
+    if (eReference.isContainer())
+    {
+      return;
+    }
+
+    if (eReference.isContainment() && !eReference.isResolveProxies())
+    {
+      return;
+    }
+
+    if (canReference(eReference.getEReferenceType(), concreteTypes))
+    {
+      List<EReference> list = sourceCandidates.get(eClass);
+      if (list == null)
+      {
+        list = new ArrayList<EReference>();
+        sourceCandidates.put(eClass, list);
       }
+
+      list.add(eReference);
     }
   }
 

@@ -25,13 +25,15 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EAdapterList;
-import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.BasicInternalEList;
+import org.eclipse.emf.ecore.util.EContentsEList;
+import org.eclipse.emf.ecore.util.ECrossReferenceEList;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -137,6 +139,16 @@ public interface CDOStaleReferencePolicy
             return null;
           }
 
+          if (name.equals("eContents")) //$NON-NLS-1$
+          {
+            return EContentsEList.emptyContentsEList();
+          }
+
+          if (name.equals("eCrossReferences")) //$NON-NLS-1$
+          {
+            return ECrossReferenceEList.emptyCrossReferenceEList();
+          }
+
           if (name.equals("eInvoke")) //$NON-NLS-1$
           {
             return null;
@@ -147,7 +159,7 @@ public interface CDOStaleReferencePolicy
             EStructuralFeature featureParam = (EStructuralFeature)args[0];
             if (featureParam.isMany())
             {
-              return new BasicEList<Object>();
+              return new BasicInternalEList<Object>(Object.class);
             }
 
             return featureParam.getDefaultValue();
@@ -195,31 +207,38 @@ public interface CDOStaleReferencePolicy
             {
               return false;
             }
-            else if (returnType == char.class)
+
+            if (returnType == char.class)
             {
               return (char)0;
             }
-            else if (returnType == byte.class)
+
+            if (returnType == byte.class)
             {
               return (byte)0;
             }
-            else if (returnType == short.class)
+
+            if (returnType == short.class)
             {
               return (short)0;
             }
-            else if (returnType == int.class)
+
+            if (returnType == int.class)
             {
               return (int)0;
             }
-            else if (returnType == long.class)
+
+            if (returnType == long.class)
             {
               return (long)0;
             }
-            else if (returnType == float.class)
+
+            if (returnType == float.class)
             {
               return (float)0;
             }
-            else if (returnType == double.class)
+
+            if (returnType == double.class)
             {
               return (double)0;
             }
@@ -227,7 +246,7 @@ public interface CDOStaleReferencePolicy
 
           if (List.class.isAssignableFrom(returnType))
           {
-            return new BasicEList<Object>();
+            return new BasicInternalEList<Object>(Object.class);
           }
 
           return null;
@@ -236,6 +255,9 @@ public interface CDOStaleReferencePolicy
 
       Class<?> instanceClass = type.getInstanceClass();
       Class<?>[] interfaces = null;
+
+      int xxx;
+      System.out.println(instanceClass);
 
       // Be sure to have only interface
       if (instanceClass.isInterface())

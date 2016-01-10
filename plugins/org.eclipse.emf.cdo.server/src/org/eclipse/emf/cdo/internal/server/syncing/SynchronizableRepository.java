@@ -72,6 +72,7 @@ import org.eclipse.emf.cdo.spi.server.SyncingUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -735,7 +736,10 @@ public abstract class SynchronizableRepository extends Repository.Default implem
       }
 
       long requiredTimestamp = masterLockingResult.getRequiredTimestamp();
-      remoteSession.waitForUpdate(requiredTimestamp);
+      if (!remoteSession.waitForUpdate(requiredTimestamp, 10000))
+      {
+        throw new TimeoutRuntimeException();
+      }
     }
 
     return masterLockingResult;

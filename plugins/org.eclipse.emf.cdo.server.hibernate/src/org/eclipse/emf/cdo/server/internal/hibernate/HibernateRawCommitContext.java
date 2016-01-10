@@ -320,6 +320,10 @@ public class HibernateRawCommitContext implements InternalCommitContext
   {
   }
 
+  public void setCommitNumber(int commitNumber)
+  {
+  }
+
   public void setCommitComment(String comment)
   {
   }

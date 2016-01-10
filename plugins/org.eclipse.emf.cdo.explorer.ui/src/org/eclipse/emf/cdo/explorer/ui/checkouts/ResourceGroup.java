@@ -80,7 +80,9 @@ public class ResourceGroup extends CDOElement
           public void setName(final String name)
           {
             final String type = getType();
-            new Job("Rename " + type.toLowerCase())
+            final String title = "Rename " + type.toLowerCase();
+
+            new Job(title)
             {
               @Override
               protected IStatus run(IProgressMonitor monitor)
@@ -118,7 +120,11 @@ public class ResourceGroup extends CDOElement
 
                 if (commitInfo != null)
                 {
-                  checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
+                  if (!checkout.getView().waitForUpdate(commitInfo.getTimeStamp(), 10000))
+                  {
+                    OM.LOG.error(title + ": Did not receive an update");
+                    return Status.OK_STATUS;
+                  }
 
                   CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
                   checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT,

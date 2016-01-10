@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -459,6 +460,11 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public CommitTransactionResult commitXATransactionCancel(InternalCDOXACommitContext xaContext, OMMonitor monitor)
   {
     return send(new CommitXATransactionCancelRequest(this, xaContext), monitor);
+  }
+
+  public CDOCommitInfo resetTransaction(int transactionID, int commitNumber)
+  {
+    return send(new ResetTransactionRequest(this, transactionID, commitNumber));
   }
 
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe)

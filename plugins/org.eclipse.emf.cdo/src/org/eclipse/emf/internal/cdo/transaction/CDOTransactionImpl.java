@@ -162,6 +162,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOSession.CommitToken;
 import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
@@ -230,6 +231,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private volatile long lastCommitTime = UNSPECIFIED_DATE;
 
   private String commitComment;
+
+  private CommitToken commitToken;
 
   // Bug 283985 (Re-attachment)
   private final ThreadLocal<Boolean> providingCDOID = new InheritableThreadLocal<Boolean>()
@@ -1291,7 +1294,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     if (info != null)
     {
       long timeStamp = info.getTimeStamp();
-      waitForUpdate(timeStamp, 10000);
+      long timeout = options().getCommitInfoTimeout();
+
+      if (!waitForUpdate(timeStamp, timeout))
+      {
+        throw new TimeoutRuntimeException("Did not receive an update: " + this);
+      }
     }
 
     return info;
@@ -1300,7 +1308,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private synchronized CDOCommitInfo commitSynced(IProgressMonitor progressMonitor)
       throws DanglingIntegrityException, CommitException
   {
-    Object token = null;
+    InternalCDOSession session = getSession();
 
     try
     {
@@ -1310,7 +1318,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new LocalCommitConflictException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
       }
 
-      token = getSession().startLocalCommit();
+      commitToken = (CommitToken)session.startLocalCommit();
 
       CDOTransactionStrategy transactionStrategy = getTransactionStrategy();
       CDOCommitInfo info = transactionStrategy.commit(this, progressMonitor);
@@ -1331,19 +1339,51 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
     catch (Throwable t)
     {
-      if (t.getCause() instanceof MonitorCanceledException
-          && !(t.getCause().getCause() instanceof TimeoutRuntimeException))
+      try
       {
-        throw new OperationCanceledException("CDOTransactionImpl.7");//$NON-NLS-1$
+        // The commit may have succeeded on the server, but after that fact network problems or timeouts have hit us.
+        // Let's see if we can recover...
+        CDOCommitInfo info = session.getSessionProtocol().resetTransaction(getViewID(), commitToken.getCommitNumber());
+        if (info != null)
+        {
+          lastCommitTime = info.getTimeStamp();
+          session.invalidate(info, this, true, CDOProtocol.CommitNotificationInfo.IMPACT_NONE, null);
+
+          // At this point the session (invalidator) is recovered.
+          // Continue to rethrow the exception and let the client call rollback()...
+        }
+      }
+      catch (Throwable ex)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace(ex);
+        }
+      }
+
+      Throwable cause = t.getCause();
+      if (cause instanceof MonitorCanceledException)
+      {
+        if (!(cause.getCause() instanceof TimeoutRuntimeException))
+        {
+          throw new OperationCanceledException("CDOTransactionImpl.7");//$NON-NLS-1$
+        }
       }
 
       throw new CommitException(t);
     }
     finally
     {
-      getSession().endLocalCommit(token);
+      session.endLocalCommit(commitToken);
+      commitToken = null;
+
       clearResourcePathCacheIfNecessary(null);
     }
+  }
+
+  public CommitToken getCommitToken()
+  {
+    return commitToken;
   }
 
   /**
@@ -3529,6 +3569,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private boolean autoReleaseLocksEnabled = true;
 
+    private long commitInfoTimeout = DEFAULT_COMMIT_INFO_TIMEOUT;
+
     public OptionsImpl()
     {
     }
@@ -3710,6 +3752,28 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       fireEvent(event);
     }
 
+    public long getCommitInfoTimeout()
+    {
+      return commitInfoTimeout;
+    }
+
+    public void setCommitInfoTimeout(long commitInfoTimeout)
+    {
+      checkActive();
+
+      IEvent event = null;
+      synchronized (CDOTransactionImpl.this)
+      {
+        if (this.commitInfoTimeout != commitInfoTimeout)
+        {
+          this.commitInfoTimeout = commitInfoTimeout;
+          event = new CommitInfoTimeoutImpl();
+        }
+      }
+
+      fireEvent(event);
+    }
+
     /**
      * @author Eike Stepper
      */
@@ -3757,6 +3821,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       private static final long serialVersionUID = 1L;
 
       public AutoReleaseLocksEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class CommitInfoTimeoutImpl extends OptionsEvent implements CommitInfoTimeout
+    {
+      private static final long serialVersionUID = 1L;
+
+      public CommitInfoTimeoutImpl()
       {
         super(OptionsImpl.this);
       }

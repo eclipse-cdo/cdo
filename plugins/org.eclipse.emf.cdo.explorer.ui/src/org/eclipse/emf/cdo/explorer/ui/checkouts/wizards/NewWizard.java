@@ -87,6 +87,7 @@ public abstract class NewWizard extends Wizard implements INewWizard
   {
     final Object parent = page.getParent();
     final String name = page.getName();
+    final String error = "An error occured while creating the " + title.toLowerCase() + ".";
 
     new Job(title)
     {
@@ -139,8 +140,7 @@ public abstract class NewWizard extends Wizard implements INewWizard
           {
             public void run()
             {
-              ErrorDialog.openError(getShell(), "Error",
-                  "An error occured while creating the " + title.toLowerCase() + ".", status);
+              ErrorDialog.openError(getShell(), "Error", error, status);
             }
           });
 
@@ -154,7 +154,11 @@ public abstract class NewWizard extends Wizard implements INewWizard
         if (commitInfo != null && contentProvider != null)
         {
           CDOView view = checkout.getView();
-          view.waitForUpdate(commitInfo.getTimeStamp());
+          if (!view.waitForUpdate(commitInfo.getTimeStamp(), 10000))
+          {
+            OM.LOG.error(error + " Did not receive an update");
+            return Status.OK_STATUS;
+          }
 
           CDOObject newObject = view.getObject(newID);
           contentProvider.selectObjects(newObject);

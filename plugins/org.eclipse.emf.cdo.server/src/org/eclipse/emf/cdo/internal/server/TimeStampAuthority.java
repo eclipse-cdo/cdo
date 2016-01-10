@@ -72,6 +72,10 @@ class TimeStampAuthority
     this.repository = repository;
   }
 
+  /**
+   * @deprecated Not used anymore.
+   */
+  @Deprecated
   synchronized long[] startCommit(OMMonitor monitor)
   {
     return startCommit(CDOBranchPoint.UNSPECIFIED_DATE, monitor);

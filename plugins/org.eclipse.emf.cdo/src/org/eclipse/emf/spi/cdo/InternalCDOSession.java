@@ -312,6 +312,46 @@ public interface InternalCDOSession
       boolean computeChangeSets);
 
   /**
+   * @author Eike Stepper
+   * @since 4.5
+   */
+  public static final class CommitToken
+  {
+    private final int commitNumber;
+
+    private final String threadName;
+
+    public CommitToken(int commitNumber, String threadName)
+    {
+      this.commitNumber = commitNumber;
+      this.threadName = threadName;
+    }
+
+    public int getCommitNumber()
+    {
+      return commitNumber;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      return commitNumber == ((CommitToken)obj).commitNumber;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return commitNumber;
+    }
+
+    @Override
+    public String toString()
+    {
+      return "LocalCommit[" + getCommitNumber() + (threadName == null ? "" : ", " + threadName) + "]";
+    }
+  }
+
+  /**
    * A data structure that holds all input and output values of {@link InternalCDOSession#getMergeData(CDOBranchPoint, CDOBranchPoint, CDOBranchPoint, boolean) InternalCDOSession.getMergeData()}.
    *
    * @author Eike Stepper

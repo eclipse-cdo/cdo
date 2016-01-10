@@ -67,8 +67,6 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, StoreAccessorBase.class);
 
-  // private static int COUNT;
-
   private Store store;
 
   private Object context;
@@ -263,18 +261,6 @@ public abstract class StoreAccessorBase extends Lifecycle implements IStoreAcces
   }
 
   protected abstract CDOID getNextCDOID(CDORevision revision);
-
-  // @Override
-  // protected void doActivate() throws Exception
-  // {
-  // System.out.println("Active accessors: " + ++COUNT);
-  // }
-  //
-  // @Override
-  // protected void doDeactivate() throws Exception
-  // {
-  // System.out.println("Active accessors: " + --COUNT);
-  // }
 
   protected void doPassivate() throws Exception
   {

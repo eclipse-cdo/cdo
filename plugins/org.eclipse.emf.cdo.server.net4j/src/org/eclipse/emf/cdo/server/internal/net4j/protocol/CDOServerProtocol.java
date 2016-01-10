@@ -388,6 +388,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case SIGNAL_OPENED_SESSION:
       return new OpenedSessionNotification(this);
 
+    case SIGNAL_RESET_TRANSACTION:
+      return new ResetTransactionIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

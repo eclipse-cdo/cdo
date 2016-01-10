@@ -70,6 +70,7 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction.CommitAttempt;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -131,6 +132,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
   private long previousTimeStamp = CDORevision.UNSPECIFIED_DATE;
+
+  private int commitNumber;
 
   private String commitComment;
 
@@ -214,6 +217,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public String getUserID()
   {
     return transaction.getSession().getUserID();
+  }
+
+  public int getCommitNumber()
+  {
+    return commitNumber;
   }
 
   public String getCommitComment()
@@ -354,7 +362,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return (InternalCDORevision)transaction.getRevision(id);
   }
 
-  private Map<CDOID, InternalCDORevision> cacheRevisions()
+  protected Map<CDOID, InternalCDORevision> cacheRevisions()
   {
     Map<CDOID, InternalCDORevision> cache = CDOIDUtil.createMap();
     if (newObjects != null)
@@ -432,7 +440,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void applyIDMappings(InternalCDORevision[] revisions, OMMonitor monitor)
+  protected void applyIDMappings(InternalCDORevision[] revisions, OMMonitor monitor)
   {
     try
     {
@@ -544,6 +552,11 @@ public class TransactionCommitContext implements InternalCommitContext
     autoReleaseLocksEnabled = on;
   }
 
+  public void setCommitNumber(int commitNumber)
+  {
+    this.commitNumber = commitNumber;
+  }
+
   public void setCommitComment(String commitComment)
   {
     this.commitComment = commitComment;
@@ -583,7 +596,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return old;
   }
 
-  private InternalCDOPackageUnit[] lockPackageRegistry(InternalCDOPackageUnit[] packageUnits)
+  protected InternalCDOPackageUnit[] lockPackageRegistry(InternalCDOPackageUnit[] packageUnits)
       throws InterruptedException
   {
     if (!packageRegistryLocked)
@@ -648,7 +661,7 @@ public class TransactionCommitContext implements InternalCommitContext
       monitor.worked();
 
       detachObjects(monitor.fork());
-      accessor.write(this, monitor.fork(100));
+      writeAccessor(monitor.fork(100));
     }
     catch (RollbackException ex)
     {
@@ -702,7 +715,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return postCommitLockStates;
   }
 
-  private void handleException(Throwable ex)
+  protected void handleException(Throwable ex)
   {
     try
     {
@@ -742,7 +755,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void finishMonitor(OMMonitor monitor)
+  protected void finishMonitor(OMMonitor monitor)
   {
     try
     {
@@ -760,12 +773,14 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void setTimeStamp(OMMonitor monitor)
+  protected void setTimeStamp(OMMonitor monitor)
   {
     long[] times = createTimeStamp(monitor); // Could throw an exception
     timeStamp = times[0];
     previousTimeStamp = times[1];
     CheckUtil.checkState(timeStamp != CDOBranchPoint.UNSPECIFIED_DATE, "Commit timestamp must not be 0");
+
+    transaction.setLastCommitAttempt(new CommitAttempt(commitNumber, timeStamp, previousTimeStamp));
   }
 
   protected long[] createTimeStamp(OMMonitor monitor)
@@ -791,9 +806,16 @@ public class TransactionCommitContext implements InternalCommitContext
 
   public void postCommit(boolean success)
   {
-    if (packageRegistryLocked)
+    try
     {
-      repository.getPackageRegistryCommitLock().release();
+      if (packageRegistryLocked)
+      {
+        repository.getPackageRegistryCommitLock().release();
+      }
+    }
+    catch (Throwable ex)
+    {
+      OM.LOG.warn("A problem occured while releasing the package registry commit lock", ex);
     }
 
     try
@@ -804,7 +826,7 @@ public class TransactionCommitContext implements InternalCommitContext
         sendCommitNotifications(success);
       }
     }
-    catch (Exception ex)
+    catch (Throwable ex)
     {
       OM.LOG.warn("A problem occured while notifying other sessions", ex);
     }
@@ -822,7 +844,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void sendCommitNotifications(boolean success)
+  protected void sendCommitNotifications(boolean success)
   {
     commitNotificationInfo.setSender(transaction.getSession());
     commitNotificationInfo.setRevisionProvider(this);
@@ -853,7 +875,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return new FailureCommitInfo(timeStamp, previousTimeStamp);
   }
 
-  private CDOCommitData createCommitData()
+  protected CDOCommitData createCommitData()
   {
     List<CDOPackageUnit> newPackageUnitsCollection = new IndexedList.ArrayBacked<CDOPackageUnit>()
     {
@@ -1034,7 +1056,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void lockTarget(Object value, Set<CDOID> newIDs, boolean supportingBranches)
+  protected void lockTarget(Object value, Set<CDOID> newIDs, boolean supportingBranches)
   {
     if (value instanceof CDOIDObject)
     {
@@ -1069,7 +1091,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private synchronized void unlockObjects()
+  protected synchronized void unlockObjects()
   {
     // Unlock objects locked during commit
     if (!lockedObjects.isEmpty())
@@ -1113,7 +1135,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void computeDirtyObjects(OMMonitor monitor)
+  protected void computeDirtyObjects(OMMonitor monitor)
   {
     try
     {
@@ -1140,7 +1162,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta)
+  protected InternalCDORevision computeDirtyObject(InternalCDORevisionDelta delta)
   {
     CDOID id = delta.getID();
 
@@ -1228,7 +1250,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private boolean isTheRootReachable(InternalCDORevision revision, Set<CDOID> objectsThatReachTheRoot,
+  protected boolean isTheRootReachable(InternalCDORevision revision, Set<CDOID> objectsThatReachTheRoot,
       Set<CDOID> visited)
   {
     CDOID id = revision.getID();
@@ -1305,7 +1327,7 @@ public class TransactionCommitContext implements InternalCommitContext
     return accessor;
   }
 
-  private void updateInfraStructure(OMMonitor monitor)
+  protected void updateInfraStructure(OMMonitor monitor)
   {
     try
     {
@@ -1345,7 +1367,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void applyLocksOnNewObjects() throws InterruptedException
+  protected void applyLocksOnNewObjects() throws InterruptedException
   {
     final CDOLockOwner owner = CDOLockUtil.createLockOwner(transaction);
 
@@ -1373,7 +1395,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void sendLockNotifications(List<LockState<Object, IView>> newLockStates)
+  protected void sendLockNotifications(List<LockState<Object, IView>> newLockStates)
   {
     CDOLockState[] newStates = Repository.toCDOLockStates(newLockStates);
 
@@ -1384,7 +1406,7 @@ public class TransactionCommitContext implements InternalCommitContext
     repository.getSessionManager().sendLockNotification(transaction.getSession(), info);
   }
 
-  private void addNewPackageUnits(OMMonitor monitor)
+  protected void addNewPackageUnits(OMMonitor monitor)
   {
     InternalCDOPackageRegistry repositoryPackageRegistry = repository.getPackageRegistry(false);
     synchronized (repositoryPackageRegistry)
@@ -1408,7 +1430,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void addRevisions(CDORevision[] revisions, OMMonitor monitor)
+  protected void addRevisions(CDORevision[] revisions, OMMonitor monitor)
   {
     try
     {
@@ -1431,7 +1453,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void reviseDetachedObjects(OMMonitor monitor)
+  protected void reviseDetachedObjects(OMMonitor monitor)
   {
     try
     {
@@ -1453,7 +1475,7 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  private void detachObjects(OMMonitor monitor)
+  protected void detachObjects(OMMonitor monitor)
   {
     int size = detachedObjects.length;
     cachedDetachedRevisions = new InternalCDORevision[size];
@@ -1478,6 +1500,11 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       monitor.done();
     }
+  }
+
+  protected void writeAccessor(OMMonitor monitor)
+  {
+    accessor.write(this, monitor);
   }
 
   @Override

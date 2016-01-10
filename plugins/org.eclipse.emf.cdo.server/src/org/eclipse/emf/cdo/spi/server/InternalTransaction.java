@@ -23,4 +23,49 @@ import org.eclipse.emf.cdo.server.ITransaction;
 public interface InternalTransaction extends ITransaction, InternalView
 {
   public InternalCommitContext createCommitContext();
+
+  /**
+   * @since 4.5
+   */
+  public CommitAttempt getLastCommitAttempt();
+
+  /**
+   * @since 4.5
+   */
+  public void setLastCommitAttempt(CommitAttempt lastCommitAttempt);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.5
+   */
+  public static final class CommitAttempt
+  {
+    private final int commitNumber;
+
+    private final long timeStamp;
+
+    private final long previousTimeStamp;
+
+    public CommitAttempt(int commitNumber, long timeStamp, long previousTimeStamp)
+    {
+      this.commitNumber = commitNumber;
+      this.timeStamp = timeStamp;
+      this.previousTimeStamp = previousTimeStamp;
+    }
+
+    public int getCommitNumber()
+    {
+      return commitNumber;
+    }
+
+    public long getTimeStamp()
+    {
+      return timeStamp;
+    }
+
+    public long getPreviousTimeStamp()
+    {
+      return previousTimeStamp;
+    }
+  }
 }

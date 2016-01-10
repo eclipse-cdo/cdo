@@ -65,6 +65,8 @@ import java.util.Set;
  */
 public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, DurableLocking2, BranchLoader3
 {
+  private final MEMStore store;
+
   private final IQueryHandler testQueryHandler = new IQueryHandler()
   {
     public void executeQuery(CDOQueryInfo info, IQueryContext queryContext)
@@ -105,7 +107,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
       }
 
       int i = 0;
-      for (InternalCDORevision revision : getStore().getCurrentRevisions())
+      for (InternalCDORevision revision : store.getCurrentRevisions())
       {
         if (sleep != null)
         {
@@ -168,11 +170,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
     }
   };
 
-  private List<InternalCDORevision> newRevisions = new ArrayList<InternalCDORevision>();
+  private List<InternalCDORevision> newRevisions;
 
   public MEMStoreAccessor(MEMStore store, ISession session)
   {
     super(store, session);
+    this.store = store;
   }
 
   /**
@@ -181,12 +184,13 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   public MEMStoreAccessor(MEMStore store, ITransaction transaction)
   {
     super(store, transaction);
+    this.store = store;
   }
 
   @Override
   public MEMStore getStore()
   {
-    return (MEMStore)super.getStore();
+    return store;
   }
 
   /**
@@ -209,22 +213,22 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
 
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
-    return getStore().createBranch(branchID, branchInfo);
+    return store.createBranch(branchID, branchInfo);
   }
 
   public BranchInfo loadBranch(int branchID)
   {
-    return getStore().loadBranch(branchID);
+    return store.loadBranch(branchID);
   }
 
   public SubBranchInfo[] loadSubBranches(int branchID)
   {
-    return getStore().loadSubBranches(branchID);
+    return store.loadSubBranches(branchID);
   }
 
   public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler)
   {
-    return getStore().loadBranches(startID, endID, branchHandler);
+    return store.loadBranches(startID, endID, branchHandler);
   }
 
   @Deprecated
@@ -241,35 +245,35 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
 
   public void renameBranch(int branchID, String oldName, String newName)
   {
-    getStore().renameBranch(branchID, oldName, newName);
+    store.renameBranch(branchID, oldName, newName);
   }
 
   public void loadCommitInfos(CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
-    getStore().loadCommitInfos(branch, startTime, endTime, handler);
+    store.loadCommitInfos(branch, startTime, endTime, handler);
   }
 
   public Set<CDOID> readChangeSet(OMMonitor monitor, CDOChangeSetSegment... segments)
   {
-    return getStore().readChangeSet(segments);
+    return store.readChangeSet(segments);
   }
 
   public InternalCDORevision readRevision(CDOID id, CDOBranchPoint branchPoint, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return getStore().getRevision(id, branchPoint);
+    return store.getRevision(id, branchPoint);
   }
 
   public InternalCDORevision readRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int listChunk,
       CDORevisionCacheAdder cache)
   {
-    return getStore().getRevisionByVersion(id, branchVersion);
+    return store.getRevisionByVersion(id, branchVersion);
   }
 
   public void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime,
       CDORevisionHandler handler)
   {
-    getStore().handleRevisions(eClass, branch, timeStamp, exactTime, handler);
+    store.handleRevisions(eClass, branch, timeStamp, exactTime, handler);
   }
 
   /**
@@ -278,13 +282,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   @Override
   protected void doCommit(OMMonitor monitor)
   {
-    // Do nothing
+    newRevisions = null;
   }
 
   @Override
   public void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
-    MEMStore store = getStore();
     synchronized (store)
     {
       super.doWrite(context, monitor);
@@ -295,18 +298,20 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   protected void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor)
   {
-    getStore().addCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment);
+    store.addCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment);
   }
 
   @Override
   protected void doRollback(CommitContext context)
   {
-    MEMStore store = getStore();
-    synchronized (store)
+    if (newRevisions != null)
     {
-      for (InternalCDORevision revision : newRevisions)
+      synchronized (store)
       {
-        store.rollbackRevision(revision);
+        for (InternalCDORevision revision : newRevisions)
+        {
+          store.rollbackRevision(revision);
+        }
       }
     }
   }
@@ -327,8 +332,13 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
 
   protected void writeRevision(InternalCDORevision revision)
   {
+    if (newRevisions == null)
+    {
+      newRevisions = new ArrayList<InternalCDORevision>();
+    }
+
     newRevisions.add(revision);
-    getStore().addRevision(revision, false);
+    store.addRevision(revision, false);
   }
 
   /**
@@ -350,7 +360,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   protected void writeRevisionDelta(InternalCDORevisionDelta revisionDelta, CDOBranch branch, long created)
   {
     CDOID id = revisionDelta.getID();
-    InternalCDORevision revision = getStore().getRevisionByVersion(id, revisionDelta);
+    InternalCDORevision revision = store.getRevisionByVersion(id, revisionDelta);
     if (revision == null)
     {
       throw new ConcurrentModificationException("Trying to update object " + id //$NON-NLS-1$
@@ -378,7 +388,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
    */
   protected void detachObject(CDOID id, CDOBranch branch, long timeStamp)
   {
-    getStore().detachObject(id, branch, timeStamp);
+    store.detachObject(id, branch, timeStamp);
   }
 
   /**
@@ -386,12 +396,12 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
    */
   public void queryResources(QueryResourcesContext context)
   {
-    getStore().queryResources(context);
+    store.queryResources(context);
   }
 
   public void queryXRefs(QueryXRefsContext context)
   {
-    getStore().queryXRefs(context);
+    store.queryXRefs(context);
   }
 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
@@ -407,13 +417,13 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   public void rawExport(CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
-    getStore().rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
+    store.rawExport(out, fromBranchID, toBranchID, fromCommitTime, toCommitTime);
   }
 
   public void rawImport(CDODataInput in, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime,
       OMMonitor monitor) throws IOException
   {
-    getStore().rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
+    store.rawImport(in, fromBranchID, toBranchID, fromCommitTime, toCommitTime, monitor);
   }
 
   public void rawStore(InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -423,7 +433,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
 
   public void rawStore(InternalCDORevision revision, OMMonitor monitor)
   {
-    getStore().addRevision(revision, true);
+    store.addRevision(revision, true);
   }
 
   public void rawStore(byte[] id, long size, InputStream inputStream) throws IOException
@@ -444,7 +454,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
 
   public void rawDelete(CDOID id, int version, CDOBranch branch, EClass eClass, OMMonitor monitor)
   {
-    getStore().rawDelete(id, version, branch);
+    store.rawDelete(id, version, branch);
   }
 
   public void rawCommit(double commitWork, OMMonitor monitor)
@@ -455,75 +465,75 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   public LockArea createLockArea(String userID, CDOBranchPoint branchPoint, boolean readOnly,
       Map<CDOID, LockGrade> locks)
   {
-    return getStore().createLockArea(userID, branchPoint, readOnly, locks);
+    return store.createLockArea(userID, branchPoint, readOnly, locks);
   }
 
   public LockArea createLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
       Map<CDOID, LockGrade> locks)
   {
-    return getStore().createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
+    return store.createLockArea(durableLockingID, userID, branchPoint, readOnly, locks);
   }
 
   public void updateLockArea(LockArea lockArea)
   {
-    getStore().updateLockArea(lockArea);
+    store.updateLockArea(lockArea);
   }
 
   public LockArea getLockArea(String durableLockingID) throws LockAreaNotFoundException
   {
-    return getStore().getLockArea(durableLockingID);
+    return store.getLockArea(durableLockingID);
   }
 
   public void getLockAreas(String userIDPrefix, Handler handler)
   {
-    getStore().getLockAreas(userIDPrefix, handler);
+    store.getLockAreas(userIDPrefix, handler);
   }
 
   public void deleteLockArea(String durableLockingID)
   {
-    getStore().deleteLockArea(durableLockingID);
+    store.deleteLockArea(durableLockingID);
   }
 
   public void lock(String durableLockingID, LockType type, Collection<? extends Object> objectsToLock)
   {
-    getStore().lock(durableLockingID, type, objectsToLock);
+    store.lock(durableLockingID, type, objectsToLock);
   }
 
   public void unlock(String durableLockingID, LockType type, Collection<? extends Object> objectsToUnlock)
   {
-    getStore().unlock(durableLockingID, type, objectsToUnlock);
+    store.unlock(durableLockingID, type, objectsToUnlock);
   }
 
   public void unlock(String durableLockingID)
   {
-    getStore().unlock(durableLockingID);
+    store.unlock(durableLockingID);
   }
 
   public void queryLobs(List<byte[]> ids)
   {
-    getStore().queryLobs(ids);
+    store.queryLobs(ids);
   }
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    getStore().handleLobs(fromTime, toTime, handler);
+    store.handleLobs(fromTime, toTime, handler);
   }
 
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    getStore().loadLob(id, out);
+    store.loadLob(id, out);
   }
 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    getStore().writeBlob(id, size, inputStream);
+    store.writeBlob(id, size, inputStream);
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    getStore().writeClob(id, size, reader);
+    store.writeClob(id, size, reader);
   }
 
   @Override
@@ -535,7 +545,11 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw, Durabl
   @Override
   protected void doDeactivate() throws Exception
   {
-    newRevisions.clear();
+    if (newRevisions != null)
+    {
+      newRevisions.clear();
+      newRevisions = null;
+    }
   }
 
   @Override

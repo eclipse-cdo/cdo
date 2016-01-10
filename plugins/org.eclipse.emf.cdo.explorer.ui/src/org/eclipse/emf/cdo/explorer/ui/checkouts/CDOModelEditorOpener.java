@@ -25,6 +25,7 @@ import org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -48,6 +49,13 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
   protected IEditorPart doOpenEditor(final IWorkbenchPage page, URI uri)
   {
     CDOCheckout checkout = CDOExplorerUtil.getCheckout(uri);
+    if (checkout == null)
+    {
+      MessageDialog.openError(page.getWorkbenchWindow().getShell(), "Error",
+          "The checkout for " + uri + " could not be found.");
+      return null;
+    }
+
     final CDOView view = checkout.openView();
 
     if (view instanceof CDOTransaction)

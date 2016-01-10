@@ -1761,6 +1761,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
     private boolean terminateIfSessionClosed;
 
+    private int lastCommitNumber;
+
     public Invalidator()
     {
     }
@@ -1772,15 +1774,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
         return null;
       }
 
-      final String threadName = Thread.currentThread().getName();
-      Object token = new Object()
+      CommitToken token = new CommitToken(++lastCommitNumber, Thread.currentThread().getName());
+
+      if (DEBUG)
       {
-        @Override
-        public String toString()
-        {
-          return threadName;
-        }
-      };
+        IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] startLocalCommit: " + token);
+      }
 
       unfinishedLocalCommits.add(token);
       return token;
@@ -1788,6 +1787,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
     public synchronized void endLocalCommit(Object token)
     {
+      if (DEBUG)
+      {
+        IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] endLocalCommit: " + token);
+      }
+
       unfinishedLocalCommits.remove(token);
     }
 

@@ -49,20 +49,20 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
         }
       }, //
 
-  new ProgressDistributable.Default<InternalCommitContext>()
-  {
-    public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
-    {
-      if (commitContext.getRollbackMessage() == null)
+      new ProgressDistributable.Default<InternalCommitContext>()
       {
-        commitContext.commit(monitor.fork());
-      }
-      else
-      {
-        monitor.worked();
-      }
-    }
-  });
+        public void runLoop(int index, InternalCommitContext commitContext, OMMonitor monitor) throws Exception
+        {
+          if (commitContext.getRollbackMessage() == null)
+          {
+            commitContext.commit(monitor.fork());
+          }
+          else
+          {
+            monitor.worked();
+          }
+        }
+      });
 
   public InternalTransaction getTransaction();
 
@@ -135,6 +135,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public void setLastUpdateTime(long lastUpdateTime);
 
   public void setAutoReleaseLocksEnabled(boolean on);
+
+  /**
+   * @since 4.5
+   */
+  public void setCommitNumber(int commitNumber);
 
   public void setCommitComment(String comment);
 

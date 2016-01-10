@@ -230,6 +230,11 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public static final CDOUndoDetector DEFAULT_UNDO_DETECTOR = CDOUndoDetector.ALL_FEATURES;
 
     /**
+     * @since 4.5
+     */
+    public static final long DEFAULT_COMMIT_INFO_TIMEOUT = 10000;
+
+    /**
      * Returns the {@link CDOTransaction transaction} of this options object.
      *
      * @since 4.0
@@ -305,6 +310,24 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public void setAutoReleaseLocksEnabled(boolean on);
 
     /**
+     * Returns the number of milliseconds to wait for the transaction update when {@link CDOTransaction#commit()} is called.
+     * <p>
+     * Default value is 10000.
+     *
+     * @since 4.5
+     */
+    public long getCommitInfoTimeout();
+
+    /**
+    * Specifies the number of milliseconds to wait for the transaction update when {@link CDOTransaction#commit()} is called.
+    * <p>
+    * Default value is 10000.
+    *
+    * @since 4.5
+    */
+    public void setCommitInfoTimeout(long commitInfoTimeout);
+
+    /**
      * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
      * {@link Options#setUndoDetector(CDOUndoDetector) undo detector} option has changed.
      *
@@ -352,6 +375,19 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface AutoReleaseLocksEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
+     * {@link Options#setCommitInfoTimeout(long) commit info timeout} option has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.5
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface CommitInfoTimeout extends IOptionsEvent
     {
     }
   }

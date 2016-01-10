@@ -194,7 +194,9 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
       public void setName(final String name)
       {
-        new Job("Rename " + getType().toLowerCase())
+        final String title = "Rename " + getType().toLowerCase();
+
+        new Job(title)
         {
           @Override
           protected IStatus run(IProgressMonitor monitor)
@@ -232,7 +234,11 @@ public class ExplorerUIAdapterFactory implements IAdapterFactory
 
             if (commitInfo != null && checkout != null)
             {
-              checkout.getView().waitForUpdate(commitInfo.getTimeStamp());
+              if (!checkout.getView().waitForUpdate(commitInfo.getTimeStamp(), 10000))
+              {
+                OM.LOG.error(title + ": Did not receive an update");
+                return Status.OK_STATUS;
+              }
 
               CDOCheckoutManagerImpl checkoutManager = (CDOCheckoutManagerImpl)CDOExplorerUtil.getCheckoutManager();
               checkoutManager.fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT, resourceNode);

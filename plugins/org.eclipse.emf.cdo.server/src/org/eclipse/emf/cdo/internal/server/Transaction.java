@@ -26,6 +26,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
  */
 public class Transaction extends View implements InternalTransaction
 {
+  private CommitAttempt lastCommitAttempt;
+
   public Transaction(InternalSession session, int viewID, CDOBranchPoint branchPoint)
   {
     super(session, viewID, branchPoint);
@@ -71,6 +73,16 @@ public class Transaction extends View implements InternalTransaction
         return new long[] { timeStamp, UNSPECIFIED_DATE };
       }
     };
+  }
+
+  public CommitAttempt getLastCommitAttempt()
+  {
+    return lastCommitAttempt;
+  }
+
+  public void setLastCommitAttempt(CommitAttempt lastCommitAttempt)
+  {
+    this.lastCommitAttempt = lastCommitAttempt;
   }
 
   @Override

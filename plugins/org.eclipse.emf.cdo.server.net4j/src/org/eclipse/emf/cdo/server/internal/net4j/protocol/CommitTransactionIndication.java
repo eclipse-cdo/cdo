@@ -106,7 +106,11 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace(ex);
+      }
+
       throw WrappedException.wrap(ex);
     }
     finally
@@ -123,6 +127,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
     long lastUpdateTime = in.readLong();
     boolean autoReleaseLocksEnabled = in.readBoolean();
+    int commitNumber = in.readInt();
     String commitComment = in.readString();
 
     InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
@@ -267,6 +272,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         detachedObjectTypes = null;
       }
 
+      commitContext.setCommitNumber(commitNumber);
       commitContext.setLastUpdateTime(lastUpdateTime);
       commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
       commitContext.setClearResourcePathCache(clearResourcePathCache);

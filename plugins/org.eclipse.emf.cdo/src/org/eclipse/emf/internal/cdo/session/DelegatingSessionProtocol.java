@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitData;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
@@ -388,6 +389,22 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.commitXATransactionPhase3(xaContext, monitor);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  public CDOCommitInfo resetTransaction(int transactionID, int commitNumber)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.resetTransaction(transactionID, commitNumber);
       }
       catch (Exception ex)
       {

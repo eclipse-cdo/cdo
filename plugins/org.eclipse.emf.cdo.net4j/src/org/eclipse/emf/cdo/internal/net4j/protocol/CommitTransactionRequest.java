@@ -38,7 +38,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
@@ -51,6 +50,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOSession.CommitToken;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
 import java.io.IOException;
@@ -70,7 +71,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   private CDOIDProvider idProvider; // CDOTransaction
 
-  private String comment;
+  private int commitNumber;
+
+  private String commitComment;
 
   private boolean releaseLocks;
 
@@ -85,7 +88,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   /**
    * Is <code>null</code> in {@link CommitDelegationRequest}.
    */
-  private CDOTransaction transaction;
+  private InternalCDOTransaction transaction;
 
   private boolean clearResourcePathCache;
 
@@ -99,7 +102,13 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     super(protocol, signalID);
 
     transaction = context.getTransaction();
-    comment = context.getCommitComment();
+    CommitToken commitToken = transaction.getCommitToken();
+    if (commitToken != null)
+    {
+      commitNumber = commitToken.getCommitNumber();
+    }
+
+    commitComment = context.getCommitComment();
     releaseLocks = context.isAutoReleaseLocks();
     idProvider = context.getTransaction();
     commitData = context.getCommitData();
@@ -142,7 +151,8 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
     out.writeLong(getLastUpdateTime());
     out.writeBoolean(releaseLocks);
-    out.writeString(comment);
+    out.writeInt(commitNumber);
+    out.writeString(commitComment);
     out.writeInt(newPackageUnits.size());
     out.writeInt(locksOnNewObjects.size());
     out.writeInt(newObjects.size());

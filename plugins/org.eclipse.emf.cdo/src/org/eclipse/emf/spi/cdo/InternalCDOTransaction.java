@@ -30,6 +30,7 @@ import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOSession.CommitToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,11 @@ import java.util.Map;
 public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserTransaction, InternalCDOView
 {
   public InternalCDOCommitContext createCommitContext();
+
+  /**
+   * @since 4.5
+   */
+  public CommitToken getCommitToken();
 
   /**
    * @since 4.3

@@ -69,6 +69,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ArrayUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.HashBag;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -407,7 +408,10 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
       if (waitUntilReadable)
       {
-        systemView.waitForUpdate(commit.getTimeStamp());
+        if (!systemView.waitForUpdate(commit.getTimeStamp(), 10000))
+        {
+          throw new TimeoutRuntimeException();
+        }
       }
     }
     catch (CommitException ex)
@@ -686,7 +690,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   {
     if (lastRealmModification != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      systemView.waitForUpdate(lastRealmModification);
+      if (!systemView.waitForUpdate(lastRealmModification, 10000L))
+      {
+        throw new TimeoutRuntimeException();
+      }
+
       lastRealmModification = CDOBranchPoint.UNSPECIFIED_DATE;
     }
 

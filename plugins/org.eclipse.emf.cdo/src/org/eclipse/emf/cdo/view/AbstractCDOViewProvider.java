@@ -126,4 +126,10 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   {
     return uri.path();
   }
+
+  @Override
+  public String toString()
+  {
+    return "CDOViewProviderDescriptor[" + getPriority() + " --> " + getRegex() + "]";
+  }
 }

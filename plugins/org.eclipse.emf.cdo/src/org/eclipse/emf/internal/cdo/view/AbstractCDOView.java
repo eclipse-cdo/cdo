@@ -87,6 +87,7 @@ import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
+import org.eclipse.net4j.util.container.SelfAttachingContainerListener.DoNotDescend;
 import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -136,7 +137,7 @@ import java.util.Set;
  * @author Eike Stepper
  */
 public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOObject, CDOObjectHistory>
-    implements InternalCDOView
+    implements InternalCDOView, DoNotDescend
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, AbstractCDOView.class);
 
@@ -440,20 +441,25 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   public synchronized CDOResourceNode[] getElements()
   {
-    CDOResource rootResource = getRootResource();
-    EList<EObject> contents = rootResource.getContents();
+    List<CDOResourceNode> elements = new ArrayList<CDOResourceNode>();
 
-    List<CDOResourceNode> elements = new ArrayList<CDOResourceNode>(contents.size());
-    for (EObject object : contents)
+    if (isActive())
     {
-      if (object instanceof CDOResourceNode)
+      CDOResource rootResource = getRootResource();
+      EList<EObject> contents = rootResource.getContents();
+
+      for (EObject object : contents)
       {
-        CDOResourceNode element = (CDOResourceNode)object;
-        elements.add(element);
+        if (object instanceof CDOResourceNode)
+        {
+          CDOResourceNode element = (CDOResourceNode)object;
+          elements.add(element);
+        }
       }
+
+      ensureContainerAdapter(rootResource);
     }
 
-    ensureContainerAdapter(rootResource);
     return elements.toArray(new CDOResourceNode[elements.size()]);
   }
 

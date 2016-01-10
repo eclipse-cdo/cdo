@@ -2017,7 +2017,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     @Override
     public String toString()
     {
-      return "CDOViewInvalidationEvent: " + revisionDeltas; //$NON-NLS-1$
+      return "CDOViewInvalidationEvent" + revisionDeltas; //$NON-NLS-1$
     }
   }
 

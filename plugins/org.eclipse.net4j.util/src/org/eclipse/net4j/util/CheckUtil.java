@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util;
 
+import org.eclipse.net4j.util.io.IOUtil;
+
 /**
  * Provides static methods that check object states and invocation arguments.
  *
@@ -18,6 +20,8 @@ package org.eclipse.net4j.util;
  */
 public final class CheckUtil
 {
+  private static int counter;
+
   private CheckUtil()
   {
   }
@@ -60,5 +64,21 @@ public final class CheckUtil
     {
       throw new IllegalStateException(handleName + " is null"); //$NON-NLS-1$
     }
+  }
+
+  /**
+   * @since 3.6
+   */
+  public static void countUp(String message)
+  {
+    IOUtil.OUT().println(message + (++counter));
+  }
+
+  /**
+   * @since 3.6
+   */
+  public static void countDown(String message)
+  {
+    IOUtil.OUT().println(message + --counter);
   }
 }

@@ -60,7 +60,9 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -329,6 +331,24 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
 
   // -- database name demangling methods ---------------------------------
 
+  private String getTableNamePrefix(EModelElement element)
+  {
+    String prefix = StringUtil.safe(DBAnnotation.TABLE_NAME_PREFIX.getValue(element));
+    if (prefix.length() != 0 && !prefix.endsWith(NAME_SEPARATOR))
+    {
+      prefix += NAME_SEPARATOR;
+    }
+
+    EObject eContainer = element.eContainer();
+    if (eContainer instanceof EModelElement)
+    {
+      EModelElement parent = (EModelElement)eContainer;
+      prefix = getTableNamePrefix(parent) + prefix;
+    }
+
+    return prefix;
+  }
+
   public String getTableName(ENamedElement element)
   {
     String name = null;
@@ -363,6 +383,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       prefix += NAME_SEPARATOR;
     }
 
+    prefix += getTableNamePrefix(element);
+
     String suffix = typePrefix + getUniqueID(element);
     int maxTableNameLength = getMaxTableNameLength();
 
@@ -386,6 +408,8 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     {
       prefix += NAME_SEPARATOR;
     }
+
+    prefix += getTableNamePrefix(feature);
 
     String suffix = TYPE_PREFIX_FEATURE + getUniqueID(feature);
     int maxTableNameLength = getMaxTableNameLength();

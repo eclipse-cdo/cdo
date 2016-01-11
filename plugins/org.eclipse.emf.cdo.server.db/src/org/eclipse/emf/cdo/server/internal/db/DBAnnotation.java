@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 public enum DBAnnotation
 {
   TABLE_MAPPING("tableMapping"), //
+  TABLE_NAME_PREFIX("tableNamePrefix"), //
   TABLE_NAME("tableName"), //
   COLUMN_NAME("columnName"), //
   COLUMN_TYPE("columnType"), //

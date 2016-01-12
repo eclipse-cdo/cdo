@@ -256,9 +256,6 @@ public interface CDOStaleReferencePolicy
       Class<?> instanceClass = type.getInstanceClass();
       Class<?>[] interfaces = null;
 
-      int xxx;
-      System.out.println(instanceClass);
-
       // Be sure to have only interface
       if (instanceClass.isInterface())
       {

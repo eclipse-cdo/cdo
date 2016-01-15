@@ -368,8 +368,17 @@ public final class CDORevisionUtil
    */
   public static List<CDORevision> getChildRevisions(CDOID container, CDORevisionProvider provider)
   {
+    return getChildRevisions(container, provider, false);
+  }
+
+  /**
+   * @since 4.5
+   */
+  public static List<CDORevision> getChildRevisions(CDOID container, CDORevisionProvider provider,
+      boolean onlyProperContents)
+  {
     InternalCDORevision revision = (InternalCDORevision)provider.getRevision(container);
-    return getChildRevisions(revision, provider);
+    return getChildRevisions(revision, provider, onlyProperContents);
   }
 
   /**
@@ -377,10 +386,24 @@ public final class CDORevisionUtil
    */
   public static List<CDORevision> getChildRevisions(CDORevision container, CDORevisionProvider provider)
   {
+    return getChildRevisions(container, provider, false);
+  }
+
+  /**
+   * @since 4.5
+   */
+  public static List<CDORevision> getChildRevisions(CDORevision container, CDORevisionProvider provider,
+      boolean onlyProperContents)
+  {
     List<CDORevision> children = new ArrayList<CDORevision>();
 
     InternalCDORevision revisionData = (InternalCDORevision)container;
     CDOClassInfo classInfo = revisionData.getClassInfo();
+
+    if (onlyProperContents && classInfo.isResource())
+    {
+      onlyProperContents = false;
+    }
 
     for (EStructuralFeature feature : classInfo.getAllPersistentContainments())
     {
@@ -393,14 +416,14 @@ public final class CDORevisionUtil
           {
             for (Object value : list)
             {
-              addChildRevision(value, provider, children);
+              addChildRevision(value, provider, children, onlyProperContents);
             }
           }
         }
         else
         {
           Object value = revisionData.getValue(feature);
-          addChildRevision(value, provider, children);
+          addChildRevision(value, provider, children, onlyProperContents);
         }
       }
     }
@@ -408,7 +431,8 @@ public final class CDORevisionUtil
     return children;
   }
 
-  private static void addChildRevision(Object value, CDORevisionProvider provider, List<CDORevision> children)
+  private static void addChildRevision(Object value, CDORevisionProvider provider, List<CDORevision> children,
+      boolean onlyProperContents)
   {
     if (value instanceof CDOID)
     {
@@ -416,6 +440,16 @@ public final class CDORevisionUtil
       CDORevision child = provider.getRevision(id);
       if (child != null)
       {
+        if (onlyProperContents)
+        {
+          // Check proper contents (i.e., no containment proxy).
+          CDOID resourceID = child.data().getResourceID();
+          if (!CDOIDUtil.isNull(resourceID))
+          {
+            return;
+          }
+        }
+
         children.add(child);
       }
     }

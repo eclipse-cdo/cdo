@@ -633,41 +633,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     CDOBranch branch = view.getBranch();
     CDOBranchPoint head = branch.getHead();
 
-    final CDOTransaction transaction = session.openTransaction(head, resourceSet);
-    // transaction.addTransactionHandler(new CDODefaultTransactionHandler1()
-    // {
-    // private Job commitJob = new Job("Commit")
-    // {
-    // @Override
-    // protected IStatus run(IProgressMonitor monitor)
-    // {
-    // try
-    // {
-    // synchronized (transaction)
-    // {
-    // if (transaction.isDirty())
-    // {
-    // transaction.commit();
-    // }
-    // }
-    // }
-    // catch (Throwable ex)
-    // {
-    // ex.printStackTrace();
-    // }
-    //
-    // return Status.OK_STATUS;
-    // }
-    // };
-    //
-    // @Override
-    // public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureChange)
-    // {
-    // commitJob.schedule(200);
-    // }
-    // });
-
-    return transaction;
+    return session.openTransaction(head, resourceSet);
   }
 
   protected CDOView configureView(final CDOView view)

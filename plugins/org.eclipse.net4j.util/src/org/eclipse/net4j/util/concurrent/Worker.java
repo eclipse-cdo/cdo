@@ -86,6 +86,14 @@ public abstract class Worker extends Lifecycle
     this.deactivationTimeout = deactivationTimeout;
   }
 
+  /**
+   * @since 3.6
+   */
+  public WorkerThread getWorkerThread()
+  {
+    return workerThread;
+  }
+
   @Override
   protected void doActivate() throws Exception
   {

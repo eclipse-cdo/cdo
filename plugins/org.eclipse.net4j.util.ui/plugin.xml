@@ -39,13 +39,15 @@
       <factory
             class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory"
             productGroup="org.eclipse.net4j.util.security.credentialsProviders"
-            type="interactive">
-      </factory>
+            type="interactive"/>
       <factory
             class="org.eclipse.net4j.util.ui.confirmation.InteractiveConfirmationProvider$Factory"
             productGroup="org.eclipse.net4j.util.confirmationProviders"
-            type="interactive">
-      </factory>
+            type="interactive"/>
+      <factory
+            class="org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector$Factory"
+            productGroup="org.eclipse.net4j.util.concurrent.delegateDetectors"
+            type="display"/>
    </extension>
    
 </plugin>

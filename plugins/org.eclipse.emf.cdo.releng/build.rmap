@@ -163,7 +163,7 @@
 
 		<!-- EMF Client Platform -->
 		<rm:provider componentTypes="eclipse.feature,osgi.bundle" readerType="p2" source="false" mutable="false">
-			<rm:uri format="http://download.eclipse.org/ecp/releases/preview"/>
+			<rm:uri format="http://download.eclipse.org/ecp/releases/preview/ecp"/>
 		</rm:provider>
 
 		<!-- ORACLE.COM -->

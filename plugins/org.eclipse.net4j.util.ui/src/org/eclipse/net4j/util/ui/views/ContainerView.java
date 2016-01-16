@@ -41,7 +41,6 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -228,6 +227,7 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.1
    */
+  @SuppressWarnings("deprecation")
   protected void initViewer()
   {
     itemProvider = createContainerItemProvider();
@@ -240,7 +240,8 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   /**
    * @since 3.3
    */
-  protected ViewerSorter createViewerSorter()
+  @SuppressWarnings("deprecation")
+  protected org.eclipse.jface.viewers.ViewerSorter createViewerSorter()
   {
     return itemProvider;
   }

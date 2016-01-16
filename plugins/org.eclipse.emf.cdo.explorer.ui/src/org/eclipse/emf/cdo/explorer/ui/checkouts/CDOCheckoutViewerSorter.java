@@ -18,12 +18,12 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 
 /**
  * @author Eike Stepper
  */
-public class CDOCheckoutViewerSorter extends ViewerSorter
+@SuppressWarnings("deprecation")
+public class CDOCheckoutViewerSorter extends org.eclipse.jface.viewers.ViewerSorter
 {
   @Override
   public int category(Object element)

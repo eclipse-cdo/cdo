@@ -33,7 +33,6 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -77,7 +76,6 @@ public class RemoteTraceView extends ViewPart
     createColmuns(viewer);
     viewer.setContentProvider(new ViewContentProvider());
     viewer.setLabelProvider(new ViewLabelProvider());
-    // viewer.setSorter(new NameSorter());
     viewer.setInput(getViewSite());
 
     // final ToolTipHandler tooltip = new ToolTipHandler(getSite().getShell());
@@ -332,13 +330,6 @@ public class RemoteTraceView extends ViewPart
 
       return str.replaceAll("\r", ""); //$NON-NLS-1$ //$NON-NLS-2$
     }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class NameSorter extends ViewerSorter
-  {
   }
 
   // static class ToolTipHandler

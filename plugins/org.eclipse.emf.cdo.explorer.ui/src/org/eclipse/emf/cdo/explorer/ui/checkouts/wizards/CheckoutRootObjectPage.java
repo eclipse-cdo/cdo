@@ -244,7 +244,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
     treeViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
     treeViewer.setContentProvider(itemProvider);
     treeViewer.setLabelProvider(itemProvider);
-    treeViewer.setSorter(new CDOCheckoutViewerSorter());
+    treeViewer.setComparator(new CDOCheckoutViewerSorter());
     treeViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
       public void selectionChanged(SelectionChangedEvent event)

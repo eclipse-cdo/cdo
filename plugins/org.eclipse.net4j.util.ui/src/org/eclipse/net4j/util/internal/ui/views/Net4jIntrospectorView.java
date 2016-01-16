@@ -36,7 +36,7 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Color;
@@ -170,7 +170,7 @@ public class Net4jIntrospectorView extends ViewPart
     objectViewer.addDoubleClickListener(this);
     objectViewer.setContentProvider(new ObjectContentProvider());
     objectViewer.setLabelProvider(new ObjectLabelProvider());
-    objectViewer.setSorter(new NameSorter());
+    objectViewer.setComparator(new NameComparator());
     objectViewer.setInput(getViewSite());
 
     iterableViewer = createViewer(stacked);
@@ -192,7 +192,7 @@ public class Net4jIntrospectorView extends ViewPart
     mapViewer.addDoubleClickListener(this);
     mapViewer.setContentProvider(new MapContentProvider());
     mapViewer.setLabelProvider(new MapLabelProvider());
-    mapViewer.setSorter(new NameSorter());
+    mapViewer.setComparator(new NameComparator());
     mapViewer.setInput(getViewSite());
 
     IActionBars bars = getViewSite().getActionBars();
@@ -824,7 +824,7 @@ public class Net4jIntrospectorView extends ViewPart
   /**
    * @author Eike Stepper
    */
-  class NameSorter extends ViewerSorter
+  class NameComparator extends ViewerComparator
   {
   }
 }

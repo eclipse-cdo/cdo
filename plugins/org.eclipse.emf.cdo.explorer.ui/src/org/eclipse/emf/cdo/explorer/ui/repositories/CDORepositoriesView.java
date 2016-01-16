@@ -115,7 +115,7 @@ public class CDORepositoriesView extends ContainerView
 
     TreeViewer viewer = getViewer();
     viewer.addTreeListener(activityDetector);
-    viewer.setSorter(null);
+    viewer.setComparator(null);
     UIUtil.addDragSupport(viewer);
 
     Tree tree = viewer.getTree();

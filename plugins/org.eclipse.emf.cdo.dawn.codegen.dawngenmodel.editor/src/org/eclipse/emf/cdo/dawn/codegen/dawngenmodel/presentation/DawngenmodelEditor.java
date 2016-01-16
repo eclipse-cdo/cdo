@@ -131,7 +131,7 @@ import java.util.Map;
  * @generated
  */
 public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingDomainProvider, ISelectionProvider,
-IMenuListener, IViewerProvider, IGotoMarker, ISelectionChangedListener
+    IMenuListener, IViewerProvider, IGotoMarker, ISelectionChangedListener
 {
   /**
    * This keeps track of the editing domain that is used to track all changes to the model. <!-- begin-user-doc --> <!--
@@ -1205,6 +1205,7 @@ IMenuListener, IViewerProvider, IGotoMarker, ISelectionChangedListener
           }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
             IStatusLineManager statusLineManager)
@@ -1213,6 +1214,7 @@ IMenuListener, IViewerProvider, IGotoMarker, ISelectionChangedListener
           contentOutlineStatusLineManager = statusLineManager;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void setActionBars(IActionBars actionBars)
         {
@@ -1470,7 +1472,7 @@ IMenuListener, IViewerProvider, IGotoMarker, ISelectionChangedListener
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
         ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-        doSave(progressMonitor);
+    doSave(progressMonitor);
   }
 
   /**

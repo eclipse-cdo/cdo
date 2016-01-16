@@ -1198,6 +1198,7 @@ public class SecurityEditor extends MultiPageEditorPart
           }
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
             IStatusLineManager statusLineManager)
@@ -1206,6 +1207,7 @@ public class SecurityEditor extends MultiPageEditorPart
           contentOutlineStatusLineManager = statusLineManager;
         }
 
+        @SuppressWarnings("deprecation")
         @Override
         public void setActionBars(IActionBars actionBars)
         {
@@ -1449,7 +1451,7 @@ public class SecurityEditor extends MultiPageEditorPart
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null
         ? getActionBars().getStatusLineManager().getProgressMonitor() : new NullProgressMonitor();
-        doSave(progressMonitor);
+    doSave(progressMonitor);
   }
 
   /**

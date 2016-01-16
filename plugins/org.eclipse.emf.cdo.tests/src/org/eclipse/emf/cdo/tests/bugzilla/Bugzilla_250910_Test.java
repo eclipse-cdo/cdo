@@ -20,11 +20,13 @@ import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import java.util.concurrent.Callable;
+
 /**
  * 250910: IllegalArgumentException: created > revised
  * <p>
  * See bug 250910
- * 
+ *
  * @author Simon McDuff
  */
 public class Bugzilla_250910_Test extends AbstractCDOTest
@@ -33,7 +35,7 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
 
-    CDOTransaction transaction1 = session.openTransaction();
+    final CDOTransaction transaction1 = session.openTransaction();
     String resourcePath = "/test1";
     CDOResource res = transaction1.createResource(getResourcePath(resourcePath));
     Company company = getModel1Factory().createCompany();
@@ -41,24 +43,28 @@ public class Bugzilla_250910_Test extends AbstractCDOTest
     res.getContents().add(company);
     transaction1.commit();
 
-    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    final CDOID id = CDOUtil.getCDOObject(company).cdoID();
 
     for (int i = 0; i < 20; i++)
     {
-      TestAdapter testAdapter = new TestAdapter();
+      final TestAdapter testAdapter = new TestAdapter();
       CDOSession session2 = openSession();
-      CDOTransaction transaction2 = session2.openTransaction();
+      final CDOTransaction transaction2 = session2.openTransaction();
       company.setName(String.valueOf(i));
 
-      Company company2;
-      synchronized (transaction2)
+      Company company2 = transaction2.syncExec(new Callable<Company>()
       {
-        transaction1.commit();
+        public Company call() throws Exception
+        {
+          transaction1.commit();
 
-        transaction2.options().setInvalidationNotificationEnabled(true);
-        company2 = (Company)CDOUtil.getEObject(transaction2.getObject(id, true));
-        company2.eAdapters().add(testAdapter);
-      }
+          transaction2.options().setInvalidationNotificationEnabled(true);
+          Company company2 = (Company)CDOUtil.getEObject(transaction2.getObject(id, true));
+          company2.eAdapters().add(testAdapter);
+
+          return company2;
+        }
+      });
 
       assertEquals(String.valueOf(i), company2.getName());
       // Need a way to test if an error occured in the invalidation process.

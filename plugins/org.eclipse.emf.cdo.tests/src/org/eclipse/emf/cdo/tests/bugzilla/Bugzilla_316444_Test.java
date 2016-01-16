@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.WrappedException;
 
@@ -32,6 +33,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -584,48 +586,57 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     return y;
   }
 
-  private NodeB getElementFromGraphNodeB(NodeB node, String name)
+  private NodeB getElementFromGraphNodeB(final NodeB node, final String name) throws Exception
   {
     if (node.getName().equals(name))
     {
       return node;
     }
 
-    synchronized (CDOUtil.getView(node))
+    CDOView view = CDOUtil.getView(node);
+    return view.syncExec(new Callable<NodeB>()
     {
-      for (NodeB child : node.getChildren())
+      public NodeB call() throws Exception
       {
-        NodeB elementFromGraph = getElementFromGraphNodeB(child, name);
-        if (elementFromGraph != null)
+        for (NodeB child : node.getChildren())
         {
-          return elementFromGraph;
+          NodeB elementFromGraph = getElementFromGraphNodeB(child, name);
+          if (elementFromGraph != null)
+          {
+            return elementFromGraph;
+          }
         }
-      }
-    }
 
-    return null;
+        return null;
+      }
+    });
   }
 
   @SuppressWarnings("unused")
-  private NodeA getElementFromGraphNodeA(NodeA node, String name)
+  private NodeA getElementFromGraphNodeA(final NodeA node, final String name) throws Exception
   {
     if (node.getName().equals(name))
     {
       return node;
     }
 
-    synchronized (CDOUtil.getView(node))
+    CDOView view = CDOUtil.getView(node);
+    return view.syncExec(new Callable<NodeA>()
     {
-      for (NodeA child : node.getChildren())
+      public NodeA call() throws Exception
       {
-        NodeA elementFromGraph = getElementFromGraphNodeA(child, name);
-        if (elementFromGraph != null)
+        for (NodeA child : node.getChildren())
         {
-          return elementFromGraph;
+          NodeA elementFromGraph = getElementFromGraphNodeA(child, name);
+          if (elementFromGraph != null)
+          {
+            return elementFromGraph;
+          }
         }
+
+        return null;
       }
-    }
-    return null;
+    });
   }
 
   /*

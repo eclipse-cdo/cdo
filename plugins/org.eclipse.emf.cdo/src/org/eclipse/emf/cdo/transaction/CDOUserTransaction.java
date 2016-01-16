@@ -45,24 +45,23 @@ public interface CDOUserTransaction
    * write robust transactions:
    * <pre>
     CDOTransaction transaction = null;
-  
+
     try
     {
       transaction = session.openTransaction();
-  
+
       for (;;)
       {
+        transaction.getViewLock().lock();
+  
         try
         {
-          synchronized (transaction)
-          {
-            CDOResource resource = transaction.getResource("/stock/resource1");
+          CDOResource resource = transaction.getResource("/stock/resource1");
   
-            // Modify the model here...
+          // Modify the model here...
   
-            transaction.commit();
-            break;
-          }
+          transaction.commit();
+          break;
         }
         catch (ConcurrentAccessException ex)
         {
@@ -71,6 +70,10 @@ public interface CDOUserTransaction
         catch (CommitException ex)
         {
           throw ex.wrap();
+        }
+        finally
+        {
+          transaction.getViewLock().unlock();
         }
       }
     }

@@ -109,7 +109,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
   public ServerCDOView(InternalSession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
   {
-    super(branchPoint);
+    super(null, branchPoint);
     this.session = new ServerCDOSession(session);
     this.revisionProvider = revisionProvider;
 
@@ -147,13 +147,13 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     return this;
   }
 
-  public synchronized InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
+  public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
     return (InternalCDORevision)revisionProvider.getRevision(id);
   }
 
   @Override
-  protected synchronized void excludeNewObject(CDOID id)
+  protected void excludeNewObject(CDOID id)
   {
     // Do nothing
   }
@@ -1222,6 +1222,16 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isDelegableViewLockEnabled()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void setDelegableViewLockEnabled(boolean enabled)
     {
       throw new UnsupportedOperationException();
     }

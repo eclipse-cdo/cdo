@@ -1392,6 +1392,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
     private CDOPermissionUpdater permissionUpdater = CDOPermissionUpdater.SERVER;
 
+    private boolean delegableViewLockEnabled;
+
     public OptionsImpl()
     {
       setCollectionLoadingPolicy(null); // Init default
@@ -1621,6 +1623,37 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
       }
     }
 
+    public boolean isDelegableViewLockEnabled()
+    {
+      synchronized (this)
+      {
+        return delegableViewLockEnabled;
+      }
+    }
+
+    public void setDelegableViewLockEnabled(boolean delegableViewLockEnabled)
+    {
+      IListener[] listeners = getListeners();
+      IEvent event = null;
+
+      synchronized (this)
+      {
+        if (this.delegableViewLockEnabled != delegableViewLockEnabled)
+        {
+          this.delegableViewLockEnabled = delegableViewLockEnabled;
+          if (listeners != null)
+          {
+            event = new DelegableViewLockEventImpl();
+          }
+        }
+      }
+
+      if (event != null)
+      {
+        fireEvent(event, listeners);
+      }
+    }
+
     /**
      * @author Eike Stepper
      */
@@ -1742,6 +1775,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
       private static final long serialVersionUID = 1L;
 
       public PermissionUpdaterEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class DelegableViewLockEventImpl extends OptionsEvent implements DelegableViewLockEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public DelegableViewLockEventImpl()
       {
         super(OptionsImpl.this);
       }

@@ -67,6 +67,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.locks.Lock;
 
 /**
  * A {@link CDOTransaction transaction} that persists changes to the object graph locally on commit and can later load
@@ -674,6 +676,30 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public CDOViewSet getViewSet()
   {
     return delegate.getViewSet();
+  }
+
+  /**
+   * @since 4.5
+   */
+  public Lock getViewLock()
+  {
+    return delegate.getViewLock();
+  }
+
+  /**
+   * @since 4.5
+   */
+  public void syncExec(Runnable runnable)
+  {
+    delegate.syncExec(runnable);
+  }
+
+  /**
+   * @since 4.5
+   */
+  public <V> V syncExec(Callable<V> callable) throws Exception
+  {
+    return delegate.syncExec(callable);
   }
 
   public boolean hasConflict()

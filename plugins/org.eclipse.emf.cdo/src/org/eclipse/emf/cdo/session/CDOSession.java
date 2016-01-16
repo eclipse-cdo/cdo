@@ -31,18 +31,23 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionContainer;
 import org.eclipse.emf.cdo.util.CDOUpdatable;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
+
+import java.util.concurrent.locks.Lock;
 
 /**
  * Represents and controls the connection to a model repository in addition to the inherited {@link CDOView view}
@@ -293,6 +298,21 @@ public interface CDOSession
     public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater);
 
     /**
+     * @since 4.5
+     */
+    public boolean isDelegableViewLockEnabled();
+
+    /**
+     * This method is useful, for example, if EMF {@link Adapter adapters} call <code>Display.syncExec()</code> in response to CDO notifications.
+     * In these cases a {@link DelegableReentrantLock} can be injected into the new {@link CDOView view},
+     * which does not deadlock when both CDO's invalidation thread and the display thread acquire the view lock.
+     *
+     * @see CDOUtil#setNextViewLock(Lock)
+     * @since 4.5
+     */
+    public void setDelegableViewLockEnabled(boolean delegableViewLockEnabled);
+
+    /**
      * An {@link IOptionsEvent options event} fired when the
      * {@link Options#setGeneratedPackageEmulationEnabled(boolean) generated package emulation enabled} option of a
      * {@link CDOSession session} has changed.
@@ -341,6 +361,19 @@ public interface CDOSession
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface PermissionUpdaterEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired when the {@link Options#setDelegableViewLockEnabled(boolean) delegable view lock enabled}
+     * option of a {@link CDOSession session} has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.5
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface DelegableViewLockEvent extends IOptionsEvent
     {
     }
   }

@@ -32,16 +32,19 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession.Options;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
+import org.eclipse.emf.cdo.transaction.CDOTransactionContainer;
 import org.eclipse.emf.cdo.transaction.CDOXATransaction;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleObject;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewContainer;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 import org.eclipse.emf.cdo.view.CDOViewSet;
 
@@ -56,11 +59,13 @@ import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAInternalAdapter;
+import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 import org.eclipse.emf.internal.cdo.view.CDORevisionPrefetchingPolicyImpl;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.view.CDOStoreImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
@@ -86,6 +91,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Various static methods that may help in CDO client applications.
@@ -229,6 +235,25 @@ public final class CDOUtil
     }
 
     return null;
+  }
+
+  /**
+   * Sets the {@link CDOView#getViewLock() lock} to be used for the next view that is opened in the context of the current thread.
+   * <p>
+   * This method is useful, for example, if EMF {@link Adapter adapters} call <code>Display.syncExec()</code> in response to CDO notifications.
+   * In these cases a {@link DelegableReentrantLock} can be injected into the new {@link CDOView view},
+   * which does not deadlock when both CDO's invalidation thread and the display thread acquire the view lock.
+   * <p>
+   * This method involves a {@link ThreadLocal} variable to avoid method explosion in {@link CDOViewContainer} and {@link CDOTransactionContainer}.
+   * After calling this method make sure to either open a new {@link CDOView view} from the current thread or call <code>setNextViewLock(null)</code>
+   * to clear the {@link ThreadLocal} variable.
+   *
+   * @see Options#setDelegableViewLockEnabled(boolean)
+   * @since 4.5
+   */
+  public static void setNextViewLock(Lock viewLock)
+  {
+    AbstractCDOView.setNextViewLock(viewLock);
   }
 
   /**

@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -134,41 +135,46 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
     protected void runSafe(AtomicReference<Throwable> exception) throws Exception
     {
       CDOSession session = openSession();
-      CDOTransaction transaction = session.openTransaction();
+      final CDOTransaction transaction = session.openTransaction();
       transaction.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
       transaction.options().setStaleReferencePolicy(CDOStaleReferencePolicy.EXCEPTION);
 
-      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
-      List<Company> listOfCompanies = new ArrayList<Company>();
+      final CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+      final List<Company> listOfCompanies = new ArrayList<Company>();
 
       int loop = 5;
       while (exception.get() == null && --loop != 0)
       {
-        synchronized (transaction)
+        transaction.syncExec(new Callable<Object>()
         {
-          for (int i = 0; i < 20; i++)
+          public Object call() throws Exception
           {
-            Company company = createCompanyWithCategories(resource);
-            listOfCompanies.add(company);
-          }
-
-          transaction.commit();
-
-          while (!listOfCompanies.isEmpty())
-          {
-            Company company = listOfCompanies.remove(0);
-
-            EList<Category> categories = company.getCategories();
-            while (!categories.isEmpty())
+            for (int i = 0; i < 20; i++)
             {
-              categories.remove(0);
+              Company company = createCompanyWithCategories(resource);
+              listOfCompanies.add(company);
+            }
+
+            transaction.commit();
+
+            while (!listOfCompanies.isEmpty())
+            {
+              Company company = listOfCompanies.remove(0);
+
+              EList<Category> categories = company.getCategories();
+              while (!categories.isEmpty())
+              {
+                categories.remove(0);
+                transaction.commit();
+              }
+
+              resource.getContents().remove(company);
               transaction.commit();
             }
 
-            resource.getContents().remove(company);
-            transaction.commit();
+            return null;
           }
-        }
+        });
       }
 
       throw new Success();
@@ -211,25 +217,30 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
       transaction.options().setInvalidationPolicy(CDOInvalidationPolicy.STRICT);
       transaction.options().setFeatureAnalyzer(CDOUtil.createModelBasedFeatureAnalyzer());
 
-      CDOResource resource = transaction.getResource(getResourcePath("/test1"));
+      final CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
       while (exception.get() == null)
       {
         try
         {
-          synchronized (transaction)
+          transaction.syncExec(new Callable<Object>()
           {
-            for (EObject object : resource.getContents())
+            public Object call() throws Exception
             {
-              Company company = (Company)object;
-              EList<Category> categories = company.getCategories();
-              if (categories.size() > 0)
+              for (EObject object : resource.getContents())
               {
-                Category category = categories.get(0);
-                msg(category);
+                Company company = (Company)object;
+                EList<Category> categories = company.getCategories();
+                if (categories.size() > 0)
+                {
+                  Category category = categories.get(0);
+                  msg(category);
+                }
               }
+
+              return null;
             }
-          }
+          });
         }
         catch (InvalidObjectException ex)
         {

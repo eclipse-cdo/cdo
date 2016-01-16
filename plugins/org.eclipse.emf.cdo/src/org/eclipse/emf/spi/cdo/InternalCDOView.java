@@ -199,6 +199,21 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public ViewAndState getViewAndState(CDOState state);
 
   /**
+   * @since 4.5
+   */
+  public Object getViewMonitor();
+
+  /**
+   * @since 4.5
+   */
+  public void lockView();
+
+  /**
+   * @since 4.5
+   */
+  public void unlockView();
+
+  /**
    * Optimizes the storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}. All objects of a view
    * share a small number of {@link CDOState} literals, so they are moved into a final AbstractCDOView.viewAndStates array.
    * For the {@link CDOState#TRANSIENT TRANSIENT} state, where there is no view associated with a {@link CDOObject}, this class

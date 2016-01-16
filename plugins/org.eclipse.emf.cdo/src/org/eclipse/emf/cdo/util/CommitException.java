@@ -24,17 +24,16 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 
     for (;;)
     {
+      transaction.getViewLock().lock();
+
       try
       {
-        synchronized (transaction)
-        {
-          CDOResource resource = transaction.getResource("/stock/resource1");
+        CDOResource resource = transaction.getResource("/stock/resource1");
 
-          // Modify the model here...
+        // Modify the model here...
 
-          transaction.commit();
-          break;
-        }
+        transaction.commit();
+        break;
       }
       catch (ConcurrentAccessException ex)
       {
@@ -43,6 +42,10 @@ import org.eclipse.net4j.util.transaction.TransactionException;
       catch (CommitException ex)
       {
         throw ex.wrap();
+      }
+      finally
+      {
+        transaction.getViewLock().unlock();
       }
     }
  * </pre>

@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -88,22 +89,28 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
       latch.countDown();
     }
 
-    private void attemptCommit(CDOTransaction transaction)
+    private void attemptCommit(final CDOTransaction transaction)
     {
       for (;;)
       {
-        Category category = getModel1Factory().createCategory();
+        final Category category = getModel1Factory().createCategory();
         category.setName("category-" + System.currentTimeMillis());
 
         try
         {
-          synchronized (transaction)
+          transaction.syncExec(new Callable<Object>()
           {
-            CDOResource res = transaction.getOrCreateResource(getResourcePath("/res-" + nr));
-            res.getContents().add(category);
-            transaction.commit();
-            break;
-          }
+            public Object call() throws Exception
+            {
+              CDOResource res = transaction.getOrCreateResource(getResourcePath("/res-" + nr));
+              res.getContents().add(category);
+              transaction.commit();
+
+              return null;
+            }
+          });
+
+          break;
         }
         catch (CommitConflictException ex)
         {

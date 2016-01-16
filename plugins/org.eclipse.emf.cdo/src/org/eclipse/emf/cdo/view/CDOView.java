@@ -57,6 +57,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.locks.Lock;
 
 /**
  * A read-only view to the state of the object graph in the repository of the underlying {@link CDOSession session} at a
@@ -125,6 +127,21 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * @see CDOViewSet#getViews()
    */
   public CDOViewSet getViewSet();
+
+  /**
+   * @since 4.5
+   */
+  public Lock getViewLock();
+
+  /**
+   * @since 4.5
+   */
+  public void syncExec(Runnable runnable);
+
+  /**
+   * @since 4.5
+   */
+  public <V> V syncExec(Callable<V> callable) throws Exception;
 
   /**
    * Returns the {@link ResourceSet resource set} this view is associated with.

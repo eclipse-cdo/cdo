@@ -17,6 +17,7 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewContainer;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
@@ -41,7 +42,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public abstract class CDOViewContainerImpl extends Container<CDOView>implements CDOViewContainer
+public abstract class CDOViewContainerImpl extends Container<CDOView> implements CDOViewContainer
 {
   public static final ThreadLocal<CDOViewProvider> VIEW_PROVIDER = new ThreadLocal<CDOViewProvider>();
 
@@ -211,7 +212,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView>implements 
    */
   protected InternalCDOView createView(CDOBranch branch, long timeStamp)
   {
-    return new CDOViewImpl(branch, timeStamp);
+    return new CDOViewImpl((CDOSession)this, branch, timeStamp);
   }
 
   /**
@@ -219,7 +220,7 @@ public abstract class CDOViewContainerImpl extends Container<CDOView>implements 
    */
   protected InternalCDOView createView(String durableLockingID)
   {
-    return new CDOViewImpl(durableLockingID);
+    return new CDOViewImpl((CDOSession)this, durableLockingID);
   }
 
   protected ResourceSet createResourceSet()

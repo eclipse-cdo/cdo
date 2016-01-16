@@ -17,6 +17,7 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionContainer;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -115,7 +116,7 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
    */
   protected InternalCDOTransaction createTransaction(CDOBranch branch)
   {
-    return new CDOTransactionImpl(branch);
+    return new CDOTransactionImpl((CDOSession)this, branch);
   }
 
   /**
@@ -123,6 +124,6 @@ public abstract class CDOTransactionContainerImpl extends CDOViewContainerImpl i
    */
   protected InternalCDOTransaction createTransaction(String durableLockingID)
   {
-    return new CDOTransactionImpl(durableLockingID);
+    return new CDOTransactionImpl((CDOSession)this, durableLockingID);
   }
 }

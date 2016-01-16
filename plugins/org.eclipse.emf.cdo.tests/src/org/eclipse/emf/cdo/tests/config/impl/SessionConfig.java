@@ -278,6 +278,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
   {
     final File lobCache = getCurrentTest().createTempFolder("lobs_" + new Date().getTime() + "_", ".tmp");
     session.options().setLobCache(new CDOLobStoreImpl(lobCache));
+    session.options().setDelegableViewLockEnabled(true);
     session.addListener(new LifecycleEventAdapter()
     {
       @Override

@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -164,63 +166,72 @@ public class Locking_SequenceWithChildListTest_DISABLED extends AbstractLockingT
         for (int allocation = 0; allocation < ADDITIONS; allocation++)
         {
           CDOSession session = Locking_SequenceWithChildListTest_DISABLED.this.openSession();
-          CDOTransaction transaction = session.openTransaction();
+          InternalCDOTransaction transaction = (InternalCDOTransaction)session.openTransaction();
 
           try
           {
-            synchronized (transaction)
+            synchronized (transaction.getViewMonitor())
             {
-              for (int retry = 0; retry < RETRIES; ++retry)
+              transaction.lockView();
+
+              try
               {
-                Company company = transaction.getObject(c);
-                CDOObject cdoObject = CDOUtil.getCDOObject(company);
-                CDOLock lock = cdoObject.cdoWriteLock();
-
-                TimerThread timerThread = new TimerThread(getName() + ": lock(" + LOCK_TIMEOUT + ")");
-
-                try
+                for (int retry = 0; retry < RETRIES; ++retry)
                 {
-                  timerThread.start();
-                  lock.lock(LOCK_TIMEOUT);
+                  Company company = transaction.getObject(c);
+                  CDOObject cdoObject = CDOUtil.getCDOObject(company);
+                  CDOLock lock = cdoObject.cdoWriteLock();
 
-                  Category category = getModel1Factory().createCategory();
-                  company.getCategories().add(category);
+                  TimerThread timerThread = new TimerThread(getName() + ": lock(" + LOCK_TIMEOUT + ")");
 
                   try
                   {
-                    int version = cdoObject.cdoRevision().getVersion() + 1;
-                    System.out.println(getName() + ": committing version " + version);
+                    timerThread.start();
+                    lock.lock(LOCK_TIMEOUT);
 
-                    transaction.setCommitComment(getName() + ": version " + version);
-                    transaction.commit();
+                    Category category = getModel1Factory().createCategory();
+                    company.getCategories().add(category);
 
-                    ++additions;
-                    msg("Category added " + getAdditions());
-                    break; // No more retries.
+                    try
+                    {
+                      int version = cdoObject.cdoRevision().getVersion() + 1;
+                      System.out.println(getName() + ": committing version " + version);
+
+                      transaction.setCommitComment(getName() + ": version " + version);
+                      transaction.commit();
+
+                      ++additions;
+                      msg("Category added " + getAdditions());
+                      break; // No more retries.
+                    }
+                    catch (Exception ex)
+                    {
+                      exception = ex;
+                      return;
+                    }
                   }
-                  catch (Exception ex)
+                  catch (TimeoutException ex)
                   {
+                    msg("Lock timed out.");
+
                     exception = ex;
-                    return;
-                  }
-                }
-                catch (TimeoutException ex)
-                {
-                  msg("Lock timed out.");
+                    if (retry == RETRIES - 1)
+                    {
+                      msg("Exhausted!");
+                      return;
+                    }
 
-                  exception = ex;
-                  if (retry == RETRIES - 1)
+                    msg("Trying again...");
+                  }
+                  finally
                   {
-                    msg("Exhausted!");
-                    return;
+                    timerThread.done();
                   }
-
-                  msg("Trying again...");
                 }
-                finally
-                {
-                  timerThread.done();
-                }
+              }
+              finally
+              {
+                transaction.unlockView();
               }
             }
           }

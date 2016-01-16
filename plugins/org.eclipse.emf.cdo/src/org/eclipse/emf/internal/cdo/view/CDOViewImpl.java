@@ -78,6 +78,8 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.event.ThrowableEvent;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -116,6 +118,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -1543,6 +1546,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
 
     lockOwner = CDOLockUtil.createLockOwner(this);
+
+    if (viewLock != null && Boolean.getBoolean("org.eclipse.emf.cdo.sync.tester"))
+    {
+      new SyncTester().start();
+    }
   }
 
   @Override
@@ -2394,6 +2402,45 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
 
       return objects.toArray(new EObject[objects.size()]);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SyncTester extends Thread
+  {
+    private final CountDownLatch latch = new CountDownLatch(1);
+
+    public SyncTester()
+    {
+      super(CDOViewImpl.this + "-sync-tester");
+      setDaemon(true);
+    }
+
+    @Override
+    public void run()
+    {
+      addListener(new LifecycleEventAdapter()
+      {
+        @Override
+        protected void onAboutToDeactivate(ILifecycle lifecycle)
+        {
+          latch.countDown();
+        }
+      });
+
+      synchronized (CDOViewImpl.this)
+      {
+        try
+        {
+          latch.await();
+        }
+        catch (InterruptedException ex)
+        {
+          return;
+        }
+      }
     }
   }
 

@@ -1099,6 +1099,50 @@ public final class DBUtil
     }
   }
 
+  /**
+   * Returns the number of rows contained in the given table.
+   *
+   * @since 4.5
+   */
+  public static int getRowCount(Connection connection, String tableName) throws DBException
+  {
+    String sql = trace("SELECT COUNT(*) FROM " + tableName);
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      statement = connection.createStatement();
+
+      try
+      {
+        resultSet = statement.executeQuery(sql);
+        if (!resultSet.next())
+        {
+          return -1;
+        }
+
+        return resultSet.getInt(1);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        close(resultSet);
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      close(statement);
+    }
+  }
+
   private static void reset(ResultSet resultSet) throws DBException
   {
     try

@@ -85,6 +85,10 @@ public class DBBrowserPage extends AbstractPage
   protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, String repo)
   {
     String table = browser.getParam("table");
+    boolean used = browser.isParam("used");
+
+    int totalRows = 0;
+    int usedTables = 0;
 
     List<String> allTableNames = DBUtil.getAllTableNames(connection, repo);
     for (String tableName : allTableNames)
@@ -95,14 +99,47 @@ public class DBBrowserPage extends AbstractPage
       }
 
       String label = browser.escape(tableName)/* .toLowerCase() */;
+
+      int rowCount = DBUtil.getRowCount(connection, tableName);
+      if (rowCount > 0)
+      {
+        // label += " (" + rowCount + ")";
+        totalRows += rowCount;
+        ++usedTables;
+      }
+      else if (used)
+      {
+        continue;
+      }
+
       if (tableName.equals(table))
       {
-        pout.print("<b>" + label + "</b><br>\r\n");
+        pout.print("<b>" + label + "</b>");
       }
       else
       {
-        pout.print(browser.href(label, getName(), "table", tableName, "order", null, "direction", null) + "<br>\r\n");
+        pout.print(browser.href(label, getName(), "table", tableName, "order", null, "direction", null));
       }
+
+      if (rowCount > 0)
+      {
+        pout.print(" (" + rowCount + ")");
+      }
+
+      pout.print("<br>\r\n");
+    }
+
+    if (totalRows != 0)
+    {
+      int totalTables = allTableNames.size();
+      int emptyTables = totalTables - usedTables;
+
+      pout.print("<br>" + totalTables + " tables total\r\n");
+      pout.print("<br>" + usedTables + " tables used (" + totalRows + " rows)\r\n");
+      pout.print("<br>" + emptyTables + " tables empty\r\n");
+      pout.print("<br>"
+          + browser.href(used ? "Show empty tables" : "Hide empty tables", getName(), "used", String.valueOf(!used))
+          + "<br>\r\n");
     }
 
     return table;

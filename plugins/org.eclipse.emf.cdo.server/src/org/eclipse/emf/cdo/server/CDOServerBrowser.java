@@ -208,7 +208,14 @@ public class CDOServerBrowser extends Worker
       if (param.length() != 0)
       {
         String[] keyValue = param.split("=");
-        map.put(keyValue[0], keyValue[1]);
+        if (keyValue.length == 1)
+        {
+          map.put(keyValue[0], "true");
+        }
+        else
+        {
+          map.put(keyValue[0], keyValue[1]);
+        }
       }
     }
   }
@@ -229,6 +236,15 @@ public class CDOServerBrowser extends Worker
   {
     Map<String, String> map = params.get();
     return map.get(key);
+  }
+
+  /**
+   * @since 4.5
+   */
+  public boolean isParam(String key)
+  {
+    Map<String, String> map = params.get();
+    return "true".equalsIgnoreCase(map.get(key));
   }
 
   public String href(String label, String resource, String... params)

@@ -86,6 +86,15 @@ public class DBBrowserPage extends AbstractPage
   {
     String table = browser.getParam("table");
     boolean used = browser.isParam("used");
+    boolean schema = browser.isParam("schema");
+
+    pout.print("<table border=\"0\">\r\n");
+    pout.print("<tr><td><b>Empty tables:</b></td><td><b>"
+        + browser.href(used ? "Hidden" : "Shown", getName(), "used", String.valueOf(!used)) + "</b></td></tr>\r\n");
+    pout.print("<tr><td><b>Row data:</b></td><td><b>"
+        + browser.href(schema ? "Hidden" : "Shown", getName(), "schema", String.valueOf(!schema))
+        + "</b></td></tr>\r\n");
+    pout.print("</table><br>\r\n");
 
     int totalRows = 0;
     int usedTables = 0;
@@ -136,10 +145,7 @@ public class DBBrowserPage extends AbstractPage
 
       pout.print("<br>" + totalTables + " tables total\r\n");
       pout.print("<br>" + usedTables + " tables used (" + totalRows + " rows)\r\n");
-      pout.print("<br>" + emptyTables + " tables empty\r\n");
-      pout.print("<br>"
-          + browser.href(used ? "Show empty tables" : "Hide empty tables", getName(), "used", String.valueOf(!used))
-          + "<br>\r\n");
+      pout.print("<br>" + emptyTables + " tables empty<br>\r\n");
     }
 
     return table;
@@ -153,22 +159,24 @@ public class DBBrowserPage extends AbstractPage
     try
     {
       String order = browser.getParam("order");
-      executeQuery(browser, pout, connection,
+      executeQuery(browser, pout, connection, table,
           "SELECT * FROM " + table + (order == null ? "" : " ORDER BY " + order + " " + browser.getParam("direction")));
     }
     catch (Exception ex)
     {
       browser.removeParam("order");
       browser.removeParam("direction");
-      executeQuery(browser, pout, connection, "SELECT * FROM " + table);
+      executeQuery(browser, pout, connection, table, "SELECT * FROM " + table);
     }
   }
 
-  protected void executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String sql)
+  protected void executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String table,
+      String sql)
   {
     String order = browser.getParam("order");
     String direction = browser.getParam("direction");
     String highlight = browser.getParam("highlight");
+    boolean schema = browser.isParam("schema");
 
     Statement stmt = null;
     ResultSet resultSet = null;
@@ -182,6 +190,7 @@ public class DBBrowserPage extends AbstractPage
       int columns = metaData.getColumnCount();
 
       pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
+      pout.print("<tr><td colspan=\"" + (1 + columns) + "\" align=\"center\"><b>" + table + "</b></td></tr>\r\n");
       pout.print("<tr>\r\n");
       pout.print("<td>&nbsp;</td>\r\n");
       for (int i = 0; i < columns; i++)
@@ -196,20 +205,23 @@ public class DBBrowserPage extends AbstractPage
 
       pout.print("</tr>\r\n");
 
-      int row = 0;
-      while (resultSet.next())
+      if (!schema)
       {
-        ++row;
-        pout.print("<tr>\r\n");
-        pout.print("<td><b>" + row + "</b></td>\r\n");
-        for (int i = 0; i < columns; i++)
+        int row = 0;
+        while (resultSet.next())
         {
-          String value = resultSet.getString(1 + i);
-          String bgcolor = highlight != null && highlight.equals(value) ? " bgcolor=\"#fffca6\"" : "";
-          pout.print("<td" + bgcolor + ">" + browser.href(value, getName(), "highlight", value) + "</td>\r\n");
-        }
+          ++row;
+          pout.print("<tr>\r\n");
+          pout.print("<td><b>" + row + "</b></td>\r\n");
+          for (int i = 0; i < columns; i++)
+          {
+            String value = resultSet.getString(1 + i);
+            String bgcolor = highlight != null && highlight.equals(value) ? " bgcolor=\"#fffca6\"" : "";
+            pout.print("<td" + bgcolor + ">" + browser.href(value, getName(), "highlight", value) + "</td>\r\n");
+          }
 
-        pout.print("</tr>\r\n");
+          pout.print("</tr>\r\n");
+        }
       }
 
       pout.print("</table>\r\n");

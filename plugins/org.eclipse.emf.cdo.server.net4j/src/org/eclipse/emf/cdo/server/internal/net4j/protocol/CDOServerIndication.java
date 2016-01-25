@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.signal.IndicationWithResponse;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -78,6 +79,12 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     }
 
     return store;
+  }
+
+  protected InternalView getView(int viewID)
+  {
+    InternalSession session = getSession();
+    return session.getView(viewID);
   }
 
   @Override

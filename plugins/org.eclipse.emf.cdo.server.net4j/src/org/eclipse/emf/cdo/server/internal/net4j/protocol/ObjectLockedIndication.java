@@ -39,7 +39,7 @@ public class ObjectLockedIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    IView view = getSession().getView(viewID);
+    IView view = getView(viewID);
     InternalLockManager lockManager = getRepository().getLockingManager();
 
     LockType lockType = in.readCDOLockType();

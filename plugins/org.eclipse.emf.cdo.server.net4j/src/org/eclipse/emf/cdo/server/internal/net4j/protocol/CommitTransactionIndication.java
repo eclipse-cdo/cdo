@@ -447,7 +447,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
   protected InternalTransaction getTransaction(int viewID)
   {
-    InternalView view = getSession().getView(viewID);
+    InternalView view = getView(viewID);
     if (view instanceof InternalTransaction)
     {
       return (InternalTransaction)view;

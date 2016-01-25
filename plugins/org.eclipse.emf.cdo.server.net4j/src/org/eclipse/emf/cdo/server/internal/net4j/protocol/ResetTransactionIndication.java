@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction.CommitAttempt;
 
@@ -57,8 +56,7 @@ public class ResetTransactionIndication extends CDOServerReadIndication
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    InternalSession session = getSession();
-    InternalTransaction transaction = (InternalTransaction)session.getView(transactionID);
+    InternalTransaction transaction = (InternalTransaction)getView(transactionID);
     CommitAttempt lastCommitSuccess = transaction.getLastCommitAttempt();
     if (lastCommitSuccess != null && lastCommitSuccess.getCommitNumber() == commitNumber)
     {

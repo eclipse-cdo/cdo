@@ -48,7 +48,7 @@ public class QueryIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    InternalView view = getSession().getView(viewID);
+    InternalView view = getView(viewID);
 
     CDOQueryInfo queryInfo = new CDOQueryInfoImpl(in);
     xrefs = queryInfo.getQueryLanguage().equals(CDOProtocolConstants.QUERY_LANGUAGE_XREFS);

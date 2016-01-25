@@ -353,7 +353,8 @@ public final class CDORevisionUtil
       {
         return null;
       }
-      else if (parentID == revision.getID())
+
+      if (parentID == revision.getID())
       {
         // This must be the root resource!
         return null;
@@ -486,6 +487,7 @@ public final class CDORevisionUtil
     {
       container = getParentRevision(revision, provider);
     }
+
     if (container != null)
     {
       getResourceNodePath(container, provider, result);
@@ -515,6 +517,7 @@ public final class CDORevisionUtil
     {
       return null;
     }
+
     if (CDOIDUtil.isNull(resourceID))
     {
       CDOID parentID = null;

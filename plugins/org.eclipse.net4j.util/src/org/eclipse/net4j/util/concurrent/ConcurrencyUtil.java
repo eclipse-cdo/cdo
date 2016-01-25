@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -85,5 +86,33 @@ public final class ConcurrencyUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 3.6
+   */
+  public static void execute(Object executor, Runnable runnable)
+  {
+    if (executor instanceof Executor)
+    {
+      ((Executor)executor).execute(runnable);
+      return;
+    }
+
+    ExecutorService executorService = getExecutorService(executor);
+    if (executorService == null && executor instanceof IManagedContainer)
+    {
+      executorService = getExecutorService((IManagedContainer)executor);
+    }
+
+    if (executorService != null)
+    {
+      executorService.execute(runnable);
+      return;
+    }
+
+    Thread thread = new Thread(runnable, runnable.getClass().getSimpleName());
+    thread.setDaemon(true);
+    thread.start();
   }
 }

@@ -60,7 +60,7 @@ public class SwitchTargetIndication extends CDOServerReadIndicationWithMonitorin
           invalidObjects.add(id);
         }
 
-        InternalView view = getSession().getView(viewID);
+        InternalView view = getView(viewID);
         view.changeTarget(branchPoint, invalidObjects, allChangedObjects, allDetachedObjects);
       }
       finally

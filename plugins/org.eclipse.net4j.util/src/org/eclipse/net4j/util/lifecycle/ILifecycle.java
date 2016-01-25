@@ -27,7 +27,7 @@ import org.eclipse.net4j.util.event.INotifier;
  * @apiviz.uses {@link ILifecycleEvent} - - fires
  * @apiviz.excludeSubtypes
  */
-public interface ILifecycle extends INotifier
+public interface ILifecycle extends IDeactivateable, INotifier
 {
   public void activate() throws LifecycleException;
 

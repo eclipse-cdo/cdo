@@ -187,6 +187,9 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
     ++pooledBuffers;
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static final class BufferRef extends SoftReference<IBuffer>
   {
     public BufferRef(IBuffer buffer, ReferenceQueue<IBuffer> queue)

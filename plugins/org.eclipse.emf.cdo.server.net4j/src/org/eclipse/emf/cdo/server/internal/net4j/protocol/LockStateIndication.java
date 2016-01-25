@@ -50,7 +50,7 @@ public class LockStateIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    InternalView view = getSession().getView(viewID);
+    InternalView view = getView(viewID);
     if (view == null)
     {
       throw new IllegalStateException("View not found");

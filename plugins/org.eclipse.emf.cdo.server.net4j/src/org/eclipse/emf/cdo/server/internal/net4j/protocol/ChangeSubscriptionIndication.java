@@ -48,7 +48,7 @@ public class ChangeSubscriptionIndication extends CDOServerReadIndication
       size = -size;
     }
 
-    InternalView view = getSession().getView(viewID);
+    InternalView view = getView(viewID);
     if (clear)
     {
       if (TRACER.isEnabled())

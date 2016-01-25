@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
@@ -60,7 +59,7 @@ public class LockDelegationIndication extends LockObjectsIndication
   }
 
   @Override
-  protected IView getView(int viewID)
+  protected InternalView getView(int viewID)
   {
     // The viewID received as an argument, is the ID of the client's view, which
     // does not exist on the master. So we ignore this argument and open a new

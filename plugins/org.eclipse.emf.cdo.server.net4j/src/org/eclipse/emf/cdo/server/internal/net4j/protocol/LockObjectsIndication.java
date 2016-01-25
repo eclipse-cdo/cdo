@@ -46,11 +46,6 @@ public class LockObjectsIndication extends CDOServerWriteIndication
     super(protocol, signalID);
   }
 
-  protected IView getView(int viewID)
-  {
-    return getSession().getView(viewID);
-  }
-
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {

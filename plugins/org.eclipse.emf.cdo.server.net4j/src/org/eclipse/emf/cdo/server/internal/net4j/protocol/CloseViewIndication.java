@@ -14,7 +14,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.server.IView;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import java.io.IOException;
 
@@ -32,8 +31,7 @@ public class CloseViewIndication extends CDOServerReadIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     int viewID = in.readInt();
-    InternalSession session = getSession();
-    IView view = session.getView(viewID);
+    IView view = getView(viewID);
     if (view != null)
     {
       view.close();

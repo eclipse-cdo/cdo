@@ -229,9 +229,9 @@ public final class LifecycleUtil
    */
   public static Exception deactivate(Object object, boolean useAnnotation)
   {
-    if (object instanceof ILifecycle)
+    if (object instanceof IDeactivateable)
     {
-      return ((ILifecycle)object).deactivate();
+      return ((IDeactivateable)object).deactivate();
     }
     else if (object != null && useAnnotation)
     {

@@ -83,9 +83,4 @@ public class UnlockObjectsIndication extends CDOServerWriteIndication
       out.writeCDOLockState(state);
     }
   }
-
-  protected IView getView(int viewID)
-  {
-    return getSession().getView(viewID);
-  }
 }

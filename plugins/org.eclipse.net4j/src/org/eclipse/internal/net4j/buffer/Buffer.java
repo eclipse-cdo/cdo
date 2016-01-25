@@ -465,12 +465,21 @@ public class Buffer implements InternalBuffer
 
   public void handleError(Throwable t)
   {
-    if (errorHandler != null)
+    try
     {
-      errorHandler.handleError(t);
+      if (errorHandler != null)
+      {
+        errorHandler.handleError(t);
+      }
+      else if (TRACER.isEnabled())
+      {
+        TRACER.trace(t);
+      }
     }
-
-    release();
+    finally
+    {
+      release();
+    }
   }
 
   private static void readChannel(SocketChannel socketChannel, ByteBuffer buffer) throws ClosedChannelException

@@ -17,6 +17,7 @@
     <property name="overrideUUID" value=""/>
     <property name="supportingAudits" value="true"/>
     <property name="supportingBranches" value="true"/>
+    <property name="supportingUnits" value="false"/>
     <property name="ensureReferentialIntegrity" value="false"/>
     <property name="allowInterruptRunningQueries" value="true"/>
     <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->
@@ -52,6 +53,7 @@
 
       <mappingStrategy type="horizontal"> <!-- callout -->
         <property name="qualifiedNames" value="true"/>
+        <property name="withRanges" value="false"/>
 
         <!--
           Per default, the objectTypeCache is in-memory and contains
@@ -59,17 +61,15 @@
           uncomment the following line and set the desired size.
           The cache can be disabled by setting a size of 0.
         -->
-
         <!-- Optional:
         <property name="objectTypeCacheSize" value="100000"/>
         -->
-
       </mappingStrategy>
 
       <dbAdapter name="h2"/>
       <dataSource class="org.h2.jdbcx.JdbcDataSource"
-        URL="jdbc:h2:database/repo1"/>
-
+        URL="jdbc:h2:/develop/cdo-master/h2/big"/>
+      
       <!-- Example:
       <dbAdapter name="derby-embedded"/>
       <dataSource class="org.apache.derby.jdbc.EmbeddedDataSource"
@@ -87,8 +87,8 @@
       <!-- Example:
       <dbAdapter name="mysql"/>
       <dataSource class="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"
-        url="jdbc:mysql://localhost/repo1"
-        user="sa"/>
+        url="jdbc:mysql://localhost/big"
+        user="test" password="0000"/>
       -->
 
       <!-- Example:

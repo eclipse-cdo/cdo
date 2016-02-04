@@ -60,6 +60,11 @@ public interface IDBAdapter
   public IDBConnectionProvider createConnectionProvider(DataSource dataSource);
 
   /**
+   * @since 4.5
+   */
+  public Connection modifyConnection(Connection connection);
+
+  /**
    * @since 4.2
    */
   public IDBSchema readSchema(Connection connection, String name);

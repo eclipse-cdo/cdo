@@ -400,7 +400,12 @@ public abstract class Store extends Lifecycle implements InternalStore
   {
     CDORevisionFactory factory = repository.getRevisionManager().getFactory();
     InternalCDORevision revision = (InternalCDORevision)factory.createRevision(eClass);
-    revision.setID(id);
+
+    if (id != null)
+    {
+      revision.setID(id);
+    }
+
     return revision;
   }
 

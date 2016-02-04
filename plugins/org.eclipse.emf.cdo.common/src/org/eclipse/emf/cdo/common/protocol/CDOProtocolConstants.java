@@ -30,8 +30,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 28; // SIGNAL_RESET_TRANSACTION
+  public static final int PROTOCOL_VERSION = 29; // SIGNAL_UNIT
 
+  // public static final int PROTOCOL_VERSION = 28; // SIGNAL_RESET_TRANSACTION
   // public static final int PROTOCOL_VERSION = 27; // SIGNAL_OPENED_SESSION
   // public static final int PROTOCOL_VERSION = 26; // Add prefetch depth in LockStateRequest/Indication
   // public static final int PROTOCOL_VERSION = 25; // OpenSessionResponse.repositoryAuthenticating
@@ -312,6 +313,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_RESET_TRANSACTION = 61;
 
+  /**
+   * @since 4.5
+   */
+  public static final short SIGNAL_UNIT = 62;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 
@@ -470,4 +476,27 @@ public interface CDOProtocolConstants
    * @since 4.3
    */
   public static final byte REVISION_DOES_NOT_EXIST = -1;
+
+  // //////////////////////////////////////////////////////////////////////
+  // Units
+
+  /**
+   * @since 4.5
+   */
+  public static final byte UNIT_CHECK = 0;
+
+  /**
+   * @since 4.5
+   */
+  public static final byte UNIT_CREATE = 1;
+
+  /**
+   * @since 4.5
+   */
+  public static final byte UNIT_OPEN = 2;
+
+  /**
+   * @since 4.5
+   */
+  public static final byte UNIT_CLOSE = 3;
 }

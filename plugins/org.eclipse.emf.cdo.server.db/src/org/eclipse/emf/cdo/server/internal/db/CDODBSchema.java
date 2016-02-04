@@ -35,13 +35,13 @@ public class CDODBSchema
   public static final IDBTable PROPERTIES = INSTANCE.addTable("cdo_properties"); //$NON-NLS-1$
 
   public static final IDBField PROPERTIES_NAME = //
-      PROPERTIES.addField("name", DBType.VARCHAR, 255, true); //$NON-NLS-1$
+  PROPERTIES.addField("name", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PROPERTIES_VALUE = //
-      PROPERTIES.addField("value", DBType.LONGVARCHAR); //$NON-NLS-1$
+  PROPERTIES.addField("value", DBType.LONGVARCHAR); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_PROPERTIES_PK = //
-      PROPERTIES.addIndex(IDBIndex.Type.PRIMARY_KEY, PROPERTIES_NAME);
+  PROPERTIES.addIndex(IDBIndex.Type.PRIMARY_KEY, PROPERTIES_NAME);
 
   public static final String SQL_DELETE_PROPERTIES = "DELETE FROM " + PROPERTIES + " WHERE " + PROPERTIES_NAME + "=?"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
@@ -60,19 +60,19 @@ public class CDODBSchema
   public static final IDBTable PACKAGE_UNITS = INSTANCE.addTable("cdo_package_units"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ID = //
-      PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255, true); //$NON-NLS-1$
+  PACKAGE_UNITS.addField("id", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_ORIGINAL_TYPE = //
-      PACKAGE_UNITS.addField("original_type", DBType.INTEGER); //$NON-NLS-1$
+  PACKAGE_UNITS.addField("original_type", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_TIME_STAMP = //
-      PACKAGE_UNITS.addField("time_stamp", DBType.BIGINT); //$NON-NLS-1$
+  PACKAGE_UNITS.addField("time_stamp", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_UNITS_PACKAGE_DATA = //
-      PACKAGE_UNITS.addField("package_data", DBType.BLOB); //$NON-NLS-1$
+  PACKAGE_UNITS.addField("package_data", DBType.BLOB); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_PACKAGE_UNITS_PK = //
-      PACKAGE_UNITS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_UNITS_ID);
+  PACKAGE_UNITS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_UNITS_ID);
 
   /**
    * DBTable cdo_packages
@@ -80,22 +80,22 @@ public class CDODBSchema
   public static final IDBTable PACKAGE_INFOS = INSTANCE.addTable("cdo_package_infos"); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_URI = //
-      PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255, true); //$NON-NLS-1$
+  PACKAGE_INFOS.addField("uri", DBType.VARCHAR, 255, true); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_PARENT = //
-      PACKAGE_INFOS.addField("parent", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PACKAGE_INFOS.addField("parent", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBField PACKAGE_INFOS_UNIT = //
-      PACKAGE_INFOS.addField("unit", DBType.VARCHAR, 255); //$NON-NLS-1$
+  PACKAGE_INFOS.addField("unit", DBType.VARCHAR, 255); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_PACKAGE_INFOS_PK = //
-      PACKAGE_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_INFOS_URI);
+  PACKAGE_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, PACKAGE_INFOS_URI);
 
   public static final IDBIndex INDEX_PACKAGE_INFOS_PARENT = //
-      PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_PARENT);
+  PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_PARENT);
 
   public static final IDBIndex INDEX_PACKAGE_INFOS_UNIT = //
-      PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_UNIT);
+  PACKAGE_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, PACKAGE_INFOS_UNIT);
 
   /**
    * DBTable cdo_branches
@@ -103,19 +103,19 @@ public class CDODBSchema
   public static final IDBTable BRANCHES = INSTANCE.addTable("cdo_branches"); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_ID = //
-      BRANCHES.addField("id", DBType.INTEGER, true); //$NON-NLS-1$
+  BRANCHES.addField("id", DBType.INTEGER, true); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_NAME = //
-      BRANCHES.addField("name", DBType.VARCHAR); //$NON-NLS-1$
+  BRANCHES.addField("name", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_BASE_BRANCH_ID = //
-      BRANCHES.addField("base_id", DBType.INTEGER); //$NON-NLS-1$
+  BRANCHES.addField("base_id", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBField BRANCHES_BASE_TIMESTAMP = //
-      BRANCHES.addField("base_time", DBType.BIGINT); //$NON-NLS-1$
+  BRANCHES.addField("base_time", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_BRANCHES_ID = //
-      BRANCHES.addIndex(IDBIndex.Type.PRIMARY_KEY, BRANCHES_ID);
+  BRANCHES.addIndex(IDBIndex.Type.PRIMARY_KEY, BRANCHES_ID);
 
   public static final String SQL_CREATE_BRANCH = "INSERT INTO " + BRANCHES + " (" + BRANCHES_ID + ", " + BRANCHES_NAME //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
       + ", " + BRANCHES_BASE_BRANCH_ID + ", " + BRANCHES_BASE_TIMESTAMP + ") VALUES (?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -139,33 +139,32 @@ public class CDODBSchema
   public static final IDBTable COMMIT_INFOS = INSTANCE.addTable("cdo_commit_infos"); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_TIMESTAMP = //
-      COMMIT_INFOS.addField("commit_time", DBType.BIGINT, true); //$NON-NLS-1$
+  COMMIT_INFOS.addField("commit_time", DBType.BIGINT, true); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_PREVIOUS_TIMESTAMP = //
-      COMMIT_INFOS.addField("previous_time", DBType.BIGINT); //$NON-NLS-1$
+  COMMIT_INFOS.addField("previous_time", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_BRANCH = //
-      COMMIT_INFOS.addField("branch_id", DBType.INTEGER); //$NON-NLS-1$
+  COMMIT_INFOS.addField("branch_id", DBType.INTEGER); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_USER = //
-      COMMIT_INFOS.addField("user_id", DBType.VARCHAR); //$NON-NLS-1$
+  COMMIT_INFOS.addField("user_id", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBField COMMIT_INFOS_COMMENT = //
-      COMMIT_INFOS.addField("commit_comment", DBType.VARCHAR); //$NON-NLS-1$
+  COMMIT_INFOS.addField("commit_comment", DBType.VARCHAR); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_COMMIT_INFOS_PK = //
-      COMMIT_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, COMMIT_INFOS_TIMESTAMP);
+  COMMIT_INFOS.addIndex(IDBIndex.Type.PRIMARY_KEY, COMMIT_INFOS_TIMESTAMP);
 
   public static final IDBIndex INDEX_COMMIT_INFOS_BRANCH = //
-      COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_BRANCH);
+  COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_BRANCH);
 
   public static final IDBIndex INDEX_COMMIT_INFOS_USER = //
-      COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_USER);
+  COMMIT_INFOS.addIndex(IDBIndex.Type.NON_UNIQUE, COMMIT_INFOS_USER);
 
   public static final String SQL_CREATE_COMMIT_INFO = "INSERT INTO " + COMMIT_INFOS + "(" + COMMIT_INFOS_TIMESTAMP //$NON-NLS-1$ //$NON-NLS-2$
       + ", " + COMMIT_INFOS_PREVIOUS_TIMESTAMP + ", " + COMMIT_INFOS_BRANCH + ", " + COMMIT_INFOS_USER + ", " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-      + COMMIT_INFOS_COMMENT + ") "
-      + "VALUES (?, ?, ?, ?, ?)"; //$NON-NLS-1$
+      + COMMIT_INFOS_COMMENT + ") " + "VALUES (?, ?, ?, ?, ?)"; //$NON-NLS-2$
 
   /**
    * DBTable cdo_lobs
@@ -173,19 +172,19 @@ public class CDODBSchema
   public static final IDBTable LOBS = INSTANCE.addTable("cdo_lobs"); //$NON-NLS-1$
 
   public static final IDBField LOBS_ID = //
-      LOBS.addField("id", DBType.VARCHAR, 64, true); //$NON-NLS-1$
+  LOBS.addField("id", DBType.VARCHAR, 64, true); //$NON-NLS-1$
 
   public static final IDBField LOBS_SIZE = //
-      LOBS.addField("lsize", DBType.BIGINT); //$NON-NLS-1$
+  LOBS.addField("lsize", DBType.BIGINT); //$NON-NLS-1$
 
   public static final IDBField LOBS_BDATA = //
-      LOBS.addField("bdata", DBType.BLOB); //$NON-NLS-1$
+  LOBS.addField("bdata", DBType.BLOB); //$NON-NLS-1$
 
   public static final IDBField LOBS_CDATA = //
-      LOBS.addField("cdata", DBType.CLOB); //$NON-NLS-1$
+  LOBS.addField("cdata", DBType.CLOB); //$NON-NLS-1$
 
   public static final IDBIndex INDEX_LOBS_ID = //
-      LOBS.addIndex(IDBIndex.Type.PRIMARY_KEY, LOBS_ID);
+  LOBS.addIndex(IDBIndex.Type.PRIMARY_KEY, LOBS_ID);
 
   public static final String SQL_QUERY_LOBS = "SELECT 1 FROM " + CDODBSchema.LOBS + " WHERE " + CDODBSchema.LOBS_ID //$NON-NLS-1$ //$NON-NLS-2$
       + "=?"; //$NON-NLS-1$

@@ -1993,6 +1993,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           // here be removed from the collection of reattached objects
           lastSavepoint.getReattachedObjects().remove(id);
         }
+
+        getUnitManager().removeObject(object);
       }
       finally
       {

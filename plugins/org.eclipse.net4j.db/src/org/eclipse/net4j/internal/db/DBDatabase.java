@@ -33,7 +33,7 @@ import java.util.LinkedList;
 /**
  * @author Eike Stepper
  */
-public final class DBDatabase extends SetContainer<IDBConnection>implements IDBDatabase
+public final class DBDatabase extends SetContainer<IDBConnection> implements IDBDatabase
 {
   private DBAdapter adapter;
 
@@ -141,6 +141,8 @@ public final class DBDatabase extends SetContainer<IDBConnection>implements IDBD
     {
       throw new DBException("No connection from connection provider: " + connectionProvider);
     }
+
+    delegate = adapter.modifyConnection(delegate);
 
     DBConnection connection = new DBConnection(this, delegate);
     addElement(connection);

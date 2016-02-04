@@ -116,7 +116,7 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(WorkspaceTest.class);
     testClasses.add(BackupTest.class);
     testClasses.add(ResourceModificationTrackingTest.class);
-    testClasses.add(CDOStaleReferencePolicyTests.class);
+    testClasses.add(CDOStaleReferencePolicyTest.class);
 
     // TODO testClasses.add(RemoteSessionManagerTest.class);
     // TODO testClasses.add(NonCDOResourceTest.class);

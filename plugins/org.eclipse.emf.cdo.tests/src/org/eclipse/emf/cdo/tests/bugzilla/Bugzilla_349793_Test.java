@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Egidijus Vaisnora
@@ -55,7 +56,7 @@ public class Bugzilla_349793_Test extends AbstractCDOTest
           try
           {
             testExecutionLatch.countDown();
-            invalidationLatch.await();
+            invalidationLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
           }
           catch (InterruptedException ex)
           {
@@ -66,7 +67,7 @@ public class Bugzilla_349793_Test extends AbstractCDOTest
     });
 
     long timestamp = doSecondSessionSync();
-    testExecutionLatch.await();
+    testExecutionLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
     CDOTransaction freshTransaction = session.openTransaction();
     invalidationLatch.countDown();
 

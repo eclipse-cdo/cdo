@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -35,18 +36,29 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingUnitSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.IDBResultSet;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -54,27 +66,37 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
  * @since 2.0
  */
 public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
-    implements IClassMappingAuditSupport, IClassMappingDeltaSupport
+    implements IClassMappingAuditSupport, IClassMappingDeltaSupport, IClassMappingUnitSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
   private String sqlInsertAttributes;
 
-  private String sqlSelectCurrentAttributes;
-
-  private String sqlSelectAllObjectIDs;
+  private String sqlSelectAttributesCurrent;
 
   private String sqlSelectAttributesByTime;
 
   private String sqlSelectAttributesByVersion;
+
+  private String sqlSelectUnitCurrent;
+
+  private String sqlSelectUnitByTime;
+
+  private String sqlSelectAllObjectIDs;
 
   private String sqlReviseAttributes;
 
@@ -98,46 +120,24 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   private void initSQLStrings()
   {
     // ----------- Select Revision ---------------------------
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
-    appendTypeMappingNames(builder, getValueMappings());
-    appendFieldNames(builder, getUnsettableFields());
-    appendFieldNames(builder, getListSizeFields());
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
-    builder.append("=? AND ("); //$NON-NLS-1$
-    String sqlSelectAttributesPrefix = builder.toString();
-    builder.append(ATTRIBUTES_REVISED);
-    builder.append("=0)"); //$NON-NLS-1$
-    sqlSelectCurrentAttributes = builder.toString();
+    String[] strings = buildSQLSelects(false);
+    String sqlSelectAttributesPrefix = strings[0];
+    sqlSelectAttributesCurrent = strings[1];
+    sqlSelectAttributesByTime = strings[2];
 
-    builder = new StringBuilder(sqlSelectAttributesPrefix);
-    builder.append(ATTRIBUTES_CREATED);
-    builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
-    builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
-    builder.append(">=?))"); //$NON-NLS-1$
-    sqlSelectAttributesByTime = builder.toString();
-
-    builder = new StringBuilder(sqlSelectAttributesPrefix);
+    StringBuilder builder = new StringBuilder(sqlSelectAttributesPrefix);
     builder.append("ABS(");
     builder.append(ATTRIBUTES_VERSION);
-    builder.append(")=?)"); //$NON-NLS-1$
+    builder.append(")=?"); //$NON-NLS-1$
     sqlSelectAttributesByVersion = builder.toString();
+
+    InternalRepository repository = (InternalRepository)getMappingStrategy().getStore().getRepository();
+    if (repository.isSupportingUnits())
+    {
+      strings = buildSQLSelects(true);
+      sqlSelectUnitCurrent = strings[1];
+      sqlSelectUnitByTime = strings[2];
+    }
 
     // ----------- Insert Attributes -------------------------
     builder = new StringBuilder();
@@ -200,6 +200,92 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     sqlRawDeleteAttributes = builder.toString();
   }
 
+  private String[] buildSQLSelects(boolean forUnits)
+  {
+    String[] strings = new String[3];
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT "); //$NON-NLS-1$
+    if (forUnits)
+    {
+      builder.append(ATTRIBUTES_ID);
+      builder.append(", "); //$NON-NLS-1$
+    }
+
+    builder.append(ATTRIBUTES_VERSION);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CREATED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(", "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_FEATURE);
+    appendTypeMappingNames(builder, getValueMappings());
+    appendFieldNames(builder, getUnsettableFields());
+    appendFieldNames(builder, getListSizeFields());
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+
+    if (forUnits)
+    {
+      builder.append(", "); //$NON-NLS-1$
+      builder.append(UnitMappingTable.UNITS);
+      builder.append(" WHERE "); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_ID);
+      builder.append("="); //$NON-NLS-1$
+      builder.append(UnitMappingTable.UNITS);
+      builder.append("."); //$NON-NLS-1$
+      builder.append(UnitMappingTable.UNITS_ELEM);
+      builder.append(" AND "); //$NON-NLS-1$
+      builder.append(UnitMappingTable.UNITS);
+      builder.append("."); //$NON-NLS-1$
+      builder.append(UnitMappingTable.UNITS_UNIT);
+      builder.append("=?"); //$NON-NLS-1$
+      builder.append(" AND "); //$NON-NLS-1$
+    }
+    else
+    {
+      builder.append(" WHERE "); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_ID);
+      builder.append("=? AND "); //$NON-NLS-1$
+    }
+
+    strings[0] = builder.toString();
+
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append("=0"); //$NON-NLS-1$
+
+    if (forUnits)
+    {
+      builder.append(" ORDER BY "); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_ID);
+    }
+
+    strings[1] = builder.toString();
+
+    builder = new StringBuilder(strings[0]);
+    builder.append("("); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_CREATED);
+    builder.append("<=? AND ("); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append("=0 OR "); //$NON-NLS-1$
+    builder.append(ATTRIBUTES_REVISED);
+    builder.append(">=?))"); //$NON-NLS-1$
+
+    if (forUnits)
+    {
+      builder.append(" ORDER BY "); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_ID);
+    }
+
+    strings[2] = builder.toString();
+
+    return strings;
+  }
+
   public boolean readRevision(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -217,7 +303,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       }
       else
       {
-        stmt = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesCurrent, ReuseProbability.HIGH);
         idHandler.setCDOID(stmt, 1, revision.getID());
       }
 
@@ -591,6 +677,210 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
 
     return builder.toString();
+  }
+
+  public void readUnitRevisions(IDBStoreAccessor accessor, CDOBranchPoint branchPoint, CDOID rootID,
+      CDORevisionHandler revisionHandler) throws SQLException
+  {
+    DBStore store = (DBStore)getMappingStrategy().getStore();
+    InternalRepository repository = store.getRepository();
+    CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
+    EClass eClass = getEClass();
+
+    IIDHandler idHandler = store.getIDHandler();
+    IDBPreparedStatement stmt = null;
+    int oldFetchSize = -1;
+
+    try
+    {
+      long timeStamp = branchPoint.getTimeStamp();
+      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitByTime, ReuseProbability.MEDIUM);
+        idHandler.setCDOID(stmt, 1, rootID);
+        stmt.setLong(2, timeStamp);
+        stmt.setLong(3, timeStamp);
+      }
+      else
+      {
+        stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitCurrent, ReuseProbability.HIGH);
+        idHandler.setCDOID(stmt, 1, rootID);
+      }
+
+      AsnychronousListFiller listFiller = new AsnychronousListFiller(accessor, rootID, revisionHandler);
+      ConcurrencyUtil.execute(repository, listFiller);
+
+      oldFetchSize = stmt.getFetchSize();
+      stmt.setFetchSize(100000);
+      IDBResultSet resultSet = stmt.executeQuery();
+
+      for (;;)
+      {
+        InternalCDORevision revision = store.createRevision(eClass, null);
+        revision.setBranchPoint(head);
+
+        if (!readValuesFromResultSet(resultSet, idHandler, revision, true))
+        {
+          break;
+        }
+
+        listFiller.schedule(revision);
+      }
+
+      listFiller.await();
+    }
+    finally
+    {
+      if (oldFetchSize != -1)
+      {
+        stmt.setFetchSize(oldFetchSize);
+      }
+
+      DBUtil.close(stmt);
+    }
+  }
+
+  private class AsnychronousListFiller implements Runnable
+  {
+    private final BlockingQueue<InternalCDORevision> queue = new LinkedBlockingQueue<InternalCDORevision>();
+
+    private final CountDownLatch latch = new CountDownLatch(1);
+
+    private final IDBStoreAccessor accessor;
+
+    private final CDOID rootID;
+
+    private final DBStore store;
+
+    private final IIDHandler idHandler;
+
+    private final IListMappingUnitSupport[] listMappings;
+
+    private final ResultSet[] resultSets;
+
+    private final CDORevisionHandler revisionHandler;
+
+    private Throwable exception;
+
+    public AsnychronousListFiller(IDBStoreAccessor accessor, CDOID rootID, CDORevisionHandler revisionHandler)
+    {
+      this.accessor = accessor;
+      this.rootID = rootID;
+      this.revisionHandler = revisionHandler;
+
+      store = (DBStore)accessor.getStore();
+      idHandler = store.getIDHandler();
+
+      List<IListMapping> tmp = getListMappings();
+      int size = tmp.size();
+
+      listMappings = new IListMappingUnitSupport[size];
+      resultSets = new ResultSet[size];
+
+      int i = 0;
+      for (IListMapping listMapping : tmp)
+      {
+        listMappings[i++] = (IListMappingUnitSupport)listMapping;
+      }
+    }
+
+    public void schedule(InternalCDORevision revision)
+    {
+      queue.offer(revision);
+    }
+
+    public void await() throws SQLException
+    {
+      // Schedule an end marker revision.
+      schedule(new StubCDORevision(getEClass()));
+
+      try
+      {
+        latch.await();
+      }
+      catch (InterruptedException ex)
+      {
+        throw new TimeoutRuntimeException();
+      }
+
+      if (exception instanceof RuntimeException)
+      {
+        throw (RuntimeException)exception;
+      }
+
+      if (exception instanceof Error)
+      {
+        throw (Error)exception;
+      }
+
+      if (exception instanceof SQLException)
+      {
+        throw (SQLException)exception;
+      }
+
+      if (exception instanceof Exception)
+      {
+        throw WrappedException.wrap((Exception)exception);
+      }
+    }
+
+    public void run()
+    {
+      try
+      {
+        while (store.isActive())
+        {
+          InternalCDORevision revision = queue.poll(1, TimeUnit.SECONDS);
+          if (revision == null)
+          {
+            continue;
+          }
+
+          if (revision instanceof StubCDORevision)
+          {
+            return;
+          }
+
+          readUnitEntries(revision);
+        }
+      }
+      catch (Throwable ex)
+      {
+        exception = ex;
+      }
+      finally
+      {
+        latch.countDown();
+      }
+    }
+
+    private void readUnitEntries(InternalCDORevision revision) throws SQLException
+    {
+      CDOID id = revision.getID();
+
+      for (int i = 0; i < listMappings.length; i++)
+      {
+        IListMappingUnitSupport listMapping = listMappings[i];
+        EStructuralFeature feature = listMapping.getFeature();
+
+        MoveableList<Object> list = revision.getList(feature);
+        int size = list.size();
+        if (size != 0)
+        {
+          if (resultSets[i] == null)
+          {
+            resultSets[i] = listMapping.queryUnitEntries(accessor, idHandler, rootID);
+          }
+
+          listMapping.readUnitEntries(resultSets[i], idHandler, id, list);
+        }
+      }
+
+      synchronized (revisionHandler)
+      {
+        revisionHandler.handleRevision(revision);
+      }
+    }
   }
 
   /**

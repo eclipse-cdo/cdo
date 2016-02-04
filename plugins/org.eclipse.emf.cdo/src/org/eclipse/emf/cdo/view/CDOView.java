@@ -155,6 +155,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public URIHandler getURIHandler();
 
   /**
+   * @since 4.5
+   */
+  public CDOUnitManager getUnitManager();
+
+  /**
    * Sets the {@link CDOBranch branch} and the point in (repository) time this view should refer to. {@link CDOObject
    * Objects} provided by this view will be {@link CDORevision#isValid(long) valid} at this time. The special value
    * {@link CDOCommonView#UNSPECIFIED_DATE UNSPECIFIED_DATE} denotes a "floating view" that always shows the latest

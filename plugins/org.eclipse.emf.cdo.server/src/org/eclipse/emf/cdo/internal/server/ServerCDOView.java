@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
+import org.eclipse.emf.cdo.view.CDOUnitManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
@@ -460,6 +461,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   public CDOLockState[] getLockStates(Collection<CDOID> ids)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public CDOUnitManager getUnitManager()
   {
     throw new UnsupportedOperationException();
   }

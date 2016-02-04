@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOQuery;
+import org.eclipse.emf.cdo.view.CDOUnitManager;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewSet;
@@ -952,6 +953,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public URIHandler getURIHandler()
   {
     return delegate.getURIHandler();
+  }
+
+  /**
+   * @since 4.5
+   */
+  public CDOUnitManager getUnitManager()
+  {
+    return delegate.getUnitManager();
   }
 
   public String getCommitComment()

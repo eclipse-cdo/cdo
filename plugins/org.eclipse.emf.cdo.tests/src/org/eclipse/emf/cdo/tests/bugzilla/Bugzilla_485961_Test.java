@@ -54,13 +54,12 @@ public class Bugzilla_485961_Test extends AbstractCDOTest
     InternalRepository repository = getRepository();
     CDORevisionProvider revisionProvider = new ManagedRevisionProvider(repository.getRevisionManager(),
         repository.getBranchManager().getMainBranch().getHead());
-    CDOID rootResourceID = repository.getRootResourceID();
 
     StoreThreadLocal.setSession(repository.getSessionManager().getSession(session.getSessionID()));
 
     try
     {
-      assertEquals(8, traverse(revisionProvider, rootResourceID));
+      assertEquals(4, traverse(revisionProvider, res1.cdoID()));
     }
     finally
     {

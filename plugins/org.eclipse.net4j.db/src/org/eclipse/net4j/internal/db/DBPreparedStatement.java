@@ -22,7 +22,7 @@ import java.sql.SQLException;
 /**
  * @author Eike Stepper
  */
-public final class DBPreparedStatement extends DelegatingPreparedStatement implements IDBPreparedStatement
+public class DBPreparedStatement extends DelegatingPreparedStatement implements IDBPreparedStatement
 {
   private final String sql;
 

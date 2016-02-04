@@ -86,6 +86,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   public ISessionManager getSessionManager();
 
   /**
+   * @since 4.5
+   */
+  public IUnitManager getUnitManager();
+
+  /**
    * @since 4.0
    * @deprecated As of 4.1 use {@link #getLockingManager()}.
    */
@@ -317,6 +322,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 3.0
      */
     public static final String SUPPORTING_BRANCHES = "supportingBranches"; //$NON-NLS-1$
+
+    /**
+     * @since 4.5
+     */
+    public static final String SUPPORTING_UNITS = "supportingUnits"; //$NON-NLS-1$
 
     /**
      * @since 4.0

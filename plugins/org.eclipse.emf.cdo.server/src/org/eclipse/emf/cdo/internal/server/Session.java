@@ -74,7 +74,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Eike Stepper
  */
-public class Session extends Container<IView>implements InternalSession
+public class Session extends Container<IView> implements InternalSession
 {
   private InternalSessionManager manager;
 
@@ -402,7 +402,7 @@ public class Session extends Container<IView>implements InternalSession
   public void collectContainedRevisions(InternalCDORevision revision, CDOBranchPoint branchPoint, int referenceChunk,
       Set<CDOID> revisions, List<CDORevision> additionalRevisions)
   {
-    InternalCDORevisionManager revisionManager = getManager().getRepository().getRevisionManager();
+    InternalCDORevisionManager revisionManager = manager.getRepository().getRevisionManager();
     for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
     {
       // TODO Clarify feature maps
@@ -577,13 +577,20 @@ public class Session extends Container<IView>implements InternalSession
     }
   }
 
-  private boolean hasSubscription(CDOID id, InternalView[] views)
+  private boolean isDeltaNeeded(CDOID id, InternalView[] views)
   {
+    boolean supportingUnits = manager.getRepository().isSupportingUnits();
+
     for (InternalView view : views)
     {
       try
       {
         if (view.hasSubscription(id))
+        {
+          return true;
+        }
+
+        if (supportingUnits && view.isInOpenUnit(id))
         {
           return true;
         }
@@ -788,7 +795,7 @@ public class Session extends Container<IView>implements InternalSession
           CDORevisionDelta revisionDelta = (CDORevisionDelta)changedObjects.get(index);
           CDOID id = revisionDelta.getID();
 
-          if (changes || hasSubscription(id, views))
+          if (changes || isDeltaNeeded(id, views))
           {
             if (permissionManager == null)
             {

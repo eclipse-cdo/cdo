@@ -35,9 +35,11 @@ public class MysqlConfig extends AbstractSetupDBConfig
    */
   public static final String HOST = "localhost";
 
-  public static final String USER = "root";
+  public static final String SCHEMA = "test";
 
-  public static final String PASS = "root";
+  public static final String USER = "test";
+
+  public static final String PASS = "0000";
 
   private static final long serialVersionUID = 1L;
 
@@ -62,7 +64,7 @@ public class MysqlConfig extends AbstractSetupDBConfig
   protected DataSource createDataSourceForDB(String dbName) throws SQLException
   {
     MysqlDataSource dataSource = new MysqlDataSource();
-    dataSource.setUrl("jdbc:mysql://" + HOST);
+    dataSource.setUrl("jdbc:mysql://" + HOST + "/" + SCHEMA);
     dataSource.setUser(USER);
     if (PASS != null)
     {

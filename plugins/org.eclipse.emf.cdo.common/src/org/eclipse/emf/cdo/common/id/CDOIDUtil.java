@@ -69,6 +69,14 @@ public final class CDOIDUtil
   }
 
   /**
+   * @since 4.5
+   */
+  public static <V> Map<CDOID, V> createMap(Map<? extends CDOID, ? extends V> map)
+  {
+    return new HashMap<CDOID, V>(map);
+  }
+
+  /**
    * @since 4.0
    */
   public static CDOIDAndVersion createIDAndVersion(CDOID id, int version)

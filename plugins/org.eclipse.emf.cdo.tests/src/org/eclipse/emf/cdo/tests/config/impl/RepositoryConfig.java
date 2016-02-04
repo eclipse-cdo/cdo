@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
+import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
@@ -105,6 +106,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public static final String PROP_TEST_REPOSITORY = "test.repository";
 
   public static final String PROP_TEST_REVISION_MANAGER = "test.repository.RevisionManager";
+
+  public static final String PROP_TEST_UNIT_MANAGER = "test.repository.UnitManager";
 
   public static final String PROP_TEST_SESSION_MANAGER = "test.repository.SessionManager";
 
@@ -604,6 +607,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     repository.setRevisionManager(revisionManager);
 
+    InternalUnitManager unitManager = getTestUnitManager();
+    if (unitManager != null)
+    {
+      repository.setUnitManager(unitManager);
+    }
+
     InternalSessionManager sessionManager = getTestSessionManager();
     if (sessionManager == null)
     {
@@ -650,6 +659,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected InternalCDORevisionManager getTestRevisionManager()
   {
     return (InternalCDORevisionManager)getTestProperty(PROP_TEST_REVISION_MANAGER);
+  }
+
+  protected InternalUnitManager getTestUnitManager()
+  {
+    return (InternalUnitManager)getTestProperty(PROP_TEST_UNIT_MANAGER);
   }
 
   protected InternalSessionManager getTestSessionManager()

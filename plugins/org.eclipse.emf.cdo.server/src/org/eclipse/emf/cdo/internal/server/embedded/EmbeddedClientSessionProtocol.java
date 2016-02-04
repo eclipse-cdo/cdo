@@ -653,6 +653,11 @@ public class EmbeddedClientSessionProtocol extends Lifecycle implements CDOSessi
     throw new UnsupportedOperationException();
   }
 
+  public boolean requestUnit(int viewID, CDOID rootID, byte opcode, CDORevisionHandler revisionHandler)
+  {
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   protected void doActivate() throws Exception
   {

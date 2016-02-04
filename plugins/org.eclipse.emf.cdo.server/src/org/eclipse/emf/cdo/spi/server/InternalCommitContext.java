@@ -67,6 +67,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public InternalTransaction getTransaction();
 
   /**
+   * @since 4.5
+   */
+  public IStoreAccessor getAccessor();
+
+  /**
    * @since 4.2
    */
   public long getTimeStamp();

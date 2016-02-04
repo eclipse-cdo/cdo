@@ -503,6 +503,47 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     return send(new LoadMergeDataRequest(this, targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo));
   }
 
+  @Deprecated
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
+  {
+    return getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
+  }
+
+  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth)
+  {
+    return send(new LockStateRequest(this, viewID, ids, depth));
+  }
+
+  public void enableLockNotifications(int viewID, boolean on)
+  {
+    send(new EnableLockNotificationRequest(this, viewID, on));
+  }
+
+  public void setLockNotificationMode(LockNotificationMode mode)
+  {
+    send(new SetLockNotificationModeRequest(this, mode));
+  }
+
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  {
+    return send(new LoadPermissionsRequest(this, revisions));
+  }
+
+  public void requestChangeCredentials()
+  {
+    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.CHANGE_PASSWORD, null), new Monitor());
+  }
+
+  public void requestResetCredentials(String userID)
+  {
+    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID), new Monitor());
+  }
+
+  public boolean requestUnit(int viewID, CDOID rootID, byte opcode, CDORevisionHandler revisionHandler)
+  {
+    return send(new UnitRequest(this, viewID, rootID, opcode, revisionHandler));
+  }
+
   @Override
   protected SignalReactor createSignalReactor(short signalID)
   {
@@ -599,41 +640,5 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     {
       REVISION_LOADING.stop(request);
     }
-  }
-
-  @Deprecated
-  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids)
-  {
-    return getLockStates(viewID, ids, CDOLockState.DEPTH_NONE);
-  }
-
-  public CDOLockState[] getLockStates(int viewID, Collection<CDOID> ids, int depth)
-  {
-    return send(new LockStateRequest(this, viewID, ids, depth));
-  }
-
-  public void enableLockNotifications(int viewID, boolean on)
-  {
-    send(new EnableLockNotificationRequest(this, viewID, on));
-  }
-
-  public void setLockNotificationMode(LockNotificationMode mode)
-  {
-    send(new SetLockNotificationModeRequest(this, mode));
-  }
-
-  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
-  {
-    return send(new LoadPermissionsRequest(this, revisions));
-  }
-
-  public void requestChangeCredentials()
-  {
-    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.CHANGE_PASSWORD, null), new Monitor());
-  }
-
-  public void requestResetCredentials(String userID)
-  {
-    send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID), new Monitor());
   }
 }

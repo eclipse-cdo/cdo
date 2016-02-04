@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.ITransaction;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
@@ -49,6 +50,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader3;
@@ -63,8 +65,11 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
+import org.eclipse.emf.cdo.spi.server.InternalUnitManager.InternalObjectAttacher;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
@@ -118,9 +123,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   private ConnectionKeepAliveTask connectionKeepAliveTask;
 
-  private Set<CDOID> newObjects = new HashSet<CDOID>();
-
   private CDOID maxID = CDOID.NULL;
+
+  private InternalObjectAttacher objectAttacher;
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
@@ -133,17 +138,17 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
-  public DBStore getStore()
+  public final DBStore getStore()
   {
     return (DBStore)super.getStore();
   }
 
-  public IDBConnection getDBConnection()
+  public final IDBConnection getDBConnection()
   {
     return connection;
   }
 
-  public Connection getConnection()
+  public final Connection getConnection()
   {
     return connection;
   }
@@ -480,17 +485,17 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     super.applyIDMappings(context, monitor);
 
+    DBStore store = getStore();
+    IIDHandler idHandler = store.getIDHandler();
+
     // Remember maxID because it may have to be adjusted if the repository is BACKUP or CLONE. See bug 325097.
     boolean adjustMaxID = !context.getBranchPoint().getBranch().isLocal()
-        && getStore().getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
-
-    IIDHandler idHandler = getStore().getIDHandler();
+        && store.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
 
     // Remember CDOIDs of new objects. They are cleared after writeRevisions()
     for (InternalCDORevision revision : context.getNewObjects())
     {
       CDOID id = revision.getID();
-      newObjects.add(id);
 
       if (adjustMaxID && idHandler.compare(id, maxID) > 0)
       {
@@ -560,22 +565,50 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
-  protected void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
+  protected void writeNewObjectRevisions(InternalCommitContext context, InternalCDORevision[] newObjects,
+      CDOBranch branch, OMMonitor monitor)
+  {
+    writeRevisions(context, true, newObjects, branch, monitor);
+  }
+
+  @Override
+  protected void writeDirtyObjectRevisions(InternalCommitContext context, InternalCDORevision[] dirtyObjects,
+      CDOBranch branch, OMMonitor monitor)
+  {
+    writeRevisions(context, false, dirtyObjects, branch, monitor);
+  }
+
+  protected void writeRevisions(InternalCommitContext context, boolean attachNewObjects,
+      InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
   {
     try
     {
       monitor.begin(revisions.length);
       for (InternalCDORevision revision : revisions)
       {
-        boolean mapType = newObjects.contains(revision.getID());
-        writeRevision(revision, mapType, true, monitor.fork());
+        writeRevision(revision, attachNewObjects, true, monitor.fork());
+      }
+
+      if (attachNewObjects)
+      {
+        InternalRepository repository = getStore().getRepository();
+        if (repository.isSupportingUnits())
+        {
+          InternalUnitManager unitManager = repository.getUnitManager();
+          objectAttacher = unitManager.attachObjects(context);
+        }
       }
     }
     finally
     {
-      newObjects.clear();
       monitor.done();
     }
+  }
+
+  @Override
+  protected void writeRevisions(InternalCDORevision[] revisions, CDOBranch branch, OMMonitor monitor)
+  {
+    throw new UnsupportedOperationException();
   }
 
   protected void writeRevision(InternalCDORevision revision, boolean mapType, boolean revise, OMMonitor monitor)
@@ -708,6 +741,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
           getStore().getIDHandler().adjustLastObjectID(maxID);
           maxID = CDOID.NULL;
         }
+
+        if (objectAttacher != null)
+        {
+          objectAttacher.finishedCommit(true);
+          objectAttacher = null;
+        }
       }
       finally
       {
@@ -730,6 +769,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected final void doRollback(IStoreAccessor.CommitContext commitContext)
   {
+    if (objectAttacher != null)
+    {
+      objectAttacher.finishedCommit(false);
+      objectAttacher = null;
+    }
+
     getStore().getMetaDataManager().clearMetaIDMappings();
 
     if (TRACER.isEnabled())
@@ -758,6 +803,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     DBStore store = getStore();
     connection = store.getDatabase().getConnection();
     connectionKeepAliveTask = new ConnectionKeepAliveTask(this);
+    objectAttacher = null;
 
     long keepAlivePeriod = ConnectionKeepAliveTask.EXECUTION_PERIOD;
     Map<String, String> storeProps = store.getProperties();
@@ -1441,6 +1487,38 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   {
     DurableLockingManager manager = getStore().getDurableLockingManager();
     manager.unlock(this, durableLockingID);
+  }
+
+  public List<CDOID> readUnitRoots()
+  {
+    UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
+    return unitMappingTable.readUnitRoots(this);
+  }
+
+  public void readUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler)
+  {
+    UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
+    unitMappingTable.readUnitRevisions(this, view, rootID, revisionHandler);
+  }
+
+  public Object initUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs,
+      long timeStamp)
+  {
+    UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
+    return unitMappingTable.initUnit(this, timeStamp, view, rootID, revisionHandler, initializedIDs);
+  }
+
+  public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp,
+      Object initResult, List<CDOID> ids)
+  {
+    UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
+    unitMappingTable.finishUnit((BatchedStatement)initResult, rootID, ids, timeStamp);
+  }
+
+  public void writeUnits(Map<CDOID, CDOID> unitMappings, long timeStamp)
+  {
+    UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
+    unitMappingTable.writeUnitMappings(this, unitMappings, timeStamp);
   }
 
   /**

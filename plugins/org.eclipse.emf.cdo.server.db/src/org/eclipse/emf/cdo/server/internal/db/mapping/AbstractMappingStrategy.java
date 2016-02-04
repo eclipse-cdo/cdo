@@ -55,6 +55,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
@@ -827,6 +828,21 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
 
   public abstract IListMapping doCreateFeatureMapMapping(EClass containingClass, EStructuralFeature feature);
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    deactivateClassMappings();
+    super.doDeactivate();
+  }
+
+  protected void deactivateClassMappings()
+  {
+    for (IClassMapping classMapping : classMappings.values())
+    {
+      LifecycleUtil.deactivate(classMapping);
+    }
+  }
 
   private static Set<CDOFeatureType> doGetForceIndexes(IMappingStrategy mappingStrategy)
   {

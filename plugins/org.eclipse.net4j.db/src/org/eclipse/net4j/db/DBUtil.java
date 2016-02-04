@@ -14,6 +14,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.internal.db.BatchedStatementImpl;
 import org.eclipse.net4j.internal.db.DBConnection;
 import org.eclipse.net4j.internal.db.DBDatabase;
 import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
@@ -374,6 +375,14 @@ public final class DBUtil
   public static IDBAdapter getDBAdapter(String adapterName)
   {
     return IDBAdapter.REGISTRY.get(adapterName);
+  }
+
+  /**
+   * @since 4.5
+   */
+  public static BatchedStatement batched(PreparedStatement delegate, int batchSize) throws DBException
+  {
+    return new BatchedStatementImpl(delegate, batchSize);
   }
 
   public static Exception close(ResultSet resultSet)

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  * @author Esteban Dugueperoux
  */
-public class CDOStaleReferencePolicyTests extends AbstractCDOTest
+public class CDOStaleReferencePolicyTest extends AbstractCDOTest
 {
   private static final String RESOURCE_NAME = "test1.model1";
 

@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Martin Fluegge
@@ -70,7 +71,7 @@ public class Bugzilla_340709_Test extends AbstractCDOTest
 
           try
           {
-            latch.await();
+            latch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
           }
           catch (InterruptedException ex)
           {

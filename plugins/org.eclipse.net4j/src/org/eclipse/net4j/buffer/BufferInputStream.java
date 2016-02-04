@@ -40,6 +40,9 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   public static final long DEFAULT_MILLIS_INTERRUPT_CHECK = 100;
 
+  private static final boolean DISABLE_TIMEOUT = Boolean
+      .getBoolean("org.eclipse.net4j.buffer.BufferInputStream.disableTimeout");
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_BUFFER_STREAM, BufferInputStream.class);
 
   private final boolean tracerEnabled;
@@ -205,7 +208,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
         }
 
         long timeout;
-        if (noTimeout)
+        if (noTimeout || DISABLE_TIMEOUT)
         {
           timeout = check;
         }
@@ -240,6 +243,11 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private long computeTimeout(final long check) throws IOTimeoutException
   {
+    if (DISABLE_TIMEOUT)
+    {
+      return Integer.MAX_VALUE;
+    }
+
     long remaining;
     synchronized (this)
     {

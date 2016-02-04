@@ -323,20 +323,40 @@ public final class CDORevisionUtil
       return true;
     }
 
-    InternalCDORevision parent = getParentRevision(child, provider);
+    CDORevision parent = getParentRevision(child, provider);
     if (parent != null)
     {
-      return isContained(parent, container, provider);
+      return isContained((InternalCDORevision)parent, container, provider);
     }
 
     return false;
   }
 
-  private static InternalCDORevision getParentRevision(InternalCDORevision revision, CDORevisionProvider provider)
+  /**
+   * @since 4.5
+   */
+  public static void handleParentRevisions(CDORevision revision, CDORevisionProvider provider,
+      CDORevisionHandler handler)
+  {
+    CDORevision parentRevision = getParentRevision(revision, provider);
+    if (parentRevision != null)
+    {
+      if (handler.handleRevision(parentRevision))
+      {
+        handleParentRevisions(parentRevision, provider, handler);
+      }
+    }
+  }
+
+  /**
+   * @since 4.5
+   */
+  public static CDORevision getParentRevision(CDORevision revision, CDORevisionProvider provider)
   {
     CDOID parentID;
+    CDORevisionData data = revision.data();
 
-    Object containerID = revision.getContainerID();
+    Object containerID = data.getContainerID();
     if (containerID instanceof CDOWithID)
     {
       parentID = ((CDOWithID)containerID).cdoID();
@@ -348,7 +368,7 @@ public final class CDORevisionUtil
 
     if (CDOIDUtil.isNull(parentID))
     {
-      parentID = revision.getResourceID();
+      parentID = data.getResourceID();
       if (CDOIDUtil.isNull(parentID))
       {
         return null;
@@ -361,9 +381,12 @@ public final class CDORevisionUtil
       }
     }
 
-    return (InternalCDORevision)provider.getRevision(parentID);
+    return provider.getRevision(parentID);
   }
 
+  /**
+   * @since 4.5
+   */
   /**
    * @since 4.4
    */
@@ -485,7 +508,7 @@ public final class CDORevisionUtil
     }
     else
     {
-      container = getParentRevision(revision, provider);
+      container = (InternalCDORevision)getParentRevision(revision, provider);
     }
 
     if (container != null)

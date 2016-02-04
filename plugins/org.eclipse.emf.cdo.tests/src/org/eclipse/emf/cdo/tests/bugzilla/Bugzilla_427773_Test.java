@@ -32,8 +32,6 @@ public class Bugzilla_427773_Test extends AbstractCDOTest
   @Override
   public void setUp() throws Exception
   {
-    SUPPRESS_OUTPUT = true;
-
     UserManager userManager = new UserManager();
     userManager.activate();
     userManager.addUser(USER_1_CREDENTIALS.getUserID(), USER_1_CREDENTIALS.getPassword());

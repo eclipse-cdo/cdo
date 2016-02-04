@@ -36,11 +36,14 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -75,7 +78,8 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport
+public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping
+    implements IListMappingDeltaSupport, IListMappingUnitSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditListTableMappingWithRanges.class);
 
@@ -83,6 +87,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
    * Used to clean up lists for detached objects.
    */
   private static final int FINAL_VERSION = Integer.MAX_VALUE;
+
+  private static final String SQL_ORDER_BY_INDEX = " ORDER BY " + LIST_IDX;
+
+  private static final boolean CHECK_UNIT_ENTRIES = Boolean
+      .getBoolean("org.eclipse.emf.cdo.server.db.checkUnitEntries");
 
   /**
    * The table of this mapping.
@@ -97,7 +106,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
 
-  private String sqlOrderByIndex;
+  private String sqlSelectUnitEntries;
 
   private String sqlInsertEntry;
 
@@ -171,8 +180,6 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     builder.append(LIST_REVISION_VERSION_REMOVED);
     builder.append(">?)"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
-
-    sqlOrderByIndex = " ORDER BY " + LIST_IDX; //$NON-NLS-1$
 
     // ----------------- insert entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
@@ -271,6 +278,26 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     sqlDeleteList = builder.toString();
   }
 
+  @Override
+  public void setClassMapping(IClassMapping classMapping)
+  {
+    InternalRepository repository = (InternalRepository)getMappingStrategy().getStore().getRepository();
+    if (repository.isSupportingUnits())
+    {
+      String listTableName = getTable().getName();
+      String attributesTableName = classMapping.getDBTables().get(0).getName();
+
+      sqlSelectUnitEntries = "SELECT " + (CHECK_UNIT_ENTRIES ? ATTRIBUTES_ID + ", " : "") + "cdo_list." + LIST_VALUE + //
+          " FROM " + listTableName + " cdo_list, " + attributesTableName + ", " + UnitMappingTable.UNITS + //
+          " WHERE " + UnitMappingTable.UNITS_ELEM + "=" + ATTRIBUTES_ID + //
+          " AND " + ATTRIBUTES_ID + "=cdo_list." + LIST_REVISION_ID + //
+          " AND " + UnitMappingTable.UNITS_UNIT + "=?" + //
+          " AND cdo_list." + LIST_REVISION_VERSION_ADDED + "<=" + ATTRIBUTES_VERSION + //
+          " AND (cdo_list." + LIST_REVISION_VERSION_REMOVED + " IS NULL OR cdo_list." + LIST_REVISION_VERSION_REMOVED
+          + ">" + ATTRIBUTES_VERSION + ") ORDER BY cdo_list." + LIST_REVISION_ID + ", cdo_list." + LIST_IDX;
+    }
+  }
+
   public Collection<IDBTable> getDBTables()
   {
     return Collections.singleton(table);
@@ -301,7 +328,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
           getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
-    String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
+    String sql = sqlSelectChunksPrefix + SQL_ORDER_BY_INDEX;
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
@@ -365,7 +392,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       builder.append(where);
     }
 
-    builder.append(sqlOrderByIndex);
+    builder.append(SQL_ORDER_BY_INDEX);
     String sql = builder.toString();
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -534,6 +561,259 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   public void rawDeleted(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version)
   {
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
+  }
+
+  public ResultSet queryUnitEntries(IDBStoreAccessor accessor, IIDHandler idHandler, CDOID rootID) throws SQLException
+  {
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitEntries,
+        ReuseProbability.MEDIUM);
+    idHandler.setCDOID(stmt, 1, rootID);
+    return stmt.executeQuery();
+  }
+
+  public void readUnitEntries(ResultSet resultSet, IIDHandler idHandler, CDOID id, MoveableList<Object> list)
+      throws SQLException
+  {
+    int size = list.size();
+    for (int i = 0; i < size; i++)
+    {
+      resultSet.next();
+
+      if (CHECK_UNIT_ENTRIES)
+      {
+        CDOID checkID = idHandler.getCDOID(resultSet, 1);
+        if (checkID != id)
+        {
+          throw new IllegalStateException("Result set does not deliver expected result");
+        }
+      }
+
+      Object value = typeMapping.readValue(resultSet);
+      list.set(i, value);
+    }
+  }
+
+  private void addEntry(IDBStoreAccessor accessor, CDOID id, int version, int index, Object value)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Adding value for feature() {0}.{1} index {2} of {3}v{4} : {5}", //$NON-NLS-1$
+          getContainingClass().getName(), getFeature().getName(), index, id, version, value);
+    }
+
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+
+    try
+    {
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, version);
+      stmt.setInt(column++, index);
+      typeMapping.setValue(stmt, column++, value);
+
+      DBUtil.update(stmt, true);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    catch (IllegalStateException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int index)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Removing value for feature() {0}.{1} index {2} of {3}v{4}", //$NON-NLS-1$
+          getContainingClass().getName(), getFeature().getName(), index, id, newVersion);
+    }
+
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
+
+    try
+    {
+      // try to delete a temporary entry first
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, index);
+      stmt.setInt(column++, newVersion);
+
+      int result = DBUtil.update(stmt, false);
+      if (result == 1)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("removeEntry deleted: {0}", index); //$NON-NLS-1$
+        }
+      }
+      else if (result > 1)
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("removeEntry Too many results: {0}: {1}", index, result); //$NON-NLS-1$
+        }
+
+        throw new DBException("Too many results"); //$NON-NLS-1$
+      }
+      else
+      {
+        // no temporary entry found, so mark the entry as removed
+        DBUtil.close(stmt);
+        stmt = accessor.getDBConnection().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+
+        column = 1;
+        stmt.setInt(column++, newVersion);
+        idHandler.setCDOID(stmt, column++, id);
+        stmt.setInt(column++, index);
+
+        DBUtil.update(stmt, true);
+      }
+    }
+    catch (SQLException e)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Removing value for feature() {0}.{1} index {2} of {3}v{4} FAILED {5}", //$NON-NLS-1$
+            getContainingClass().getName(), getFeature().getName(), index, id, newVersion, e.getMessage());
+      }
+
+      throw new DBException(e);
+    }
+    catch (IllegalStateException e)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Removing value for feature() {0}.{1} index {2} of {3}v{4} FAILED {5}", //$NON-NLS-1$
+            getContainingClass().getName(), getFeature().getName(), index, id, newVersion, e.getMessage());
+      }
+
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  private Object getValue(IDBStoreAccessor accessor, CDOID id, int index)
+  {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
+    Object result = null;
+
+    try
+    {
+      int column = 1;
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, index);
+
+      ResultSet resultSet = stmt.executeQuery();
+      if (!resultSet.next())
+      {
+        throw new DBException("getValue() expects exactly one result");
+      }
+
+      result = typeMapping.readValue(resultSet);
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Read value (index {0}) from result set: {1}", index, result); //$NON-NLS-1$
+      }
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+
+    return result;
+  }
+
+  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
+      QueryXRefsContext context, String idString)
+  {
+
+    String tableName = getTable().getName();
+    String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT l_t."); //$NON-NLS-1$
+    builder.append(LIST_REVISION_ID);
+    builder.append(", l_t."); //$NON-NLS-1$
+    builder.append(LIST_VALUE);
+    builder.append(", l_t."); //$NON-NLS-1$
+    builder.append(LIST_IDX);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(tableName);
+    builder.append(" l_t, ");//$NON-NLS-1$
+    builder.append(mainTableName);
+    builder.append(" a_t WHERE ");//$NON-NLS-1$
+    builder.append("a_t.");//$NON-NLS-1$
+    builder.append(mainTableWhere);
+    builder.append(listJoin);
+    builder.append(" AND "); //$NON-NLS-1$
+    builder.append(LIST_VALUE);
+    builder.append(" IN "); //$NON-NLS-1$
+    builder.append(idString);
+    String sql = builder.toString();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Query XRefs (list): {0}", sql);
+    }
+
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
+    ResultSet resultSet = null;
+
+    try
+    {
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
+      {
+        CDOID sourceID = idHandler.getCDOID(resultSet, 1);
+        CDOID targetID = idHandler.getCDOID(resultSet, 2);
+        int idx = resultSet.getInt(3);
+
+        boolean more = context.addXRef(targetID, sourceID, (EReference)getFeature(), idx);
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", sourceID, targetID, idx);
+        }
+
+        if (!more)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("  result limit reached. Ignoring further results.");
+          }
+
+          return false;
+        }
+      }
+
+      return true;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(stmt);
+    }
   }
 
   public void processDelta(final IDBStoreAccessor accessor, final CDOID id, final int branchId, int oldVersion,
@@ -888,229 +1168,6 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       {
         DBUtil.close(stmt);
       }
-    }
-  }
-
-  private void addEntry(IDBStoreAccessor accessor, CDOID id, int version, int index, Object value)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Adding value for feature() {0}.{1} index {2} of {3}v{4} : {5}", //$NON-NLS-1$
-          getContainingClass().getName(), getFeature().getName(), index, id, version, value);
-    }
-
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
-
-    try
-    {
-      int column = 1;
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, version);
-      stmt.setInt(column++, index);
-      typeMapping.setValue(stmt, column++, value);
-
-      DBUtil.update(stmt, true);
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
-    catch (IllegalStateException e)
-    {
-      throw new DBException(e);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
-  }
-
-  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int index)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Removing value for feature() {0}.{1} index {2} of {3}v{4}", //$NON-NLS-1$
-          getContainingClass().getName(), getFeature().getName(), index, id, newVersion);
-    }
-
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
-
-    try
-    {
-      // try to delete a temporary entry first
-      int column = 1;
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, index);
-      stmt.setInt(column++, newVersion);
-
-      int result = DBUtil.update(stmt, false);
-      if (result == 1)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("removeEntry deleted: {0}", index); //$NON-NLS-1$
-        }
-      }
-      else if (result > 1)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("removeEntry Too many results: {0}: {1}", index, result); //$NON-NLS-1$
-        }
-
-        throw new DBException("Too many results"); //$NON-NLS-1$
-      }
-      else
-      {
-        // no temporary entry found, so mark the entry as removed
-        DBUtil.close(stmt);
-        stmt = accessor.getDBConnection().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
-
-        column = 1;
-        stmt.setInt(column++, newVersion);
-        idHandler.setCDOID(stmt, column++, id);
-        stmt.setInt(column++, index);
-
-        DBUtil.update(stmt, true);
-      }
-    }
-    catch (SQLException e)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Removing value for feature() {0}.{1} index {2} of {3}v{4} FAILED {5}", //$NON-NLS-1$
-            getContainingClass().getName(), getFeature().getName(), index, id, newVersion, e.getMessage());
-      }
-
-      throw new DBException(e);
-    }
-    catch (IllegalStateException e)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Removing value for feature() {0}.{1} index {2} of {3}v{4} FAILED {5}", //$NON-NLS-1$
-            getContainingClass().getName(), getFeature().getName(), index, id, newVersion, e.getMessage());
-      }
-
-      throw new DBException(e);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
-  }
-
-  private Object getValue(IDBStoreAccessor accessor, CDOID id, int index)
-  {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
-    Object result = null;
-
-    try
-    {
-      int column = 1;
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, index);
-
-      ResultSet resultSet = stmt.executeQuery();
-      if (!resultSet.next())
-      {
-        throw new DBException("getValue() expects exactly one result");
-      }
-
-      result = typeMapping.readValue(resultSet);
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Read value (index {0}) from result set: {1}", index, result); //$NON-NLS-1$
-      }
-    }
-    catch (SQLException e)
-    {
-      throw new DBException(e);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
-
-    return result;
-  }
-
-  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere,
-      QueryXRefsContext context, String idString)
-  {
-
-    String tableName = getTable().getName();
-    String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
-
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
-    builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
-    builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(LIST_IDX);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(tableName);
-    builder.append(" l_t, ");//$NON-NLS-1$
-    builder.append(mainTableName);
-    builder.append(" a_t WHERE ");//$NON-NLS-1$
-    builder.append("a_t.");//$NON-NLS-1$
-    builder.append(mainTableWhere);
-    builder.append(listJoin);
-    builder.append(" AND "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
-    builder.append(" IN "); //$NON-NLS-1$
-    builder.append(idString);
-    String sql = builder.toString();
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Query XRefs (list): {0}", sql);
-    }
-
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
-    ResultSet resultSet = null;
-
-    try
-    {
-      resultSet = stmt.executeQuery();
-      while (resultSet.next())
-      {
-        CDOID sourceID = idHandler.getCDOID(resultSet, 1);
-        CDOID targetID = idHandler.getCDOID(resultSet, 2);
-        int idx = resultSet.getInt(3);
-
-        boolean more = context.addXRef(targetID, sourceID, (EReference)getFeature(), idx);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", sourceID, targetID, idx);
-        }
-
-        if (!more)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("  result limit reached. Ignoring further results.");
-          }
-
-          return false;
-        }
-      }
-
-      return true;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
     }
   }
 }

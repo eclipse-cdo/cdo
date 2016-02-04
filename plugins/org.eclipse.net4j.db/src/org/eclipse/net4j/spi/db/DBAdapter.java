@@ -144,6 +144,14 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
+   * @since 4.5
+   */
+  public Connection modifyConnection(Connection connection)
+  {
+    return connection;
+  }
+
+  /**
    * @since 4.2
    */
   public IDBSchema readSchema(Connection connection, String name)

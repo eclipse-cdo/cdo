@@ -45,7 +45,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -402,7 +401,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
 
     public ObjectsMapUpdater(Map<CDOID, CDOObject> map)
     {
-      mapCopy = new HashMap<CDOID, CDOObject>(map);
+      mapCopy = CDOIDUtil.createMap(map);
       map.clear();
 
       this.map = map;

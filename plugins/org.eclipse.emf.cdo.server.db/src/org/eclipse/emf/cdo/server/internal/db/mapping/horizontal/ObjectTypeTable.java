@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -213,7 +214,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   {
     super.doActivate();
 
-    IDBStore store = getMappingStrategy().getStore();
+    final IDBStore store = getMappingStrategy().getStore();
     final DBType idType = store.getIDHandler().getDBType();
     final int idLength = store.getIDColumnLength();
 
@@ -230,6 +231,12 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
           table.addField(ATTRIBUTES_CLASS, idType, idLength);
           table.addField(ATTRIBUTES_CREATED, DBType.BIGINT);
           table.addIndex(IDBIndex.Type.PRIMARY_KEY, ATTRIBUTES_ID);
+
+          InternalRepository repository = (InternalRepository)store.getRepository();
+          if (repository.isSupportingUnits())
+          {
+            table.addIndex(IDBIndex.Type.NON_UNIQUE, ATTRIBUTES_CLASS);
+          }
         }
       });
     }

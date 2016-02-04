@@ -116,6 +116,16 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    */
   public InternalLockManager getLockingManager();
 
+  /**
+   * @since 4.5
+   */
+  public InternalUnitManager getUnitManager();
+
+  /**
+   * @since 4.5
+   */
+  public void setUnitManager(InternalUnitManager unitManager);
+
   public InternalQueryManager getQueryManager();
 
   public void setQueryHandlerProvider(IQueryHandlerProvider queryHandlerProvider);
@@ -260,6 +270,11 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
    * @since 4.0
    */
   public void setSkipInitialization(boolean skipInitialization);
+
+  /**
+   * @since 4.5
+   */
+  public boolean isSupportingUnits();
 
   /**
    * @since 4.0

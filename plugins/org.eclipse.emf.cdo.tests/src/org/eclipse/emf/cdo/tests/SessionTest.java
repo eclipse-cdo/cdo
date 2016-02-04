@@ -50,6 +50,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.Collection;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -234,7 +235,7 @@ public class SessionTest extends AbstractCDOTest
       {
         try
         {
-          startLatch.await();
+          startLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
 
           msg("Committing NOW!");
           commitTime[0] = transaction.commit().getTimeStamp();
@@ -251,7 +252,7 @@ public class SessionTest extends AbstractCDOTest
     CDOSession session2 = openSession();
 
     startLatch.countDown();
-    stopLatch.await();
+    stopLatch.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
     assertEquals(true, session2.waitForUpdate(commitTime[0], DEFAULT_TIMEOUT));
 
     transaction.getSession().close();

@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -51,6 +52,7 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
+import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -79,7 +81,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalClassMapping implements IClassMapping, IMappingConstants
+public abstract class AbstractHorizontalClassMapping implements IClassMapping, IMappingConstants, IDeactivateable
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalClassMapping.class);
 
@@ -142,7 +144,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         primaryKey.addIndexField(branchField);
       }
 
-      table.addIndex(IDBIndex.Type.NON_UNIQUE, ATTRIBUTES_ID, ATTRIBUTES_REVISED);
+      table.addIndex(IDBIndex.Type.NON_UNIQUE, ATTRIBUTES_REVISED);
     }
   }
 
@@ -173,6 +175,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           else
           {
             mapping = mappingStrategy.createListMapping(eClass, feature);
+          }
+
+          if (mapping instanceof IListMapping3)
+          {
+            ((IListMapping3)mapping).setClassMapping(this);
           }
 
           listMappings.add(mapping);
@@ -294,9 +301,10 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       }
 
       stmt.setMaxRows(1); // Optimization: only 1 row
-
       resultSet = stmt.executeQuery();
-      if (!resultSet.next())
+
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      if (!readValuesFromResultSet(resultSet, idHandler, revision, false))
       {
         if (TRACER.isEnabled())
         {
@@ -304,59 +312,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         }
 
         return false;
-      }
-
-      revision.setVersion(resultSet.getInt(ATTRIBUTES_VERSION));
-
-      long timeStamp = resultSet.getLong(ATTRIBUTES_CREATED);
-
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      CDOBranchPoint branchPoint = revision.getBranch().getPoint(timeStamp);
-
-      revision.setBranchPoint(branchPoint);
-      revision.setRevised(resultSet.getLong(ATTRIBUTES_REVISED));
-      revision.setResourceID(idHandler.getCDOID(resultSet, ATTRIBUTES_RESOURCE));
-      revision.setContainerID(idHandler.getCDOID(resultSet, ATTRIBUTES_CONTAINER));
-      revision.setContainingFeatureID(resultSet.getInt(ATTRIBUTES_FEATURE));
-
-      for (ITypeMapping mapping : valueMappings)
-      {
-        EStructuralFeature feature = mapping.getFeature();
-        if (feature.isUnsettable())
-        {
-          IDBField field = unsettableFields.get(feature);
-          if (!resultSet.getBoolean(field.getName()))
-          {
-            // isSet==false -- setValue: null
-            revision.setValue(feature, null);
-            continue;
-          }
-        }
-
-        mapping.readValueToRevision(resultSet, revision);
-      }
-
-      if (listSizeFields != null)
-      {
-        for (Map.Entry<EStructuralFeature, IDBField> listSizeEntry : listSizeFields.entrySet())
-        {
-          EStructuralFeature feature = listSizeEntry.getKey();
-          IDBField field = listSizeEntry.getValue();
-          int size = resultSet.getInt(field.getName());
-
-          // ensure the listSize (TODO: remove assertion)
-          CDOList list = revision.getList(feature, size);
-
-          for (int i = 0; i < size; i++)
-          {
-            list.add(InternalCDOList.UNINITIALIZED);
-          }
-
-          if (list.size() != size)
-          {
-            Assert.isTrue(false);
-          }
-        }
       }
 
       return true;
@@ -368,6 +323,85 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     finally
     {
       DBUtil.close(resultSet);
+    }
+  }
+
+  /**
+   * Read the revision's values from the DB.
+   *
+   * @return <code>true</code> if the revision has been read successfully.<br>
+   *         <code>false</code> if the revision does not exist in the DB.
+   */
+  protected final boolean readValuesFromResultSet(ResultSet resultSet, IIDHandler idHandler,
+      InternalCDORevision revision, boolean forUnit)
+  {
+    try
+    {
+      if (resultSet.next())
+      {
+        long timeStamp = resultSet.getLong(ATTRIBUTES_CREATED);
+        CDOBranchPoint branchPoint = revision.getBranch().getPoint(timeStamp);
+
+        if (forUnit)
+        {
+          revision.setID(idHandler.getCDOID(resultSet, ATTRIBUTES_ID));
+        }
+
+        revision.setBranchPoint(branchPoint);
+        revision.setVersion(resultSet.getInt(ATTRIBUTES_VERSION));
+        revision.setRevised(resultSet.getLong(ATTRIBUTES_REVISED));
+        revision.setResourceID(idHandler.getCDOID(resultSet, ATTRIBUTES_RESOURCE));
+        revision.setContainerID(idHandler.getCDOID(resultSet, ATTRIBUTES_CONTAINER));
+        revision.setContainingFeatureID(resultSet.getInt(ATTRIBUTES_FEATURE));
+
+        for (ITypeMapping mapping : valueMappings)
+        {
+          EStructuralFeature feature = mapping.getFeature();
+          if (feature.isUnsettable())
+          {
+            IDBField field = unsettableFields.get(feature);
+            if (!resultSet.getBoolean(field.getName()))
+            {
+              // isSet==false -- setValue: null
+              revision.setValue(feature, null);
+              continue;
+            }
+          }
+
+          mapping.readValueToRevision(resultSet, revision);
+        }
+
+        if (listSizeFields != null)
+        {
+          for (Map.Entry<EStructuralFeature, IDBField> listSizeEntry : listSizeFields.entrySet())
+          {
+            EStructuralFeature feature = listSizeEntry.getKey();
+            IDBField field = listSizeEntry.getValue();
+            int size = resultSet.getInt(field.getName());
+
+            // ensure the listSize (TODO: remove assertion)
+            CDOList list = revision.getList(feature, size);
+
+            for (int i = 0; i < size; i++)
+            {
+              list.add(InternalCDOList.UNINITIALIZED);
+            }
+
+            if (list.size() != size)
+            {
+              Assert.isTrue(false);
+            }
+          }
+        }
+
+        return true;
+      }
+
+      return false;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
     }
   }
 
@@ -925,6 +959,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   protected abstract void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp);
 
   protected abstract void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision);
+
+  public Exception deactivate()
+  {
+    return null;
+  }
 
   protected static void appendTypeMappingNames(StringBuilder builder, Collection<ITypeMapping> typeMappings)
   {

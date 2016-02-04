@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -341,6 +342,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    *         not support requesting reset of credentials
    */
   public void requestResetCredentials(String userID);
+
+  /**
+   * @since 4.5
+   */
+  public boolean requestUnit(int viewID, CDOID rootID, byte opcode, CDORevisionHandler revisionHandler);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...

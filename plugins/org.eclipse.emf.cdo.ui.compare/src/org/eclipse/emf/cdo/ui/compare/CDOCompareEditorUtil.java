@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
@@ -80,7 +81,6 @@ import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -814,7 +814,7 @@ public class CDOCompareEditorUtil
           Collection<CDOObject> values = transaction.getNewObjects().values();
           if (!values.isEmpty())
           {
-            Map<CDOID, CDOID> idMappings = new HashMap<CDOID, CDOID>();
+            Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
             CDOObject[] rightObjects = values.toArray(new CDOObject[values.size()]);
             for (CDOObject rightObject : rightObjects)

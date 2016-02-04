@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -47,7 +48,6 @@ import java.util.Set;
  */
 public class HibernateRawCommitContext implements InternalCommitContext
 {
-
   private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
   private List<InternalCDORevision> dirtyObjects = new ArrayList<InternalCDORevision>();
@@ -243,6 +243,11 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public void setNewObjects(List<InternalCDORevision> newObjects)
   {
     this.newObjects = newObjects;
+  }
+
+  public IStoreAccessor getAccessor()
+  {
+    return null;
   }
 
   public void preWrite()

@@ -25,9 +25,11 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
@@ -51,6 +53,8 @@ import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOStaleReferencePolicy;
+import org.eclipse.emf.cdo.view.CDOUnit;
+import org.eclipse.emf.cdo.view.CDOUnitManager;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewDurabilityChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
@@ -74,6 +78,7 @@ import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IWorkSerializer;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -95,6 +100,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
@@ -113,9 +119,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -134,6 +142,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   private InternalCDOSession session;
 
   private String durableLockingID;
+
+  private final CDOUnitManagerImpl unitManager = new CDOUnitManagerImpl();
 
   private ChangeSubscriptionManager changeSubscriptionManager = new ChangeSubscriptionManager();
 
@@ -926,23 +936,15 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   }
 
   @Override
-  public InternalCDOObject removeObject(CDOID id)
+  protected void objectRegistered(InternalCDOObject object)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
+    unitManager.addObject(object);
+  }
 
-      try
-      {
-        InternalCDOObject removedObject = super.removeObject(id);
-        removeLockState(removedObject);
-        return removedObject;
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+  @Override
+  protected void objectDeregistered(InternalCDOObject object)
+  {
+    removeLockState(object);
   }
 
   public CDOLockState[] getLockStates(Collection<CDOID> ids)
@@ -1551,6 +1553,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       new SyncTester().start();
     }
+
+    unitManager.activate();
   }
 
   @Override
@@ -1591,6 +1595,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   @Override
   protected void doDeactivate() throws Exception
   {
+    unitManager.deactivate();
+
     CDOViewRegistryImpl.INSTANCE.deregister(this);
     LifecycleUtil.deactivate(invalidationRunner, OMLogger.Level.WARN);
 
@@ -1805,6 +1811,346 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return id;
   }
 
+  public final CDOUnitManagerImpl getUnitManager()
+  {
+    return unitManager;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class CDOUnitManagerImpl extends Container<CDOUnit> implements CDOUnitManager
+  {
+    private final Map<EObject, CDOUnit> unitPerRoot = new HashMap<EObject, CDOUnit>();
+
+    private final Map<EObject, CDOUnit> unitPerObject = new HashMap<EObject, CDOUnit>();
+
+    public CDOUnitManagerImpl()
+    {
+    }
+
+    public CDOView getView()
+    {
+      return CDOViewImpl.this;
+    }
+
+    public boolean isUnit(EObject root)
+    {
+      CDOUnitImpl unit = requestUnit(root, CDOProtocolConstants.UNIT_CHECK);
+      return unit != null;
+    }
+
+    public CDOUnit createUnit(EObject root) throws UnitExistsException
+    {
+      CDOUnitImpl unit = requestUnit(root, CDOProtocolConstants.UNIT_CREATE);
+      if (unit == null)
+      {
+        throw new UnitExistsException();
+      }
+
+      fireElementAddedEvent(unit);
+      return unit;
+    }
+
+    public CDOUnit openUnit(EObject root) throws UnitNotFoundException
+    {
+      CDOUnitImpl unit = requestUnit(root, CDOProtocolConstants.UNIT_OPEN);
+      if (unit == null)
+      {
+        throw new UnitNotFoundException();
+      }
+
+      fireElementAddedEvent(unit);
+      return unit;
+    }
+
+    public CDOUnit[] getElements()
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          return unitPerRoot.values().toArray(new CDOUnit[unitPerRoot.size()]);
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+    }
+
+    public CDOUnit[] getOpenUnits()
+    {
+      return getElements();
+    }
+
+    public CDOUnit getOpenUnit(EObject object)
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          return getOpenUnitUnsynced(object);
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+    }
+
+    public CDOUnit getOpenUnitUnsynced(EObject object)
+    {
+      return unitPerObject.get(object);
+    }
+
+    public void addObject(InternalCDOObject object)
+    {
+      if (!unitPerRoot.isEmpty())
+      {
+        CDOUnit unit = getOpenUnitUnsynced(object);
+        if (unit == null)
+        {
+          EObject parent = getParent(object);
+          EObject rootResource = getRootResource();
+
+          while (parent != null && parent != rootResource)
+          {
+            unit = getOpenUnitUnsynced(parent);
+            if (unit != null)
+            {
+              unitPerObject.put(object, unit);
+              ++((CDOUnitImpl)unit).elements;
+              break;
+            }
+
+            parent = getParent(parent);
+          }
+        }
+      }
+    }
+
+    public void removeObject(InternalCDOObject object)
+    {
+      if (!unitPerRoot.isEmpty())
+      {
+        CDOUnit unit = unitPerObject.remove(object);
+        if (unit != null)
+        {
+          if (unit.getRoot() == object)
+          {
+            unitPerRoot.remove(object);
+          }
+
+          --((CDOUnitImpl)unit).elements;
+        }
+      }
+    }
+
+    @Override
+    protected void doDeactivate() throws Exception
+    {
+      unitPerRoot.clear();
+      unitPerObject.clear();
+      super.doDeactivate();
+    }
+
+    private EObject getParent(EObject object)
+    {
+      EObject parent = object.eContainer();
+      if (parent == null)
+      {
+        parent = (EObject)((InternalEObject)object).eDirectResource();
+      }
+
+      return parent;
+    }
+
+    private CDOObject getCDORoot(EObject root)
+    {
+      CDOObject cdoRoot = CDOUtil.getCDOObject(root);
+      if (cdoRoot == null)
+      {
+        throw new IllegalArgumentException("Root " + root + " is not managed by CDO");
+      }
+
+      CDOView view = cdoRoot.cdoView();
+      if (view != CDOViewImpl.this)
+      {
+        throw new IllegalArgumentException("Root " + root + " is managed by " + view);
+      }
+
+      return cdoRoot;
+    }
+
+    private CDOUnitImpl requestUnit(EObject root, byte opcode)
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          if (opcode == CDOProtocolConstants.UNIT_CREATE)
+          {
+            CDOUnit containingUnit = getOpenUnit(root);
+            if (containingUnit != null)
+            {
+              throw new CDOException(
+                  "Attempt to nest the new unit " + root + " in the existing unit " + containingUnit);
+            }
+
+            for (CDOUnit existingUnit : unitPerRoot.values())
+            {
+              if (EcoreUtil.isAncestor(root, existingUnit.getRoot()))
+              {
+                throw new CDOException(
+                    "Attempt to nest the existing unit " + existingUnit + " in the new unit " + root);
+              }
+            }
+          }
+
+          final InternalCDORevisionManager revisionManager = session.getRevisionManager();
+          final CDOUnitImpl unit = new CDOUnitImpl(root);
+
+          int viewID = getViewID();
+          CDOID rootID = getCDORoot(root).cdoID();
+
+          CDORevisionHandler revisionHandler = opcode == CDOProtocolConstants.UNIT_CREATE
+              || opcode == CDOProtocolConstants.UNIT_OPEN ? new CDORevisionHandler()
+              {
+                public boolean handleRevision(CDORevision revision)
+                {
+                  ++unit.elements;
+                  revisionManager.addRevision(revision);
+
+                  CDOID id = revision.getID();
+                  changeSubscriptionManager.removeEntry(id);
+
+                  InternalCDOObject object = getObject(id);
+                  unitPerObject.put(object, unit);
+                  return true;
+                }
+              } : null;
+
+          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+          boolean success = sessionProtocol.requestUnit(viewID, rootID, opcode, revisionHandler);
+
+          if (success)
+          {
+            if (revisionHandler != null)
+            {
+              unitPerRoot.put(root, unit);
+              unitPerObject.put(root, unit);
+            }
+
+            return unit;
+          }
+
+          return null;
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+    }
+
+    private void closeUnit(CDOUnit unit, boolean resubscribe)
+    {
+      synchronized (getViewMonitor())
+      {
+        lockView();
+
+        try
+        {
+          requestUnit(unit.getRoot(), CDOProtocolConstants.UNIT_CLOSE);
+
+          if (resubscribe && !options.hasChangeSubscriptionPolicies())
+          {
+            resubscribe = false;
+          }
+
+          for (Iterator<Entry<EObject, CDOUnit>> it = unitPerObject.entrySet().iterator(); it.hasNext();)
+          {
+            Entry<EObject, CDOUnit> entry = it.next();
+            if (entry.getValue() == unit)
+            {
+              it.remove(); // Remove the object from its unit first, so that shouldSubscribe() can return true.
+
+              if (resubscribe)
+              {
+                EObject object = entry.getKey();
+                for (Adapter adapter : object.eAdapters())
+                {
+                  changeSubscriptionManager.subscribe(object, adapter);
+                }
+              }
+            }
+          }
+
+          unitPerRoot.remove(unit.getRoot());
+        }
+        finally
+        {
+          unlockView();
+        }
+      }
+
+      fireElementRemovedEvent(unit);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public final class CDOUnitImpl implements CDOUnit
+    {
+      private final EObject root;
+
+      private int elements;
+
+      public CDOUnitImpl(EObject root)
+      {
+        this.root = root;
+      }
+
+      public CDOUnitManagerImpl getManager()
+      {
+        return CDOUnitManagerImpl.this;
+      }
+
+      public EObject getRoot()
+      {
+        return root;
+      }
+
+      public int getElements()
+      {
+        return elements;
+      }
+
+      public void close()
+      {
+        close(true);
+      }
+
+      public void close(boolean resubscribe)
+      {
+        closeUnit(this, resubscribe);
+      }
+
+      @Override
+      public String toString()
+      {
+        return "CDOUnit[" + root + "]";
+      }
+    }
+  }
+
   /**
    * @author Simon McDuff
    * @since 2.0
@@ -1926,7 +2272,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     /**
      * Register to the server all objects from the active list
      */
-    private void notifyChangeSubcriptionPolicy()
+    private void handleChangeSubcriptionPoliciesChanged()
     {
       boolean policiesPresent = options().hasChangeSubscriptionPolicies();
       subscriptions.clear();
@@ -1964,13 +2310,13 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       for (CDOObject object : newObjects)
       {
-        InternalCDOObject cdoDetachedObject = (InternalCDOObject)object;
-        if (cdoDetachedObject != null)
+        InternalCDOObject internalObject = (InternalCDOObject)object;
+        if (internalObject != null)
         {
-          int count = getNumberOfValidAdapters(cdoDetachedObject);
+          int count = getNumberOfValidAdapters(internalObject);
           if (count > 0)
           {
-            subscribe(cdoDetachedObject.cdoID(), cdoDetachedObject, count);
+            subscribe(internalObject.cdoID(), internalObject, count);
           }
         }
       }
@@ -2031,6 +2377,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private boolean shouldSubscribe(EObject eObject, Adapter adapter)
     {
+      if (unitManager.getOpenUnitUnsynced(eObject) != null)
+      {
+        return false;
+      }
+
       for (CDOAdapterPolicy policy : options().getChangeSubscriptionPolicies())
       {
         if (policy.isValid(eObject, adapter))
@@ -2072,7 +2423,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       // Look if objects need to be unsubscribe
       if (count <= 0)
       {
-        subscriptions.remove(id);
+        removeEntry(id);
 
         // Notification need to be enable to send correct value to the server
         if (policiesPresent)
@@ -2098,9 +2449,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       subscribe(id, null, Integer.MIN_VALUE);
     }
 
-    private void addEntry(CDOID key, InternalCDOObject object, int count)
+    private void addEntry(CDOID id, InternalCDOObject object, int count)
     {
-      subscriptions.put(key, new SubscribeEntry(object, count));
+      subscriptions.put(id, new SubscribeEntry(object, count));
+    }
+
+    private void removeEntry(CDOID id)
+    {
+      subscriptions.remove(id);
     }
   }
 
@@ -2136,7 +2492,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
   }
 
   /**
-   * A {@link IListener} to prefetch {@link CDOLockState lockstates} when {@link CDORevision revisions} are loaded, according to {@link Options#setLockStatePrefetchEnabled(boolean)} option.
+   * A {@link IListener} to prefetch {@link CDOLockState lock states} when {@link CDORevision revisions} are loaded,
+   * according to {@link Options#setLockStatePrefetchEnabled(boolean)} option.
    *
    * @author Esteban Dugueperoux
    */
@@ -2814,7 +3171,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         {
           if (changeSubscriptionPolicies.add(policy))
           {
-            changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+            changeSubscriptionManager.handleChangeSubcriptionPoliciesChanged();
             event = new ChangeSubscriptionPoliciesEventImpl();
           }
         }
@@ -2840,7 +3197,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         {
           if (changeSubscriptionPolicies.remove(policy) && !changeSubscriptionPolicies.contains(policy))
           {
-            changeSubscriptionManager.notifyChangeSubcriptionPolicy();
+            changeSubscriptionManager.handleChangeSubcriptionPoliciesChanged();
             event = new ChangeSubscriptionPoliciesEventImpl();
           }
         }

@@ -1777,13 +1777,24 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           lastLookupObject = null;
         }
 
-        return objects.remove(id);
+        InternalCDOObject object = objects.remove(id);
+        if (object != null)
+        {
+          objectDeregistered(object);
+        }
+
+        return object;
       }
       finally
       {
         unlockView();
       }
     }
+  }
+
+  protected void objectDeregistered(InternalCDOObject object)
+  {
+    // Subclasses may override.
   }
 
   /**
@@ -2247,12 +2258,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
             TRACER.format(Messages.getString("CDOViewImpl.20"), old); //$NON-NLS-1$
           }
         }
+
+        objectRegistered(object);
       }
       finally
       {
         unlockView();
       }
     }
+  }
+
+  protected void objectRegistered(InternalCDOObject object)
+  {
+    // Subclasses may override.
   }
 
   public void deregisterObject(InternalCDOObject object)

@@ -95,7 +95,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
 
       if (newObjects.length != 0)
       {
-        writeRevisions(newObjects, branch, monitor.fork(newObjects.length));
+        writeNewObjectRevisions(context, newObjects, branch, monitor.fork(newObjects.length));
       }
 
       if (dirtyCount != 0)
@@ -106,7 +106,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
         }
         else
         {
-          writeRevisions(dirtyObjects, branch, monitor.fork(dirtyCount));
+          writeDirtyObjectRevisions(context, dirtyObjects, branch, monitor.fork(dirtyCount));
         }
       }
 
@@ -165,6 +165,24 @@ public abstract class StoreAccessor extends StoreAccessorBase
    */
   protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID,
       String comment, OMMonitor monitor);
+
+  /**
+   * @since 4.5
+   */
+  protected void writeNewObjectRevisions(InternalCommitContext context, InternalCDORevision[] newObjects,
+      CDOBranch branch, OMMonitor monitor)
+  {
+    writeRevisions(newObjects, branch, monitor);
+  }
+
+  /**
+   * @since 4.5
+   */
+  protected void writeDirtyObjectRevisions(InternalCommitContext context, InternalCDORevision[] dirtyObjects,
+      CDOBranch branch, OMMonitor monitor)
+  {
+    writeRevisions(dirtyObjects, branch, monitor);
+  }
 
   /**
    * @since 3.0

@@ -368,6 +368,8 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       if (hasLists)
       {
+        // Reading all list rows of an object is not atomic.
+        // After all row reads are done, check the revision version again (see below).
         stmtVersion = accessor.getDBConnection().prepareStatement(sqlSelectCurrentVersion, ReuseProbability.HIGH);
         stmtVersion.setMaxRows(1); // Optimization: only 1 row
         idHandler.setCDOID(stmtVersion, 1, id);

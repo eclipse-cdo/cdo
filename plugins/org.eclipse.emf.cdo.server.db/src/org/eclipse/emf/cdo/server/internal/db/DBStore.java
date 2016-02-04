@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstants;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -114,6 +115,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   private IMetaDataManager metaDataManager = new MetaDataManager(this);
 
   private DurableLockingManager durableLockingManager = new DurableLockingManager(this);
+
+  private UnitMappingTable unitMappingTable;
 
   private IMappingStrategy mappingStrategy;
 
@@ -235,6 +238,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   public DurableLockingManager getDurableLockingManager()
   {
     return durableLockingManager;
+  }
+
+  public UnitMappingTable getUnitMappingTable()
+  {
+    return unitMappingTable;
   }
 
   public Timer getConnectionKeepAliveTimer()
@@ -640,6 +648,12 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     LifecycleUtil.activate(durableLockingManager);
     LifecycleUtil.activate(mappingStrategy);
 
+    if (repository.isSupportingUnits())
+    {
+      unitMappingTable = new UnitMappingTable(mappingStrategy);
+      unitMappingTable.activate();
+    }
+
     setRevisionTemporality(mappingStrategy.hasAuditSupport() ? RevisionTemporality.AUDITING : RevisionTemporality.NONE);
     setRevisionParallelism(
         mappingStrategy.hasBranchingSupport() ? RevisionParallelism.BRANCHING : RevisionParallelism.NONE);
@@ -659,6 +673,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   @Override
   protected void doDeactivate() throws Exception
   {
+    LifecycleUtil.deactivate(unitMappingTable);
     LifecycleUtil.deactivate(mappingStrategy);
     LifecycleUtil.deactivate(durableLockingManager);
     LifecycleUtil.deactivate(metaDataManager);
@@ -961,7 +976,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   };
 
   private static final SchemaMigrator[] SCHEMA_MIGRATORS = { NO_MIGRATION_NEEDED, NON_AUDIT_MIGRATION,
-    LOB_SIZE_MIGRATION, NO_MIGRATION_NEEDED };
+      LOB_SIZE_MIGRATION, NO_MIGRATION_NEEDED };
 
   static
   {

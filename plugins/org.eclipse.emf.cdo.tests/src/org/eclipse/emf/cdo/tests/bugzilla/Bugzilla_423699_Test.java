@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -38,7 +38,6 @@ import java.util.LinkedHashSet;
  */
 public class Bugzilla_423699_Test extends AbstractLockingTest
 {
-
   private CDOSession session;
 
   private InternalCDOTransaction tx;
@@ -112,6 +111,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     {
       tx.enableDurableLocking();
     }
+
     CDOID containerID = container.cdoID();
     CDOID childID = child.cdoID();
 
@@ -119,6 +119,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     Collection<CDOObject> objectsToLock = new LinkedHashSet<CDOObject>();
     objectsToLock.add(container);
     objectsToLock.add(child);
+
     tx.lockObjects(objectsToLock, LockType.WRITE, 10000);
     assertIsLocked(durableLocking, true, containerID);
     assertIsLocked(durableLocking, true, childID);
@@ -128,8 +129,10 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
 
     // Step 4: commit
     tx.commit(new NullProgressMonitor());
+
     // Lock should be deleted on detached object
     assertIsLocked(durableLocking, false, childID);
+
     // Lock should be deleted only if lock autorelease is enabled
     assertIsLocked(durableLocking, !autoReleaseLocksEnabled, containerID);
 
@@ -142,6 +145,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
       session = openSession();
       tx = (InternalCDOTransaction)session.openTransaction(durableLockingID);
       tx.options().setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
+
       // Lock states should not have changed
       assertIsLocked(durableLocking, false, childID);
       assertIsLocked(durableLocking, !autoReleaseLocksEnabled, containerID);
@@ -165,6 +169,7 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     if (durably)
     {
       LockGrade durableLock = null;
+
       try
       {
         InternalSession session = getRepository().getSessionManager().getSession(tx.getSessionID());
@@ -177,12 +182,14 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
       {
         StoreThreadLocal.release();
       }
+
       assertEquals(elementID + " has not the expected durable lock status", shouldBeLocked, durableLock != null);
     }
 
     // Step 2: check lock
     ArrayList<CDOID> elementIDs = new ArrayList<CDOID>();
     elementIDs.add(elementID);
+
     CDOLockState cdoLockState = tx.getLockStates(elementIDs)[0];
     assertEquals(elementID + " has wrong lock status", shouldBeLocked, cdoLockState.getWriteLockOwner() != null);
   }

@@ -63,6 +63,7 @@ public class UUIDHandler extends Lifecycle implements IIDHandler
 
   public int compare(CDOID id1, CDOID id2)
   {
+    // UUIDs are not generated in strictly ordered form.
     throw new UnsupportedOperationException();
   }
 

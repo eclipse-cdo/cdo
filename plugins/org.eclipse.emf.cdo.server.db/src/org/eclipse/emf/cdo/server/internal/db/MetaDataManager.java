@@ -238,8 +238,11 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     try
     {
-      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " VALUES (?, ?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
+      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " (" + CDODBSchema.PACKAGE_UNITS_ID + ", " //$NON-NLS-1$ //$NON-NLS-2$
+          + CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE + ", " + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + ", "
+          + CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA + ") VALUES (?, ?, ?, ?)";
       DBUtil.trace(sql);
+
       IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 
       try
@@ -311,7 +314,8 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     String parentURI = packageInfo.getParentURI();
     String unitID = packageInfo.getPackageUnit().getID();
 
-    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " VALUES (?, ?, ?)"; //$NON-NLS-1$ //$NON-NLS-2$
+    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " (" + CDODBSchema.PACKAGE_INFOS_URI + ", " //$NON-NLS-1$ //$NON-NLS-2$
+        + CDODBSchema.PACKAGE_INFOS_PARENT + ", " + CDODBSchema.PACKAGE_INFOS_UNIT + ") VALUES (?, ?, ?)";
     DBUtil.trace(sql);
 
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);

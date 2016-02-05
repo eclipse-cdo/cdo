@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.internal.tcp;
 
+import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
 
@@ -19,7 +20,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class TCPServerConnector extends TCPConnector
+public class TCPServerConnector extends TCPConnector implements IServerConnector
 {
   private TCPAcceptor acceptor;
 

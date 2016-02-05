@@ -40,7 +40,7 @@ public class JVMAcceptor extends Acceptor implements IJVMAcceptor
 
   public JVMServerConnector handleAccept(JVMClientConnector client)
   {
-    JVMServerConnector connector = new JVMServerConnector(client);
+    JVMServerConnector connector = new JVMServerConnector(this, client);
     connector.setName(client.getName());
     connector.setConfig(getConfig());
     connector.activate();

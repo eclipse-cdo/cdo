@@ -47,7 +47,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class ChannelMultiplexer extends Container<IChannel>implements InternalChannelMultiplexer
+public abstract class ChannelMultiplexer extends Container<IChannel> implements InternalChannelMultiplexer
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_CONNECTOR, ChannelMultiplexer.class);
 
@@ -193,14 +193,24 @@ public abstract class ChannelMultiplexer extends Container<IChannel>implements I
    */
   public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
   {
-    IProtocol<?> protocol = createProtocol(protocolID, null);
-    ProtocolVersionException.checkVersion(protocol, protocolVersion);
+    CONTEXT_MULTIPLEXER.set(this);
 
-    InternalChannel channel = createChannel();
-    initChannel(channel, protocol);
-    channel.setID(channelID);
-    addChannel(channel);
-    return channel;
+    try
+    {
+      IProtocol<?> protocol = createProtocol(protocolID, null);
+      ProtocolVersionException.checkVersion(protocol, protocolVersion);
+
+      InternalChannel channel = createChannel();
+      initChannel(channel, protocol);
+      channel.setID(channelID);
+
+      addChannel(channel);
+      return channel;
+    }
+    finally
+    {
+      CONTEXT_MULTIPLEXER.remove();
+    }
   }
 
   public void closeChannel(InternalChannel channel) throws ChannelException

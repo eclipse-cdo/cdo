@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.io;
 
+import org.eclipse.net4j.util.factory.ProductCreationException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,4 +28,20 @@ public interface IStreamWrapper
   public void finishInputStream(InputStream in) throws IOException;
 
   public void finishOutputStream(OutputStream out) throws IOException;
+
+  /**
+   * @author Esteban Dugueperoux
+   * @since 3.6
+   */
+  public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+  {
+    public static final String PRODUCT_GROUP = "org.eclipse.net4j.streamWrappers"; //$NON-NLS-1$
+
+    public Factory(String type)
+    {
+      super(PRODUCT_GROUP, type);
+    }
+
+    public abstract IStreamWrapper create(String description) throws ProductCreationException;
+  }
 }

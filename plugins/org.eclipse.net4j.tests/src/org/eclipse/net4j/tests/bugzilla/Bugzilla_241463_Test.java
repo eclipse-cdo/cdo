@@ -90,7 +90,7 @@ public class Bugzilla_241463_Test extends AbstractTransportTest
         @Override
         public JVMServerConnector handleAccept(JVMClientConnector client)
         {
-          JVMServerConnector connector = new JVMServerConnector(client)
+          JVMServerConnector connector = new JVMServerConnector(this, client)
           {
             @Override
             public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)

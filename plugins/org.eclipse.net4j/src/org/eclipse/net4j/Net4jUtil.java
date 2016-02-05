@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.GZIPStreamWrapper;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.internal.net4j.TransportConfig;
@@ -53,8 +54,9 @@ public final class Net4jUtil
   {
     ContainerUtil.prepareContainer(container);
     container.registerFactory(new BufferProviderFactory());
-    container.addPostProcessor(new TransportInjector());
+    container.registerFactory(new GZIPStreamWrapper.Factory());
     container.registerFactory(new HeartBeatProtocol.Server.Factory());
+    container.addPostProcessor(new TransportInjector());
     container.addPostProcessor(new HeartBeatProtocol.Server.TimerInjector());
   }
 

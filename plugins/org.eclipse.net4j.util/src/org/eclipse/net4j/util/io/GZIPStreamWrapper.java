@@ -10,23 +10,47 @@
  */
 package org.eclipse.net4j.util.io;
 
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.util.zip.Deflater;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
  * @author Eike Stepper
+ * @since 3.6
  */
 public class GZIPStreamWrapper implements IStreamWrapper
 {
+  /**
+   * @since 3.6
+   */
+  public static final int DEFAULT_BUFFER_SIZE = 512;
+
+  /**
+   * @since 3.6
+   */
+  public static final int DEFAULT_COMPRESSION_LEVEL = Deflater.BEST_SPEED;
+
+  private final int bufferSize;
+
+  private final int compressionLevel;
+
   public GZIPStreamWrapper()
   {
+    this(DEFAULT_BUFFER_SIZE, DEFAULT_COMPRESSION_LEVEL);
+  }
+
+  /**
+   * @since 3.6
+   */
+  public GZIPStreamWrapper(int bufferSize, int compressionLevel)
+  {
+    this.bufferSize = bufferSize;
+    this.compressionLevel = compressionLevel;
   }
 
   public GZIPInputStream wrapInputStream(InputStream in) throws IOException
@@ -36,7 +60,7 @@ public class GZIPStreamWrapper implements IStreamWrapper
       return (GZIPInputStream)in;
     }
 
-    return new GZIPInputStream(in);
+    return new GZIPInputStream(in, bufferSize);
   }
 
   public GZIPOutputStream wrapOutputStream(OutputStream out) throws IOException
@@ -46,7 +70,12 @@ public class GZIPStreamWrapper implements IStreamWrapper
       return (GZIPOutputStream)out;
     }
 
-    return new GZIPOutputStream(out);
+    return new GZIPOutputStream(out, bufferSize)
+    {
+      {
+        def.setLevel(compressionLevel);
+      }
+    };
   }
 
   public void finishInputStream(InputStream in) throws IOException
@@ -59,43 +88,59 @@ public class GZIPStreamWrapper implements IStreamWrapper
   }
 
   /**
-   * TODO Move or remove me
+   * @author Esteban Dugueperoux
+   * @since 3.6
    */
-  public static void main(String[] args) throws Exception
+  public static class Factory extends IStreamWrapper.Factory
   {
-    final PipedOutputStream pos = new PipedOutputStream();
-    @SuppressWarnings("resource")
-    final PipedInputStream pis = new PipedInputStream(pos);
+    public static final String TYPE = "gzip"; //$NON-NLS-1$
 
-    final GZIPOutputStream gos = new GZIPOutputStream(pos);
-    final byte[] out = "eike".getBytes(); //$NON-NLS-1$
-
-    Thread thread = new Thread()
+    public Factory()
     {
-      @Override
-      public void run()
-      {
-        try
-        {
-          GZIPInputStream gis = new GZIPInputStream(pis);
+      super(TYPE);
+    }
 
-          byte[] in = new byte[out.length];
-          gis.read(in);
-          gis.close();
-        }
-        catch (IOException ex)
+    @Override
+    public IStreamWrapper create(String description) throws ProductCreationException
+    {
+      int bufferSize = GZIPStreamWrapper.DEFAULT_BUFFER_SIZE;
+      int compressionLevel = GZIPStreamWrapper.DEFAULT_COMPRESSION_LEVEL;
+
+      String[] properties = description.split(",");
+      for (String property : properties)
+      {
+        String[] tokens = property.split("=");
+        if (tokens.length == 2)
         {
-          throw new IORuntimeException(ex);
+          String propertyName = tokens[0];
+          String propertyValue = tokens[1];
+
+          if ("bufferSize".equals(propertyName))
+          {
+            try
+            {
+              bufferSize = Integer.valueOf(propertyValue);
+            }
+            catch (NumberFormatException ex)
+            {
+              throw new ProductCreationException(ex);
+            }
+          }
+          else if ("compressionLevel".equals(propertyName))
+          {
+            try
+            {
+              compressionLevel = Integer.valueOf(propertyValue);
+            }
+            catch (NumberFormatException ex)
+            {
+              throw new ProductCreationException(ex);
+            }
+          }
         }
       }
-    };
 
-    thread.start();
-    ConcurrencyUtil.sleep(1000);
-
-    gos.write(out);
-    gos.close();
-
-    ConcurrencyUtil.sleep(2000);
+      return new GZIPStreamWrapper(bufferSize, compressionLevel);
+    }
   }
 }

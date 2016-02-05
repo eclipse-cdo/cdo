@@ -10,16 +10,25 @@
  */
 package org.eclipse.net4j.internal.jvm;
 
+import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * @author Eike Stepper
  */
-public class JVMServerConnector extends JVMConnector
+public class JVMServerConnector extends JVMConnector implements IServerConnector
 {
-  public JVMServerConnector(JVMClientConnector clientPeer)
+  private final JVMAcceptor acceptor;
+
+  public JVMServerConnector(JVMAcceptor acceptor, JVMClientConnector clientPeer)
   {
+    this.acceptor = acceptor;
     setPeer(clientPeer);
+  }
+
+  public JVMAcceptor getAcceptor()
+  {
+    return acceptor;
   }
 
   @Override

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.http.internal.server;
 
 import org.eclipse.net4j.channel.ChannelException;
+import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.http.internal.common.HTTPConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.WrappedException;
@@ -20,7 +21,7 @@ import java.text.MessageFormat;
 /**
  * @author Eike Stepper
  */
-public class HTTPServerConnector extends HTTPConnector
+public class HTTPServerConnector extends HTTPConnector implements IServerConnector
 {
   private HTTPAcceptor acceptor;
 

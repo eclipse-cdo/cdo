@@ -77,6 +77,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/io/GZIPStreamWrapper.java" type="org.eclipse.net4j.util.io.GZIPStreamWrapper">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.io.GZIPStreamWrapper"/>
+                <message_argument value="main(String[])"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/lifecycle/ILifecycle.java" type="org.eclipse.net4j.util.lifecycle.ILifecycle">
         <filter id="403984517">
             <message_arguments>

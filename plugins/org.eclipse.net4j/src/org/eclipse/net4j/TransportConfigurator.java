@@ -11,7 +11,13 @@
 package org.eclipse.net4j;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.channel.IChannelMultiplexer;
+import org.eclipse.net4j.connector.IServerConnector;
+import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.signal.wrapping.StreamWrapperInjector;
+import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiator;
 import org.eclipse.net4j.util.security.NegotiatorFactory;
@@ -21,6 +27,7 @@ import org.eclipse.internal.net4j.bundle.OM;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.spi.net4j.Acceptor;
 import org.eclipse.spi.net4j.AcceptorFactory;
+import org.eclipse.spi.net4j.InternalChannelMultiplexer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -71,12 +78,23 @@ public class TransportConfigurator
 
     List<IAcceptor> acceptors = new ArrayList<IAcceptor>();
     Document document = getDocument(configFile);
+
     NodeList acceptorConfigs = document.getElementsByTagName("acceptor"); //$NON-NLS-1$
     for (int i = 0; i < acceptorConfigs.getLength(); i++)
     {
       Element acceptorConfig = (Element)acceptorConfigs.item(i);
       IAcceptor acceptor = configureAcceptor(acceptorConfig);
       acceptors.add(acceptor);
+    }
+
+    NodeList streamWrapperConfigs = document.getElementsByTagName("streamWrapper"); //$NON-NLS-1$
+    for (int i = 0; i < streamWrapperConfigs.getLength(); i++)
+    {
+      Element streamWrapperConfig = (Element)streamWrapperConfigs.item(i);
+      if (getLevel(streamWrapperConfig) == 2)
+      {
+        configureStreamWrapper(streamWrapperConfig, null);
+      }
     }
 
     return acceptors.toArray(new IAcceptor[acceptors.size()]);
@@ -104,6 +122,16 @@ public class TransportConfigurator
       acceptor.getConfig().setNegotiator(negotiator);
     }
 
+    NodeList streamWrapperConfigs = acceptorConfig.getElementsByTagName("streamWrapper"); //$NON-NLS-1$
+    for (int i = 0; i < streamWrapperConfigs.getLength(); i++)
+    {
+      Element streamWrapperConfig = (Element)streamWrapperConfigs.item(i);
+      if (getLevel(streamWrapperConfig) == 3)
+      {
+        configureStreamWrapper(streamWrapperConfig, acceptor);
+      }
+    }
+
     OM.LOG.info("Net4j acceptor starting: " + type + "://" + description);
     acceptor.activate();
     return acceptor;
@@ -114,6 +142,24 @@ public class TransportConfigurator
     String type = negotiatorConfig.getAttribute("type"); //$NON-NLS-1$
     String description = negotiatorConfig.getAttribute("description"); //$NON-NLS-1$
     return (INegotiator)container.getElement(NegotiatorFactory.PRODUCT_GROUP, type, description);
+  }
+
+  /**
+   * @since 4.5
+   */
+  protected void configureStreamWrapper(Element streamWrapperConfig, Acceptor acceptor)
+  {
+    String type = streamWrapperConfig.getAttribute("type");//$NON-NLS-1$
+    String description = streamWrapperConfig.getAttribute("description"); //$NON-NLS-1$
+    String protocolName = streamWrapperConfig.getAttribute("protocol");//$NON-NLS-1$
+
+    IStreamWrapper streamWrapper = (IStreamWrapper)container.getElement(IStreamWrapper.Factory.PRODUCT_GROUP, type,
+        description);
+    if (streamWrapper != null)
+    {
+      IElementProcessor injector = new AcceptorStreamWrapperInjector(protocolName, acceptor, streamWrapper);
+      container.addPostProcessor(injector);
+    }
   }
 
   protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException
@@ -163,6 +209,51 @@ public class TransportConfigurator
           collectProperties((Element)childNode, prefix, properties, levels - 1);
         }
       }
+    }
+  }
+
+  private static int getLevel(Node node)
+  {
+    Node parentNode = node.getParentNode();
+    return parentNode != null ? getLevel(parentNode) + 1 : 0;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class AcceptorStreamWrapperInjector extends StreamWrapperInjector
+  {
+    private final IAcceptor acceptor;
+
+    public AcceptorStreamWrapperInjector(String protocolID, IAcceptor acceptor, IStreamWrapper streamWrapper)
+    {
+      super(protocolID, streamWrapper);
+      this.acceptor = acceptor;
+    }
+
+    @Override
+    protected boolean shouldInject(IManagedContainer container, String productGroup, String factoryType,
+        String description, SignalProtocol<?> signalProtocol)
+    {
+      if (super.shouldInject(container, productGroup, factoryType, description, signalProtocol))
+      {
+        if (acceptor == null)
+        {
+          return true;
+        }
+
+        IChannelMultiplexer multiplexer = InternalChannelMultiplexer.CONTEXT_MULTIPLEXER.get();
+        if (multiplexer instanceof IServerConnector)
+        {
+          IServerConnector serverConnector = (IServerConnector)multiplexer;
+          if (serverConnector.getAcceptor() == acceptor)
+          {
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
   }
 }

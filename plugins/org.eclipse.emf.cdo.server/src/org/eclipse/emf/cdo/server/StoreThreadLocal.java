@@ -121,10 +121,18 @@ public final class StoreThreadLocal
     }
     finally
     {
-      ACCESSOR.remove();
-      SESSION.remove();
-      COMMIT_CONTEXT.remove();
+      remove();
     }
+  }
+
+  /**
+   * @since 4.5
+   */
+  public static void remove()
+  {
+    ACCESSOR.remove();
+    SESSION.remove();
+    COMMIT_CONTEXT.remove();
   }
 
   /**

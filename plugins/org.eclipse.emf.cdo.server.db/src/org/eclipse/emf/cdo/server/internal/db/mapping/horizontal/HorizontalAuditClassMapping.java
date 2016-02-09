@@ -854,7 +854,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       finally
       {
         latch.countDown();
-        StoreThreadLocal.release();
+        StoreThreadLocal.remove();
       }
     }
 

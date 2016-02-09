@@ -183,13 +183,8 @@ public abstract class AbstractOMTest extends TestCase
 
     if (!SUPPRESS_OUTPUT)
     {
-      IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
-      Thread.yield();
-      Thread.sleep(2L);
-      IOUtil.ERR().println(this);
-      Thread.yield();
-      Thread.sleep(2L);
-      IOUtil.OUT().println("*******************************************************"); //$NON-NLS-1$
+      IOUtil.OUT().println("*******************************************************\n" + this //$NON-NLS-1$
+          + "\n*******************************************************"); //$NON-NLS-1$
     }
 
     if (!logSetUpAndTearDown())
@@ -202,8 +197,7 @@ public abstract class AbstractOMTest extends TestCase
 
     if (!SUPPRESS_OUTPUT && logSetUpAndTearDown())
     {
-      IOUtil.OUT().println();
-      IOUtil.OUT().println("------------------------ START ------------------------"); //$NON-NLS-1$
+      IOUtil.OUT().println("\n------------------------ START ------------------------"); //$NON-NLS-1$
     }
 
     enableConsole();

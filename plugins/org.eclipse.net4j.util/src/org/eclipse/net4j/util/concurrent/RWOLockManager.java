@@ -231,7 +231,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     {
       for (LockType lockType : LockType.values())
       {
-        if (lockState.hasLock(lockType, context, false))
+        while (lockState.hasLock(lockType, context, false))
         {
           lockState.unlock(lockType, context);
         }

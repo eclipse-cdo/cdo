@@ -183,7 +183,7 @@ public abstract class AbstractOMTest extends TestCase
 
     if (!SUPPRESS_OUTPUT)
     {
-      IOUtil.ERR().println("*******************************************************\n" + this //$NON-NLS-1$
+      IOUtil.OUT().println("*******************************************************\n" + this //$NON-NLS-1$
           + "\n*******************************************************"); //$NON-NLS-1$
     }
 

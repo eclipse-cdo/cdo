@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
@@ -826,6 +827,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     public void run()
     {
+      StoreThreadLocal.setAccessor(accessor);
+
       try
       {
         while (store.isActive())
@@ -851,6 +854,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       finally
       {
         latch.countDown();
+        StoreThreadLocal.release();
       }
     }
 

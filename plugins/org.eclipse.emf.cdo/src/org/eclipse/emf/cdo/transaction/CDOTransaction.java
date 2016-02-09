@@ -232,7 +232,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     /**
      * @since 4.5
      */
-    public static final long DEFAULT_COMMIT_INFO_TIMEOUT = 10000;
+    public static final long DEFAULT_COMMIT_INFO_TIMEOUT = 60000;
 
     /**
      * Returns the {@link CDOTransaction transaction} of this options object.

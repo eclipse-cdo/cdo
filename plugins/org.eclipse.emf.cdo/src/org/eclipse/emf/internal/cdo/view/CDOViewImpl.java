@@ -1156,60 +1156,68 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
       try
       {
-        if (getTimeStamp() != UNSPECIFIED_DATE && CDOStateMachine.SWITCHING_TARGET.get() != Boolean.TRUE)
-        {
-          // Don't invalidate historical views unless during a branch point switch.
-          return;
-        }
-
-        try
-        {
-          // Also false for FailureCommitInfos (because of branch==null). Only setLastUpdateTime() is called below.
-          if (branch == getBranch())
-          {
-            if (clearResourcePathCache)
-            {
-              clearResourcePathCacheIfNecessary(null);
-            }
-
-            List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
-            Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
-            Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
-
-            Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = invalidate(allChangedObjects,
-                allDetachedObjects, deltas, revisionDeltas, detachedObjects);
-            handleConflicts(lastUpdateTime, conflicts, deltas);
-
-            sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
-            fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableMap(revisionDeltas),
-                Collections.unmodifiableSet(detachedObjects));
-
-            // Then send the notifications. The deltas could have been modified by the conflict resolvers.
-            if (!deltas.isEmpty() || !detachedObjects.isEmpty())
-            {
-              sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
-            }
-
-            fireAdaptersNotifiedEvent(lastUpdateTime);
-          }
-        }
-        catch (RuntimeException ex)
-        {
-          if (isActive())
-          {
-            fireEvent(new ThrowableEvent(this, ex));
-            throw ex;
-          }
-        }
-        finally
-        {
-          setLastUpdateTime(lastUpdateTime);
-        }
+        doInvalidateSynced(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions,
+            clearResourcePathCache);
       }
       finally
       {
         unlockView();
       }
+    }
+  }
+
+  private void doInvalidateSynced(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions,
+      boolean clearResourcePathCache)
+  {
+    if (getTimeStamp() != UNSPECIFIED_DATE && CDOStateMachine.SWITCHING_TARGET.get() != Boolean.TRUE)
+    {
+      // Don't invalidate historical views unless during a branch point switch.
+      return;
+    }
+
+    try
+    {
+      // Also false for FailureCommitInfos (because of branch==null). Only setLastUpdateTime() is called below.
+      if (branch == getBranch())
+      {
+        if (clearResourcePathCache)
+        {
+          clearResourcePathCacheIfNecessary(null);
+        }
+
+        List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
+        Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
+        Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
+
+        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = invalidate(allChangedObjects,
+            allDetachedObjects, deltas, revisionDeltas, detachedObjects);
+        handleConflicts(lastUpdateTime, conflicts, deltas);
+
+        sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
+        fireInvalidationEvent(lastUpdateTime, Collections.unmodifiableMap(revisionDeltas),
+            Collections.unmodifiableSet(detachedObjects));
+
+        // Then send the notifications. The deltas could have been modified by the conflict resolvers.
+        if (!deltas.isEmpty() || !detachedObjects.isEmpty())
+        {
+          sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
+        }
+
+        fireAdaptersNotifiedEvent(lastUpdateTime);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      if (isActive())
+      {
+        fireEvent(new ThrowableEvent(this, ex));
+        throw ex;
+      }
+    }
+    finally
+    {
+      setLastUpdateTime(lastUpdateTime);
     }
   }
 

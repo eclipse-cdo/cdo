@@ -123,6 +123,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     return true;
   }
 
+  public boolean isHistorical()
+  {
+    return branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
+  }
+
   public boolean isDurableView()
   {
     return durableLockingID != null;

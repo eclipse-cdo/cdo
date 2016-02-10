@@ -69,7 +69,7 @@ import java.util.Set;
  * @author Simon McDuff
  * @since 3.0
  */
-public class LockingManager extends RWOLockManager<Object, IView>implements InternalLockManager
+public class LockingManager extends RWOLockManager<Object, IView> implements InternalLockManager
 {
   private InternalRepository repository;
 
@@ -649,6 +649,11 @@ public class LockingManager extends RWOLockManager<Object, IView>implements Inte
     }
 
     public boolean isReadOnly()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public boolean isHistorical()
     {
       throw new UnsupportedOperationException();
     }

@@ -250,6 +250,23 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return true;
   }
 
+  public boolean isHistorical()
+  {
+    synchronized (getViewMonitor())
+    {
+      lockView();
+
+      try
+      {
+        return branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
+      }
+      finally
+      {
+        unlockView();
+      }
+    }
+  }
+
   @Deprecated
   public boolean isLegacyModeEnabled()
   {

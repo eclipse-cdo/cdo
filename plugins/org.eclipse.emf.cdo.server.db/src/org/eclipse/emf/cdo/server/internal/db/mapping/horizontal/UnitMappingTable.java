@@ -13,6 +13,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -125,6 +126,9 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
     IIDHandler idHandler = store.getIDHandler();
     IMetaDataManager metaDataManager = store.getMetaDataManager();
 
+    long timeStamp = view.isHistorical() ? view.getTimeStamp() : store.getRepository().getTimeStamp();
+    CDOBranchPoint branchPoint = view.getBranch().getPoint(timeStamp);
+
     IDBConnection connection = accessor.getDBConnection();
     IDBPreparedStatement stmt = connection.prepareStatement(SQL_SELECT_CLASSES, ReuseProbability.HIGH);
     int oldFetchSize = -1;
@@ -143,7 +147,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
         EClass eClass = (EClass)metaDataManager.getMetaInstance(classID);
 
         IClassMappingUnitSupport classMapping = (IClassMappingUnitSupport)mappingStrategy.getClassMapping(eClass);
-        classMapping.readUnitRevisions(accessor, view, rootID, revisionHandler);
+        classMapping.readUnitRevisions(accessor, branchPoint, rootID, revisionHandler);
       }
     }
     catch (SQLException ex)

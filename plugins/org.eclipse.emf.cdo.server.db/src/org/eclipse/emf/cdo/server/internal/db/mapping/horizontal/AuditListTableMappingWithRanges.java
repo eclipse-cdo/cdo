@@ -292,6 +292,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
           " WHERE " + UnitMappingTable.UNITS_ELEM + "=" + ATTRIBUTES_ID + //
           " AND " + ATTRIBUTES_ID + "=cdo_list." + LIST_REVISION_ID + //
           " AND " + UnitMappingTable.UNITS_UNIT + "=?" + //
+          " AND " + ATTRIBUTES_CREATED + "<=?" + //
+          " AND (" + ATTRIBUTES_REVISED + "=0 OR " + ATTRIBUTES_REVISED + ">=?)" + //
           " AND cdo_list." + LIST_REVISION_VERSION_ADDED + "<=" + ATTRIBUTES_VERSION + //
           " AND (cdo_list." + LIST_REVISION_VERSION_REMOVED + " IS NULL OR cdo_list." + LIST_REVISION_VERSION_REMOVED
           + ">" + ATTRIBUTES_VERSION + ") ORDER BY cdo_list." + LIST_REVISION_ID + ", cdo_list." + LIST_IDX;
@@ -563,11 +565,14 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     throw new UnsupportedOperationException("Raw deletion does not work in range-based mappings");
   }
 
-  public ResultSet queryUnitEntries(IDBStoreAccessor accessor, IIDHandler idHandler, CDOID rootID) throws SQLException
+  public ResultSet queryUnitEntries(IDBStoreAccessor accessor, IIDHandler idHandler, long timeStamp, CDOID rootID)
+      throws SQLException
   {
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitEntries,
         ReuseProbability.MEDIUM);
     idHandler.setCDOID(stmt, 1, rootID);
+    stmt.setLong(2, timeStamp);
+    stmt.setLong(3, timeStamp);
     return stmt.executeQuery();
   }
 

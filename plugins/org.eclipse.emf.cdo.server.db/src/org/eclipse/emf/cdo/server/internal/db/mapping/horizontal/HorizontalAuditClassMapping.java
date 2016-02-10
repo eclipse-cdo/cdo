@@ -93,8 +93,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
   private String sqlSelectAttributesByVersion;
 
-  private String sqlSelectUnitCurrent;
-
   private String sqlSelectUnitByTime;
 
   private String sqlSelectAllObjectIDs;
@@ -136,7 +134,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     if (repository.isSupportingUnits())
     {
       strings = buildSQLSelects(true);
-      sqlSelectUnitCurrent = strings[1];
       sqlSelectUnitByTime = strings[2];
     }
 
@@ -687,6 +684,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     InternalRepository repository = store.getRepository();
     CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
     EClass eClass = getEClass();
+    long timeStamp = branchPoint.getTimeStamp();
 
     IIDHandler idHandler = store.getIDHandler();
     IDBPreparedStatement stmt = null;
@@ -694,21 +692,12 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     try
     {
-      long timeStamp = branchPoint.getTimeStamp();
-      if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitByTime, ReuseProbability.MEDIUM);
-        idHandler.setCDOID(stmt, 1, rootID);
-        stmt.setLong(2, timeStamp);
-        stmt.setLong(3, timeStamp);
-      }
-      else
-      {
-        stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitCurrent, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmt, 1, rootID);
-      }
+      stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitByTime, ReuseProbability.MEDIUM);
+      idHandler.setCDOID(stmt, 1, rootID);
+      stmt.setLong(2, timeStamp);
+      stmt.setLong(3, timeStamp);
 
-      AsnychronousListFiller listFiller = new AsnychronousListFiller(accessor, rootID, revisionHandler);
+      AsnychronousListFiller listFiller = new AsnychronousListFiller(accessor, timeStamp, rootID, revisionHandler);
       ConcurrencyUtil.execute(repository, listFiller);
 
       oldFetchSize = stmt.getFetchSize();
@@ -749,6 +738,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     private final IDBStoreAccessor accessor;
 
+    private final long timeStamp;
+
     private final CDOID rootID;
 
     private final DBStore store;
@@ -763,9 +754,11 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     private Throwable exception;
 
-    public AsnychronousListFiller(IDBStoreAccessor accessor, CDOID rootID, CDORevisionHandler revisionHandler)
+    public AsnychronousListFiller(IDBStoreAccessor accessor, long timeStamp, CDOID rootID,
+        CDORevisionHandler revisionHandler)
     {
       this.accessor = accessor;
+      this.timeStamp = timeStamp;
       this.rootID = rootID;
       this.revisionHandler = revisionHandler;
 
@@ -873,7 +866,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         {
           if (resultSets[i] == null)
           {
-            resultSets[i] = listMapping.queryUnitEntries(accessor, idHandler, rootID);
+            resultSets[i] = listMapping.queryUnitEntries(accessor, idHandler, timeStamp, rootID);
           }
 
           listMapping.readUnitEntries(resultSets[i], idHandler, id, list);

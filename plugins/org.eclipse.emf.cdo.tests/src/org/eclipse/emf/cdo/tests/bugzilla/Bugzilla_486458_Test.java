@@ -66,7 +66,6 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
   {
     Map<String, Object> map = getTestProperties();
     map.put(Props.SUPPORTING_UNITS, Boolean.toString(true));
-
     super.doSetUp();
   }
 

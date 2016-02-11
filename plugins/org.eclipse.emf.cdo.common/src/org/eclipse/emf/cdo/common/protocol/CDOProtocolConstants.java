@@ -30,8 +30,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 29; // SIGNAL_UNIT
+  public static final int PROTOCOL_VERSION = 30; // UnitOpcode
 
+  // public static final int PROTOCOL_VERSION = 29; // SIGNAL_UNIT
   // public static final int PROTOCOL_VERSION = 28; // SIGNAL_RESET_TRANSACTION
   // public static final int PROTOCOL_VERSION = 27; // SIGNAL_OPENED_SESSION
   // public static final int PROTOCOL_VERSION = 26; // Add prefetch depth in LockStateRequest/Indication
@@ -481,22 +482,41 @@ public interface CDOProtocolConstants
   // Units
 
   /**
+   * @author Eike Stepper
    * @since 4.5
    */
-  public static final byte UNIT_CHECK = 0;
+  public static enum UnitOpcode
+  {
+    CHECK(false, false),
 
-  /**
-   * @since 4.5
-   */
-  public static final byte UNIT_CREATE = 1;
+    CREATE(true, false),
 
-  /**
-   * @since 4.5
-   */
-  public static final byte UNIT_OPEN = 2;
+    CREATE_AND_OPEN(true, true),
 
-  /**
-   * @since 4.5
-   */
-  public static final byte UNIT_CLOSE = 3;
+    OPEN(false, true),
+
+    OPEN_DEMAND_CREATE(true, true),
+
+    CLOSE(false, false);
+
+    private boolean create;
+
+    private boolean open;
+
+    private UnitOpcode(boolean create, boolean open)
+    {
+      this.create = create;
+      this.open = open;
+    }
+
+    public boolean isCreate()
+    {
+      return create;
+    }
+
+    public boolean isOpen()
+    {
+      return open;
+    }
+  }
 }

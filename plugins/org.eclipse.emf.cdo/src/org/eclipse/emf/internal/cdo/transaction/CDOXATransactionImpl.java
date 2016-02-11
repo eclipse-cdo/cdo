@@ -27,7 +27,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor.SynchronizedSubProgressMonitor;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -44,7 +44,6 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext.CDOXAState;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -636,8 +635,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       if (xaContext.getTransaction().isDirty())
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
-        OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
-        result = sessionProtocol.commitXATransactionPhase1(xaContext, monitor);
+        result = sessionProtocol.commitXATransactionPhase1(xaContext, EclipseMonitor.convert(progressMonitor));
         check_result(result);
       }
 
@@ -669,8 +667,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       if (xaContext.getTransaction().isDirty())
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
-        OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
-        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase2(xaContext, monitor);
+        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase2(xaContext,
+            EclipseMonitor.convert(progressMonitor));
         check_result(result);
       }
 
@@ -701,8 +699,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       if (xaContext.getTransaction().isDirty())
       {
         CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
-        OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
-        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase3(xaContext, monitor);
+        CommitTransactionResult result = sessionProtocol.commitXATransactionPhase3(xaContext,
+            EclipseMonitor.convert(progressMonitor));
         check_result(result);
       }
 
@@ -732,8 +730,8 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     public void handle(InternalCDOXACommitContext xaContext, IProgressMonitor progressMonitor) throws Exception
     {
       CDOSessionProtocol sessionProtocol = xaContext.getTransaction().getSession().getSessionProtocol();
-      OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
-      CommitTransactionResult result = sessionProtocol.commitXATransactionCancel(xaContext, monitor);
+      CommitTransactionResult result = sessionProtocol.commitXATransactionCancel(xaContext,
+          EclipseMonitor.convert(progressMonitor));
       check_result(result);
     }
 

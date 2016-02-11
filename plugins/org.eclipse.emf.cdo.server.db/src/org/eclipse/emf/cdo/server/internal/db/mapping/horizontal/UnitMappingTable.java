@@ -40,6 +40,7 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -72,8 +73,12 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
   private static final String SQL_INSERT_MAPPINGS = "INSERT INTO " + UNITS + " (" + UNITS_ELEM + ", " + UNITS_UNIT
       + ") VALUES (?, ?)";
 
-  private static final String SQL_SELECT_CLASSES = "SELECT DISTINCT " + ATTRIBUTES_CLASS + " FROM " + UNITS + ", "
-      + CDODBSchema.CDO_OBJECTS + " WHERE " + UNITS_ELEM + "=" + ATTRIBUTES_ID + " AND " + UNITS_UNIT + "=?";
+  // private static final String SQL_SELECT_SIZE = "SELECT COUNT(" + UNITS_ELEM + ") FROM " + UNITS + " WHERE "
+  // + UNITS_UNIT + "=?";
+
+  private static final String SQL_SELECT_CLASSES = "SELECT " + ATTRIBUTES_CLASS + ", COUNT(" + UNITS_ELEM + ") FROM "
+      + UNITS + ", " + CDODBSchema.CDO_OBJECTS + " WHERE " + UNITS_ELEM + "=" + ATTRIBUTES_ID + " AND " + UNITS_UNIT
+      + "=? GROUP BY " + ATTRIBUTES_CLASS;
 
   private static final int WRITE_UNIT_MAPPING_BATCH_SIZE = 100000;
 
@@ -120,7 +125,8 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
     return rootIDs;
   }
 
-  public void readUnitRevisions(IDBStoreAccessor accessor, IView view, CDOID rootID, CDORevisionHandler revisionHandler)
+  public void readUnitRevisions(IDBStoreAccessor accessor, IView view, CDOID rootID, CDORevisionHandler revisionHandler,
+      OMMonitor monitor)
   {
     IDBStore store = mappingStrategy.getStore();
     IIDHandler idHandler = store.getIDHandler();
@@ -173,7 +179,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
   }
 
   public BatchedStatement initUnit(IDBStoreAccessor accessor, long timeStamp, IView view, CDOID rootID,
-      CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs)
+      CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs, OMMonitor monitor)
   {
     IIDHandler idHandler = mappingStrategy.getStore().getIDHandler();
     IDBConnection connection = accessor.getDBConnection();
@@ -184,7 +190,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
     {
       CDORevision revision = view.getRevision(rootID);
 
-      initUnit(stmt, view, rootID, revisionHandler, initializedIDs, timeStamp, idHandler, revision);
+      initUnit(stmt, view, rootID, revisionHandler, initializedIDs, timeStamp, idHandler, revision, monitor);
       return stmt;
     }
     catch (SQLException ex)
@@ -198,7 +204,8 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
   }
 
   private void initUnit(BatchedStatement stmt, IView view, CDOID rootID, CDORevisionHandler revisionHandler,
-      Set<CDOID> initializedIDs, long timeStamp, IIDHandler idHandler, CDORevision revision) throws SQLException
+      Set<CDOID> initializedIDs, long timeStamp, IIDHandler idHandler, CDORevision revision, OMMonitor monitor)
+          throws SQLException
   {
     revisionHandler.handleRevision(revision);
 
@@ -210,7 +217,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
     List<CDORevision> children = CDORevisionUtil.getChildRevisions(revision, view, true);
     for (CDORevision child : children)
     {
-      initUnit(stmt, view, rootID, revisionHandler, initializedIDs, timeStamp, idHandler, child);
+      initUnit(stmt, view, rootID, revisionHandler, initializedIDs, timeStamp, idHandler, child, monitor);
     }
   }
 

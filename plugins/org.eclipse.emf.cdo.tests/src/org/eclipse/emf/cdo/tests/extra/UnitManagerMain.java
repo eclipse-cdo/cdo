@@ -205,7 +205,7 @@ public class UnitManagerMain
         CDOResource resource = transaction.getResource(RESOURCE_NAME);
 
         start("Create Unit");
-        resource.cdoView().getUnitManager().createUnit(resource);
+        resource.cdoView().getUnitManager().createUnit(resource, true, null);
         stop();
 
         iterateResource(resource);
@@ -232,7 +232,7 @@ public class UnitManagerMain
         CDOResource resource = transaction.getResource(RESOURCE_NAME);
 
         start("Open Unit");
-        resource.cdoView().getUnitManager().openUnit(resource);
+        resource.cdoView().getUnitManager().openUnit(resource, false, null);
         stop();
 
         iterateResource(resource);

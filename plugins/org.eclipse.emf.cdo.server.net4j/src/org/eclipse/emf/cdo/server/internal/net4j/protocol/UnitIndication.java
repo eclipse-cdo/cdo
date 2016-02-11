@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IUnit;
@@ -34,7 +35,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
 
   private CDOID rootID;
 
-  private byte opcode;
+  private UnitOpcode opcode;
 
   public UnitIndication(CDOServerProtocol protocol)
   {
@@ -46,7 +47,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
   {
     viewID = in.readInt();
     rootID = in.readCDOID();
-    opcode = in.readByte();
+    opcode = UnitOpcode.values()[in.readByte()];
   }
 
   @Override
@@ -55,13 +56,13 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
     final InternalView view = getView(viewID);
     IUnitManager unitManager = getRepository().getUnitManager();
 
-    if (opcode == CDOProtocolConstants.UNIT_CHECK)
+    if (opcode == UnitOpcode.CHECK)
     {
       out.writeBoolean(unitManager.isUnit(rootID));
       return;
     }
 
-    if (opcode == CDOProtocolConstants.UNIT_CLOSE)
+    if (opcode == UnitOpcode.CLOSE)
     {
       IUnit unit = unitManager.getUnit(rootID);
       if (unit != null)
@@ -83,7 +84,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
 
     try
     {
-      boolean success = view.openUnit(rootID, opcode == CDOProtocolConstants.UNIT_CREATE, new CDORevisionHandler()
+      boolean success = view.openUnit(rootID, opcode, new CDORevisionHandler()
       {
         public boolean handleRevision(CDORevision revision)
         {
@@ -104,7 +105,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
 
           return false;
         }
-      });
+      }, monitor);
 
       if (ioException[0] != null)
       {

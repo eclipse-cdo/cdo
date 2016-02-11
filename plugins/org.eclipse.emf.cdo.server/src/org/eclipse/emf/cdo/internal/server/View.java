@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -210,31 +212,45 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     this.durableLockingID = durableLockingID;
   }
 
-  public boolean openUnit(CDOID rootID, boolean create, CDORevisionHandler revisionHandler)
+  public boolean openUnit(CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     IUnitManager unitManager = repository.getUnitManager();
     IUnit unit = unitManager.getUnit(rootID);
 
-    if (create)
+    switch (opcode)
     {
+    case CREATE:
+    case CREATE_AND_OPEN:
       if (unit != null)
       {
         return false;
       }
 
-      unit = unitManager.createUnit(rootID, this, revisionHandler);
-    }
-    else
-    {
+      unit = unitManager.createUnit(rootID, this, revisionHandler, monitor);
+      break;
+
+    case OPEN:
+    case OPEN_DEMAND_CREATE:
       if (unit == null)
       {
+        if (opcode.isCreate())
+        {
+          unit = unitManager.createUnit(rootID, this, revisionHandler, monitor);
+          break;
+        }
+
         return false;
       }
 
-      unit.open(this, revisionHandler);
+      unit.open(this, revisionHandler, monitor);
+      break;
     }
 
-    openUnitRoots.add(rootID);
+    if (opcode.isOpen())
+    {
+      openUnitRoots.add(rootID);
+    }
+
     return true;
   }
 

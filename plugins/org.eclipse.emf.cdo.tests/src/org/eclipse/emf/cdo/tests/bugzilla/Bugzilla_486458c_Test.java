@@ -87,7 +87,7 @@ public class Bugzilla_486458c_Test extends AbstractCDOTest
           return;
         }
 
-        CDOUnit unit = transaction.getUnitManager().createUnit(resource);
+        CDOUnit unit = transaction.getUnitManager().createUnit(resource, true, null);
         secondCreated[0] = unit.getElements();
 
         session.close();
@@ -101,7 +101,7 @@ public class Bugzilla_486458c_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("test"));
 
-    CDOUnit unit = transaction.getUnitManager().createUnit(resource);
+    CDOUnit unit = transaction.getUnitManager().createUnit(resource, true, null);
     int created = unit.getElements();
     assertEquals(7714, created);
 

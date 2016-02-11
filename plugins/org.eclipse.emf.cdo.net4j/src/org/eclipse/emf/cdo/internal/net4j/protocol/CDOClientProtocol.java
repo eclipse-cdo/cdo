@@ -539,9 +539,10 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     send(new ChangeCredentialsRequest(this, CredentialsUpdateOperation.RESET_PASSWORD, userID), new Monitor());
   }
 
-  public boolean requestUnit(int viewID, CDOID rootID, byte opcode, CDORevisionHandler revisionHandler)
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler,
+      OMMonitor monitor)
   {
-    return send(new UnitRequest(this, viewID, rootID, opcode, revisionHandler));
+    return send(new UnitRequest(this, viewID, rootID, opcode, revisionHandler), monitor);
   }
 
   @Override

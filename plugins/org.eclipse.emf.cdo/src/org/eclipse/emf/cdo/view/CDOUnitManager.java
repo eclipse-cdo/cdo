@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+
 /**
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -28,9 +30,9 @@ public interface CDOUnitManager extends IContainer<CDOUnit>
 
   public boolean isUnit(EObject root);
 
-  public CDOUnit createUnit(EObject root) throws UnitExistsException;
+  public CDOUnit createUnit(EObject root, boolean open, IProgressMonitor monitor) throws UnitExistsException;
 
-  public CDOUnit openUnit(EObject root) throws UnitNotFoundException;
+  public CDOUnit openUnit(EObject root, boolean createOnDemand, IProgressMonitor monitor) throws UnitNotFoundException;
 
   public CDOUnit getOpenUnit(EObject object);
 

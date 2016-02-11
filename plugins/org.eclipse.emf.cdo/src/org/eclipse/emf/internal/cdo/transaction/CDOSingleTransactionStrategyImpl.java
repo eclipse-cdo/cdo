@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.util.ReferentialIntegrityException;
 import org.eclipse.emf.cdo.util.ValidationException;
 
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
@@ -59,8 +58,8 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
     InternalCDOSession session = transaction.getSession();
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
 
-    OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
-    CommitTransactionResult result = sessionProtocol.commitTransaction(commitContext, monitor);
+    CommitTransactionResult result = sessionProtocol.commitTransaction(commitContext,
+        EclipseMonitor.convert(progressMonitor));
 
     commitContext.postCommit(result);
 

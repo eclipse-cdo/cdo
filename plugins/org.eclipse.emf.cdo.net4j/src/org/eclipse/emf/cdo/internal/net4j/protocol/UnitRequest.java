@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 
@@ -30,11 +31,11 @@ public class UnitRequest extends CDOClientRequestWithMonitoring<Boolean>
 
   private CDOID rootID;
 
-  private byte opcode;
+  private UnitOpcode opcode;
 
   private CDORevisionHandler revisionHandler;
 
-  public UnitRequest(CDOClientProtocol protocol, int viewID, CDOID rootID, byte opcode,
+  public UnitRequest(CDOClientProtocol protocol, int viewID, CDOID rootID, UnitOpcode opcode,
       CDORevisionHandler revisionHandler)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_UNIT);
@@ -49,13 +50,13 @@ public class UnitRequest extends CDOClientRequestWithMonitoring<Boolean>
   {
     out.writeInt(viewID);
     out.writeCDOID(rootID);
-    out.writeByte(opcode);
+    out.writeByte(opcode.ordinal());
   }
 
   @Override
   protected Boolean confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
-    if (opcode == CDOProtocolConstants.UNIT_CREATE || opcode == CDOProtocolConstants.UNIT_OPEN)
+    if (opcode.isOpen())
     {
       for (;;)
       {

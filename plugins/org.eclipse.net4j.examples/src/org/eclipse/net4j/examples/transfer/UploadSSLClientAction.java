@@ -112,7 +112,7 @@ public class UploadSSLClientAction implements IWorkbenchWindowActionDelegate, Up
       protocol.open(connector);
 
       UploadRequest request = new UploadRequest(protocol, file);
-      return request.send(new EclipseMonitor(monitor));
+      return request.send(EclipseMonitor.safe(monitor));
     }
     finally
     {

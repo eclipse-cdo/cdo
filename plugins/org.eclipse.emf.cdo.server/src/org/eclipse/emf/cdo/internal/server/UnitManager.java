@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +42,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
@@ -87,7 +90,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
-  public IUnit createUnit(CDOID rootID, IView view, CDORevisionHandler revisionHandler)
+  public IUnit createUnit(CDOID rootID, IView view, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     checkActive();
 
@@ -148,7 +151,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
     if (hook)
     {
-      return unitInitializer.hook(rootID, view, revisionHandler);
+      return unitInitializer.hook(rootID, view, revisionHandler, monitor);
     }
 
     IUnit unit = null;
@@ -159,7 +162,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       // Phase 2: Initialize (potentially long, not locked)
       /////////////////////////////////////////////////////
 
-      unit = unitInitializer.initialize();
+      unit = unitInitializer.initialize(monitor);
     }
     finally
     {
@@ -462,7 +465,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       }
     }
 
-    public void open(IView view, final CDORevisionHandler revisionHandler)
+    public void open(IView view, final CDORevisionHandler revisionHandler, OMMonitor monitor)
     {
       synchronized (views)
       {
@@ -473,7 +476,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
       try
       {
-        storeAccessor.readUnit(view, rootID, revisionHandler);
+        storeAccessor.readUnit(view, rootID, revisionHandler, monitor);
       }
       finally
       {
@@ -501,14 +504,14 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
      * Does not hold any manager lock when called.
      */
     public void initialize(IView view, long timeStamp, CDORevisionHandler revisionHandler,
-        Map<ObjectAttacher, List<CDOID>> objectAttachers)
+        Map<ObjectAttacher, List<CDOID>> objectAttachers, OMMonitor monitor)
     {
       UnitSupport storeAccessor = (UnitSupport)repository.getStore().getWriter(null);
 
       try
       {
         Set<CDOID> initializedIDs = new HashSet<CDOID>();
-        Object initResult = storeAccessor.initUnit(view, rootID, revisionHandler, initializedIDs, timeStamp);
+        Object initResult = storeAccessor.initUnit(view, rootID, revisionHandler, initializedIDs, timeStamp, monitor);
 
         List<CDOID> ids = new ArrayList<CDOID>();
         for (Entry<ObjectAttacher, List<CDOID>> entry : objectAttachers.entrySet())
@@ -573,20 +576,19 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     /**
      * Does not hold any manager lock when called.
      */
-    public IUnit initialize()
+    public IUnit initialize(OMMonitor monitor)
     {
       unit = new Unit(rootID);
-      unit.initialize(view, timeStamp, revisionHandler, concurrentObjectAttachers);
+      unit.initialize(view, timeStamp, revisionHandler, concurrentObjectAttachers, monitor);
       return unit;
     }
 
     /**
      * Does not hold any manager lock when called.
      */
-    public IUnit hook(CDOID rootID, IView view, final CDORevisionHandler revisionHandler)
+    public IUnit hook(CDOID rootID, IView view, final CDORevisionHandler revisionHandler, OMMonitor monitor)
     {
       final Set<CDOID> ids = new HashSet<CDOID>();
-
       hookedRevisionHandlers.add(new CDORevisionHandler()
       {
         public boolean handleRevision(CDORevision revision)
@@ -603,32 +605,55 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       // i.e., concurrent createUnit() calls for the same unit, are extremely rare.
       hasHookedRevisionHandlers = true;
 
+      monitor.begin(2);
+
       try
       {
-        // Now wait for the main revision handler to finish.
-        unitInitialized.await();
-      }
-      catch (InterruptedException ex)
-      {
-        return null;
-      }
+        Async async = null;
 
-      // Now send the missed revisions.
-      unit.open(view, new CDORevisionHandler()
-      {
-        public boolean handleRevision(CDORevision revision)
+        try
         {
-          if (ids.contains(revision.getID()))
+          async = monitor.forkAsync();
+
+          // Now wait for the main revision handler to finish.
+          while (!unitInitialized.await(100, TimeUnit.MILLISECONDS))
           {
-            // This revision has already been sent. Skip to the next one.
-            return true;
+            monitor.checkCanceled();
           }
-
-          return revisionHandler.handleRevision(revision);
         }
-      });
+        catch (InterruptedException ex)
+        {
+          return null;
+        }
+        finally
+        {
+          if (async != null)
+          {
+            async.stop();
+          }
+        }
 
-      return unit;
+        // Now send the missed revisions.
+        unit.open(view, new CDORevisionHandler()
+        {
+          public boolean handleRevision(CDORevision revision)
+          {
+            if (ids.contains(revision.getID()))
+            {
+              // This revision has already been sent. Skip to the next one.
+              return true;
+            }
+
+            return revisionHandler.handleRevision(revision);
+          }
+        }, monitor.fork());
+
+        return unit;
+      }
+      finally
+      {
+        monitor.done();
+      }
     }
 
     /**

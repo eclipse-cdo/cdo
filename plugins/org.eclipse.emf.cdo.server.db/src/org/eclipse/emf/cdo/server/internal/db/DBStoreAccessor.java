@@ -1495,17 +1495,17 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return unitMappingTable.readUnitRoots(this);
   }
 
-  public void readUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler)
+  public void readUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
-    unitMappingTable.readUnitRevisions(this, view, rootID, revisionHandler);
+    unitMappingTable.readUnitRevisions(this, view, rootID, revisionHandler, monitor);
   }
 
   public Object initUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, Set<CDOID> initializedIDs,
-      long timeStamp)
+      long timeStamp, OMMonitor monitor)
   {
     UnitMappingTable unitMappingTable = getStore().getUnitMappingTable();
-    return unitMappingTable.initUnit(this, timeStamp, view, rootID, revisionHandler, initializedIDs);
+    return unitMappingTable.initUnit(this, timeStamp, view, rootID, revisionHandler, initializedIDs, monitor);
   }
 
   public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp,

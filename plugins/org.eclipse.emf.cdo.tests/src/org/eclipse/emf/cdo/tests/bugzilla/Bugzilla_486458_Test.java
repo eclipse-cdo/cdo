@@ -104,7 +104,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
     assertEquals(false, serverView.isInOpenUnit(childID));
 
     long start = System.currentTimeMillis();
-    CDOUnit unit = transaction.getUnitManager().createUnit(resource);
+    CDOUnit unit = transaction.getUnitManager().createUnit(resource, true, null);
     long stop = System.currentTimeMillis();
     System.out.println("Created Unit: " + (stop - start));
 
@@ -132,13 +132,13 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("test"));
 
-    CDOUnit unit = transaction.getUnitManager().createUnit(resource);
+    CDOUnit unit = transaction.getUnitManager().createUnit(resource, true, null);
     EObject parent = resource.getFolder();
     EObject child = resource.getContents().get(0);
 
     try
     {
-      transaction.getUnitManager().createUnit(parent);
+      transaction.getUnitManager().createUnit(parent, true, null);
       fail("CDOException expected");
     }
     catch (CDOException expected)
@@ -148,7 +148,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
 
     try
     {
-      transaction.getUnitManager().createUnit(child);
+      transaction.getUnitManager().createUnit(child, true, null);
       fail("CDOException expected");
     }
     catch (CDOException expected)
@@ -172,7 +172,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.getResource(getResourcePath("test"));
-      CDOUnit createdUnit = transaction.getUnitManager().createUnit(resource);
+      CDOUnit createdUnit = transaction.getUnitManager().createUnit(resource, true, null);
       assertEquals(7714, createdUnit.getElements());
 
       session.close();
@@ -187,7 +187,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
       assertEquals(0, transaction.getUnitManager().getOpenUnits().length);
 
       long start = System.currentTimeMillis();
-      CDOUnit openedUnit = transaction.getUnitManager().openUnit(resource);
+      CDOUnit openedUnit = transaction.getUnitManager().openUnit(resource, false, null);
       assertEquals(7714, openedUnit.getElements());
       long stop = System.currentTimeMillis();
       System.out.println("Opened Unit: " + (stop - start));
@@ -209,7 +209,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("test"));
 
-    CDOUnit unit = transaction.getUnitManager().createUnit(resource);
+    CDOUnit unit = transaction.getUnitManager().createUnit(resource, true, null);
     int elements = unit.getElements();
 
     Company company = (Company)resource.getContents().get(0);
@@ -240,7 +240,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
     Category child = (Category)root.eContents().get(0);
     Company sibling = (Company)resource.getContents().get(1);
 
-    CDOUnit unit = transaction.getUnitManager().createUnit(root);
+    CDOUnit unit = transaction.getUnitManager().createUnit(root, true, null);
 
     TestAdapter adapter = new TestAdapter();
     root.eAdapters().add(adapter);

@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 /**
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
@@ -27,7 +29,7 @@ public interface IUnit
 
   public boolean isOpen();
 
-  public void open(IView view, CDORevisionHandler revisionHandler);
+  public void open(IView view, CDORevisionHandler revisionHandler, OMMonitor monitor);
 
   public void close(IView view);
 }

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
  * @noextend This interface is not intended to be extended by clients.
@@ -25,7 +26,7 @@ public interface IUnitManager extends IContainer<IUnit>
 {
   public IRepository getRepository();
 
-  public IUnit createUnit(CDOID rootID, IView view, CDORevisionHandler revisionHandler);
+  public IUnit createUnit(CDOID rootID, IView view, CDORevisionHandler revisionHandler, OMMonitor monitor);
 
   public boolean isUnit(CDOID rootID);
 

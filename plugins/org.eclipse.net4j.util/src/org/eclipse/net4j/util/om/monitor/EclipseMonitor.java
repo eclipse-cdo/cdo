@@ -14,7 +14,7 @@ import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * @author Eike Stepper
@@ -35,6 +35,14 @@ public class EclipseMonitor extends Monitor
   public EclipseMonitor(IProgressMonitor progressMonitor)
   {
     this(progressMonitor, StringUtil.EMPTY);
+  }
+
+  /**
+   * @since 3.6
+   */
+  public EclipseMonitor()
+  {
+    this(new NullProgressMonitor(), StringUtil.EMPTY);
   }
 
   public String getTaskName()
@@ -74,6 +82,22 @@ public class EclipseMonitor extends Monitor
   {
     super.done();
     progressMonitor.done();
+  }
+
+  /**
+   * @since 3.6
+   */
+  public static OMMonitor convert(IProgressMonitor progressMonitor)
+  {
+    return progressMonitor == null ? null : new EclipseMonitor(progressMonitor);
+  }
+
+  /**
+   * @since 3.6
+   */
+  public static OMMonitor safe(IProgressMonitor progressMonitor)
+  {
+    return progressMonitor == null ? new Monitor() : new EclipseMonitor(progressMonitor);
   }
 
   /**

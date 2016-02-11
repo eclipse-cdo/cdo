@@ -1061,14 +1061,15 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     }
   }
 
-  public boolean requestUnit(int viewID, CDOID rootID, byte opcode, CDORevisionHandler revisionHandler)
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler,
+      OMMonitor monitor)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.requestUnit(viewID, rootID, opcode, revisionHandler);
+        return delegate.requestUnit(viewID, rootID, opcode, revisionHandler, monitor);
       }
       catch (Exception ex)
       {

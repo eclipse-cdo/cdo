@@ -41,6 +41,8 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOUnit;
 
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -111,7 +113,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("test"));
 
-    transaction.getUnitManager().createUnit(resource);
+    transaction.getUnitManager().createUnit(resource, true, null);
     committer.join(DEFAULT_TIMEOUT);
 
     session = openSession();
@@ -126,7 +128,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
     transaction = session.openTransaction();
     resource = transaction.getResource(getResourcePath("test"));
 
-    CDOUnit unit = transaction.getUnitManager().openUnit(resource);
+    CDOUnit unit = transaction.getUnitManager().openUnit(resource, false, null);
     assertEquals(expected, unit.getElements());
 
     session = openSession();
@@ -186,7 +188,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
           }
 
           @Override
-          public IUnit createUnit(CDOID rootID, IView view, CDORevisionHandler revisionHandler)
+          public IUnit createUnit(CDOID rootID, IView view, CDORevisionHandler revisionHandler, OMMonitor monitor)
           {
             if (analyzeStarted != null)
             {
@@ -200,7 +202,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
               }
             }
 
-            return super.createUnit(rootID, view, revisionHandler);
+            return super.createUnit(rootID, view, revisionHandler, monitor);
           }
 
           @Override
@@ -209,7 +211,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
             return new UnitInitializer(rootID, view, revisionHandler)
             {
               @Override
-              public IUnit initialize()
+              public IUnit initialize(OMMonitor monitor)
               {
                 if (longCommit)
                 {
@@ -218,7 +220,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
 
                 try
                 {
-                  return super.initialize();
+                  return super.initialize(monitor);
                 }
                 finally
                 {

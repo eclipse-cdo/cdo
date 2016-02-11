@@ -123,7 +123,7 @@ public class Bugzilla_486458a_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("test"));
 
-    transaction.getUnitManager().createUnit(resource);
+    transaction.getUnitManager().createUnit(resource, true, null);
     committer.join(DEFAULT_TIMEOUT);
 
     session = openSession();
@@ -138,7 +138,7 @@ public class Bugzilla_486458a_Test extends AbstractCDOTest
     transaction = session.openTransaction();
     resource = transaction.getResource(getResourcePath("test"));
 
-    transaction.getUnitManager().openUnit(resource);
+    transaction.getUnitManager().openUnit(resource, false, null);
 
     session = openSession();
     transaction = session.openTransaction();
@@ -196,7 +196,7 @@ public class Bugzilla_486458a_Test extends AbstractCDOTest
             return new UnitInitializer(rootID, view, revisionHandler)
             {
               @Override
-              public IUnit initialize()
+              public IUnit initialize(OMMonitor monitor)
               {
                 if (unitRegistered != null)
                 {
@@ -212,7 +212,7 @@ public class Bugzilla_486458a_Test extends AbstractCDOTest
                   return null;
                 }
 
-                return super.initialize();
+                return super.initialize(monitor);
               }
             };
           }

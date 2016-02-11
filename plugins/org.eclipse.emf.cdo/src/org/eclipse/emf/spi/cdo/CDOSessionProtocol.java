@@ -346,7 +346,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   /**
    * @since 4.5
    */
-  public boolean requestUnit(int viewID, CDOID rootID, byte opcode, CDORevisionHandler revisionHandler);
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler,
+      OMMonitor monitor);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...

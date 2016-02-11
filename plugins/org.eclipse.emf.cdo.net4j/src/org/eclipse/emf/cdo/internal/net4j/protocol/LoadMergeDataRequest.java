@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -61,8 +59,9 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   {
     if (monitor == null)
     {
-      monitor = new EclipseMonitor(new NullProgressMonitor());
+      monitor = new EclipseMonitor();
     }
+
     out.writeInt(infos);
     monitor.begin(infos);
 
@@ -117,8 +116,9 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   {
     if (monitor == null)
     {
-      monitor = new EclipseMonitor(new NullProgressMonitor());
+      monitor = new EclipseMonitor();
     }
+
     Set<CDOID> result = new HashSet<CDOID>();
 
     int size = in.readInt();

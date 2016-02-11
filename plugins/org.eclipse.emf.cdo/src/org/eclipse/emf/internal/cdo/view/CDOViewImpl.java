@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -89,7 +89,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
-import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.options.OptionsEvent;
@@ -271,9 +270,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         }
 
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        OMMonitor monitor = progressMonitor != null ? new EclipseMonitor(progressMonitor) : null;
         sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects,
-            monitor);
+            EclipseMonitor.convert(progressMonitor));
 
         basicSetBranchPoint(branchPoint);
         CDOBranch branch = branchPoint.getBranch();
@@ -1833,6 +1831,10 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     private final Map<EObject, CDOUnit> unitPerObject = new HashMap<EObject, CDOUnit>();
 
+    private CDOUnitImpl openingUnit;
+
+    private Set<CDOID> openingIDs;
+
     public CDOUnitManagerImpl()
     {
     }
@@ -1844,25 +1846,34 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     public boolean isUnit(EObject root)
     {
-      CDOUnitImpl unit = requestUnit(root, CDOProtocolConstants.UNIT_CHECK);
+      CDOUnitImpl unit = requestUnit(root, UnitOpcode.CHECK, null);
       return unit != null;
     }
 
-    public CDOUnit createUnit(EObject root) throws UnitExistsException
+    public CDOUnit createUnit(EObject root, boolean open, IProgressMonitor monitor) throws UnitExistsException
     {
-      CDOUnitImpl unit = requestUnit(root, CDOProtocolConstants.UNIT_CREATE);
-      if (unit == null)
+      UnitOpcode opcode = open ? UnitOpcode.CREATE_AND_OPEN : UnitOpcode.CREATE;
+
+      CDOUnitImpl unit = requestUnit(root, opcode, monitor);
+
+      if (open)
       {
-        throw new UnitExistsException();
+        if (unit == null)
+        {
+          throw new UnitExistsException();
+        }
+
+        fireElementAddedEvent(unit);
       }
 
-      fireElementAddedEvent(unit);
       return unit;
     }
 
-    public CDOUnit openUnit(EObject root) throws UnitNotFoundException
+    public CDOUnit openUnit(EObject root, boolean createOnDemand, IProgressMonitor monitor) throws UnitNotFoundException
     {
-      CDOUnitImpl unit = requestUnit(root, CDOProtocolConstants.UNIT_OPEN);
+      UnitOpcode opcode = createOnDemand ? UnitOpcode.OPEN_DEMAND_CREATE : UnitOpcode.OPEN;
+
+      CDOUnitImpl unit = requestUnit(root, opcode, monitor);
       if (unit == null)
       {
         throw new UnitNotFoundException();
@@ -1913,7 +1924,21 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
     public CDOUnit getOpenUnitUnsynced(EObject object)
     {
-      return unitPerObject.get(object);
+      CDOUnit unit = unitPerObject.get(object);
+      if (unit == null && openingUnit != null)
+      {
+        CDOObject cdoObject = CDOUtil.getCDOObject(object);
+        if (cdoObject != null)
+        {
+          CDOID id = cdoObject.cdoID();
+          if (openingIDs.contains(id))
+          {
+            unit = openingUnit;
+          }
+        }
+      }
+
+      return unit;
     }
 
     public void addObject(InternalCDOObject object)
@@ -1995,7 +2020,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       return cdoRoot;
     }
 
-    private CDOUnitImpl requestUnit(EObject root, byte opcode)
+    private CDOUnitImpl requestUnit(EObject root, UnitOpcode opcode, IProgressMonitor monitor)
     {
       synchronized (getViewMonitor())
       {
@@ -2003,7 +2028,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
         try
         {
-          if (opcode == CDOProtocolConstants.UNIT_CREATE)
+          if (opcode.isCreate())
           {
             CDOUnit containingUnit = getOpenUnit(root);
             if (containingUnit != null)
@@ -2023,46 +2048,64 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           }
 
           final InternalCDORevisionManager revisionManager = session.getRevisionManager();
-          final CDOUnitImpl unit = new CDOUnitImpl(root);
+          openingUnit = new CDOUnitImpl(root);
 
           int viewID = getViewID();
           CDOID rootID = getCDORoot(root).cdoID();
 
-          CDORevisionHandler revisionHandler = opcode == CDOProtocolConstants.UNIT_CREATE
-              || opcode == CDOProtocolConstants.UNIT_OPEN ? new CDORevisionHandler()
+          CDORevisionHandler revisionHandler = null;
+          final List<CDORevision> revisions = new ArrayList<CDORevision>();
+
+          if (opcode.isOpen())
+          {
+            openingIDs = new HashSet<CDOID>();
+
+            revisionHandler = new CDORevisionHandler()
+            {
+              public boolean handleRevision(CDORevision revision)
               {
-                public boolean handleRevision(CDORevision revision)
-                {
-                  ++unit.elements;
-                  revisionManager.addRevision(revision);
+                ++openingUnit.elements;
+                revisionManager.addRevision(revision);
+                revisions.add(revision);
 
-                  CDOID id = revision.getID();
-                  changeSubscriptionManager.removeEntry(id);
+                CDOID id = revision.getID();
+                changeSubscriptionManager.removeEntry(id);
+                openingIDs.add(id);
 
-                  InternalCDOObject object = getObject(id);
-                  unitPerObject.put(object, unit);
-                  return true;
-                }
-              } : null;
+                return true;
+              }
+            };
+          }
 
           CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          boolean success = sessionProtocol.requestUnit(viewID, rootID, opcode, revisionHandler);
+          boolean success = sessionProtocol.requestUnit(viewID, rootID, opcode, revisionHandler,
+              EclipseMonitor.safe(monitor));
 
           if (success)
           {
             if (revisionHandler != null)
             {
-              unitPerRoot.put(root, unit);
-              unitPerObject.put(root, unit);
+              unitPerRoot.put(root, openingUnit);
+              unitPerObject.put(root, openingUnit);
+
+              for (CDORevision revision : revisions)
+              {
+                CDOID id = revision.getID();
+
+                InternalCDOObject object = getObject(id);
+                unitPerObject.put(object, openingUnit);
+              }
             }
 
-            return unit;
+            return openingUnit;
           }
 
           return null;
         }
         finally
         {
+          openingUnit = null;
+          openingIDs = null;
           unlockView();
         }
       }
@@ -2076,7 +2119,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
         try
         {
-          requestUnit(unit.getRoot(), CDOProtocolConstants.UNIT_CLOSE);
+          requestUnit(unit.getRoot(), UnitOpcode.CLOSE, null);
 
           if (resubscribe && !options.hasChangeSubscriptionPolicies())
           {

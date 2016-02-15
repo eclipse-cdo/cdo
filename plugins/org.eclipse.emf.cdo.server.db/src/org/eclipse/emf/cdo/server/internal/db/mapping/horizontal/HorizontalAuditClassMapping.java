@@ -69,6 +69,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -795,6 +796,17 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       catch (InterruptedException ex)
       {
         throw new TimeoutRuntimeException();
+      }
+      finally
+      {
+        for (ResultSet resultSet : resultSets)
+        {
+          if (resultSet != null)
+          {
+            Statement statement = resultSet.getStatement();
+            DBUtil.close(statement);
+          }
+        }
       }
 
       if (exception instanceof RuntimeException)

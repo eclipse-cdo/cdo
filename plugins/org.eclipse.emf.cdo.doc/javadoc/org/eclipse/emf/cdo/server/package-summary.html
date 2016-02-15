@@ -118,11 +118,13 @@
 <area shape="rect" id="node39" href="IStoreFactory.html" title="&#171;interface&#187; IStoreFactory" alt="" coords="1603,39,1703,79"/>
 <area shape="rect" id="node40" href="ISynchronizableRepository.html" title="&#171;interface&#187; ISynchronizableRepository" alt="" coords="621,1024,797,1064"/>
 <area shape="rect" id="node41" href="ITransaction.html" title="&#171;interface&#187; ITransaction" alt="" coords="1607,568,1699,608"/>
-<area shape="rect" id="node42" href="IView.html" title="&#171;interface&#187; IView" alt="" coords="1327,417,1412,457"/>
-<area shape="rect" id="node43" title="&#171;interface&#187; Map (java.util)" alt="" coords="667,630,752,685"/>
-<area shape="rect" id="node44" href="IStore.ChangeFormat.html" title="&#171;enum&#187; IStore.ChangeFormat" alt="" coords="1581,103,1726,143"/>
-<area shape="rect" id="node45" href="IStore.RevisionParallelism.html" title="&#171;enum&#187; IStore.RevisionParallelism" alt="" coords="1567,167,1739,207"/>
-<area shape="rect" id="node46" href="IStore.RevisionTemporality.html" title="&#171;enum&#187; IStore.RevisionTemporality" alt="" coords="1566,231,1741,271"/>
+<area shape="rect" id="node42" href="IUnit.html" title="&#171;interface&#187; IUnit" alt="" coords="85,228,171,268"/>
+<area shape="rect" id="node43" href="IUnitManager.html" title="&#171;interface&#187; IUnitManager" alt="" coords="79,164,177,204"/>
+<area shape="rect" id="node44" href="IView.html" title="&#171;interface&#187; IView" alt="" coords="1327,417,1412,457"/>
+<area shape="rect" id="node45" title="&#171;interface&#187; Map (java.util)" alt="" coords="667,630,752,685"/>
+<area shape="rect" id="node46" href="IStore.ChangeFormat.html" title="&#171;enum&#187; IStore.ChangeFormat" alt="" coords="1581,103,1726,143"/>
+<area shape="rect" id="node47" href="IStore.RevisionParallelism.html" title="&#171;enum&#187; IStore.RevisionParallelism" alt="" coords="1567,167,1739,207"/>
+<area shape="rect" id="node48" href="IStore.RevisionTemporality.html" title="&#171;enum&#187; IStore.RevisionTemporality" alt="" coords="1566,231,1741,271"/>
 </map>
 <div id="apivizContainer" style="text-align: center;margin-bottom: 1em;"><img src="package-summary.png" usemap="#APIVIZ" border="0"></div>
 <ul class="blockList">
@@ -326,31 +328,45 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.UnitSupport.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.UnitSupport</a></td>
+<td class="colLast">
+<div class="block">An extension interface for <a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>units</i>.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a></td>
 <td class="colLast">
 <div class="block">Reads <a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server"><code>chunks</code></a> of
  <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy-org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy-"><code>partially loaded</code></a> lists from a physical data storage backend.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server">IStoreFactory</a></td>
 <td class="colLast">
 <div class="block">Creates <a href="../../../../../org/eclipse/emf/cdo/server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>stores</code></a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></td>
 <td class="colLast">
 <div class="block">A repository with the ability to <a href="../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>synchronize</code></a> its content with another repository.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></td>
 <td class="colLast">
 <div class="block">The server-side representation of a client <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IUnit.html" title="interface in org.eclipse.emf.cdo.server">IUnit</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IUnitManager.html" title="interface in org.eclipse.emf.cdo.server">IUnitManager</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></td>
 <td class="colLast">
 <div class="block">The server-side representation of a client <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>

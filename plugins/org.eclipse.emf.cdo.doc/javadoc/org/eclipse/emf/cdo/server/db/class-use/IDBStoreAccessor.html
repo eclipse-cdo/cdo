@@ -252,13 +252,20 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a></code></td>
+<td class="colLast"><span class="typeNameLabel">IListMappingUnitSupport.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html#queryUnitEntries-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.server.db.IIDHandler-long-org.eclipse.emf.cdo.common.id.CDOID-">queryUnitEntries</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+                <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
+                long&nbsp;timeStamp,
+                <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#queryXRefs-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext-">queryXRefs</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</code>
 <div class="block">Executes a cross reference query.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#queryXRefs-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext-java.lang.String-">queryXRefs</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           <a href="../../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context,
@@ -266,7 +273,7 @@
 <div class="block">Retrieve cross-references from DB</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">IListMapping.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMapping.html#queryXRefs-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-java.lang.String-java.lang.String-org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext-java.lang.String-">queryXRefs</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;mainTableName,
@@ -276,7 +283,7 @@
 <div class="block">Retrieve cross-references from DB.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#rawExport-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-int-long-long-">rawExport</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
          <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
@@ -285,7 +292,7 @@
          long&nbsp;lastReplicatedCommitTime,
          long&nbsp;lastCommitTime)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#rawImport-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.common.protocol.CDODataInput-long-long-org.eclipse.net4j.util.om.monitor.OMMonitor-">rawImport</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
          <a href="../../../../../../../org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
@@ -293,14 +300,14 @@
          long&nbsp;toCommitTime,
          <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readChangeSet-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment:A-">readChangeSet</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readChangeSet-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.net4j.util.om.monitor.OMMonitor-org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment:A-">readChangeSet</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
              <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html?is-external=true" title="class or interface in org.eclipse.net4j.util.om.monitor">OMMonitor</a>&nbsp;monitor,
@@ -308,20 +315,20 @@
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readObjectIDs-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-">readObjectIDs</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code>
 <div class="block">Get an iterator over all instances of objects in the store.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></td>
 <td class="colLast"><span class="typeNameLabel">IMappingStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#readObjectType-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.common.id.CDOID-">readObjectType</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
               <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>
 <div class="block">Read the type (i.e. class) of the object referred to by a given ID.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">IClassMapping.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#readRevision-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-int-">readRevision</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
             <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
@@ -329,13 +336,20 @@
 <div class="block">Read a revision.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">IClassMappingAuditSupport.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMappingAuditSupport.html#readRevisionByVersion-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-int-">readRevisionByVersion</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;storeAccessor,
                      <a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
                      int&nbsp;listChunk)</code>
 <div class="block">Read a specific version of a revision.</div>
 </td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">IClassMappingUnitSupport.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IClassMappingUnitSupport.html#readUnitRevisions-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">readUnitRevisions</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+                 <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+                 <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
+                 <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler)</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>

@@ -144,17 +144,16 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exce
 
     for (;;)
     {
+      transaction.getViewLock().lock();
+
       try
       {
-        synchronized (transaction)
-        {
-          CDOResource resource = transaction.getResource("/stock/resource1");
+        CDOResource resource = transaction.getResource("/stock/resource1");
 
-          // Modify the model here...
+        // Modify the model here...
 
-          transaction.commit();
-          break;
-        }
+        transaction.commit();
+        break;
       }
       catch (ConcurrentAccessException ex)
       {
@@ -163,6 +162,10 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Exce
       catch (CommitException ex)
       {
         throw ex.wrap();
+      }
+      finally
+      {
+        transaction.getViewLock().unlock();
       }
     }
  </pre>

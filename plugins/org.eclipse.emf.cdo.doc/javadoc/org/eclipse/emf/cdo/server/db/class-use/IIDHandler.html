@@ -87,6 +87,12 @@
 <div class="block">Server concepts for dealing with DB stores and accessors.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.server.db.mapping">org.eclipse.emf.cdo.server.db.mapping</a></td>
+<td class="colLast">
+<div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
+</td>
+</tr>
 </tbody>
 </table>
 </li>
@@ -106,6 +112,34 @@
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a></code></td>
 <td class="colLast"><span class="typeNameLabel">IDBStore.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getIDHandler--">getIDHandler</a></span>()</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.emf.cdo.server.db.mapping">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a> in <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a> with parameters of type <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a></code></td>
+<td class="colLast"><span class="typeNameLabel">IListMappingUnitSupport.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html#queryUnitEntries-org.eclipse.emf.cdo.server.db.IDBStoreAccessor-org.eclipse.emf.cdo.server.db.IIDHandler-long-org.eclipse.emf.cdo.common.id.CDOID-">queryUnitEntries</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+                <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
+                long&nbsp;timeStamp,
+                <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">IListMappingUnitSupport.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html#readUnitEntries-java.sql.ResultSet-org.eclipse.emf.cdo.server.db.IIDHandler-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.net4j.util.collection.MoveableList-">readUnitEntries</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/ResultSet.html?is-external=true" title="class or interface in java.sql">ResultSet</a>&nbsp;resultSet,
+               <a href="../../../../../../../org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
+               <a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+               <a href="../../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/MoveableList.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&gt;&nbsp;list)</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

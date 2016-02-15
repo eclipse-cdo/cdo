@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":41,"i28":41,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":41,"i41":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":41,"i28":41,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":41,"i41":9,"i42":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -361,6 +361,12 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </td>
 </tr>
 <tr id="i41" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock-java.util.concurrent.locks.Lock-">setNextViewLock</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a>&nbsp;viewLock)</code>
+<div class="block">Sets the <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getViewLock--"><code>lock</code></a> to be used for the next view that is opened in the context of the current thread.</div>
+</td>
+</tr>
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#wrapExternalObject-org.eclipse.emf.ecore.EObject-org.eclipse.emf.cdo.view.CDOView-">wrapExternalObject</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object,
                   <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code>&nbsp;</td>
@@ -490,6 +496,30 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
+</dl>
+</li>
+</ul>
+<a name="setNextViewLock-java.util.concurrent.locks.Lock-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setNextViewLock</h4>
+<pre>public static&nbsp;void&nbsp;setNextViewLock(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/concurrent/locks/Lock.html?is-external=true" title="class or interface in java.util.concurrent.locks">Lock</a>&nbsp;viewLock)</pre>
+<div class="block">Sets the <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getViewLock--"><code>lock</code></a> to be used for the next view that is opened in the context of the current thread.
+ <p>
+ This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.
+ In these cases a <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a> can be injected into the new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>,
+ which does not deadlock when both CDO's invalidation thread and the display thread acquire the view lock.
+ <p>
+ This method involves a <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang"><code>ThreadLocal</code></a> variable to avoid method explosion in <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOViewContainer</code></a> and <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionContainer</code></a>.
+ After calling this method make sure to either open a new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> from the current thread or call <code>setNextViewLock(null)</code>
+ to clear the <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/ThreadLocal.html?is-external=true" title="class or interface in java.lang"><code>ThreadLocal</code></a> variable.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled-boolean-"><code>CDOSession.Options.setDelegableViewLockEnabled(boolean)</code></a></dd>
 </dl>
 </li>
 </ul>

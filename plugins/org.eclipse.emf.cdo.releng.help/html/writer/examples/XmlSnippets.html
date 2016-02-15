@@ -73,6 +73,7 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="overrideUUID"</font>&nbsp;value<font color="#000080">=""</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingAudits"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingBranches"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="supportingUnits"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="ensureReferentialIntegrity"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="allowInterruptRunningQueries"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
 &nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="idGenerationLocation"</font>&nbsp;value<font color="#000080">="STORE"</font>/&gt;</font>&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Possible&nbsp;values:&nbsp;STORE&nbsp;|&nbsp;CLIENT&nbsp;--&gt;</font><br/>
@@ -110,6 +111,7 @@ function windowTitle()
           properties supportingAudits and supportingBranches." title="The mapping strategy &quot;horizontal&quot; delegates to a mapping strategy chosen to match the repository
           properties supportingAudits and supportingBranches."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="qualifiedNames"</font>&nbsp;value<font color="#000080">="true"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;property&nbsp;name<font color="#000080">="withRanges"</font>&nbsp;value<font color="#000080">="false"</font>/&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Per&nbsp;default,&nbsp;the&nbsp;objectTypeCache&nbsp;is&nbsp;in-memory&nbsp;and&nbsp;contains<br/>
@@ -117,16 +119,14 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uncomment&nbsp;the&nbsp;following&nbsp;line&nbsp;and&nbsp;set&nbsp;the&nbsp;desired&nbsp;size.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;cache&nbsp;can&nbsp;be&nbsp;disabled&nbsp;by&nbsp;setting&nbsp;a&nbsp;size&nbsp;of&nbsp;0.<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
-<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Optional:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property&nbsp;name="objectTypeCacheSize"&nbsp;value="100000"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
-<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;/mappingStrategy&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;dbAdapter&nbsp;name<font color="#000080">="h2"</font>/&gt;</font><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;dataSource&nbsp;class<font color="#000080">="org.h2.jdbcx.JdbcDataSource"</font>&nbsp;URL<font color="#000080">="jdbc:h2:database/repo1"</font>/&gt;</font><br/>
-<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#0000e1">&lt;dataSource&nbsp;class<font color="#000080">="org.h2.jdbcx.JdbcDataSource"</font>&nbsp;URL<font color="#000080">="jdbc:h2:/develop/cdo-master/h2/big"</font>/&gt;</font><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dbAdapter&nbsp;name="derby-embedded"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dataSource&nbsp;class="org.apache.derby.jdbc.EmbeddedDataSource"<br/>
@@ -144,8 +144,8 @@ function windowTitle()
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example:<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dbAdapter&nbsp;name="mysql"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dataSource&nbsp;class="com.mysql.jdbc.jdbc2.optional.MysqlDataSource"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url="jdbc:mysql://localhost/repo1"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user="sa"/&gt;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url="jdbc:mysql://localhost/big"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;user="test"&nbsp;password="0000"/&gt;<br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--&gt;</font><br/>
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">&lt;!--&nbsp;Example:<br/>

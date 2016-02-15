@@ -268,6 +268,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/TransportConfigurator.html#configureNegotiator-org.w3c.dom.Element-">configureNegotiator(Element)</a></span> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/TransportConfigurator.html#configureStreamWrapper-org.w3c.dom.Element-org.eclipse.spi.net4j.Acceptor-">configureStreamWrapper(Element, Acceptor)</a></span> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html" title="class in org.eclipse.net4j.signal.confirmation"><span class="typeNameLink">ConfirmationIndication</span></a>&lt;<a href="org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html" title="type parameter in ConfirmationIndication">PROTOCOL</a> extends <a href="org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt; &amp; <a href="../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/confirmation/IConfirmationProvider.Provider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.confirmation">IConfirmationProvider.Provider</a>&gt; - Class in <a href="org/eclipse/net4j/signal/confirmation/package-summary.html">org.eclipse.net4j.signal.confirmation</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html#ConfirmationIndication-org.eclipse.net4j.signal.SignalProtocol-short-java.lang.String-">ConfirmationIndication(SignalProtocol&lt;?&gt;, short, String)</a></span> - Constructor for class org.eclipse.net4j.signal.confirmation.<a href="org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationIndication</a></dt>
@@ -394,6 +396,8 @@
 <div class="block">Container-based <a href="org/eclipse/net4j/protocol/IProtocolProvider.html" title="interface in org.eclipse.net4j.protocol"><code>protocol provider</code></a> for <a href="org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a>
  protocols.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/spi/net4j/InternalChannelMultiplexer.html#CONTEXT_MULTIPLEXER">CONTEXT_MULTIPLEXER</a></span> - Static variable in interface org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/Net4jUtil.html#copyTransportConfig-org.eclipse.net4j.util.lifecycle.ILifecycle-org.eclipse.net4j.ITransportConfig-">copyTransportConfig(ILifecycle, ITransportConfig)</a></span> - Static method in class org.eclipse.net4j.<a href="org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.Factory.html#create-java.lang.String-">create(String)</a></span> - Method in class org.eclipse.net4j.signal.heartbeat.<a href="org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.Factory.html" title="class in org.eclipse.net4j.signal.heartbeat">HeartBeatProtocol.Server.Factory</a></dt>
@@ -629,6 +633,8 @@
 <div class="block">Returns an array of the connectors that have been accepted by this acceptor and not been closed since.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/spi/net4j/Acceptor.html#getAcceptedConnectors--">getAcceptedConnectors()</a></span> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Acceptor.html" title="class in org.eclipse.spi.net4j">Acceptor</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/connector/IServerConnector.html#getAcceptor--">getAcceptor()</a></span> - Method in interface org.eclipse.net4j.connector.<a href="org/eclipse/net4j/connector/IServerConnector.html" title="interface in org.eclipse.net4j.connector">IServerConnector</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/http/server/HTTPServerUtil.html#getAcceptor-org.eclipse.net4j.util.container.IManagedContainer-java.lang.String-">getAcceptor(IManagedContainer, String)</a></span> - Static method in class org.eclipse.net4j.http.server.<a href="org/eclipse/net4j/http/server/HTTPServerUtil.html" title="class in org.eclipse.net4j.http.server">HTTPServerUtil</a></dt>
 <dd>&nbsp;</dd>
@@ -1407,6 +1413,8 @@
 <dd>
 <div class="block">Returns the <em>End Of Stream</em> flag to indicate whether this buffer is the last buffer in a stream (typically a signal) of buffers.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/connector/IServerConnector.html" title="interface in org.eclipse.net4j.connector"><span class="typeNameLink">IServerConnector</span></a> - Interface in <a href="org/eclipse/net4j/connector/package-summary.html">org.eclipse.net4j.connector</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><span class="typeNameLink">ISignalProtocol</span></a>&lt;<a href="org/eclipse/net4j/signal/ISignalProtocol.html" title="type parameter in ISignalProtocol">INFRA_STRUCTURE</a>&gt; - Interface in <a href="org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></dt>
 <dd>
 <div class="block">A <a href="org/eclipse/net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol"><code>protocol</code></a> that consists of a number of stream-based <a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signals</code></a>.</div>

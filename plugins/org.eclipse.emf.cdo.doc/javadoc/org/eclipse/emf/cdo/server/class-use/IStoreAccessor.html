@@ -152,6 +152,12 @@
  <a href="../../../../../../org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="../../../../../../org/eclipse/emf/cdo/server/CDOServerImporter.html" title="class in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
 </td>
 </tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.UnitSupport.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.UnitSupport</a></span></code>
+<div class="block">An extension interface for <a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>units</i>.</div>
+</td>
+</tr>
 </tbody>
 </table>
 <table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
@@ -405,13 +411,17 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">StoreChunkReader.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreChunkReader.html#getAccessor--">getAccessor</a></span>()</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">InternalCommitContext.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#getAccessor--">getAccessor</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></td>
-<td class="colLast"><span class="typeNameLabel">Store.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getReader-org.eclipse.emf.cdo.server.ISession-">getReader</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">StoreChunkReader.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/StoreChunkReader.html#getAccessor--">getAccessor</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></td>
+<td class="colLast"><span class="typeNameLabel">Store.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getReader-org.eclipse.emf.cdo.server.ISession-">getReader</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></td>
 <td class="colLast"><span class="typeNameLabel">Store.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/Store.html#getWriter-org.eclipse.emf.cdo.server.ITransaction-">getWriter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>

@@ -122,24 +122,36 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/eclipse/net4j/db/BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DBUtil.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/DBUtil.html#batched-java.sql.PreparedStatement-int-">batched</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/PreparedStatement.html?is-external=true" title="class or interface in java.sql">PreparedStatement</a>&nbsp;delegate,
+       int&nbsp;batchSize)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">IDBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createTable-org.eclipse.net4j.db.ddl.IDBTable-java.sql.Statement-">createTable</a></span>(<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Statement.html?is-external=true" title="class or interface in java.sql">Statement</a>&nbsp;statement)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">IDBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#createTables-java.lang.Iterable-java.sql.Connection-">createTables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">IDBAdapter.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/IDBAdapter.html#dropTables-java.lang.Iterable-java.sql.Connection-">dropTables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Iterable.html?is-external=true" title="class or interface in java.lang">Iterable</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a></code></td>
 <td class="colLast"><span class="typeNameLabel">IDBConnectionProvider.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/IDBConnectionProvider.html#getConnection--">getConnection</a></span>()</code>
 <div class="block">Returns a connection.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><span class="typeNameLabel">DBUtil.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/db/DBUtil.html#getRowCount-java.sql.Connection-java.lang.String-">getRowCount</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
+           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;tableName)</code>
+<div class="block">Returns the number of rows contained in the given table.</div>
 </td>
 </tr>
 <tr class="altColor">

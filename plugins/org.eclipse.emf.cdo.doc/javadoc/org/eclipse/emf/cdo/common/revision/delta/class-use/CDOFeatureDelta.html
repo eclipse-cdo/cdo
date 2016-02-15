@@ -112,6 +112,12 @@
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></td>
+<td class="colLast">
+<div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></td>
 <td class="colLast">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
@@ -382,25 +388,49 @@
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOAutoLocker.ForSingleValuedChanges.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.ForSingleValuedChanges.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+               <a href="../../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+               <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDODefaultTransactionHandler1.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOPostEventTransactionHandler.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOTransactionHandler1.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</div>
 </td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.eclipse.emf.cdo.view">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a> in <a href="../../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../../../org/eclipse/emf/cdo/view/package-summary.html">org.eclipse.emf.cdo.view</a> that return <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOViewEventProducer.CDOModifyingObjectEvent.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOModifyingObjectEvent.html#getFeatureDelta--">getFeatureDelta</a></span>()</code>&nbsp;</td>
 </tr>
 </tbody>
 </table>

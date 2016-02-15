@@ -1348,19 +1348,25 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOAutoLocker.ForSingleValuedChanges.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.ForSingleValuedChanges.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
+               <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+               <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDODefaultTransactionHandler1.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureChange)</code>
 <div class="block">This implementation does nothing.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOPostEventTransactionHandler.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
                <a href="../../../../../org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOTransactionHandler1.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html#modifyingObject-org.eclipse.emf.cdo.transaction.CDOTransaction-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta-">modifyingObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
                <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
@@ -1368,12 +1374,12 @@
 <div class="block">Called by a <code>CDOTransaction</code> <b>before</b> an object is modified.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#queryXRefs-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.ecore.EReference...-">queryXRefs</a></span>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOPushTransaction.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#reload-org.eclipse.emf.cdo.CDOObject...-">reload</a></span>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>...&nbsp;objects)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
@@ -1591,6 +1597,22 @@
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOViewEventProducer.CDOObjectStateChangedEvent.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOObjectStateChangedEvent.html#getObject--">getObject</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOViewEventProducer.CDOAttachingObjectEvent.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOAttachingObjectEvent.html#getObject--">getObject</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOViewEventProducer.CDODetachingObjectEvent.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEventProducer.CDODetachingObjectEvent.html#getObject--">getObject</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
+<td class="colLast"><span class="typeNameLabel">CDOViewEventProducer.CDOModifyingObjectEvent.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOModifyingObjectEvent.html#getObject--">getObject</a></span>()</code>&nbsp;</td>
+</tr>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></td>
 <td class="colLast"><span class="typeNameLabel">CDOView.</span><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject-org.eclipse.emf.cdo.common.id.CDOID-">getObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>

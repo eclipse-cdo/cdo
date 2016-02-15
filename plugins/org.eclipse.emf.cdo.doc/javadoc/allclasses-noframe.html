@@ -77,6 +77,7 @@
 <li><a href="org/eclipse/emf/cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol"><span class="interfaceName">CDOAuthenticator</span></a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoAttacher</a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker</a></li>
+<li><a href="org/eclipse/emf/cdo/transaction/CDOAutoLocker.ForSingleValuedChanges.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker.ForSingleValuedChanges</a></li>
 <li><a href="org/eclipse/emf/cdo/util/CDOBalancedTree.html" title="class in org.eclipse.emf.cdo.util">CDOBalancedTree</a></li>
 <li><a href="org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><span class="interfaceName">CDOBinaryResource</span></a></li>
 <li><a href="org/eclipse/emf/cdo/eresource/impl/CDOBinaryResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOBinaryResourceImpl</a></li>
@@ -318,6 +319,7 @@
 <li><a href="org/eclipse/emf/cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol"><span class="interfaceName">CDOProtocol</span></a></li>
 <li><a href="org/eclipse/emf/cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a></li>
 <li><a href="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.html" title="interface in org.eclipse.emf.cdo.common.protocol"><span class="interfaceName">CDOProtocolConstants</span></a></li>
+<li><a href="org/eclipse/emf/cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</a></li>
 <li><a href="org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOQuery</span></a></li>
 <li><a href="org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util"><span class="interfaceName">CDOQueryInfo</span></a></li>
@@ -419,6 +421,7 @@
 <li><a href="org/eclipse/emf/cdo/net4j/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j"><span class="interfaceName">CDOSession.Options</span></a></li>
 <li><a href="org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session"><span class="interfaceName">CDOSession.Options</span></a></li>
 <li><a href="org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session"><span class="interfaceName">CDOSession.Options.CollectionLoadingPolicyEvent</span></a></li>
+<li><a href="org/eclipse/emf/cdo/session/CDOSession.Options.DelegableViewLockEvent.html" title="interface in org.eclipse.emf.cdo.session"><span class="interfaceName">CDOSession.Options.DelegableViewLockEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session"><span class="interfaceName">CDOSession.Options.GeneratedPackageEmulationEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session"><span class="interfaceName">CDOSession.Options.LobCacheEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/session/CDOSession.Options.PermissionUpdaterEvent.html" title="interface in org.eclipse.emf.cdo.session"><span class="interfaceName">CDOSession.Options.PermissionUpdaterEvent</span></a></li>
@@ -460,6 +463,7 @@
 <li><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOTransaction</span></a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOTransaction.Options</span></a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOTransaction.Options.AutoReleaseLocksEvent</span></a></li>
+<li><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.CommitInfoTimeout.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOTransaction.Options.CommitInfoTimeout</span></a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.ConflictResolversEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOTransaction.Options.ConflictResolversEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.StaleReferenceCleanerEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOTransaction.Options.StaleReferenceCleanerEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.Options.UndoDetectorEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOTransaction.Options.UndoDetectorEvent</span></a></li>
@@ -498,6 +502,10 @@
 <li><a href="org/eclipse/emf/cdo/ui/CDOTreeExpansionAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOTreeExpansionAgent</a></li>
 <li><a href="org/eclipse/emf/cdo/common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model"><span class="interfaceName">CDOType</span></a></li>
 <li><a href="org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="interfaceName">CDOUndoDetector</span></a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOUnit.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOUnit</span></a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOUnitManager.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOUnitManager</span></a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOUnitManager.UnitExistsException.html" title="class in org.eclipse.emf.cdo.view">CDOUnitManager.UnitExistsException</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOUnitManager.UnitNotFoundException.html" title="class in org.eclipse.emf.cdo.view">CDOUnitManager.UnitNotFoundException</a></li>
 <li><a href="org/eclipse/emf/cdo/common/revision/delta/CDOUnsetFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><span class="interfaceName">CDOUnsetFeatureDelta</span></a></li>
 <li><a href="org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util"><span class="interfaceName">CDOUpdatable</span></a></li>
 <li><a href="org/eclipse/emf/cdo/util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util">CDOURIData</a></li>
@@ -522,6 +530,14 @@
 <li><a href="org/eclipse/emf/cdo/view/CDOViewContainer.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOViewContainer</span></a></li>
 <li><a href="org/eclipse/emf/cdo/view/CDOViewDurabilityChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOViewDurabilityChangedEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/view/CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOViewEvent</span></a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOAttachingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOAttachingObjectEvent</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOCommittedTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOCommittedTransactionEvent</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOCommittingTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOCommittingTransactionEvent</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDODetachingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDODetachingObjectEvent</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOModifyingObjectEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOModifyingObjectEvent</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDOObjectStateChangedEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDOObjectStateChangedEvent</a></li>
+<li><a href="org/eclipse/emf/cdo/view/CDOViewEventProducer.CDORolledBackTransactionEvent.html" title="class in org.eclipse.emf.cdo.view">CDOViewEventProducer.CDORolledBackTransactionEvent</a></li>
 <li><a href="org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOViewInvalidationEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOViewLocksChangedEvent</span></a></li>
 <li><a href="org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view"><span class="interfaceName">CDOViewOpener</span></a></li>
@@ -671,6 +687,7 @@
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IClassMapping</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/IClassMappingAuditSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IClassMappingAuditSupport</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/IClassMappingDeltaSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IClassMappingDeltaSupport</span></a></li>
+<li><a href="org/eclipse/emf/cdo/server/db/mapping/IClassMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IClassMappingUnitSupport</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db4o/IDB4OIdentifiableObject.html" title="interface in org.eclipse.emf.cdo.server.db4o"><span class="interfaceName">IDB4OIdentifiableObject</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db4o/IDB4OStore.html" title="interface in org.eclipse.emf.cdo.server.db4o"><span class="interfaceName">IDB4OStore</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db"><span class="interfaceName">IDBStore</span></a></li>
@@ -696,7 +713,9 @@
 <li><a href="org/eclipse/emf/cdo/server/lissome/ILissomeStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server.lissome"><span class="interfaceName">ILissomeStoreChunkReader</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IListMapping</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/IListMapping2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IListMapping2</span></a></li>
+<li><a href="org/eclipse/emf/cdo/server/db/mapping/IListMapping3.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IListMapping3</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/IListMappingDeltaSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IListMappingDeltaSupport</span></a></li>
+<li><a href="org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IListMappingUnitSupport</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/ILockingManager.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">ILockingManager</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/ILockingManager.DurableViewHandler.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">ILockingManager.DurableViewHandler</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">IMappingStrategy</span></a></li>
@@ -744,6 +763,7 @@
 <li><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><span class="interfaceName">InternalCDORevisionManager.RevisionLocker</span></a></li>
 <li><a href="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo"><span class="interfaceName">InternalCDOSavepoint</span></a></li>
 <li><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo"><span class="interfaceName">InternalCDOSession</span></a></li>
+<li><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.CommitToken.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.CommitToken</a></li>
 <li><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.MergeData</a></li>
 <li><a href="org/eclipse/emf/spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo"><span class="interfaceName">InternalCDOSessionConfiguration</span></a></li>
 <li><a href="org/eclipse/emf/spi/cdo/InternalCDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.spi.cdo"><span class="interfaceName">InternalCDOSessionInvalidationEvent</span></a></li>
@@ -789,6 +809,9 @@
 <li><a href="org/eclipse/emf/cdo/spi/server/InternalStore.NoRawAccess.html" title="interface in org.eclipse.emf.cdo.spi.server"><span class="interfaceName">InternalStore.NoRawAccess</span></a></li>
 <li><a href="org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server"><span class="interfaceName">InternalSynchronizableRepository</span></a></li>
 <li><a href="org/eclipse/emf/cdo/spi/server/InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server"><span class="interfaceName">InternalTransaction</span></a></li>
+<li><a href="org/eclipse/emf/cdo/spi/server/InternalTransaction.CommitAttempt.html" title="class in org.eclipse.emf.cdo.spi.server">InternalTransaction.CommitAttempt</a></li>
+<li><a href="org/eclipse/emf/cdo/spi/server/InternalUnitManager.html" title="interface in org.eclipse.emf.cdo.spi.server"><span class="interfaceName">InternalUnitManager</span></a></li>
+<li><a href="org/eclipse/emf/cdo/spi/server/InternalUnitManager.InternalObjectAttacher.html" title="interface in org.eclipse.emf.cdo.spi.server"><span class="interfaceName">InternalUnitManager.InternalObjectAttacher</span></a></li>
 <li><a href="org/eclipse/emf/cdo/spi/server/InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server"><span class="interfaceName">InternalView</span></a></li>
 <li><a href="org/eclipse/emf/cdo/expressions/IntValue.html" title="interface in org.eclipse.emf.cdo.expressions"><span class="interfaceName">IntValue</span></a></li>
 <li><a href="org/eclipse/emf/cdo/expressions/impl/IntValueImpl.html" title="class in org.eclipse.emf.cdo.expressions.impl">IntValueImpl</a></li>
@@ -838,6 +861,7 @@
 <li><a href="org/eclipse/emf/cdo/server/IStoreAccessor.QueryResourcesContext.ExactMatch.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IStoreAccessor.QueryResourcesContext.ExactMatch</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IStoreAccessor.QueryXRefsContext</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IStoreAccessor.Raw</span></a></li>
+<li><a href="org/eclipse/emf/cdo/server/IStoreAccessor.UnitSupport.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IStoreAccessor.UnitSupport</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IStoreChunkReader</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server">IStoreChunkReader.Chunk</a></li>
 <li><a href="org/eclipse/emf/cdo/server/IStoreFactory.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IStoreFactory</span></a></li>
@@ -848,6 +872,8 @@
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Factory.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">ITypeMapping.Factory</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Provider.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">ITypeMapping.Provider</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Registry.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><span class="interfaceName">ITypeMapping.Registry</span></a></li>
+<li><a href="org/eclipse/emf/cdo/server/IUnit.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IUnit</span></a></li>
+<li><a href="org/eclipse/emf/cdo/server/IUnitManager.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IUnitManager</span></a></li>
 <li><a href="org/eclipse/emf/cdo/server/IView.html" title="interface in org.eclipse.emf.cdo.server"><span class="interfaceName">IView</span></a></li>
 <li><a href="org/eclipse/emf/cdo/util/LegacyModeNotEnabledException.html" title="class in org.eclipse.emf.cdo.util">LegacyModeNotEnabledException</a></li>
 <li><a href="org/eclipse/emf/cdo/expressions/LinkedExpression.html" title="interface in org.eclipse.emf.cdo.expressions"><span class="interfaceName">LinkedExpression</span></a></li>

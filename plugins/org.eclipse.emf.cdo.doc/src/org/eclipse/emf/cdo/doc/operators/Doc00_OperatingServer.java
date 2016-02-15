@@ -39,7 +39,7 @@ public class Doc00_OperatingServer
    * {@img eclipse-installer.png}
    * <p>
    * On the second page make sure you select the product version (of the CDO Server) that matches your clients' versions:
-   * {@img eclipse-installer.png}
+   * {@img eclipse-installer2.png}
    * <p>
    * When the installation has finished the "eclipse" folder under the installation folder contains the <b>cdo-server.xml</b>
    * configuration file, which looks similar to this:

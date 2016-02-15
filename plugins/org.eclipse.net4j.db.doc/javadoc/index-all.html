@@ -219,6 +219,10 @@
 </a>
 <h2 class="title">B</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/DBUtil.html#batched-java.sql.PreparedStatement-int-">batched(PreparedStatement, int)</a></span> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchedStatement.html" title="interface in org.eclipse.net4j.db"><span class="typeNameLink">BatchedStatement</span></a> - Interface in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#beforeFirst--">beforeFirst()</a></span> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -783,6 +787,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.html#getAutoCommit--">getAutoCommit()</a></span> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingConnection</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/BatchedStatement.html#getBatchCount--">getBatchCount()</a></span> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/BatchedStatement.html#getBatchSize--">getBatchSize()</a></span> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getBigDecimal-int-int-">getBigDecimal(int, int)</a></span> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
@@ -1217,6 +1225,10 @@
 <dd>
 <div class="block">Returns the number of rows contained in the given result set.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/DBUtil.html#getRowCount-java.sql.Connection-java.lang.String-">getRowCount(Connection, String)</a></span> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>
+<div class="block">Returns the number of rows contained in the given table.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getRowId-int-">getRowId(int)</a></span> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>
 <div class="block">Since JDK 1.6.</div>
@@ -1336,6 +1348,8 @@
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getTimestamp-int-java.util.Calendar-">getTimestamp(int, Calendar)</a></span> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getTimestamp-java.lang.String-java.util.Calendar-">getTimestamp(String, Calendar)</a></span> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/BatchedStatement.html#getTotalResult--">getTotalResult()</a></span> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/IDBPreparedStatement.html#getTransaction--">getTransaction()</a></span> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></dt>
 <dd>
@@ -1787,6 +1801,12 @@
 <h2 class="title">M</h2>
 <dl>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/DBUtil.html#MAX_BATCH_SIZE">MAX_BATCH_SIZE</a></span> - Static variable in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/IDBAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection(Connection)</a></span> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection(Connection)</a></span> - Method in class org.eclipse.net4j.db.mysql.<a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/spi/db/DBAdapter.html#modifyConnection-java.sql.Connection-">modifyConnection(Connection)</a></span> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#moveToCurrentRow--">moveToCurrentRow()</a></span> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>

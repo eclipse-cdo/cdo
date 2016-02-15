@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -169,20 +169,27 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.DelegableViewLockEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.DelegableViewLockEvent</a></span></code>
+<div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired when the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled-boolean-"><code>delegable view lock enabled</code></a>
+ option of a <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.GeneratedPackageEmulationEvent</a></span></code>
 <div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired when the
  <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled-boolean-"><code>generated package emulation enabled</code></a> option of a
  <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.LobCacheEvent</a></span></code>
 <div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired when the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache-org.eclipse.emf.cdo.common.lob.CDOLobStore-"><code>large object cache</code></a>
  option of a <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.PermissionUpdaterEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PermissionUpdaterEvent</a></span></code>
 <div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired when the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setPermissionUpdater-org.eclipse.emf.spi.cdo.CDOPermissionUpdater-"><code>permission updater</code></a>
@@ -238,25 +245,35 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#isGeneratedPackageEmulationEnabled--">isGeneratedPackageEmulationEnabled</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#isDelegableViewLockEnabled--">isDelegableViewLockEnabled</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#isGeneratedPackageEmulationEnabled--">isGeneratedPackageEmulationEnabled</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy-org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy-">setCollectionLoadingPolicy</a></span>(<a href="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</code>
 <div class="block">Sets the <a href="../../../../../org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading</code></a> to be used by this session.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled-boolean-">setDelegableViewLockEnabled</a></span>(boolean&nbsp;delegableViewLockEnabled)</code>
+<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled-boolean-">setGeneratedPackageEmulationEnabled</a></span>(boolean&nbsp;generatedPackageEmulationEnabled)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache-org.eclipse.emf.cdo.common.lob.CDOLobStore-">setLobCache</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;lobCache)</code>
 <div class="block">Sets the <a href="../../../../../org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob"><code>large object cache</code></a> to be used by this session.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html#setPermissionUpdater-org.eclipse.emf.spi.cdo.CDOPermissionUpdater-">setPermissionUpdater</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo">CDOPermissionUpdater</a>&nbsp;permissionUpdater)</code>
 <div class="block">Sets the <a href="../../../../../org/eclipse/emf/spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo"><code>permission updater</code></a> to be used by this session.</div>
@@ -406,7 +423,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 <a name="setPermissionUpdater-org.eclipse.emf.spi.cdo.CDOPermissionUpdater-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setPermissionUpdater</h4>
 <pre>void&nbsp;setPermissionUpdater(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo">CDOPermissionUpdater</a>&nbsp;permissionUpdater)</pre>
@@ -414,6 +431,37 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Opti
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.3</dd>
+</dl>
+</li>
+</ul>
+<a name="isDelegableViewLockEnabled--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDelegableViewLockEnabled</h4>
+<pre>boolean&nbsp;isDelegableViewLockEnabled()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="setDelegableViewLockEnabled-boolean-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setDelegableViewLockEnabled</h4>
+<pre>void&nbsp;setDelegableViewLockEnabled(boolean&nbsp;delegableViewLockEnabled)</pre>
+<div class="block">This method is useful, for example, if EMF <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.
+ In these cases a <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a> can be injected into the new <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>,
+ which does not deadlock when both CDO's invalidation thread and the display thread acquire the view lock.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock-java.util.concurrent.locks.Lock-"><code>CDOUtil.setNextViewLock(Lock)</code></a></dd>
 </dl>
 </li>
 </ul>

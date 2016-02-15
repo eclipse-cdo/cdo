@@ -49,7 +49,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html" title="class in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.ForSingleValuedChanges.html" title="class in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" target="_top">Frames</a></li>
@@ -73,7 +73,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -96,8 +96,9 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDODefaultTransactionHandler1.html" title="CDODefaultTransactionHandler1" alt="" coords="5,6,213,31"/>
-<area shape="rect" id="node2" href="CDOAutoLocker.html" title="CDOAutoLocker" alt="" coords="51,71,167,97"/>
+<area shape="rect" id="node1" href="CDODefaultTransactionHandler1.html" title="CDODefaultTransactionHandler1" alt="" coords="35,6,243,31"/>
+<area shape="rect" id="node2" href="CDOAutoLocker.ForSingleValuedChanges.html" title="CDOAutoLocker.ForSingleValuedChanges" alt="" coords="5,137,272,162"/>
+<area shape="rect" id="node3" href="CDOAutoLocker.html" title="CDOAutoLocker" alt="" coords="81,71,196,97"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOAutoLocker.png" usemap="#APIVIZ" border="0"></div>
 <ul class="inheritance">
@@ -120,6 +121,10 @@ var activeTableTab = "activeTableTab";
 <dt>All Implemented Interfaces:</dt>
 <dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandlerBase</a></dd>
 </dl>
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.ForSingleValuedChanges.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker.ForSingleValuedChanges</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">CDOAutoLocker</span>
@@ -136,6 +141,27 @@ extends <a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransa
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Class and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.ForSingleValuedChanges.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoLocker.ForSingleValuedChanges</a></span></code>
+<div class="block">An <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" title="class in org.eclipse.emf.cdo.transaction"><code>auto locker</code></a> that only locks objects when their single-valued features are changed.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.summary">
@@ -278,7 +304,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransa
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoAttacher.html" title="class in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOAutoLocker.ForSingleValuedChanges.html" title="class in org.eclipse.emf.cdo.transaction"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/transaction/CDOAutoLocker.html" target="_top">Frames</a></li>
@@ -302,7 +328,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/transaction/CDODefaultTransa
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

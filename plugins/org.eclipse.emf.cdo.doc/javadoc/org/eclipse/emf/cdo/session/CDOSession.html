@@ -6,21 +6,34 @@
 <title>CDOSession (CDO Model Repository Documentation)</title>
 <meta name="date" content="">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
+<script type="text/javascript" src="../../../../../script.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
-    if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="CDOSession (CDO Model Repository Documentation)";
+    try {
+        if (location.href.indexOf('is-external=true') == -1) {
+            parent.document.title="CDOSession (CDO Model Repository Documentation)";
+        }
+    }
+    catch(err) {
     }
 //-->
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 </script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a name="navbar_top">
+<div class="topNav"><a name="navbar.top">
 <!--   -->
-</a><a href="#skip-navbar_top" title="Skip navigation links"></a><a name="navbar_top_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.top.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -35,15 +48,15 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDORetryExceptionHandler.html" title="class in org.eclipse.emf.cdo.session"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/session/CDORetryExceptionHandler.html" title="class in org.eclipse.emf.cdo.session"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/session/CDOSession.html" target="_top">Frames</a></li>
-<li><a href="CDOSession.html" target="_top">No Frames</a></li>
+<li><a href="CDOSession.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -60,19 +73,19 @@
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_top">
+<a name="skip.navbar.top">
 <!--   -->
 </a></div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -119,17 +132,17 @@
 </dl>
 <hr>
 <br>
-<pre>public interface <span class="strong">CDOSession</span>
+<pre>public interface <span class="typeNameLabel">CDOSession</span>
 extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionContainer</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider.Provider</a></pre>
 <div class="block">Represents and controls the connection to a model repository in addition to the inherited <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
  management functions.
  <p>
  A session has the following responsibilities:
  <ul>
- <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRepositoryInfo()"><code>CDORepositoryInfo information</code></a>
- <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry()"><code>Package registry</code></a>
- <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRevisionManager()"><code>Data management</code></a>
- <li> <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getViews()"><code>View management</code></a>
+ <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRepositoryInfo--"><code>CDORepositoryInfo information</code></a>
+ <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry--"><code>Package registry</code></a>
+ <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRevisionManager--"><code>Data management</code></a>
+ <li> <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getViews--"><code>View management</code></a>
  </ul>
  <p>
  Note that in order to retrieve, access and store <code>objects</code> a <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> is needed. The
@@ -137,16 +150,18 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
  <p>
  A session can fire the following events:
  <ul>
- <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a> after <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><code>commit notifications</code></a>
+ <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a> after <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled-boolean-"><code>commit notifications</code></a>
  have been received and processed.
  <li> <a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionLocksChangedEvent</code></a> after <a href="../../../../../org/eclipse/emf/cdo/CDOLock.html" title="interface in org.eclipse.emf.cdo"><code>locks</code></a> have been acquired or released.
  </ul></div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>2.0</dd>
-<dt><span class="strong">No Implement</span></dt>
-  <dd>This interface is not intended to be implemented by clients.</dd>
-<dt><span class="strong">No Extend</span></dt>
-  <dd>This interface is not intended to be extended by clients.</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>2.0</dd>
+<dt><span class="simpleTagLabel">No Implement</span></dt>
+<dd>This interface is not intended to be implemented by clients.</dd>
+<dt><span class="simpleTagLabel">No Extend</span></dt>
+<dd>This interface is not intended to be extended by clients.</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -155,11 +170,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <ul class="blockList">
-<li class="blockList"><a name="nested_class_summary">
+<li class="blockList"><a name="nested.class.summary">
 <!--   -->
 </a>
 <h3>Nested Class Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
 <caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -167,21 +182,21 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a></strong></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a></span></code>
 <div class="block">Handles <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo"><code>protocol</code></a> exceptions if
- <a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)"><code>configured</code></a> before the session has
+ <a href="../../../../../org/eclipse/emf/cdo/session/CDOSessionConfiguration.html#setExceptionHandler-org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler-"><code>configured</code></a> before the session has
  been opened.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static interface&nbsp;</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</a></strong></code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</a></span></code>
 <div class="block">Encapsulates a set of notifying <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> configuration options.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="nested_classes_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
 <h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
@@ -191,12 +206,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 </ul>
 <!-- =========== FIELD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="field_summary">
+<li class="blockList"><a name="field.summary">
 <!--   -->
 </a>
 <h3>Field Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="fields_inherited_from_class_org.eclipse.emf.cdo.util.CDOUpdatable">
+<li class="blockList"><a name="fields.inherited.from.class.org.eclipse.emf.cdo.util.CDOUpdatable">
 <!--   -->
 </a>
 <h3>Fields inherited from interface&nbsp;org.eclipse.emf.cdo.util.<a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></h3>
@@ -206,205 +221,205 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 </ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_summary">
+<li class="blockList"><a name="method.summary">
 <!--   -->
 </a>
 <h3>Method Summary</h3>
-<table class="overviewSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span>Methods</span><span class="tabEnd">&nbsp;</span></caption>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
-<tr class="altColor">
+<tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#changeCredentials()">changeCredentials</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#changeCredentials--">changeCredentials</a></span>()</code>
 <div class="block">Initiates (possibly interactive) changing of credentials for the user logged in in this session.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">compareRevisions</a></strong>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#compareRevisions-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">compareRevisions</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
                 <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getBranchManager()">getBranchManager</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getBranchManager--">getBranchManager</a></span>()</code>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a> that manages the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branches</code></a> of the
  repository of this session.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getCommitInfoManager()">getCommitInfoManager</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getCommitInfoManager--">getCommitInfoManager</a></span>()</code>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info manager</code></a> of this session.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getExceptionHandler()">getExceptionHandler</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getExceptionHandler--">getExceptionHandler</a></span>()</code>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><code>exception handler</code></a> of this session.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getFetchRuleManager()">getFetchRuleManager</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getFetchRuleManager--">getFetchRuleManager</a></span>()</code>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view"><code>fetch rule manager</code></a> of this session.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getIDGenerator()">getIDGenerator</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getIDGenerator--">getIDGenerator</a></span>()</code>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID generator</code></a> of this session.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry()">getPackageRegistry</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getPackageRegistry--">getPackageRegistry</a></span>()</code>
 <div class="block">Returns the EMF <code>package registry</code> that is used by all <code>objects</code> of all
  <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> of this session.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRemoteSessionManager()">getRemoteSessionManager</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRemoteSessionManager--">getRemoteSessionManager</a></span>()</code>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote session manager</code></a> that keeps track of the other remote
  sessions served by the repository of this local session.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html" title="interface in org.eclipse.emf.cdo.session">CDORepositoryInfo</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRepositoryInfo()">getRepositoryInfo</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRepositoryInfo--">getRepositoryInfo</a></span>()</code>
 <div class="block">Returns an instance of <a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html" title="interface in org.eclipse.emf.cdo.session"><code>CDORepositoryInfo</code></a> that describes the model repository this <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> is connected to.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRevisionManager()">getRevisionManager</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#getRevisionManager--">getRevisionManager</a></span>()</code>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a> that manages the <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of the
  repository of this session.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</a></code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#options()">options</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#options--">options</a></span>()</code>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session"><code>options</code></a> of this session.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#refresh()">refresh</a></strong>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#refresh--">refresh</a></span>()</code>
 <div class="block">Refreshes the object caches of all (non-historical) <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#refresh(org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult.Provider)">refresh</a></strong>(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.Provider.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult.Provider</a>&nbsp;provider)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#refresh-org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult.Provider-">refresh</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.Provider.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult.Provider</a>&nbsp;provider)</code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#waitForUpdate(long)">waitForUpdate</a></strong>(long&nbsp;updateTime)</code>
-<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long)"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#waitForUpdate-long-">waitForUpdate</a></span>(long&nbsp;updateTime)</code>
+<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><strong><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#waitForUpdate(long,%20long)">waitForUpdate</a></strong>(long&nbsp;updateTime,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html#waitForUpdate-long-long-">waitForUpdate</a></span>(long&nbsp;updateTime,
              long&nbsp;timeoutMillis)</code>
-<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long)"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views.</div>
+<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.common.CDOCommonSession">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonSession">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getSessionID()">getSessionID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getView(int)">getView</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getViews()">getViews</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getSessionID--">getSessionID</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getView-int-">getView</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#getViews--">getViews</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.core.runtime.IAdaptable">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.runtime.IAdaptable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></h3>
-<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter(java.lang.Class)" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.security.IUserAware">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.security.IUserAware">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IUserAware</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true#getUserID()" title="class or interface in org.eclipse.net4j.util.security">getUserID</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IUserAware.html?is-external=true#getUserID--" title="class or interface in org.eclipse.net4j.util.security">getUserID</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.properties.IPropertiesContainer">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.properties.IPropertiesContainer">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.properties.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.properties">IPropertiesContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html?is-external=true#properties()" title="class or interface in org.eclipse.net4j.util.properties">properties</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html?is-external=true#properties--" title="class or interface in org.eclipse.net4j.util.properties">properties</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.collection.Closeable">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.collection.Closeable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.collection.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">Closeable</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close()" title="class or interface in org.eclipse.net4j.util.collection">close</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed()" title="class or interface in org.eclipse.net4j.util.collection">isClosed</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#close--" title="class or interface in org.eclipse.net4j.util.collection">close</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html?is-external=true#isClosed--" title="class or interface in org.eclipse.net4j.util.collection">isClosed</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.util.CDOUpdatable">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.util.CDOUpdatable">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.util.<a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#getLastUpdateTime()">getLastUpdateTime</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#runAfterUpdate(long,%20java.lang.Runnable)">runAfterUpdate</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#getLastUpdateTime--">getLastUpdateTime</a>, <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#runAfterUpdate-long-java.lang.Runnable-">runAfterUpdate</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.transaction.CDOTransactionContainer">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.transaction.CDOTransactionContainer">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.transaction.<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionContainer</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransaction(int)">getTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransactions()">getTransactions</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransactions(org.eclipse.emf.cdo.common.branch.CDOBranch)">getTransactions</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranch)">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranch,%20org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction(java.lang.String)">openTransaction</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransaction-int-">getTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransactions--">getTransactions</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#getTransactions-org.eclipse.emf.cdo.common.branch.CDOBranch-">getTransactions</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction--">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction-org.eclipse.emf.cdo.common.branch.CDOBranch-">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction-org.eclipse.emf.cdo.common.branch.CDOBranch-org.eclipse.emf.ecore.resource.ResourceSet-">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction-org.eclipse.emf.ecore.resource.ResourceSet-">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction-java.lang.String-">openTransaction</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.view.CDOViewContainer">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewContainer">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html" title="interface in org.eclipse.emf.cdo.view">CDOViewContainer</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getView(int)">getView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getViews()">getViews</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getViews(org.eclipse.emf.cdo.common.branch.CDOBranch)">getViews</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranch,%20long,%20org.eclipse.emf.ecore.resource.ResourceSet)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(long)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.ecore.resource.ResourceSet)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(java.lang.String)">openView</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getView-int-">getView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getViews--">getViews</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#getViews-org.eclipse.emf.cdo.common.branch.CDOBranch-">getViews</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView--">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView-org.eclipse.emf.cdo.common.branch.CDOBranch-">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView-org.eclipse.emf.cdo.common.branch.CDOBranch-long-">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView-org.eclipse.emf.cdo.common.branch.CDOBranch-long-org.eclipse.emf.ecore.resource.ResourceSet-">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView-long-">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView-org.eclipse.emf.ecore.resource.ResourceSet-">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewContainer.html#openView-java.lang.String-">openView</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.container.IContainer">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.container">IContainer</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements()" title="class or interface in org.eclipse.net4j.util.container">getElements</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty()" title="class or interface in org.eclipse.net4j.util.container">isEmpty</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#getElements--" title="class or interface in org.eclipse.net4j.util.container">getElements</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html?is-external=true#isEmpty--" title="class or interface in org.eclipse.net4j.util.container">isEmpty</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.event.INotifier">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">INotifier</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners()" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners()" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener(org.eclipse.net4j.util.event.IListener)" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#addListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">addListener</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#getListeners--" title="class or interface in org.eclipse.net4j.util.event">getListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#hasListeners--" title="class or interface in org.eclipse.net4j.util.event">hasListeners</a>, <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html?is-external=true#removeListener-org.eclipse.net4j.util.event.IListener-" title="class or interface in org.eclipse.net4j.util.event">removeListener</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.view.CDOViewOpener">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.view.CDOViewOpener">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.view.<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html#openView(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.ecore.resource.ResourceSet)">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html#openView(java.lang.String,%20org.eclipse.emf.ecore.resource.ResourceSet)">openView</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html#openView-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.ecore.resource.ResourceSet-">openView</a>, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewOpener.html#openView-java.lang.String-org.eclipse.emf.ecore.resource.ResourceSet-">openView</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.emf.cdo.transaction.CDOTransactionOpener">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.transaction.CDOTransactionOpener">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.transaction.<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionOpener</a></h3>
-<code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html#openTransaction(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,%20org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html#openTransaction(java.lang.String,%20org.eclipse.emf.ecore.resource.ResourceSet)">openTransaction</a></code></li>
+<code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html#openTransaction-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.ecore.resource.ResourceSet-">openTransaction</a>, <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html#openTransaction-java.lang.String-org.eclipse.emf.ecore.resource.ResourceSet-">openTransaction</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods_inherited_from_class_org.eclipse.net4j.util.security.IPasswordCredentialsProvider.Provider">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.security.IPasswordCredentialsProvider.Provider">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.security.<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html?is-external=true" title="class or interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider.Provider</a></h3>
-<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html?is-external=true#getCredentialsProvider()" title="class or interface in org.eclipse.net4j.util.security">getCredentialsProvider</a></code></li>
+<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html?is-external=true#getCredentialsProvider--" title="class or interface in org.eclipse.net4j.util.security">getCredentialsProvider</a></code></li>
 </ul>
 </li>
 </ul>
@@ -416,11 +431,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <li class="blockList">
 <!-- ============ METHOD DETAIL ========== -->
 <ul class="blockList">
-<li class="blockList"><a name="method_detail">
+<li class="blockList"><a name="method.detail">
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getRepositoryInfo()">
+<a name="getRepositoryInfo--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -428,11 +443,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <h4>getRepositoryInfo</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html" title="interface in org.eclipse.emf.cdo.session">CDORepositoryInfo</a>&nbsp;getRepositoryInfo()</pre>
 <div class="block">Returns an instance of <a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html" title="interface in org.eclipse.emf.cdo.session"><code>CDORepositoryInfo</code></a> that describes the model repository this <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> is connected to.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getPackageRegistry()">
+<a name="getPackageRegistry--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -447,7 +464,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
  <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>, if needed.</div>
 </li>
 </ul>
-<a name="getBranchManager()">
+<a name="getBranchManager--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -456,11 +473,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;getBranchManager()</pre>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a> that manages the <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branches</code></a> of the
  repository of this session.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getRevisionManager()">
+<a name="getRevisionManager--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -469,11 +488,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;getRevisionManager()</pre>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a> that manages the <a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of the
  repository of this session.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getFetchRuleManager()">
+<a name="getFetchRuleManager--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -481,11 +502,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <h4>getFetchRuleManager</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a>&nbsp;getFetchRuleManager()</pre>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view"><code>fetch rule manager</code></a> of this session.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getRemoteSessionManager()">
+<a name="getRemoteSessionManager--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -496,7 +519,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
  sessions served by the repository of this local session.</div>
 </li>
 </ul>
-<a name="getCommitInfoManager()">
+<a name="getCommitInfoManager--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -504,11 +527,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <h4>getCommitInfoManager</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>&nbsp;getCommitInfoManager()</pre>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info manager</code></a> of this session.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="getExceptionHandler()">
+<a name="getExceptionHandler--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -518,7 +543,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><code>exception handler</code></a> of this session.</div>
 </li>
 </ul>
-<a name="getIDGenerator()">
+<a name="getIDGenerator--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -526,11 +551,13 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <h4>getIDGenerator</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a>&nbsp;getIDGenerator()</pre>
 <div class="block">Returns the CDO <a href="../../../../../org/eclipse/emf/cdo/common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID generator</code></a> of this session.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.1</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.1</dd>
+</dl>
 </li>
 </ul>
-<a name="refresh()">
+<a name="refresh--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -538,68 +565,76 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <h4>refresh</h4>
 <pre>long&nbsp;refresh()</pre>
 <div class="block">Refreshes the object caches of all (non-historical) <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>3.0</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
 </li>
 </ul>
-<a name="refresh(org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult.Provider)">
+<a name="refresh-org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult.Provider-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>refresh</h4>
 <pre>long&nbsp;refresh(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.Provider.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult.Provider</a>&nbsp;provider)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.4</dd></dl>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
+</dl>
 </li>
 </ul>
-<a name="waitForUpdate(long)">
+<a name="waitForUpdate-long-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>waitForUpdate</h4>
 <pre>void&nbsp;waitForUpdate(long&nbsp;updateTime)</pre>
-<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long)"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views. That is, this blocks the
+<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views. That is, this blocks the
  calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
  higher).</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long)">waitForUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-">waitForUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="waitForUpdate(long, long)">
+<a name="waitForUpdate-long-long-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>waitForUpdate</h4>
 <pre>boolean&nbsp;waitForUpdate(long&nbsp;updateTime,
-                    long&nbsp;timeoutMillis)</pre>
-<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long)"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views. That is, this blocks the
+                      long&nbsp;timeoutMillis)</pre>
+<div class="block">Equivalent to calling <a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-"><code>CDOUpdatable.waitForUpdate(long)</code></a> on each of this session's views. That is, this blocks the
  calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
  higher) or the given total timeout has expired.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long,%20long)">waitForUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></code></dd>
-<dt><span class="strong">Returns:</span></dt><dd><code>true</code> if the specified commit operation has occured within the given timeout period,
-         <code>false</code> otherwise.</dd></dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate-long-long-">waitForUpdate</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if the specified commit operation has occured within the given timeout period,
+         <code>false</code> otherwise.</dd>
+</dl>
 </li>
 </ul>
-<a name="compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint, org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
+<a name="compareRevisions-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>compareRevisions</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;compareRevisions(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
-                                <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</pre>
-<dl><dt><span class="strong">Since:</span></dt>
-  <dd>4.0</dd></dl>
+                                  <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;target)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.0</dd>
+</dl>
 </li>
 </ul>
-<a name="changeCredentials()">
+<a name="changeCredentials--">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -608,13 +643,17 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <pre>void&nbsp;changeCredentials()</pre>
 <div class="block">Initiates (possibly interactive) changing of credentials for the user logged in in this session.
  This is an optional operation of the session.</div>
-<dl><dt><span class="strong">Throws:</span></dt>
-<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if the session implementation does not permit changing credentials</dd><dt><span class="strong">Since:</span></dt>
-  <dd>4.3</dd>
-<dt><span class="strong">See Also:</span></dt><dd><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html?is-external=true#getCredentialsProvider()" title="class or interface in org.eclipse.net4j.util.security"><code>IPasswordCredentialsProvider.Provider.getCredentialsProvider()</code></a></dd></dl>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/UnsupportedOperationException.html?is-external=true" title="class or interface in java.lang">UnsupportedOperationException</a></code> - if the session implementation does not permit changing credentials</dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.3</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html?is-external=true#getCredentialsProvider--" title="class or interface in org.eclipse.net4j.util.security"><code>IPasswordCredentialsProvider.Provider.getCredentialsProvider()</code></a></dd>
+</dl>
 </li>
 </ul>
-<a name="options()">
+<a name="options--">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -623,10 +662,10 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <pre><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</a>&nbsp;options()</pre>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session"><code>options</code></a> of this session.</div>
 <dl>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#options()">options</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></code></dd>
-<dt><strong>Specified by:</strong></dt>
-<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true#options()" title="class or interface in org.eclipse.net4j.util.options">options</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html#options--">options</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true#options--" title="class or interface in org.eclipse.net4j.util.options">options</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options">IOptionsContainer</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -638,9 +677,11 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 </div>
 <!-- ========= END OF CLASS DATA ========= -->
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a name="navbar_bottom">
+<div class="bottomNav"><a name="navbar.bottom">
 <!--   -->
-</a><a href="#skip-navbar_bottom" title="Skip navigation links"></a><a name="navbar_bottom_firstrow">
+</a>
+<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
+<a name="navbar.bottom.firstrow">
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
@@ -655,15 +696,15 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDORetryExceptionHandler.html" title="class in org.eclipse.emf.cdo.session"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/session/CDORetryExceptionHandler.html" title="class in org.eclipse.emf.cdo.session"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../../../org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../index.html?org/eclipse/emf/cdo/session/CDOSession.html" target="_top">Frames</a></li>
-<li><a href="CDOSession.html" target="_top">No Frames</a></li>
+<li><a href="CDOSession.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses-noframe.html">All Classes</a></li>
+<li><a href="../../../../../allclasses-noframe.html">All&nbsp;Classes</a></li>
 </ul>
 <div>
 <script type="text/javascript"><!--
@@ -680,19 +721,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonSession.html
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested_class_summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_summary">Method</a></li>
+<li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method_detail">Method</a></li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
-<a name="skip-navbar_bottom">
+<a name="skip.navbar.bottom">
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->

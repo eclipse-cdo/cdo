@@ -506,21 +506,6 @@
 			<package name="org.eclipse.emf.cdo.doc.reference.api" />
 			<package name="org.eclipse.emf.cdo.doc.reference.schema" />
 			<package name="org.eclipse.emf.cdo.doc.users" />
-			<package name="org.eclipse.net4j.db.doc" />
-			<package name="org.eclipse.net4j.db.doc.online" />
-			<package name="org.eclipse.net4j.db.doc.reference" />
-			<package name="org.eclipse.net4j.db.doc.reference.api" />
-			<package name="org.eclipse.net4j.db.doc.reference.schema" />
-			<package name="org.eclipse.net4j.doc" />
-			<package name="org.eclipse.net4j.doc.online" />
-			<package name="org.eclipse.net4j.doc.reference" />
-			<package name="org.eclipse.net4j.doc.reference.api" />
-			<package name="org.eclipse.net4j.doc.reference.schema" />
-			<package name="org.eclipse.net4j.util.doc" />
-			<package name="org.eclipse.net4j.util.doc.online" />
-			<package name="org.eclipse.net4j.util.doc.reference" />
-			<package name="org.eclipse.net4j.util.doc.reference.api" />
-			<package name="org.eclipse.net4j.util.doc.reference.schema" />
 		</javadoc>
 	</target>
 

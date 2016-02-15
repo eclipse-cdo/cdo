@@ -276,16 +276,6 @@
 			<package name="org.eclipse.emf.cdo.releng.help.writer.authoring" />
 			<package name="org.eclipse.emf.cdo.releng.help.writer.building" />
 			<package name="org.eclipse.emf.cdo.releng.help.writer.examples" />
-			<package name="org.eclipse.net4j.doc" />
-			<package name="org.eclipse.net4j.doc.online" />
-			<package name="org.eclipse.net4j.doc.reference" />
-			<package name="org.eclipse.net4j.doc.reference.api" />
-			<package name="org.eclipse.net4j.doc.reference.schema" />
-			<package name="org.eclipse.net4j.util.doc" />
-			<package name="org.eclipse.net4j.util.doc.online" />
-			<package name="org.eclipse.net4j.util.doc.reference" />
-			<package name="org.eclipse.net4j.util.doc.reference.api" />
-			<package name="org.eclipse.net4j.util.doc.reference.schema" />
 		</javadoc>
 	</target>
 

@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 
@@ -39,7 +41,7 @@ import org.eclipse.ui.IWorkbenchPart;
 public class CDOModelEditorOpener extends CDOEditorOpener.Default
 {
   private static final boolean INTERACTIVE_CONFLICT_RESOLUTION = !"false"
-      .equalsIgnoreCase(System.getProperty("cdo.interactive.conflict.resolution"));
+      .equalsIgnoreCase(OMPlatform.INSTANCE.getProperty("cdo.interactive.conflict.resolution"));
 
   public CDOModelEditorOpener()
   {

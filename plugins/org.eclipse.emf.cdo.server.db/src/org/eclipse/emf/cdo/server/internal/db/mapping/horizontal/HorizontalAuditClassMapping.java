@@ -86,6 +86,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
+  private static final ContextTracer TRACER_UNITS = new ContextTracer(OM.DEBUG_UNITS,
+      HorizontalAuditClassMapping.class);
+
   private String sqlInsertAttributes;
 
   private String sqlSelectAttributesCurrent;
@@ -431,7 +434,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Created Resource Query: {0}", stmt.toString()); //$NON-NLS-1$
+        TRACER.format("Created Resource Query: {0}", stmt); //$NON-NLS-1$
       }
 
       return stmt;
@@ -691,6 +694,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     IDBPreparedStatement stmt = null;
     int oldFetchSize = -1;
 
+    final long start1 = TRACER_UNITS.isEnabled() ? System.currentTimeMillis() : CDOBranchPoint.UNSPECIFIED_DATE;
+
     try
     {
       stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitByTime, ReuseProbability.MEDIUM);
@@ -718,7 +723,15 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         listFiller.schedule(revision);
       }
 
+      final long start2 = start1 != CDOBranchPoint.UNSPECIFIED_DATE ? System.currentTimeMillis() : start1;
+
       listFiller.await();
+
+      if (start1 != CDOBranchPoint.UNSPECIFIED_DATE)
+      {
+        TRACER_UNITS.format("Read {0} revisions of unit {1}: {2} millis + {3} millis", eClass.getName(), rootID,
+            start2 - start1, System.currentTimeMillis() - start2);
+      }
     }
     finally
     {

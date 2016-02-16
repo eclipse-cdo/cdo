@@ -103,7 +103,6 @@ public final class ExtendedIOUtil
     }
     else
     {
-      @SuppressWarnings("resource")
       ObjectOutputStream wrapper = new ObjectOutputStream(new OutputStream()
       {
         @Override
@@ -138,7 +137,6 @@ public final class ExtendedIOUtil
     }
     else
     {
-      @SuppressWarnings("resource")
       ObjectInputStream wrapper = new ObjectInputStream(new InputStream()
       {
         @Override

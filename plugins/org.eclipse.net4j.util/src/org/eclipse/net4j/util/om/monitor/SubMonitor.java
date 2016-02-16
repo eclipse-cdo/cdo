@@ -16,12 +16,13 @@
  */
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IProgressMonitorWithBlocking;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
-import org.eclipse.net4j.util.om.monitor.SubProgressMonitor;
 
 /**
  * A {@link IProgressMonitorWithBlocking progress monitor} that uses a given amount of work ticks from a parent monitor.
@@ -920,7 +921,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
 
     private static ProbingMode getDefault()
     {
-      String mode = System.getProperty("submonitor.probing");
+      String mode = OMPlatform.INSTANCE.getProperty("submonitor.probing");
       if (FULL.toString().equalsIgnoreCase(mode))
       {
         return FULL;

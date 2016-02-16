@@ -38,7 +38,8 @@ public abstract class OM
 
   public static final OMLogger LOG = BUNDLE.logger();
 
-  private static final String STATE_LOCATION = System.getProperty("org.eclipse.emf.cdo.explorer.stateLocation");
+  private static final String STATE_LOCATION = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.explorer.stateLocation");
 
   private static String stateLocation;
 

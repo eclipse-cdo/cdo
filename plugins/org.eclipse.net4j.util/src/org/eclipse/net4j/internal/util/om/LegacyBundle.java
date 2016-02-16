@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.trace.Tracer;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,6 +39,9 @@ import java.util.jar.JarFile;
  */
 public class LegacyBundle extends AbstractBundle
 {
+  private static final boolean isOptionsDisabled = Boolean
+      .valueOf(OMPlatform.INSTANCE.getProperty(Tracer.PROP_DISABLE_TRACING_OPTIONS, Boolean.FALSE.toString()));
+
   private URL baseURL;
 
   public LegacyBundle(AbstractPlatform platform, String bundleID, Class<?> accessor)
@@ -51,7 +56,10 @@ public class LegacyBundle extends AbstractBundle
         throw new IllegalStateException("No base URL");
       }
 
-      loadOptions();
+      if (!isOptionsDisabled)
+      {
+        loadOptions();
+      }
     }
     catch (Exception ex)
     {

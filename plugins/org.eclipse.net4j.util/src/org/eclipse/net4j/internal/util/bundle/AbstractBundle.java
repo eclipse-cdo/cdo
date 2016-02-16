@@ -57,8 +57,6 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
 
   private boolean debugging;
 
-  private boolean debuggingInitialized;
-
   private Map<String, Tracer> tracers = new ConcurrentHashMap<String, Tracer>(0);
 
   private OMLogger logger;
@@ -80,6 +78,9 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     this.platform = platform;
     this.bundleID = bundleID;
     this.accessor = accessor;
+
+    boolean debug = getDebugOption("debug", false); //$NON-NLS-1$
+    setDebugging(debug);
   }
 
   public OMPlatform getPlatform()
@@ -95,6 +96,11 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   public Class<?> getAccessor()
   {
     return accessor;
+  }
+
+  public void setAccessor(Class<?> accessor)
+  {
+    this.accessor = accessor;
   }
 
   public Object getBundleContext()
@@ -123,12 +129,6 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     if (!platform.isDebugging())
     {
       return false;
-    }
-
-    if (!debuggingInitialized)
-    {
-      debugging = getDebugOption("debug", false); //$NON-NLS-1$
-      debuggingInitialized = true;
     }
 
     return debugging;

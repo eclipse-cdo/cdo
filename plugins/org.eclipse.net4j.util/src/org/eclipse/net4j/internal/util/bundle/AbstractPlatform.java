@@ -86,10 +86,18 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public synchronized OMBundle bundle(String bundleID, Class<?> accessor)
   {
-    OMBundle bundle = bundles.get(bundleID);
+    AbstractBundle bundle = bundles.get(bundleID);
     if (bundle == null)
     {
-      bundle = createBundle(bundleID, accessor);
+      bundle = (AbstractBundle)createBundle(bundleID, accessor);
+      bundles.put(bundleID, bundle);
+    }
+    else if (accessor != null)
+    {
+      if (bundle.getAccessor() == null)
+      {
+        bundle.setAccessor(accessor);
+      }
     }
 
     return bundle;

@@ -29,6 +29,11 @@ public class Tracer implements OMTracer
    */
   public static final String PROP_DISABLE_TRACING = "org.eclipse.net4j.util.om.trace.disable";
 
+  /**
+   * @since 3.6
+   */
+  public static final String PROP_DISABLE_TRACING_OPTIONS = "org.eclipse.net4j.util.om.trace.disable.options";
+
   private static final boolean isGloballyDisabled = Boolean
       .valueOf(OMPlatform.INSTANCE.getProperty(PROP_DISABLE_TRACING, Boolean.FALSE.toString()));
 
@@ -128,5 +133,11 @@ public class Tracer implements OMTracer
   public OMTracer tracer(String name)
   {
     return new Tracer(this, name);
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Tracer[" + bundle + "/" + fullName + "]";
   }
 }

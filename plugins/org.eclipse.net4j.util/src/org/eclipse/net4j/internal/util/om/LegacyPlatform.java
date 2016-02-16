@@ -55,4 +55,16 @@ public class LegacyPlatform extends AbstractPlatform
   {
     return LegacyUtil.getCommandLineArgs();
   }
+
+  public static boolean clearDebugOptions()
+  {
+    if (INSTANCE instanceof LegacyPlatform)
+    {
+      LegacyPlatform platform = (LegacyPlatform)INSTANCE;
+      platform.debugOptions.clear();
+      return true;
+    }
+
+    return false;
+  }
 }

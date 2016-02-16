@@ -97,4 +97,10 @@ public class ContextTracer
   {
     delegate.trace(context, t);
   }
+
+  @Override
+  public String toString()
+  {
+    return "ContextTracer[" + getBundle() + "/" + getFullName() + " --> " + context.getName() + "]";
+  }
 }

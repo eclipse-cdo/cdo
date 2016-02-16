@@ -166,6 +166,11 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
 
   public void testOpenUnit() throws Exception
   {
+    // OMPlatform.INSTANCE.setDebugging(true);
+    // OMBundle bundle = OMPlatform.INSTANCE.bundle("org.eclipse.emf.cdo.server.db", null);
+    // bundle.getDebugSupport().setDebugging(true);
+    // bundle.tracer("debug").tracer("units").setEnabled(true);
+
     fillRepository();
 
     {

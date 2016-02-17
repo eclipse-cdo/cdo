@@ -132,7 +132,7 @@ public class DBBrowserPage extends AbstractPage
 
       if (rowCount > 0)
       {
-        pout.print(" (" + rowCount + ")");
+        pout.print("&nbsp;(" + rowCount + ")");
       }
 
       pout.print("<br>\r\n");

@@ -16,9 +16,11 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IUnit;
 import org.eclipse.emf.cdo.server.IUnitManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -54,16 +56,19 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
   protected void responding(final CDODataOutput out, OMMonitor monitor) throws Exception
   {
     final InternalView view = getView(viewID);
-    IUnitManager unitManager = getRepository().getUnitManager();
+    final InternalRepository repository = getRepository();
 
     if (opcode == UnitOpcode.CHECK)
     {
-      out.writeBoolean(unitManager.isUnit(rootID));
+      IUnitManager unitManager = repository.getUnitManager();
+      boolean isUnit = unitManager.isUnit(rootID);
+      out.writeBoolean(isUnit);
       return;
     }
 
     if (opcode == UnitOpcode.CLOSE)
     {
+      IUnitManager unitManager = repository.getUnitManager();
       IUnit unit = unitManager.getUnit(rootID);
       if (unit != null)
       {
@@ -76,6 +81,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
       return;
     }
 
+    final CDORevisionCache revisionCache = repository.getRevisionManager().getCache();
     final IOException[] ioException = { null };
     final RuntimeException[] runtimeException = { null };
 
@@ -91,6 +97,8 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
           try
           {
             view.unsubscribe(revision.getID());
+            revisionCache.addRevision(revision);
+
             out.writeCDORevision(revision, CDORevision.UNCHUNKED); // Exposes revision to client side
             return true;
           }

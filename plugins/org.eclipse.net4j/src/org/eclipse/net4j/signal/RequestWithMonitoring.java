@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.internal.net4j.bundle.OM;
@@ -52,6 +53,8 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
 
   private Object monitorLock = new Object();
 
+  private boolean isMonitoring;
+
   /**
    * @since 2.0
    */
@@ -79,100 +82,103 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   @Override
   public Future<RESULT> sendAsync()
   {
+    initMainMonitor(null);
     return super.sendAsync();
   }
 
   public Future<RESULT> sendAsync(OMMonitor monitor)
   {
-    mainMonitor = monitor;
+    initMainMonitor(monitor);
     return super.sendAsync();
   }
 
   @Override
   public RESULT send() throws Exception, RemoteException
   {
+    initMainMonitor(null);
     return super.send();
   }
 
   @Override
   public RESULT send(long timeout) throws Exception, RemoteException
   {
+    initMainMonitor(null);
     return super.send(timeout);
   }
 
   public RESULT send(OMMonitor monitor) throws Exception, RemoteException
   {
-    mainMonitor = monitor;
+    initMainMonitor(monitor);
     return super.send();
   }
 
   public RESULT send(long timeout, OMMonitor monitor) throws Exception, RemoteException
   {
-    mainMonitor = monitor;
+    initMainMonitor(monitor);
     return super.send(timeout);
   }
 
   @Override
   protected final void requesting(ExtendedDataOutputStream out) throws Exception
   {
-    OMMonitor fork = null;
-    boolean useMonitor = mainMonitor != null;
-    out.writeBoolean(useMonitor);
-    if (useMonitor)
+    double remoteWork = OMMonitor.HUNDRED - getRequestingWorkPercent() - getConfirmingWorkPercent();
+    if (remoteWork < OMMonitor.ZERO)
     {
-      double remoteWork = OMMonitor.HUNDRED - getRequestingWorkPercent() - getConfirmingWorkPercent();
-      if (remoteWork < OMMonitor.ZERO)
-      {
-        throw new ImplementationError("Remote work must not be negative: " + remoteWork); //$NON-NLS-1$
-      }
+      throw new ImplementationError("Remote work must not be negative: " + remoteWork); //$NON-NLS-1$
+    }
 
-      mainMonitor.begin(OMMonitor.HUNDRED);
-      OMMonitor subMonitor = mainMonitor.fork(remoteWork);
-      synchronized (monitorLock)
-      {
-        remoteMonitor = subMonitor;
-      }
+    mainMonitor.begin(OMMonitor.HUNDRED);
+    OMMonitor subMonitor = mainMonitor.fork(remoteWork);
+    synchronized (monitorLock)
+    {
+      remoteMonitor = subMonitor;
+    }
 
-      ExecutorService executorService = getCancelationExecutorService();
-      if (executorService != null)
+    ExecutorService executorService = getCancelationExecutorService();
+    if (executorService != null)
+    {
+      executorService.execute(new Runnable()
       {
-        executorService.execute(new Runnable()
+        public void run()
         {
-          public void run()
+          while (mainMonitor != null)
           {
-            while (mainMonitor != null)
+            ConcurrencyUtil.sleep(getCancelationPollInterval());
+            if (mainMonitor != null && mainMonitor.isCanceled())
             {
-              ConcurrencyUtil.sleep(getCancelationPollInterval());
-              if (mainMonitor != null && mainMonitor.isCanceled())
+              try
               {
-                try
-                {
-                  new MonitorCanceledRequest(getProtocol(), getCorrelationID()).sendAsync();
-                }
-                catch (Exception ex)
-                {
-                  OM.LOG.error(ex);
-                }
-
-                return;
+                new MonitorCanceledRequest(getProtocol(), getCorrelationID()).sendAsync();
               }
+              catch (Exception ex)
+              {
+                OM.LOG.error(ex);
+              }
+
+              return;
             }
           }
-        });
-      }
-
-      out.writeInt(getMonitorProgressSeconds());
-      fork = mainMonitor.fork(getRequestingWorkPercent());
+        }
+      });
     }
-    out.writeInt(getMonitorTimeoutSeconds());
-    requesting(out, fork);
+
+    int monitorTimeoutSeconds = getMonitorTimeoutSeconds();
+    int monitorProgressSeconds = getMonitorProgressSeconds();
+
+    if (!isMonitoring)
+    {
+      monitorProgressSeconds = Math.max(monitorProgressSeconds, (int)Math.floor(monitorTimeoutSeconds * 0.8));
+    }
+
+    out.writeInt(monitorProgressSeconds);
+    out.writeInt(monitorTimeoutSeconds);
+    requesting(out, mainMonitor.fork(getRequestingWorkPercent()));
   }
 
   @Override
   protected final RESULT confirming(ExtendedDataInputStream in) throws Exception
   {
-    OMMonitor monitor = mainMonitor != null ? mainMonitor.fork(getConfirmingWorkPercent()) : null;
-    return confirming(in, monitor);
+    return confirming(in, mainMonitor.fork(getConfirmingWorkPercent()));
   }
 
   protected abstract void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception;
@@ -301,4 +307,9 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
     }
   }
 
+  private void initMainMonitor(OMMonitor monitor)
+  {
+    isMonitoring = monitor != null;
+    mainMonitor = isMonitoring ? monitor : new Monitor();
+  }
 }

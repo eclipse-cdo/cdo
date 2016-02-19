@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 
-import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
@@ -57,11 +56,6 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   @Override
   protected void requesting(CDODataOutput out, OMMonitor monitor) throws IOException
   {
-    if (monitor == null)
-    {
-      monitor = new EclipseMonitor();
-    }
-
     out.writeInt(infos);
     monitor.begin(infos);
 
@@ -114,11 +108,6 @@ public class LoadMergeDataRequest extends CDOClientRequestWithMonitoring<Set<CDO
   @Override
   protected Set<CDOID> confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
-    if (monitor == null)
-    {
-      monitor = new EclipseMonitor();
-    }
-
     Set<CDOID> result = new HashSet<CDOID>();
 
     int size = in.readInt();

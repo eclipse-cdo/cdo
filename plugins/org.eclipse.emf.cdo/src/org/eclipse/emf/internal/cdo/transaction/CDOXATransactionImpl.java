@@ -224,6 +224,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
         {
           xaContext.setProgressMonitor(new SynchronizedSubProgressMonitor(progressMonitor, 1));
         }
+
         Future<Object> future = executorService.submit(xaContext);
         futures.put(future, xaContext);
       }
@@ -266,6 +267,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       {
         progressMonitor.done();
       }
+
       for (InternalCDOXACommitContext xaContext : xaContexts)
       {
         xaContext.setProgressMonitor(null);

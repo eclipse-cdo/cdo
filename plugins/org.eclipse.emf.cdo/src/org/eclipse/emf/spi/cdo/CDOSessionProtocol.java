@@ -14,7 +14,6 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -63,6 +62,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitContext;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.PlatformObject;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -356,17 +358,19 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 3.0
    * @noinstantiate This class is not intended to be instantiated by clients.
    */
-  public final class OpenSessionResult
+  public final class OpenSessionResult extends PlatformObject implements CDOCommonRepository
   {
     private int sessionID;
 
     private String userID;
 
-    private String repositoryUUID;
+    private String uuid;
 
-    private CDOCommonRepository.Type repositoryType;
+    private String name;
 
-    private CDOCommonRepository.State repositoryState;
+    private CDOCommonRepository.Type type;
+
+    private CDOCommonRepository.State state;
 
     private String storeType;
 
@@ -380,19 +384,21 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private CDOID rootResourceID;
 
-    private boolean repositoryAuthenticating;
+    private boolean authenticating;
 
-    private boolean repositorySupportingAudits;
+    private boolean supportingAudits;
 
-    private boolean repositorySupportingBranches;
+    private boolean supportingBranches;
 
-    private boolean repositorySerializingCommits;
+    private boolean supportingUnits;
 
-    private boolean repositoryEnsuringReferentialIntegrity;
+    private boolean serializingCommits;
+
+    private boolean ensuringReferentialIntegrity;
 
     private final List<InternalCDOPackageUnit> packageUnits = new ArrayList<InternalCDOPackageUnit>();
 
-    private IDGenerationLocation repositoryIDGenerationLocation;
+    private IDGenerationLocation idGenerationLocation;
 
     /**
      * @since 4.4
@@ -402,9 +408,10 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.sessionID = sessionID;
 
       userID = in.readString();
-      repositoryUUID = in.readString();
-      repositoryType = in.readEnum(CDOCommonRepository.Type.class);
-      repositoryState = in.readEnum(CDOCommonRepository.State.class);
+      uuid = in.readString();
+      name = in.readString();
+      type = in.readEnum(CDOCommonRepository.Type.class);
+      state = in.readEnum(CDOCommonRepository.State.class);
       storeType = in.readString();
 
       int types = in.readInt();
@@ -417,12 +424,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       repositoryCreationTime = in.readLong();
       lastUpdateTime = in.readLong();
       rootResourceID = in.readCDOID();
-      repositoryAuthenticating = in.readBoolean();
-      repositorySupportingAudits = in.readBoolean();
-      repositorySupportingBranches = in.readBoolean();
-      repositorySerializingCommits = in.readBoolean();
-      repositoryEnsuringReferentialIntegrity = in.readBoolean();
-      repositoryIDGenerationLocation = in.readEnum(IDGenerationLocation.class);
+      authenticating = in.readBoolean();
+      supportingAudits = in.readBoolean();
+      supportingBranches = in.readBoolean();
+      supportingUnits = in.readBoolean();
+      serializingCommits = in.readBoolean();
+      ensuringReferentialIntegrity = in.readBoolean();
+      idGenerationLocation = in.readEnum(IDGenerationLocation.class);
 
       CDOPackageUnit[] packageUnits = in.readCDOPackageUnits(null);
       for (int i = 0; i < packageUnits.length; i++)
@@ -458,25 +466,36 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return userID;
     }
 
-    public String getRepositoryUUID()
+    /**
+     * @since 4.5
+     */
+    public String getUUID()
     {
-      return repositoryUUID;
+      return uuid;
     }
 
     /**
-     * @since 3.0
+     * @since 4.5
      */
-    public CDOCommonRepository.Type getRepositoryType()
+    public String getName()
     {
-      return repositoryType;
+      return name;
     }
 
     /**
-     * @since 3.0
+     * @since 4.5
      */
-    public CDOCommonRepository.State getRepositoryState()
+    public Type getType()
     {
-      return repositoryState;
+      return type;
+    }
+
+    /**
+     * @since 4.5
+     */
+    public State getState()
+    {
+      return state;
     }
 
     /**
@@ -503,73 +522,78 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       return rootResourceID;
     }
 
-    public long getRepositoryCreationTime()
+    /**
+     * @since 4.5
+     */
+    public long getCreationTime()
     {
       return repositoryCreationTime;
     }
 
     /**
-     * @since 4.4
+     * @since 4.5
      */
-    public boolean isRepositoryAuthenticating()
+    public boolean isAuthenticating()
     {
-      return repositoryAuthenticating;
-    }
-
-    public boolean isRepositorySupportingAudits()
-    {
-      return repositorySupportingAudits;
+      return authenticating;
     }
 
     /**
-     * @since 3.0
+     * @since 4.5
      */
-    public boolean isRepositorySupportingBranches()
+    public boolean isSupportingAudits()
     {
-      return repositorySupportingBranches;
+      return supportingAudits;
     }
 
     /**
+     * @since 4.5
+     */
+    public boolean isSupportingBranches()
+    {
+      return supportingBranches;
+    }
+
+    /**
+     * @since 4.5
+     */
+    public boolean isSupportingUnits()
+    {
+      return supportingUnits;
+    }
+
+    /**
+     * @since 4.5
      * @deprecated As of 4.2 instances of Ecore are always supported (on demand).
      */
     @Deprecated
-    public boolean isRepositorySupportingEcore()
+    public boolean isSupportingEcore()
     {
       return true;
     }
 
     /**
-     * @since 4.2
+     * @since 4.5
      */
-    public boolean isRepositorySerializingCommits()
+    public boolean isSerializingCommits()
     {
-      return repositorySerializingCommits;
+      return serializingCommits;
     }
 
     /**
-     * @since 4.0
+     * @since 4.5
      */
-    public boolean isRepositoryEnsuringReferentialIntegrity()
+    public boolean isEnsuringReferentialIntegrity()
     {
-      return repositoryEnsuringReferentialIntegrity;
+      return ensuringReferentialIntegrity;
     }
 
     /**
-     * @since 4.1
+     * @since 4.5
      */
-    public IDGenerationLocation getRepositoryIDGenerationLocation()
+    public IDGenerationLocation getIDGenerationLocation()
     {
-      return repositoryIDGenerationLocation;
-    }
-
-    public RepositoryTimeResult getRepositoryTimeResult()
-    {
-      return repositoryTimeResult;
-    }
-
-    public void setRepositoryTimeResult(RepositoryTimeResult repositoryTimeResult)
-    {
-      this.repositoryTimeResult = repositoryTimeResult;
+      return idGenerationLocation;
     }
 
     /**
@@ -583,6 +607,138 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public List<InternalCDOPackageUnit> getPackageUnits()
     {
       return packageUnits;
+    }
+
+    public RepositoryTimeResult getRepositoryTimeResult()
+    {
+      return repositoryTimeResult;
+    }
+
+    public void setRepositoryTimeResult(RepositoryTimeResult repositoryTimeResult)
+    {
+      this.repositoryTimeResult = repositoryTimeResult;
+    }
+
+    /**
+     * @since 4.5
+     */
+    public long getTimeStamp()
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.5
+     */
+    public boolean waitWhileInitial(IProgressMonitor monitor)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    /**
+    * @deprecated as of 4.5 use {@link #getUUID()}.
+     */
+    @Deprecated
+    public String getRepositoryUUID()
+    {
+      return getUUID();
+    }
+
+    /**
+     * @since 3.0
+     * @deprecated as of 4.5 use {@link #getType()}.
+     */
+    @Deprecated
+    public CDOCommonRepository.Type getRepositoryType()
+    {
+      return getType();
+    }
+
+    /**
+     * @since 3.0
+     * @deprecated as of 4.5 use {@link #getState()}.
+     */
+    @Deprecated
+    public CDOCommonRepository.State getRepositoryState()
+    {
+      return getState();
+    }
+
+    /**
+     * @deprecated as of 4.5 use {@link #getCreationTime()}.
+     */
+    @Deprecated
+    public long getRepositoryCreationTime()
+    {
+      return getCreationTime();
+    }
+
+    /**
+     * @since 4.4
+     * @deprecated as of 4.5 use {@link #isAuthenticating()}.
+     */
+    @Deprecated
+    public boolean isRepositoryAuthenticating()
+    {
+      return isAuthenticating();
+    }
+
+    /**
+     * @deprecated as of 4.5 use {@link #isSupportingAudits()}.
+     */
+    @Deprecated
+    public boolean isRepositorySupportingAudits()
+    {
+      return isSupportingAudits();
+    }
+
+    /**
+     * @since 3.0
+     * @deprecated as of 4.5 use {@link #isSupportingBranches()}.
+     */
+    @Deprecated
+    public boolean isRepositorySupportingBranches()
+    {
+      return isSupportingBranches();
+    }
+
+    /**
+     * @deprecated As of 4.2 instances of Ecore are always supported (on demand).
+     */
+    @Deprecated
+    public boolean isRepositorySupportingEcore()
+    {
+      return isSupportingEcore();
+    }
+
+    /**
+     * @since 4.2
+     * @deprecated as of 4.5 use {@link #isSerializingCommits()}.
+     */
+    @Deprecated
+    public boolean isRepositorySerializingCommits()
+    {
+      return isSerializingCommits();
+    }
+
+    /**
+     * @since 4.0
+     * @deprecated as of 4.5 use {@link #isEnsuringReferentialIntegrity()}.
+     */
+    @Deprecated
+    public boolean isRepositoryEnsuringReferentialIntegrity()
+    {
+      return isEnsuringReferentialIntegrity();
+    }
+
+    /**
+     * @since 4.1
+     * @deprecated as of 4.5 use {@link #getIDGenerationLocation()}.
+     */
+    @Deprecated
+    public IDGenerationLocation getRepositoryIDGenerationLocation()
+    {
+      return getIDGenerationLocation();
     }
   }
 

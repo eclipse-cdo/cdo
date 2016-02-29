@@ -30,8 +30,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 30; // UnitOpcode
+  public static final int PROTOCOL_VERSION = 31; // CDOCommonRepository.isSupportingUnits()
 
+  // public static final int PROTOCOL_VERSION = 30; // UnitOpcode
   // public static final int PROTOCOL_VERSION = 29; // SIGNAL_UNIT
   // public static final int PROTOCOL_VERSION = 28; // SIGNAL_RESET_TRANSACTION
   // public static final int PROTOCOL_VERSION = 27; // SIGNAL_OPENED_SESSION

@@ -33,7 +33,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class SessionProperties extends Properties<CDOSession>implements CDOCommonRepository
+public class SessionProperties extends Properties<CDOSession> implements CDOCommonRepository
 {
   public static final IProperties<CDOSession> INSTANCE = new SessionProperties();
 
@@ -199,6 +199,17 @@ public class SessionProperties extends Properties<CDOSession>implements CDOCommo
       }
     });
 
+    add(new Property<CDOSession>("supportingUnits", Messages.getString("SessionPropertyTester_22"), //
+        Messages.getString("SessionPropertyTester_23"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(CDOSession session)
+      {
+        return session.getRepositoryInfo().isSupportingBranches();
+      }
+    });
+
     add(new Property<CDOSession>("serializeCommits", Messages.getString("SessionPropertyTester_38"), //
         Messages.getString("SessionPropertyTester_39"), //$NON-NLS-1$
         CATEGORY_REPOSITORY)
@@ -342,6 +353,11 @@ public class SessionProperties extends Properties<CDOSession>implements CDOCommo
   }
 
   public boolean isSupportingBranches()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public boolean isSupportingUnits()
   {
     throw new UnsupportedOperationException();
   }

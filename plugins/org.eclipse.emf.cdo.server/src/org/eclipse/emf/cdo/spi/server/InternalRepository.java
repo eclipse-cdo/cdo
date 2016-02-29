@@ -272,11 +272,6 @@ public interface InternalRepository extends IRepository, PackageProcessor, Packa
   public void setSkipInitialization(boolean skipInitialization);
 
   /**
-   * @since 4.5
-   */
-  public boolean isSupportingUnits();
-
-  /**
    * @since 4.0
    * @deprecated As of 4.3 use {@link #initSystemPackages()}.
    */

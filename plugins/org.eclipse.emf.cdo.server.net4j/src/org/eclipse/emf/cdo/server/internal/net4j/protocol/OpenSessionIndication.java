@@ -179,6 +179,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       }
 
       out.writeString(repository.getUUID());
+      out.writeString(repository.getName());
       out.writeEnum(repository.getType());
       out.writeEnum(repository.getState());
       out.writeString(repository.getStoreType());
@@ -197,6 +198,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeBoolean(repository.isAuthenticating());
       out.writeBoolean(repository.isSupportingAudits());
       out.writeBoolean(repository.isSupportingBranches());
+      out.writeBoolean(repository.isSupportingUnits());
       out.writeBoolean(repository.isSerializingCommits());
       out.writeBoolean(repository.isEnsuringReferentialIntegrity());
       out.writeEnum(repository.getIDGenerationLocation());

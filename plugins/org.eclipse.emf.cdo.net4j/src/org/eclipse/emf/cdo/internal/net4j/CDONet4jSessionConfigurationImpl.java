@@ -138,9 +138,9 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
    */
   public static class RepositoryInfo extends PlatformObject implements CDORepositoryInfo
   {
-    private String name;
-
     private String uuid;
+
+    private String name;
 
     private Type type;
 
@@ -162,6 +162,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean supportingBranches;
 
+    private boolean supportingUnits;
+
     private boolean serializingCommits;
 
     private boolean ensuringReferentialIntegrity;
@@ -170,24 +172,25 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private InternalCDOSession session;
 
-    public RepositoryInfo(InternalCDOSession session, String name, OpenSessionResult result)
+    public RepositoryInfo(InternalCDOSession session, OpenSessionResult result)
     {
       this.session = session;
-      this.name = name;
-      uuid = result.getRepositoryUUID();
-      type = result.getRepositoryType();
-      state = result.getRepositoryState();
+      uuid = result.getUUID();
+      name = result.getName();
+      type = result.getType();
+      state = result.getState();
       storeType = result.getStoreType();
       objectIDTypes = result.getObjectIDTypes();
-      creationTime = result.getRepositoryCreationTime();
+      creationTime = result.getCreationTime();
       timeResult = result.getRepositoryTimeResult();
       rootResourceID = result.getRootResourceID();
-      authenticating = result.isRepositoryAuthenticating();
-      supportingAudits = result.isRepositorySupportingAudits();
-      supportingBranches = result.isRepositorySupportingBranches();
-      serializingCommits = result.isRepositoryEnsuringReferentialIntegrity();
-      ensuringReferentialIntegrity = result.isRepositoryEnsuringReferentialIntegrity();
-      idGenerationLocation = result.getRepositoryIDGenerationLocation();
+      authenticating = result.isAuthenticating();
+      supportingAudits = result.isSupportingAudits();
+      supportingBranches = result.isSupportingBranches();
+      supportingUnits = result.isSupportingBranches();
+      serializingCommits = result.isEnsuringReferentialIntegrity();
+      ensuringReferentialIntegrity = result.isEnsuringReferentialIntegrity();
+      idGenerationLocation = result.getIDGenerationLocation();
     }
 
     public InternalCDOSession getSession()
@@ -293,6 +296,11 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isSupportingBranches()
     {
       return supportingBranches;
+    }
+
+    public boolean isSupportingUnits()
+    {
+      return supportingUnits;
     }
 
     @Deprecated

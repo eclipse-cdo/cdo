@@ -89,6 +89,7 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
 
   /**
    * Returns <code>true</code> if this repository requires user authentication, <code>false</code> otherwise.
+   *
    * @since 4.4
    */
   public boolean isAuthenticating();
@@ -102,6 +103,13 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
    * Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.
    */
   public boolean isSupportingBranches();
+
+  /**
+   * Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.
+   *
+   * @since 4.5
+   */
+  public boolean isSupportingUnits();
 
   /**
    * Returns <code>true</code> if this repository supports instances of Ecore, <code>false</code> otherwise.

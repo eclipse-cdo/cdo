@@ -63,6 +63,8 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private boolean supportingBranches;
 
+  private boolean supportingUnits;
+
   private boolean serializingCommits;
 
   private boolean ensuringReferentialIntegrity;
@@ -91,6 +93,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     authenticating = in.readBoolean();
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();
+    supportingUnits = in.readBoolean();
     serializingCommits = in.readBoolean();
     ensuringReferentialIntegrity = in.readBoolean();
     idGenerationLocation = in.readEnum(IDGenerationLocation.class);
@@ -154,6 +157,11 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
   public boolean isSupportingBranches()
   {
     return supportingBranches;
+  }
+
+  public boolean isSupportingUnits()
+  {
+    return supportingUnits;
   }
 
   @Deprecated

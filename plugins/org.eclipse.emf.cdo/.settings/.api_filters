@@ -725,6 +725,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/CDOSessionProtocol.java" type="org.eclipse.emf.spi.cdo.CDOSessionProtocol$OpenSessionResult">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="CDOCommonRepository"/>
+                <message_argument value="OpenSessionResult"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOObject.java" type="org.eclipse.emf.spi.cdo.InternalCDOObject">
         <filter id="571473929">
             <message_arguments>

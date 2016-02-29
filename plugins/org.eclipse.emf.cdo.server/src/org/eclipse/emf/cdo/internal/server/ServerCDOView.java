@@ -740,6 +740,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return repository.isSupportingBranches();
     }
 
+    public boolean isSupportingUnits()
+    {
+      return repository.isSupportingUnits();
+    }
+
     @Deprecated
     public boolean isSupportingEcore()
     {

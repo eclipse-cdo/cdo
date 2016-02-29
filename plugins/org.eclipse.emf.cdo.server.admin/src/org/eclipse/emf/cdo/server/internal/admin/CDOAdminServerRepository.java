@@ -167,6 +167,11 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.isSupportingBranches();
   }
 
+  public boolean isSupportingUnits()
+  {
+    return delegate.isSupportingUnits();
+  }
+
   @Deprecated
   public boolean isSupportingEcore()
   {
@@ -231,6 +236,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     out.writeBoolean(isAuthenticating());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());
+    out.writeBoolean(isSupportingUnits());
     out.writeBoolean(isSerializingCommits());
     out.writeBoolean(isEnsuringReferentialIntegrity());
     out.writeEnum(getIDGenerationLocation());

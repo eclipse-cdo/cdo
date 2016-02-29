@@ -1023,9 +1023,10 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         try
         {
+          long timeout = repository.getOptimisticLockingTimeout();
+
           // First lock all objects (incl. possible ref targets).
           // This is a transient operation, it does not check for existance!
-          long timeout = repository.getOptimisticLockingTimeout();
           lockManager.lock2(LockType.WRITE, transaction, lockedObjects, timeout);
         }
         catch (Exception ex)

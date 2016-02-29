@@ -262,7 +262,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setSessionID(result.getSessionID());
       setUserID(result.getUserID());
       setLastUpdateTime(result.getLastUpdateTime());
-      setRepositoryInfo(new RepositoryInfo(this, repositoryName, result));
+      setRepositoryInfo(new RepositoryInfo(this, result));
       return result;
     }
     catch (RemoteException ex)

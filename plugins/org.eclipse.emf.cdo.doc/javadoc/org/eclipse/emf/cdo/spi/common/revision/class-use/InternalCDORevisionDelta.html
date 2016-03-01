@@ -82,24 +82,30 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><a href="#org.eclipse.emf.cdo.common.revision">org.eclipse.emf.cdo.common.revision</a></td>
+<td class="colLast">
+<div class="block">Common concepts for dealing with revisions and revision lists.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server">org.eclipse.emf.cdo.server</a></td>
 <td class="colLast">
 <div class="block">Server concepts for dealing with repositories and stores.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.server.db.mapping">org.eclipse.emf.cdo.server.db.mapping</a></td>
 <td class="colLast">
 <div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision</a></td>
 <td class="colLast">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></td>
 <td class="colLast">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
@@ -110,6 +116,24 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
+<li class="blockList"><a name="org.eclipse.emf.cdo.common.revision">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a> in <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/package-summary.html">org.eclipse.emf.cdo.common.revision</a> with parameters of type <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><span class="typeNameLabel">CDORevisionUtil.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#isTreeRestructuring-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta:A-">isTreeRestructuring</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
 <li class="blockList"><a name="org.eclipse.emf.cdo.server">
 <!--   -->
 </a>
@@ -189,6 +213,21 @@
 </a>
 <h3>Uses of <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a> in <a href="../../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></h3>
 <table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return types with arguments of type <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">InternalUnitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.html#getUnitMoves-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta:A-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-">getUnitMoves</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas,
+            <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;before,
+            <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;after)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
 <caption><span>Methods in <a href="../../../../../../../../org/eclipse/emf/cdo/spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
@@ -196,10 +235,16 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">InternalUnitManager.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.html#getUnitMoves-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta:A-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-">getUnitMoves</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas,
+            <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;before,
+            <a href="../../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;after)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">InternalCommitContext.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#setDirtyObjectDeltas-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta:A-">setDirtyObjectDeltas</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;dirtyObjectDeltas)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected abstract void</code></td>
 <td class="colLast"><span class="typeNameLabel">StoreAccessor.</span><code><span class="memberNameLink"><a href="../../../../../../../../org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeRevisionDeltas-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta:A-org.eclipse.emf.cdo.common.branch.CDOBranch-long-org.eclipse.net4j.util.om.monitor.OMMonitor-">writeRevisionDeltas</a></span>(<a href="../../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;revisionDeltas,
                    <a href="../../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,

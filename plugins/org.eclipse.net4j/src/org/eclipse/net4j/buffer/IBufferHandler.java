@@ -20,7 +20,7 @@ public interface IBufferHandler
   /**
    * Handles an {@link IBuffer} and optionally releases it. The implementor of this method takes over the ownership of
    * the buffer. Care must be taken to properly {@link IBuffer#release() release} the buffer if the ownership is not
-   * explicitely passed to some further party.
+   * explicitly passed to some further party.
    *
    * @param buffer
    *          The buffer to be handled and otionally released.

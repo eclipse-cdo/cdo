@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":38,"i15":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":38,"i15":6,"i16":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -96,18 +96,19 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="admin/CDOAdminRepository.html" title="&#171;interface&#187; CDOAdminRepository (org.eclipse.emf.cdo.common.admin)" alt="" coords="797,5,1033,59"/>
-<area shape="rect" id="node2" href="CDOCommonRepository.html" title="&#171;interface&#187; CDOCommonRepository" alt="" coords="425,219,589,259"/>
-<area shape="rect" id="node3" href="CDOCommonRepository.StateChangedEvent.html" title="&#171;interface&#187; CDOCommonRepository.StateChangedEvent" alt="" coords="5,127,288,167"/>
-<area shape="rect" id="node4" href="CDOCommonRepository.TypeChangedEvent.html" title="&#171;interface&#187; CDOCommonRepository.TypeChangedEvent" alt="" coords="7,185,286,225"/>
-<area shape="rect" id="node5" href="CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession" alt="" coords="840,79,989,119"/>
-<area shape="rect" id="node6" href="../session/CDORepositoryInfo.html" title="&#171;interface&#187; CDORepositoryInfo (org.eclipse.emf.cdo.session)" alt="" coords="819,138,1011,193"/>
-<area shape="rect" id="node7" href="util/CDOTimeProvider.html" title="&#171;interface&#187; CDOTimeProvider (org.eclipse.emf.cdo.common.util)" alt="" coords="37,245,256,299"/>
-<area shape="rect" id="node8" title="&#171;interface&#187; IAdaptable (org.eclipse.core.runtime)" alt="" coords="62,318,231,373"/>
-<area shape="rect" id="node9" href="../server/IRepository.html" title="&#171;interface&#187; IRepository (org.eclipse.emf.cdo.server)" alt="" coords="824,211,1005,266"/>
-<area shape="rect" id="node10" href="CDOCommonRepository.IDGenerationLocation.html" title="&#171;enum&#187; CDOCommonRepository.IDGenerationLocation" alt="" coords="769,285,1061,325"/>
-<area shape="rect" id="node11" href="CDOCommonRepository.State.html" title="&#171;enum&#187; CDOCommonRepository.State" alt="" coords="815,344,1014,384"/>
-<area shape="rect" id="node12" href="CDOCommonRepository.Type.html" title="&#171;enum&#187; CDOCommonRepository.Type" alt="" coords="817,403,1013,443"/>
+<area shape="rect" id="node1" href="../../spi/cdo/CDOSessionProtocol.OpenSessionResult.html" title="CDOSessionProtocol.OpenSessionResult (org.eclipse.emf.spi.cdo)" alt="" coords="783,5,1047,45"/>
+<area shape="rect" id="node2" href="admin/CDOAdminRepository.html" title="&#171;interface&#187; CDOAdminRepository (org.eclipse.emf.cdo.common.admin)" alt="" coords="797,65,1033,119"/>
+<area shape="rect" id="node3" href="CDOCommonRepository.html" title="&#171;interface&#187; CDOCommonRepository" alt="" coords="425,243,589,283"/>
+<area shape="rect" id="node4" href="CDOCommonRepository.StateChangedEvent.html" title="&#171;interface&#187; CDOCommonRepository.StateChangedEvent" alt="" coords="5,151,288,191"/>
+<area shape="rect" id="node5" href="CDOCommonRepository.TypeChangedEvent.html" title="&#171;interface&#187; CDOCommonRepository.TypeChangedEvent" alt="" coords="7,209,286,249"/>
+<area shape="rect" id="node6" href="CDOCommonSession.html" title="&#171;interface&#187; CDOCommonSession" alt="" coords="840,139,989,179"/>
+<area shape="rect" id="node7" href="../session/CDORepositoryInfo.html" title="&#171;interface&#187; CDORepositoryInfo (org.eclipse.emf.cdo.session)" alt="" coords="819,198,1011,253"/>
+<area shape="rect" id="node8" href="util/CDOTimeProvider.html" title="&#171;interface&#187; CDOTimeProvider (org.eclipse.emf.cdo.common.util)" alt="" coords="37,269,256,323"/>
+<area shape="rect" id="node9" title="&#171;interface&#187; IAdaptable (org.eclipse.core.runtime)" alt="" coords="62,342,231,397"/>
+<area shape="rect" id="node10" href="../server/IRepository.html" title="&#171;interface&#187; IRepository (org.eclipse.emf.cdo.server)" alt="" coords="824,271,1005,326"/>
+<area shape="rect" id="node11" href="CDOCommonRepository.IDGenerationLocation.html" title="&#171;enum&#187; CDOCommonRepository.IDGenerationLocation" alt="" coords="769,345,1061,385"/>
+<area shape="rect" id="node12" href="CDOCommonRepository.State.html" title="&#171;enum&#187; CDOCommonRepository.State" alt="" coords="815,404,1014,444"/>
+<area shape="rect" id="node13" href="CDOCommonRepository.Type.html" title="&#171;enum&#187; CDOCommonRepository.Type" alt="" coords="817,463,1013,503"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOCommonRepository.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
@@ -120,6 +121,10 @@ var activeTableTab = "activeTableTab";
 <dl>
 <dt>All Known Subinterfaces:</dt>
 <dd><a href="../../../../../org/eclipse/emf/cdo/admin/CDOAdminClientRepository.html" title="interface in org.eclipse.emf.cdo.admin">CDOAdminClientRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/session/CDORepositoryInfo.html" title="interface in org.eclipse.emf.cdo.session">CDORepositoryInfo</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></dd>
+</dl>
+<dl>
+<dt>All Known Implementing Classes:</dt>
+<dd><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.OpenSessionResult</a></dd>
 </dl>
 <hr>
 <br>
@@ -296,6 +301,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingUnits--">isSupportingUnits</a></span>()</code>
+<div class="block">Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#waitWhileInitial-org.eclipse.core.runtime.IProgressMonitor-">waitWhileInitial</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
 </tr>
 </table>
@@ -452,6 +463,20 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.
 <h4>isSupportingBranches</h4>
 <pre>boolean&nbsp;isSupportingBranches()</pre>
 <div class="block">Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.</div>
+</li>
+</ul>
+<a name="isSupportingUnits--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSupportingUnits</h4>
+<pre>boolean&nbsp;isSupportingUnits()</pre>
+<div class="block">Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
 </li>
 </ul>
 <a name="isSupportingEcore--">

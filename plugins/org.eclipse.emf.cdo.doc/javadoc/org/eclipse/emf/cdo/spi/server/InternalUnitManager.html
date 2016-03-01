@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6};
+var methods = {"i0":6,"i1":6,"i2":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -171,13 +171,19 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html"
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.html#getRepository--">getRepository</a></span>()</code>&nbsp;</td>
 </tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/spi/server/InternalUnitManager.html#getUnitMoves-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta:A-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-">getUnitMoves</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas,
+            <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;before,
+            <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;after)</code>&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.emf.cdo.server.IUnitManager">
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html" title="interface in org.eclipse.emf.cdo.server">IUnitManager</a></h3>
-<code><a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#createUnit-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.server.IView-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-org.eclipse.net4j.util.om.monitor.OMMonitor-">createUnit</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#getUnit-org.eclipse.emf.cdo.common.id.CDOID-">getUnit</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#getUnits--">getUnits</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#isUnit-org.eclipse.emf.cdo.common.id.CDOID-">isUnit</a></code></li>
+<code><a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#createUnit-org.eclipse.emf.cdo.common.id.CDOID-org.eclipse.emf.cdo.server.IView-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-org.eclipse.net4j.util.om.monitor.OMMonitor-">createUnit</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#getUnit-org.eclipse.emf.cdo.common.id.CDOID-">getUnit</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#getUnits--">getUnits</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#getUnitsOf-java.util.Set-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-">getUnitsOf</a>, <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#isUnit-org.eclipse.emf.cdo.common.id.CDOID-">isUnit</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
@@ -218,6 +224,17 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html"
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html#getRepository--">getRepository</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/server/IUnitManager.html" title="interface in org.eclipse.emf.cdo.server">IUnitManager</a></code></dd>
 </dl>
+</li>
+</ul>
+<a name="getUnitMoves-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta:A-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-org.eclipse.emf.cdo.common.revision.CDORevisionProvider-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getUnitMoves</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;&nbsp;getUnitMoves(<a href="../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas,
+                                            <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;before,
+                                            <a href="../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;after)</pre>
 </li>
 </ul>
 <a name="attachObjects-org.eclipse.emf.cdo.spi.server.InternalCommitContext-">

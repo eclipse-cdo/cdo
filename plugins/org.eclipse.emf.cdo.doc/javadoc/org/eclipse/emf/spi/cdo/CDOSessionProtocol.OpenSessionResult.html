@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":42,"i19":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":42,"i7":42,"i8":42,"i9":10,"i10":42,"i11":42,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":42,"i23":42,"i24":42,"i25":42,"i26":42,"i27":42,"i28":10,"i29":10,"i30":10,"i31":42,"i32":10,"i33":10,"i34":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -96,14 +96,21 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="contentContainer">
 <map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="CDOSessionProtocol.OpenSessionResult.html" title="CDOSessionProtocol.OpenSessionResult" alt="" coords="5,6,269,31"/>
+<area shape="rect" id="node1" href="../../cdo/common/CDOCommonRepository.html" title="&#171;interface&#187; CDOCommonRepository (org.eclipse.emf.cdo.common)" alt="" coords="5,6,203,61"/>
+<area shape="rect" id="node2" title="PlatformObject (org.eclipse.core.runtime)" alt="" coords="233,13,401,53"/>
+<area shape="rect" id="node3" href="CDOSessionProtocol.OpenSessionResult.html" title="CDOSessionProtocol.OpenSessionResult" alt="" coords="79,101,343,126"/>
 </map>
 <div id="apivizContainer" style="text-align: center;"><img src="CDOSessionProtocol.OpenSessionResult.png" usemap="#APIVIZ" border="0"></div>
 <ul class="inheritance">
 <li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html?is-external=true" title="class or interface in org.eclipse.core.runtime">org.eclipse.core.runtime.PlatformObject</a></li>
+<li>
+<ul class="inheritance">
 <li>org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -111,13 +118,18 @@ var activeTableTab = "activeTableTab";
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>, <a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></dd>
+</dl>
+<dl>
 <dt>Enclosing interface:</dt>
 <dd><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></dd>
 </dl>
 <hr>
 <br>
 <pre>public static final class <span class="typeNameLabel">CDOSessionProtocol.OpenSessionResult</span>
-extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html?is-external=true" title="class or interface in org.eclipse.core.runtime">PlatformObject</a>
+implements <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></pre>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -131,6 +143,21 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<ul class="blockList">
+<li class="blockList"><a name="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.eclipse.emf.cdo.common.CDOCommonRepository">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
+<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>, <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.summary">
@@ -184,77 +211,173 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getLastUpdateTime--">getLastUpdateTime</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getCreationTime--">getCreationTime</a></span>()</code>
+<div class="block">Returns the creation time of this repository.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getObjectIDTypes--">getObjectIDTypes</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getIDGenerationLocation--">getIDGenerationLocation</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getLastUpdateTime--">getLastUpdateTime</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getName--">getName</a></span>()</code>
+<div class="block">Returns the name of this repository.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getObjectIDTypes--">getObjectIDTypes</a></span>()</code>
+<div class="block">Returns the type of CDOIDs created by the store of this repository.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getPackageUnits--">getPackageUnits</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>long</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryCreationTime--">getRepositoryCreationTime</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryIDGenerationLocation--">getRepositoryIDGenerationLocation</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryState--">getRepositoryState</a></span>()</code>&nbsp;</td>
-</tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryCreationTime--">getRepositoryCreationTime</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getCreationTime--"><code>getCreationTime()</code></a>.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryIDGenerationLocation--">getRepositoryIDGenerationLocation</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getIDGenerationLocation--"><code>getIDGenerationLocation()</code></a>.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryState--">getRepositoryState</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getState--"><code>getState()</code></a>.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryTimeResult--">getRepositoryTimeResult</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryType--">getRepositoryType</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryUUID--">getRepositoryUUID</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRootResourceID--">getRootResourceID</a></span>()</code>&nbsp;</td>
-</tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getSessionID--">getSessionID</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryType--">getRepositoryType</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getType--"><code>getType()</code></a>.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getStoreType--">getStoreType</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryUUID--">getRepositoryUUID</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getUUID--"><code>getUUID()</code></a>.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRootResourceID--">getRootResourceID</a></span>()</code>
+<div class="block">Returns the ID of the root resource of this repository.</div>
+</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getSessionID--">getSessionID</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getState--">getState</a></span>()</code>
+<div class="block">Returns the state of this repository.</div>
+</td>
+</tr>
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getStoreType--">getStoreType</a></span>()</code>
+<div class="block">Returns the type of the store of this repository.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code>long</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getTimeStamp--">getTimeStamp</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getType--">getType</a></span>()</code>
+<div class="block">Returns the type of this repository.</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getUserID--">getUserID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryAuthenticating--">isRepositoryAuthenticating</a></span>()</code>&nbsp;</td>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getUUID--">getUUID</a></span>()</code>
+<div class="block">Returns the UUID of this repository.</div>
+</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryEnsuringReferentialIntegrity--">isRepositoryEnsuringReferentialIntegrity</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isAuthenticating--">isAuthenticating</a></span>()</code>
+<div class="block">Returns <code>true</code> if this repository requires user authentication, <code>false</code> otherwise.</div>
+</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySerializingCommits--">isRepositorySerializingCommits</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isEnsuringReferentialIntegrity--">isEnsuringReferentialIntegrity</a></span>()</code>
+<div class="block">Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.</div>
+</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingAudits--">isRepositorySupportingAudits</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryAuthenticating--">isRepositoryAuthenticating</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isAuthenticating--"><code>isAuthenticating()</code></a>.</span></div>
+</div>
+</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingBranches--">isRepositorySupportingBranches</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryEnsuringReferentialIntegrity--">isRepositoryEnsuringReferentialIntegrity</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isEnsuringReferentialIntegrity--"><code>isEnsuringReferentialIntegrity()</code></a>.</span></div>
+</div>
+</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySerializingCommits--">isRepositorySerializingCommits</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSerializingCommits--"><code>isSerializingCommits()</code></a>.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingAudits--">isRepositorySupportingAudits</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingAudits--"><code>isSupportingAudits()</code></a>.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingBranches--">isRepositorySupportingBranches</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingBranches--"><code>isSupportingBranches()</code></a>.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingEcore--">isRepositorySupportingEcore</a></span>()</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -262,17 +385,67 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i28" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSerializingCommits--">isSerializingCommits</a></span>()</code>
+<div class="block">Returns <code>true</code> if this repository serializes commits, <code>false</code> otherwise.</div>
+</td>
+</tr>
+<tr id="i29" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingAudits--">isSupportingAudits</a></span>()</code>
+<div class="block">Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.</div>
+</td>
+</tr>
+<tr id="i30" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingBranches--">isSupportingBranches</a></span>()</code>
+<div class="block">Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.</div>
+</td>
+</tr>
+<tr id="i31" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingEcore--">isSupportingEcore</a></span>()</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.2 instances of Ecore are always supported (on demand).</span></div>
+</div>
+</td>
+</tr>
+<tr id="i32" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingUnits--">isSupportingUnits</a></span>()</code>
+<div class="block">Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.</div>
+</td>
+</tr>
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#setRepositoryTimeResult-org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult-">setRepositoryTimeResult</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;repositoryTimeResult)</code>&nbsp;</td>
 </tr>
+<tr id="i34" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#waitWhileInitial-org.eclipse.core.runtime.IProgressMonitor-">waitWhileInitial</a></span>(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.runtime.PlatformObject">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html?is-external=true" title="class or interface in org.eclipse.core.runtime">PlatformObject</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;java.lang.<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.eclipse.core.runtime.IAdaptable">
+<!--   -->
+</a>
+<h3>Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IAdaptable</a></h3>
+<code><a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html?is-external=true#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime">getAdapter</a></code></li>
 </ul>
 </li>
 </ul>
@@ -364,38 +537,71 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 </dl>
 </li>
 </ul>
-<a name="getRepositoryUUID--">
+<a name="getUUID--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getRepositoryUUID</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getRepositoryUUID()</pre>
-</li>
-</ul>
-<a name="getRepositoryType--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRepositoryType</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;getRepositoryType()</pre>
+<h4>getUUID</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getUUID()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the UUID of this repository.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID--">getUUID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>3.0</dd>
+<dd>4.5</dd>
 </dl>
 </li>
 </ul>
-<a name="getRepositoryState--">
+<a name="getName--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getRepositoryState</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;getRepositoryState()</pre>
+<h4>getName</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getName()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the name of this repository.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName--">getName</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>3.0</dd>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="getType--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getType</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;getType()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the type of this repository.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType--">getType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="getState--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getState</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;getState()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the state of this repository.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState--">getState</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
 </dl>
 </li>
 </ul>
@@ -406,7 +612,11 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 <li class="blockList">
 <h4>getStoreType</h4>
 <pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getStoreType()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the type of the store of this repository.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType--">getStoreType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
@@ -419,7 +629,11 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 <li class="blockList">
 <h4>getObjectIDTypes</h4>
 <pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="enum in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;getObjectIDTypes()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the type of CDOIDs created by the store of this repository.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes--">getObjectIDTypes</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
 </dl>
@@ -432,6 +646,274 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 <li class="blockList">
 <h4>getRootResourceID</h4>
 <pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;getRootResourceID()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the ID of the root resource of this repository.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID--">getRootResourceID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
+</li>
+</ul>
+<a name="getCreationTime--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCreationTime</h4>
+<pre>public&nbsp;long&nbsp;getCreationTime()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns the creation time of this repository.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime--">getCreationTime</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="isAuthenticating--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAuthenticating</h4>
+<pre>public&nbsp;boolean&nbsp;isAuthenticating()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isAuthenticating--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns <code>true</code> if this repository requires user authentication, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isAuthenticating--">isAuthenticating</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="isSupportingAudits--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSupportingAudits</h4>
+<pre>public&nbsp;boolean&nbsp;isSupportingAudits()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits--">isSupportingAudits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="isSupportingBranches--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSupportingBranches</h4>
+<pre>public&nbsp;boolean&nbsp;isSupportingBranches()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches--">isSupportingBranches</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="isSupportingUnits--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSupportingUnits</h4>
+<pre>public&nbsp;boolean&nbsp;isSupportingUnits()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingUnits--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingUnits--">isSupportingUnits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="isSupportingEcore--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSupportingEcore</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;boolean&nbsp;isSupportingEcore()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.2 instances of Ecore are always supported (on demand).</span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns <code>true</code> if this repository supports instances of Ecore, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingEcore--">isSupportingEcore</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="isSerializingCommits--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isSerializingCommits</h4>
+<pre>public&nbsp;boolean&nbsp;isSerializingCommits()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSerializingCommits--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns <code>true</code> if this repository serializes commits, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSerializingCommits--">isSerializingCommits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="isEnsuringReferentialIntegrity--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isEnsuringReferentialIntegrity</h4>
+<pre>public&nbsp;boolean&nbsp;isEnsuringReferentialIntegrity()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity--">CDOCommonRepository</a></code></span></div>
+<div class="block">Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity--">isEnsuringReferentialIntegrity</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="getIDGenerationLocation--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIDGenerationLocation</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;getIDGenerationLocation()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation--">getIDGenerationLocation</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="getLastUpdateTime--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastUpdateTime</h4>
+<pre>public&nbsp;long&nbsp;getLastUpdateTime()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
+</li>
+</ul>
+<a name="getPackageUnits--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPackageUnits</h4>
+<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;&nbsp;getPackageUnits()</pre>
+</li>
+</ul>
+<a name="getRepositoryTimeResult--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRepositoryTimeResult</h4>
+<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;getRepositoryTimeResult()</pre>
+</li>
+</ul>
+<a name="setRepositoryTimeResult-org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setRepositoryTimeResult</h4>
+<pre>public&nbsp;void&nbsp;setRepositoryTimeResult(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;repositoryTimeResult)</pre>
+</li>
+</ul>
+<a name="getTimeStamp--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTimeStamp</h4>
+<pre>public&nbsp;long&nbsp;getTimeStamp()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp--">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="waitWhileInitial-org.eclipse.core.runtime.IProgressMonitor-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>waitWhileInitial</h4>
+<pre>public&nbsp;boolean&nbsp;waitWhileInitial(<a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html#waitWhileInitial-org.eclipse.core.runtime.IProgressMonitor-">waitWhileInitial</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
+</dl>
+</li>
+</ul>
+<a name="getRepositoryUUID--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRepositoryUUID</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getRepositoryUUID()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getUUID--"><code>getUUID()</code></a>.</span></div>
+</li>
+</ul>
+<a name="getRepositoryType--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRepositoryType</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;getRepositoryType()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getType--"><code>getType()</code></a>.</span></div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.0</dd>
+</dl>
+</li>
+</ul>
+<a name="getRepositoryState--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRepositoryState</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;getRepositoryState()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getState--"><code>getState()</code></a>.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -444,7 +926,9 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 <ul class="blockList">
 <li class="blockList">
 <h4>getRepositoryCreationTime</h4>
-<pre>public&nbsp;long&nbsp;getRepositoryCreationTime()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;long&nbsp;getRepositoryCreationTime()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getCreationTime--"><code>getCreationTime()</code></a>.</span></div>
 </li>
 </ul>
 <a name="isRepositoryAuthenticating--">
@@ -453,7 +937,9 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 <ul class="blockList">
 <li class="blockList">
 <h4>isRepositoryAuthenticating</h4>
-<pre>public&nbsp;boolean&nbsp;isRepositoryAuthenticating()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;boolean&nbsp;isRepositoryAuthenticating()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isAuthenticating--"><code>isAuthenticating()</code></a>.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
@@ -466,7 +952,9 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 <ul class="blockList">
 <li class="blockList">
 <h4>isRepositorySupportingAudits</h4>
-<pre>public&nbsp;boolean&nbsp;isRepositorySupportingAudits()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;boolean&nbsp;isRepositorySupportingAudits()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingAudits--"><code>isSupportingAudits()</code></a>.</span></div>
 </li>
 </ul>
 <a name="isRepositorySupportingBranches--">
@@ -475,7 +963,9 @@ public&nbsp;OpenSessionResult(int&nbsp;sessionID,
 <ul class="blockList">
 <li class="blockList">
 <h4>isRepositorySupportingBranches</h4>
-<pre>public&nbsp;boolean&nbsp;isRepositorySupportingBranches()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;boolean&nbsp;isRepositorySupportingBranches()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingBranches--"><code>isSupportingBranches()</code></a>.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
@@ -499,7 +989,9 @@ public&nbsp;boolean&nbsp;isRepositorySupportingEcore()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isRepositorySerializingCommits</h4>
-<pre>public&nbsp;boolean&nbsp;isRepositorySerializingCommits()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;boolean&nbsp;isRepositorySerializingCommits()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSerializingCommits--"><code>isSerializingCommits()</code></a>.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
@@ -512,7 +1004,9 @@ public&nbsp;boolean&nbsp;isRepositorySupportingEcore()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>isRepositoryEnsuringReferentialIntegrity</h4>
-<pre>public&nbsp;boolean&nbsp;isRepositoryEnsuringReferentialIntegrity()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;boolean&nbsp;isRepositoryEnsuringReferentialIntegrity()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isEnsuringReferentialIntegrity--"><code>isEnsuringReferentialIntegrity()</code></a>.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -522,54 +1016,16 @@ public&nbsp;boolean&nbsp;isRepositorySupportingEcore()</pre>
 <a name="getRepositoryIDGenerationLocation--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>getRepositoryIDGenerationLocation</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;getRepositoryIDGenerationLocation()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;<a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>&nbsp;getRepositoryIDGenerationLocation()</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">as of 4.5 use <a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getIDGenerationLocation--"><code>getIDGenerationLocation()</code></a>.</span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
 </dl>
-</li>
-</ul>
-<a name="getRepositoryTimeResult--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRepositoryTimeResult</h4>
-<pre>public&nbsp;<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;getRepositoryTimeResult()</pre>
-</li>
-</ul>
-<a name="setRepositoryTimeResult-org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRepositoryTimeResult</h4>
-<pre>public&nbsp;void&nbsp;setRepositoryTimeResult(<a href="../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;repositoryTimeResult)</pre>
-</li>
-</ul>
-<a name="getLastUpdateTime--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getLastUpdateTime</h4>
-<pre>public&nbsp;long&nbsp;getLastUpdateTime()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>3.0</dd>
-</dl>
-</li>
-</ul>
-<a name="getPackageUnits--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getPackageUnits</h4>
-<pre>public&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;&nbsp;getPackageUnits()</pre>
 </li>
 </ul>
 </li>

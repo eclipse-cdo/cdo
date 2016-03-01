@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -187,13 +187,21 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOUnitManager.html#isUnit-org.eclipse.emf.ecore.EObject-">isUnit</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;root)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOUnitManager.html#isAutoResourceUnitsEnabled--">isAutoResourceUnitsEnabled</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOUnitManager.html#isUnit-org.eclipse.emf.ecore.EObject-">isUnit</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;root)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/view/CDOUnit.html" title="interface in org.eclipse.emf.cdo.view">CDOUnit</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOUnitManager.html#openUnit-org.eclipse.emf.ecore.EObject-boolean-org.eclipse.core.runtime.IProgressMonitor-">openUnit</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;root,
         boolean&nbsp;createOnDemand,
         <a href="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html?is-external=true" title="class or interface in org.eclipse.core.runtime">IProgressMonitor</a>&nbsp;monitor)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOUnitManager.html#setAutoResourceUnitsEnabled-boolean-">setAutoResourceUnitsEnabled</a></span>(boolean&nbsp;enabled)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -286,10 +294,28 @@ extends <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <a name="getOpenUnits--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getOpenUnits</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/view/CDOUnit.html" title="interface in org.eclipse.emf.cdo.view">CDOUnit</a>[]&nbsp;getOpenUnits()</pre>
+</li>
+</ul>
+<a name="isAutoResourceUnitsEnabled--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAutoResourceUnitsEnabled</h4>
+<pre>boolean&nbsp;isAutoResourceUnitsEnabled()</pre>
+</li>
+</ul>
+<a name="setAutoResourceUnitsEnabled-boolean-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setAutoResourceUnitsEnabled</h4>
+<pre>void&nbsp;setAutoResourceUnitsEnabled(boolean&nbsp;enabled)</pre>
 </li>
 </ul>
 </li>

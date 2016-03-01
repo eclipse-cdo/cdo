@@ -44,8 +44,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
@@ -78,7 +76,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -1137,7 +1134,7 @@ public class Repository extends Container<Object> implements InternalRepository,
 
   public void commit(InternalCommitContext commitContext, OMMonitor monitor)
   {
-    if (isTreeRestructuring(commitContext))
+    if (commitContext.isTreeRestructuring())
     {
       synchronized (commitTransactionLock)
       {
@@ -1163,23 +1160,6 @@ public class Repository extends Container<Object> implements InternalRepository,
   {
     ProgressDistributor distributor = store.getIndicatingCommitDistributor();
     distributor.run(InternalCommitContext.OPS, commitContext, monitor);
-  }
-
-  private boolean isTreeRestructuring(InternalCommitContext commitContext)
-  {
-    for (InternalCDORevisionDelta delta : commitContext.getDirtyObjectDeltas())
-    {
-      for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
-      {
-        EStructuralFeature feature = featureDelta.getFeature();
-        if (feature == CDOContainerFeatureDelta.CONTAINER_FEATURE)
-        {
-          return true;
-        }
-      }
-    }
-
-    return false;
   }
 
   @Deprecated

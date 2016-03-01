@@ -109,7 +109,7 @@ public interface CDORevisionManager extends INotifier
    * @param prefetchDepth
    *          The number of nested containment levels to load revisions for in one round trip. Use the symbolic
    *          constants {@link CDORevision#DEPTH_INFINITE} to prefetch all contained revisions or
-   *          {@link CDORevision#DEPTH_NONE} to not prefetch anything. Only the explicitely requested revision is
+   *          {@link CDORevision#DEPTH_NONE} to not prefetch anything. Only the explicitly requested revision is
    *          returned by this method. If additional revisions are prefetched they are placed in the revision cache to
    *          speed up subsequent calls to this method.
    * @param loadOnDemand
@@ -132,7 +132,7 @@ public interface CDORevisionManager extends INotifier
    * @param prefetchDepth
    *          The number of nested containment levels to load revisions for in one round trip. Use the symbolic
    *          constants {@link CDORevision#DEPTH_INFINITE} to prefetch all contained revisions or
-   *          {@link CDORevision#DEPTH_NONE} to not prefetch anything. Only the explicitely requested revisions are
+   *          {@link CDORevision#DEPTH_NONE} to not prefetch anything. Only the explicitly requested revisions are
    *          returned by this method. If additional revisions are prefetched they are placed in the revision cache to
    *          speed up subsequent calls to this method.
    * @param loadOnDemand

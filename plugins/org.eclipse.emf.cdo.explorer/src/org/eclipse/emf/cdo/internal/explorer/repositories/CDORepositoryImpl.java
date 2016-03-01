@@ -136,7 +136,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private State state = State.Disconnected;
 
-  private boolean explicitelyConnected;
+  private boolean explicitlyConnected;
 
   private int sessionRefCount;
 
@@ -249,7 +249,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public final void connect()
   {
-    explicitelyConnected = true;
+    explicitlyConnected = true;
     doConnect();
   }
 
@@ -311,7 +311,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   public final void disconnect()
   {
-    explicitelyConnected = false;
+    explicitlyConnected = false;
     doDisconnect(false);
   }
 
@@ -319,7 +319,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     if (!force)
     {
-      if (explicitelyConnected || sessionRefCount != 0)
+      if (explicitlyConnected || sessionRefCount != 0)
       {
         return;
       }

@@ -30,8 +30,9 @@ public interface CDOProtocolConstants
    * @since 4.2
    * @noreference This field is not intended to be referenced by clients.
    */
-  public static final int PROTOCOL_VERSION = 31; // CDOCommonRepository.isSupportingUnits()
+  public static final int PROTOCOL_VERSION = 32; // ROLLBACK_REASON_UNIT_INTEGRITY
 
+  // public static final int PROTOCOL_VERSION = 31; // CDOCommonRepository.isSupportingUnits()
   // public static final int PROTOCOL_VERSION = 30; // UnitOpcode
   // public static final int PROTOCOL_VERSION = 29; // SIGNAL_UNIT
   // public static final int PROTOCOL_VERSION = 28; // SIGNAL_RESET_TRANSACTION
@@ -470,6 +471,11 @@ public interface CDOProtocolConstants
    * @since 4.3
    */
   public static final byte ROLLBACK_REASON_VALIDATION_ERROR = 5;
+
+  /**
+   * @since 4.5
+   */
+  public static final byte ROLLBACK_REASON_UNIT_INTEGRITY = 6;
 
   // //////////////////////////////////////////////////////////////////////
   // Security

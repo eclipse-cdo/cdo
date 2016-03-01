@@ -10,7 +10,11 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.server.IUnitManager;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -21,6 +25,9 @@ import org.eclipse.emf.cdo.server.IUnitManager;
 public interface InternalUnitManager extends IUnitManager
 {
   public InternalRepository getRepository();
+
+  public List<InternalCDORevisionDelta> getUnitMoves(InternalCDORevisionDelta[] deltas, CDORevisionProvider before,
+      CDORevisionProvider after);
 
   public InternalObjectAttacher attachObjects(InternalCommitContext commitContext);
 

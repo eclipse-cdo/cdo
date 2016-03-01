@@ -329,11 +329,9 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     public static final String SUPPORTING_UNITS = "supportingUnits"; //$NON-NLS-1$
 
     /**
-     * @since 4.0
-     * @deprecated As of 4.2 instances of Ecore are always supported (on demand).
+     * @since 4.5
      */
-    @Deprecated
-    public static final String SUPPORTING_ECORE = "supportingEcore"; //$NON-NLS-1$
+    public static final String CHECK_UNIT_MOVES = "checkUnitMoves"; //$NON-NLS-1$
 
     /**
      * @since 4.2
@@ -359,5 +357,12 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 4.2
      */
     public static final String OPTIMISTIC_LOCKING_TIMEOUT = "optimisticLockingTimeout"; //$NON-NLS-1$
+
+    /**
+     * @since 4.0
+     * @deprecated As of 4.2 instances of Ecore are always supported (on demand).
+     */
+    @Deprecated
+    public static final String SUPPORTING_ECORE = "supportingEcore"; //$NON-NLS-1$
   }
 }

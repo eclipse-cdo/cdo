@@ -18,6 +18,7 @@
     <property name="supportingAudits" value="true"/>
     <property name="supportingBranches" value="true"/>
     <property name="supportingUnits" value="false"/>
+    <property name="checkUnitMoves" value="false"/>
     <property name="ensureReferentialIntegrity" value="false"/>
     <property name="allowInterruptRunningQueries" value="true"/>
     <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->

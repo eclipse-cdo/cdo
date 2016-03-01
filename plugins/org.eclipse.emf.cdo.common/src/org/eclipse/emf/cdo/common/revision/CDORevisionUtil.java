@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
@@ -36,6 +38,7 @@ import org.eclipse.emf.cdo.internal.common.revision.CDORevisionManagerImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureMapEntry;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 
@@ -302,6 +305,26 @@ public final class CDORevisionUtil
   public static Object remapID(Object value, Map<CDOID, CDOID> idMappings, boolean allowUnmappedTempIDs)
   {
     return CDORevisionImpl.remapID(value, idMappings, allowUnmappedTempIDs);
+  }
+
+  /**
+   * @since 4.5
+   */
+  public static boolean isTreeRestructuring(InternalCDORevisionDelta[] deltas)
+  {
+    for (InternalCDORevisionDelta delta : deltas)
+    {
+      for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+      {
+        EStructuralFeature feature = featureDelta.getFeature();
+        if (feature == CDOContainerFeatureDelta.CONTAINER_FEATURE)
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   /**

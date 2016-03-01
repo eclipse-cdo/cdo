@@ -12,9 +12,13 @@ package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @noextend This interface is not intended to be extended by clients.
@@ -33,4 +37,6 @@ public interface IUnitManager extends IContainer<IUnit>
   public IUnit getUnit(CDOID rootID);
 
   public IUnit[] getUnits();
+
+  public Map<CDOID, CDOID> getUnitsOf(Set<CDOID> ids, CDORevisionProvider revisionProvider);
 }

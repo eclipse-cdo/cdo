@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -71,6 +72,7 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction.CommitAttempt;
+import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -128,6 +130,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private long lastUpdateTime;
 
   private long lastTreeRestructuringCommit;
+
+  private Boolean treeRestructuring;
 
   private long timeStamp = CDORevision.UNSPECIFIED_DATE;
 
@@ -481,6 +485,16 @@ public class TransactionCommitContext implements InternalCommitContext
     StoreThreadLocal.setCommitContext(this);
   }
 
+  public boolean isTreeRestructuring()
+  {
+    if (treeRestructuring == null)
+    {
+      treeRestructuring = CDORevisionUtil.isTreeRestructuring(dirtyObjectDeltas);
+    }
+
+    return treeRestructuring;
+  }
+
   public void setLastTreeRestructuringCommit(long lastTreeRestructuringCommit)
   {
     this.lastTreeRestructuringCommit = lastTreeRestructuringCommit;
@@ -658,6 +672,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       checkContainmentCycles();
       checkXRefs();
+      checkUnitMoves();
       monitor.worked();
 
       detachObjects(monitor.fork());
@@ -1292,6 +1307,27 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY,
             "Attempt by " + transaction + " to introduce a stale reference");
+      }
+    }
+  }
+
+  protected void checkUnitMoves()
+  {
+    if (repository.isSupportingUnits() && isTreeRestructuring())
+    {
+      String checkUnitMoves = repository.getProperties().get(IRepository.Props.CHECK_UNIT_MOVES);
+      if ("true".equalsIgnoreCase(checkUnitMoves))
+      {
+        InternalUnitManager unitManager = repository.getUnitManager();
+
+        List<InternalCDORevisionDelta> unitMoves = unitManager.getUnitMoves(dirtyObjectDeltas, transaction, this);
+        if (!unitMoves.isEmpty())
+        {
+          StringBuilder builder = new StringBuilder("Attempt by " + transaction + " to move objects between units: ");
+          CDOIDUtil.write(builder, unitMoves);
+
+          throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_UNIT_INTEGRITY, builder.toString());
+        }
       }
     }
   }

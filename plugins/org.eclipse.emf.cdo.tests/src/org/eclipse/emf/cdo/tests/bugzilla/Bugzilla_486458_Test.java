@@ -38,8 +38,12 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
+import org.eclipse.emf.cdo.util.UnitIntegrityException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOUnit;
+import org.eclipse.emf.cdo.view.CDOUnitManager;
+
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.EList;
@@ -66,6 +70,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
   {
     Map<String, Object> map = getTestProperties();
     map.put(Props.SUPPORTING_UNITS, Boolean.toString(true));
+    map.put(Props.CHECK_UNIT_MOVES, Boolean.toString(true));
     super.doSetUp();
   }
 
@@ -230,6 +235,57 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
 
     company.getCategories().remove(category);
     assertEquals(elements, unit.getElements());
+  }
+
+  public void testUnitMoves() throws Exception
+  {
+    fillRepository();
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource(getResourcePath("test"));
+
+    Company company = (Company)resource.getContents().get(0);
+    Category category1 = company.getCategories().get(0);
+    Category category2 = company.getCategories().get(1);
+    Category category3 = company.getCategories().get(2);
+
+    CDOUnitManager unitManager = transaction.getUnitManager();
+    unitManager.createUnit(category1, true, null);
+    unitManager.createUnit(category2, true, null);
+
+    category2.getProducts().add(category1.getProducts().get(0));
+    category2.getProducts().add(category1.getProducts().get(1));
+
+    try
+    {
+      transaction.commit();
+      fail("UnitIntegrityException expected");
+    }
+    catch (UnitIntegrityException expected)
+    {
+      // SUCCESS
+      IOUtil.OUT().println(expected.getMessage());
+      transaction.rollback();
+    }
+
+    category3.getProducts().add(category1.getProducts().get(0));
+    category3.getProducts().add(category1.getProducts().get(1));
+
+    try
+    {
+      transaction.commit();
+      fail("UnitIntegrityException expected");
+    }
+    catch (UnitIntegrityException expected)
+    {
+      // SUCCESS
+      IOUtil.OUT().println(expected.getMessage());
+      transaction.rollback();
+    }
+
+    category1.getProducts().add(category3.getProducts().get(0));
+    transaction.commit();
   }
 
   public void testNotificationsAfterOpenUnit() throws Exception

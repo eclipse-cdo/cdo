@@ -77,6 +77,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public long getTimeStamp();
 
   /**
+   * @since 4.5
+   */
+  public boolean isTreeRestructuring();
+
+  /**
    * @since 4.2
    */
   public void setLastTreeRestructuringCommit(long lastTreeRestructuringCommit);

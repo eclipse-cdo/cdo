@@ -17,9 +17,9 @@ import java.util.List;
 
 /**
  * A {@link DataIntegrityException data integrity exception} that indicates an attempt to create <i>stale references</i>.
- * A stale reference is a refenrence that points to a target object that does not (or no longer) exist.
+ * A stale reference is a reference that points to a target object that does not (or no longer) exist.
  * <p>
- * Detection of referential integrity violations must be explicitely enabled on the server side because it can be expensive:
+ * Detection of referential integrity violations must be explicitly enabled on the server side because it can be expensive:
  *
  * <pre>
     &lt;property name="ensureReferentialIntegrity" value="true"/>

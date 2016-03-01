@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -113,6 +114,11 @@ public class HibernateRawCommitContext implements InternalCommitContext
   public long getTimeStamp()
   {
     return 0;
+  }
+
+  public boolean isTreeRestructuring()
+  {
+    return CDORevisionUtil.isTreeRestructuring(getDirtyObjectDeltas());
   }
 
   public void setLastTreeRestructuringCommit(long lastTreeRestructuringCommit)

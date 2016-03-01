@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.mapping.ColumnTypeModifier;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.view.CDOUnit;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
@@ -114,8 +115,48 @@ public class Doc01_ConfiguringRepositories
      * even if you never planned to store instances of Ecore.
      * <p>
      * Valid values: <code>false</code> (default) or <code>true</code>.
+     * <p>
+     * <b>This property is deprecated. As of 4.2 instances of Ecore are always supported (on demand).</b>
      */
     public class Property_supportingEcore
+    {
+    }
+
+    /**
+     * Property supportingUnits
+     * <p>
+     * Specifies whether the repository will support the creation and optimized loading of {@link CDOUnit units} or not.
+     * <p>
+     * Unit support is only available if the configured {@link IStore store} supports units.
+     * <p>
+     * Valid values: <code>false</code> (default) or <code>true</code>.
+     */
+    public class Property_supportingUnits
+    {
+    }
+
+    /**
+     * Property checkUnitMoves
+     * <p>
+     * Specifies whether the repository will apply extra validation to prevent moves of objects between {@link CDOUnit units} or not.
+     * <p>
+     * Valid values: <code>false</code> (default) or <code>true</code>.
+     * <p>
+     *
+     * @see Property_supportingUnits
+     */
+    public class Property_checkUnitMoves
+    {
+    }
+
+    /**
+     * Property ensureReferentialIntegrity
+     * <p>
+     * Specifies whether the repository will detect and reject commits that would leave stale references in the object graph.
+     * <p>
+     * Valid values: <code>false</code> (default) or <code>true</code>.
+     */
+    public class Property_ensureReferentialIntegrity
     {
     }
 
@@ -129,17 +170,6 @@ public class Doc01_ConfiguringRepositories
      * Valid values: <code>false</code> (default) or <code>true</code>.
      */
     public class Property_serializeCommits
-    {
-    }
-
-    /**
-     * Property ensureReferentialIntegrity
-     * <p>
-     * Specifies whether the repository will detect and reject commits that would leave stale references in the object graph.
-     * <p>
-     * Valid values: <code>false</code> (default) or <code>true</code>.
-     */
-    public class Property_ensureReferentialIntegrity
     {
     }
 

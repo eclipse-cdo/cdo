@@ -16,12 +16,15 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.server.IStoreAccessor.UnitSupport;
 import org.eclipse.emf.cdo.server.IUnit;
 import org.eclipse.emf.cdo.server.IUnitManager;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
@@ -30,6 +33,8 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -203,7 +208,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
   private void checkNotNested(CDOID rootID, IView view, Set<CDOID> unitIDs)
   {
     InternalCDORevision rootRevision = (InternalCDORevision)view.getRevision(rootID);
-    CDOID unitID = getUnit(rootRevision, view, unitIDs);
+    CDOID unitID = getUnitOf(rootRevision, view, unitIDs);
     if (unitID != null)
     {
       throw new CDOException("Attempt to nest the new unit " + rootID + " in the existing unit " + unitID);
@@ -213,7 +218,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     for (CDOID id : unitIDs)
     {
       InternalCDORevision revision = (InternalCDORevision)view.getRevision(id);
-      if (getUnit(revision, view, set) != null)
+      if (getUnitOf(revision, view, set) != null)
       {
         throw new CDOException("Attempt to nest the existing unit " + id + " in the new unit " + rootID);
       }
@@ -260,6 +265,83 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     }
   }
 
+  public Map<CDOID, CDOID> getUnitsOf(Set<CDOID> ids, CDORevisionProvider revisionProvider)
+  {
+    ReadLock readLock = managerLock.readLock();
+    readLock.lock();
+
+    try
+    {
+      Map<CDOID, CDOID> units = new HashMap<CDOID, CDOID>();
+
+      Set<CDOID> rootIDs = getRootIDs();
+      if (!rootIDs.isEmpty())
+      {
+        for (CDOID id : ids)
+        {
+          InternalCDORevision revision = (InternalCDORevision)revisionProvider.getRevision(id);
+          CDOID rootID = getUnitOf(revision, revisionProvider, rootIDs);
+          if (rootID != null)
+          {
+            units.put(id, rootID);
+          }
+        }
+      }
+
+      return units;
+    }
+    finally
+    {
+      readLock.unlock();
+    }
+  }
+
+  public List<InternalCDORevisionDelta> getUnitMoves(InternalCDORevisionDelta[] deltas, CDORevisionProvider before,
+      CDORevisionProvider after)
+  {
+    ReadLock readLock = managerLock.readLock();
+    readLock.lock();
+
+    try
+    {
+      List<InternalCDORevisionDelta> unitMoves = new ArrayList<InternalCDORevisionDelta>();
+
+      Set<CDOID> rootIDs = getRootIDs();
+      if (!rootIDs.isEmpty())
+      {
+        for (InternalCDORevisionDelta delta : deltas)
+        {
+          CDOID id = delta.getID();
+
+          for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+          {
+            EStructuralFeature feature = featureDelta.getFeature();
+            if (feature == CDOContainerFeatureDelta.CONTAINER_FEATURE)
+            {
+              InternalCDORevision beforeRevision = (InternalCDORevision)before.getRevision(id);
+              CDOID beforeUnit = getUnitOf(beforeRevision, before, rootIDs);
+              if (beforeUnit != null)
+              {
+                InternalCDORevision afterRevision = (InternalCDORevision)after.getRevision(id);
+                CDOID afterUnit = getUnitOf(afterRevision, after, rootIDs);
+                if (afterUnit != beforeUnit)
+                {
+                  unitMoves.add(delta);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      return unitMoves;
+    }
+    finally
+    {
+      readLock.unlock();
+    }
+  }
+
   public InternalObjectAttacher attachObjects(InternalCommitContext commitContext)
   {
     checkActive();
@@ -280,22 +362,15 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     {
       attachObjectsHook1();
 
-      Set<CDOID> rootIDs = new HashSet<CDOID>();
-
-      // No need to synchronize on units because all other modifiers hold the manager write lock.
-      rootIDs.addAll(units.keySet());
-
-      // No need to synchronize on unitInitializers because all other modifiers hold the manager write lock.
-      rootIDs.addAll(unitInitializers.keySet());
-
-      List<InternalCDORevision> unmappedRevisions = new ArrayList<InternalCDORevision>();
+      Set<CDOID> rootIDs = getRootIDs();
       boolean checkUnits = !rootIDs.isEmpty();
 
+      List<InternalCDORevision> unmappedRevisions = new ArrayList<InternalCDORevision>();
       for (InternalCDORevision revision : commitContext.getNewObjects())
       {
         if (checkUnits)
         {
-          CDOID rootID = getUnit(revision, commitContext, rootIDs);
+          CDOID rootID = getUnitOf(revision, commitContext, rootIDs);
           if (rootID != null)
           {
             unitMappings.put(revision.getID(), rootID);
@@ -411,7 +486,20 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
   {
   }
 
-  private static CDOID getUnit(InternalCDORevision revision, CDORevisionProvider revisionProvider, Set<CDOID> rootIDs)
+  private Set<CDOID> getRootIDs()
+  {
+    Set<CDOID> rootIDs = new HashSet<CDOID>();
+
+    // No need to synchronize on units because all other modifiers hold the manager write lock.
+    rootIDs.addAll(units.keySet());
+
+    // No need to synchronize on unitInitializers because all other modifiers hold the manager write lock.
+    rootIDs.addAll(unitInitializers.keySet());
+
+    return rootIDs;
+  }
+
+  private static CDOID getUnitOf(InternalCDORevision revision, CDORevisionProvider revisionProvider, Set<CDOID> rootIDs)
   {
     if (rootIDs.isEmpty())
     {
@@ -427,7 +515,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     CDORevision parentRevision = CDORevisionUtil.getParentRevision(revision, revisionProvider);
     if (parentRevision != null)
     {
-      return getUnit((InternalCDORevision)parentRevision, revisionProvider, rootIDs);
+      return getUnitOf((InternalCDORevision)parentRevision, revisionProvider, rootIDs);
     }
 
     return null;
@@ -732,7 +820,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       for (Iterator<InternalCDORevision> it = unmappedRevisions.iterator(); it.hasNext();)
       {
         InternalCDORevision revision = it.next();
-        if (getUnit(revision, commitContext, rootIDs) != null)
+        if (getUnitOf(revision, commitContext, rootIDs) != null)
         {
           ids.add(revision.getID());
           it.remove();

@@ -306,6 +306,32 @@ public final class CDOIDUtil
   }
 
   /**
+   * @since 4.5
+   */
+  public static void write(StringBuilder builder, Iterable<?> objects)
+  {
+    boolean first = true;
+
+    for (Object object : objects)
+    {
+      CDOID id = getCDOID(object);
+      if (id != null)
+      {
+        if (first)
+        {
+          first = false;
+        }
+        else
+        {
+          builder.append(", ");
+        }
+
+        write(builder, id);
+      }
+    }
+  }
+
+  /**
    * Format of the uri fragment.
    * <p>
    * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>

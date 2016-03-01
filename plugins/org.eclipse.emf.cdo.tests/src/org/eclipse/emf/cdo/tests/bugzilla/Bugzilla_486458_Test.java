@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.util.UnitIntegrityException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOUnit;
 import org.eclipse.emf.cdo.view.CDOUnitManager;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -358,6 +359,51 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
     assertEquals("Name2", sibling.getName());
   }
 
+  public void testResourceUnits() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.getUnitManager().setAutoResourceUnitsEnabled(true);
+
+    System.out.print("Committed: ");
+    for (int i = 0; i < 5; i++)
+    {
+      CDOResource resource = transaction.createResource(getResourcePath("test" + i));
+
+      Company company = getModel1Factory().createCompany();
+      addUnique(resource.getContents(), company);
+      fillCompany(company);
+    }
+
+    long start = System.currentTimeMillis();
+    transaction.commit();
+    long stop = System.currentTimeMillis();
+    System.out.println(stop - start);
+
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+    session = openSession();
+
+    CDOView view = session.openView();
+    view.getUnitManager().setAutoResourceUnitsEnabled(true);
+
+    for (int i = 0; i < 5; i++)
+    {
+      CDOResource resource = view.getResource(getResourcePath("test" + i));
+      iterateResource(resource);
+    }
+
+    assertEquals(5, view.getUnitManager().getOpenUnits().length);
+
+    for (int i = 0; i < 5; i++)
+    {
+      CDOResource resource = view.getResource(getResourcePath("test" + i));
+      resource.unload();
+    }
+
+    assertEquals(0, view.getUnitManager().getOpenUnits().length);
+  }
+
   private void fillRepository() throws ConcurrentAccessException, CommitException
   {
     CDOSession session = openSession();
@@ -366,6 +412,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
 
     for (int i = 0; i < 3; i++)
     {
+      System.out.print("Committed: ");
       Company company = getModel1Factory().createCompany();
       addUnique(resource.getContents(), company);
       fillCompany(company);
@@ -373,7 +420,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
       long start = System.currentTimeMillis();
       transaction.commit();
       long stop = System.currentTimeMillis();
-      System.out.println("Committed: " + (stop - start));
+      System.out.println(stop - start);
     }
 
     session.close();
@@ -453,6 +500,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
 
   private static int iterateResource(CDOResource resource)
   {
+    System.out.print("Iterated: ");
     int count = 1;
     long start = System.currentTimeMillis();
 
@@ -463,7 +511,7 @@ public class Bugzilla_486458_Test extends AbstractCDOTest
     }
 
     long stop = System.currentTimeMillis();
-    System.out.println("Iterated: " + (stop - start));
+    System.out.println(stop - start);
 
     return count;
   }

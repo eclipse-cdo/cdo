@@ -36,6 +36,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
@@ -1817,6 +1819,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     return id;
   }
 
+  public void resourceLoaded(CDOResourceImpl resource, boolean loaded)
+  {
+    if (session.getRepositoryInfo().isSupportingUnits())
+    {
+      unitManager.resourceLoaded(resource, loaded);
+    }
+  }
+
   public final CDOUnitManagerImpl getUnitManager()
   {
     return unitManager;
@@ -1834,6 +1844,8 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     private CDOUnitImpl openingUnit;
 
     private Set<CDOID> openingIDs;
+
+    private Map<CDOResource, CDOUnit> resourceUnits;
 
     public CDOUnitManagerImpl()
     {
@@ -1984,12 +1996,64 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
     }
 
+    public synchronized boolean isAutoResourceUnitsEnabled()
+    {
+      return resourceUnits != null;
+    }
+
+    public synchronized void setAutoResourceUnitsEnabled(boolean enabled)
+    {
+      if (enabled)
+      {
+        resourceUnits = new HashMap<CDOResource, CDOUnit>();
+      }
+      else
+      {
+        resourceUnits = null;
+      }
+    }
+
+    public synchronized void resourceLoaded(CDOResourceImpl resource, boolean loaded)
+    {
+      if (resourceUnits != null)
+      {
+        if (loaded)
+        {
+          loadResource(resource);
+        }
+        else
+        {
+          unloadResource(resource);
+        }
+      }
+    }
+
     @Override
     protected void doDeactivate() throws Exception
     {
       unitPerRoot.clear();
       unitPerObject.clear();
       super.doDeactivate();
+    }
+
+    private void loadResource(CDOResource resource)
+    {
+      CDOUnit unit = resourceUnits.get(resource);
+      if (unit == null)
+      {
+        CDOUnitManager unitManager = resource.cdoView().getUnitManager();
+        unit = unitManager.openUnit(resource, true, null);
+        resourceUnits.put(resource, unit);
+      }
+    }
+
+    private void unloadResource(CDOResource resource)
+    {
+      CDOUnit unit = resourceUnits.remove(resource);
+      if (unit != null)
+      {
+        unit.close();
+      }
     }
 
     private EObject getParent(EObject object)

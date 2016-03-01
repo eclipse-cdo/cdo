@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -280,6 +281,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+  {
+    // Do nothing
+  }
+
+  public void resourceLoaded(CDOResourceImpl resource, boolean loaded)
   {
     // Do nothing
   }

@@ -187,7 +187,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       authenticating = result.isAuthenticating();
       supportingAudits = result.isSupportingAudits();
       supportingBranches = result.isSupportingBranches();
-      supportingUnits = result.isSupportingBranches();
+      supportingUnits = result.isSupportingUnits();
       serializingCommits = result.isEnsuringReferentialIntegrity();
       ensuringReferentialIntegrity = result.isEnsuringReferentialIntegrity();
       idGenerationLocation = result.getIDGenerationLocation();

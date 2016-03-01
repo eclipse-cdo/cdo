@@ -1230,6 +1230,12 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
         }
       }
 
+      if (!root)
+      {
+        InternalCDOView view = cdoView();
+        view.resourceLoaded(this, true);
+      }
+
       Notification notification = setLoaded(true);
       if (notification != null)
       {
@@ -1534,7 +1540,11 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements CDOResource,
    */
   public void unload()
   {
-    // Do nothing
+    if (!root)
+    {
+      InternalCDOView view = cdoView();
+      view.resourceLoaded(this, false);
+    }
   }
 
   /**

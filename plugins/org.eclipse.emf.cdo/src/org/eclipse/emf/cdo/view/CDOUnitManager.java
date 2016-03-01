@@ -38,6 +38,10 @@ public interface CDOUnitManager extends IContainer<CDOUnit>
 
   public CDOUnit[] getOpenUnits();
 
+  public boolean isAutoResourceUnitsEnabled();
+
+  public void setAutoResourceUnitsEnabled(boolean enabled);
+
   /**
    * @author Eike Stepper
    */

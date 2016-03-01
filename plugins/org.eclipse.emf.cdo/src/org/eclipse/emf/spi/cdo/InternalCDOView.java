@@ -99,6 +99,11 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
   public void attachResource(CDOResourceImpl resource);
 
   /**
+   * @since 4.5
+   */
+  public void resourceLoaded(CDOResourceImpl resource, boolean loaded);
+
+  /**
    * @since 3.0
    */
   public void handleObjectStateChanged(InternalCDOObject object, CDOState oldState, CDOState newState);

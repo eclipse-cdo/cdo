@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.examples.hibernate.server
-Bundle-Version: 4.1.300.qualifier
+Bundle-Version: 4.1.400.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
@@ -20,5 +20,5 @@ Import-Package: org.eclipse.emf.teneo.annotations.mapper;version="[2.0.0,3.0.0)"
  org.hibernate.engine.spi;version="[4.0.0,5.0.0)",
  org.hibernate.id;version="[4.0.0,5.0.0)",
  org.hibernate.persister.entity;version="[4.0.0,5.0.0)"
-Export-Package: org.eclipse.emf.cdo.examples.hibernate.server;version="4.1.300"
+Export-Package: org.eclipse.emf.cdo.examples.hibernate.server;version="4.1.400"
 Bundle-ClassPath: .

@@ -1859,23 +1859,21 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     String path = getResourcePath(revision);
     URI uri = CDOURIUtil.createResourceURI(this, path);
+    ResourceSet resourceSet = getResourceSet();
 
     // Bug 334995: Check if locally there is already a resource with the same URI
-    ResourceSet resourceSet = getResourceSet();
-    CDOResource resource1 = (CDOResource)resourceSet.getResource(uri, false);
-
-    String oldName = null;
-    if (resource1 != null && !isReadOnly())
+    CDOResource existingResource = (CDOResource)resourceSet.getResource(uri, false);
+    if (existingResource != null && !isReadOnly())
     {
       // We have no other option than to change the name of the local resource
-      oldName = resource1.getName();
-      resource1.setName(oldName + ".renamed");
+      String oldName = existingResource.getName();
+      existingResource.setName(oldName + ".renamed");
+
       OM.LOG.warn("URI clash: resource being instantiated had same URI as a resource already present "
-          + "locally; local resource was renamed from " + oldName + " to " + resource1.getName());
+          + "locally; local resource was renamed from " + oldName + " to " + existingResource.getName());
     }
 
-    CDOResource resource2 = getResource(path, true);
-    return resource2;
+    return getResource(path, true);
   }
 
   private String getResourcePath(InternalCDORevision revision)

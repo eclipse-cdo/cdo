@@ -114,6 +114,7 @@ function windowTitle()
 <tr><td></td><td>5.1&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionKeepAlivePeriod" title="Chapter in CDO Model Repository Documentation">Property connectionKeepAlivePeriod</a></td></tr>
 <tr><td></td><td>5.2&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_readerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property readerPoolCapacity</a></td></tr>
 <tr><td></td><td>5.3&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_writerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property writerPoolCapacity</a></td></tr>
+<tr><td></td><td>5.4&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_dropAllDataOnActivate" title="Chapter in CDO Model Repository Documentation">Property dropAllDataOnActivate</a></td></tr>
 <tr><td>6&nbsp;</td><td colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_mappingStrategy" title="Chapter in CDO Model Repository Documentation">Element mappingStrategy</a></td></tr>
 <tr><td></td><td>6.1&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_toManyReferences" title="Chapter in CDO Model Repository Documentation">Property toManyReferences</a></td></tr>
 <tr><td></td><td>6.2&nbsp;</td><td colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_maxTableNameLength" title="Chapter in CDO Model Repository Documentation">Property maxTableNameLength</a></td></tr>
@@ -362,6 +363,13 @@ function windowTitle()
  Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the writer pool.
  <p>
  The default value is 15.
+
+<h3><a name="Property_dropAllDataOnActivate"></a>5.4&nbsp;&nbsp;Property dropAllDataOnActivate</h3>
+<p>
+ If set to <code>true</code> and the store is a DBStore, drops all database tables of the configured
+ <a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">schema</a> at the beginning of the store activation.
+ <p>
+ The default value is <code>false</code>.
 
 <h2><a name="Element_mappingStrategy"></a>6&nbsp;&nbsp;Element mappingStrategy</h2>
 <p>

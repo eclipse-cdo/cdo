@@ -288,6 +288,18 @@ public class Doc01_ConfiguringRepositories
     public class Property_writerPoolCapacity
     {
     }
+
+    /**
+     * Property dropAllDataOnActivate
+     * <p>
+     * If set to <code>true</code> and the store is a DBStore, drops all database tables of the configured
+     * {@link Element_dataSource schema} at the beginning of the store activation.
+     * <p>
+     * The default value is <code>false</code>.
+     */
+    public class Property_dropAllDataOnActivate
+    {
+    }
   }
 
   /**

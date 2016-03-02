@@ -133,5 +133,10 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
      * @since 4.3
      */
     public static final String FIELD_CONSTRUCTION_TRACKING = "fieldConstructionTracking"; //$NON-NLS-1$
+
+    /**
+     * @since 4.4
+     */
+    public static final String DROP_ALL_DATA_ON_ACTIVATE = "dropAllDataOnActivate"; //$NON-NLS-1$
   }
 }

@@ -598,6 +598,12 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
       configureAccessorPool(readerPool, IDBStore.Props.READER_POOL_CAPACITY);
       configureAccessorPool(writerPool, IDBStore.Props.WRITER_POOL_CAPACITY);
+
+      String prop = properties.get(IDBStore.Props.DROP_ALL_DATA_ON_ACTIVATE);
+      if (prop != null)
+      {
+        setDropAllDataOnActivate(Boolean.parseBoolean(prop));
+      }
     }
 
     Connection connection = getConnection();

@@ -576,6 +576,10 @@
             <arg value="http://download.eclipse.org/tools/buckminster/headless-4.4" />
             <arg value="-r" />
             <arg value="http://download.eclipse.org/releases/mars" />
+            <arg value="-r" />
+            <arg value="http://download.eclipse.org/oomph/updates/latest" />
+            <arg value="-r" />
+            <arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
             <arg value="-d" />
             <arg value="${tools}/buckminster" />
             <arg value="-p" />

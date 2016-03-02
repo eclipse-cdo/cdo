@@ -362,12 +362,6 @@
     <property name="loglevel" value="${env.LOG_LEVEL}" />
     <property name="jarprocessor.dir" value="${env.org.eclipse.update.jarprocessor.pack200}" />
     <property name="p2.mirrors" value="false" />
-    <property name="generate.products" value="${env.GENERATE_PRODUCTS}" />
-
-    <!-- skip.generate.products -->
-    <condition property="skip.generate.products" value="false" else="true">
-      <equals arg1="${env.GENERATE_PRODUCTS}" arg2="true" />
-    </condition>
 
     <!-- build.trigger -->
     <if>

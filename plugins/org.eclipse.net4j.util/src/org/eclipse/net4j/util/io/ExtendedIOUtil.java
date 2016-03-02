@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -94,7 +95,6 @@ public final class ExtendedIOUtil
     return b;
   }
 
-  @SuppressWarnings("unused")
   public static void writeObject(final DataOutput out, Object object) throws IOException
   {
     ObjectOutput objectOutput = null;
@@ -113,7 +113,7 @@ public final class ExtendedIOUtil
         }
       });
 
-      if (false)
+      if (ObjectUtil.never())
       {
         // Suppress resource leak warning.
         wrapper.close();
@@ -135,7 +135,6 @@ public final class ExtendedIOUtil
     return readObject(in, new ClassLoaderClassResolver(classLoader));
   }
 
-  @SuppressWarnings("unused")
   public static Object readObject(final DataInput in, final ClassResolver classResolver) throws IOException
   {
     ObjectInput objectInput = null;
@@ -175,7 +174,7 @@ public final class ExtendedIOUtil
         }
       };
 
-      if (false)
+      if (ObjectUtil.never())
       {
         // Suppress resource leak warning.
         wrapper.close();

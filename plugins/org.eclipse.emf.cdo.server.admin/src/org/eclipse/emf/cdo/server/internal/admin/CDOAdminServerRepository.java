@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -215,7 +216,6 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.toString();
   }
 
-  @SuppressWarnings("unused")
   public void write(ExtendedDataOutputStream out) throws IOException
   {
     out.writeString(getName());
@@ -236,7 +236,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
 
     CDODataOutputImpl wrapper = new CDODataOutputImpl(out);
     wrapper.writeCDOID(getRootResourceID());
-    if (false)
+    if (ObjectUtil.never())
     {
       // Suppress resource leak warning.
       wrapper.close();

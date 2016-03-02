@@ -28,6 +28,14 @@ public final class ObjectUtil
   {
   }
 
+  /**
+   * @since 3.6
+   */
+  public static boolean never()
+  {
+    return false;
+  }
+
   public static boolean equals(Object o1, Object o2)
   {
     if (o1 == null)

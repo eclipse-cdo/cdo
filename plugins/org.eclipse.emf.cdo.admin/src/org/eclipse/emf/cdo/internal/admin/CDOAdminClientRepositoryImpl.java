@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.om.monitor.NotifyingMonitor;
@@ -71,7 +72,6 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private IDGenerationLocation idGenerationLocation;
 
-  @SuppressWarnings("unused")
   public CDOAdminClientRepositoryImpl(CDOAdminClientImpl admin, ExtendedDataInputStream in) throws IOException
   {
     this.admin = admin;
@@ -93,7 +93,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
     CDODataInputImpl.Default wrapper = new CDODataInputImpl.Default(in);
     rootResourceID = wrapper.readCDOID();
-    if (false)
+    if (ObjectUtil.never())
     {
       // Suppress resource leak warning.
       wrapper.close();

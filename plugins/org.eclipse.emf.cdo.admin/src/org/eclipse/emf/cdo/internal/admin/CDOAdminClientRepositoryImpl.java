@@ -71,6 +71,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private IDGenerationLocation idGenerationLocation;
 
+  @SuppressWarnings("unused")
   public CDOAdminClientRepositoryImpl(CDOAdminClientImpl admin, ExtendedDataInputStream in) throws IOException
   {
     this.admin = admin;
@@ -89,7 +90,15 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     }
 
     creationTime = in.readLong();
-    rootResourceID = new CDODataInputImpl.Default(in).readCDOID();
+
+    CDODataInputImpl.Default wrapper = new CDODataInputImpl.Default(in);
+    rootResourceID = wrapper.readCDOID();
+    if (false)
+    {
+      // Suppress resource leak warning.
+      wrapper.close();
+    }
+
     authenticating = in.readBoolean();
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();

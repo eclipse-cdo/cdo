@@ -94,6 +94,7 @@ public final class ExtendedIOUtil
     return b;
   }
 
+  @SuppressWarnings("unused")
   public static void writeObject(final DataOutput out, Object object) throws IOException
   {
     ObjectOutput objectOutput = null;
@@ -112,6 +113,12 @@ public final class ExtendedIOUtil
         }
       });
 
+      if (false)
+      {
+        // Suppress resource leak warning.
+        wrapper.close();
+      }
+
       objectOutput = wrapper;
     }
 
@@ -128,6 +135,7 @@ public final class ExtendedIOUtil
     return readObject(in, new ClassLoaderClassResolver(classLoader));
   }
 
+  @SuppressWarnings("unused")
   public static Object readObject(final DataInput in, final ClassResolver classResolver) throws IOException
   {
     ObjectInput objectInput = null;
@@ -166,6 +174,12 @@ public final class ExtendedIOUtil
           return super.resolveClass(desc);
         }
       };
+
+      if (false)
+      {
+        // Suppress resource leak warning.
+        wrapper.close();
+      }
 
       objectInput = wrapper;
     }

@@ -215,6 +215,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     return delegate.toString();
   }
 
+  @SuppressWarnings("unused")
   public void write(ExtendedDataOutputStream out) throws IOException
   {
     out.writeString(getName());
@@ -232,7 +233,15 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     }
 
     out.writeLong(getCreationTime());
-    new CDODataOutputImpl(out).writeCDOID(getRootResourceID());
+
+    CDODataOutputImpl wrapper = new CDODataOutputImpl(out);
+    wrapper.writeCDOID(getRootResourceID());
+    if (false)
+    {
+      // Suppress resource leak warning.
+      wrapper.close();
+    }
+
     out.writeBoolean(isAuthenticating());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());

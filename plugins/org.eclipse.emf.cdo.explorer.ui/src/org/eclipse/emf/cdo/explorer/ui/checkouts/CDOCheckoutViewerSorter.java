@@ -10,11 +10,9 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
-import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.viewers.Viewer;
@@ -43,18 +41,7 @@ public class CDOCheckoutViewerSorter extends org.eclipse.jface.viewers.ViewerSor
     // Don't sort normal EObjects.
     if (e1 instanceof EObject && !(e1 instanceof CDOResourceNode))
     {
-      EObject child1 = (EObject)e1;
-      EObject child2 = (EObject)e2;
-
-      EObject parent = CDOElement.getParentOf(child1);
-      if (parent != null)
-      {
-        EList<EObject> children = parent.eContents();
-
-        int pos1 = children.indexOf(child1);
-        int pos2 = children.indexOf(child2);
-        return pos1 - pos2;
-      }
+      return 0;
     }
 
     return super.compare(viewer, e1, e2);

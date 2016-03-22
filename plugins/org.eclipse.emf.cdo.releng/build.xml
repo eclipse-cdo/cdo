@@ -573,9 +573,9 @@
           </properties>
           <args>
             <arg value="-r" />
-            <arg value="http://download.eclipse.org/tools/buckminster/headless-4.5" />
+            <arg value="http://download.eclipse.org/tools/buckminster/headless-4.4" />
             <arg value="-r" />
-            <arg value="http://download.eclipse.org/releases/neon" />
+            <arg value="http://download.eclipse.org/releases/mars" />
             <arg value="-r" />
             <arg value="http://download.eclipse.org/oomph/updates/latest" />
             <arg value="-r" />

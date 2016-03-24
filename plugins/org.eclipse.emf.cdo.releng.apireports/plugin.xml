@@ -13,6 +13,15 @@
 
 <plugin>
 
+   <extension point="org.eclipse.core.runtime.applications" id="ApiReportsApplication">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run class="org.eclipse.emf.cdo.releng.apireports.ApiReportsApplication"/>
+      </application>
+   </extension>
+   
 	<extension point="org.eclipse.buckminster.core.actors">
 		<actor
 			ID="apireports"

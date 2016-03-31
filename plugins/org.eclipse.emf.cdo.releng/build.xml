@@ -360,6 +360,7 @@
     <property name="build.location" value="hudson" />
     <property name="build.timestamp" value="${env.BUILD_ID}" />
     <property name="loglevel" value="${env.LOG_LEVEL}" />
+    <property name="skip.test" value="${env.SKIP_TEST}" />
     <property name="jarprocessor.dir" value="${env.org.eclipse.update.jarprocessor.pack200}" />
     <property name="p2.mirrors" value="false" />
 

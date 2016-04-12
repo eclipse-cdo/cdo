@@ -10,14 +10,18 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.CDOEditorInputImpl;
 import org.eclipse.emf.cdo.internal.ui.InteractiveConflictHandlerSelector;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOEditorUtil;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOHandlingConflictResolver;
@@ -65,7 +69,17 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
       configureTransaction((CDOTransaction)view);
     }
 
-    final IEditorPart editor = openEditor(page, view, CDOURIUtil.extractResourcePath(uri));
+    CDOID objectID = null;
+    if (uri.hasFragment())
+    {
+      CDOObject cdoObject = CDOUtil.getCDOObject(view.getResourceSet().getEObject(uri, true));
+      if (cdoObject != null)
+      {
+        objectID = cdoObject.cdoID();
+      }
+    }
+
+    final IEditorPart editor = openEditor(page, view, CDOURIUtil.extractResourcePath(uri), objectID);
     page.addPartListener(new IPartListener()
     {
       public void partClosed(IWorkbenchPart part)
@@ -116,7 +130,7 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
     addConflictResolver(transaction);
   }
 
-  private IEditorPart openEditor(IWorkbenchPage page, CDOView view, String resourcePath)
+  private IEditorPart openEditor(IWorkbenchPage page, CDOView view, String resourcePath, CDOID objectID)
   {
     try
     {
@@ -134,6 +148,7 @@ public class CDOModelEditorOpener extends CDOEditorOpener.Default
       }
 
       IEditorInput input = CDOEditorUtil.createCDOEditorInput(view, resourcePath, false);
+      ((CDOEditorInputImpl)input).setObjectID(objectID);
       return page.openEditor(input, editorID);
     }
     catch (Exception ex)

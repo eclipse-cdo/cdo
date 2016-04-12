@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
@@ -27,6 +28,7 @@ import org.eclipse.emf.cdo.internal.ui.dialogs.SelectClassDialog;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorInput2;
 import org.eclipse.emf.cdo.ui.CDOEventHandler;
 import org.eclipse.emf.cdo.ui.CDOInvalidRootAgent;
 import org.eclipse.emf.cdo.ui.CDOLabelProvider;
@@ -1071,8 +1073,22 @@ public class CDOEditor extends MultiPageEditorPart
       }
       else
       {
-        URI resourceURI = CDOURIUtil.createResourceURI(view, resourcePath);
-        viewerInput = resourceSet.getResource(resourceURI, true);
+        InternalCDOObject inputObject = null;
+        if (editorInput instanceof CDOEditorInput2)
+        {
+          CDOID objectID = ((CDOEditorInput2)editorInput).getObjectID();
+          inputObject = (InternalCDOObject)view.getObject(objectID);
+        }
+
+        if (inputObject != null)
+        {
+          viewerInput = inputObject.cdoInternalInstance();
+        }
+        else
+        {
+          URI resourceURI = CDOURIUtil.createResourceURI(view, resourcePath);
+          viewerInput = resourceSet.getResource(resourceURI, true);
+        }
 
         if (!view.isReadOnly())
         {

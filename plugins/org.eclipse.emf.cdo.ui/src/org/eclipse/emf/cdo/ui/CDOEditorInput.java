@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.ui.IEditorInput;
 
 /**
- * An specialized {@link org.eclipse.ui.IEditorInput IEditorInput} for the CDO editor. A <code>CDOEditorInput</code> is
+ * A specialized {@link org.eclipse.ui.IEditorInput IEditorInput} for the CDO editor. A <code>CDOEditorInput</code> is
  * associated with a {@link org.eclipse.emf.cdo.eresource.CDOResource CDOResource}, accessed through a
  * {@link org.eclipse.emf.cdo.view.CDOView CDOView} instance.
  * <p>

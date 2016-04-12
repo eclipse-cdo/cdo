@@ -11,10 +11,11 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.ui.CDOEditorInput;
+import org.eclipse.emf.cdo.ui.CDOEditorInput2;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -29,13 +30,15 @@ import org.eclipse.ui.IPersistableElement;
  * @author Eike Stepper
  * @since 2.0
  */
-public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
+public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput2
 {
   private CDOView view;
 
   private boolean viewOwned;
 
   private String resourcePath;
+
+  private CDOID objectID;
 
   public CDOEditorInputImpl(CDOView view, String resourcePath)
   {
@@ -62,6 +65,16 @@ public class CDOEditorInputImpl extends PlatformObject implements CDOEditorInput
   public String getResourcePath()
   {
     return resourcePath;
+  }
+
+  public CDOID getObjectID()
+  {
+    return objectID;
+  }
+
+  public void setObjectID(CDOID objectID)
+  {
+    this.objectID = objectID;
   }
 
   public boolean exists()

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceLeaf;
@@ -299,16 +300,25 @@ public class OpenWithActionProvider extends CommonActionProvider
     }
 
     CDOObject cdoObject = CDOUtil.getCDOObject(object);
+
     CDOResourceLeaf resourceLeaf = getResourceLeaf(cdoObject);
     if (resourceLeaf instanceof CDOResource)
     {
-      CDOResource resource = (CDOResource)resourceLeaf;
-      URI uri = resource.getURI();
-
       CDOCheckout checkout = CDOExplorerUtil.getCheckout(cdoObject);
       if (checkout != null)
       {
-        CDOEditorOpener[] editorOpeners = CDOEditorOpener.Registry.INSTANCE.getEditorOpeners(uri);
+        URI uri = resourceLeaf.getURI();
+
+        if (!(object instanceof CDOResourceNode))
+        {
+          StringBuilder builder = new StringBuilder();
+          CDOIDUtil.write(builder, cdoObject.cdoID());
+
+          String fragment = builder.toString();
+          uri = uri.appendFragment(fragment);
+        }
+
+        CDOEditorOpener[] editorOpeners = CDOEditorOpener.Registry.INSTANCE.getEditorOpeners(uri.trimFragment());
         String defaultEditorOpenerID = editorOpeners.length != 0 ? editorOpeners[0].getID() : null;
 
         CDOID objectID = cdoObject.cdoID();
@@ -332,6 +342,11 @@ public class OpenWithActionProvider extends CommonActionProvider
             if (!ObjectUtil.equals(editorOpenerID, lastEditorOpenerID))
             {
               checkout.setEditorOpenerID(objectID, editorOpenerID);
+            }
+
+            if (cdoObject instanceof CDOResourceNode)
+            {
+              uri = uri.trimFragment();
             }
 
             editorOpener.openEditor(page, uri);

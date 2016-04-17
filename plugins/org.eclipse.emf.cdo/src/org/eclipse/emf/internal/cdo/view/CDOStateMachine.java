@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.internal.cdo.view;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -525,7 +526,20 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  public void commit(InternalCDOObject object, CommitTransactionResult result)
+  public void commit(Map<CDOID, CDOObject> objects, CommitTransactionResult result)
+  {
+    for (CDOObject object : objects.values())
+    {
+      commitObject((InternalCDOObject)object, result);
+    }
+
+    for (CDOObject object : objects.values())
+    {
+      changeState((InternalCDOObject)object, CDOState.CLEAN);
+    }
+  }
+
+  private void commitObject(InternalCDOObject object, CommitTransactionResult result)
   {
     synchronized (getMonitor(object))
     {
@@ -1059,8 +1073,6 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
       InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
       revisionManager.addRevision(revision);
-
-      changeState(object, CDOState.CLEAN);
     }
   }
 

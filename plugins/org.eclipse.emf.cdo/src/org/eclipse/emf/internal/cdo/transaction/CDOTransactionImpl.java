@@ -3119,7 +3119,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = //
-    super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
+        super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
 
     if (!allChangedObjects.isEmpty())
     {
@@ -4051,10 +4051,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       if (!objects.isEmpty())
       {
-        for (CDOObject object : objects.values())
-        {
-          CDOStateMachine.INSTANCE.commit((InternalCDOObject)object, result);
-        }
+        CDOStateMachine.INSTANCE.commit(objects, result);
       }
     }
   }

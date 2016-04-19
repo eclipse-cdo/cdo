@@ -1674,7 +1674,7 @@ public class TransactionCommitContext implements InternalCommitContext
       {
         public Object adjustReference(Object targetID, EStructuralFeature feature, int index)
         {
-          if (feature != CDOContainerFeatureDelta.CONTAINER_FEATURE)
+          if (!(feature instanceof EReference && ((EReference)feature).isContainer()))
           {
             if (detachedIDs.contains(targetID))
             {

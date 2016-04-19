@@ -1,0 +1,93 @@
+/**
+ */
+package base.impl;
+
+import base.BasePackage;
+import base.Element;
+
+import org.eclipse.emf.common.util.EList;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Element</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link base.impl.ElementImpl#getSubelements <em>Subelements</em>}</li>
+ *   <li>{@link base.impl.ElementImpl#getParent <em>Parent</em>}</li>
+ * </ul>
+ *
+ * @generated
+ */
+public class ElementImpl extends CDOObjectImpl implements Element
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ElementImpl()
+  {
+    super();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return BasePackage.Literals.ELEMENT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  public EList<Element> getSubelements()
+  {
+    return (EList<Element>)eGet(BasePackage.Literals.ELEMENT__SUBELEMENTS, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Element getParent()
+  {
+    return (Element)eGet(BasePackage.Literals.ELEMENT__PARENT, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setParent(Element newParent)
+  {
+    eSet(BasePackage.Literals.ELEMENT__PARENT, newParent);
+  }
+
+} //ElementImpl

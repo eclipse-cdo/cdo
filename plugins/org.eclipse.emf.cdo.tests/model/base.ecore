@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ecore:EPackage xmi:version="2.0"
-    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="base"
-    nsURI="http://www.fernuni-hagen.de/ST/dummy/base.ecore" nsPrefix="base">
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="base" nsURI="http://www.fernuni-hagen.de/ST/dummy/base.ecore"
+    nsPrefix="base">
   <eClassifiers xsi:type="ecore:EClass" name="BaseClass">
     <eOperations name="increment"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="couter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Document">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="root" eType="#//Element"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Element">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subelements" upperBound="-1"
+        eType="#//Element" containment="true" eOpposite="#//Element/parent"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" eType="#//Element"
+        eOpposite="#//Element/subelements"/>
   </eClassifiers>
 </ecore:EPackage>

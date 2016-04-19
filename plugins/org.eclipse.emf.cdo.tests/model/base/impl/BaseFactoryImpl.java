@@ -10,6 +10,7 @@
  */
 package base.impl;
 
+import base.*;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -22,22 +23,20 @@ import base.BasePackage;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Factory</b>. <!-- end-user-doc -->
- * 
  * @generated
  */
 public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 {
   /**
-   * Creates the default factory implementation. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates the default factory implementation.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public static BaseFactory init()
   {
     try
     {
-      BaseFactory theBaseFactory = (BaseFactory)EPackage.Registry.INSTANCE
-          .getEFactory("http://www.fernuni-hagen.de/ST/dummy/base.ecore");
+      BaseFactory theBaseFactory = (BaseFactory)EPackage.Registry.INSTANCE.getEFactory(BasePackage.eNS_URI);
       if (theBaseFactory != null)
       {
         return theBaseFactory;
@@ -51,8 +50,8 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * Creates an instance of the factory. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * Creates an instance of the factory.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public BaseFactoryImpl()
@@ -80,7 +79,6 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   public BaseClass createBaseClass()
@@ -90,10 +88,31 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public Document createDocument()
+  {
+    DocumentImpl document = new DocumentImpl();
+    return document;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public Element createElement()
+  {
+    ElementImpl element = new ElementImpl();
+    return element;
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public BasePackage getBasePackage()
   {
     return (BasePackage)getEPackage();
@@ -101,7 +120,6 @@ public class BaseFactoryImpl extends EFactoryImpl implements BaseFactory
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @deprecated
    * @generated
    */

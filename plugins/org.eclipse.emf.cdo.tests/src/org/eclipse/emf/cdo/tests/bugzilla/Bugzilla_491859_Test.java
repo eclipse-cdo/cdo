@@ -26,7 +26,7 @@ import base.Document;
 import base.Element;
 
 /**
- * Bug 491859 - Referential integrity check fails when container is changed and previsous container is deleted
+ * Bug 491859 - Referential integrity check fails when container is changed and previous container is deleted
  *
  * @author Eike Stepper
  */

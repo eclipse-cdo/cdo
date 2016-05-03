@@ -121,7 +121,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Unlock", objectsToUnlock, context); //$NON-NLS-1$
+      TRACER.format("Unlock : {0} --> {1}", objectsToUnlock, context); //$NON-NLS-1$
     }
 
     Set<LockState<OBJECT, CONTEXT>> lockStates = new HashSet<LockState<OBJECT, CONTEXT>>();

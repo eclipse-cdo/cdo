@@ -517,40 +517,24 @@ public abstract class AbstractOMTest extends TestCase
     return (AbstractOMTest)TestExecuter.getValue();
   }
 
-  /**
-   * @deprecated Use assertEquals(message, true, ...)
-   */
-  @Deprecated
   public static void assertTrue(String message, boolean condition)
   {
-    throw new UnsupportedOperationException("Use assertEquals(message, true, ...)");
+    assertEquals(message, true, condition);
   }
 
-  /**
-   * @deprecated Use assertEquals(true, ...)
-   */
-  @Deprecated
   public static void assertTrue(boolean condition)
   {
-    throw new UnsupportedOperationException("Use assertEquals(true, ...)");
+    assertEquals(true, condition);
   }
 
-  /**
-   * @deprecated Use assertEquals(message, false, ...)
-   */
-  @Deprecated
   public static void assertFalse(String message, boolean condition)
   {
-    throw new UnsupportedOperationException("Use assertEquals(message, false, ...)");
+    assertEquals(message, false, condition);
   }
 
-  /**
-   * @deprecated Use assertEquals(false, ...)
-   */
-  @Deprecated
   public static void assertFalse(boolean condition)
   {
-    throw new UnsupportedOperationException("Use assertEquals(false, ...)");
+    assertEquals(false, condition);
   }
 
   public static void assertEquals(Object[] expected, Object[] actual)

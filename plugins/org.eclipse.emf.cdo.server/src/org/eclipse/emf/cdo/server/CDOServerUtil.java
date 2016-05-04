@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.internal.server.syncing.RepositorySynchronizer;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -284,6 +286,12 @@ public final class CDOServerUtil
 
   public static void addRepository(IManagedContainer container, IRepository repository)
   {
+    InternalRepository internal = (InternalRepository)repository;
+    if (internal.getContainer() == null && container != IPluginContainer.INSTANCE)
+    {
+      internal.setContainer(container);
+    }
+
     String productGroup = RepositoryFactory.PRODUCT_GROUP;
     String type = RepositoryFactory.TYPE;
     String name = repository.getName();

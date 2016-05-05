@@ -1149,7 +1149,6 @@ public class DawnEmfGenmodelEditor extends MultiPageEditorPart
           }
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
             IStatusLineManager statusLineManager)
@@ -1158,7 +1157,6 @@ public class DawnEmfGenmodelEditor extends MultiPageEditorPart
           contentOutlineStatusLineManager = statusLineManager;
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void setActionBars(IActionBars actionBars)
         {

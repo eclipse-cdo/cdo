@@ -1205,7 +1205,6 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
           }
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
             IStatusLineManager statusLineManager)
@@ -1214,7 +1213,6 @@ public class DawngenmodelEditor extends MultiPageEditorPart implements IEditingD
           contentOutlineStatusLineManager = statusLineManager;
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void setActionBars(IActionBars actionBars)
         {

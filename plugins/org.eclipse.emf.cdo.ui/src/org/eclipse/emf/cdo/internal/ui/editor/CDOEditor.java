@@ -1676,7 +1676,6 @@ public class CDOEditor extends MultiPageEditorPart
           }
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void makeContributions(IMenuManager menuManager, IToolBarManager toolBarManager,
             IStatusLineManager statusLineManager)
@@ -1685,7 +1684,6 @@ public class CDOEditor extends MultiPageEditorPart
           contentOutlineStatusLineManager = statusLineManager;
         }
 
-        @SuppressWarnings("deprecation")
         @Override
         public void setActionBars(IActionBars actionBars)
         {

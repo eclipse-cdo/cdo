@@ -11,6 +11,8 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDExternal;
+import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -20,6 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOUndoDetector;
 
 import org.eclipse.net4j.util.ObjectUtil;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -32,48 +35,49 @@ import java.util.List;
  */
 public class CDOUndoDetectorImpl implements CDOUndoDetector
 {
-  public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision revision,
+  public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision,
       CDOFeatureDelta featureDelta)
   {
     EStructuralFeature feature = featureDelta.getFeature();
-    InternalCDORevision revision1 = (InternalCDORevision)cleanRevision;
-    InternalCDORevision revision2 = (InternalCDORevision)revision;
+    InternalCDORevision cleanInternalRevision = (InternalCDORevision)cleanRevision;
+    InternalCDORevision currentInternalRevision = (InternalCDORevision)currentRevision;
 
-    if (ignore(feature, revision1, revision2))
+    if (ignore(feature, cleanInternalRevision, currentInternalRevision))
     {
       return false;
     }
 
     if (feature == CDOContainerFeatureDelta.CONTAINER_FEATURE)
     {
-      return detectUndoContainer(revision1, revision2);
+      return detectUndoContainer(transaction, cleanInternalRevision, currentInternalRevision);
     }
 
-    Object value1 = revision1.getValue(feature);
-    Object value2 = revision2.getValue(feature);
+    Object cleanValue = cleanInternalRevision.getValue(feature);
+    Object currentValue = currentInternalRevision.getValue(feature);
 
     if (feature instanceof EReference)
     {
       if (feature.isMany())
       {
-        List<?> list1 = (List<?>)value1;
-        List<?> list2 = (List<?>)value2;
+        List<?> cleanList = (List<?>)cleanValue;
+        List<?> currentList = (List<?>)currentValue;
 
-        int size1 = size(list1);
-        int size2 = size(list2);
+        int cleanSize = size(cleanList);
+        int currentSize = size(currentList);
 
-        if (size1 != size2)
+        if (cleanSize != currentSize)
         {
           return false;
         }
 
-        if (size1 != 0)
+        if (cleanSize != 0)
         {
-          for (Iterator<?> it1 = list1.iterator(), it2 = list2.iterator(); it1.hasNext();)
+          for (Iterator<?> cleanIterator = cleanList.iterator(), currentIterator = currentList.iterator(); //
+          cleanIterator.hasNext();)
           {
-            Object id1 = getID(it1.next());
-            Object id2 = getID(it2.next());
-            if (id1 != id2)
+            Object cleanID = cleanIterator.next();
+            Object currentID = currentIterator.next();
+            if (!equalReference(transaction, cleanID, currentID))
             {
               return false;
             }
@@ -83,37 +87,43 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
         return true;
       }
 
-      value1 = getID(value1);
-      value2 = getID(value2);
-      return value1 == value2;
+      return equalReference(transaction, cleanValue, currentValue);
     }
 
-    return ObjectUtil.equals(value1, value2);
+    return ObjectUtil.equals(cleanValue, currentValue);
   }
 
-  protected boolean detectUndoContainer(InternalCDORevision revision1, InternalCDORevision revision2)
+  /**
+   * @deprecated As of CDO 4.5 {@link #detectUndo(CDOTransaction, CDORevision, CDORevision, CDOFeatureDelta)} is called.
+   */
+  @Deprecated
+  protected boolean detectUndoContainer(InternalCDORevision cleanRevision, InternalCDORevision currentRevision)
   {
-    CDOID resourceID1 = revision1.getResourceID();
-    CDOID resourceID2 = revision2.getResourceID();
-    if (resourceID1 != resourceID2)
+    throw new UnsupportedOperationException();
+  }
+
+  protected boolean detectUndoContainer(CDOTransaction transaction, InternalCDORevision cleanRevision,
+      InternalCDORevision currentRevision)
+  {
+    CDOID cleanResourceID = cleanRevision.getResourceID();
+    CDOID currentResourceID = currentRevision.getResourceID();
+    if (cleanResourceID != currentResourceID)
     {
       return false;
     }
 
-    int containingFeatureID1 = revision1.getContainingFeatureID();
-    int containingFeatureID2 = revision2.getContainingFeatureID();
-    if (containingFeatureID1 != containingFeatureID2)
+    int cleanContainingFeatureID = cleanRevision.getContainingFeatureID();
+    int currentContainingFeatureID = currentRevision.getContainingFeatureID();
+
+    if (cleanContainingFeatureID != currentContainingFeatureID)
     {
       return false;
     }
 
-    Object c1 = revision1.getContainerID();
-    Object c2 = revision2.getContainerID();
+    Object cleanContainerID = cleanRevision.getContainerID();
+    Object currentContainerID = currentRevision.getContainerID();
 
-    // Potentially most expensive check because of EObject/ID conversion in getID()
-    Object containerID1 = getID(c1);
-    Object containerID2 = getID(c2);
-    if (containerID1 != containerID2)
+    if (!equalReference(transaction, cleanContainerID, currentContainerID))
     {
       return false;
     }
@@ -121,21 +131,24 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
     return true;
   }
 
-  protected boolean ignore(EStructuralFeature feature, InternalCDORevision revision1, InternalCDORevision revision2)
+  protected boolean ignore(EStructuralFeature feature, InternalCDORevision cleanRevision,
+      InternalCDORevision currentRevision)
   {
-    return feature.isMany() && !revision1.isUnchunked() && !revision2.isUnchunked();
+    return feature.isMany() && !cleanRevision.isUnchunked() && !currentRevision.isUnchunked();
   }
 
-  private static Object getID(Object value)
+  private static boolean equalReference(CDOTransaction transaction, Object cleanValue, Object currentValue)
   {
-    // TODO Write tests to see if EObject instead of CDOID instances need special handling
-    // CDOID id = CDOIDUtil.getCDOID(value);
-    // if (id != null)
-    // {
-    // return id;
-    // }
+    if (currentValue instanceof EObject && cleanValue instanceof CDOIDExternal)
+    {
+      CDOID id = ((CDOIDProvider)transaction).provideCDOID(currentValue);
+      if (id != null)
+      {
+        currentValue = id;
+      }
+    }
 
-    return value;
+    return cleanValue == currentValue;
   }
 
   private static int size(List<?> list)
@@ -153,7 +166,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
    */
   public static final class NoFeatures implements CDOUndoDetector
   {
-    public boolean detectUndo(CDOTransaction transaction, CDORevision revision1, CDORevision revision2,
+    public boolean detectUndo(CDOTransaction transaction, CDORevision cleanRevision, CDORevision currentRevision,
         CDOFeatureDelta featureDelta)
     {
       return false;
@@ -166,14 +179,15 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
   public static final class SingleValuedFeatures extends CDOUndoDetectorImpl
   {
     @Override
-    protected boolean ignore(EStructuralFeature feature, InternalCDORevision revision1, InternalCDORevision revision2)
+    protected boolean ignore(EStructuralFeature feature, InternalCDORevision cleanRevision,
+        InternalCDORevision currentRevision)
     {
       if (feature.isMany())
       {
         return false;
       }
 
-      return super.ignore(feature, revision1, revision2);
+      return super.ignore(feature, cleanRevision, currentRevision);
     }
   }
 }

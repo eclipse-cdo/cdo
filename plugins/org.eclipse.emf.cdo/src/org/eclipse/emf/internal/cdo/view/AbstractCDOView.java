@@ -167,6 +167,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private Map<CDOID, InternalCDOObject> objects;
 
+  private int objectCreationCounter;
+
   private CDOStore store = new CDOStoreImpl(this);
 
   private CDOResourceImpl rootResource;
@@ -1824,32 +1826,44 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       TRACER.trace("Creating object for " + id); //$NON-NLS-1$
     }
 
+    // Remember the current object creation count to be able to optimize the map lookup
+    // away if no objects get created during the getRevision() call.
+    int originalCount = objectCreationCounter;
+
     InternalCDORevision revision = getRevision(id, true);
     if (revision == null)
     {
       throw new ObjectNotFoundException(id, this);
     }
 
-    EClass eClass = revision.getEClass();
-    InternalCDOObject object;
-    if (CDOModelUtil.isResource(eClass) && id != rootResourceID)
+    // If the object has been created and registered during revision loading
+    // (for example by lock state prefetcher) don't create a duplicate.
+    InternalCDOObject object = objectCreationCounter == originalCount ? null : objects.get(id);
+    if (object == null)
     {
-      object = (InternalCDOObject)newResourceInstance(revision);
-      // object is PROXY
-    }
-    else
-    {
-      object = newInstance(eClass);
-      // object is TRANSIENT
-    }
+      EClass eClass = revision.getEClass();
 
-    cleanObject(object, revision);
-    CDOStateMachine.INSTANCE.dispatchLoadNotification(object);
+      if (CDOModelUtil.isResource(eClass) && id != rootResourceID)
+      {
+        object = (InternalCDOObject)newResourceInstance(revision);
+        // object is PROXY
+      }
+      else
+      {
+        object = newInstance(eClass);
+        // object is TRANSIENT
+      }
 
-    // Bug 435198: Have object's resource added to the ResourceSet on call to CDOView.getObject(CDOID)
-    if (!CDOModelUtil.isResource(eClass))
-    {
-      getStore().getResource(object);
+      ++objectCreationCounter;
+
+      cleanObject(object, revision);
+      CDOStateMachine.INSTANCE.dispatchLoadNotification(object);
+
+      // Bug 435198: Have object's resource added to the ResourceSet on call to CDOView.getObject(CDOID)
+      if (!CDOModelUtil.isResource(eClass))
+      {
+        getStore().getResource(object);
+      }
     }
 
     return object;

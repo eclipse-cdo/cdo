@@ -455,6 +455,18 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    */
   protected void updateLockStates(CDOLockState[] newLockStates)
   {
+    updateLockStates(newLockStates, false);
+  }
+
+  /**
+   * Updates the lock states of objects held in this view
+   *
+   * @param newLockStates new {@link CDOLockState lockStates} to integrate in cache
+   * @param loadOnDemand true to load corresponding {@link CDOObject} if not already loaded to be able to store lockState in cache, false otherwise
+   * @since 4.5
+   */
+  protected void updateLockStates(CDOLockState[] newLockStates, boolean loadOnDemand)
+  {
     for (CDOLockState lockState : newLockStates)
     {
       Object lockedObject = lockState.getLockedObject();
@@ -478,7 +490,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         throw new IllegalStateException("Unexpected: " + lockedObject.getClass().getSimpleName());
       }
 
-      InternalCDOObject object = getObject(id, false);
+      InternalCDOObject object = getObject(id, loadOnDemand);
       if (object != null)
       {
         InternalCDOLockState existingLockState = (InternalCDOLockState)lockStates.get(object);
@@ -2660,7 +2672,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
         CDOLockState[] lockStates = sessionProtocol.getLockStates(viewID, ids, revisionsLoadedEvent.getPrefetchDepth());
 
-        updateLockStatesForAllViews(lockStates);
+        updateLockStatesForAllViews(lockStates, true);
 
         // add missing lock states
         List<CDOLockState> missingLockStates = new ArrayList<CDOLockState>();
@@ -2671,7 +2683,10 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
           if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
           {
             Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-            missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
+            if (lockedObject != null)
+            {
+              missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
+            }
           }
         }
 
@@ -2685,24 +2700,27 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
             if (object != null && CDOViewImpl.this.lockStates.get(object) == null)
             {
               Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-              missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
+              if (lockedObject != null)
+              {
+                missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
+              }
             }
           }
         }
 
-        updateLockStatesForAllViews(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]));
+        updateLockStatesForAllViews(missingLockStates.toArray(new CDOLockState[missingLockStates.size()]), false);
       }
     }
 
-    private void updateLockStatesForAllViews(CDOLockState[] lockStates)
+    private void updateLockStatesForAllViews(CDOLockState[] lockStates, boolean loadOnDemand)
     {
-      updateLockStates(lockStates);
+      updateLockStates(lockStates, loadOnDemand);
 
       for (CDOCommonView view : getSession().getViews())
       {
         if (view != CDOViewImpl.this && view.getBranch() == getBranch())
         {
-          updateLockStates(lockStates);
+          updateLockStates(lockStates, loadOnDemand);
         }
       }
     }

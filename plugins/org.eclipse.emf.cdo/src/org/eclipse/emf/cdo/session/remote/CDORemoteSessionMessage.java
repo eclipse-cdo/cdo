@@ -153,7 +153,7 @@ public final class CDORemoteSessionMessage
   @Override
   public String toString()
   {
-    return MessageFormat.format("Message[type={0}, priority={1}, data={3}]", type, priority, HexUtil.bytesToHex(data));
+    return MessageFormat.format("Message[type={0}, priority={1}, data={2}]", type, priority, HexUtil.bytesToHex(data));
   }
 
   private byte[] copyData(byte[] src)

@@ -110,6 +110,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   private int idColumnLength = IDBField.DEFAULT;
 
+  private int jdbcFetchSize = 100000;
+
   private IIDHandler idHandler;
 
   private IMetaDataManager metaDataManager = new MetaDataManager(this);
@@ -188,6 +190,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   public Map<String, String> getProperties()
   {
     return properties;
+  }
+
+  public int getJDBCFetchSize()
+  {
+    return jdbcFetchSize;
   }
 
   public int getIDColumnLength()
@@ -603,6 +610,12 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       if (prop != null)
       {
         setDropAllDataOnActivate(Boolean.parseBoolean(prop));
+      }
+
+      prop = properties.get(IDBStore.Props.JDBC_FETCH_SIZE);
+      if (prop != null)
+      {
+        jdbcFetchSize = Integer.parseInt(prop);
       }
     }
 

@@ -686,12 +686,15 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   {
     DBStore store = (DBStore)getMappingStrategy().getStore();
     InternalRepository repository = store.getRepository();
+
     CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
     EClass eClass = getEClass();
     long timeStamp = branchPoint.getTimeStamp();
 
     IIDHandler idHandler = store.getIDHandler();
     IDBPreparedStatement stmt = null;
+
+    int jdbcFetchSize = store.getJDBCFetchSize();
     int oldFetchSize = -1;
 
     final long start1 = TRACER_UNITS.isEnabled() ? System.currentTimeMillis() : CDOBranchPoint.UNSPECIFIED_DATE;
@@ -707,7 +710,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       ConcurrencyUtil.execute(repository, listFiller);
 
       oldFetchSize = stmt.getFetchSize();
-      stmt.setFetchSize(100000);
+      stmt.setFetchSize(jdbcFetchSize);
       IDBResultSet resultSet = stmt.executeQuery();
 
       for (;;)

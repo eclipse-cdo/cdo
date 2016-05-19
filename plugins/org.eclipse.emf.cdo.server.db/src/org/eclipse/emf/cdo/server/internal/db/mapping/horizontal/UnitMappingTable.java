@@ -137,6 +137,8 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
 
     IDBConnection connection = accessor.getDBConnection();
     IDBPreparedStatement stmt = connection.prepareStatement(SQL_SELECT_CLASSES, ReuseProbability.HIGH);
+
+    int jdbcFetchSize = store.getJDBCFetchSize();
     int oldFetchSize = -1;
 
     try
@@ -144,7 +146,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
       idHandler.setCDOID(stmt, 1, rootID);
 
       oldFetchSize = stmt.getFetchSize();
-      stmt.setFetchSize(100000);
+      stmt.setFetchSize(jdbcFetchSize);
       ResultSet resultSet = stmt.executeQuery();
 
       while (resultSet.next())
@@ -205,7 +207,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
 
   private void initUnit(BatchedStatement stmt, IView view, CDOID rootID, CDORevisionHandler revisionHandler,
       Set<CDOID> initializedIDs, long timeStamp, IIDHandler idHandler, CDORevision revision, OMMonitor monitor)
-          throws SQLException
+      throws SQLException
   {
     revisionHandler.handleRevision(revision);
 

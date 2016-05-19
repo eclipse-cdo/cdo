@@ -43,6 +43,10 @@
 	      <property name="idColumnLength" value="34"/>
 			-->
 
+      <!-- Example http://bugs.eclipse.org/493598
+	      <property name="jdbcFetchSize" value="10000"/>
+			-->
+
       <!-- Period at which to execute an SQL statement to keep DB connection alive, in minutes -->
       <property name="connectionKeepAlivePeriod" value="60"/>
 
@@ -51,6 +55,7 @@
 
       <!-- Maximum number of store accessors (JDBC connections) to keep in the writer pool. The default value is 15.  -->
       <property name="writerPoolCapacity" value="20"/>
+
 
       <mappingStrategy type="horizontal"> <!-- callout -->
         <property name="qualifiedNames" value="true"/>

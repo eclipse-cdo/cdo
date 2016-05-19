@@ -275,6 +275,12 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
     if (revision != null)
     {
       CDOID parentID = revision.getResourceID();
+      if (parentID == id)
+      {
+        // This must be the root resource; break the recursion.
+        return false;
+      }
+
       if (CDOIDUtil.isNull(parentID))
       {
         parentID = (CDOID)revision.getContainerID();

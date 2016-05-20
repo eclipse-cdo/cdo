@@ -61,6 +61,9 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
    */
   public int getIDColumnLength();
 
+  /**
+   * @since 4.4
+   */
   public int getJDBCFetchSize();
 
   /**
@@ -142,7 +145,7 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
     public static final String DROP_ALL_DATA_ON_ACTIVATE = "dropAllDataOnActivate"; //$NON-NLS-1$
 
     /**
-     * @since 4.1
+     * @since 4.4
      */
     public static final String JDBC_FETCH_SIZE = "jdbcFetchSize"; //$NON-NLS-1$
   }

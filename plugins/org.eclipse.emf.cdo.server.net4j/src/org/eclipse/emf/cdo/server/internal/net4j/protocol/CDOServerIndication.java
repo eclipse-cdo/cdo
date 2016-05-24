@@ -88,6 +88,20 @@ public abstract class CDOServerIndication extends IndicationWithResponse
   }
 
   @Override
+  protected String getAdditionalInfo()
+  {
+    String additionalInfo = super.getAdditionalInfo();
+
+    String userID = getSession().getUserID();
+    if (userID != null)
+    {
+      additionalInfo += ", user=" + userID;
+    }
+
+    return additionalInfo;
+  }
+
+  @Override
   protected void indicating(ExtendedDataInputStream in) throws Exception
   {
     indicating(new CDODataInputImpl(in)

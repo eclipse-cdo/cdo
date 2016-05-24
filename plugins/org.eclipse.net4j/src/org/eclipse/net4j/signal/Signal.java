@@ -135,8 +135,16 @@ public abstract class Signal implements Runnable
   @Override
   public String toString()
   {
-    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}]", getProtocol().getType(), //$NON-NLS-1$
-        getID(), getName(), getCorrelationID());
+    return MessageFormat.format("Signal[protocol={0}, id={1}, name={2}, correlation={3}{4}]", getProtocol().getType(), //$NON-NLS-1$
+        getID(), getName(), getCorrelationID(), getAdditionalInfo());
+  }
+
+  /**
+   * @since 4.5
+   */
+  protected String getAdditionalInfo()
+  {
+    return "";
   }
 
   public final void run()

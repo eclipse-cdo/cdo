@@ -45,6 +45,20 @@ public abstract class CDOServerRequest extends Request
   }
 
   @Override
+  protected String getAdditionalInfo()
+  {
+    String additionalInfo = super.getAdditionalInfo();
+
+    String userID = getSession().getUserID();
+    if (userID != null)
+    {
+      additionalInfo += ", user=" + userID;
+    }
+
+    return additionalInfo;
+  }
+
+  @Override
   protected final void requesting(ExtendedDataOutputStream out) throws Exception
   {
     requesting(new CDODataOutputImpl(out)

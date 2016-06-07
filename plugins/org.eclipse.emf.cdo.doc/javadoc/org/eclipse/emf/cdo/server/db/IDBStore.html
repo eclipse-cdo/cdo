@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,13 +95,6 @@ var activeTableTab = "activeTableTab";
 <h2 title="Interface IDBStore" class="title">Interface IDBStore</h2>
 </div>
 <div class="contentContainer">
-<map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" href="../IStore.CanHandleClientAssignedIDs.html" title="&#171;interface&#187; IStore.CanHandleClientAssignedIDs (org.eclipse.emf.cdo.server)" alt="" coords="5,6,235,61"/>
-<area shape="rect" id="node2" href="../IStore.html" title="&#171;interface&#187; IStore (org.eclipse.emf.cdo.server)" alt="" coords="264,6,445,61"/>
-<area shape="rect" id="node3" href="IDBStore.html" title="&#171;interface&#187; IDBStore" alt="" coords="312,100,397,140"/>
-<area shape="rect" id="node4" title="&#171;interface&#187; IDBConnectionProvider (org.eclipse.net4j.db)" alt="" coords="475,6,629,61"/>
-</map>
-<div id="apivizContainer" style="text-align: center;"><img src="IDBStore.png" usemap="#APIVIZ" border="0"></div>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
@@ -193,32 +186,36 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getIDHandler--">getIDHandler</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getJDBCFetchSize--">getJDBCFetchSize</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getMappingStrategy--">getMappingStrategy</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/db/IMetaDataManager.html" title="interface in org.eclipse.emf.cdo.server.db">IMetaDataManager</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getMetaDataManager--">getMetaDataManager</a></span>()</code>
 <div class="block">Get the meta data manager associated with this DBStore.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getProperties--">getProperties</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getReader-org.eclipse.emf.cdo.server.ISession-">getReader</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code>
 <div class="block">Returns a reader that can be used to read from this store in the context of the given session.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#getWriter-org.eclipse.emf.cdo.server.ITransaction-">getWriter</a></span>(<a href="../../../../../../org/eclipse/emf/cdo/server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction)</code>
 <div class="block">Returns a writer that can be used to write to this store in the context of the given view.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.html#visitAllTables-java.sql.Connection-org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor-">visitAllTables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/sql/Connection.html?is-external=true" title="class or interface in java.sql">Connection</a>&nbsp;connection,
               <a href="../../../../../../org/eclipse/emf/cdo/server/db/IDBStore.TableVisitor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore.TableVisitor</a>&nbsp;visitor)</code>&nbsp;</td>
@@ -319,6 +316,19 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/server/IStore.html" title
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
+</dl>
+</li>
+</ul>
+<a name="getJDBCFetchSize--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getJDBCFetchSize</h4>
+<pre>int&nbsp;getJDBCFetchSize()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.4</dd>
 </dl>
 </li>
 </ul>

@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,13 +95,6 @@ var activeTableTab = "activeTableTab";
 <h2 title="Class Signal" class="title">Class Signal</h2>
 </div>
 <div class="contentContainer">
-<map id="APIVIZ" name="APIVIZ">
-<area shape="rect" id="node1" title="&#171;interface&#187; Runnable (java.lang)" alt="" coords="76,6,161,61"/>
-<area shape="rect" id="node2" href="SignalReactor.html" title="SignalReactor" alt="" coords="5,166,107,191"/>
-<area shape="rect" id="node3" href="SignalActor.html" title="SignalActor" alt="" coords="137,166,225,191"/>
-<area shape="rect" id="node4" href="Signal.html" title="Signal" alt="" coords="89,101,148,126"/>
-</map>
-<div id="apivizContainer" style="text-align: center;"><img src="Signal.png" usemap="#APIVIZ" border="0"></div>
 <ul class="inheritance">
 <li><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
@@ -223,53 +216,57 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#flush--">flush</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getAdditionalInfo--">getAdditionalInfo</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/buffer/BufferInputStream.html" title="class in org.eclipse.net4j.buffer">BufferInputStream</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferInputStream--">getBufferInputStream</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected <a href="../../../../org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getBufferOutputStream--">getBufferOutputStream</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCorrelationID--">getCorrelationID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentInputStream--">getCurrentInputStream</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getCurrentOutputStream--">getCurrentOutputStream</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>short</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getID--">getID</a></span>()</code>
 <div class="block">Returns the short integer ID of this signal that is unique among all signals of the associated
  <a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol--"><code>protocol</code></a>.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getName--">getName</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#getProtocol--">getProtocol</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#run--">run</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapInputStream-java.io.InputStream-">wrapInputStream</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/InputStream.html?is-external=true" title="class or interface in java.io">InputStream</a>&nbsp;in)</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>protected <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/Signal.html#wrapOutputStream-java.io.OutputStream-">wrapOutputStream</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/io/OutputStream.html?is-external=true" title="class or interface in java.io">OutputStream</a>&nbsp;out)</code>&nbsp;</td>
 </tr>
@@ -437,6 +434,19 @@ implements <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/R
 <dd><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a></code>&nbsp;in class&nbsp;<code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></dd>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
+</dl>
+</li>
+</ul>
+<a name="getAdditionalInfo--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAdditionalInfo</h4>
+<pre>protected&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getAdditionalInfo()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.5</dd>
 </dl>
 </li>
 </ul>

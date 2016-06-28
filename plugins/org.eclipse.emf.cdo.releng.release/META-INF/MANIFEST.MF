@@ -2,6 +2,6 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.releng.release; singleton:=true
-Bundle-Version: 4.2.300.qualifier
+Bundle-Version: 4.2.400.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin

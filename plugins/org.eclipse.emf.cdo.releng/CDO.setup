@@ -705,7 +705,6 @@
     </setupTask>
     <setupTask
         xsi:type="setup:EclipseIniTask"
-        id=""
         option="-Doomph.redirection.cdosetup"
         value="=http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/plugins/org.eclipse.emf.cdo.releng/CDO.setup"
         vm="true"/>
@@ -773,7 +772,6 @@
     </setupTask>
     <setupTask
         xsi:type="setup:EclipseIniTask"
-        id=""
         option="-Doomph.redirection.cdosetup"
         value="=http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/plugins/org.eclipse.emf.cdo.releng/CDO.setup"
         vm="true"/>

@@ -61,11 +61,6 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
     return getDelegate().getCommitComment();
   }
 
-  public boolean isAutoReleaseLocksEnabled()
-  {
-    return getDelegate().isAutoReleaseLocksEnabled();
-  }
-
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return getDelegate().getPackageRegistry();
@@ -136,9 +131,20 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
     return getDelegate().isUsingEtypes();
   }
 
+  @Deprecated
+  public boolean isAutoReleaseLocksEnabled()
+  {
+    return getDelegate().isAutoReleaseLocksEnabled();
+  }
+
   public CDOLockState[] getLocksOnNewObjects()
   {
     return getDelegate().getLocksOnNewObjects();
+  }
+
+  public CDOID[] getIDsToUnlock()
+  {
+    return getDelegate().getIDsToUnlock();
   }
 
   public CDOBranchVersion[] getDetachedObjectVersions()

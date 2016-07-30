@@ -19,7 +19,9 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 /**
  * @author Simon McDuff
+ * @deprecated As of 4.6 no longer supported.
  */
+@Deprecated
 public class WriteLockObjectsAction extends AbstractLockObjectsAction
 {
   public static final String ID = "writelock-objects"; //$NON-NLS-1$

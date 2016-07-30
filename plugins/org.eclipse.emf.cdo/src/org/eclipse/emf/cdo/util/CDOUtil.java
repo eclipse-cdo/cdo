@@ -88,8 +88,10 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
@@ -589,6 +591,20 @@ public final class CDOUtil
     }
 
     return (CDOObject)FSMUtil.getLegacyAdapter(object);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public static List<? extends CDOObject> getCDOObjects(EObject... objects)
+  {
+    List<CDOObject> result = new ArrayList<CDOObject>();
+    for (EObject object : objects)
+    {
+      result.add(getCDOObject(object));
+    }
+
+    return result;
   }
 
   /**

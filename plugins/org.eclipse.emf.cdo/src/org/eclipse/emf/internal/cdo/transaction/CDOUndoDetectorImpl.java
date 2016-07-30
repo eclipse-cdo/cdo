@@ -94,7 +94,7 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
   }
 
   /**
-   * @deprecated As of CDO 4.5 {@link #detectUndo(CDOTransaction, CDORevision, CDORevision, CDOFeatureDelta)} is called.
+   * @deprecated As of 4.5 {@link #detectUndo(CDOTransaction, CDORevision, CDORevision, CDOFeatureDelta)} is called.
    */
   @Deprecated
   protected boolean detectUndoContainer(InternalCDORevision cleanRevision, InternalCDORevision currentRevision)

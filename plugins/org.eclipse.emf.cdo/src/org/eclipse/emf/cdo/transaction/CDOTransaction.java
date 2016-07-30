@@ -292,22 +292,91 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
     public void setStaleReferenceCleaner(CDOStaleReferenceCleaner staleReferenceCleaner);
 
     /**
-     * Returns true if locks in this view will be removes when {@link CDOTransaction#commit()} or
-     * {@link CDOTransaction#rollback()} is called.
+     * Returns <code>true</code> if locks in this transaction will be released when {@link CDOTransaction#commit()} or
+     * {@link CDOTransaction#rollback()} are called, <code>false</code> otherwise.
      * <p>
-     * Default value is true.
+     * The default value is <code>true</code>.
+     *
+     * @see #getAutoReleaseLocksExemptions()
      */
     public boolean isAutoReleaseLocksEnabled();
 
     /**
-     * Specifies whether locks in this view will be removed when {@link CDOTransaction#commit()} or
-     * {@link CDOTransaction#rollback()} is called.
+     * Specifies whether locks in this transaction will be released when {@link CDOTransaction#commit()} or
+     * {@link CDOTransaction#rollback()} are called.
      * <p>
-     * If false all locks are kept.
+     * If set to <code>false</code> all locks will be kept when {@link CDOTransaction#commit()} or
+     * {@link CDOTransaction#rollback()} are called.
      * <p>
-     * Default value is true.
+     * The default value is <code>true</code>.
+     *
+     * @see #getAutoReleaseLocksExemptions()
      */
     public void setAutoReleaseLocksEnabled(boolean on);
+
+    /**
+     * Returns the set of {@link EObject objects} that are to be treated as exemptions to the {@link #isAutoReleaseLocksEnabled()} option.
+     * <p>
+     * That means:
+     * <p>
+     * <ul>
+     * <li> If {@link #isAutoReleaseLocksEnabled()} returns <code>true</code>, the locks on the objects in this set are <b>not</b> released
+     *      when {@link CDOTransaction#commit()} or {@link CDOTransaction#rollback()} are called.
+     * <li> If {@link #isAutoReleaseLocksEnabled()} returns <code>false</code>, the locks on the objects in this set <b>are</b> released nevertheless
+     *      when {@link CDOTransaction#commit()} or {@link CDOTransaction#rollback()} are called.
+     * </ul>
+     * <p>
+     * The returned set is unmodifiable. To modify the set use the {@link #clearAutoReleaseLocksExemptions() clearAutoReleaseLocksExemptions()},
+     * {@link #addAutoReleaseLocksExemptions(boolean, EObject...) addAutoReleaseLocksExemption()},
+     * and {@link #removeAutoReleaseLocksExemptions(boolean, EObject...) removeAutoReleaseLocksExemption()} methods.
+     * <p>
+     * <b>Implementation note</b>: This set stores weak references to the contained objects.
+     *
+     * @see #clearAutoReleaseLocksExemptions()
+     * @see #addAutoReleaseLocksExemptions(boolean, EObject...)
+     * @see #removeAutoReleaseLocksExemptions(boolean, EObject...)
+     * @since 4.6
+     */
+    public Set<? extends EObject> getAutoReleaseLocksExemptions();
+
+    /**
+     * Returns <code>true</code> if the given object is treated as an exemption to the {@link #isAutoReleaseLocksEnabled()} option,
+     * <code>false</code> otherwise.
+     *
+     * @see #getAutoReleaseLocksExemptions()
+     * @since 4.6
+     */
+    public boolean isAutoReleaseLocksExemption(EObject object);
+
+    /**
+     * Clears the set of {@link EObject objects} that are to be treated as exemptions to the {@link #isAutoReleaseLocksEnabled()} option.
+     *
+     * @see #getAutoReleaseLocksExemptions()
+     * @see #addAutoReleaseLocksExemptions(boolean, EObject...)
+     * @see #removeAutoReleaseLocksExemptions(boolean, EObject...)
+     * @since 4.6
+     */
+    public void clearAutoReleaseLocksExemptions();
+
+    /**
+     * Adds the given {@link EObject object} to the set of objects that are to be treated as exemptions to the {@link #isAutoReleaseLocksEnabled()} option.
+     *
+     * @see #getAutoReleaseLocksExemptions()
+     * @see #clearAutoReleaseLocksExemptions()
+     * @see #removeAutoReleaseLocksExemptions(boolean, EObject...)
+     * @since 4.6
+     */
+    public void addAutoReleaseLocksExemptions(boolean recursive, EObject... objects);
+
+    /**
+     * Removes the given {@link EObject object} from the set of objects that are to be treated as exemptions to the {@link #isAutoReleaseLocksEnabled()} option.
+     *
+     * @see #getAutoReleaseLocksExemptions()
+     * @see #clearAutoReleaseLocksExemptions()
+     * @see #addAutoReleaseLocksExemptions(boolean, EObject...)
+     * @since 4.6
+     */
+    public void removeAutoReleaseLocksExemptions(boolean recursive, EObject... objects);
 
     /**
      * Returns the number of milliseconds to wait for the transaction update when {@link CDOTransaction#commit()} is called.
@@ -367,7 +436,8 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
 
     /**
      * An {@link IOptionsEvent options event} fired from transaction {@link CDOTransaction#options() options} when the
-     * {@link Options#setAutoReleaseLocksEnabled(boolean) auto release locks} option has changed.
+     * {@link Options#setAutoReleaseLocksEnabled(boolean) auto release locks enabled} or
+     * {@link Options#getAutoReleaseLocksExemptions() auto release locks exemptions} options have changed.
      *
      * @author Eike Stepper
      * @since 3.0
@@ -376,6 +446,31 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
      */
     public interface AutoReleaseLocksEvent extends IOptionsEvent
     {
+      /**
+       * An {@link AutoReleaseLocksEvent auto release locks options event} fired from transaction {@link CDOTransaction#options() options} when the
+       * {@link Options#setAutoReleaseLocksEnabled(boolean) auto release locks enabled} option has changed.
+       *
+       * @author Eike Stepper
+       * @since 4.6
+       * @noextend This interface is not intended to be extended by clients.
+       * @noimplement This interface is not intended to be implemented by clients.
+       */
+      public interface AutoReleaseLocksEnabledEvent extends AutoReleaseLocksEvent
+      {
+      }
+
+      /**
+       * An {@link AutoReleaseLocksEvent auto release locks options event} fired from transaction {@link CDOTransaction#options() options} when the
+       * {@link Options#getAutoReleaseLocksExemptions() auto release locks exemptions} option has changed.
+       *
+       * @author Eike Stepper
+       * @since 4.6
+       * @noextend This interface is not intended to be extended by clients.
+       * @noimplement This interface is not intended to be implemented by clients.
+       */
+      public interface AutoReleaseLocksExemptionsEvent extends AutoReleaseLocksEvent
+      {
+      }
     }
 
     /**

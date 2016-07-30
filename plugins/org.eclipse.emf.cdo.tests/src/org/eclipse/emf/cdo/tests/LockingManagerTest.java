@@ -1255,7 +1255,7 @@ public class LockingManagerTest extends AbstractLockingTest
     assertEquals(false, CDOUtil.getCDOObject(category2).cdoWriteLock().isLocked()); // Implicit locks always released
   }
 
-  public void testAutoReleaseLocksOnChangedObject() throws Exception
+  public void testAutoReleaseExplicitLocks() throws Exception
   {
     Company company = getModel1Factory().createCompany();
 

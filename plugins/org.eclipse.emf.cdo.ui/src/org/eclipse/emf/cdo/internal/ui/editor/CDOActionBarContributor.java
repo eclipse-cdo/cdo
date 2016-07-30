@@ -12,12 +12,8 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.ui.actions.ChangePassiveUpdateAction;
+import org.eclipse.emf.cdo.internal.ui.actions.AutoReleaseLockExemptionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
-import org.eclipse.emf.cdo.internal.ui.actions.ReadLockObjectsAction;
-import org.eclipse.emf.cdo.internal.ui.actions.WriteLockObjectsAction;
-import org.eclipse.emf.cdo.internal.ui.messages.Messages;
-import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 import org.eclipse.emf.edit.domain.EditingDomain;
@@ -76,17 +72,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * @ADDED
    */
-  protected ReadLockObjectsAction readLockObjectsAction;
-
-  /**
-   * @ADDED
-   */
-  protected WriteLockObjectsAction writeLockObjectsAction;
-
-  /**
-   * @ADDED
-   */
-  protected ChangePassiveUpdateAction changePassiveUpdateAction;
+  protected AutoReleaseLockExemptionAction autoReleaseLockExemptionAction;
 
   /**
    * This keeps track of the active editor.
@@ -196,12 +182,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     loadResourceAction.setId(LOAD_RESOURCE_ID);
 
     importRootsAction = new ImportRootsAction();
-    importRootsAction.setId(ImportRootsAction.ID);
-
-    changePassiveUpdateAction = new ChangePassiveUpdateAction();
-
-    readLockObjectsAction = new ReadLockObjectsAction();
-    writeLockObjectsAction = new WriteLockObjectsAction();
+    autoReleaseLockExemptionAction = new AutoReleaseLockExemptionAction();
 
     validateAction = new ValidateAction();
     controlAction = new ControlAction();
@@ -375,18 +356,10 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     ISelection selection = event.getSelection();
     if (selection instanceof IStructuredSelection)
     {
-      if (readLockObjectsAction != null)
-      {
-        readLockObjectsAction.selectionChanged((IStructuredSelection)selection);
-      }
-
-      if (writeLockObjectsAction != null)
-      {
-        writeLockObjectsAction.selectionChanged((IStructuredSelection)selection);
-      }
-
       if (((IStructuredSelection)selection).size() == 1)
       {
+        autoReleaseLockExemptionAction.selectionChanged((IStructuredSelection)selection);
+
         Object object = ((IStructuredSelection)selection).getFirstElement();
 
         EditingDomain domain = ((IEditingDomainProvider)activeEditorPart).getEditingDomain();
@@ -394,16 +367,13 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
         newChildDescriptors = domain.getNewChildDescriptors(object, null);
         newSiblingDescriptors = domain.getNewChildDescriptors(null, object);
 
-        if (importRootsAction != null)
+        if (object instanceof CDOResource)
         {
-          if (object instanceof CDOResource)
-          {
-            importRootsAction.setTargetResource((CDOResource)object);
-          }
-          else
-          {
-            importRootsAction.setTargetResource(null);
-          }
+          importRootsAction.setTargetResource((CDOResource)object);
+        }
+        else
+        {
+          importRootsAction.setTargetResource(null);
         }
       }
     }
@@ -578,37 +548,21 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     refreshViewerAction.setId(REFRESH_VIEWER_ID);
     menuManager.insertAfter("ui-actions", refreshViewerAction); //$NON-NLS-1$
 
-    MenuManager lockingSubMenu = new MenuManager(Messages.getString("CDOActionBarContributor_0")); //$NON-NLS-1$
-    lockingSubMenu.add(new Separator("ui-actions")); //$NON-NLS-1$
-
-    lockingSubMenu.insertAfter("ui-actions", writeLockObjectsAction); //$NON-NLS-1$
-    writeLockObjectsAction.update();
-
-    lockingSubMenu.insertAfter("ui-actions", readLockObjectsAction); //$NON-NLS-1$
-    readLockObjectsAction.update();
-
-    menuManager.insertAfter("ui-actions", lockingSubMenu); //$NON-NLS-1$
-
-    menuManager.insertAfter("ui-actions", changePassiveUpdateAction); //$NON-NLS-1$
-    changePassiveUpdateAction.update();
-    changePassiveUpdateAction.setEnabled(true);
+    if (autoReleaseLockExemptionAction.init())
+    {
+      menuManager.insertAfter("additions", autoReleaseLockExemptionAction); //$NON-NLS-1$
+      autoReleaseLockExemptionAction.update();
+    }
 
     super.addGlobalActions(menuManager);
 
     if (loadResourceAction != null)
     {
-      if (importRootsAction != null)
-      {
-        menuManager.insertAfter(loadResourceAction.getId(), importRootsAction);
-      }
+      menuManager.insertAfter(loadResourceAction.getId(), importRootsAction);
     }
     else
     {
-      if (importRootsAction != null)
-      {
-        menuManager.insertBefore("additions-end", importRootsAction); //$NON-NLS-1$
-      }
-
+      menuManager.insertBefore("additions-end", importRootsAction); //$NON-NLS-1$
       menuManager.insertBefore("additions-end", new Separator()); //$NON-NLS-1$
     }
   }
@@ -631,28 +585,15 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   @Override
   public void activate()
   {
-    if (importRootsAction != null)
+    importRootsAction.setActiveWorkbenchPart(activeEditor);
+    Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
+    if (input instanceof CDOResource)
     {
-      importRootsAction.setActiveWorkbenchPart(activeEditor);
-      Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
-      if (input instanceof CDOResource)
-      {
-        importRootsAction.setTargetResource((CDOResource)input);
-      }
-      else
-      {
-        importRootsAction.setTargetResource(null);
-      }
+      importRootsAction.setTargetResource((CDOResource)input);
     }
-
-    if (changePassiveUpdateAction != null)
+    else
     {
-      Object input = ((CDOEditor)getActiveEditor()).getViewer().getInput();
-      if (input instanceof CDOResource)
-      {
-        CDOView view = ((CDOResource)input).cdoView();
-        changePassiveUpdateAction.setSession(view.getSession());
-      }
+      importRootsAction.setTargetResource(null);
     }
 
     super.activate();
@@ -664,11 +605,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   @Override
   public void deactivate()
   {
-    if (importRootsAction != null)
-    {
-      importRootsAction.setActiveWorkbenchPart(null);
-      importRootsAction.setTargetResource(null);
-    }
+    importRootsAction.setActiveWorkbenchPart(null);
+    importRootsAction.setTargetResource(null);
 
     super.deactivate();
   }
@@ -680,9 +618,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   public void update()
   {
     super.update();
-    if (importRootsAction != null)
-    {
-      importRootsAction.update();
-    }
+    importRootsAction.update();
   }
 }

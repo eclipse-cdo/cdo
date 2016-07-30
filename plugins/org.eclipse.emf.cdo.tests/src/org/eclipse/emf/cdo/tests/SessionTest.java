@@ -63,6 +63,14 @@ public class SessionTest extends AbstractCDOTest
 
   private static final char[] PASSWORD2 = "invalid".toCharArray(); //$NON-NLS-1$
 
+  @Override
+  public void setUp() throws Exception
+  {
+    super.setUp();
+    enableConsole();
+
+  }
+
   public void testIsSupportingAudits() throws Exception
   {
     CDOSession session = openSession();

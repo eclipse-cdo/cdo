@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -516,6 +517,28 @@ public class ObjectProperties extends Properties<EObject>
         }
 
         return lock.isLockedByOthers();
+      }
+    });
+
+    add(new Property<EObject>("autoReleaseLocksExemption")//$NON-NLS-1$
+    {
+      @Override
+      protected Object eval(EObject object)
+      {
+        CDOObject cdoObject = getCDOObject(object);
+        if (cdoObject == null)
+        {
+          return false;
+        }
+
+        CDOView view = cdoObject.cdoView();
+        if (view instanceof CDOTransaction)
+        {
+          CDOTransaction transaction = (CDOTransaction)view;
+          return transaction.options().isAutoReleaseLocksExemption(cdoObject);
+        }
+
+        return false;
       }
     });
 

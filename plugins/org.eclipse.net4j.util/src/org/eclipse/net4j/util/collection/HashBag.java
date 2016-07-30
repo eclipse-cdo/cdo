@@ -57,6 +57,20 @@ public final class HashBag<T> implements Set<T>
     return counter.getValue();
   }
 
+  /**
+   * @since 3.7
+   */
+  public int removeCounterFor(T o)
+  {
+    Counter counter = map.remove(o);
+    if (counter == null)
+    {
+      return 0;
+    }
+
+    return counter.getValue();
+  }
+
   public boolean add(T o)
   {
     return add(o, 1);

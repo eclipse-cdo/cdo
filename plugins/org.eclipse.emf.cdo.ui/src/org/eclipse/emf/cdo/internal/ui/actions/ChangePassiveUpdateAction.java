@@ -24,7 +24,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * {@link CDOSession session}.
  *
  * @author Victor Roldan Betancort
+ * @deprecated As of 4.6 no longer supported.
  */
+@Deprecated
 public class ChangePassiveUpdateAction extends EditingDomainAction
 {
   public static final String ID = "change-passiveupdate"; //$NON-NLS-1$

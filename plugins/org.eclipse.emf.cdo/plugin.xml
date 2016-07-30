@@ -59,19 +59,19 @@
          id="org.eclipse.emf.cdo.view.properties"
          type="org.eclipse.emf.cdo.view.CDOView"
          namespace="org.eclipse.emf.cdo.view"
-         properties="open,viewID,branchName,branch,timeStamp,lastUpdateTime,readOnly,dirty,durable,sessionID,userID,userAuthenticated,historical"
+         properties="open,viewID,branchName,branch,timeStamp,lastUpdateTime,rootResourcePermission,readOnly,dirty,durable,sessionID,userID,userAuthenticated,historical,autoReleaseLocks"
          class="org.eclipse.emf.internal.cdo.view.ViewProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.object.properties"
          type="org.eclipse.emf.ecore.EObject"
          namespace="org.eclipse.emf.cdo.object"
-         properties="isCDO,id,version,branch,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,viewHistorical,uri"
+         properties="isCDO,id,version,branch,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,autoReleaseLocksExemption,viewHistorical,uri"
          class="org.eclipse.emf.internal.cdo.object.ObjectProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.object.properties"
          type="org.eclipse.emf.cdo.CDOElement"
          namespace="org.eclipse.emf.cdo.object"
-         properties="isCDO,id,version,branch,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,viewHistorical,uri"
+         properties="isCDO,id,version,branch,state,transactional,readable,writable,writableContainer,container,children,permission,permissionContainer,readLocks,readLocked,readLockedByOthers,writeLock,writeLocked,writeLockedByOthers,writeOption,writeOptioned,writeOptionedByOthers,autoReleaseLocksExemption,viewHistorical,uri"
          class="org.eclipse.emf.internal.cdo.object.ObjectProperties$ElementTester"/>
    </extension>
 

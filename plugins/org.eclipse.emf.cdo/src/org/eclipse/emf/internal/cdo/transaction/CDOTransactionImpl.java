@@ -96,8 +96,6 @@ import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksEnabledEvent;
-import org.eclipse.emf.cdo.transaction.CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksExemptionsEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
@@ -148,7 +146,6 @@ import org.eclipse.net4j.util.transaction.TransactionException;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -179,6 +176,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -189,7 +187,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.WeakHashMap;
 import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -3643,6 +3640,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private CDOCommitData commitData;
 
+    private Collection<CDOLockState> locksOnNewObjects;
+
     private Map<CDOID, CDOObject> newObjects;
 
     private Map<CDOID, CDOObject> detachedObjects;
@@ -3653,10 +3652,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private Map<ByteArrayWrapper, CDOLob<?>> lobs = new HashMap<ByteArrayWrapper, CDOLob<?>>();
 
-    private List<CDOLockState> locksOnNewObjects = new ArrayList<CDOLockState>();
-
-    private List<CDOID> idsToUnlock = new ArrayList<CDOID>();
-
     public CDOCommitContextImpl(InternalCDOTransaction transaction)
     {
       this.transaction = transaction;
@@ -3665,8 +3660,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private void calculateCommitData()
     {
-      OptionsImpl options = (OptionsImpl)transaction.options();
-
       List<CDOPackageUnit> newPackageUnits = analyzeNewPackages();
 
       newObjects = filterCommittables(transaction.getNewObjects());
@@ -3674,15 +3667,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       for (CDOObject newObject : newObjects.values())
       {
         revisions.add(newObject.cdoRevision());
-
-        CDOLockState lockState = getLockState(newObject);
-        if (lockState != null)
-        {
-          if (!options.isEffectiveAutoReleaseLock(newObject))
-          {
-            locksOnNewObjects.add(lockState);
-          }
-        }
       }
 
       revisionDeltas = filterCommittables(transaction.getRevisionDeltas());
@@ -3716,16 +3700,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       dirtyObjects = filterCommittables(transaction.getDirtyObjects());
 
-      for (CDOObject lockedObject : getLockStates().keySet())
-      {
-        if (!FSMUtil.isTransient(lockedObject))
-        {
-          if (options.isEffectiveAutoReleaseLock(lockedObject))
-          {
-            idsToUnlock.add(lockedObject.cdoID());
-          }
-        }
-      }
+      CDOLockState[] locksOnNewObjectsArray = getLockStates(newObjects.keySet(), false);
+      locksOnNewObjects = Arrays.asList(locksOnNewObjectsArray);
 
       commitData = CDOCommitInfoUtil.createCommitData(newPackageUnits, revisions, deltas, detached);
     }
@@ -3781,6 +3757,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return isPartialCommit;
     }
 
+    public boolean isAutoReleaseLocks()
+    {
+      return transaction.options().isAutoReleaseLocksEnabled();
+    }
+
     public String getCommitComment()
     {
       return transaction.getCommitComment();
@@ -3806,6 +3787,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return commitData.getNewPackageUnits();
     }
 
+    public Collection<CDOLockState> getLocksOnNewObjects()
+    {
+      return locksOnNewObjects;
+    }
+
     public Map<CDOID, CDOObject> getDetachedObjects()
     {
       return detachedObjects;
@@ -3819,22 +3805,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     public Collection<CDOLob<?>> getLobs()
     {
       return lobs.values();
-    }
-
-    @Deprecated
-    public boolean isAutoReleaseLocks()
-    {
-      return transaction.options().isAutoReleaseLocksEnabled();
-    }
-
-    public Collection<CDOLockState> getLocksOnNewObjects()
-    {
-      return locksOnNewObjects;
-    }
-
-    public List<CDOID> getIDsToUnlock()
-    {
-      return idsToUnlock;
     }
 
     public void preCommit()
@@ -4021,26 +3991,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           fireEvent(new FinishedEvent(idMappings), listeners);
         }
 
-        Map<CDOObject, CDOLockState> lockStates = getLockStates();
-        if (!lockStates.isEmpty())
+        CDOLockState[] newLockStates = result.getNewLockStates();
+        if (newLockStates != null)
         {
-          List<CDOLockState> objectsToUnlock = new ArrayList<CDOLockState>();
-
-          for (Map.Entry<CDOObject, CDOLockState> entry : lockStates.entrySet())
-          {
-            CDOObject object = entry.getKey();
-            if (options().isEffectiveAutoReleaseLock(object))
-            {
-              InternalCDOLockState lockState = (InternalCDOLockState)entry.getValue();
-              lockState.updateFrom(InternalCDOLockState.UNLOCKED);
-
-              objectsToUnlock.add(lockState);
-            }
-          }
-
-          CDOLockState[] newLockStates = objectsToUnlock.toArray(new CDOLockState[objectsToUnlock.size()]);
-          notifyOtherViewsAboutLockChanges(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(),
-              newLockStates);
+          updateAndNotifyLockStates(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), newLockStates);
         }
       }
       catch (RuntimeException ex)
@@ -4221,13 +4175,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     private CDOUndoDetector undoDetector = DEFAULT_UNDO_DETECTOR;
 
-    private final List<CDOConflictResolver> conflictResolvers = new ArrayList<CDOConflictResolver>();
+    private List<CDOConflictResolver> conflictResolvers = new ArrayList<CDOConflictResolver>();
 
     private CDOStaleReferenceCleaner staleReferenceCleaner = CDOStaleReferenceCleaner.DEFAULT;
 
     private boolean autoReleaseLocksEnabled = true;
-
-    private final Map<EObject, Boolean> autoReleaseLocksExemptions = new WeakHashMap<EObject, Boolean>();
 
     private long commitInfoTimeout = DEFAULT_COMMIT_INFO_TIMEOUT;
 
@@ -4462,7 +4414,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           if (autoReleaseLocksEnabled != on)
           {
             autoReleaseLocksEnabled = on;
-            event = new AutoReleaseLocksEnabledEventImpl();
+            event = new AutoReleaseLocksEventImpl();
           }
         }
         finally
@@ -4472,157 +4424,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       fireEvent(event);
-    }
-
-    public Set<? extends EObject> getAutoReleaseLocksExemptions()
-    {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return new HashSet<EObject>(autoReleaseLocksExemptions.keySet());
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
-    }
-
-    public boolean isAutoReleaseLocksExemption(EObject object)
-    {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return autoReleaseLocksExemptions.get(CDOUtil.getCDOObject(object)) == Boolean.TRUE;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
-    }
-
-    public void clearAutoReleaseLocksExemptions()
-    {
-      checkActive();
-
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          if (!autoReleaseLocksExemptions.isEmpty())
-          {
-            autoReleaseLocksExemptions.clear();
-            event = new AutoReleaseLocksExemptionsEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
-
-      fireEvent(event);
-    }
-
-    public void addAutoReleaseLocksExemptions(boolean recursive, EObject... objects)
-    {
-      checkActive();
-
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          for (EObject object : objects)
-          {
-            if (autoReleaseLocksExemptions.put(CDOUtil.getCDOObject(object), Boolean.TRUE) == null)
-            {
-              event = new AutoReleaseLocksExemptionsEventImpl();
-            }
-
-            if (recursive)
-            {
-              for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
-              {
-                EObject child = it.next();
-                if (autoReleaseLocksExemptions.put(CDOUtil.getCDOObject(child), Boolean.TRUE) == null && event == null)
-                {
-                  event = new AutoReleaseLocksExemptionsEventImpl();
-                }
-              }
-            }
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
-
-      fireEvent(event);
-    }
-
-    public void removeAutoReleaseLocksExemptions(boolean recursive, EObject... objects)
-    {
-      checkActive();
-
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          for (EObject object : objects)
-          {
-            if (autoReleaseLocksExemptions.remove(CDOUtil.getCDOObject(object)) != null)
-            {
-              event = new AutoReleaseLocksExemptionsEventImpl();
-            }
-
-            if (recursive)
-            {
-              for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
-              {
-                EObject child = it.next();
-                if (autoReleaseLocksExemptions.remove(CDOUtil.getCDOObject(child)) != null && event == null)
-                {
-                  event = new AutoReleaseLocksExemptionsEventImpl();
-                }
-              }
-            }
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
-
-      fireEvent(event);
-    }
-
-    public boolean isEffectiveAutoReleaseLock(CDOObject newObject)
-    {
-      boolean effectiveAutoReleaseLock = autoReleaseLocksEnabled;
-      if (autoReleaseLocksExemptions.containsKey(newObject))
-      {
-        effectiveAutoReleaseLock = !effectiveAutoReleaseLock;
-      }
-
-      return effectiveAutoReleaseLock;
     }
 
     public long getCommitInfoTimeout()
@@ -4698,25 +4499,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     /**
      * @author Eike Stepper
      */
-    private final class AutoReleaseLocksEnabledEventImpl extends OptionsEvent implements AutoReleaseLocksEnabledEvent
+    private final class AutoReleaseLocksEventImpl extends OptionsEvent implements AutoReleaseLocksEvent
     {
       private static final long serialVersionUID = 1L;
 
-      public AutoReleaseLocksEnabledEventImpl()
-      {
-        super(OptionsImpl.this);
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class AutoReleaseLocksExemptionsEventImpl extends OptionsEvent
-        implements AutoReleaseLocksExemptionsEvent
-    {
-      private static final long serialVersionUID = 1L;
-
-      public AutoReleaseLocksExemptionsEventImpl()
+      public AutoReleaseLocksEventImpl()
       {
         super(OptionsImpl.this);
       }

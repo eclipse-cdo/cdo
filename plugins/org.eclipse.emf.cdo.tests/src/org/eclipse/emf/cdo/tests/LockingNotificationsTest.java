@@ -309,10 +309,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     CDOTransaction tx1 = session1.openTransaction();
     tx1.options().setAutoReleaseLocksEnabled(true);
-
     CDOResource res1 = tx1.getOrCreateResource(getResourcePath("r1"));
     res1.getContents().clear();
-
     Company company = getModel1Factory().createCompany();
     res1.getContents().add(company);
     tx1.commit();

@@ -1022,6 +1022,13 @@ public abstract class SynchronizableRepository extends Repository.Default implem
           throw new UnsupportedOperationException();
         }
 
+        public Collection<CDOLockState> getLocksOnNewObjects()
+        {
+          CDOLockState[] locksOnNewObjectsArr = WriteThroughCommitContext.this.getLocksOnNewObjects();
+          Collection<CDOLockState> locksOnNewObjects = Arrays.asList(locksOnNewObjectsArr);
+          return locksOnNewObjects;
+        }
+
         public Collection<CDOLob<?>> getLobs()
         {
           return Collections.emptySet(); // TODO (CD) Did we forget to support this earlier?
@@ -1067,22 +1074,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
           return WriteThroughCommitContext.this.getUserID();
         }
 
-        @Deprecated
         public boolean isAutoReleaseLocks()
         {
           return WriteThroughCommitContext.this.isAutoReleaseLocksEnabled();
-        }
-
-        public Collection<CDOLockState> getLocksOnNewObjects()
-        {
-          CDOLockState[] locksOnNewObjectsArray = WriteThroughCommitContext.this.getLocksOnNewObjects();
-          return Arrays.asList(locksOnNewObjectsArray);
-        }
-
-        public Collection<CDOID> getIDsToUnlock()
-        {
-          CDOID[] idsToUnlockArray = WriteThroughCommitContext.this.getIDsToUnlock();
-          return Arrays.asList(idsToUnlockArray);
         }
 
         public String getCommitComment()

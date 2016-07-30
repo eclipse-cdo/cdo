@@ -30,9 +30,7 @@ import java.util.List;
 
 /**
  * @author Simon McDuff
- * @deprecated As of 4.6 no longer supported.
  */
-@Deprecated
 public abstract class AbstractLockObjectsAction extends EditingDomainAction
 {
   private List<InternalCDOObject> objects = new ArrayList<InternalCDOObject>();

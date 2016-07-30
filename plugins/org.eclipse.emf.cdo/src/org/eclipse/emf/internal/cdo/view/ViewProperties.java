@@ -13,7 +13,6 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -58,13 +57,13 @@ public class ViewProperties extends Properties<CDOView>
     });
 
     add(new Property<CDOView>("branchName") //$NON-NLS-1$
-    {
+        {
       @Override
       protected Object eval(CDOView view)
       {
         return view.getBranch().getName();
       }
-    });
+        });
 
     add(new Property<CDOView>("branch", //$NON-NLS-1$
         "Branch", "The branch of this view.", CATEGORY_VIEW)
@@ -167,27 +166,13 @@ public class ViewProperties extends Properties<CDOView>
     });
 
     add(new Property<CDOView>("historical") //$NON-NLS-1$
-    {
+        {
       @Override
       protected Object eval(CDOView view)
       {
         return view.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE;
       }
-    });
-
-    add(new Property<CDOView>("autoReleaseLocks") //$NON-NLS-1$
-    {
-      @Override
-      protected Object eval(CDOView view)
-      {
-        if (view instanceof CDOTransaction)
-        {
-          return ((CDOTransaction)view).options().isAutoReleaseLocksEnabled();
-        }
-
-        return false;
-      }
-    });
+        });
   }
 
   public static void main(String[] args)

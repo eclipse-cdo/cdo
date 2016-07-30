@@ -119,6 +119,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getTransaction();
   }
 
+  public boolean isAutoReleaseLocks()
+  {
+    return delegateCommitContext.isAutoReleaseLocks();
+  }
+
   public boolean isPartialCommit()
   {
     return delegateCommitContext.isPartialCommit();
@@ -154,6 +159,11 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
     return delegateCommitContext.getNewPackageUnits();
   }
 
+  public Collection<CDOLockState> getLocksOnNewObjects()
+  {
+    return delegateCommitContext.getLocksOnNewObjects();
+  }
+
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
     return delegateCommitContext.getDetachedObjects();
@@ -167,22 +177,6 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   public Collection<CDOLob<?>> getLobs()
   {
     return delegateCommitContext.getLobs();
-  }
-
-  @Deprecated
-  public boolean isAutoReleaseLocks()
-  {
-    return delegateCommitContext.isAutoReleaseLocks();
-  }
-
-  public Collection<CDOLockState> getLocksOnNewObjects()
-  {
-    return delegateCommitContext.getLocksOnNewObjects();
-  }
-
-  public Collection<CDOID> getIDsToUnlock()
-  {
-    return delegateCommitContext.getIDsToUnlock();
   }
 
   public Object call() throws Exception

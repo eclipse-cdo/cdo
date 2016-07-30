@@ -69,24 +69,26 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   private static long sleepMillisForTesting = 0L;
 
-  private final int commitNumber;
+  private CDOIDProvider idProvider; // CDOTransaction
 
-  private final String commitComment;
+  private int commitNumber;
 
-  private final CDOCommitData commitData;
+  private String commitComment;
 
-  private final Collection<CDOLob<?>> lobs;
+  private boolean releaseLocks;
 
-  private final Collection<CDOLockState> locksOnNewObjects;
+  private CDOCommitData commitData;
 
-  private final Collection<CDOID> idsToUnlock;
+  private Collection<CDOLob<?>> lobs;
 
-  private final int viewID;
+  private Collection<CDOLockState> locksOnNewObjects;
+
+  private int viewID;
 
   /**
    * Is <code>null</code> in {@link CommitDelegationRequest}.
    */
-  private final InternalCDOTransaction transaction;
+  private InternalCDOTransaction transaction;
 
   private boolean clearResourcePathCache;
 
@@ -98,23 +100,20 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   public CommitTransactionRequest(CDOClientProtocol protocol, short signalID, InternalCDOCommitContext context)
   {
     super(protocol, signalID);
-    transaction = context.getTransaction();
 
+    transaction = context.getTransaction();
     CommitToken commitToken = transaction.getCommitToken();
     if (commitToken != null)
     {
       commitNumber = commitToken.getCommitNumber();
     }
-    else
-    {
-      commitNumber = 0;
-    }
 
     commitComment = context.getCommitComment();
+    releaseLocks = context.isAutoReleaseLocks();
+    idProvider = context.getTransaction();
     commitData = context.getCommitData();
     lobs = context.getLobs();
     locksOnNewObjects = context.getLocksOnNewObjects();
-    idsToUnlock = context.getIDsToUnlock();
     viewID = context.getViewID();
   }
 
@@ -128,7 +127,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   @Override
   protected CDOIDProvider getIDProvider()
   {
-    return transaction;
+    return idProvider;
   }
 
   @Override
@@ -151,34 +150,14 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     List<CDOIDAndVersion> detachedObjects = commitData.getDetachedObjects();
 
     out.writeLong(getLastUpdateTime());
+    out.writeBoolean(releaseLocks);
     out.writeInt(commitNumber);
     out.writeString(commitComment);
-    out.writeInt(locksOnNewObjects.size());
-    out.writeInt(idsToUnlock.size());
     out.writeInt(newPackageUnits.size());
+    out.writeInt(locksOnNewObjects.size());
     out.writeInt(newObjects.size());
     out.writeInt(changedObjects.size());
     out.writeInt(detachedObjects.size());
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} locks on new objects", locksOnNewObjects.size()); //$NON-NLS-1$
-    }
-
-    for (CDOLockState lockState : locksOnNewObjects)
-    {
-      out.writeCDOLockState(lockState);
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing {0} unlocks on changed objects", idsToUnlock.size()); //$NON-NLS-1$
-    }
-
-    for (CDOID id : idsToUnlock)
-    {
-      out.writeCDOID(id);
-    }
 
     if (TRACER.isEnabled())
     {
@@ -188,6 +167,16 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     for (CDOPackageUnit newPackageUnit : newPackageUnits)
     {
       out.writeCDOPackageUnit(newPackageUnit, true);
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing {0} locks on new objects", locksOnNewObjects.size()); //$NON-NLS-1$
+    }
+
+    for (CDOLockState lockState : locksOnNewObjects)
+    {
+      out.writeCDOLockState(lockState);
     }
 
     if (TRACER.isEnabled())
@@ -330,7 +319,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     }
 
     CommitTransactionResult result = new CommitTransactionResult();
-    result.setIDProvider(transaction);
+    result.setIDProvider(idProvider);
     result.setClearResourcePathCache(clearResourcePathCache);
     result.setRollbackReason(in.readByte());
     result.setRollbackMessage(in.readString());
@@ -356,7 +345,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
   protected CommitTransactionResult confirmingResult(CDODataInput in) throws IOException
   {
     CommitTransactionResult result = new CommitTransactionResult();
-    result.setIDProvider(transaction);
+    result.setIDProvider(idProvider);
     result.setClearResourcePathCache(clearResourcePathCache);
     result.setBranchPoint(in.readCDOBranchPoint());
     result.setPreviousTimeStamp(in.readLong());

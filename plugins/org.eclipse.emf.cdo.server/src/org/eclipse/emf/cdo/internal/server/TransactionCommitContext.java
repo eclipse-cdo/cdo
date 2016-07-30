@@ -78,7 +78,6 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -93,6 +92,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -147,6 +147,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[0];
 
+  private CDOLockState[] locksOnNewObjects = new CDOLockState[0];
+
   private InternalCDORevision[] newObjects = new InternalCDORevision[0];
 
   private InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[0];
@@ -177,7 +179,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private List<CDOIDReference> xRefs;
 
-  private final List<LockState<Object, IView>> postCommitLockStates = new ArrayList<LockState<Object, IView>>();
+  private List<LockState<Object, IView>> postCommitLockStates;
 
   private boolean hasChanges;
 
@@ -185,11 +187,9 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private boolean ensuringReferentialIntegrity;
 
+  private boolean autoReleaseLocksEnabled;
+
   private ExtendedDataInputStream lobs;
-
-  private CDOLockState[] locksOnNewObjects = new CDOLockState[0];
-
-  private CDOID[] idsToUnlock = new CDOID[0];
 
   private Map<Object, Object> data;
 
@@ -236,6 +236,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public long getLastUpdateTime()
   {
     return lastUpdateTime;
+  }
+
+  public boolean isAutoReleaseLocksEnabled()
+  {
+    return autoReleaseLocksEnabled;
   }
 
   public byte getRollbackReason()
@@ -287,6 +292,11 @@ public class TransactionCommitContext implements InternalCommitContext
   public InternalCDOPackageUnit[] getNewPackageUnits()
   {
     return newPackageUnits;
+  }
+
+  public CDOLockState[] getLocksOnNewObjects()
+  {
+    return locksOnNewObjects;
   }
 
   public InternalCDORevision[] getNewObjects()
@@ -516,6 +526,11 @@ public class TransactionCommitContext implements InternalCommitContext
     this.newPackageUnits = newPackageUnits;
   }
 
+  public void setLocksOnNewObjects(CDOLockState[] locksOnNewObjects)
+  {
+    this.locksOnNewObjects = locksOnNewObjects;
+  }
+
   public void setNewObjects(InternalCDORevision[] newObjects)
   {
     this.newObjects = newObjects;
@@ -546,6 +561,11 @@ public class TransactionCommitContext implements InternalCommitContext
     this.lastUpdateTime = lastUpdateTime;
   }
 
+  public void setAutoReleaseLocksEnabled(boolean on)
+  {
+    autoReleaseLocksEnabled = on;
+  }
+
   public void setCommitNumber(int commitNumber)
   {
     this.commitNumber = commitNumber;
@@ -564,38 +584,6 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setLobs(ExtendedDataInputStream in)
   {
     lobs = in;
-  }
-
-  @Deprecated
-  public boolean isAutoReleaseLocksEnabled()
-  {
-    return false;
-  }
-
-  @Deprecated
-  public void setAutoReleaseLocksEnabled(boolean on)
-  {
-    // Do nothing.
-  }
-
-  public CDOLockState[] getLocksOnNewObjects()
-  {
-    return locksOnNewObjects;
-  }
-
-  public void setLocksOnNewObjects(CDOLockState[] locksOnNewObjects)
-  {
-    this.locksOnNewObjects = locksOnNewObjects;
-  }
-
-  public CDOID[] getIDsToUnlock()
-  {
-    return idsToUnlock;
-  }
-
-  public void setIDsToUnlock(CDOID[] idsToUnlock)
-  {
-    this.idsToUnlock = idsToUnlock;
   }
 
   public <T> T getData(Object key)
@@ -1119,6 +1107,50 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
+  protected synchronized void unlockObjects()
+  {
+    // Unlock objects locked during commit
+    if (!lockedObjects.isEmpty())
+    {
+      lockManager.unlock2(LockType.WRITE, transaction, lockedObjects);
+      lockedObjects.clear();
+    }
+
+    // Release durable locks that have been acquired on detached objects
+    if (detachedObjects.length > 0)
+    {
+      boolean branching = repository.isSupportingBranches();
+      Collection<? extends Object> unlockables;
+      if (branching)
+      {
+        List<CDOIDAndBranch> keys = new ArrayList<CDOIDAndBranch>(detachedObjects.length);
+        for (CDOID id : detachedObjects)
+        {
+          CDOIDAndBranch idAndBranch = CDOIDUtil.createIDAndBranch(id, branch);
+          keys.add(idAndBranch);
+        }
+
+        unlockables = keys;
+      }
+      else
+      {
+        unlockables = Arrays.asList(detachedObjects);
+      }
+
+      // We only need to consider detached objects that have been explicitly locked
+      Collection<Object> detachedObjectsToUnlock = new ArrayList<Object>();
+      for (Object unlockable : unlockables)
+      {
+        if (lockManager.hasLock(LockType.WRITE, transaction, unlockable))
+        {
+          detachedObjectsToUnlock.add(unlockable);
+        }
+      }
+
+      lockManager.unlock2(true, LockType.WRITE, transaction, detachedObjectsToUnlock, false);
+    }
+  }
+
   protected void computeDirtyObjects(OMMonitor monitor)
   {
     try
@@ -1323,7 +1355,7 @@ public class TransactionCommitContext implements InternalCommitContext
         }
       }
 
-      releaseImplicitLocks();
+      unlockObjects();
     }
   }
 
@@ -1342,22 +1374,24 @@ public class TransactionCommitContext implements InternalCommitContext
       addRevisions(dirtyObjects, monitor.fork());
       reviseDetachedObjects(monitor.fork());
 
-      releaseImplicitLocks();
+      unlockObjects();
       monitor.worked();
 
-      acquireLocksOnNewObjects();
+      applyLocksOnNewObjects();
       monitor.worked();
 
-      autoReleaseExplicitLocks();
-      monitor.worked();
-
-      if (!postCommitLockStates.isEmpty())
+      if (autoReleaseLocksEnabled)
       {
-        // TODO (CD) Does doing this here make sense?
-        // The commit notifications get sent later, from postCommit.
-        sendLockNotifications(postCommitLockStates);
+        postCommitLockStates = lockManager.unlock2(true, transaction);
+        if (!postCommitLockStates.isEmpty())
+        {
+          // TODO (CD) Does doing this here make sense?
+          // The commit notifications get sent later, from postCommit.
+          sendLockNotifications(postCommitLockStates);
+        }
       }
 
+      monitor.worked();
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
     }
     catch (Throwable t)
@@ -1370,26 +1404,15 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  protected synchronized void releaseImplicitLocks()
-  {
-    // Unlock objects locked during commit
-    if (!lockedObjects.isEmpty())
-    {
-      lockManager.unlock2(LockType.WRITE, transaction, lockedObjects);
-      lockedObjects.clear();
-    }
-  }
-
-  protected void acquireLocksOnNewObjects() throws InterruptedException
+  protected void applyLocksOnNewObjects() throws InterruptedException
   {
     final CDOLockOwner owner = CDOLockUtil.createLockOwner(transaction);
-    final boolean mapIDs = transaction.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
 
     for (CDOLockState lockState : locksOnNewObjects)
     {
       Object target = lockState.getLockedObject();
 
-      if (mapIDs)
+      if (transaction.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
       {
         CDOIDAndBranch idAndBranch = target instanceof CDOIDAndBranch ? (CDOIDAndBranch)target : null;
         CDOID id = idAndBranch != null ? ((CDOIDAndBranch)target).getID() : (CDOID)target;
@@ -1399,60 +1422,13 @@ public class TransactionCommitContext implements InternalCommitContext
         target = idAndBranch != null ? CDOIDUtil.createIDAndBranch(newID, idAndBranch.getBranch()) : newID;
       }
 
-      LockState<Object, IView> postCommitLockState = null;
       for (LockType type : LockType.values())
       {
         if (lockState.isLocked(type, owner, false))
         {
-          List<LockState<Object, IView>> lockStates = lockManager.lock2(type, transaction,
-              Collections.singleton(target), 0);
-          postCommitLockState = lockStates.get(0);
+          lockManager.lock2(type, transaction, Collections.singleton(target), 0);
         }
       }
-
-      if (postCommitLockState != null)
-      {
-        postCommitLockStates.add(postCommitLockState);
-      }
-    }
-  }
-
-  protected void autoReleaseExplicitLocks() throws InterruptedException
-  {
-    List<Object> targets = new ArrayList<Object>();
-
-    // Release locks that have been sent from the client.
-    for (CDOID id : idsToUnlock)
-    {
-      Object target = lockManager.getLockKey(id, branch);
-      targets.add(target);
-    }
-
-    // Release durable locks that have been acquired on detached objects.
-    for (CDOID id : detachedObjects)
-    {
-      Object target = lockManager.getLockKey(id, branch);
-      if (lockManager.hasLock(LockType.WRITE, transaction, target))
-      {
-        // We only need to consider detached objects that have been explicitly locked
-        targets.add(target);
-      }
-    }
-
-    try
-    {
-      RWOLockManager.setUnlockAll(true);
-
-      List<LockState<Object, IView>> lockStates = lockManager.unlock2(true, LockType.WRITE, transaction, targets,
-          false);
-      if (lockStates != null)
-      {
-        postCommitLockStates.addAll(lockStates);
-      }
-    }
-    finally
-    {
-      RWOLockManager.setUnlockAll(false);
     }
   }
 

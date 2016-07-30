@@ -411,6 +411,7 @@
                   </iterate>
                </with>
             </visibleWhen>
+
          </command>
          <command
                commandId="org.eclipse.emf.cdo.ui.UnlockObject"

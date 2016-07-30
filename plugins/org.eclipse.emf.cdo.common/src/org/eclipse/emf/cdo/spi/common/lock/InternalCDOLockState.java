@@ -10,10 +10,8 @@
  */
 package org.eclipse.emf.cdo.spi.common.lock;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -25,11 +23,6 @@ import org.eclipse.emf.cdo.internal.common.lock.CDOLockStateImpl;
  */
 public interface InternalCDOLockState extends CDOLockState
 {
-  /**
-   * @since 4.6
-   */
-  public static final CDOLockState UNLOCKED = new CDOLockStateImpl(CDOID.NULL);
-
   public void addReadLockOwner(CDOLockOwner lockOwner);
 
   public boolean removeReadLockOwner(CDOLockOwner lockOwner);

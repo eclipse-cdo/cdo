@@ -25,11 +25,8 @@ public final class SignalCounter implements IListener
 {
   private HashBag<Class<? extends Signal>> signals = new HashBag<Class<? extends Signal>>();
 
-  private final ISignalProtocol<?> protocol;
-
   public SignalCounter()
   {
-    protocol = null;
   }
 
   /**
@@ -37,11 +34,14 @@ public final class SignalCounter implements IListener
    */
   public SignalCounter(ISignalProtocol<?> protocol)
   {
-    this.protocol = protocol;
+    protocol.addListener(this);
+  }
 
-    if (protocol != null)
+  public int getCountFor(Class<? extends Signal> signal)
+  {
+    synchronized (signals)
     {
-      protocol.addListener(this);
+      return signals.getCounterFor(signal);
     }
   }
 
@@ -55,25 +55,6 @@ public final class SignalCounter implements IListener
     synchronized (signals)
     {
       return signals.size();
-    }
-  }
-
-  public int getCountFor(Class<? extends Signal> signal)
-  {
-    synchronized (signals)
-    {
-      return signals.getCounterFor(signal);
-    }
-  }
-
-  /**
-   * @since 4.6
-   */
-  public int removeCountFor(Class<? extends Signal> signal)
-  {
-    synchronized (signals)
-    {
-      return signals.removeCounterFor(signal);
     }
   }
 
@@ -94,17 +75,6 @@ public final class SignalCounter implements IListener
         SignalFinishedEvent<?> e = (SignalFinishedEvent<?>)event;
         signals.add(e.getSignal().getClass());
       }
-    }
-  }
-
-  /**
-   * @since 4.6
-   */
-  public void dispose()
-  {
-    if (protocol != null)
-    {
-      protocol.removeListener(this);
     }
   }
 }

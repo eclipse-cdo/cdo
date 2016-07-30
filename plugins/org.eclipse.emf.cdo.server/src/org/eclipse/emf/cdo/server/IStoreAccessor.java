@@ -312,6 +312,11 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public long getLastUpdateTime();
 
     /**
+     * @since 3.0
+     */
+    public boolean isAutoReleaseLocksEnabled();
+
+    /**
      * Returns the temporary, transactional package manager associated with the commit operation represented by this
      * <code>CommitContext</code>. In addition to the packages registered with the session this package manager also
      * contains the new packages that are part of this commit operation.
@@ -343,6 +348,14 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * <code>CommitContext</code>.
      */
     public InternalCDOPackageUnit[] getNewPackageUnits();
+
+    /**
+     * Returns an array of the locks on the new objects that are part of the commit operation represented by this
+     * <code>CommitContext</code>.
+     *
+     * @since 4.1
+     */
+    public CDOLockState[] getLocksOnNewObjects();
 
     /**
      * Returns an array of the new objects that are part of the commit operation represented by this
@@ -405,27 +418,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      * @since 4.0
      */
     public ExtendedDataInputStream getLobs();
-
-    /**
-     *
-     * @since 3.0
-     * @deprecated As of 4.5 no longer supported. See {@link #getIDsToUnlock()}.
-     */
-    @Deprecated
-    public boolean isAutoReleaseLocksEnabled();
-
-    /**
-     * Returns an array of the locks on the new objects that are part of the commit operation represented by this
-     * <code>CommitContext</code>.
-     *
-     * @since 4.1
-     */
-    public CDOLockState[] getLocksOnNewObjects();
-
-    /**
-     * @since 4.6
-     */
-    public CDOID[] getIDsToUnlock();
 
     /**
      * Returns an unmodifiable map from all temporary IDs to their persistent counter parts.

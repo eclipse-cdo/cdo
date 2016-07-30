@@ -1635,7 +1635,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    * @author Eike Stepper
    * @since 4.1
    */
-  private final class CDOStoreEcoreEMap extends EcoreEMap<Object, Object>implements InternalCDOLoadable
+  private final class CDOStoreEcoreEMap extends EcoreEMap<Object, Object> implements InternalCDOLoadable
   {
     private static final long serialVersionUID = 1L;
 

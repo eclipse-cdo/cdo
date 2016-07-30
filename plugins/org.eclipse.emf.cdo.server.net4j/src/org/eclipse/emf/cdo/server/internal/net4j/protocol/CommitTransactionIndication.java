@@ -126,19 +126,44 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     commitContext.preWrite();
 
     long lastUpdateTime = in.readLong();
-    boolean autoReleaseLocksEnabled = in.readBoolean();
     int commitNumber = in.readInt();
     String commitComment = in.readString();
 
-    InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
     CDOLockState[] locksOnNewObjects = new CDOLockState[in.readInt()];
+    CDOID[] idsToUnlock = new CDOID[in.readInt()];
+    InternalCDOPackageUnit[] newPackageUnits = new InternalCDOPackageUnit[in.readInt()];
     InternalCDORevision[] newObjects = new InternalCDORevision[in.readInt()];
     InternalCDORevisionDelta[] dirtyObjectDeltas = new InternalCDORevisionDelta[in.readInt()];
     CDOID[] detachedObjects = new CDOID[in.readInt()];
-    monitor.begin(newPackageUnits.length + newObjects.length + dirtyObjectDeltas.length + detachedObjects.length);
+    monitor.begin(locksOnNewObjects.length + idsToUnlock.length + newPackageUnits.length + newObjects.length
+        + dirtyObjectDeltas.length + detachedObjects.length);
 
     try
     {
+      // Locks on new objects
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Reading {0} locks on new objects", locksOnNewObjects.length); //$NON-NLS-1$
+      }
+
+      for (int i = 0; i < locksOnNewObjects.length; i++)
+      {
+        locksOnNewObjects[i] = in.readCDOLockState();
+        monitor.worked();
+      }
+
+      // Unlocks on changed objects
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Reading {0} IDs to unlock", idsToUnlock.length); //$NON-NLS-1$
+      }
+
+      for (int i = 0; i < idsToUnlock.length; i++)
+      {
+        idsToUnlock[i] = in.readCDOID();
+        monitor.worked();
+      }
+
       // New package units
       if (TRACER.isEnabled())
       {
@@ -159,18 +184,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
         // When all packages are deserialized and registered, resolve them
         // Note: EcoreUtil.resolveAll(resourceSet) does *not* do the trick
         EMFUtil.safeResolveAll(resourceSet);
-      }
-
-      // Locks on new objects
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Reading {0} locks on new objects", locksOnNewObjects.length); //$NON-NLS-1$
-      }
-
-      for (int i = 0; i < locksOnNewObjects.length; i++)
-      {
-        locksOnNewObjects[i] = in.readCDOLockState();
-        monitor.worked();
       }
 
       // New objects
@@ -274,7 +287,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
       commitContext.setCommitNumber(commitNumber);
       commitContext.setLastUpdateTime(lastUpdateTime);
-      commitContext.setAutoReleaseLocksEnabled(autoReleaseLocksEnabled);
       commitContext.setClearResourcePathCache(clearResourcePathCache);
       commitContext.setUsingEcore(usingEcore);
       commitContext.setUsingEtypes(usingEtypes);
@@ -287,6 +299,8 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       commitContext.setDetachedObjectVersions(detachedObjectVersions);
       commitContext.setCommitComment(commitComment);
       commitContext.setLobs(getIndicationStream());
+      commitContext.setLocksOnNewObjects(locksOnNewObjects);
+      commitContext.setIDsToUnlock(idsToUnlock);
     }
     finally
     {

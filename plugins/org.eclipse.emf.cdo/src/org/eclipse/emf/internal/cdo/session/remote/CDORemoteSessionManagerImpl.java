@@ -39,7 +39,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession>implements InternalCDORemoteSessionManager
+public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> implements InternalCDORemoteSessionManager
 {
   private InternalCDOSession localSession;
 
@@ -65,20 +65,17 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession>impl
 
   public CDORemoteSession[] getRemoteSessions()
   {
-    Collection<CDORemoteSession> remoteSessions;
     synchronized (this)
     {
       if (subscribed)
       {
-        remoteSessions = this.remoteSessions.values();
+        Collection<CDORemoteSession> values = remoteSessions.values();
+        return values.toArray(new CDORemoteSession[values.size()]);
       }
-      else
-      {
-        remoteSessions = localSession.getSessionProtocol().getRemoteSessions(this, false);
-      }
-    }
 
-    return remoteSessions.toArray(new CDORemoteSession[remoteSessions.size()]);
+      List<CDORemoteSession> loadedRemoteSessions = localSession.getSessionProtocol().getRemoteSessions(this, false);
+      return loadedRemoteSessions.toArray(new CDORemoteSession[loadedRemoteSessions.size()]);
+    }
   }
 
   public CDORemoteSession[] getElements()

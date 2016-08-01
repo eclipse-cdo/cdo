@@ -595,10 +595,8 @@
             <arg value="org.eclipse.buckminster.git.headless.feature.feature.group" />
             <arg value="-i" />
             <arg value="org.eclipse.ant.launching" />
-          	<!--
             <arg value="-i" />
             <arg value="org.eclipse.pde.api.tools.ee.feature.feature.group" />
-            -->
             <arg value="-i" />
             <arg value="org.eclipse.oomph.version.headless.feature.group" />
             <arg value="-i" />

@@ -580,7 +580,7 @@
             <arg value="-r" />
             <arg value="http://download.eclipse.org/oomph/updates/latest" />
             <arg value="-r" />
-            <arg value="http://download.eclipse.org/modeling/emf/cdo/updates/integration" />
+            <arg value="http://download.eclipse.org/modeling/emf/cdo/drops/R20160607-1209" />
             <arg value="-d" />
             <arg value="${tools}/buckminster" />
             <arg value="-p" />

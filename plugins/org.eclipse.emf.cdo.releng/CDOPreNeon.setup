@@ -136,247 +136,74 @@
       <sourceLocator
           rootFolder="${cdo.git.clone.location}"/>
       <repositoryList
-          name="Oxygen">
+          name="Mars">
         <repository
-            url="http://download.eclipse.org/releases/neon"/>
+            url="http://download.eclipse.org/releases/mars"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.6"/>
+            url="http://download.eclipse.org/eclipse/updates/4.5"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
-        <repository
-            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
-        <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
-        <repository
-            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
-        <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
-        <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
-      </repositoryList>
-      <repositoryList
-          name="Neon">
-        <repository
-            url="http://download.eclipse.org/releases/neon"/>
-        <repository
-            url="http://download.eclipse.org/eclipse/updates/4.6"/>
-        <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
+            url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
-        <repository
-            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
-        <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
-        <repository
-            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
-        <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
-        <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
-      </repositoryList>
-      <repositoryList
-          name="Neon-Old">
-        <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/orbit/latest-R"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/emf/updates/2.12milestones/core"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/transaction/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/validation/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emf/compare/updates/milestones/3.2"/>
-        <repository
-            url="http://download.eclipse.org/modeling/emft/mwe/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/m2t/xpand/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/mdt/ocl/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.1milestones"/>
-        <repository
-            url="http://download.eclipse.org/mmt/qvto/updates/milestones/3.6.0"/>
-        <repository
-            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
-        <repository
-            url="http://download.eclipse.org/graphiti/updates/milestones"/>
-        <repository
-            url="http://download.eclipse.org/mylyn/snapshots/weekly"/>
-        <repository
-            url="http://download.eclipse.org/tools/gef/updates/interim"/>
-        <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
-        <repository
-            url="http://download.eclipse.org/technology/swtbot/snapshots"/>
         <repository
             url="http://download.eclipse.org/technology/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/ecp/releases/preview/ecp"/>
+            url="http://download.eclipse.org/tools/buckminster/updates-4.4"/>
+        <repository
+            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
             url="http://download.oracle.com/otn_software/oepe/12.2.1/mars/repository"/>
         <repository
             url="http://www.elver.org/eclipse/2.1.0/update"/>
       </repositoryList>
-    </targlet>
-  </setupTask>
-  <setupTask
-      xsi:type="setup.targlets:TargletTask"
-      targetName="Baseline Target"
-      activateTarget="false">
-    <targlet
-        name="CDO"
-        activeRepositoryList="${cdo.baseline.version}">
-      <requirement
-          name="org.eclipse.emf.cdo.releng.apireports.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.releng.buildstamp.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.emf.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.codegen.gmf.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.ecore.editor.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.ecoretools.diagram.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.examples.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.dawn.tests.feature.group"/>
-      <requirement
-          name="org.gastro.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.license.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.compare.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.defs.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.doc.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.epp.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.examples.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.examples.installer.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.explorer.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.migrator.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.db.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.db4o.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.hibernate.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.examples.hibernate.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.tests.hibernate.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.lissome.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.mongodb.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.server.objectivity.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.tests.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.releng.tasks.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.derby.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.doc.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.h2.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.hsqldb.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.mysql.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.oracle.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.db.postgresql.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.defs.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.doc.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.examples.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.examples.installer.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.sdk.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.tests.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.ui.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.util.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.util.doc.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.util.ui.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.releng.relativepaths.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.releng.help.feature.group"/>
-      <requirement
-          name="org.eclipse.platform.feature.group"/>
-      <requirement
-          name="org.eclipse.jdt.feature.group"/>
-      <requirement
-          name="org.eclipse.pde.feature.group"/>
-      <requirement
-          name="org.eclipse.equinox.executable.feature.group"/>
       <repositoryList
-          name="4.5">
+          name="Luna">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20160607-1209"/>
+            url="http://download.eclipse.org/modeling/emf/compare/updates/releases/3.0/R201406111328"/>
         <repository
-            url="http://download.eclipse.org/releases/neon/201606221000"/>
+            url="http://download.eclipse.org/tools/orbit/downloads/drops/R20140525021250/repository"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.6"/>
+            url="http://download.eclipse.org/modeling/emf/emf/updates/2.10/core/R201405190339"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
+            url="http://download.eclipse.org/modeling/gmp/gmf-runtime/updates/releases/R201406111639"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="http://download.eclipse.org/modeling/gmp/gmf-notation/updates/releases/R201405281433"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+            url="http://download.eclipse.org/modeling/gmp/gmf-tooling/updates/releases-3.2.0"/>
         <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
+            url="http://download.eclipse.org/modeling/emft/mwe/updates/releases/R201406110919/mwe"/>
+        <repository
+            url="http://download.eclipse.org/modeling/m2t/xpand/updates/releases/R201406030414"/>
         <repository
             url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="http://download.eclipse.org/modeling/emf/transaction/updates/releases/R201405281451"/>
         <repository
-            url="http://www.elver.org/eclipse/2.1.0/update"/>
+            url="http://download.eclipse.org/tools/gef/updates/releases"/>
+        <repository
+            url="http://download.eclipse.org/graphiti/updates/0.11.0"/>
+        <repository
+            url="http://download.eclipse.org/technology/swtbot/releases/2.2.1"/>
+        <repository
+            url="http://download.eclipse.org/modeling/mdt/ocl/updates/releases/5.0.1"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.0.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/tools/buckminster/headless-4.3"/>
+        <repository
+            url="http://download.eclipse.org/mylyn/releases/3.12"/>
+        <repository
+            url="http://download.eclipse.org/technology/nebula/snapshot/"/>
+        <repository
+            url="http://download.eclipse.org/modeling/mdt/uml2/updates/4.1.x/R201402022055"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/validation/updates/releases/R201405281429"/>
+        <repository
+            url="http://download.eclipse.org/mmt/qvto/updates/releases/3.4.0"/>
+        <repository
+            url="http://www.elver.org/eclipse/2.0.0/update"/>
+        <repository
+            url="http://download.oracle.com/otn_software/oepe/kepler"/>
       </repositoryList>
     </targlet>
   </setupTask>
@@ -398,7 +225,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.1 //@setupTasks.10/@workingSets.2 //@setupTasks.10/@workingSets.3 //@setupTasks.10/@workingSets.7 //@setupTasks.10/@workingSets.8"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.1 //@setupTasks.9/@workingSets.2 //@setupTasks.9/@workingSets.3 //@setupTasks.9/@workingSets.7 //@setupTasks.9/@workingSets.8"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -411,7 +238,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -430,7 +257,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -443,7 +270,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -456,7 +283,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.5 //@setupTasks.10/@workingSets.6 //@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.5 //@setupTasks.9/@workingSets.6 //@setupTasks.9/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -469,7 +296,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -491,7 +318,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -517,7 +344,7 @@
             pattern="org\.eclipse\.emf\.cdo\.releng.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.10/@workingSets.7"/>
+            excludedWorkingSet="//@setupTasks.9/@workingSets.7"/>
       </predicate>
     </workingSet>
   </setupTask>
@@ -618,8 +445,8 @@
           name="emf-cdo-gerrit"/>
     </setupTask>
   </setupTask>
-  <stream name="master"
-      label="4.6 Integration (Oxygen)">
+  <stream name="4.4-maintenance"
+      label="4.4 Maintenance (Mars)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -631,62 +458,33 @@
       <requirement
           name="org.eclipse.gmf.sdk.feature.group"/>
       <repository
-          url="http://download.eclipse.org/releases/neon"/>
+          url="http://download.eclipse.org/releases/mars"/>
     </setupTask>
-    <setupTask
-        xsi:type="setup:EclipseIniTask"
-        option="-Doomph.redirection.cdosetup"
-        value="=http://git.eclipse.org/c/cdo/cdo.git/plain/plugins/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/plugins/org.eclipse.emf.cdo.releng/CDO.setup"
-        vm="true"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.git.branch"
-        value="master"/>
+        value="streams/4.4-maintenance"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="Oxygen"/>
+        value="Mars"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
-        value="4.6"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.baseline.version"
-        value="4.5"/>
+        value="4.4"/>
     <setupTask
         xsi:type="jdt:JRETask"
-        version="JavaSE-1.8"
-        location="${jre.location-1.8}"/>
+        version="JavaSE-1.7"
+        location="${jre.location-1.7}"/>
     <setupTask
-        xsi:type="pde:APIBaselineFromTargetTask"
-        name="CDO 4.5"
-        targetName="Baseline Target"/>
-    <setupTask
-        xsi:type="setup.workingsets:WorkingSetTask">
-      <workingSet
-          name="Infrastructure"
-          id="CDO Infrastructure">
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="cdo\.www.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="org\.eclipse\.simrel\.build.*"/>
-        <predicate
-            xsi:type="predicates:NamePredicate"
-            pattern="com\.ibm\.db2\.jcc.*"/>
-      </workingSet>
-    </setupTask>
+        xsi:type="pde:APIBaselineTask"
+        name="CDO"
+        version="4.4"
+        location="${installation.location/baseline}"
+        remoteURI="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.4-baseline.zip/download"/>
   </stream>
-  <stream name="4.5-maintenance"
-      label="4.5 Maintenance (Neon)">
+  <stream name="4.3-maintenance"
+      label="4.3 Maintenance (Luna)">
     <setupTask
         xsi:type="setup.p2:P2Task">
       <requirement
@@ -698,27 +496,29 @@
       <requirement
           name="org.eclipse.gmf.sdk.feature.group"/>
       <repository
-          url="http://download.eclipse.org/releases/neon"/>
+          url="http://download.eclipse.org/releases/luna"/>
     </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.git.branch"
-        value="streams/4.5-maintenance"/>
+        value="streams/4.3-maintenance"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="Neon"/>
+        value="Luna"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
-        value="4.5"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="cdo.baseline.version"
-        value="4.5"/>
+        value="4.3"/>
     <setupTask
         xsi:type="jdt:JRETask"
-        version="JavaSE-1.8"
-        location="${jre.location-1.8}"/>
+        version="JavaSE-1.7"
+        location="${jre.location-1.7}"/>
+    <setupTask
+        xsi:type="pde:APIBaselineTask"
+        name="CDO"
+        version="4.3"
+        location="${installation.location/baseline}"
+        remoteURI="http://sourceforge.net/projects/net4j/files/Baselines/emf-cdo-4.3-baseline.zip/download"/>
   </stream>
 </setup:Project>

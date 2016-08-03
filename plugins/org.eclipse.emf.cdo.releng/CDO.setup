@@ -720,5 +720,9 @@
         xsi:type="jdt:JRETask"
         version="JavaSE-1.8"
         location="${jre.location-1.8}"/>
+    <setupTask
+        xsi:type="pde:APIBaselineFromTargetTask"
+        name="CDO 4.5"
+        targetName="Baseline Target"/>
   </stream>
 </setup:Project>

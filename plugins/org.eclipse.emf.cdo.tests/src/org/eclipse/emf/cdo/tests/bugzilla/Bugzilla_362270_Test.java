@@ -124,7 +124,7 @@ public class Bugzilla_362270_Test extends AbstractCDOTest
     ResourceSet localResourceSet = new ResourceSetImpl();
     registerXMIFactory(localResourceSet);
 
-    File localResourceFile = createTempFile("localResource", ".model1").getAbsoluteFile();
+    File localResourceFile = createTempFile(getName(), ".model1").getAbsoluteFile();
     URI localResourceURI = URI.createFileURI(localResourceFile.getAbsolutePath());
     Resource localResource = localResourceSet.createResource(localResourceURI);
 

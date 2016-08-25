@@ -26,6 +26,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.nio.CharBuffer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -957,6 +958,8 @@ public enum DBType
 
     private final long length;
 
+    private long pos;
+
     private InputStreamWithLength(File file, long length) throws FileNotFoundException
     {
       super(file);
@@ -964,9 +967,70 @@ public enum DBType
       this.length = length;
     }
 
+    private void incrementPos(long n) throws IOException
+    {
+      pos += n;
+      if (pos >= length)
+      {
+        close();
+      }
+    }
+
     public long getLength()
     {
       return length;
+    }
+
+    @Override
+    public int read() throws IOException
+    {
+      try
+      {
+        return super.read();
+      }
+      finally
+      {
+        incrementPos(1);
+      }
+    }
+
+    @Override
+    public int read(byte[] b) throws IOException
+    {
+      try
+      {
+        return super.read(b);
+      }
+      finally
+      {
+        incrementPos(b.length);
+      }
+    }
+
+    @Override
+    public int read(byte[] b, int off, int len) throws IOException
+    {
+      try
+      {
+        return super.read(b, off, len);
+      }
+      finally
+      {
+        incrementPos(len);
+      }
+    }
+
+    @Override
+    public long skip(long n) throws IOException
+    {
+      try
+      {
+        return super.skip(n);
+      }
+      finally
+      {
+        incrementPos(n);
+      }
     }
 
     @Override
@@ -1020,6 +1084,8 @@ public enum DBType
 
     private final long length;
 
+    private long pos;
+
     private ReaderWithLength(File file, long length) throws FileNotFoundException
     {
       super(file);
@@ -1027,9 +1093,101 @@ public enum DBType
       this.length = length;
     }
 
+    private void incrementPos(long n) throws IOException
+    {
+      pos += n;
+      if (pos >= length)
+      {
+        close();
+      }
+    }
+
     public long getLength()
     {
       return length;
+    }
+
+    @Override
+    public int read() throws IOException
+    {
+      try
+      {
+        return super.read();
+      }
+      finally
+      {
+        incrementPos(1);
+      }
+    }
+
+    @Override
+    public int read(char[] cbuf, int offset, int length) throws IOException
+    {
+      try
+      {
+        return super.read(cbuf, offset, length);
+      }
+      finally
+      {
+        incrementPos(length);
+      }
+    }
+
+    @Override
+    public int read(CharBuffer target) throws IOException
+    {
+      try
+      {
+        return super.read(target);
+      }
+      finally
+      {
+        incrementPos(target.length());
+      }
+    }
+
+    @Override
+    public int read(char[] cbuf) throws IOException
+    {
+      try
+      {
+        return super.read(cbuf);
+      }
+      finally
+      {
+        incrementPos(cbuf.length);
+      }
+    }
+
+    @Override
+    public long skip(long n) throws IOException
+    {
+      try
+      {
+        return super.skip(n);
+      }
+      finally
+      {
+        incrementPos(n);
+      }
+    }
+
+    @Override
+    public boolean markSupported()
+    {
+      return false;
+    }
+
+    @Override
+    public void mark(int readAheadLimit) throws IOException
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void reset() throws IOException
+    {
+      throw new UnsupportedOperationException();
     }
 
     @Override

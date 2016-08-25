@@ -1915,6 +1915,8 @@ public class ResourceTest extends AbstractCDOTest
     {
       IOUtil.close(inputStream);
     }
+
+    session.close();
   }
 
   /**

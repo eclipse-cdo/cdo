@@ -17,6 +17,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * @author Eike Stepper
@@ -32,6 +33,8 @@ public final class TMPUtil
    * @since 2.0
    */
   public static final String SYSTEM_TEMP_FOLDER = OMPlatform.INSTANCE.getProperty("java.io.tmpdir"); //$NON-NLS-1$
+
+  private static final Random RANDOM = new Random(System.currentTimeMillis());
 
   private static File tempFolder;
 
@@ -102,6 +105,48 @@ public final class TMPUtil
   public static void setTempFolder(String tempFolder)
   {
     TMPUtil.tempFolder = new File(tempFolder);
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static File getTempName() throws IORuntimeException
+  {
+    return getTempName("tmp"); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static File getTempName(String prefix) throws IORuntimeException
+  {
+    return getTempName(prefix, ""); //$NON-NLS-1$
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static File getTempName(String prefix, String suffix) throws IORuntimeException
+  {
+    return getTempName(prefix, suffix, getTempFolder());
+  }
+
+  /**
+   * @since 3.7
+   */
+  public static File getTempName(String prefix, String suffix, File directory) throws IORuntimeException
+  {
+    for (int i = 0; i < 100; i++)
+    {
+      long random = Math.abs(RANDOM.nextLong());
+      File name = new File(directory, prefix + random + suffix);
+      if (!name.exists())
+      {
+        return name;
+      }
+    }
+
+    throw new IORuntimeException("Could not determine unique name in " + directory);
   }
 
   public static File createTempFolder() throws IORuntimeException

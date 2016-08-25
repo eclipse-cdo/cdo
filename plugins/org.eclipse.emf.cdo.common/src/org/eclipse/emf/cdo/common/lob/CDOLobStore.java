@@ -73,6 +73,12 @@ public interface CDOLobStore
       return getDelegate().putCharacter(contents);
     }
 
+    @Override
+    public String toString()
+    {
+      return getDelegate().toString();
+    }
+
     protected abstract CDOLobStore getDelegate();
   }
 }

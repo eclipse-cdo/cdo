@@ -66,7 +66,7 @@ public class Bugzilla_458149_Test extends AbstractCDOTest
     registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
 
-    URI localResourceURI = URI.createFileURI(createTempFile("resource", ".model1").getCanonicalPath());
+    URI localResourceURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource localResource = resourceSet.createResource(localResourceURI);
     localResource.save(Collections.emptyMap());
     assertEquals(localResourceURI, localResource.getURI());

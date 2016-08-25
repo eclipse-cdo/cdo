@@ -74,7 +74,7 @@ public class Bugzilla_400128_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction(resourceSet);
     CDOResource cdoResource = transaction.createResource(getResourcePath(RESOURCE_PATH));
 
-    xmiURI = URI.createFileURI(createTempFile("Bugzilla_400128_Test-", ".model1").getCanonicalPath());
+    xmiURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource xmiResource = resourceSet.createResource(xmiURI);
 
     ContainedElementNoOpposite xmiElement = getModel4Factory().createContainedElementNoOpposite();

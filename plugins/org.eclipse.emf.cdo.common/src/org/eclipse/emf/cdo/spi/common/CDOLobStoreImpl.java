@@ -146,6 +146,12 @@ public class CDOLobStoreImpl implements CDOLobStore
     return new CDOLobInfo(id, size);
   }
 
+  @Override
+  public String toString()
+  {
+    return "CDOLobStore[" + folder + "]";
+  }
+
   protected MessageDigest createDigest()
   {
     try

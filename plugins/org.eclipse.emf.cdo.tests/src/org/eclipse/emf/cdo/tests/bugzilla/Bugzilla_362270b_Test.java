@@ -64,7 +64,7 @@ public class Bugzilla_362270b_Test extends AbstractCDOTest
 
   private void init(CDOTransaction cdoTransaction) throws Exception
   {
-    URI localResourceURI = URI.createFileURI(createTempFile("resource", ".model1").getCanonicalPath());
+    URI localResourceURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource remoteResource = cdoTransaction.createResource(getResourcePath(REMOTE_RESOURCE_PATH));
     Resource localResource = cdoTransaction.getResourceSet().createResource(localResourceURI);
 

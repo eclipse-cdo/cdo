@@ -67,7 +67,7 @@ public class Bugzilla_329786_Test extends AbstractCDOTest
         + getResourcePath("/sharedResource")).appendQuery(CDOURIData.TRANSACTIONAL_PARAMETER + "=true");
     Resource sharedResource = resourceSet.createResource(sharedURI);
 
-    URI localURI = URI.createFileURI(createTempFile("resource", ".model1").getCanonicalPath());
+    URI localURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource localResource = resourceSet.createResource(localURI);
 
     Company localCompany = getModel1Factory().createCompany();

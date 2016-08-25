@@ -139,7 +139,7 @@ public class Bugzilla_402142_Test extends AbstractCDOTest
 
     ResourceSet resourceSet = transaction.getResourceSet();
     resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("model1", new XMLResourceFactoryImpl());
-    URI localURI = URI.createFileURI(createTempFile("resource", ".model1").getCanonicalPath());
+    URI localURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource resource2 = resourceSet.createResource(localURI);
     Company company2 = getModel1Factory().createCompany();
     resource2.getContents().add(company2);

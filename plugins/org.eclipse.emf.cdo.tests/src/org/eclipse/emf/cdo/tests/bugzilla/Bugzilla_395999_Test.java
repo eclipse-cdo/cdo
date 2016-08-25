@@ -66,7 +66,7 @@ public class Bugzilla_395999_Test extends AbstractCDOTest
     {
       ResourceSet resourceSet = new ResourceSetImpl();
 
-      URI uri = URI.createFileURI(createTempFile("resource", ".model1").getCanonicalPath());
+      URI uri = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
       Resource resource = resourceSet.createResource(uri);
       resource.save(Collections.emptyMap());
 

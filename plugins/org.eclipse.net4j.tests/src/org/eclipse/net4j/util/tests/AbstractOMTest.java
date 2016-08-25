@@ -92,7 +92,7 @@ public abstract class AbstractOMTest extends TestCase
 
   private static String testName;
 
-  private transient List<File> filesToDelete = new ArrayList<File>();
+  private transient final List<File> filesToDelete = new ArrayList<File>();
 
   private transient String codeLink;
 
@@ -435,19 +435,52 @@ public abstract class AbstractOMTest extends TestCase
     deleteFiles();
   }
 
-  public synchronized void deleteFiles()
+  public void deleteFiles()
   {
-    for (File file : filesToDelete)
+    synchronized (filesToDelete)
     {
-      IOUtil.delete(file);
+      for (File file : filesToDelete)
+      {
+        IOUtil.delete(file);
+      }
+      filesToDelete.clear();
     }
-
-    filesToDelete.clear();
   }
 
-  public synchronized void addFileToDelete(File file)
+  public void addFileToDelete(File file)
   {
-    filesToDelete.add(file);
+    synchronized (filesToDelete)
+    {
+      filesToDelete.add(file);
+    }
+  }
+
+  public File getTempName() throws IORuntimeException
+  {
+    File name = TMPUtil.getTempName();
+    addFileToDelete(name);
+    return name;
+  }
+
+  public File getTempName(String prefix) throws IORuntimeException
+  {
+    File name = TMPUtil.getTempName(prefix);
+    addFileToDelete(name);
+    return name;
+  }
+
+  public File getTempName(String prefix, String suffix) throws IORuntimeException
+  {
+    File name = TMPUtil.getTempName(prefix, suffix);
+    addFileToDelete(name);
+    return name;
+  }
+
+  public File getTempName(String prefix, String suffix, File directory) throws IORuntimeException
+  {
+    File name = TMPUtil.getTempName(prefix, suffix, directory);
+    addFileToDelete(name);
+    return name;
   }
 
   public File createTempFolder() throws IORuntimeException

@@ -539,7 +539,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
 
   protected void loadLobAsync(CDOLobInfo info, Runnable runnable)
   {
-    new Thread(runnable, "LobLoader").start();
+    ConcurrencyUtil.execute(this, runnable);
   }
 
   public void close()

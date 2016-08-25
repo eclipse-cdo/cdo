@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -48,13 +49,20 @@ public class LoadLobRequest extends CDOClientRequest<Boolean>
   @Override
   protected Boolean confirming(ExtendedDataInputStream in) throws Exception
   {
-    if (out instanceof OutputStream)
+    try
     {
-      IOUtil.copyBinary(in, (OutputStream)out, info.getSize());
+      if (out instanceof OutputStream)
+      {
+        IOUtil.copyBinary(in, (OutputStream)out, info.getSize());
+      }
+      else
+      {
+        IOUtil.copyCharacter(new InputStreamReader(in), (Writer)out, info.getSize());
+      }
     }
-    else
+    finally
     {
-      IOUtil.copyCharacter(new InputStreamReader(in), (Writer)out, info.getSize());
+      ((Closeable)out).close();
     }
 
     return true;

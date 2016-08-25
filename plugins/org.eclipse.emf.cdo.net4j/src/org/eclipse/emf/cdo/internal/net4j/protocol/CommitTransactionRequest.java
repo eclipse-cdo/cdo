@@ -54,8 +54,11 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession.CommitToken;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction.InternalCDOCommitContext;
 
+import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -272,19 +275,35 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     out.writeInt(lobs.size());
     for (CDOLob<?> lob : lobs)
     {
-      out.writeByteArray(lob.getID());
-      long size = lob.getSize();
-      if (lob instanceof CDOBlob)
+      Closeable closeable = null;
+
+      try
       {
-        CDOBlob blob = (CDOBlob)lob;
-        out.writeLong(size);
-        IOUtil.copyBinary(blob.getContents(), out, size);
+        out.writeByteArray(lob.getID());
+        long size = lob.getSize();
+
+        if (lob instanceof CDOBlob)
+        {
+          CDOBlob blob = (CDOBlob)lob;
+          out.writeLong(size);
+
+          InputStream contents = blob.getContents();
+          closeable = contents;
+          IOUtil.copyBinary(contents, out, size);
+        }
+        else
+        {
+          CDOClob clob = (CDOClob)lob;
+          out.writeLong(-size);
+
+          Reader contents = clob.getContents();
+          closeable = contents;
+          IOUtil.copyCharacter(contents, new OutputStreamWriter(out), size);
+        }
       }
-      else
+      finally
       {
-        CDOClob clob = (CDOClob)lob;
-        out.writeLong(-size);
-        IOUtil.copyCharacter(clob.getContents(), new OutputStreamWriter(out), size);
+        IOUtil.close(closeable);
       }
     }
   }

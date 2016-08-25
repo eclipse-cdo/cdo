@@ -66,7 +66,7 @@ public class Bugzilla_450880_Test extends AbstractCDOTest
     Resource.Factory.Registry registry = Resource.Factory.Registry.INSTANCE;
     registry.getExtensionToFactoryMap().put("model1", new XMIResourceFactoryImpl());
     ResourceSet resourceSet = new ResourceSetImpl();
-    URI localMainResourceURI = URI.createFileURI(createTempFile("main", ".model1").getCanonicalPath());
+    URI localMainResourceURI = URI.createFileURI(createTempFile(getName(), ".model1").getCanonicalPath());
     Resource resource1 = resourceSet.createResource(localMainResourceURI);
     testCDODeltaNotificationGetValueWithEnumTypedAttribute(resource1);
   }

@@ -276,7 +276,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   protected void configureSession(CDOSession session)
   {
-    final File lobCache = getCurrentTest().createTempFolder("lobs_" + new Date().getTime() + "_", ".tmp");
+    final File lobCache = getCurrentTest().getTempName("lobs_" + new Date().getTime() + "_", ".tmp");
     session.options().setLobCache(new CDOLobStoreImpl(lobCache));
     session.addListener(new LifecycleEventAdapter()
     {

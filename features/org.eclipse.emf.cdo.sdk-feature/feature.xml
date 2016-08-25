@@ -56,10 +56,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.defs"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.doc"
          version="0.0.0"/>
 

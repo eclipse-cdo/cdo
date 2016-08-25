@@ -56,10 +56,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.defs"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.net4j.doc"
          version="0.0.0"/>
 

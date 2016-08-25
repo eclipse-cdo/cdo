@@ -48,14 +48,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.util"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.util.ui"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.net4j.doc"
          version="0.0.0"/>
 

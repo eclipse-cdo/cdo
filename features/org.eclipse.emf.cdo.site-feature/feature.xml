@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.emf.cdo.site"
       label="CDO Model Repository Site"
-      version="4.2.300.qualifier"
+      version="4.2.400.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -29,10 +29,6 @@
    <license url="%licenseURL">
       %license
    </license>
-
-   <includes
-         id="org.eclipse.emf.cdo.compare"
-         version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.dawn.codegen.gmf"
@@ -71,23 +67,11 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.server"
-         version="0.0.0"/>
-
-   <includes
          id="org.eclipse.emf.cdo.server.db4o"
          version="0.0.0"/>
 
    <includes
          id="org.eclipse.emf.cdo.server.hibernate"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.lissome"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.emf.cdo.server.mongodb"
          version="0.0.0"/>
 
    <includes
@@ -108,10 +92,6 @@
 
    <includes
          id="org.eclipse.net4j.db.derby"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.net4j.db.h2"
          version="0.0.0"/>
 
    <includes

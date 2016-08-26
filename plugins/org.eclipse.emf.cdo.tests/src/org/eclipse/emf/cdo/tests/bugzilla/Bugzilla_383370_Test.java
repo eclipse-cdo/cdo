@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -30,7 +29,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public class Bugzilla_383370_Test extends AbstractCDOTest
 {
-  @Skips(IConfig.EFFORT_MERGING)
   public void testTopLevel() throws Exception
   {
     Category category = getModel1Factory().createCategory();
@@ -54,7 +52,6 @@ public class Bugzilla_383370_Test extends AbstractCDOTest
     assertEquals(resource, category.eResource());
   }
 
-  @Skips(IConfig.EFFORT_MERGING)
   public void testTopLevelWithChildren() throws Exception
   {
     Category category = getModel1Factory().createCategory();
@@ -83,7 +80,6 @@ public class Bugzilla_383370_Test extends AbstractCDOTest
     assertEquals(category, child.eContainer());
   }
 
-  @Skips(IConfig.EFFORT_MERGING)
   public void testSecondLevel() throws Exception
   {
     Company company = getModel1Factory().createCompany();
@@ -109,7 +105,6 @@ public class Bugzilla_383370_Test extends AbstractCDOTest
     assertEquals(company, category.eContainer());
   }
 
-  @Skips(IConfig.EFFORT_MERGING)
   public void testSecondLevelWithChildren() throws Exception
   {
     Company company = getModel1Factory().createCompany();

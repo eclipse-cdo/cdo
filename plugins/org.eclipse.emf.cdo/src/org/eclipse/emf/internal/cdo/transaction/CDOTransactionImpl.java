@@ -1776,12 +1776,26 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (idOrObject instanceof CDOObjectImpl)
         {
           CDOObjectImpl impl = (CDOObjectImpl)idOrObject;
+          InternalCDORevision revision = impl.cdoRevision();
+
           Resource.Internal directResource = impl.eDirectResource();
           EObject container = impl.eContainer();
           if (!toBeDetached.contains(directResource) && !toBeDetached.contains(container))
           {
-            // Unset direct resource and/or eContainer
-            impl.cdoInternalSetResource(null);
+            if (revision != null)
+            {
+              // Unset direct resource and container in the revision.
+              // Later cdoInternalPostDetach() will migrate these values into the EObject.
+              // See CDOStateMachine.RollbackTransition.execute().
+              revision.setResourceID(null);
+              revision.setContainerID(null);
+              revision.setContainingFeatureID(0);
+            }
+            else
+            {
+              // Unset direct resource and eContainer in the EObject.
+              impl.cdoInternalSetResource(null);
+            }
           }
         }
         else if (idOrObject instanceof CDOObjectWrapper)

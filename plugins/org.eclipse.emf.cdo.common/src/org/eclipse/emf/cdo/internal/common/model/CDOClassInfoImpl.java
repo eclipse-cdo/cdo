@@ -21,8 +21,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 
-import org.eclipse.net4j.util.ImplementationError;
-
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -446,11 +444,6 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
         return getClassInfo().getRevisionForID(null);
       }
 
-      if (id.equals(this.id))
-      {
-        throw new ImplementationError(); // XXX Remove me
-      }
-
       return new RevisionWithID(getClassInfo(), id);
     }
 
@@ -463,7 +456,7 @@ public final class CDOClassInfoImpl implements InternalCDOClassInfo, Adapter.Int
     @Override
     public String toString()
     {
-      return MessageFormat.format("RevisionWithoutID[{0}, {1}]", getClassInfo(), id);
+      return MessageFormat.format("RevisionWithID[{0}, {1}]", getClassInfo(), id);
     }
   }
 }

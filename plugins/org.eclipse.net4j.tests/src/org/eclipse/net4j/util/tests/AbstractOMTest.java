@@ -443,6 +443,7 @@ public abstract class AbstractOMTest extends TestCase
       {
         IOUtil.delete(file);
       }
+
       filesToDelete.clear();
     }
   }

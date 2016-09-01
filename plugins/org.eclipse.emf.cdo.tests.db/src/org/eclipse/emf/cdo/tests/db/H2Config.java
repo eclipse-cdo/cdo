@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.io.TMPUtil;
 
 import org.h2.jdbcx.JdbcDataSource;
 
@@ -62,21 +63,41 @@ public class H2Config extends DBConfig
       IOUtil.delete(reusableFolder);
     }
 
+    String url = "jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0";
+
     if (defaultDataSource == null)
     {
       defaultDataSource = new JdbcDataSource();
-      defaultDataSource.setURL("jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;LOCK_TIMEOUT=10000");
+      defaultDataSource.setURL(url);
     }
 
     H2Adapter.createSchema(defaultDataSource, repoName, !isRestarting());
 
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:" + reusableFolder.getAbsolutePath() + "/h2test;LOCK_TIMEOUT=10000;SCHEMA=" + repoName);
+    dataSource.setURL(url + ";SCHEMA=" + repoName);
     return dataSource;
   }
 
   protected File createDBFolder()
   {
-    return getCurrentTest().createTempFolder("h2_", "_test");
+    return TMPUtil.createTempFolder("h2_", "_test");
+  }
+
+  @Override
+  public void mainSuiteFinished() throws Exception
+  {
+    deactivateRepositories();
+
+    // if (defaultDataSource != null)
+    // {
+    // H2Adapter.shutdown(defaultDataSource);
+    // defaultDataSource = null;
+    // }
+
+    if (reusableFolder != null)
+    {
+      IOUtil.delete(reusableFolder);
+      reusableFolder = null;
+    }
   }
 }

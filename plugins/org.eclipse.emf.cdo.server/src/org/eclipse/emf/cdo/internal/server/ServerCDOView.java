@@ -273,9 +273,15 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
       boolean clearResourcePathCache)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  public void invalidate(ViewInvalidationData invalidationData)
   {
     throw new UnsupportedOperationException();
   }
@@ -1044,8 +1050,14 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    @Deprecated
     public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
         byte securityImpact, Map<CDOID, CDOPermission> newPermissions)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    public void invalidate(InvalidationData invalidationData)
     {
       throw new UnsupportedOperationException();
     }

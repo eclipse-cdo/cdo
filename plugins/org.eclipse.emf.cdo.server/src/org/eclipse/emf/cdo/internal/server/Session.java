@@ -528,6 +528,16 @@ public class Session extends Container<IView> implements InternalSession
     sessionNotificationInfo.setNewPermissions(sessionCommitInfo.getNewPermissions());
     sessionNotificationInfo.setSecurityImpact(securityImpact);
 
+    CDOLockChangeInfo lockChangeInfo = notificationInfo.getLockChangeInfo();
+    if (lockChangeInfo != null)
+    {
+      Object lockNotificationRequired = isLockNotificationRequired(lockChangeInfo);
+      if (lockNotificationRequired != null)
+      {
+        sessionNotificationInfo.setLockChangeInfo(lockChangeInfo);
+      }
+    }
+
     protocol.sendCommitNotification(sessionNotificationInfo);
 
     synchronized (lastUpdateTimeLock)
@@ -541,40 +551,57 @@ public class Session extends Container<IView> implements InternalSession
   {
     if (protocol != null)
     {
-      if (options().getLockNotificationMode() == LockNotificationMode.ALWAYS)
+      Object lockNotificationRequired = isLockNotificationRequired(lockChangeInfo);
+      if (lockNotificationRequired == Boolean.TRUE)
       {
         protocol.sendLockNotification(lockChangeInfo);
         return;
       }
 
-      if (options().getLockNotificationMode() == LockNotificationMode.IF_REQUIRED_BY_VIEWS)
+      if (lockNotificationRequired instanceof InternalView)
       {
-        // If this session has one (or more) views configured for this branch,
-        // only then do we send the lockChangeInfo.
-        for (InternalView view : getViews())
+        InternalView view = (InternalView)lockNotificationRequired;
+
+        try
         {
-          try
+          protocol.sendLockNotification(lockChangeInfo);
+        }
+        catch (Exception ex)
+        {
+          if (!view.isClosed())
           {
-            if (view.options().isLockNotificationEnabled())
-            {
-              CDOBranch affectedBranch = lockChangeInfo.getBranch();
-              if (view.getBranch() == affectedBranch || affectedBranch == null)
-              {
-                protocol.sendLockNotification(lockChangeInfo);
-                break;
-              }
-            }
-          }
-          catch (Exception ex)
-          {
-            if (!view.isClosed())
-            {
-              OM.LOG.warn("A problem occured while notifying view " + view, ex);
-            }
+            OM.LOG.warn("A problem occured while notifying view " + view, ex);
           }
         }
       }
     }
+  }
+
+  private Object isLockNotificationRequired(CDOLockChangeInfo lockChangeInfo)
+  {
+    LockNotificationMode lockNotificationMode = options().getLockNotificationMode();
+    if (lockNotificationMode == LockNotificationMode.ALWAYS)
+    {
+      return Boolean.TRUE;
+    }
+
+    if (lockNotificationMode == LockNotificationMode.IF_REQUIRED_BY_VIEWS)
+    {
+      // We send the lockChangeInfo only if this session has one (or more) views configured for this branch.
+      for (InternalView view : getViews())
+      {
+        if (view.options().isLockNotificationEnabled())
+        {
+          CDOBranch affectedBranch = lockChangeInfo.getBranch();
+          if (view.getBranch() == affectedBranch || affectedBranch == null)
+          {
+            return view;
+          }
+        }
+      }
+    }
+
+    return null;
   }
 
   private boolean isDeltaNeeded(CDOID id, InternalView[] views)

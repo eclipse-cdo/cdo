@@ -300,10 +300,10 @@ public class CDOLockStateImpl implements InternalCDOLockState
   @Override
   public String toString()
   {
-    StringBuilder builder = new StringBuilder("CDOLockState\n  lockedObject=");
+    StringBuilder builder = new StringBuilder("CDOLockState[lockedObject=");
     builder.append(lockedObject);
 
-    builder.append("\n  readLockOwners=");
+    builder.append(", readLockOwners=");
     if (readLockOwners != null && readLockOwners.size() > 0)
     {
       boolean first = true;
@@ -328,10 +328,10 @@ public class CDOLockStateImpl implements InternalCDOLockState
       builder.append("NONE");
     }
 
-    builder.append("\n  writeLockOwner=");
+    builder.append(", writeLockOwner=");
     builder.append(writeLockOwner != null ? writeLockOwner : "NONE");
 
-    builder.append("\n  writeOptionOwner=");
+    builder.append(", writeOptionOwner=");
     builder.append(writeOptionOwner != null ? writeOptionOwner : "NONE");
 
     return builder.toString();

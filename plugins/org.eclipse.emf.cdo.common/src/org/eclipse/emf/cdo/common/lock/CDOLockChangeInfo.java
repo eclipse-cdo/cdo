@@ -31,7 +31,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 public interface CDOLockChangeInfo extends CDOBranchPoint
 {
   /**
-   * @return <code>true</code> if this instance signals that all {@link CDOLockState lockstates} must be invalidated,
+   * @return <code>true</code> if this instance signals that all {@link CDOLockState lock states} must be invalidated,
    *         <code>false</code> otherwise
    */
   public boolean isInvalidateAll();
@@ -43,19 +43,9 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
 
   /**
    * @return The repository time at which the lock changes took place. This is only an informal indication; no formal
-   *         relation (e.g. an ordering) with commit timestamps is guaranteed.
+   *         relation (e.g. an ordering) with commit time stamps is guaranteed.
    */
   public long getTimeStamp();
-
-  /**
-   * @return The view, represented as a {@link CDOLockOwner}, that authored the lock changes.
-   */
-  public CDOLockOwner getLockOwner();
-
-  /**
-   * @return The new lock states of the objects that were affected by the change
-   */
-  public CDOLockState[] getLockStates();
 
   /**
    * @return the type of lock operation that caused the lock changes
@@ -66,6 +56,16 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
    * @return the type of locks that were affected by the lock operation
    */
   public LockType getLockType();
+
+  /**
+   * @return The view, represented as a {@link CDOLockOwner}, that authored the lock changes.
+   */
+  public CDOLockOwner getLockOwner();
+
+  /**
+   * @return The new lock states of the objects that were affected by the change
+   */
+  public CDOLockState[] getLockStates();
 
   /**
    * Enumerates the possible locking operations.

@@ -272,9 +272,9 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     return (CDOFetchRuleManager)getTestProperty(PROP_TEST_FETCH_RULE_MANAGER);
   }
 
-  protected abstract CDOSessionConfiguration createSessionConfiguration(String repositoryName);
+  public abstract CDOSessionConfiguration createSessionConfiguration(String repositoryName);
 
-  protected void configureSession(CDOSession session)
+  public void configureSession(CDOSession session)
   {
     final File lobCache = getCurrentTest().getTempName("lobs_" + new Date().getTime() + "_", ".tmp");
     session.options().setLobCache(new CDOLobStoreImpl(lobCache));
@@ -347,7 +347,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     }
 
     @Override
-    protected CDOSessionConfiguration createSessionConfiguration(String repositoryName)
+    public CDOSessionConfiguration createSessionConfiguration(String repositoryName)
     {
       IRepository repository = getCurrentTest().getRepository(repositoryName);
 
@@ -434,7 +434,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     }
 
     @Override
-    protected CDOSessionConfiguration createSessionConfiguration(String repositoryName)
+    public CDOSessionConfiguration createSessionConfiguration(String repositoryName)
     {
       CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
       configuration.setConnector(getConnector());
@@ -444,13 +444,13 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     }
 
     @Override
-    protected void configureSession(CDOSession session)
+    public void configureSession(CDOSession session)
     {
       super.configureSession(session);
       ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(-1);
     }
 
-    protected abstract CDOViewProvider createViewProvider(IManagedContainer container);
+    public abstract CDOViewProvider createViewProvider(IManagedContainer container);
 
     @Override
     public void setUp() throws Exception
@@ -537,7 +537,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      protected CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider(final IManagedContainer container)
       {
         return new CDONet4jViewProvider.TCP()
         {
@@ -605,7 +605,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      protected CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider(final IManagedContainer container)
       {
         return new CDONet4jViewProvider.SSL()
         {
@@ -674,7 +674,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      protected CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider(final IManagedContainer container)
       {
         return new CDONet4jViewProvider.JVM()
         {

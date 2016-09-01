@@ -38,7 +38,15 @@ public class Event extends EventObject implements IEvent
   {
     String params = formatAdditionalParameters();
     params = params == null ? "" : ", " + params;
-    return MessageFormat.format("{0}[source={1}{2}]", getClass().getSimpleName(), getSource(), params);
+    return MessageFormat.format("{0}[source={1}{2}]", formatEventName(), getSource(), params);
+  }
+
+  /**
+   * @since 3.7
+   */
+  protected String formatEventName()
+  {
+    return getClass().getSimpleName();
   }
 
   /**

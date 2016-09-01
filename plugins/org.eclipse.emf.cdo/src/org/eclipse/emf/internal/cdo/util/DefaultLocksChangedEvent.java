@@ -40,43 +40,54 @@ public class DefaultLocksChangedEvent extends Event implements CDOLockChangeInfo
     this.lockChangeInfo = lockChangeInfo;
   }
 
-  public InternalCDOView getSender()
+  public final InternalCDOView getSender()
   {
     return sender;
   }
 
-  public CDOBranch getBranch()
+  public final CDOBranch getBranch()
   {
     return lockChangeInfo.getBranch();
   }
 
-  public long getTimeStamp()
+  public final long getTimeStamp()
   {
     return lockChangeInfo.getTimeStamp();
   }
 
-  public CDOLockOwner getLockOwner()
-  {
-    return lockChangeInfo.getLockOwner();
-  }
-
-  public CDOLockState[] getLockStates()
-  {
-    return lockChangeInfo.getLockStates();
-  }
-
-  public Operation getOperation()
+  public final Operation getOperation()
   {
     return lockChangeInfo.getOperation();
   }
 
-  public LockType getLockType()
+  public final LockType getLockType()
   {
     return lockChangeInfo.getLockType();
   }
 
-  public boolean isInvalidateAll()
+  public final CDOLockOwner getLockOwner()
+  {
+    return lockChangeInfo.getLockOwner();
+  }
+
+  public final CDOLockState[] getLockStates()
+  {
+    return lockChangeInfo.getLockStates();
+  }
+
+  public final boolean isInvalidateAll()
   {
     return lockChangeInfo.isInvalidateAll();
+  }
+
+  protected final CDOLockChangeInfo getLockChangeInfo()
+  {
+    return lockChangeInfo;
+  }
+
+  @Override
+  protected String formatAdditionalParameters()
+  {
+    return "sender=" + getSender() + ", " + getLockChangeInfo();
   }
 }

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 
 import java.lang.reflect.AnnotatedElement;
@@ -36,6 +37,8 @@ import junit.framework.TestSuite;
  */
 public abstract class ConfigTestSuite implements IConstants
 {
+  private final List<IScenario> scenarios = new ArrayList<IScenario>();
+
   public ConfigTestSuite()
   {
   }
@@ -62,7 +65,7 @@ public abstract class ConfigTestSuite implements IConstants
 
     if (scenario.isValid())
     {
-      TestSuite suite = new TestSuite(scenario.toString());
+      TestSuite scenarioSuite = new TestSuite(scenario.toString());
 
       List<Class<? extends ConfigTest>> testClasses = new ArrayList<Class<? extends ConfigTest>>();
       initTestClasses(testClasses, scenario);
@@ -71,10 +74,10 @@ public abstract class ConfigTestSuite implements IConstants
       {
         try
         {
-          ScenarioSuite wrapper = new ScenarioSuite(testClass, scenario, this);
-          if (wrapper.testCount() != 0)
+          TestClassWrapper testClassWrapper = new TestClassWrapper(testClass, scenario, this);
+          if (testClassWrapper.testCount() != 0)
           {
-            suite.addTest(wrapper);
+            scenarioSuite.addTest(testClassWrapper);
           }
         }
         catch (ConstraintsViolatedException ex)
@@ -83,7 +86,8 @@ public abstract class ConfigTestSuite implements IConstants
         }
       }
 
-      parent.addTest(suite);
+      parent.addTest(scenarioSuite);
+      scenarios.add(scenario);
     }
   }
 
@@ -124,11 +128,19 @@ public abstract class ConfigTestSuite implements IConstants
   {
   }
 
-  /**
-   * Can be overridden by subclasses.
-   */
   protected void mainSuiteFinished()
   {
+    for (IScenario scenario : scenarios)
+    {
+      try
+      {
+        scenario.mainSuiteFinished();
+      }
+      catch (Exception ex)
+      {
+        IOUtil.print(ex);
+      }
+    }
   }
 
   /**
@@ -152,28 +164,28 @@ public abstract class ConfigTestSuite implements IConstants
   /**
    * @author Eike Stepper
    */
-  private static final class ScenarioSuite extends TestSuite
+  private static final class TestClassWrapper extends TestSuite
   {
     private IScenario scenario;
-  
-    public ScenarioSuite(Class<? extends ConfigTest> testClass, IScenario scenario, ConfigTestSuite suite)
+
+    public TestClassWrapper(Class<? extends ConfigTest> testClass, IScenario scenario, ConfigTestSuite suite)
         throws ConstraintsViolatedException
     {
       // super(testClass, testClass.getName()); // Important for the UI to set the *qualified* class name!
       this.scenario = scenario;
       addTestsFromTestCase(testClass, suite);
     }
-  
+
     @Override
     public void runTest(Test test, TestResult result)
     {
       if (test instanceof ConfigTest)
       {
         scenario.save();
-  
+
         ConfigTest configTest = (ConfigTest)test;
         configTest.setScenario(scenario);
-  
+
         if (configTest.isValid())
         {
           super.runTest(configTest, result);
@@ -184,31 +196,31 @@ public abstract class ConfigTestSuite implements IConstants
         super.runTest(test, result);
       }
     }
-  
+
     private void addTestsFromTestCase(final Class<?> theClass, ConfigTestSuite suite)
         throws ConstraintsViolatedException
     {
       setName(theClass.getName());
-  
+
       try
       {
         getTestConstructor(theClass); // Avoid generating multiple error messages
       }
       catch (NoSuchMethodException e)
       {
-        addTest(warning("Class " + theClass.getName()
-            + " has no public constructor TestCase(String name) or TestCase()"));
+        addTest(
+            warning("Class " + theClass.getName() + " has no public constructor TestCase(String name) or TestCase()"));
         return;
       }
-  
+
       if (!Modifier.isPublic(theClass.getModifiers()))
       {
         addTest(warning("Class " + theClass.getName() + " is not public"));
         return;
       }
-  
+
       Set<String> capabilities = scenario.getCapabilities();
-  
+
       Class<?> superClass = theClass;
       while (Test.class.isAssignableFrom(superClass))
       {
@@ -216,12 +228,12 @@ public abstract class ConfigTestSuite implements IConstants
         {
           throw new ConstraintsViolatedException();
         }
-  
+
         superClass = superClass.getSuperclass();
       }
-  
+
       List<String> names = new ArrayList<String>();
-  
+
       superClass = theClass;
       while (Test.class.isAssignableFrom(superClass))
       {
@@ -232,11 +244,11 @@ public abstract class ConfigTestSuite implements IConstants
             addTestMethod(method, names, theClass, suite);
           }
         }
-  
+
         superClass = superClass.getSuperclass();
       }
     }
-  
+
     private boolean validateConstraints(AnnotatedElement element, Set<String> capabilities)
     {
       Requires requires = element.getAnnotation(Requires.class);
@@ -250,7 +262,7 @@ public abstract class ConfigTestSuite implements IConstants
           }
         }
       }
-  
+
       Skips skips = element.getAnnotation(Skips.class);
       if (skips != null)
       {
@@ -262,10 +274,10 @@ public abstract class ConfigTestSuite implements IConstants
           }
         }
       }
-  
+
       return true;
     }
-  
+
     private void addTestMethod(Method m, List<String> names, Class<?> theClass, ConfigTestSuite suite)
     {
       String name = m.getName();
@@ -273,17 +285,17 @@ public abstract class ConfigTestSuite implements IConstants
       {
         return;
       }
-  
+
       if (!isPublicTestMethod(m))
       {
         if (isTestMethod(m))
         {
           addTest(warning("Test method isn't public: " + m.getName() + "(" + theClass.getCanonicalName() + ")"));
         }
-  
+
         return;
       }
-  
+
       names.add(name);
       Test test = createTest(theClass, name);
       if (test instanceof ConfigTest)
@@ -291,15 +303,15 @@ public abstract class ConfigTestSuite implements IConstants
         ConfigTest configTest = (ConfigTest)test;
         suite.prepareTest(configTest);
       }
-  
+
       addTest(test);
     }
-  
+
     private boolean isPublicTestMethod(Method m)
     {
       return isTestMethod(m) && Modifier.isPublic(m.getModifiers());
     }
-  
+
     private boolean isTestMethod(Method m)
     {
       return m.getParameterTypes().length == 0 && m.getName().startsWith("test") && m.getReturnType().equals(Void.TYPE);

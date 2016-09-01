@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 /**
  * @author Eike Stepper
@@ -18,10 +19,17 @@ import org.eclipse.net4j.util.StringUtil;
  */
 public abstract class RunnableWithName implements Runnable
 {
-  public abstract String getName();
+  private static final boolean DISABLE_RUNNABLE_NAMES = Boolean.parseBoolean(
+      OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.DISABLE_RUNNABLE_NAMES", "false"));
 
   public final void run()
   {
+    if (DISABLE_RUNNABLE_NAMES)
+    {
+      doRun();
+      return;
+    }
+
     Thread thread = null;
     String oldName = null;
 
@@ -53,6 +61,8 @@ public abstract class RunnableWithName implements Runnable
       }
     }
   }
+
+  public abstract String getName();
 
   protected abstract void doRun();
 }

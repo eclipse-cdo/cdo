@@ -20,20 +20,22 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
+import java.util.Arrays;
+
 /**
  * @author Caspar De Groot
  */
-public class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranchAdjustable
+public final class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranchAdjustable
 {
   private CDOBranchPoint branchPoint;
-
-  private final CDOLockOwner lockOwner;
-
-  private final CDOLockState[] lockStates;
 
   private final Operation operation;
 
   private final LockType lockType;
+
+  private final CDOLockOwner lockOwner;
+
+  private final CDOLockState[] lockStates;
 
   private final boolean isInvalidateAll;
 
@@ -80,16 +82,6 @@ public class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranchAdjust
     return branchPoint == null ? CDOBranchPoint.UNSPECIFIED_DATE : branchPoint.getTimeStamp();
   }
 
-  public CDOLockOwner getLockOwner()
-  {
-    return lockOwner;
-  }
-
-  public CDOLockState[] getLockStates()
-  {
-    return lockStates;
-  }
-
   public Operation getOperation()
   {
     return operation;
@@ -100,8 +92,38 @@ public class CDOLockChangeInfoImpl implements CDOLockChangeInfo, CDOBranchAdjust
     return lockType;
   }
 
+  public CDOLockOwner getLockOwner()
+  {
+    return lockOwner;
+  }
+
+  public CDOLockState[] getLockStates()
+  {
+    return lockStates;
+  }
+
   public boolean isInvalidateAll()
   {
     return isInvalidateAll;
+  }
+
+  @Override
+  public String toString()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("CDOLockChangeInfo[branchPoint=");
+    builder.append(branchPoint);
+    builder.append(", operation=");
+    builder.append(operation);
+    builder.append(", lockType=");
+    builder.append(lockType);
+    builder.append(", lockOwner=");
+    builder.append(lockOwner);
+    builder.append(", lockStates=");
+    builder.append(Arrays.toString(lockStates));
+    builder.append(", invalidateAll=");
+    builder.append(isInvalidateAll);
+    builder.append("]");
+    return builder.toString();
   }
 }

@@ -2873,9 +2873,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
 
     @Override
-    public String toString()
+    protected String formatEventName()
     {
-      return "CDOViewAdaptersNotifiedEvent: " + timeStamp; //$NON-NLS-1$
+      return "CDOViewAdaptersNotifiedEvent";
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "timeStamp=" + timeStamp;
     }
   }
 
@@ -2896,12 +2902,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       this.branchPoint = CDOBranchUtil.copyBranchPoint(branchPoint);
     }
 
-    @Override
-    public String toString()
-    {
-      return MessageFormat.format("CDOViewTargetChangedEvent: {0}", branchPoint); //$NON-NLS-1$
-    }
-
     public CDOBranchPoint getOldBranchPoint()
     {
       return oldBranchPoint;
@@ -2910,6 +2910,18 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     public CDOBranchPoint getBranchPoint()
     {
       return branchPoint;
+    }
+
+    @Override
+    protected String formatEventName()
+    {
+      return "CDOViewTargetChangedEvent";
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "oldBranchPoint=" + oldBranchPoint + ", branchPoint=" + branchPoint;
     }
   }
 

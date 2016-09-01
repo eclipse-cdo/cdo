@@ -513,8 +513,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       LifecycleUtil.deactivate(repository);
     }
 
-    repositories.clear();
-    repositories = null;
+    if (repositories != null)
+    {
+      repositories.clear();
+      repositories = null;
+    }
 
     StoreThreadLocal.release();
 

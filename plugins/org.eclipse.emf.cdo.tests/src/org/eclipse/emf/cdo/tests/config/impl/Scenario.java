@@ -236,6 +236,36 @@ public class Scenario implements IScenario
     }
   }
 
+  public void mainSuiteFinished()
+  {
+    try
+    {
+      getModelConfig().mainSuiteFinished();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      getSessionConfig().mainSuiteFinished();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+
+    try
+    {
+      getRepositoryConfig().mainSuiteFinished();
+    }
+    catch (Exception ex)
+    {
+      IOUtil.print(ex);
+    }
+  }
+
   public void save()
   {
     File file = getStateFile();

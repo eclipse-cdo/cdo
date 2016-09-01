@@ -19,7 +19,7 @@ import java.text.MessageFormat;
  *
  * @author Eike Stepper
  * @since 4.0
- * @noextend This interface is not intended to be extended by clients.
+ * @noextend This class is not intended to be subclassed by clients.
  * @noinstantiate This class is not intended to be instantiated by clients.
  */
 public class CDOLobInfo
@@ -46,6 +46,16 @@ public class CDOLobInfo
     return id;
   }
 
+  /**
+   * A string representation of the {@link #getID() identifier} of this large object.
+   *
+   * @since 4.6
+   */
+  public final String getIDString()
+  {
+    return HexUtil.bytesToHex(id);
+  }
+
   public final long getSize()
   {
     return size;
@@ -54,6 +64,6 @@ public class CDOLobInfo
   @Override
   public String toString()
   {
-    return MessageFormat.format("{0}[id={1}, size={2}]", getClass().getSimpleName(), HexUtil.bytesToHex(id), size);
+    return MessageFormat.format("{0}[id={1}, size={2}]", getClass().getSimpleName(), getIDString(), size);
   }
 }

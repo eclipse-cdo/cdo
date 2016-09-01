@@ -256,9 +256,16 @@ public interface InternalCDOSession
 
   /**
    * @since 4.3
+   * @deprecated As of 4.6 use {@link #invalidate(InvalidationData)}.
    */
+  @Deprecated
   public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache,
       byte securityImpact, Map<CDOID, CDOPermission> newPermissions);
+
+  /**
+   * @since 4.6
+   */
+  public void invalidate(InvalidationData invalidationData);
 
   /**
    * @since 3.0
@@ -348,6 +355,111 @@ public interface InternalCDOSession
     public String toString()
     {
       return "LocalCommit[" + getCommitNumber() + (threadName == null ? "" : ", " + threadName) + "]";
+    }
+  }
+
+  /**
+   * A data structure that holds all input values of {@link InternalCDOSession#invalidate(InvalidationData) InternalCDOSession#invalidate()}.
+   *
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static final class InvalidationData
+  {
+    private CDOCommitInfo commitInfo;
+
+    private InternalCDOTransaction sender;
+
+    private boolean clearResourcePathCache;
+
+    private byte securityImpact;
+
+    private Map<CDOID, CDOPermission> newPermissions;
+
+    private CDOLockChangeInfo lockChangeInfo;
+
+    public InvalidationData()
+    {
+    }
+
+    public CDOCommitInfo getCommitInfo()
+    {
+      return commitInfo;
+    }
+
+    public void setCommitInfo(CDOCommitInfo commitInfo)
+    {
+      this.commitInfo = commitInfo;
+    }
+
+    public InternalCDOTransaction getSender()
+    {
+      return sender;
+    }
+
+    public void setSender(InternalCDOTransaction sender)
+    {
+      this.sender = sender;
+    }
+
+    public boolean isClearResourcePathCache()
+    {
+      return clearResourcePathCache;
+    }
+
+    public void setClearResourcePathCache(boolean clearResourcePathCache)
+    {
+      this.clearResourcePathCache = clearResourcePathCache;
+    }
+
+    public byte getSecurityImpact()
+    {
+      return securityImpact;
+    }
+
+    public void setSecurityImpact(byte securityImpact)
+    {
+      this.securityImpact = securityImpact;
+    }
+
+    public Map<CDOID, CDOPermission> getNewPermissions()
+    {
+      return newPermissions;
+    }
+
+    public void setNewPermissions(Map<CDOID, CDOPermission> newPermissions)
+    {
+      this.newPermissions = newPermissions;
+    }
+
+    public CDOLockChangeInfo getLockChangeInfo()
+    {
+      return lockChangeInfo;
+    }
+
+    public void setLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
+    {
+      this.lockChangeInfo = lockChangeInfo;
+    }
+
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("InvalidationData[commitInfo=");
+      builder.append(commitInfo);
+      builder.append(", sender=");
+      builder.append(sender);
+      builder.append(", clearResourcePathCache=");
+      builder.append(clearResourcePathCache);
+      builder.append(", securityImpact=");
+      builder.append(securityImpact);
+      builder.append(", newPermissions=");
+      builder.append(newPermissions);
+      builder.append(", lockChangeInfo=");
+      builder.append(lockChangeInfo);
+      builder.append("]");
+      return builder.toString();
     }
   }
 

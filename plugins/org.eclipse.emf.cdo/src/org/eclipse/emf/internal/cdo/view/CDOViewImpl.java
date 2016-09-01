@@ -278,12 +278,20 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
             EclipseMonitor.convert(progressMonitor));
 
         basicSetBranchPoint(branchPoint);
-        CDOBranch branch = branchPoint.getBranch();
 
         try
         {
           CDOStateMachine.SWITCHING_TARGET.set(Boolean.TRUE);
-          doInvalidate(branch, UNSPECIFIED_DATE, allChangedObjects, allDetachedObjects, oldRevisions, true);
+
+          ViewInvalidationData invalidationData = new ViewInvalidationData();
+          invalidationData.setLastUpdateTime(UNSPECIFIED_DATE);
+          invalidationData.setBranch(branchPoint.getBranch());
+          invalidationData.setAllChangedObjects(allChangedObjects);
+          invalidationData.setAllDetachedObjects(allDetachedObjects);
+          invalidationData.setOldRevisions(oldRevisions);
+          invalidationData.setClearResourcePathCache(true);
+
+          doInvalidate(invalidationData);
         }
         finally
         {
@@ -541,7 +549,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
-  private CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp,
+  protected final CDOLockChangeInfo makeLockChangeInfo(Operation op, LockType type, long timestamp,
       CDOLockState[] newLockStates)
   {
     return CDOLockUtil.createLockChangeInfo(timestamp, this, getBranch(), op, type, newLockStates);
@@ -596,12 +604,12 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
-  private void fireLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+  protected final void fireLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
   {
     IListener[] listeners = getListeners();
     if (listeners != null)
     {
-      fireEvent(new LocksChangedEvent(sender, lockChangeInfo), listeners);
+      fireEvent(new ViewLocksChangedEvent(sender, lockChangeInfo), listeners);
     }
   }
 
@@ -1148,38 +1156,38 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     revisionManager.getRevision(id, this, initialChunkSize, depth, true);
   }
 
-  /*
-   * Must not by synchronized on the view!
-   */
   @Deprecated
-  public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async)
   {
-    invalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, async, true);
+    throw new UnsupportedOperationException();
   }
 
-  /*
-   * Must not by synchronized on the view!
-   */
-  public/* synchronized */void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
+  @Deprecated
+  public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
       boolean clearResourcePathCache)
   {
-    if (async)
+    throw new UnsupportedOperationException();
+  }
+
+  /*
+   * Must not by synchronized on the view!
+   */
+  public /* synchronized */ void invalidate(ViewInvalidationData invalidationData)
+  {
+    if (invalidationData.isAsync())
     {
       IWorkSerializer serializer = getInvalidationRunner();
-      serializer.addWork(new InvalidationRunnable(branch, lastUpdateTime, allChangedObjects, allDetachedObjects,
-          oldRevisions, clearResourcePathCache));
+      serializer.addWork(new InvalidationRunnable(invalidationData));
     }
     else
     {
-      doInvalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions, clearResourcePathCache);
+      doInvalidate(invalidationData);
     }
   }
 
-  protected void doInvalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions,
-      boolean clearResourcePathCache)
+  protected void doInvalidate(ViewInvalidationData invalidationData)
   {
     synchronized (getViewMonitor())
     {
@@ -1187,8 +1195,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
 
       try
       {
-        doInvalidateSynced(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions,
-            clearResourcePathCache);
+        doInvalidateSynced(invalidationData);
       }
       finally
       {
@@ -1197,9 +1204,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
   }
 
-  private void doInvalidateSynced(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions,
-      boolean clearResourcePathCache)
+  private void doInvalidateSynced(ViewInvalidationData invalidationData)
   {
     if (getTimeStamp() != UNSPECIFIED_DATE && CDOStateMachine.SWITCHING_TARGET.get() != Boolean.TRUE)
     {
@@ -1207,12 +1212,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       return;
     }
 
+    long lastUpdateTime = invalidationData.getLastUpdateTime();
+
     try
     {
       // Also false for FailureCommitInfos (because of branch==null). Only setLastUpdateTime() is called below.
-      if (branch == getBranch())
+      if (invalidationData.getBranch() == getBranch())
       {
-        if (clearResourcePathCache)
+        if (invalidationData.isClearResourcePathCache())
         {
           clearResourcePathCacheIfNecessary(null);
         }
@@ -1221,8 +1228,9 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
         Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
 
-        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = invalidate(allChangedObjects,
-            allDetachedObjects, deltas, revisionDeltas, detachedObjects);
+        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = invalidate(
+            invalidationData.getAllChangedObjects(), invalidationData.getAllDetachedObjects(), deltas, revisionDeltas,
+            detachedObjects);
         handleConflicts(lastUpdateTime, conflicts, deltas);
 
         sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
@@ -1232,10 +1240,16 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         // Then send the notifications. The deltas could have been modified by the conflict resolvers.
         if (!deltas.isEmpty() || !detachedObjects.isEmpty())
         {
-          sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
+          sendDeltaNotifications(deltas, detachedObjects, invalidationData.getOldRevisions());
         }
 
         fireAdaptersNotifiedEvent(lastUpdateTime);
+
+        CDOLockChangeInfo lockChangeInfo = invalidationData.getLockChangeInfo();
+        if (lockChangeInfo != null)
+        {
+          fireLocksChangedEvent(null, lockChangeInfo);
+        }
       }
     }
     catch (RuntimeException ex)
@@ -2759,28 +2773,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    */
   private final class InvalidationRunnable extends RunnableWithName
   {
-    private final CDOBranch branch;
+    private final ViewInvalidationData invalidationData;
 
-    private final long lastUpdateTime;
-
-    private final List<CDORevisionKey> allChangedObjects;
-
-    private final List<CDOIDAndVersion> allDetachedObjects;
-
-    private final Map<CDOID, InternalCDORevision> oldRevisions;
-
-    private boolean clearResourcePathCache;
-
-    private InvalidationRunnable(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
-        List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions,
-        boolean clearResourcePathCache)
+    public InvalidationRunnable(ViewInvalidationData invalidationData)
     {
-      this.branch = branch;
-      this.lastUpdateTime = lastUpdateTime;
-      this.allChangedObjects = allChangedObjects;
-      this.allDetachedObjects = allDetachedObjects;
-      this.oldRevisions = oldRevisions;
-      this.clearResourcePathCache = clearResourcePathCache;
+      this.invalidationData = invalidationData;
     }
 
     @Override
@@ -2795,8 +2792,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       try
       {
         invalidationRunnerActive = true;
-        doInvalidate(branch, lastUpdateTime, allChangedObjects, allDetachedObjects, oldRevisions,
-            clearResourcePathCache);
+        doInvalidate(invalidationData);
       }
       catch (Exception ex)
       {
@@ -2854,9 +2850,16 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     }
 
     @Override
-    public String toString()
+    protected String formatEventName()
     {
-      return "CDOViewInvalidationEvent" + revisionDeltas; //$NON-NLS-1$
+      return "CDOViewInvalidationEvent";
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "timeStamp=" + timeStamp + ", revisionDeltas=" + revisionDeltas + ", detachedObjects=" + detachedObjects
+          + "]";
     }
   }
 
@@ -2864,11 +2867,11 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
    * @author Caspar De Groot
    * @since 4.1
    */
-  private final class LocksChangedEvent extends DefaultLocksChangedEvent implements CDOViewLocksChangedEvent
+  private final class ViewLocksChangedEvent extends DefaultLocksChangedEvent implements CDOViewLocksChangedEvent
   {
     private static final long serialVersionUID = 1L;
 
-    public LocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+    public ViewLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
     {
       super(CDOViewImpl.this, sender, lockChangeInfo);
     }
@@ -2915,6 +2918,12 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
       }
 
       return objects.toArray(new EObject[objects.size()]);
+    }
+
+    @Override
+    protected String formatEventName()
+    {
+      return "CDOViewLocksChangedEvent";
     }
   }
 

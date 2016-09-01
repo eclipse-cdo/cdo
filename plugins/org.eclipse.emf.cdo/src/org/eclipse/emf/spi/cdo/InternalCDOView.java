@@ -117,10 +117,17 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
 
   /**
    * @since 4.2
+   * @deprecated As of 4.6. use {@link #invalidate(ViewInvalidationData)}
    */
+  @Deprecated
   public void invalidate(CDOBranch branch, long lastUpdateTime, List<CDORevisionKey> allChangedObjects,
       List<CDOIDAndVersion> allDetachedObjects, Map<CDOID, InternalCDORevision> oldRevisions, boolean async,
       boolean clearResourcePathCache);
+
+  /**
+   * @since 4.6
+   */
+  public void invalidate(ViewInvalidationData invalidationData);
 
   /**
    * @since 3.0
@@ -270,6 +277,139 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
       }
 
       return viewAndStates;
+    }
+  }
+
+  /**
+   * A data structure that holds all input values of {@link InternalCDOView#invalidate(ViewInvalidationData) InternalCDOView#invalidate()}.
+   *
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static final class ViewInvalidationData
+  {
+    private CDOBranch branch;
+
+    private long lastUpdateTime;
+
+    private List<CDORevisionKey> allChangedObjects;
+
+    private List<CDOIDAndVersion> allDetachedObjects;
+
+    private Map<CDOID, InternalCDORevision> oldRevisions;
+
+    private boolean async;
+
+    private boolean clearResourcePathCache;
+
+    private CDOLockChangeInfo lockChangeInfo;
+
+    public ViewInvalidationData()
+    {
+    }
+
+    public CDOBranch getBranch()
+    {
+      return branch;
+    }
+
+    public void setBranch(CDOBranch branch)
+    {
+      this.branch = branch;
+    }
+
+    public long getLastUpdateTime()
+    {
+      return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(long lastUpdateTime)
+    {
+      this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public List<CDORevisionKey> getAllChangedObjects()
+    {
+      return allChangedObjects;
+    }
+
+    public void setAllChangedObjects(List<CDORevisionKey> allChangedObjects)
+    {
+      this.allChangedObjects = allChangedObjects;
+    }
+
+    public List<CDOIDAndVersion> getAllDetachedObjects()
+    {
+      return allDetachedObjects;
+    }
+
+    public void setAllDetachedObjects(List<CDOIDAndVersion> allDetachedObjects)
+    {
+      this.allDetachedObjects = allDetachedObjects;
+    }
+
+    public Map<CDOID, InternalCDORevision> getOldRevisions()
+    {
+      return oldRevisions;
+    }
+
+    public void setOldRevisions(Map<CDOID, InternalCDORevision> oldRevisions)
+    {
+      this.oldRevisions = oldRevisions;
+    }
+
+    public boolean isAsync()
+    {
+      return async;
+    }
+
+    public void setAsync(boolean async)
+    {
+      this.async = async;
+    }
+
+    public boolean isClearResourcePathCache()
+    {
+      return clearResourcePathCache;
+    }
+
+    public void setClearResourcePathCache(boolean clearResourcePathCache)
+    {
+      this.clearResourcePathCache = clearResourcePathCache;
+    }
+
+    public CDOLockChangeInfo getLockChangeInfo()
+    {
+      return lockChangeInfo;
+    }
+
+    public void setLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
+    {
+      this.lockChangeInfo = lockChangeInfo;
+    }
+
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("ViewInvalidationData[branch=");
+      builder.append(branch);
+      builder.append(", lastUpdateTime=");
+      builder.append(lastUpdateTime);
+      builder.append(", allChangedObjects=");
+      builder.append(allChangedObjects);
+      builder.append(", allDetachedObjects=");
+      builder.append(allDetachedObjects);
+      builder.append(", oldRevisions=");
+      builder.append(oldRevisions);
+      builder.append(", async=");
+      builder.append(async);
+      builder.append(", clearResourcePathCache=");
+      builder.append(clearResourcePathCache);
+      builder.append(", lockChangeInfo=");
+      builder.append(lockChangeInfo);
+      builder.append("]");
+      return builder.toString();
     }
   }
 }

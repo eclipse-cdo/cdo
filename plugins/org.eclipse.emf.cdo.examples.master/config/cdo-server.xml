@@ -74,7 +74,7 @@
 
       <dbAdapter name="h2"/>
       <dataSource class="org.h2.jdbcx.JdbcDataSource"
-        URL="jdbc:h2:/develop/cdo-master/h2/big"/>
+        URL="jdbc:h2:/develop/cdo-master/h2/big;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0"/>
       
       <!-- Example:
       <dbAdapter name="derby-embedded"/>

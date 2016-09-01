@@ -39,13 +39,6 @@ import java.util.List;
  */
 public class LockingNotificationsTest extends AbstractLockingTest
 {
-  private CDOView openViewWithLockNotifications(CDOSession session, CDOBranch branch)
-  {
-    CDOView view = branch != null ? session.openView(branch) : session.openView();
-    view.options().setLockNotificationEnabled(true);
-    return view;
-  }
-
   /**
    * FIXME Disabled until bug 358603 is addressed.
    */
@@ -59,24 +52,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
     sameBranchDifferentSession(LockReleaseMode.AUTO);
   }
 
-  private void sameBranchDifferentSession(LockReleaseMode mode) throws CommitException
-  {
-    CDOSession session1 = openSession();
-    CDOSession session2 = openSession();
-    CDOView controlView = openViewWithLockNotifications(session2, null);
-    if (mode == LockReleaseMode.EXPLICIT)
-    {
-      withExplicitRelease(session1, controlView, true);
-    }
-    else if (mode == LockReleaseMode.AUTO)
-    {
-      withAutoRelease(session1, controlView, true);
-    }
-
-    session1.close();
-    session2.close();
-  }
-
   public void testSameBranchSameSession_explicitRelease() throws CommitException
   {
     sameBranchSameSession(LockReleaseMode.EXPLICIT);
@@ -85,22 +60,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
   public void testSameBranchSameSession_autoRelease() throws CommitException
   {
     sameBranchSameSession(LockReleaseMode.AUTO);
-  }
-
-  private void sameBranchSameSession(LockReleaseMode mode) throws CommitException
-  {
-    CDOSession session1 = openSession();
-    CDOView controlView = openViewWithLockNotifications(session1, null);
-    if (mode == LockReleaseMode.EXPLICIT)
-    {
-      withExplicitRelease(session1, controlView, true);
-    }
-    else if (mode == LockReleaseMode.AUTO)
-    {
-      withAutoRelease(session1, controlView, true);
-    }
-
-    session1.close();
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
@@ -115,25 +74,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
     differentBranchDifferentSession(LockReleaseMode.AUTO);
   }
 
-  private void differentBranchDifferentSession(LockReleaseMode mode) throws CommitException
-  {
-    CDOSession session1 = openSession();
-    CDOBranch subBranch = session1.getBranchManager().getMainBranch().createBranch("sub1");
-    CDOSession session2 = openSession();
-    CDOView controlView = openViewWithLockNotifications(session2, subBranch);
-    if (mode == LockReleaseMode.EXPLICIT)
-    {
-      withExplicitRelease(session1, controlView, false);
-    }
-    else if (mode == LockReleaseMode.AUTO)
-    {
-      withAutoRelease(session1, controlView, false);
-    }
-
-    session1.close();
-    session2.close();
-  }
-
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
   public void testDifferentBranchSameSession() throws CommitException
   {
@@ -144,235 +84,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
   public void testDifferentBranchSameSession_autoRelease() throws CommitException
   {
     differentBranchSameSession(LockReleaseMode.AUTO);
-  }
-
-  private void differentBranchSameSession(LockReleaseMode mode) throws CommitException
-  {
-    CDOSession session1 = openSession();
-    CDOBranch subBranch = session1.getBranchManager().getMainBranch().createBranch("sub2");
-    CDOView controlView = openViewWithLockNotifications(session1, subBranch);
-    if (mode == LockReleaseMode.EXPLICIT)
-    {
-      withExplicitRelease(session1, controlView, false);
-    }
-    else if (mode == LockReleaseMode.AUTO)
-    {
-      withAutoRelease(session1, controlView, false);
-    }
-
-    session1.close();
-  }
-
-  private void withExplicitRelease(CDOSession session1, CDOView controlView, boolean mustReceiveNotifications)
-      throws CommitException
-  {
-    TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class);
-    controlView.addListener(controlViewListener);
-
-    CDOTransaction tx1 = session1.openTransaction();
-    CDOResource res1 = tx1.getOrCreateResource(getResourcePath("r1"));
-    TestListener2 transactionListener = new TestListener2(CDOViewLocksChangedEvent.class);
-    tx1.addListener(transactionListener);
-    res1.getContents().clear();
-    Company company = getModel1Factory().createCompany();
-    res1.getContents().add(company);
-    tx1.commit();
-
-    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-
-    CDOObject cdoCompanyInControlView = null;
-    if (mustReceiveNotifications)
-    {
-      cdoCompanyInControlView = controlView.getObject(cdoCompany.cdoID());
-    }
-
-    /* Test write lock */
-
-    cdoCompany.cdoWriteLock().lock();
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(1);
-      assertEquals(1, controlViewListener.getEvents().size());
-
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
-      assertLockOwner(tx1, event.getLockOwner());
-
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
-      assertLockOwner(tx1, lockStates[0].getWriteLockOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
-    }
-
-    cdoCompany.cdoWriteLock().unlock();
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(2);
-
-      assertEquals(2, controlViewListener.getEvents().size());
-
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(1);
-      assertLockOwner(tx1, event.getLockOwner());
-
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
-      assertNull(lockStates[0].getWriteLockOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
-    }
-
-    /* Test read lock */
-
-    cdoCompany.cdoReadLock().lock();
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(3);
-      assertEquals(3, controlViewListener.getEvents().size());
-
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(2);
-      assertLockOwner(tx1, event.getLockOwner());
-
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
-      assertEquals(1, lockStates[0].getReadLockOwners().size());
-      CDOLockOwner tx1Lo = CDOLockUtil.createLockOwner(tx1);
-      assertEquals(true, lockStates[0].getReadLockOwners().contains(tx1Lo));
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
-    }
-
-    cdoCompany.cdoReadLock().unlock();
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(4);
-
-      assertEquals(4, controlViewListener.getEvents().size());
-
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(3);
-      assertLockOwner(tx1, event.getLockOwner());
-
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertEquals(0, lockStates[0].getReadLockOwners().size());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
-    }
-
-    /* Test write option */
-
-    cdoCompany.cdoWriteOption().lock();
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(5);
-      assertEquals(5, controlViewListener.getEvents().size());
-
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(4);
-      assertLockOwner(tx1, event.getLockOwner());
-
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
-      assertLockOwner(tx1, lockStates[0].getWriteOptionOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
-    }
-
-    cdoCompany.cdoWriteOption().unlock();
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(6);
-
-      assertEquals(6, controlViewListener.getEvents().size());
-
-      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(5);
-      assertLockOwner(tx1, event.getLockOwner());
-
-      CDOLockState[] lockStates = event.getLockStates();
-      assertEquals(1, lockStates.length);
-      assertLockedObject(cdoCompany, lockStates[0].getLockedObject());
-      assertNull(lockStates[0].getWriteOptionOwner());
-      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
-    }
-
-    List<IEvent> events = transactionListener.getEvents();
-    assertEquals(6, events.size());
-
-    if (!mustReceiveNotifications)
-    {
-      assertEquals(0, controlViewListener.getEvents().size());
-    }
-  }
-
-  private void withAutoRelease(CDOSession session1, CDOView controlView, boolean mustReceiveNotifications)
-      throws CommitException
-  {
-    TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class);
-    controlView.addListener(controlViewListener);
-
-    CDOTransaction tx1 = session1.openTransaction();
-    tx1.options().setAutoReleaseLocksEnabled(true);
-
-    CDOResource res1 = tx1.getOrCreateResource(getResourcePath("r1"));
-    res1.getContents().clear();
-
-    Company company = getModel1Factory().createCompany();
-    res1.getContents().add(company);
-    tx1.commit();
-
-    implicitRelease(company, LockType.WRITE, tx1, controlViewListener, mustReceiveNotifications);
-    implicitRelease(company, LockType.READ, tx1, controlViewListener, mustReceiveNotifications);
-    implicitRelease(company, LockType.OPTION, tx1, controlViewListener, mustReceiveNotifications);
-  }
-
-  private void implicitRelease(Company company, LockType type, CDOTransaction tx, TestListener2 controlViewListener,
-      boolean mustReceiveNotifications) throws CommitException
-  {
-    CDOViewLocksChangedEvent e;
-    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
-
-    company.setName(company.getName() + "x"); // Make name field dirty
-    cdoCompany.cdoWriteLock().lock();
-
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(1);
-      e = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
-      assertEquals(Operation.LOCK, e.getOperation());
-      assertEquals(LockType.WRITE, e.getLockType());
-    }
-
-    tx.commit();
-
-    if (mustReceiveNotifications)
-    {
-      controlViewListener.waitFor(2);
-      e = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(1);
-      assertEquals(Operation.UNLOCK, e.getOperation());
-      assertNull(e.getLockType());
-    }
-
-    if (!mustReceiveNotifications)
-    {
-      assertEquals(0, controlViewListener.getEvents().size());
-    }
-  }
-
-  private void assertLockedObject(CDOObject obj, Object lockedObject)
-  {
-    if (lockedObject instanceof CDOIDAndBranch)
-    {
-      CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockedObject;
-      assertEquals(obj.cdoID(), idAndBranch.getID());
-      assertEquals(obj.cdoView().getBranch().getID(), idAndBranch.getBranch().getID());
-    }
-    else if (lockedObject instanceof CDOID)
-    {
-      assertEquals(obj.cdoID(), lockedObject);
-    }
-  }
-
-  private void assertLockOwner(CDOView view, CDOLockOwner lockOwner)
-  {
-    CDOLockOwner lo = CDOLockUtil.createLockOwner(view);
-    assertEquals(lo, lockOwner);
   }
 
   public void testEnableDisableNotifications() throws CommitException
@@ -390,6 +101,21 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     session1.close();
     session2.close();
+  }
+
+  public void testEnableDisableNotificationsSameSession() throws CommitException
+  {
+    CDOSession session1 = openSession();
+    CDOView controlView = session1.openView();
+    withExplicitRelease(session1, controlView, false);
+
+    controlView.options().setLockNotificationEnabled(true);
+    withExplicitRelease(session1, controlView, true);
+
+    controlView.options().setLockNotificationEnabled(false);
+    withExplicitRelease(session1, controlView, false);
+
+    session1.close();
   }
 
   public void testLockStateHeldByDurableView() throws CommitException
@@ -448,6 +174,297 @@ public class LockingNotificationsTest extends AbstractLockingTest
     assertNull(cdoObj.cdoLockState());
 
     session1.close();
+  }
+
+  private CDOView openViewWithLockNotifications(CDOSession session, CDOBranch branch)
+  {
+    CDOView view = branch != null ? session.openView(branch) : session.openView();
+    view.options().setLockNotificationEnabled(true);
+    return view;
+  }
+
+  private void sameBranchDifferentSession(LockReleaseMode mode) throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOSession controlSession = openSession();
+    CDOView controlView = openViewWithLockNotifications(controlSession, null);
+
+    if (mode == LockReleaseMode.EXPLICIT)
+    {
+      withExplicitRelease(session, controlView, true);
+    }
+    else if (mode == LockReleaseMode.AUTO)
+    {
+      withAutoRelease(session, controlView, true);
+    }
+
+    controlSession.close();
+    session.close();
+  }
+
+  private void sameBranchSameSession(LockReleaseMode mode) throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOView controlView = openViewWithLockNotifications(session, null);
+
+    if (mode == LockReleaseMode.EXPLICIT)
+    {
+      withExplicitRelease(session, controlView, true);
+    }
+    else if (mode == LockReleaseMode.AUTO)
+    {
+      withAutoRelease(session, controlView, true);
+    }
+
+    session.close();
+  }
+
+  private void differentBranchDifferentSession(LockReleaseMode mode) throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOBranch subBranch = session.getBranchManager().getMainBranch().createBranch("sub1");
+
+    CDOSession controlSession = openSession();
+    CDOView controlView = openViewWithLockNotifications(controlSession, subBranch);
+
+    if (mode == LockReleaseMode.EXPLICIT)
+    {
+      withExplicitRelease(session, controlView, false);
+    }
+    else if (mode == LockReleaseMode.AUTO)
+    {
+      withAutoRelease(session, controlView, false);
+    }
+
+    controlSession.close();
+    session.close();
+  }
+
+  private void differentBranchSameSession(LockReleaseMode mode) throws CommitException
+  {
+    CDOSession session = openSession();
+    CDOBranch subBranch = session.getBranchManager().getMainBranch().createBranch("sub2");
+    CDOView controlView = openViewWithLockNotifications(session, subBranch);
+
+    if (mode == LockReleaseMode.EXPLICIT)
+    {
+      withExplicitRelease(session, controlView, false);
+    }
+    else if (mode == LockReleaseMode.AUTO)
+    {
+      withAutoRelease(session, controlView, false);
+    }
+
+    session.close();
+  }
+
+  private void withExplicitRelease(CDOSession session1, CDOView controlView, boolean mustReceiveNotifications)
+      throws CommitException
+  {
+    TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class);
+    controlView.addListener(controlViewListener);
+
+    CDOTransaction tx1 = session1.openTransaction();
+    CDOResource res1 = tx1.getOrCreateResource(getResourcePath("r1"));
+    TestListener2 transactionListener = new TestListener2(CDOViewLocksChangedEvent.class);
+    tx1.addListener(transactionListener);
+    res1.getContents().clear();
+    Company company = getModel1Factory().createCompany();
+    res1.getContents().add(company);
+    tx1.commit();
+
+    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
+    CDOObject cdoCompanyInControlView = null;
+    if (mustReceiveNotifications)
+    {
+      cdoCompanyInControlView = controlView.getObject(cdoCompany.cdoID());
+    }
+
+    /* Test write lock */
+
+    cdoCompany.cdoWriteLock().lock();
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(1);
+      assertEquals(1, controlViewListener.getEvents().size());
+
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      assertLockOwner(tx1, event.getLockOwner());
+
+      CDOLockState[] lockStates = event.getLockStates();
+      assertEquals(1, lockStates.length);
+      assertLockedObject(cdoCompany, lockStates[0]);
+      assertLockOwner(tx1, lockStates[0].getWriteLockOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+    }
+
+    cdoCompany.cdoWriteLock().unlock();
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(2);
+      assertEquals(2, controlViewListener.getEvents().size());
+
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(1);
+      assertLockOwner(tx1, event.getLockOwner());
+
+      CDOLockState[] lockStates = event.getLockStates();
+      assertEquals(1, lockStates.length);
+      assertLockedObject(cdoCompany, lockStates[0]);
+      assertNull(lockStates[0].getWriteLockOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+    }
+
+    /* Test read lock */
+
+    cdoCompany.cdoReadLock().lock();
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(3);
+      assertEquals(3, controlViewListener.getEvents().size());
+
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(2);
+      assertLockOwner(tx1, event.getLockOwner());
+
+      CDOLockState[] lockStates = event.getLockStates();
+      assertEquals(1, lockStates.length);
+      assertLockedObject(cdoCompany, lockStates[0]);
+      assertEquals(1, lockStates[0].getReadLockOwners().size());
+      CDOLockOwner tx1Lo = CDOLockUtil.createLockOwner(tx1);
+      assertEquals(true, lockStates[0].getReadLockOwners().contains(tx1Lo));
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+    }
+
+    cdoCompany.cdoReadLock().unlock();
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(4);
+      assertEquals(4, controlViewListener.getEvents().size());
+
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(3);
+      assertLockOwner(tx1, event.getLockOwner());
+
+      CDOLockState[] lockStates = event.getLockStates();
+      assertEquals(1, lockStates.length);
+      assertEquals(0, lockStates[0].getReadLockOwners().size());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+    }
+
+    /* Test write option */
+
+    cdoCompany.cdoWriteOption().lock();
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(5);
+      assertEquals(5, controlViewListener.getEvents().size());
+
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(4);
+      assertLockOwner(tx1, event.getLockOwner());
+
+      CDOLockState[] lockStates = event.getLockStates();
+      assertEquals(1, lockStates.length);
+      assertLockedObject(cdoCompany, lockStates[0]);
+      assertLockOwner(tx1, lockStates[0].getWriteOptionOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+    }
+
+    cdoCompany.cdoWriteOption().unlock();
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(6);
+      assertEquals(6, controlViewListener.getEvents().size());
+
+      CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(5);
+      assertLockOwner(tx1, event.getLockOwner());
+
+      CDOLockState[] lockStates = event.getLockStates();
+      assertEquals(1, lockStates.length);
+      assertLockedObject(cdoCompany, lockStates[0]);
+      assertNull(lockStates[0].getWriteOptionOwner());
+      assertEquals(cdoCompanyInControlView.cdoLockState(), lockStates[0]);
+    }
+
+    List<IEvent> events = transactionListener.getEvents();
+    assertEquals(6, events.size());
+
+    if (!mustReceiveNotifications)
+    {
+      assertEquals(0, controlViewListener.getEvents().size());
+    }
+  }
+
+  private void withAutoRelease(CDOSession session, CDOView controlView, boolean mustReceiveNotifications)
+      throws CommitException
+  {
+    TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class);
+    controlView.addListener(controlViewListener);
+
+    CDOTransaction transaction = session.openTransaction();
+    transaction.options().setAutoReleaseLocksEnabled(true);
+
+    CDOResource resource = transaction.getOrCreateResource(getResourcePath("r1"));
+    resource.getContents().clear();
+
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    implicitRelease(company, LockType.WRITE, transaction, controlViewListener, mustReceiveNotifications);
+    implicitRelease(company, LockType.READ, transaction, controlViewListener, mustReceiveNotifications);
+    implicitRelease(company, LockType.OPTION, transaction, controlViewListener, mustReceiveNotifications);
+  }
+
+  private void implicitRelease(Company company, LockType type, CDOTransaction transaction,
+      TestListener2 controlViewListener, boolean mustReceiveNotifications) throws CommitException
+  {
+    CDOViewLocksChangedEvent event;
+    CDOObject cdoCompany = CDOUtil.getCDOObject(company);
+
+    company.setName(company.getName() + "x"); // Make object DIRTY.
+    cdoCompany.cdoWriteLock().lock();
+
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(1);
+      event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(0);
+      assertEquals(Operation.LOCK, event.getOperation());
+      assertEquals(LockType.WRITE, event.getLockType());
+    }
+
+    transaction.commit();
+
+    if (mustReceiveNotifications)
+    {
+      controlViewListener.waitFor(2);
+      event = (CDOViewLocksChangedEvent)controlViewListener.getEvents().get(1);
+      assertEquals(Operation.UNLOCK, event.getOperation());
+      assertNull(event.getLockType());
+    }
+    else
+    {
+      sleep(1000);
+      assertEquals(0, controlViewListener.getEvents().size());
+    }
+  }
+
+  public static void assertLockedObject(CDOObject expected, CDOLockState actual)
+  {
+    Object lockedObject = actual.getLockedObject();
+    if (lockedObject instanceof CDOIDAndBranch)
+    {
+      CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockedObject;
+      assertEquals(expected.cdoID(), idAndBranch.getID());
+      assertEquals(expected.cdoView().getBranch().getID(), idAndBranch.getBranch().getID());
+    }
+    else if (lockedObject instanceof CDOID)
+    {
+      assertEquals(expected.cdoID(), lockedObject);
+    }
+  }
+
+  public static void assertLockOwner(CDOView expected, CDOLockOwner actual)
+  {
+    CDOLockOwner lockOwner = CDOLockUtil.createLockOwner(expected);
+    assertEquals(lockOwner, actual);
   }
 
   /**

@@ -177,8 +177,6 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private List<CDOIDReference> xRefs;
 
-  private final List<LockState<Object, IView>> postCommitLockStates = new ArrayList<LockState<Object, IView>>();
-
   private boolean hasChanges;
 
   private boolean serializingCommits;
@@ -194,6 +192,10 @@ public class TransactionCommitContext implements InternalCommitContext
   private Map<Object, Object> data;
 
   private CommitNotificationInfo commitNotificationInfo = new CommitNotificationInfo();
+
+  private CDOLockChangeInfo lockChangeInfo;
+
+  private final List<LockState<Object, IView>> postCommitLockStates = new ArrayList<LockState<Object, IView>>();
 
   public TransactionCommitContext(InternalTransaction transaction)
   {
@@ -875,6 +877,7 @@ public class TransactionCommitContext implements InternalCommitContext
   {
     commitNotificationInfo.setSender(transaction.getSession());
     commitNotificationInfo.setRevisionProvider(this);
+    commitNotificationInfo.setLockChangeInfo(lockChangeInfo);
 
     if (success)
     {
@@ -1353,9 +1356,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (!postCommitLockStates.isEmpty())
       {
-        // TODO (CD) Does doing this here make sense?
-        // The commit notifications get sent later, from postCommit.
-        sendLockNotifications(postCommitLockStates);
+        lockChangeInfo = createLockChangeInfo(postCommitLockStates);
       }
 
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
@@ -1456,15 +1457,12 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  protected void sendLockNotifications(List<LockState<Object, IView>> newLockStates)
+  protected CDOLockChangeInfo createLockChangeInfo(List<LockState<Object, IView>> newLockStates)
   {
+    long timeStamp = getTimeStamp();
     CDOLockState[] newStates = Repository.toCDOLockStates(newLockStates);
 
-    long timeStamp = getTimeStamp();
-    Operation unlock = Operation.UNLOCK;
-
-    CDOLockChangeInfo info = CDOLockUtil.createLockChangeInfo(timeStamp, transaction, branch, unlock, null, newStates);
-    repository.getSessionManager().sendLockNotification(transaction.getSession(), info);
+    return CDOLockUtil.createLockChangeInfo(timeStamp, transaction, branch, Operation.UNLOCK, null, newStates);
   }
 
   protected void addNewPackageUnits(OMMonitor monitor)

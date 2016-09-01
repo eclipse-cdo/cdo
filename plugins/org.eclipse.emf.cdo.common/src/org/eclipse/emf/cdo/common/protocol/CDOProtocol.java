@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 
@@ -41,6 +42,9 @@ public interface CDOProtocol extends CDOProtocolConstants
    * @author Eike Stepper
    * @since 4.3
    */
+  /**
+   * @author Eike Stepper
+   */
   public static final class CommitNotificationInfo
   {
     public static final byte IMPACT_NONE = 0;
@@ -65,6 +69,8 @@ public interface CDOProtocol extends CDOProtocolConstants
 
     private boolean clearResourcePathCache;
 
+    private CDOLockChangeInfo lockChangeInfo;
+
     public CommitNotificationInfo()
     {
     }
@@ -88,6 +94,11 @@ public interface CDOProtocol extends CDOProtocolConstants
           CDOPermission permission = CDOPermission.get(bits);
           newPermissions.put(id, permission);
         }
+      }
+
+      if (in.readBoolean())
+      {
+        lockChangeInfo = in.readCDOLockChangeInfo();
       }
     }
 
@@ -116,6 +127,16 @@ public interface CDOProtocol extends CDOProtocolConstants
           out.writeCDOID(id);
           out.writeByte(bits);
         }
+      }
+
+      if (lockChangeInfo != null)
+      {
+        out.writeBoolean(true);
+        out.writeCDOLockChangeInfo(lockChangeInfo);
+      }
+      else
+      {
+        out.writeBoolean(false);
       }
     }
 
@@ -193,6 +214,22 @@ public interface CDOProtocol extends CDOProtocolConstants
     public void setClearResourcePathCache(boolean clearResourcePathCache)
     {
       this.clearResourcePathCache = clearResourcePathCache;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public CDOLockChangeInfo getLockChangeInfo()
+    {
+      return lockChangeInfo;
+    }
+
+    /**
+     * @since 4.6
+     */
+    public void setLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
+    {
+      this.lockChangeInfo = lockChangeInfo;
     }
   }
 }

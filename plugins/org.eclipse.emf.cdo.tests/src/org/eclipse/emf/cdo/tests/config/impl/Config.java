@@ -114,6 +114,10 @@ public abstract class Config implements IConfig
   {
   }
 
+  public void mainSuiteFinished() throws Exception
+  {
+  }
+
   public static ExecutorService getExecutorService()
   {
     return executorService;

@@ -594,13 +594,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/session/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOSessionImpl">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="InternalCDOSession"/>
-                <message_argument value="CDOCommonSession"/>
-                <message_argument value="CDOSessionImpl"/>
-            </message_arguments>
-        </filter>
         <filter id="574668824">
             <message_arguments>
                 <message_argument value="InternalCDOSession"/>
@@ -610,13 +603,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/session/CDOSessionImpl.java" type="org.eclipse.emf.internal.cdo.session.CDOSessionImpl$OptionsImpl">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="Options"/>
-                <message_argument value="Options"/>
-                <message_argument value="OptionsImpl"/>
-            </message_arguments>
-        </filter>
         <filter id="574668824">
             <message_arguments>
                 <message_argument value="Options"/>
@@ -674,13 +660,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/view/CDOViewImpl.java" type="org.eclipse.emf.internal.cdo.view.CDOViewImpl$OptionsImpl">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="Options"/>
-                <message_argument value="Options"/>
-                <message_argument value="OptionsImpl"/>
-            </message_arguments>
-        </filter>
         <filter id="574668824">
             <message_arguments>
                 <message_argument value="Options"/>

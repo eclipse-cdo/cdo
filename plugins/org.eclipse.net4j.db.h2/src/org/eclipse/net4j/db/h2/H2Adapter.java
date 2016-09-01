@@ -115,4 +115,19 @@ public class H2Adapter extends DBAdapter
       }
     });
   }
+
+  /**
+   * @since 4.3
+   */
+  public static void shutdown(DataSource dataSource)
+  {
+    DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
+    {
+      public Object run(Connection connection) throws SQLException
+      {
+        DBUtil.execute(connection, "SHUTDOWN");
+        return null;
+      }
+    });
+  }
 }

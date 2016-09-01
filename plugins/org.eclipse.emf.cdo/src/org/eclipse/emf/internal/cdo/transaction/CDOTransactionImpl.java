@@ -57,7 +57,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
@@ -167,6 +166,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSession.CommitToken;
+import org.eclipse.emf.spi.cdo.InternalCDOSession.InvalidationData;
 import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
@@ -1630,15 +1630,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           try
           {
-            // The commit may have succeeded on the server, but after that fact network problems or timeouts have hit
-            // us.
+            // The commit may have succeeded on the server, but after that network problems or timeouts have hit us.
             // Let's see if we can recover...
             CDOCommitInfo info = session.getSessionProtocol().resetTransaction(getViewID(),
                 commitToken.getCommitNumber());
             if (info != null)
             {
               lastCommitTime = info.getTimeStamp();
-              session.invalidate(info, this, true, CDOProtocol.CommitNotificationInfo.IMPACT_NONE, null);
+
+              InvalidationData invalidationData = new InvalidationData();
+              invalidationData.setCommitInfo(info);
+              invalidationData.setSender(this);
+              invalidationData.setClearResourcePathCache(true);
+              invalidationData.setSecurityImpact(CDOProtocol.CommitNotificationInfo.IMPACT_NONE);
+              invalidationData.setNewPermissions(null);
+              invalidationData.setLockChangeInfo(null);
+
+              session.invalidate(invalidationData);
 
               // At this point the session (invalidator) is recovered.
               // Continue to rethrow the exception and let the client call rollback()...
@@ -3939,8 +3947,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (result.getRollbackMessage() != null)
         {
           CDOCommitInfo commitInfo = new FailureCommitInfo(timeStamp, result.getPreviousTimeStamp());
-          session.invalidate(commitInfo, transaction, clearResourcePathCache,
-              CDOProtocol.CommitNotificationInfo.IMPACT_NONE, null);
+
+          InvalidationData invalidationData = new InvalidationData();
+          invalidationData.setCommitInfo(commitInfo);
+          invalidationData.setSender(transaction);
+          invalidationData.setClearResourcePathCache(clearResourcePathCache);
+          invalidationData.setSecurityImpact(CDOProtocol.CommitNotificationInfo.IMPACT_NONE);
+          invalidationData.setNewPermissions(null);
+          invalidationData.setLockChangeInfo(null);
+
+          session.invalidate(invalidationData);
           return;
         }
 
@@ -3973,12 +3989,20 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           removeObject(id);
         }
 
+        CDOLockChangeInfo lockChangeInfo = makeUnlockChangeInfo(result);
+
         CDOCommitInfo commitInfo = makeCommitInfo(timeStamp, result.getPreviousTimeStamp());
         if (!commitInfo.isEmpty())
         {
-          byte securityImpact = result.getSecurityImpact();
-          Map<CDOID, CDOPermission> newPermissions = result.getNewPermissions();
-          session.invalidate(commitInfo, transaction, clearResourcePathCache, securityImpact, newPermissions);
+          InvalidationData invalidationData = new InvalidationData();
+          invalidationData.setCommitInfo(commitInfo);
+          invalidationData.setSender(transaction);
+          invalidationData.setClearResourcePathCache(clearResourcePathCache);
+          invalidationData.setSecurityImpact(result.getSecurityImpact());
+          invalidationData.setNewPermissions(result.getNewPermissions());
+          invalidationData.setLockChangeInfo(lockChangeInfo);
+
+          session.invalidate(invalidationData);
         }
 
         // Bug 290032 - Sticky views
@@ -4035,26 +4059,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           fireEvent(new FinishedEvent(idMappings), listeners);
         }
 
-        Map<CDOObject, CDOLockState> lockStates = getLockStates();
-        if (!lockStates.isEmpty())
+        if (lockChangeInfo != null && isActive())
         {
-          List<CDOLockState> objectsToUnlock = new ArrayList<CDOLockState>();
-
-          for (Map.Entry<CDOObject, CDOLockState> entry : lockStates.entrySet())
-          {
-            CDOObject object = entry.getKey();
-            if (options().isEffectiveAutoReleaseLock(object))
-            {
-              InternalCDOLockState lockState = (InternalCDOLockState)entry.getValue();
-              lockState.updateFrom(InternalCDOLockState.UNLOCKED);
-
-              objectsToUnlock.add(lockState);
-            }
-          }
-
-          CDOLockState[] newLockStates = objectsToUnlock.toArray(new CDOLockState[objectsToUnlock.size()]);
-          notifyOtherViewsAboutLockChanges(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(),
-              newLockStates);
+          fireLocksChangedEvent(CDOTransactionImpl.this, lockChangeInfo);
         }
       }
       catch (RuntimeException ex)
@@ -4076,6 +4083,32 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       InternalCDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
       return commitInfoManager.createCommitInfo(branch, timeStamp, previousTimeStamp, userID, comment, commitData);
+    }
+
+    private CDOLockChangeInfo makeUnlockChangeInfo(CommitTransactionResult result)
+    {
+      Map<CDOObject, CDOLockState> lockStates = getLockStates();
+      if (lockStates.isEmpty())
+      {
+        return null;
+      }
+
+      List<CDOLockState> objectsToUnlock = new ArrayList<CDOLockState>();
+
+      for (Map.Entry<CDOObject, CDOLockState> entry : lockStates.entrySet())
+      {
+        CDOObject object = entry.getKey();
+        if (options().isEffectiveAutoReleaseLock(object))
+        {
+          InternalCDOLockState lockState = (InternalCDOLockState)entry.getValue();
+          lockState.updateFrom(InternalCDOLockState.UNLOCKED);
+
+          objectsToUnlock.add(lockState);
+        }
+      }
+
+      CDOLockState[] newLockStates = objectsToUnlock.toArray(new CDOLockState[objectsToUnlock.size()]);
+      return makeLockChangeInfo(CDOLockChangeInfo.Operation.UNLOCK, null, result.getTimeStamp(), newLockStates);
     }
 
     private void preCommit(Map<CDOID, CDOObject> objects, Map<ByteArrayWrapper, CDOLob<?>> lobs)

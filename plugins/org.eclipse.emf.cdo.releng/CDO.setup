@@ -32,6 +32,8 @@
     <requirement
         name="org.eclipse.mylyn.gerrit.feature.feature.group"/>
     <requirement
+        name="org.eclipse.mylyn.hudson.feature.group"/>
+    <requirement
         name="org.eclipse.mylyn_feature.feature.group"/>
     <requirement
         name="org.eclipse.mylyn.bugzilla_feature.feature.group"/>

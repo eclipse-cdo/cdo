@@ -114,8 +114,6 @@
       <requirement
           name="org.eclipse.emf.cdo.site.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.releng.all.feature.group"/>
-      <requirement
           name="org.eclipse.emf.cdo.releng"/>
       <requirement
           name="org.eclipse.emf.cdo.releng.release"/>
@@ -147,6 +145,8 @@
             url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
         <repository
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="http://download.eclipse.org/modeling/emf/cdo/updates/integration"/>
         <repository
             url="http://download.eclipse.org/nebula/releases/1.0.0"/>
         <repository
@@ -240,10 +240,6 @@
         name="CDO"
         activeRepositoryList="${cdo.baseline.version}">
       <requirement
-          name="org.eclipse.emf.cdo.releng.apireports.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.releng.buildstamp.feature.group"/>
-      <requirement
           name="org.eclipse.emf.cdo.dawn.codegen.feature.group"/>
       <requirement
           name="org.eclipse.emf.cdo.dawn.codegen.emf.feature.group"/>
@@ -304,8 +300,6 @@
       <requirement
           name="org.eclipse.emf.cdo.tests.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.releng.tasks.feature.group"/>
-      <requirement
           name="org.eclipse.net4j.db.feature.group"/>
       <requirement
           name="org.eclipse.net4j.db.derby.feature.group"/>
@@ -342,10 +336,6 @@
       <requirement
           name="org.eclipse.net4j.util.ui.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.releng.relativepaths.feature.group"/>
-      <requirement
-          name="org.eclipse.emf.cdo.releng.help.feature.group"/>
-      <requirement
           name="org.eclipse.platform.feature.group"/>
       <requirement
           name="org.eclipse.jdt.feature.group"/>
@@ -367,8 +357,6 @@
             url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
             url="http://download.eclipse.org/nebula/releases/1.0.0"/>
-        <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
         <repository
             url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository

@@ -57,13 +57,6 @@
 	<feature id="org.eclipse.net4j.util.doc" version="0.0.0"><category name="org.eclipse.net4j.util.category"/></feature>
 	<feature id="org.eclipse.net4j.util.ui" version="0.0.0"><category name="org.eclipse.net4j.util.category"/></feature>
 
-	<!-- Release Engineering -->
-	<feature id="org.eclipse.emf.cdo.releng.help" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.releng.apireports" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.releng.buildstamp" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.releng.relativepaths" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
-	<feature id="org.eclipse.emf.cdo.releng.tasks" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.category"/></feature>
-
 	<!-- Others -->
 	<!--feature id="org.eclipse.emf.cdo.explorer.product" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature-->
 	<!--feature id="org.eclipse.emf.cdo.server.product" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature-->
@@ -77,7 +70,6 @@
 	<category-def name="org.eclipse.net4j.category" label="Net4j Signalling Platform"/>
 	<category-def name="org.eclipse.net4j.db.category" label="Net4j DB Framework"/>
 	<category-def name="org.eclipse.net4j.util.category" label="Net4j Utilities"/>
-	<category-def name="org.eclipse.emf.cdo.releng.category" label="Release Engineering"/>
 	<category-def name="org.eclipse.emf.cdo.releng.hidden.category" label="Others"/>
 
 </site>

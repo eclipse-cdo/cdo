@@ -12,14 +12,12 @@ Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=r
  org.eclipse.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Export-Package: org.eclipse.emf.cdo.internal.net4j;version="4.1.500";
   x-friends:="org.eclipse.emf.cdo.tests,
-   org.eclipse.emf.cdo.defs,
    org.eclipse.emf.cdo.ui,
    org.eclipse.emf.cdo.examples",
  org.eclipse.emf.cdo.internal.net4j.bundle;version="4.1.500";x-friends:="org.eclipse.emf.cdo.tests",
  org.eclipse.emf.cdo.internal.net4j.messages;version="4.1.500";x-internal:=true,
  org.eclipse.emf.cdo.internal.net4j.protocol;version="4.1.500";
   x-friends:="org.eclipse.emf.cdo.tests,
-   org.eclipse.emf.cdo.defs,
    org.eclipse.emf.cdo.ui,
    org.eclipse.emf.cdo.examples",
  org.eclipse.emf.cdo.net4j;version="4.1.500"

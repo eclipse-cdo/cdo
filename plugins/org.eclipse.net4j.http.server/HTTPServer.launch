@@ -368,5 +368,5 @@
 </mapAttribute>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>
-<stringAttribute key="workspace_bundles" value="org.eclipse.net4j.defs@default:default,org.eclipse.net4j.http.common@default:default,org.eclipse.net4j.http.server@default:default,org.eclipse.net4j.http.tests@default:default,org.eclipse.net4j.http@default:default,org.eclipse.net4j.jvm@default:default,org.eclipse.net4j.tcp@default:default,org.eclipse.net4j.tests@default:default,org.eclipse.net4j.util.defs@default:default,org.eclipse.net4j.util@default:default,org.eclipse.net4j@default:default"/>
+<stringAttribute key="workspace_bundles" value="org.eclipse.net4j.http.common@default:default,org.eclipse.net4j.http.server@default:default,org.eclipse.net4j.http.tests@default:default,org.eclipse.net4j.http@default:default,org.eclipse.net4j.jvm@default:default,org.eclipse.net4j.tcp@default:default,org.eclipse.net4j.tests@default:default,org.eclipse.net4j.util@default:default,org.eclipse.net4j@default:default"/>
 </launchConfiguration>

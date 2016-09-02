@@ -40,8 +40,6 @@
       <requirement
           name="org.eclipse.emf.cdo.compare"/>
       <requirement
-          name="org.eclipse.emf.cdo.defs"/>
-      <requirement
           name="org.eclipse.emf.cdo.doc"/>
       <requirement
           name="org.eclipse.emf.cdo.ecore.retrofit"/>
@@ -113,8 +111,6 @@
           name="org.eclipse.emf.cdo.ui.admin"/>
       <requirement
           name="org.eclipse.emf.cdo.ui.compare"/>
-      <requirement
-          name="org.eclipse.emf.cdo.ui.defs"/>
       <requirement
           name="org.eclipse.emf.cdo.ui.shared"/>
       <requirement
@@ -258,8 +254,6 @@
       <requirement
           name="org.eclipse.net4j.debug"/>
       <requirement
-          name="org.eclipse.net4j.defs"/>
-      <requirement
           name="org.eclipse.net4j.doc"/>
       <requirement
           name="org.eclipse.net4j.http"/>
@@ -278,13 +272,9 @@
       <requirement
           name="org.eclipse.net4j.ui"/>
       <requirement
-          name="org.eclipse.net4j.ui.defs"/>
-      <requirement
           name="org.eclipse.net4j.ui.shared"/>
       <requirement
           name="org.eclipse.net4j.util"/>
-      <requirement
-          name="org.eclipse.net4j.util.defs"/>
       <requirement
           name="org.eclipse.net4j.util.doc"/>
       <requirement

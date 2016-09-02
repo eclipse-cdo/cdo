@@ -270,8 +270,6 @@
       <requirement
           name="org.eclipse.emf.cdo.compare.feature.group"/>
       <requirement
-          name="org.eclipse.emf.cdo.defs.feature.group"/>
-      <requirement
           name="org.eclipse.emf.cdo.doc.feature.group"/>
       <requirement
           name="org.eclipse.emf.cdo.epp.feature.group"/>
@@ -325,8 +323,6 @@
           name="org.eclipse.net4j.db.postgresql.feature.group"/>
       <requirement
           name="org.eclipse.net4j.feature.group"/>
-      <requirement
-          name="org.eclipse.net4j.defs.feature.group"/>
       <requirement
           name="org.eclipse.net4j.doc.feature.group"/>
       <requirement

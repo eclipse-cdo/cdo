@@ -23,10 +23,10 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserPasswordImpl#getEncrypted <em>Encrypted</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

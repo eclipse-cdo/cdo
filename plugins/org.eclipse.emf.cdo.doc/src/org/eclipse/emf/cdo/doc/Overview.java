@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.security.IAuthenticator;
  * describe the structure of and the possible relations between these objects.
  * <p>
  * CDO supports plentyfold deployments such as embedded repositories, offline clones or replicated clusters. The
- * following diagram illustrates the most common scenario: {@img cdo-overview.png}
+ * following diagram illustrates the most common scenario: <p align="center">{@image cdo-overview.png}
  *
  * @default
  * @author Eike Stepper

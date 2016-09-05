@@ -41,7 +41,7 @@ import java.util.StringTokenizer;
  * CDO URIs are in one of two different formats, either canonical or connection-aware. The canonical format is:
  *
  * <blockquote><b>cdo://</b> <i>RepositoryUUID</i> <b>/</b> <i>ResourcePath</i> [<b>?</b> <i>Param</i><b>=</b><i>Value</i>
- * (<b>&</b> <i>Param</i><b>=</b><i>Value</i>)*]</blockquote>
+ * (<b>&amp;</b> <i>Param</i><b>=</b><i>Value</i>)*]</blockquote>
  *
  * The non-terminals being:
  * <p>
@@ -166,7 +166,7 @@ public final class CDOURIUtil
    * <p>
    * The path is added at the end of "cdo://repositoryUUID". If path doesn't start with '/', it will be added
    * automatically. <br>
-   * e.g.: /resA or resA will give the same result -> cdo://repositoryUUID/resA <br>
+   * e.g.: /resA or resA will give the same result &rarr; cdo://repositoryUUID/resA <br>
    * authority = repositoryUUID <br>
    * path = /resA
    *

@@ -36,10 +36,10 @@ public class Doc00_OperatingServer
    * </ul>
    * <p>
    * When the Eclipse Installer is started, select the "CDO Server" application:
-   * {@img eclipse-installer.png}
+   * <p align="center">{@image eclipse-installer.png}
    * <p>
    * On the second page make sure you select the product version (of the CDO Server) that matches your clients' versions:
-   * {@img eclipse-installer2.png}
+   * <p align="center">{@image eclipse-installer2.png}
    * <p>
    * When the installation has finished the "eclipse" folder under the installation folder contains the <b>cdo-server.xml</b>
    * configuration file, which looks similar to this:
@@ -73,7 +73,7 @@ public class Doc00_OperatingServer
    * </ul>
    * <p>
    * After successful start of the server the console should look similar to this:
-   * {@img server-start.png}
+   * <p align="center">{@image server-start.png}
    * <p>
    * Please note that many {@link Doc02_ManagingRepositories repository configuration options} can <b>not</b> be changed anymore after the repository
    * has been started the first time.
@@ -88,7 +88,7 @@ public class Doc00_OperatingServer
    * Stopping a CDO Server
    * <p>
    * To gracefully shut down a running CDO server enter the command "<code>close</code>" into the console and confirm with "<code>yes</code>":
-   * {@img server-stop.png}
+   * <p align="center">{@image server-stop.png}
    * <p>
    * Please note that the {@link Element_store DBStore} supports automatic crash detection and recovery at startup time.
    * Other store may or may not support similar functionality.

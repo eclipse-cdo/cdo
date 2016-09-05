@@ -13,6 +13,6 @@
  *   	  are to be instantiated lazily
  *   <li>It provides a notification framework that enables clients to
  *       react on events (including the resolution of a lazy descriptor)
- * <ul>
+ * </ul>
  */
 package org.eclipse.net4j.util.registry;

@@ -437,12 +437,14 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
    * enum {@link IRWLockManager.LockType}
    * <p>
    * The locking semantics established by this class are as follows:
-   * <li>a read lock prevents a write lock by another, but allows read locks by others and allows a write option by
-   * another, and is therefore <b>non-exclusive</b></li>
-   * <li>a write lock prevents read locks by others, a write lock by another, and a write option by another, and is
-   * therefore <b>exclusive</b></li>
-   * <li>a write option prevents write locks by others and a write option by another, but allows read locks by others,
-   * and is therefore <b>exclusive</b></li>.
+   * <ul>
+   * <li>A read lock prevents a write lock by another, but allows read locks by others and allows a write option by
+   * another, and is therefore <b>non-exclusive</b>.
+   * <li>A write lock prevents read locks by others, a write lock by another, and a write option by another, and is
+   * therefore <b>exclusive</b>.
+   * <li>A write option prevents write locks by others and a write option by another, but allows read locks by others,
+   * and is therefore <b>exclusive</b>.
+   * </ul>
    *
    * @author Caspar De Groot
    * @since 3.2

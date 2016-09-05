@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getDetails <em>Details</em>}</li>
@@ -30,7 +31,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getContents <em>Contents</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.etypes.Annotation#getReferences <em>References</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.etypes.EtypesPackage#getAnnotation()
  * @model
@@ -75,7 +75,7 @@ public interface Annotation extends ModelElement
    * <!-- end-user-doc -->
    * @return the value of the '<em>Details</em>' map.
    * @see org.eclipse.emf.cdo.etypes.EtypesPackage#getAnnotation_Details()
-   * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+   * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString&gt;"
    * @generated
    */
   EMap<String, String> getDetails();

@@ -15,15 +15,6 @@ import java.nio.channels.SocketChannel;
 
 /**
  * Enumerates the internal states of an {@link IBuffer}.
- * <p>
- * <dt><b>State Machine Diagram:</b></dt>
- * <dd><img src="doc-files/BufferState-1.gif" title="Diagram Buffer States" border="0" usemap="#BufferState-1.gif"/></dd>
- * <p>
- * <MAP NAME="BufferState-1.gif"> <AREA SHAPE="RECT" COORDS="300,8,449,34" HREF="BufferState.html#INITIAL"> <AREA
- * SHAPE="RECT" COORDS="46,115,195,139" HREF="BufferState.html#PUTTING"> <AREA SHAPE="RECT" COORDS="48,271,195,295"
- * HREF="BufferState.html#WRITING"> <AREA SHAPE="RECT" COORDS="533,112,681,140" HREF="BufferState.html#READING_HEADER">
- * <AREA SHAPE="RECT" COORDS="533,271,680,295" HREF="BufferState.html#READING_BODY"> <AREA SHAPE="RECT"
- * COORDS="532,428,682,451" HREF="BufferState.html#GETTING"> </MAP>
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

@@ -26,20 +26,6 @@ import org.eclipse.spi.net4j.Acceptor;
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients. Service providers <b>must</b> extend the abstract
  * {@link Acceptor} class.
- * <p>
- * <dt><b>Class Diagram:</b></dt>
- * <dd><img src="doc-files/IAcceptor-1.gif" title="Diagram Acceptors" border="0" usemap="#IAcceptor-1.gif"/></dd>
- * <p>
- * <MAP NAME="IAcceptor-1.gif"> <AREA SHAPE="RECT" COORDS="10,8,99,58" HREF="IAcceptor.html"> <AREA SHAPE="RECT"
- * COORDS="289,8,378,58" HREF="../connector/IConnector.html"> </MAP>
- * <p>
- * <dt><b>Sequence Diagram:</b></dt>
- * <dd><img src="doc-files/IAcceptor-2.gif" title="Connection Process" border="0" usemap="#IAcceptor-2.gif"/></dd>
- * <p>
- * <MAP NAME="IAcceptor-2.gif"> <AREA SHAPE="RECT" COORDS="146,136,265,165" HREF="IConnector.html"> <AREA SHAPE="RECT"
- * COORDS="485,75,564,105" HREF="IAcceptor.html"> <AREA SHAPE="RECT" COORDS="296,325,414,355" HREF="IConnector.html">
- * <AREA SHAPE="RECT" COORDS="64,426,444,506" HREF="ConnectorState.html#CONNECTING"> <AREA SHAPE="RECT"
- * COORDS="64,516,444,596" HREF="ConnectorState.html#NEGOTIATING"> </MAP>
  *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.

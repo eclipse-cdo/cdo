@@ -1,24 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 
-<HEAD>
-<TITLE>Working with Models and Model Elements (CDO Model Repository Documentation)</TITLE>
+<head>
+<title>Working with Models and Model Elements (CDO Model Repository Documentation)</title>
 
-<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
 
-<SCRIPT type="text/javascript">
+<noscript></noscript>
+<script type="text/javascript">
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="Working with Models and Model Elements (CDO Model Repository Documentation)";
     }
 }
-</SCRIPT>
-<NOSCRIPT></NOSCRIPT>
-</HEAD>
+</script>
+</head>
 
-<BODY BGCOLOR="white" onload="windowTitle();">
-<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
 
 <table border="0">
 	<tr>
@@ -36,14 +36,14 @@ function windowTitle()
  <p>
  <b>Table of Contents</b> <p>
 <table border="0">
-<tr><td>1&nbsp;</td><td colspan="4"><a href="Doc07_UsingModels.html#Doc_CreatingModelElements" title="Chapter in CDO Model Repository Documentation">Creating Model Elements</a></td></tr>
-<tr><td></td><td>1.1&nbsp;</td><td colspan="3"><a href="Doc07_UsingModels.html#Doc_CreatingRootElements" title="Chapter in CDO Model Repository Documentation">Creating Root Model Elements</a></td></tr>
-<tr><td></td><td>1.2&nbsp;</td><td colspan="3"><a href="Doc07_UsingModels.html#Doc_CreatingNestedElements" title="Chapter in CDO Model Repository Documentation">Creating Nested Model Elements</a></td></tr>
-<tr><td>2&nbsp;</td><td colspan="4"><a href="Doc07_UsingModels.html#Doc_MovingModelElements" title="Chapter in CDO Model Repository Documentation">Moving and Copying Model Elements within a Checkout</a></td></tr>
-<tr><td>3&nbsp;</td><td colspan="4"><a href="Doc07_UsingModels.html#Doc_TransferingModelElements" title="Chapter in CDO Model Repository Documentation">Moving and Copying Model Elements between Checkouts and Beyond</a></td></tr>
-<tr><td>4&nbsp;</td><td colspan="4"><a href="Doc07_UsingModels.html#Doc_DeletingModelElements" title="Chapter in CDO Model Repository Documentation">Deleting Model Elements</a></td></tr>
-<tr><td>5&nbsp;</td><td colspan="4"><a href="Doc07_UsingModels.html#Doc_EditingModelElements" title="Chapter in CDO Model Repository Documentation">Editing Model Elements in a Dialog</a></td></tr>
-<tr><td>6&nbsp;</td><td colspan="4"><a href="Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chapter in CDO Model Repository Documentation">Editing Model Elements in an Editor</a></td></tr>
+<tr><td>1&nbsp;</td><td class="te" colspan="4"><a href="Doc07_UsingModels.html#Doc_CreatingModelElements" title="Chapter in CDO Model Repository Documentation">Creating Model Elements</a></td></tr>
+<tr><td></td><td>1.1&nbsp;</td><td class="te" colspan="3"><a href="Doc07_UsingModels.html#Doc_CreatingRootElements" title="Chapter in CDO Model Repository Documentation">Creating Root Model Elements</a></td></tr>
+<tr><td></td><td>1.2&nbsp;</td><td class="te" colspan="3"><a href="Doc07_UsingModels.html#Doc_CreatingNestedElements" title="Chapter in CDO Model Repository Documentation">Creating Nested Model Elements</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="4"><a href="Doc07_UsingModels.html#Doc_MovingModelElements" title="Chapter in CDO Model Repository Documentation">Moving and Copying Model Elements within a Checkout</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="4"><a href="Doc07_UsingModels.html#Doc_TransferingModelElements" title="Chapter in CDO Model Repository Documentation">Moving and Copying Model Elements between Checkouts and Beyond</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="4"><a href="Doc07_UsingModels.html#Doc_DeletingModelElements" title="Chapter in CDO Model Repository Documentation">Deleting Model Elements</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="4"><a href="Doc07_UsingModels.html#Doc_EditingModelElements" title="Chapter in CDO Model Repository Documentation">Editing Model Elements in a Dialog</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="4"><a href="Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chapter in CDO Model Repository Documentation">Editing Model Elements in an Editor</a></td></tr>
 </table>
 </p>
 
@@ -67,14 +67,14 @@ function windowTitle()
 <h3><a name="Doc_CreatingRootElements"></a>1.1&nbsp;&nbsp;Creating Root Model Elements</h3>
 <p>
  When creating new model elements directly under an existing <a href="Doc06_UsingResources.html#Doc_CreatingModelResources" title="Chapter in CDO Model Repository Documentation">model resource</a>
- the New sub menu (see <a href="Doc07_UsingModels.html#Doc_CreatingModelElements" title="Chapter in CDO Model Repository Documentation">Creating Model Elements</a>) looks as follows: <p align="center"><img src="new-root-object.png"></p>
+ the New sub menu (see <a href="Doc07_UsingModels.html#Doc_CreatingModelElements" title="Chapter in CDO Model Repository Documentation">Creating Model Elements</a>) looks as follows: <p align="center"><img src="new-root-object.png">
 
  <p>
- The first group of the New sub menu contains sub menus for all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Interface in org.eclipse.emf.ecore"><code>packages</code></a> that are already used in the repository of the
- selected checkout. A package sub menu contains creation actions for all concrete <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Interface in org.eclipse.emf.ecore"><code>classes</code></a> of that package.
+ The first group of the New sub menu contains sub menus for all <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html" title="Interface in org.eclipse.emf.ecore"><code>packages</code></a> that are already used in the repository of the
+ selected checkout. A package sub menu contains creation actions for all concrete <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html" title="Interface in org.eclipse.emf.ecore"><code>classes</code></a> of that package.
  <p>
  The second group of the New sub menu contains the Other action, which, upon selection, will open the following dialog:
- <p align="center"><img src="new-root-object-dialog.png"></p>
+ <p align="center"><img src="new-root-object-dialog.png">
 
  <p>
  The New Root Object dialog is horizontally split.
@@ -93,7 +93,7 @@ function windowTitle()
 <p>
  When creating new model elements under an existing model element the New sub menu (see <a href="Doc07_UsingModels.html#Doc_CreatingModelElements" title="Chapter in CDO Model Repository Documentation">Creating Model Elements</a>)
  looks much simpler because the choice of element types is already determined by the
- type of the existing container element: <p align="center"><img src="new-object.png"></p>
+ type of the existing container element: <p align="center"><img src="new-object.png">
 
  <p>
  What element types are offered and how many instances of those types can be created under a given container element depends
@@ -118,7 +118,7 @@ function windowTitle()
 <p>
  Model elements can be deleted from their direct container (i.e., a model resource or a containing model element)
  by selecting the model element and pressing the Del key or opening the context menu and
- selecting the Delete action. The following confirmation dialog will pop up: <p align="center"><img src="object-delete.png"></p>
+ selecting the Delete action. The following confirmation dialog will pop up: <p align="center"><img src="object-delete.png">
 
  <p>
  This confirmation dialog only shows the directly selected model elements. Nested model elements
@@ -132,7 +132,7 @@ function windowTitle()
  A model element can be edited directly in the <a href="Doc01_UserInterface.html#Doc_ProjectExplorerIntegration" title="Chapter in CDO Model Repository Documentation">Project Explorer</a>
  by double-clicking it or by selecting it and pressing the Enter key or opening the context menu and
  selecting the Open action. An <a href="http://www.eclipse.org/ecp/documentation.html" title="Article in CDO Model Repository Documentation">EMF Forms</a> dialog similar to the following will pop up:
- <p align="center"><img src="object-edit.png"></p>
+ <p align="center"><img src="object-edit.png">
 <p><b>See Also:</b></p>
 <ul>
 	<li><a href="http://www.eclipse.org/ecp/documentation.html" title="Article in CDO Model Repository Documentation">EMF Forms Guide</a></li>
@@ -146,16 +146,17 @@ function windowTitle()
  the Enter key or opening the context menu and selecting the Open action.
  <p>
  The effect of the Open action depends on the chosen editor. CDO's generic model editor, which is available for
- all model resources, looks similar to the following: <p align="center"><img src="model-editor.png"></p>
+ all model resources, looks similar to the following: <p align="center"><img src="model-editor.png">
 
  <p>
  All registered model editors open their own, separate <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>, which is typically
- <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>committed</code></a> when the editor is saved.
+ <a href="../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>committed</code></a> when the editor is saved.
  See <a href="Doc09_TechnicalBackground.html#Doc_BackgroundTransactions" title="Chapter in CDO Model Repository Documentation">Technical Background of Transactions</a> for details on how transactions are typically used by editors.
 
 <p align="right">
 <a href="Doc06_UsingResources.html" title="Backward to Working with Folders and Resources"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc08_Collaborating.html" title="Forward to Collaborating in Real-Time"><img src="../../images/forward.png" border="0"></a></p>
-<HR>
-<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

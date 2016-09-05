@@ -35,10 +35,10 @@ import java.util.List;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.impl.MemberInvocationImpl#getObject <em>Object</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

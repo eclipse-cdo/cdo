@@ -30,10 +30,10 @@ import java.lang.reflect.InvocationTargetException;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.impl.AccessImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.cdo.common.revision.CDOIDAndVersion (CDO Model Repository Documentation)</title>
@@ -248,7 +248,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></span></code>
-<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> between two
+<div class="block">Encapsulates the immutable system information of a <b>single</b> CDO <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> between two
  <a href="../../../../../../../org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commits</code></a> in a <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> and provides access to its modeled
  <a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>data</code></a>.</div>
 </td>
@@ -461,6 +461,10 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;</code></td>
+<td class="colLast"><span class="typeNameLabel">InternalCDOView.ViewInvalidationData.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewInvalidationData.html#getAllDetachedObjects--">getAllDetachedObjects</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOSessionProtocol.RefreshSessionResult.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.html#getDetachedObjects-org.eclipse.emf.cdo.common.branch.CDOBranch-">getDetachedObjects</a></span>(<a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code>&nbsp;</td>
 </tr>
 </tbody>
@@ -493,9 +497,17 @@
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
           boolean&nbsp;async,
-          boolean&nbsp;clearResourcePathCache)</code>&nbsp;</td>
+          boolean&nbsp;clearResourcePathCache)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.6. use <a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData-"><code>InternalCDOView.invalidate(ViewInvalidationData)</code></a></span></div>
+</div>
+</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">InternalCDOView.ViewInvalidationData.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewInvalidationData.html#setAllDetachedObjects-java.util.List-">setAllDetachedObjects</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOSessionProtocol.</span><code><span class="memberNameLink"><a href="../../../../../../../org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#switchTarget-int-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-java.util.List-java.util.List-java.util.List-org.eclipse.net4j.util.om.monitor.OMMonitor-">switchTarget</a></span>(int&nbsp;viewID,
             <a href="../../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -557,6 +569,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

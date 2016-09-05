@@ -39,11 +39,11 @@ import java.util.List;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.impl.InvocationImpl#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.expressions.impl.InvocationImpl#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

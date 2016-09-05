@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>CDOTransaction.Options (CDO Model Repository Documentation)</title>
@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -112,6 +112,8 @@ var activeTableTab = "activeTableTab";
 extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view">CDOView.Options</a></pre>
 <div class="block">Encapsulates a set of notifying <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> configuration options.</div>
 <dl>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Simon McDuff</dd>
 <dt><span class="simpleTagLabel">No Implement</span></dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
@@ -139,7 +141,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <td class="colFirst"><code>static interface&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AutoReleaseLocksEvent</a></span></code>
 <div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-"><code>auto release locks</code></a> option has changed.</div>
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-"><code>auto release locks enabled</code></a> or
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>auto release locks exemptions</code></a> options have changed.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -231,81 +234,114 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">addAutoReleaseLocksExemptions</a></span>(boolean&nbsp;recursive,
+                             <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</code>
+<div class="block">Adds the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> to the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addConflictResolver-org.eclipse.emf.cdo.transaction.CDOConflictResolver-">addConflictResolver</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</code>
 <div class="block">Adds a conflict resolver to the list of conflict resolvers of this transaction.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--">clearAutoReleaseLocksExemptions</a></span>()</code>
+<div class="block">Clears the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--">getAutoReleaseLocksExemptions</a></span>()</code>
+<div class="block">Returns the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getCommitInfoTimeout--">getCommitInfoTimeout</a></span>()</code>
 <div class="block">Returns the number of milliseconds to wait for the transaction update when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> is called.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getConflictResolvers--">getConflictResolvers</a></span>()</code>
 <div class="block">Returns a copy of the conflict resolver list of this transaction.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getContainer--">getContainer</a></span>()</code>
 <div class="block">Returns the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> of this options object.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getStaleReferenceCleaner--">getStaleReferenceCleaner</a></span>()</code>
 <div class="block">Get the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
  remote changes on invalidation.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getUndoDetector--">getUndoDetector</a></span>()</code>
 <div class="block">Returns the undo detector of this transaction.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--">isAutoReleaseLocksEnabled</a></span>()</code>
-<div class="block">Returns true if locks in this view will be removes when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> is called.</div>
+<div class="block">Returns <code>true</code> if locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called, <code>false</code> otherwise.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksExemption-org.eclipse.emf.ecore.EObject-">isAutoReleaseLocksExemption</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object)</code>
+<div class="block">Returns <code>true</code> if the given object is treated as an exemption to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option,
+ <code>false</code> otherwise.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">removeAutoReleaseLocksExemptions</a></span>(boolean&nbsp;recursive,
+                                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</code>
+<div class="block">Removes the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> from the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeConflictResolver-org.eclipse.emf.cdo.transaction.CDOConflictResolver-">removeConflictResolver</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>&nbsp;resolver)</code>
 <div class="block">Removes a conflict resolver from the list of conflict resolvers of this transaction.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-">setAutoReleaseLocksEnabled</a></span>(boolean&nbsp;on)</code>
-<div class="block">Specifies whether locks in this view will be removed when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> is called.</div>
+<div class="block">Specifies whether locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setCommitInfoTimeout-long-">setCommitInfoTimeout</a></span>(long&nbsp;commitInfoTimeout)</code>
 <div class="block">Specifies the number of milliseconds to wait for the transaction update when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> is called.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setConflictResolvers-org.eclipse.emf.cdo.transaction.CDOConflictResolver:A-">setConflictResolvers</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a>[]&nbsp;resolvers)</code>
 <div class="block">Sets the conflict resolver list of this transaction.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setStaleReferenceCleaner-org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner-">setStaleReferenceCleaner</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction">CDOStaleReferenceCleaner</a>&nbsp;staleReferenceCleaner)</code>
 <div class="block">Set the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOStaleReferenceCleaner</code></a> to be used to clean stale references when receiving
  remote changes on invalidation.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setUndoDetector-org.eclipse.emf.cdo.transaction.CDOUndoDetector-">setUndoDetector</a></span>(<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a>&nbsp;undoDetector)</code>
 <div class="block">Sets the undo detector of this transaction.</div>
@@ -506,10 +542,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <li class="blockList">
 <h4>isAutoReleaseLocksEnabled</h4>
 <pre>boolean&nbsp;isAutoReleaseLocksEnabled()</pre>
-<div class="block">Returns true if locks in this view will be removes when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> is called.
+<div class="block">Returns <code>true</code> if locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called, <code>false</code> otherwise.
  <p>
- Default value is true.</div>
+ The default value is <code>true</code>.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="setAutoReleaseLocksEnabled-boolean-">
@@ -519,12 +559,123 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <li class="blockList">
 <h4>setAutoReleaseLocksEnabled</h4>
 <pre>void&nbsp;setAutoReleaseLocksEnabled(boolean&nbsp;on)</pre>
-<div class="block">Specifies whether locks in this view will be removed when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> is called.
+<div class="block">Specifies whether locks in this transaction will be released when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
  <p>
- If false all locks are kept.
+ If set to <code>false</code> all locks will be kept when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
  <p>
- Default value is true.</div>
+ The default value is <code>true</code>.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="getAutoReleaseLocksExemptions--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAutoReleaseLocksExemptions</h4>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;getAutoReleaseLocksExemptions()</pre>
+<div class="block">Returns the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.
+ <p>
+ That means:
+ <p>
+ <ul>
+ <li> If <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> returns <code>true</code>, the locks on the objects in this set are <b>not</b> released
+      when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
+ <li> If <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> returns <code>false</code>, the locks on the objects in this set <b>are</b> released nevertheless
+      when <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit--"><code>CDOUserTransaction.commit()</code></a> or <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback--"><code>CDOUserTransaction.rollback()</code></a> are called.
+ </ul>
+ <p>
+ The returned set is unmodifiable. To modify the set use the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>,
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemption()</code></a>,
+ and <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemption()</code></a> methods.
+ <p>
+ <b>Implementation note</b>: This set stores weak references to the contained objects.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="isAutoReleaseLocksExemption-org.eclipse.emf.ecore.EObject-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isAutoReleaseLocksExemption</h4>
+<pre>boolean&nbsp;isAutoReleaseLocksExemption(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;object)</pre>
+<div class="block">Returns <code>true</code> if the given object is treated as an exemption to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option,
+ <code>false</code> otherwise.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="clearAutoReleaseLocksExemptions--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearAutoReleaseLocksExemptions</h4>
+<pre>void&nbsp;clearAutoReleaseLocksExemptions()</pre>
+<div class="block">Clears the set of <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>objects</code></a> that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addAutoReleaseLocksExemptions</h4>
+<pre>void&nbsp;addAutoReleaseLocksExemptions(boolean&nbsp;recursive,
+                                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</pre>
+<div class="block">Adds the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> to the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>removeAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+</dl>
+</li>
+</ul>
+<a name="removeAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeAutoReleaseLocksExemptions</h4>
+<pre>void&nbsp;removeAutoReleaseLocksExemptions(boolean&nbsp;recursive,
+                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>...&nbsp;objects)</pre>
+<div class="block">Removes the given <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> from the set of objects that are to be treated as exemptions to the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#isAutoReleaseLocksEnabled--"><code>isAutoReleaseLocksEnabled()</code></a> option.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>getAutoReleaseLocksExemptions()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#clearAutoReleaseLocksExemptions--"><code>clearAutoReleaseLocksExemptions()</code></a>, 
+<a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#addAutoReleaseLocksExemptions-boolean-org.eclipse.emf.ecore.EObject...-"><code>addAutoReleaseLocksExemptions(boolean, EObject...)</code></a></dd>
+</dl>
 </li>
 </ul>
 <a name="getCommitInfoTimeout--">
@@ -627,6 +778,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" t
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

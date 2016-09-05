@@ -59,13 +59,13 @@ public class Doc07_UsingModels
      * Creating Root Model Elements
      * <p>
      * When creating new model elements directly under an existing {@link Doc_CreatingModelResources model resource}
-     * the New sub menu (see {@link Doc_CreatingModelElements}) looks as follows: {@img new-root-object.png}
+     * the New sub menu (see {@link Doc_CreatingModelElements}) looks as follows: <p align="center">{@image new-root-object.png}
      * <p>
      * The first group of the New sub menu contains sub menus for all {@link EPackage packages} that are already used in the repository of the
      * selected checkout. A package sub menu contains creation actions for all concrete {@link EClass classes} of that package.
      * <p>
      * The second group of the New sub menu contains the Other action, which, upon selection, will open the following dialog:
-     * {@img new-root-object-dialog.png}
+     * <p align="center">{@image new-root-object-dialog.png}
      * <p>
      * The New Root Object dialog is horizontally split.
      * The left side shows all registered packages with the icons of not-yet-loaded packages being grayed out. The filter field on top
@@ -88,7 +88,7 @@ public class Doc07_UsingModels
      * <p>
      * When creating new model elements under an existing model element the New sub menu (see {@link Doc_CreatingModelElements})
      * looks much simpler because the choice of element types is already determined by the
-     * type of the existing container element: {@img new-object.png}
+     * type of the existing container element: <p align="center">{@image new-object.png}
      * <p>
      * What element types are offered and how many instances of those types can be created under a given container element depends
      * solely on the type of that container element.
@@ -128,7 +128,7 @@ public class Doc07_UsingModels
    * <p>
    * Model elements can be deleted from their direct container (i.e., a model resource or a containing model element)
    * by selecting the model element and pressing the Del key or opening the context menu and
-   * selecting the Delete action. The following confirmation dialog will pop up: {@img object-delete.png}
+   * selecting the Delete action. The following confirmation dialog will pop up: <p align="center">{@image object-delete.png}
    * <p>
    * This confirmation dialog only shows the directly selected model elements. Nested model elements
    * are not shown for performance reasons but will also be deleted if OK is pressed.
@@ -146,7 +146,7 @@ public class Doc07_UsingModels
    * A model element can be edited directly in the {@link Doc_ProjectExplorerIntegration Project Explorer}
    * by double-clicking it or by selecting it and pressing the Enter key or opening the context menu and
    * selecting the Open action. An {@link EMFFormsGuide EMF Forms} dialog similar to the following will pop up:
-   * {@img object-Edit.png}
+   * <p align="center">{@image object-Edit.png}
    *
    * @see EMFFormsGuide
    */
@@ -162,7 +162,7 @@ public class Doc07_UsingModels
    * the Enter key or opening the context menu and selecting the Open action.
    * <p>
    * The effect of the Open action depends on the chosen editor. CDO's generic model editor, which is available for
-   * all model resources, looks similar to the following: {@img model-editor.png}
+   * all model resources, looks similar to the following: <p align="center">{@image model-editor.png}
    * <p>
    * All registered model editors open their own, separate {@link CDOTransaction transaction}, which is typically
    * {@link CDOTransaction#commit(org.eclipse.core.runtime.IProgressMonitor) committed} when the editor is saved.

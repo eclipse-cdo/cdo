@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>Deprecated List (CDO Model Repository Documentation)</title>
@@ -140,10 +140,10 @@
 
  <p>
  The following features are supported:
+ </p>
  <ul>
    <li><a href="org/eclipse/emf/cdo/security/ClassPermission.html#getApplicableClass--"><code><em>Applicable Class</em></code></a></li>
- </ul>
- </p></span></div>
+ </ul></span></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -169,10 +169,10 @@
 
  <p>
  The following features are supported:
+ </p>
  <ul>
    <li><a href="org/eclipse/emf/cdo/security/PackagePermission.html#getApplicablePackage--"><code><em>Applicable Package</em></code></a></li>
- </ul>
- </p></span></div>
+ </ul></span></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -182,10 +182,10 @@
 
  <p>
  The following features are supported:
+ </p>
  <ul>
    <li><a href="org/eclipse/emf/cdo/security/ResourcePermission.html#getPattern--"><code><em>Pattern</em></code></a></li>
- </ul>
- </p></span></div>
+ </ul></span></div>
 </td>
 </tr>
 </tbody>
@@ -722,7 +722,7 @@
 </tr>
 <tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createSelectBranchComposite-org.eclipse.emf.cdo.session.CDOSession-org.eclipse.emf.cdo.common.branch.CDOBranch-">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.createSelectBranchComposite(CDOSession, CDOBranch)</a>
-<div class="block"><span class="deprecationComment">as of 4.4 use <code>#createSelectBranchComposite(Composite)</code>.</span></div>
+<div class="block"><span class="deprecationComment">as of 4.4 use <a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createBranchViewer--"><code>ComposeBranchPointComposite.createBranchViewer()</code></a>.</span></div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -1015,13 +1015,33 @@
 </td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.cdo.common.branch.CDOBranch-long-java.util.List-java.util.List-java.util.Map-boolean-boolean-">org.eclipse.emf.spi.cdo.InternalCDOView.invalidate(CDOBranch, long, List&lt;CDORevisionKey&gt;, List&lt;CDOIDAndVersion&gt;, Map&lt;CDOID, InternalCDORevision&gt;, boolean, boolean)</a>
+<div class="block"><span class="deprecationComment">As of 4.6. use <a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData-"><code>InternalCDOView.invalidate(ViewInvalidationData)</code></a></span></div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.spi.cdo.InternalCDOTransaction-">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction)</a>
 <div class="block"><span class="deprecationComment">As of 4.2 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.spi.cdo.InternalCDOTransaction-boolean-"><code>InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)</code></a>.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.spi.cdo.InternalCDOTransaction-boolean-">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)</a>
 <div class="block"><span class="deprecationComment">As of 4.3 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.spi.cdo.InternalCDOTransaction-boolean-byte-java.util.Map-"><code>InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map)</code></a>.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.cdo.common.commit.CDOCommitInfo-org.eclipse.emf.spi.cdo.InternalCDOTransaction-boolean-byte-java.util.Map-">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map&lt;CDOID, CDOPermission&gt;)</a>
+<div class="block"><span class="deprecationComment">As of 4.6 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOSession.InvalidationData-"><code>InternalCDOSession.invalidate(InvalidationData)</code></a>.</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/eclipse/emf/cdo/transaction/CDOCommitContext.html#isAutoReleaseLocks--">org.eclipse.emf.cdo.transaction.CDOCommitContext.isAutoReleaseLocks()</a>
+<div class="block"><span class="deprecationComment">As of 4.5 no longer supported. See <a href="org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getIDsToUnlock--"><code>CDOCommitContext.getIDsToUnlock()</code></a>.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#isAutoReleaseLocksEnabled--">org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext.isAutoReleaseLocksEnabled()</a>
+<div class="block"><span class="deprecationComment">As of 4.5 no longer supported. See <a href="org/eclipse/emf/cdo/server/IStoreAccessor.CommitContext.html#getIDsToUnlock--"><code>IStoreAccessor.CommitContext.getIDsToUnlock()</code></a>.</span></div>
 </td>
 </tr>
 <tr class="altColor">
@@ -1314,73 +1334,78 @@
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">org.eclipse.emf.spi.cdo.InternalCDOView.setFeatureAnalyzer(CDOFeatureAnalyzer)</a></td>
+<td class="colOne"><a href="org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#setAutoReleaseLocksEnabled-boolean-">org.eclipse.emf.cdo.spi.server.InternalCommitContext.setAutoReleaseLocksEnabled(boolean)</a>
+<div class="block"><span class="deprecationComment">As of 4.5 no longer supported. See <a href="org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#setIDsToUnlock-org.eclipse.emf.cdo.common.id.CDOID:A-"><code>InternalCommitContext.setIDsToUnlock(CDOID[])</code></a>.</span></div>
+</td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">org.eclipse.emf.spi.cdo.InternalCDOView.setFeatureAnalyzer(CDOFeatureAnalyzer)</a></td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/util/CDOUtil.html#setLegacyModeDefault-boolean-">org.eclipse.emf.cdo.util.CDOUtil.setLegacyModeDefault(boolean)</a>
 <div class="block"><span class="deprecationComment">As of 4.2 the legacy mode is always enabled.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-">org.eclipse.emf.cdo.view.CDOView.Options.setStaleReferenceBehaviour(CDOStaleReferencePolicy)</a>
 <div class="block"><span class="deprecationComment">Use <a href="org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy-org.eclipse.emf.cdo.view.CDOStaleReferencePolicy-"><code>CDOView.Options.setStaleReferencePolicy(CDOStaleReferencePolicy)</code></a></span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setTimeProvider-org.eclipse.emf.cdo.common.util.CDOTimeProvider-">org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.setTimeProvider(CDOTimeProvider)</a>
 <div class="block"><span class="deprecationComment">As of 4.2 replaced by <a href="org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.html#setRepository-org.eclipse.emf.cdo.common.CDOCommonRepository-"><code>InternalCDOBranchManager.setRepository(CDOCommonRepository)</code></a></span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/server/InternalSessionManager.html#setUserManager-org.eclipse.net4j.util.security.IUserManager-">org.eclipse.emf.cdo.spi.server.InternalSessionManager.setUserManager(IUserManager)</a>
 <div class="block"><span class="deprecationComment">As of 4.2 use <a href="org/eclipse/emf/cdo/server/ISessionManager.html#setAuthenticator-org.eclipse.net4j.util.security.IAuthenticator-"><code>ISessionManager.setAuthenticator(IAuthenticator)</code></a></span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock-boolean-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-org.eclipse.emf.cdo.server.IView-java.util.Collection-">org.eclipse.emf.cdo.spi.server.InternalLockManager.unlock(boolean, IRWLockManager.LockType, IView, Collection&lt;? extends Object&gt;)</a></td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/server/InternalLockManager.html#unlock-boolean-org.eclipse.emf.cdo.server.IView-">org.eclipse.emf.cdo.spi.server.InternalLockManager.unlock(boolean, IView)</a></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#unlockObjects-org.eclipse.emf.cdo.view.CDOView-java.util.Collection-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-">org.eclipse.emf.spi.cdo.CDOSessionProtocol.unlockObjects(CDOView, Collection&lt;CDOID&gt;, IRWLockManager.LockType)</a>
 <div class="block"><span class="deprecationComment">Not called anymore. Use <code>#unlockObjects2(CDOView, Collection, LockType, boolean)</code> instead.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#updateAfterCommit-org.eclipse.emf.cdo.transaction.CDOTransaction-">org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase.updateAfterCommit(CDOTransaction)</a></td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#updateFrom-java.lang.Object-org.eclipse.emf.cdo.common.lock.CDOLockState-">org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState.updateFrom(Object, CDOLockState)</a>
 <div class="block"><span class="deprecationComment">As of 4.5 use <a href="org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html#updateFrom-org.eclipse.emf.cdo.common.lock.CDOLockState-"><code>InternalCDOLockState.updateFrom(CDOLockState)</code></a> instead.
  The lockedObject field cannot be changed because it is used to compute the hash code.
  Instantiate a new <a href="org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockState</code></a> object if you want to update the lockedObject field.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#validateURI-org.eclipse.emf.common.util.URI-">org.eclipse.emf.cdo.util.CDOURIUtil.validateURI(URI)</a>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-">org.eclipse.emf.cdo.spi.common.id.AbstractCDOID.write(ExtendedDataOutput)</a>
 <div class="block"><span class="deprecationComment">As of 4.2 <a href="org/eclipse/emf/cdo/spi/common/id/AbstractCDOID.html#write-org.eclipse.emf.cdo.common.protocol.CDODataOutput-"><code>AbstractCDOID.write(CDODataOutput)</code></a> is called.</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#write-org.eclipse.net4j.util.io.ExtendedDataOutput-org.eclipse.emf.cdo.common.id.CDOID-">org.eclipse.emf.cdo.common.id.CDOIDUtil.write(ExtendedDataOutput, CDOID)</a>
 <div class="block"><span class="deprecationComment">As of 4.2 use <a href="org/eclipse/emf/cdo/common/id/CDOIDUtil.html#write-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.common.id.CDOID-"><code>CDOIDUtil.write(CDODataOutput, CDOID)</code></a>.</span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html#writeResult-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-">org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.writeResult(CDODataOutput, int)</a>
 <div class="block"><span class="deprecationComment">Not called anymore by the framework</span></div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html#writeResult-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-int-">org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.writeResult(CDODataOutput, InternalCDORevision, int)</a>
 <div class="block"><span class="deprecationComment">Call <a href="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html#writeResult-org.eclipse.emf.cdo.common.protocol.CDODataOutput-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-int-org.eclipse.emf.cdo.common.branch.CDOBranchPoint-"><code>RevisionInfo.writeResult(CDODataOutput, InternalCDORevision, int, CDOBranchPoint)</code></a></span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/eclipse/emf/cdo/spi/common/revision/RevisionInfo.html#writeRevision-org.eclipse.emf.cdo.common.protocol.CDODataOutput-int-">org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.writeRevision(CDODataOutput, int)</a>
 <div class="block"><span class="deprecationComment">Not called anymore by the framework</span></div>
 </td>
@@ -1521,6 +1546,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

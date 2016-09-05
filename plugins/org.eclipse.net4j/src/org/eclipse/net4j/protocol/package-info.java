@@ -7,7 +7,5 @@
 
 /**
  * The Net4j transport layer concepts for dealing with protocols.
- * <p>
- * <img src="doc-files/protocols.png" title="Diagram Protocols" border="0"/>
  */
 package org.eclipse.net4j.protocol;

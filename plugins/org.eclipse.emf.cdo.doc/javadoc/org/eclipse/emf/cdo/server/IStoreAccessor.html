@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>IStoreAccessor (CDO Model Repository Documentation)</title>
@@ -115,6 +115,12 @@ var activeTableTab = "activeTableTab";
 <pre>public interface <span class="typeNameLabel">IStoreAccessor</span>
 extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a>, <a href="../../../../../org/eclipse/emf/cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></pre>
 <div class="block">Represents a <i>connection</i> to a physical data storage back-end.</div>
+<dl>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreChunkReader</code></a> - - creates</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -224,7 +230,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#createChunkReader-org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision-org.eclipse.emf.ecore.EStructuralFeature-">createChunkReader</a></span>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
+                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></code></td>
@@ -253,7 +259,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleRevisions-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.common.branch.CDOBranch-long-boolean-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">handleRevisions</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#handleRevisions-org.eclipse.emf.ecore.EClass-org.eclipse.emf.cdo.common.branch.CDOBranch-long-boolean-org.eclipse.emf.cdo.common.revision.CDORevisionHandler-">handleRevisions</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                long&nbsp;timeStamp,
                boolean&nbsp;exactTime,
@@ -280,7 +286,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/server/IStoreAccessor.html#loadPackageUnit-org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit-">loadPackageUnit</a></span>(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</code>
 <div class="block">Demand loads a given package proxy that has been created on startup of the repository.</div>
 </td>
@@ -458,7 +464,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <li class="blockList">
 <h4>createChunkReader</h4>
 <pre><a href="../../../../../org/eclipse/emf/cdo/server/IStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server">IStoreChunkReader</a>&nbsp;createChunkReader(<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
-                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
+                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EStructuralFeature.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EStructuralFeature</a>&nbsp;feature)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
@@ -484,7 +490,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <ul class="blockList">
 <li class="blockList">
 <h4>loadPackageUnit</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;loadPackageUnit(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
+<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EPackage.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EPackage</a>[]&nbsp;loadPackageUnit(<a href="../../../../../org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&nbsp;packageUnit)</pre>
 <div class="block">Demand loads a given package proxy that has been created on startup of the repository.
  <p>
  This method must only load the given package, <b>not</b> possible contained packages.</div>
@@ -534,7 +540,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <ul class="blockList">
 <li class="blockList">
 <h4>handleRevisions</h4>
-<pre>void&nbsp;handleRevisions(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
+<pre>void&nbsp;handleRevisions(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;eClass,
                      <a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
                      long&nbsp;timeStamp,
                      boolean&nbsp;exactTime,
@@ -835,6 +841,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/server/IQueryHandlerProvider
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

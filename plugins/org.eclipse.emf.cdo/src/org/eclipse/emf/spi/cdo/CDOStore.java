@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
  * A CDO specific version of an {@link EStore}.
  * <p>
  * CDORevisions need to follow these rules:<br>
- * - Keep CDOID only when the object (!isNew && !isTransient) // Only when CDOID will not changed.<br>
+ * - Keep CDOID only when the object (!isNew &amp;&amp; !isTransient) // Only when CDOID will not changed.<br>
  * - Keep EObject for external reference, new, transient and that until commit time.<br>
  * It is important since these objects could changed and we need to keep a reference to {@link EObject} until the end.
  * It is the reason why {@link CDOStore} always call {@link InternalCDOView#convertObjectToID(Object, boolean)} with

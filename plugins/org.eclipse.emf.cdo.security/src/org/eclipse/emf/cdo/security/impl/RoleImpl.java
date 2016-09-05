@@ -24,12 +24,12 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getPermissions <em>Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RoleImpl#getAssignees <em>Assignees</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

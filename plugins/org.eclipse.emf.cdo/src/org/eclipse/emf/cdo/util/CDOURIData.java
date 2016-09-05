@@ -32,7 +32,7 @@ import java.util.Map.Entry;
  *
  * <blockquote><b>cdo.net4j.</b> <i>ConnectorType</i> <b>://</b> [<i>User</i> [<b>:</b> <i>Password</i>] <b>@</b>]
  * <i>ConnectorSpecificAuthority</i> <b>/</b> <i>RepositoryName</i> <b>/</b> <i>ResourcePath</i> [<b>?</b> <i>Param</i><b>=</b><i>Value</i>
- * (<b>&</b> <i>Param</i><b>=</b><i>Value</i>)*]</blockquote>
+ * (<b>&amp;</b> <i>Param</i><b>=</b><i>Value</i>)*]</blockquote>
  *
  * The non-terminals being:
  * <p>

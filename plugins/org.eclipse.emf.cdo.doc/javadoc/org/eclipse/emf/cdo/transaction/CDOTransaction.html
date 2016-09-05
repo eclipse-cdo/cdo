@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>CDOTransaction (CDO Model Repository Documentation)</title>
@@ -118,6 +118,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
 <dt><span class="simpleTagLabel">No Implement</span></dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
@@ -242,7 +244,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#getCommittables--">getCommittables</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
@@ -353,14 +355,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables-java.util.Set-">setCommittables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;committables)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables-java.util.Set-">setCommittables</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;committables)</code>&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#setSavepoint--">setSavepoint</a></span>()</code>
-<div class="block">Creates a save point in the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> that can be used to roll back a part of the transaction
- 
- Save points do not involve the server side, everything is done on the client side.</div>
+<div class="block">Creates a save point in the <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> that can be used to roll back a part of the transaction</div>
 </td>
 </tr>
 </table>
@@ -583,7 +583,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <pre><a href="../../../../../org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;createResource(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#createResource-org.eclipse.emf.common.util.URI-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.createResource(URI)</code></a></dd>
+<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#createResource-org.eclipse.emf.common.util.URI-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.createResource(URI)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -881,7 +881,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <ul class="blockList">
 <li class="blockList">
 <h4>setCommittables</h4>
-<pre>void&nbsp;setCommittables(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;committables)</pre>
+<pre>void&nbsp;setCommittables(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;committables)</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -894,7 +894,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <ul class="blockList">
 <li class="blockList">
 <h4>getCommittables</h4>
-<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;getCommittables()</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;? extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;getCommittables()</pre>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
@@ -1019,6 +1019,6 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

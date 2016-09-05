@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>CDOLobInfo (CDO Model Repository Documentation)</title>
@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -118,8 +118,10 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
-<dd>This interface is not intended to be extended by clients.</dd>
+<dd>This class is not intended to be subclassed by clients.</dd>
 <dt><span class="simpleTagLabel">No Instantiate</span></dt>
 <dd>This class is not intended to be instantiated by clients.</dd>
 </dl>
@@ -166,10 +168,16 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getIDString--">getIDString</a></span>()</code>
+<div class="block">A string representation of the <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID--"><code>identifier</code></a> of this large object.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>long</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getSize--">getSize</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#toString--">toString</a></span>()</code>&nbsp;</td>
 </tr>
@@ -221,6 +229,20 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <h4>getID</h4>
 <pre>public final&nbsp;byte[]&nbsp;getID()</pre>
 <div class="block">The identifier of this large object. A SHA-1 digest of the content of this large object.</div>
+</li>
+</ul>
+<a name="getIDString--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIDString</h4>
+<pre>public final&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getIDString()</pre>
+<div class="block">A string representation of the <a href="../../../../../../org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID--"><code>identifier</code></a> of this large object.</div>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
+</dl>
 </li>
 </ul>
 <a name="getSize--">
@@ -313,6 +335,6 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

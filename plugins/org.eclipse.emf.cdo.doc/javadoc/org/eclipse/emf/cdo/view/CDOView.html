@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>CDOView (CDO Model Repository Documentation)</title>
@@ -134,10 +134,19 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
 <dt><span class="simpleTagLabel">No Implement</span></dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
 <dd>This interface is not intended to be extended by clients.</dd>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.Options.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView.Options</code></a></dd>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOObjectHandler</code></a></dd>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dd><a href="../../../../../org/eclipse/emf/cdo/view/CDOQuery.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOQuery</code></a> - - creates, <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> - - manages, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOViewAdaptersNotifiedEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewDurabilityChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOViewDurabilityChangedEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOViewInvalidationEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOViewLocksChangedEvent</code></a> - - fires, <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOViewTargetChangedEvent</code></a> - - fires</dd>
 </dl>
 </li>
 </ul>
@@ -240,9 +249,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
            <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;context)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#createResourceURI-java.lang.String-">createResourceURI</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</code>
-<div class="block">Returns a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URI</code></a> that can be used in <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a> to load the resource with the specified path.</div>
+<div class="block">Returns a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URI</code></a> that can be used in <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a> to load the resource with the specified path.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -285,7 +294,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;<br>T</code></td>
+<td class="colFirst"><code>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;<br>T</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getObject-T-">getObject</a></span>(T&nbsp;objectFromDifferentView)</code>
 <div class="block">Takes an object from a (possibly) different view and <em>contextifies</em> it for the usage with this view.</div>
 </td>
@@ -322,9 +331,9 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 </td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a></code></td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResourceSet--">getResourceSet</a></span>()</code>
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> this view is associated with.</div>
+<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> this view is associated with.</div>
 </td>
 </tr>
 <tr id="i19" class="rowColor">
@@ -348,7 +357,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getUnitManager--">getUnitManager</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">URIHandler</a></code></td>
+<td class="colFirst"><code><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/URIHandler.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">URIHandler</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getURIHandler--">getURIHandler</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
@@ -420,14 +429,14 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 </td>
 </tr>
 <tr id="i35" class="rowColor">
-<td class="colFirst"><code>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;<br><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstances-org.eclipse.emf.ecore.EClass-">queryInstances</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</code>
+<td class="colFirst"><code>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;<br><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstances-org.eclipse.emf.ecore.EClass-">queryInstances</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</code>
 <div class="block">Returns a list of the instances of the given type.</div>
 </td>
 </tr>
 <tr id="i36" class="altColor">
-<td class="colFirst"><code>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;<br><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;T&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstancesAsync-org.eclipse.emf.ecore.EClass-">queryInstancesAsync</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</code>
+<td class="colFirst"><code>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;<br><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;T&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryInstancesAsync-org.eclipse.emf.ecore.EClass-">queryInstancesAsync</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</code>
 <div class="block">Returns an iterator over the instances of the given type.</div>
 </td>
 </tr>
@@ -452,7 +461,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs-org.eclipse.emf.cdo.CDOObject-org.eclipse.emf.ecore.EReference...-">queryXRefs</a></span>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
+          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
 <div class="block">Returns a list of <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to the specified
  target object.</div>
 </td>
@@ -460,7 +469,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 <tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefs-java.util.Set-org.eclipse.emf.ecore.EReference...-">queryXRefs</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
+          <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
 <div class="block">Returns a list of <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to the specified
  target objects.</div>
 </td>
@@ -468,7 +477,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#queryXRefsAsync-java.util.Set-org.eclipse.emf.ecore.EReference...-">queryXRefsAsync</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
+               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</code>
 <div class="block">Returns an iterator over the <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to
  the specified target objects.</div>
 </td>
@@ -787,8 +796,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 <ul class="blockList">
 <li class="blockList">
 <h4>getResourceSet</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;getResourceSet()</pre>
-<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> this view is associated with.
+<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">ResourceSet</a>&nbsp;getResourceSet()</pre>
+<div class="block">Returns the <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a> this view is associated with.
  <p>
  Same as calling <tt>getViewSet().getResourceSet()</tt>.</div>
 <dl>
@@ -803,7 +812,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/common/CDOCommonView.html" t
 <ul class="blockList">
 <li class="blockList">
 <h4>getURIHandler</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">URIHandler</a>&nbsp;getURIHandler()</pre>
+<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/URIHandler.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource">URIHandler</a>&nbsp;getURIHandler()</pre>
 </li>
 </ul>
 <a name="getUnitManager--">
@@ -1029,7 +1038,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
                         boolean&nbsp;loadOnDemand)</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a></dd>
+<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -1043,7 +1052,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <div class="block">Same as <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html#getResource-java.lang.String-boolean-"><code>getResource(String, true)</code></a>.</div>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a></dd>
+<dd><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -1150,8 +1159,8 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>createResourceURI</h4>
-<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
-<div class="block">Returns a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URI</code></a> that can be used in <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a> to load the resource with the specified path.</div>
+<pre><a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util">URI</a>&nbsp;createResourceURI(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;path)</pre>
+<div class="block">Returns a <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/util/URI.html?is-external=true" title="class or interface in org.eclipse.emf.common.util"><code>URI</code></a> that can be used in <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true#getResource-org.eclipse.emf.common.util.URI-boolean-" title="class or interface in org.eclipse.emf.ecore.resource"><code>ResourceSet.getResource(URI, boolean)</code></a> to load the resource with the specified path.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
@@ -1204,7 +1213,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>queryInstances</h4>
-<pre>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;queryInstances(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</pre>
+<pre>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;T&gt;&nbsp;queryInstances(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</pre>
 <div class="block">Returns a list of the instances of the given type.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1218,7 +1227,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>queryInstancesAsync</h4>
-<pre>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;T&gt;&nbsp;queryInstancesAsync(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</pre>
+<pre>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;<a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;T&gt;&nbsp;queryInstancesAsync(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EClass.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EClass</a>&nbsp;type)</pre>
 <div class="block">Returns an iterator over the instances of the given type. The underlying query will be executed asynchronously.</div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
@@ -1233,7 +1242,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <li class="blockList">
 <h4>queryXRefs</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;queryXRefs(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
-                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</pre>
+                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</pre>
 <div class="block">Returns a list of <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to the specified
  target object.</div>
 <dl>
@@ -1258,7 +1267,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <li class="blockList">
 <h4>queryXRefs</h4>
 <pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;queryXRefs(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</pre>
+                                    <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</pre>
 <div class="block">Returns a list of <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to the specified
  target objects.</div>
 <dl>
@@ -1283,7 +1292,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <li class="blockList">
 <h4>queryXRefsAsync</h4>
 <pre><a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html?is-external=true" title="class or interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;&nbsp;queryXRefsAsync(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
-                                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</pre>
+                                                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EReference.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EReference</a>...&nbsp;sourceReferences)</pre>
 <div class="block">Returns an iterator over the <a href="../../../../../org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo"><code>object references</code></a> that represent the cross references to
  the specified target objects. The underlying query will be executed asynchronously.</div>
 <dl>
@@ -1343,7 +1352,7 @@ boolean&nbsp;isLegacyModeEnabled()</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getObject</h4>
-<pre>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;T&nbsp;getObject(T&nbsp;objectFromDifferentView)</pre>
+<pre>&lt;T extends <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&gt;&nbsp;T&nbsp;getObject(T&nbsp;objectFromDifferentView)</pre>
 <div class="block">Takes an object from a (possibly) different view and <em>contextifies</em> it for the usage with this view.
  <ul>
  <li>If the given object is contained in this view it is returned unmodified.
@@ -1676,6 +1685,6 @@ int&nbsp;reload(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" titl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

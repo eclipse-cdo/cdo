@@ -20,10 +20,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.FilterPermission#getFilters <em>Filters</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getFilterPermission()
  * @model

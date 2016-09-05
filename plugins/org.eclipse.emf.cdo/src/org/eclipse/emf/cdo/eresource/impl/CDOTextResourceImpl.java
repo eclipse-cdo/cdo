@@ -25,15 +25,15 @@ import java.io.Reader;
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl#getContents <em>Contents</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOTextResourceImpl#getEncoding <em>Encoding</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class CDOTextResourceImpl extends CDOFileResourceImpl<Reader>implements CDOTextResource
+public class CDOTextResourceImpl extends CDOFileResourceImpl<Reader> implements CDOTextResource
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

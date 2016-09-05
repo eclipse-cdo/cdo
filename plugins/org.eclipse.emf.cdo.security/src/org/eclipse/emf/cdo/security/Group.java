@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getUsers <em>Users</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getInheritedGroups <em>Inherited Groups</em>}</li>
@@ -29,7 +30,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllInheritingGroups <em>All Inheriting Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Group#getAllRoles <em>All Roles</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getGroup()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='AcyclicInheritance'"

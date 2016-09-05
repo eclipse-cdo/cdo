@@ -7,7 +7,5 @@
 
 /**
  * The Net4j transport layer concepts for dealing with buffers.
- * <p>
- * <img src="doc-files/buffers.png" title="Diagram Buffers" border="0"/>
  */
 package org.eclipse.net4j.buffer;

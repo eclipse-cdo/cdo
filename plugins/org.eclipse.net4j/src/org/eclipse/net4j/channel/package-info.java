@@ -7,7 +7,5 @@
 
 /**
  * The Net4j transport layer concepts for dealing with channels.
- * <p>
- * <img src="doc-files/channels.png" title="Diagram Channels" border="0"/>
  */
 package org.eclipse.net4j.channel;

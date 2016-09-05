@@ -29,10 +29,10 @@ import java.util.regex.PatternSyntaxException;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourcePermissionImpl#getPattern <em>Pattern</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

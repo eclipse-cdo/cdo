@@ -72,11 +72,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>
  * Example of the probing mode {@link SubMonitor.ProbingMode#STANDARD STANDARD}:
  * <p>
- * <img src="doc-files/standard.png">
+ * <img src="doc-files/standard.png" alt="standard.png">
  * <p>
  * Example of the probing mode {@link SubMonitor.ProbingMode#FULL FULL}:
  * <p>
- * <img src="doc-files/full.png">
+ * <img src="doc-files/full.png" alt="full.png">
  * <p>
  * The tables in the two examples above have smooth borders that can only be displayed correctly in consoles with UTF-8 encoding. The console encoding
  * can be configured on the <i>Common</i> tab of the launch configuration dialog. In addition the rendering of smooth table borders must be explicitly enabled

@@ -132,13 +132,9 @@ public class SecuritySwitch<T>
       SecurityElement securityElement = (SecurityElement)theEObject;
       T result = caseSecurityElement(securityElement);
       if (result == null)
-      {
         result = caseModelElement(securityElement);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.SECURITY_ITEM:
@@ -146,17 +142,11 @@ public class SecuritySwitch<T>
       SecurityItem securityItem = (SecurityItem)theEObject;
       T result = caseSecurityItem(securityItem);
       if (result == null)
-      {
         result = caseSecurityElement(securityItem);
-      }
       if (result == null)
-      {
         result = caseModelElement(securityItem);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.REALM:
@@ -164,17 +154,11 @@ public class SecuritySwitch<T>
       Realm realm = (Realm)theEObject;
       T result = caseRealm(realm);
       if (result == null)
-      {
         result = caseSecurityElement(realm);
-      }
       if (result == null)
-      {
         result = caseModelElement(realm);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.DIRECTORY:
@@ -182,21 +166,13 @@ public class SecuritySwitch<T>
       Directory directory = (Directory)theEObject;
       T result = caseDirectory(directory);
       if (result == null)
-      {
         result = caseSecurityItem(directory);
-      }
       if (result == null)
-      {
         result = caseSecurityElement(directory);
-      }
       if (result == null)
-      {
         result = caseModelElement(directory);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.ROLE:
@@ -204,21 +180,13 @@ public class SecuritySwitch<T>
       Role role = (Role)theEObject;
       T result = caseRole(role);
       if (result == null)
-      {
         result = caseSecurityItem(role);
-      }
       if (result == null)
-      {
         result = caseSecurityElement(role);
-      }
       if (result == null)
-      {
         result = caseModelElement(role);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.ASSIGNEE:
@@ -226,21 +194,13 @@ public class SecuritySwitch<T>
       Assignee assignee = (Assignee)theEObject;
       T result = caseAssignee(assignee);
       if (result == null)
-      {
         result = caseSecurityItem(assignee);
-      }
       if (result == null)
-      {
         result = caseSecurityElement(assignee);
-      }
       if (result == null)
-      {
         result = caseModelElement(assignee);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.GROUP:
@@ -248,25 +208,15 @@ public class SecuritySwitch<T>
       Group group = (Group)theEObject;
       T result = caseGroup(group);
       if (result == null)
-      {
         result = caseAssignee(group);
-      }
       if (result == null)
-      {
         result = caseSecurityItem(group);
-      }
       if (result == null)
-      {
         result = caseSecurityElement(group);
-      }
       if (result == null)
-      {
         result = caseModelElement(group);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.USER:
@@ -274,25 +224,15 @@ public class SecuritySwitch<T>
       User user = (User)theEObject;
       T result = caseUser(user);
       if (result == null)
-      {
         result = caseAssignee(user);
-      }
       if (result == null)
-      {
         result = caseSecurityItem(user);
-      }
       if (result == null)
-      {
         result = caseSecurityElement(user);
-      }
       if (result == null)
-      {
         result = caseModelElement(user);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.USER_PASSWORD:
@@ -300,9 +240,7 @@ public class SecuritySwitch<T>
       UserPassword userPassword = (UserPassword)theEObject;
       T result = caseUserPassword(userPassword);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.PERMISSION:
@@ -310,9 +248,7 @@ public class SecuritySwitch<T>
       Permission permission = (Permission)theEObject;
       T result = casePermission(permission);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.CLASS_PERMISSION:
@@ -320,13 +256,9 @@ public class SecuritySwitch<T>
       ClassPermission classPermission = (ClassPermission)theEObject;
       T result = caseClassPermission(classPermission);
       if (result == null)
-      {
         result = casePermission(classPermission);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.PACKAGE_PERMISSION:
@@ -334,13 +266,9 @@ public class SecuritySwitch<T>
       PackagePermission packagePermission = (PackagePermission)theEObject;
       T result = casePackagePermission(packagePermission);
       if (result == null)
-      {
         result = casePermission(packagePermission);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.RESOURCE_PERMISSION:
@@ -348,13 +276,9 @@ public class SecuritySwitch<T>
       ResourcePermission resourcePermission = (ResourcePermission)theEObject;
       T result = caseResourcePermission(resourcePermission);
       if (result == null)
-      {
         result = casePermission(resourcePermission);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.OBJECT_PERMISSION:
@@ -362,13 +286,9 @@ public class SecuritySwitch<T>
       ObjectPermission objectPermission = (ObjectPermission)theEObject;
       T result = caseObjectPermission(objectPermission);
       if (result == null)
-      {
         result = casePermission(objectPermission);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.FILTER_PERMISSION:
@@ -376,13 +296,9 @@ public class SecuritySwitch<T>
       FilterPermission filterPermission = (FilterPermission)theEObject;
       T result = caseFilterPermission(filterPermission);
       if (result == null)
-      {
         result = casePermission(filterPermission);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.PERMISSION_FILTER:
@@ -390,9 +306,7 @@ public class SecuritySwitch<T>
       PermissionFilter permissionFilter = (PermissionFilter)theEObject;
       T result = casePermissionFilter(permissionFilter);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.LINKED_FILTER:
@@ -400,13 +314,9 @@ public class SecuritySwitch<T>
       LinkedFilter linkedFilter = (LinkedFilter)theEObject;
       T result = caseLinkedFilter(linkedFilter);
       if (result == null)
-      {
         result = casePermissionFilter(linkedFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.PACKAGE_FILTER:
@@ -414,13 +324,9 @@ public class SecuritySwitch<T>
       PackageFilter packageFilter = (PackageFilter)theEObject;
       T result = casePackageFilter(packageFilter);
       if (result == null)
-      {
         result = casePermissionFilter(packageFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.CLASS_FILTER:
@@ -428,13 +334,9 @@ public class SecuritySwitch<T>
       ClassFilter classFilter = (ClassFilter)theEObject;
       T result = caseClassFilter(classFilter);
       if (result == null)
-      {
         result = casePermissionFilter(classFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.RESOURCE_FILTER:
@@ -442,13 +344,9 @@ public class SecuritySwitch<T>
       ResourceFilter resourceFilter = (ResourceFilter)theEObject;
       T result = caseResourceFilter(resourceFilter);
       if (result == null)
-      {
         result = casePermissionFilter(resourceFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.OBJECT_FILTER:
@@ -456,13 +354,9 @@ public class SecuritySwitch<T>
       ObjectFilter objectFilter = (ObjectFilter)theEObject;
       T result = caseObjectFilter(objectFilter);
       if (result == null)
-      {
         result = casePermissionFilter(objectFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.EXPRESSION_FILTER:
@@ -470,17 +364,11 @@ public class SecuritySwitch<T>
       ExpressionFilter expressionFilter = (ExpressionFilter)theEObject;
       T result = caseExpressionFilter(expressionFilter);
       if (result == null)
-      {
         result = caseObjectFilter(expressionFilter);
-      }
       if (result == null)
-      {
         result = casePermissionFilter(expressionFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.COMBINED_FILTER:
@@ -488,13 +376,9 @@ public class SecuritySwitch<T>
       CombinedFilter combinedFilter = (CombinedFilter)theEObject;
       T result = caseCombinedFilter(combinedFilter);
       if (result == null)
-      {
         result = casePermissionFilter(combinedFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.NOT_FILTER:
@@ -502,17 +386,11 @@ public class SecuritySwitch<T>
       NotFilter notFilter = (NotFilter)theEObject;
       T result = caseNotFilter(notFilter);
       if (result == null)
-      {
         result = caseCombinedFilter(notFilter);
-      }
       if (result == null)
-      {
         result = casePermissionFilter(notFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.AND_FILTER:
@@ -520,17 +398,11 @@ public class SecuritySwitch<T>
       AndFilter andFilter = (AndFilter)theEObject;
       T result = caseAndFilter(andFilter);
       if (result == null)
-      {
         result = caseCombinedFilter(andFilter);
-      }
       if (result == null)
-      {
         result = casePermissionFilter(andFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case SecurityPackage.OR_FILTER:
@@ -538,17 +410,11 @@ public class SecuritySwitch<T>
       OrFilter orFilter = (OrFilter)theEObject;
       T result = caseOrFilter(orFilter);
       if (result == null)
-      {
         result = caseCombinedFilter(orFilter);
-      }
       if (result == null)
-      {
         result = casePermissionFilter(orFilter);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

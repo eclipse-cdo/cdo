@@ -43,6 +43,7 @@ import java.util.regex.PatternSyntaxException;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#getPath <em>Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#getPatternStyle <em>Pattern Style</em>}</li>
@@ -54,7 +55,6 @@ import java.util.regex.PatternSyntaxException;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isIncludeParents <em>Include Parents</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl#isIncludeRoot <em>Include Root</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

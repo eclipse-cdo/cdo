@@ -52,7 +52,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  * transparently with EMF's extension mechanisms some of the more advanced functions may require to add direct
  * dependencies on CDO to your application code.
  * <p>
- * The following diagram illustrates the major building blocks of a CDO application: {@img application-architecture.png}
+ * The following diagram illustrates the major building blocks of a CDO application: <p align="center">{@image application-architecture.png}
  *
  * @author Eike Stepper
  */

@@ -28,6 +28,7 @@ import java.util.Set;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getUsers <em>Users</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getInheritedGroups <em>Inherited Groups</em>}</li>
@@ -36,7 +37,6 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getAllInheritingGroups <em>All Inheriting Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.GroupImpl#getAllRoles <em>All Roles</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

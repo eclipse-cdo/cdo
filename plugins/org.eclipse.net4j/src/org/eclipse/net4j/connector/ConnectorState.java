@@ -14,18 +14,6 @@ import org.eclipse.net4j.util.security.INegotiator;
 
 /**
  * Enumerates the lifecycle states of an {@link IConnector}.
- * <p>
- * <dt><b>State Machine Diagram:</b></dt>
- * <dd><img src="doc-files/ConnectorState-1.gif" title="Diagram Connector States" border="0"
- * usemap="#ConnectorState-1.gif"/></dd>
- * <p>
- * <MAP NAME="ConnectorState-1.gif"> <AREA SHAPE="RECT" COORDS="26,135,143,159" HREF="ConnectorState.html#DISCONNECTED">
- * <AREA SHAPE="RECT" COORDS="449,50,547,73" HREF="ConnectorState.html#CONNECTING"> <AREA SHAPE="RECT"
- * COORDS="449,133,549,159" HREF="ConnectorState.html#NEGOTIATING"> <AREA SHAPE="RECT" COORDS="451,216,545,240"
- * HREF="ConnectorState.html#CONNECTED"> <AREA SHAPE="POLYGON" COORDS="10,89,11,183,164,183,163,109,77,109,77,89,11,88"
- * HREF="../util/lifecycle/ILifecycle.html#isActive()"> <AREA SHAPE="POLYGON"
- * COORDS="429,10,428,262,597,263,597,30,483,29,483,10,428,11" HREF="../util/lifecycle/ILifecycle.html#isActive()">
- * </MAP>
  *
  * @see IConnector#getState()
  * @author Eike Stepper

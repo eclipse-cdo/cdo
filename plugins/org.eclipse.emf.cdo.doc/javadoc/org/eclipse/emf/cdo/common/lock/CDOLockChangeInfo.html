@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>CDOLockChangeInfo (CDO Model Repository Documentation)</title>
@@ -115,10 +115,16 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.1</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Caspar De Groot</dd>
 <dt><span class="simpleTagLabel">No Implement</span></dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
 <dd>This interface is not intended to be extended by clients.</dd>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dd><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockOwner</code></a>, <a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockChangeInfo.Operation.html" title="enum in org.eclipse.emf.cdo.common.lock"><code>CDOLockChangeInfo.Operation</code></a>, <a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent"><code>IRWLockManager.LockType</code></a></dd>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dd><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockState</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -232,7 +238,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <pre>boolean&nbsp;isInvalidateAll()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>true</code> if this instance signals that all <a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lockstates</code></a> must be invalidated,
+<dd><code>true</code> if this instance signals that all <a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock states</code></a> must be invalidated,
          <code>false</code> otherwise</dd>
 </dl>
 </li>
@@ -272,33 +278,7 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <dd><code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp--">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org/eclipse/emf/cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The repository time at which the lock changes took place. This is only an informal indication; no formal
-         relation (e.g. an ordering) with commit timestamps is guaranteed.</dd>
-</dl>
-</li>
-</ul>
-<a name="getLockOwner--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getLockOwner</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;getLockOwner()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The view, represented as a <a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockOwner</code></a>, that authored the lock changes.</dd>
-</dl>
-</li>
-</ul>
-<a name="getLockStates--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getLockStates</h4>
-<pre><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;getLockStates()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The new lock states of the objects that were affected by the change</dd>
+         relation (e.g. an ordering) with commit time stamps is guaranteed.</dd>
 </dl>
 </li>
 </ul>
@@ -318,13 +298,39 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <a name="getLockType--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getLockType</h4>
 <pre><a href="../../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;getLockType()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the type of locks that were affected by the lock operation</dd>
+</dl>
+</li>
+</ul>
+<a name="getLockOwner--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLockOwner</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;getLockOwner()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view, represented as a <a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockOwner</code></a>, that authored the lock changes.</dd>
+</dl>
+</li>
+</ul>
+<a name="getLockStates--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getLockStates</h4>
+<pre><a href="../../../../../../org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;getLockStates()</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The new lock states of the objects that were affected by the change</dd>
 </dl>
 </li>
 </ul>
@@ -396,6 +402,6 @@ extends <a href="../../../../../../org/eclipse/emf/cdo/common/branch/CDOBranchPo
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

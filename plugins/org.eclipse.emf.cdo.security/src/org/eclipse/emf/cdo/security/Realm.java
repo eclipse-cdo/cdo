@@ -22,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getItems <em>Items</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getAllUsers <em>All Users</em>}</li>
@@ -34,7 +35,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultGroupDirectory <em>Default Group Directory</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Realm#getDefaultRoleDirectory <em>Default Role Directory</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getRealm()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='HasAdministrator'"

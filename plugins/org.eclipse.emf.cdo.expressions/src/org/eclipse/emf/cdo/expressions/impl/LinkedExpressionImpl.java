@@ -28,10 +28,10 @@ import java.lang.reflect.InvocationTargetException;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.impl.LinkedExpressionImpl#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -125,9 +125,7 @@ public class LinkedExpressionImpl extends CDOObjectImpl implements LinkedExpress
     {
     case ExpressionsPackage.LINKED_EXPRESSION__EXPRESSION:
       if (resolve)
-      {
         return getExpression();
-      }
       return basicGetExpression();
     }
     return super.eGet(featureID, resolve, coreType);

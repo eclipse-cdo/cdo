@@ -66,7 +66,7 @@ public class Doc02_ManagingRepositories
    * <p>
    * The following sections explain how to use the different repository creation or connection wizards. Each of them
    * can be started by clicking on the green plus button on the CDO Repositories view's toolbar:
-   * {@img repositories-view.png}
+   * <p align="center">{@image repositories-view.png}
    */
   public class Doc_CreatingRepositories
   {
@@ -74,12 +74,12 @@ public class Doc02_ManagingRepositories
      * Connecting to Remote Repositories
      * <p>
      * To create an online connection to an existing remote repository the first type option must be selected on the first wizard page:
-     * {@img repo-wizard-type-remote.png}
+     * <p align="center">{@image repo-wizard-type-remote.png}
      * <p>
      * A double-click on the type option or a single click on the Next button advances to the next wizard page, on which the label
      * of the new connection and information about the remote server, the repository on that server, and optionally login credentials need
      * to be entered:
-     * {@img repo-wizard-remote.png}
+     * <p align="center">{@image repo-wizard-remote.png}
      * <p>
      * The <b>label</b> identifies the connection to the remote repository. It must be unique among all
      * configured connections in the current workspace. It can also be changed later, see {@link Doc_RenamingConnections}.
@@ -113,11 +113,11 @@ public class Doc02_ManagingRepositories
      * Creating Local Repositories
      * <p>
      * To create a new local repository and add an online connection to it the third type option must be selected on the first wizard page:
-     * {@img repo-wizard-type-local.png}
+     * <p align="center">{@image repo-wizard-type-local.png}
      * <p>
      * A double-click on the type option or a single click on the Next button advances to the next wizard page, on which the label
      * of the new connection and information about the new local repository need to be entered:
-     * {@img repo-wizard-local.png}
+     * <p align="center">{@image repo-wizard-local.png}
      * <p>
      * The <b>label</b> identifies the connection to the new local repository. It must be unique among all
      * configured connections in the current workspace. It can also be changed later, see {@link Doc_RenamingConnections}.
@@ -150,7 +150,7 @@ public class Doc02_ManagingRepositories
    * <p>
    * CDO supports renaming an existing repository connection, i.e., changing its label, at any time, even when checkouts from
    * that repository already exist. A repository connection can be renamed by selecting it and pressing the F2 key or
-   * selecting the Rename action in the context menu. The following dialog will pop up: {@img repo-rename.png}
+   * selecting the Rename action in the context menu. The following dialog will pop up: <p align="center">{@image repo-rename.png}
    * <p>
    * The dialog can only be finished with the OK button if the repository label is either unchanged or changed to a not existing label.
    */
@@ -162,10 +162,10 @@ public class Doc02_ManagingRepositories
    * Deleting Repository Connections
    * <p>
    * An existing repository connection can be deleted by selecting that repository connection and pressing the Del key or selecting
-   * the Delete action in the context menu. The following dialog will pop up: {@img repo-delete.png}
+   * the Delete action in the context menu. The following dialog will pop up: <p align="center">{@image repo-delete.png}
    * <p>
    * If checkouts exist for the repository connection to be deleted the following warning dialog will pop up <b>first</b>:
-   * {@img repo-delete-checkouts.png}
+   * <p align="center">{@image repo-delete-checkouts.png}
    * <p>
    * If the deletion of the existing checkouts is confirmed the checkout deletion dialog is popped up as explained in {@link Doc_DeletingCheckouts}.
    */
@@ -197,16 +197,16 @@ public class Doc02_ManagingRepositories
    * Repositories can be shown in a number of other views depending on the type of the repository
    * by selecting them, opening their context menu, opening the Show In sub menu, and selecting one of the Show In actions.
    * <p>
-   * Local repositories can be shown in the following views: {@img repository-local-showin.png}
+   * Local repositories can be shown in the following views: <p align="center">{@image repository-local-showin.png}
    * <p>
-   * Remote repositories can be shown in the following views: {@img repository-remote-showin.png}
+   * Remote repositories can be shown in the following views: <p align="center">{@image repository-remote-showin.png}
    */
   public class Doc_RepositoryShowIn
   {
     /**
      * Showing Repositories in the CDO Sessions View
      * <p>
-     * All repositories can be shown in the {@link Doc_SessionsView CDO Sessions view}: {@img sessions-view.png}
+     * All repositories can be shown in the {@link Doc_SessionsView CDO Sessions view}: <p align="center">{@image sessions-view.png}
      * <p>
      * A new {@link CDOSession session} with the same target repository as the selected repository is opened in the CDO Sessions view.
      */
@@ -217,7 +217,7 @@ public class Doc02_ManagingRepositories
     /**
      * Showing Repositories in the CDO Server Browser
      * <p>
-     * Local repositories can be shown in the CDO Server Browser: {@img server-browser.png}
+     * Local repositories can be shown in the CDO Server Browser: <p align="center">{@image server-browser.png}
      * <p>
      * The CDO Server Browser allows to introspect the internal data of the local repository
      * in a web browser. It is only meant to be used for test and debug purposes.
@@ -230,7 +230,7 @@ public class Doc02_ManagingRepositories
     /**
      * Showing Repositories in the Properties View
      * <p>
-     * All repositories can be shown in the {@link Doc_PropertySheetIntegration Properties view}: {@img property-sheet.png}
+     * All repositories can be shown in the {@link Doc_PropertySheetIntegration Properties view}: <p align="center">{@image property-sheet.png}
      */
     public class Doc_RepositoryShowInProperties
     {
@@ -239,7 +239,7 @@ public class Doc02_ManagingRepositories
     /**
      * Showing Repositories in the History View
      * <p>
-     * All repositories can be shown in the {@link Doc_HistoryIntegration History view}: {@img history.png}
+     * All repositories can be shown in the {@link Doc_HistoryIntegration History view}: <p align="center">{@image history.png}
      * <p>
      * This is particularly useful if the "Link with Editor and Selection" button in the toolbar of the History view
      * is not enabled and the history page does not automatically adjust to the workbench selection.
@@ -261,7 +261,7 @@ public class Doc02_ManagingRepositories
     /**
      * Showing Repositories in the System Explorer
      * <p>
-     * All repositories can be shown in the System Explorer: {@img system-explorer-repository.png}
+     * All repositories can be shown in the System Explorer: <p align="center">{@image system-explorer-repository.png}
      * <p>
      * Each repository owns a dedicated directory under .metadata of the current workspace. This directory contains
      * the repository.properties file that contains the configuration of the repository. Local repositories also store the database

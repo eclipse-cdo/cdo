@@ -42,7 +42,7 @@ public class Doc06_UsingResources
    * Creating Resource Nodes
    * <p>
    * New resource nodes can be created directly in the {@link Doc_ProjectExplorerIntegration Project Explorer} by opening the
-   * context menu on a checkout or on an existing folder under a checkout and then opening the New sub menu: {@img new-menu.png}
+   * context menu on a checkout or on an existing folder under a checkout and then opening the New sub menu: <p align="center">{@image new-menu.png}
    * <p>
    * The following sub sections describe how to create the different types of resource nodes and how to work with them.
    */
@@ -58,7 +58,7 @@ public class Doc06_UsingResources
      * <p>
      * A new folder can be created by opening the context menu on a checkout or on an existing folder under a checkout and then
      * selecting New -> Folder. The following dialog will pop up to ask for the name of the new folder:
-     * {@img new-folder.png}
+     * <p align="center">{@image new-folder.png}
      * <p>
      * The name of the new folder is validated to be unique among all nested resource nodes under the container of the new folder.
      */
@@ -75,7 +75,7 @@ public class Doc06_UsingResources
      * <p>
      * A new model resource can be created by opening the context menu on a checkout or on an existing folder under a checkout and then
      * selecting New -> Model Resource. The following dialog will pop up to ask for the name of the new model resource:
-     * {@img new-resource.png}
+     * <p align="center">{@image new-resource.png}
      * <p>
      * The name of the new model resource is validated to be unique among all nested resource nodes under the container of the new model resource.
      */
@@ -91,7 +91,7 @@ public class Doc06_UsingResources
      * <p>
      * A new text file can be created by opening the context menu on a checkout or on an existing folder under a checkout and then
      * selecting New -> Text File. The following dialog will pop up to ask for the name of the new text file:
-     * {@img new-text.png}
+     * <p align="center">{@image new-text.png}
      * <p>
      * The name of the new text file is validated to be unique among all nested resource nodes under the container of the new text file.
      */
@@ -107,7 +107,7 @@ public class Doc06_UsingResources
      * <p>
      * A new binary file can be created by opening the context menu on a checkout or on an existing folder under a checkout and then
      * selecting New -> Binary File. The following dialog will pop up to ask for the name of the new binary file:
-     * {@img new-binary.png}
+     * <p align="center">{@image new-binary.png}
      * <p>
      * The name of the new binary file is validated to be unique among all nested resource nodes under the container of the new binary file.
      */
@@ -120,7 +120,7 @@ public class Doc06_UsingResources
    * Renaming Resource Nodes
    * <p>
    * A resource node can be renamed at any time by selecting the resource node and pressing the F2 key or opening the context menu and
-   * selecting the Rename action. The following dialog will pop up: {@img resource-rename.png}
+   * selecting the Rename action. The following dialog will pop up: <p align="center">{@image resource-rename.png}
    * <p>
    * Renaming a resource node <b>does not break</b> cross references to the model elements that are contained
    * in the model resources in or under the renamed resource node.
@@ -159,7 +159,7 @@ public class Doc06_UsingResources
    * <p>
    * Resource nodes can be deleted from the resource tree of a checkout by selecting the resource node and pressing
    * the Del key or opening the context menu and
-   * selecting the Delete action. The following confirmation dialog will pop up: {@img object-delete.png}
+   * selecting the Delete action. The following confirmation dialog will pop up: <p align="center">{@image object-delete.png}
    * <p>
    * This confirmation dialog only shows the directly selected resource nodes. Nested resource nodes or model elements
    * are not shown for performance reasons but will also be deleted if OK is pressed.

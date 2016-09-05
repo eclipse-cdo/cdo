@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOAutoLocker;
  * The optimistic locking timeout can be configured on the server side:
  *
  * <pre>
-    &lt;property name="optimisticLockingTimeout" value="10000"/>
+    &lt;property name="optimisticLockingTimeout" value="10000"/&gt;
  * </pre>
  *
  * @author Eike Stepper

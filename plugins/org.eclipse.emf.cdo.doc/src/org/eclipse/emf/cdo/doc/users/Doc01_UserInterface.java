@@ -42,7 +42,7 @@ public class Doc01_UserInterface
    * CDO Explorer Perspective
    * <p>
    * The CDO Explorer perspective is a convenient selection of those views and shortcuts that are most
-   * commonly used when working with CDO. It has the following default layout: {@img explorer-perspective.png}
+   * commonly used when working with CDO. It has the following default layout: <p align="center">{@image explorer-perspective.png}
    */
   public class Doc_ExplorerPerspective
   {
@@ -53,7 +53,7 @@ public class Doc01_UserInterface
    * <p>
    * The CDO Repositories view displays the various repositories and connections that are configured for use in the
    * current workspace. It allows to create new repositories and connections, rename or delete existing ones,
-   * manage the branches in them, and finally checking out from them: {@img repositories-view.png}
+   * manage the branches in them, and finally checking out from them: <p align="center">{@image repositories-view.png}
    * <p>
    * In contrast to sessions in the {@link Doc_SessionsView} repositories and connections configured in the
    * CDO Repositories view are remembered across Eclipse restarts.
@@ -73,7 +73,7 @@ public class Doc01_UserInterface
    * New servers can be added, existing ones can be removed. New repositories can be created in the servers and existing
    * ones can be deleted. If a repository supports security, i.e., authentication and authorization, an editor for the
    * various security concepts, such as users, groups, roles, and permissions can be opened on it:
-   * {@img administration-view.png}
+   * <p align="center">{@image administration-view.png}
    */
   public class Doc_AdministrationView
   {
@@ -85,7 +85,7 @@ public class Doc01_UserInterface
    * The CDO Collaboration view displays the other users that are connected to the current repository, more
    * exactly their sessions. When double-clicking a user in this view a dialog pops up asking you for a short message
    * to send to the selected user. The targeted user needs to be subscribed to receiving messages. This view is a very
-   * simple example of a custom chat protocol on top of the CDO protocol: {@img collaboration-view.png}
+   * simple example of a custom chat protocol on top of the CDO protocol: <p align="center">{@image collaboration-view.png}
    * <p>
    * The details of remote message subscriptions and how to contribute custom message handlers is explained
    * in {@link CDORemoteSessionManager}.
@@ -100,7 +100,7 @@ public class Doc01_UserInterface
    * The CDO Watch List view is a simple example of {@link Options#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)
    * change subscriptions}. Model objects can be dragged from anywhere
    * and dropped on the watch list view to create a table entry that shows the latest changes from any user to the
-   * selected model object: {@img watchlist-view.png}
+   * selected model object: <p align="center">{@image watchlist-view.png}
    */
   public class Doc_WatchListView
   {
@@ -111,7 +111,7 @@ public class Doc01_UserInterface
    * <p>
    * The CDO Time Machine view offers a slider control that can be used to look at models at different historical times.
    * The time slider is only enabled when a model or model object in a historical checkout is selected:
-   * {@img timemachine-view.png}
+   * <p align="center">{@image timemachine-view.png}
    * <p>
    * The resource tree in the selected historical checkout as well as the contents of all editors opened on this checkout
    * changes in real-time while the slider control is dragged back and forth in time.
@@ -129,7 +129,7 @@ public class Doc01_UserInterface
    * is mostly superseded now by more convenient functionality of the {@link Doc_RepositoriesView CDO Repositories view}
    * and the {@link Doc_ProjectExplorerIntegration Project Explorer integration}. Nevertheless, it can still be used to
    * open sessions to remote repositories, open model views and transactions on sessions, browse the resource trees
-   * of repositories, open model editors on selected resources, and more: {@img sessions-view.png}
+   * of repositories, open model editors on selected resources, and more: <p align="center">{@image sessions-view.png}
    * <p>
    * Please note that sessions opened in the CDO Sessions view are <b>not</b> remembered across Eclipse restarts.
    */
@@ -142,7 +142,7 @@ public class Doc01_UserInterface
    * <p>
    * The CDO Server Browser allows to introspect the internal data of {@link Doc_LocalRepositories local repositories} or
    * locally replicated repositories of {@link Doc_OfflineCheckouts offline checkouts}
-   * in a web browser: {@img server-browser.png}
+   * in a web browser: <p align="center">{@image server-browser.png}
    * <p>
    * It is only meant to be used for test and debug purposes.
    * It is <b>not</b> meant to be a production tool that would scale to arbitrary repository sizes!
@@ -155,7 +155,7 @@ public class Doc01_UserInterface
    * CDO Checkout Wizard
    * <p>
    * CDO provides an Eclipse Import wizard to create checkouts from repositories without opening the
-   * {@link Doc_RepositoriesView}: {@img import-wizard.png}
+   * {@link Doc_RepositoriesView}: <p align="center">{@image import-wizard.png}
    *
    * @see Doc04_CheckingOut
    */
@@ -172,7 +172,7 @@ public class Doc01_UserInterface
    * can be edited in the {@link Doc_PropertySheetIntegration Properties view}.
    * <p>
    * The CDO model editor is a generated EMF editor with some additional features such as real-time locking decoration and early conflict
-   * detection: {@img model-editor.png}
+   * detection: <p align="center">{@image model-editor.png}
    * <p>
    * Whether the CDO model editor actually supports editing the displayed model depends on whether the checkout of the model is
    * {@link Doc_TransactionalCheckouts transactional} or not.
@@ -192,7 +192,7 @@ public class Doc01_UserInterface
    * <p>
    * The folders, resources, and model elements of the checked-out repository are displayed under the checkout and can be
    * modified directly via drag and drop to move or copy them, or via double-click to open the {@link Doc_ModelEditor CDO model editor}
-   * on a resource or an EMF Forms dialog on a model element: {@img project-explorer.png}
+   * on a resource or an EMF Forms dialog on a model element: <p align="center">{@image project-explorer.png}
    * <p>
    * The context menu offers various functions for checkouts, such as renaming, closing, or deleting them, showing them in
    * different views, switching them to different branches or branch points, comparing them with different branches or branch points,
@@ -212,7 +212,7 @@ public class Doc01_UserInterface
    * Property Sheet Integration
    * <p>
    * CDO integrates with Eclipse's Properties view and provides various semantic and technical information about the
-   * element selected in the current perspective: {@img property-sheet.png}
+   * element selected in the current perspective: <p align="center">{@image property-sheet.png}
    * <p>
    * For model elements selected in editors of {@link Doc_TransactionalCheckouts transactional} checkouts the
    * property sheet integration supports the modification of the element's attribute and reference values.
@@ -225,7 +225,7 @@ public class Doc01_UserInterface
    * History Integration
    * <p>
    * CDO integrates with Eclipse's History view and displays the commit tree of the selected repository, branch, checkout, or
-   * model element: {@img history.png}
+   * model element: <p align="center">{@image history.png}
    * <p>
    * If the History view does not react to selection changes activate the "Link with Editor and Selection" button
    * in the History view's toolbar.
@@ -247,10 +247,10 @@ public class Doc01_UserInterface
    * Compare Integration
    * <p>
    * CDO integrates with EMF Compare to provide efficient and scalable compare editors. Different branches
-   * or different branch points can be compared with each other: {@img compare.png}
+   * or different branch points can be compared with each other: <p align="center">{@image compare.png}
    * <p>
    * CDO also provides efficient and scalable merge editors. Different branches
-   * or different branch points can be merged from each other: {@img merge.png}
+   * or different branch points can be merged from each other: <p align="center">{@image merge.png}
    * <p>
    * Comparisons and merges are started either from the {@link Doc_HistoryIntegration History view}, from the
    * context menus of {@link Doc05_UsingCheckouts checkouts}, or by dragging and dropping branches, branch points, or checkouts
@@ -269,7 +269,7 @@ public class Doc01_UserInterface
    * Forms Integration
    * <p>
    * CDO integrates with EMF Forms to provide generic editing dialogs for the model
-   * element that are displayed in the {@link Doc_ProjectExplorerIntegration Project Explorer}: {@img object-edit.png}
+   * element that are displayed in the {@link Doc_ProjectExplorerIntegration Project Explorer}: <p align="center">{@image object-edit.png}
    *
    * @see EMFFormsGuide
    * @see Doc_EditingModelElements
@@ -282,7 +282,7 @@ public class Doc01_UserInterface
    * Preference Pages
    * <p>
    * The only setting that can currently be adjusted on the CDO Explorer preference page is the number of minutes
-   * to keep a repository connected after it has been used the last time: {@img preferences.png}
+   * to keep a repository connected after it has been used the last time: <p align="center">{@image preferences.png}
    */
   public class Doc_PreferencePages
   {

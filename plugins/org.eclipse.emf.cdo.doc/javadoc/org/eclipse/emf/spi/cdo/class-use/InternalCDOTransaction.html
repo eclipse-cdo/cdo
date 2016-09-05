@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>Uses of Interface org.eclipse.emf.spi.cdo.InternalCDOTransaction (CDO Model Repository Documentation)</title>
@@ -105,13 +105,17 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOSavepoint.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getTransaction--">getTransaction</a></span>()</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">InternalCDOSession.InvalidationData.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.InvalidationData.html#getSender--">getSender</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></td>
-<td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.InternalCDOCommitContext.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.InternalCDOCommitContext.html#getTransaction--">getTransaction</a></span>()</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">InternalCDOSavepoint.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getTransaction--">getTransaction</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></td>
+<td class="colLast"><span class="typeNameLabel">InternalCDOTransaction.InternalCDOCommitContext.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.InternalCDOCommitContext.html#getTransaction--">getTransaction</a></span>()</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></td>
 <td class="colLast"><span class="typeNameLabel">InternalCDOView.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#toTransaction--">toTransaction</a></span>()</code>&nbsp;</td>
 </tr>
@@ -178,7 +182,11 @@
           <a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender,
           boolean&nbsp;clearResourcePathCache,
           byte&nbsp;securityImpact,
-          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</code>&nbsp;</td>
+          <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../../org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.6 use <a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOSession.InvalidationData-"><code>InternalCDOSession.invalidate(InvalidationData)</code></a>.</span></div>
+</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -195,9 +203,13 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">CDOTransactionStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#setTarget-org.eclipse.emf.spi.cdo.InternalCDOTransaction-">setTarget</a></span>(<a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+<td class="colLast"><span class="typeNameLabel">InternalCDOSession.InvalidationData.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.InvalidationData.html#setSender-org.eclipse.emf.spi.cdo.InternalCDOTransaction-">setSender</a></span>(<a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;sender)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">CDOTransactionStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#setTarget-org.eclipse.emf.spi.cdo.InternalCDOTransaction-">setTarget</a></span>(<a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">CDOTransactionStrategy.</span><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/emf/spi/cdo/CDOTransactionStrategy.html#unsetTarget-org.eclipse.emf.spi.cdo.InternalCDOTransaction-">unsetTarget</a></span>(<a href="../../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</code>&nbsp;</td>
 </tr>
@@ -254,6 +266,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

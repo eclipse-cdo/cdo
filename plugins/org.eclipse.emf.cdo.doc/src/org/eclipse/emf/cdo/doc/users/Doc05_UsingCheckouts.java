@@ -54,7 +54,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * </ul>
  * <p>
  * Once created, checkouts are displayed in the Project Explorer like workspace projects and decorated with a small blue repository image.
- * In contrast to workspace projects the displayed checkouts have no physical representation in the workspace. {@img project-explorer.png}
+ * In contrast to workspace projects the displayed checkouts have no physical representation in the workspace. <p align="center">{@image project-explorer.png}
  * <p>
  * <b>Table of Contents</b> {@toc}
  *
@@ -67,7 +67,7 @@ public class Doc05_UsingCheckouts
    * <p>
    * CDO supports renaming an existing checkout, i.e., changing its label, at any time. A checkout can be renamed by selecting it
    * and pressing the F2 key or selecting the Rename action in the context menu. The following dialog will pop up:
-   * {@img checkout-rename.png}
+   * <p align="center">{@image checkout-rename.png}
    * <p>
    * The dialog can only be finished with the OK button if the checkout label is either unchanged or changed to a not existing label.
    */
@@ -80,7 +80,7 @@ public class Doc05_UsingCheckouts
    * <p>
    * Sometimes it is useful to have two or more checkouts from the same repository in the Project Explorer.
    * A checkout can be duplicated by selecting it, opening the context menu, and selecting the Duplicate Checkout action.
-   * The result is an identical checkout with a unique default label: {@img checkout-duplicate.png}
+   * The result is an identical checkout with a unique default label: <p align="center">{@image checkout-duplicate.png}
    */
   public class Doc_DuplicatingCheckouts
   {
@@ -105,7 +105,7 @@ public class Doc05_UsingCheckouts
    * <p>
    * An existing checkout can be deleted by selecting that checkout and pressing the Del key or selecting
    * the Delete action in the context menu. Several checkouts can be deleted at once.
-   * The following dialog will pop up: {@img checkout-delete.png}
+   * The following dialog will pop up: <p align="center">{@image checkout-delete.png}
    * <p>
    * Deleting a checkout does not delete the associated repository or any data in it.
    * If the "Delete checkout contents on disk" checkbox is selected (i.e., checked) the locally replicated data of
@@ -120,7 +120,7 @@ public class Doc05_UsingCheckouts
    * <p>
    * Online transactional checkouts from repositories that are configured with the versioning mode <b>branching</b> can be switched
    * to other {@link CDOBranch branches} by selecting the checkout, opening the context menu and selecting the Switch To sub menu:
-   * {@img switch-to-branch.png}
+   * <p align="center">{@image switch-to-branch.png}
    * <p>
    * See {@link Property_supportingBranches} for instructions on how to enable branching for
    * remote repositories, {@link Doc_LocalRepositories} for instructions on how to enable branching for local repositories.
@@ -152,7 +152,7 @@ public class Doc05_UsingCheckouts
      * Switching to a New Branch
      * <p>
      * Online transactional checkouts can be switched to a newly created branch with the Switch To -> New Branch context menu action.
-     * The New Branch dialog will pop up: {@img branch-create.png}
+     * The New Branch dialog will pop up: <p align="center">{@image branch-create.png}
      * <p>
      * See {@link Doc_CreatingBranches} for an explanation on how to use the New Branch dialog.
      */
@@ -164,7 +164,7 @@ public class Doc05_UsingCheckouts
      * Switching to an Other Branch
      * <p>
      * Online transactional checkouts can be switched to any other branch with the Switch To -> Other Branch context menu action.
-     * The Select Branch Point dialog (without a time stamp area) will pop up: {@img branch-select.png}.
+     * The Select Branch Point dialog (without a time stamp area) will pop up: <p align="center">{@image branch-select.png}.
      */
     public class Doc_SwitchOtherBranch
     {
@@ -176,7 +176,7 @@ public class Doc05_UsingCheckouts
    * <p>
    * Online historical checkouts from repositories that are configured with the versioning modes <b>auditing</b> or <b>branching</b> can be switched
    * to other {@link CDOBranchPoint branch points} by selecting the checkout, opening the context menu and selecting the Switch To sub menu:
-   * {@img switch-to-branchpoint.png}
+   * <p align="center">{@image switch-to-branchpoint.png}
    * <p>
    * See {@link Property_supportingAudits} for instructions on how to enable auditing remote repositories,
    * {@link Property_supportingBranches}for instructions on how to enable branching for remote repositories,
@@ -214,7 +214,7 @@ public class Doc05_UsingCheckouts
      * Switching to an Other Branch Point
      * <p>
      * Online historical checkouts can be switched to any other branch point with the Switch To -> Other Branch Point context menu action.
-     * The Select Branch Point dialog (with a time stamp area) will pop up: {@img branchpoint-select.png}.
+     * The Select Branch Point dialog (with a time stamp area) will pop up: <p align="center">{@image branchpoint-select.png}.
      */
     public class Doc_SwitchOtherBranchPoint
     {
@@ -224,7 +224,7 @@ public class Doc05_UsingCheckouts
      * Switching to a Commit
      * <p>
      * Online historical checkouts can be switched to a commit with the Switch To -> Commit context menu action.
-     * The Select Commit dialog will pop up: {@img commit-select.png}.
+     * The Select Commit dialog will pop up: <p align="center">{@image commit-select.png}.
      */
     public class Doc_SwitchCommit
     {
@@ -237,7 +237,7 @@ public class Doc05_UsingCheckouts
    * All types of checkouts can be compared with other {@link CDOBranchPoint#getTimeStamp() time stamps} or
    * other {@link CDOBranchPoint#getBranch() branches} from the same repository
    * by selecting the checkout, opening the context menu and selecting the Compare With sub menu:
-   * {@img compare-with.png}
+   * <p align="center">{@image compare-with.png}
    * <p>
    * The Compare With sub menu consists of the following action groups:
    * <ul>
@@ -259,7 +259,7 @@ public class Doc05_UsingCheckouts
    * <p>
    * When a checkout is compared with a different branch point an EMF Compare editor is opened with the left side
    * showing the selected compare source (e.g., the drag source) and the right side showing the selected compare target
-   * (e.g., the drop target): {@img compare.png}
+   * (e.g., the drop target): <p align="center">{@image compare.png}
    *
    * @see Doc_RepositoriesView
    * @see Doc_HistoryIntegration
@@ -272,7 +272,7 @@ public class Doc05_UsingCheckouts
      * Comparing with an Other Branch
      * <p>
      * Checkouts can be compared with any other branch with the Compare With -> Other Branch context menu action.
-     * The Select Branch Point dialog (without a time stamp area) will pop up: {@img branch-select.png}.
+     * The Select Branch Point dialog (without a time stamp area) will pop up: <p align="center">{@image branch-select.png}.
      */
     public class Doc_CompareOtherBranch
     {
@@ -282,7 +282,7 @@ public class Doc05_UsingCheckouts
      * Comparing with an Other Branch Point
      * <p>
      * Checkouts can be compared with any other branch point with the Compare With -> Other Branch Point context menu action.
-     * The Select Branch Point dialog (with a time stamp area) will pop up: {@img branchpoint-select.png}.
+     * The Select Branch Point dialog (with a time stamp area) will pop up: <p align="center">{@image branchpoint-select.png}.
      */
     public class Doc_CompareOtherBranchPoint
     {
@@ -292,7 +292,7 @@ public class Doc05_UsingCheckouts
      * Comparing with a Commit
      * <p>
      * Checkouts can be compared with a commit with the Compare With -> Commit context menu action.
-     * The Select Commit dialog will pop up: {@img commit-select.png}.
+     * The Select Commit dialog will pop up: <p align="center">{@image commit-select.png}.
      */
     public class Doc_CompareCommit
     {
@@ -305,7 +305,7 @@ public class Doc05_UsingCheckouts
    * Offline and online transactional checkouts can be merged from other {@link CDOBranchPoint#getTimeStamp() time stamps} or
    * other {@link CDOBranchPoint#getBranch() branches} from the same repository
    * by selecting the checkout, opening the context menu and selecting the Merge From sub menu:
-   * {@img merge-from.png}
+   * <p align="center">{@image merge-from.png}
    * <p>
    * The Merge From sub menu consists of the following action groups:
    * <ul>
@@ -327,7 +327,7 @@ public class Doc05_UsingCheckouts
    * <p>
    * When a checkout is merged from a different branch point an EMF Merge editor is opened with the left side
    * showing the selected merge source (e.g., the drag source) and the right side showing the selected merge target
-   * (e.g., the drop target): {@img merge.png}
+   * (e.g., the drop target): <p align="center">{@image merge.png}
    *
    * @see Doc_RepositoriesView
    * @see Doc_HistoryIntegration
@@ -340,7 +340,7 @@ public class Doc05_UsingCheckouts
      * Merging from an Other Branch
      * <p>
      * Checkouts can be merged from any other branch with the Merge From -> Other Branch context menu action.
-     * The Select Branch Point dialog (without a time stamp area) will pop up: {@img branch-select.png}.
+     * The Select Branch Point dialog (without a time stamp area) will pop up: <p align="center">{@image branch-select.png}.
      */
     public class Doc_MergeOtherBranch
     {
@@ -350,7 +350,7 @@ public class Doc05_UsingCheckouts
      * Merging from an Other Branch Point
      * <p>
      * Checkouts can be merged from any other branch point with the Merge From -> Other Branch Point context menu action.
-     * The Select Branch Point dialog (with a time stamp area) will pop up: {@img branchpoint-select.png}.
+     * The Select Branch Point dialog (with a time stamp area) will pop up: <p align="center">{@image branchpoint-select.png}.
      */
     public class Doc_MergeOtherBranchPoint
     {
@@ -360,7 +360,7 @@ public class Doc05_UsingCheckouts
      * Merging from a Commit
      * <p>
      * Checkouts can be merged from a commit with the Merge From -> Commit context menu action.
-     * The Select Commit dialog will pop up: {@img commit-select.png}.
+     * The Select Commit dialog will pop up: <p align="center">{@image commit-select.png}.
      */
     public class Doc_MergeCommit
     {
@@ -373,18 +373,18 @@ public class Doc05_UsingCheckouts
    * Checkouts can be shown in a number of other views depending on the type of the checkout
    * by selecting them, opening their context menu, opening the Show In sub menu, and selecting one of the Show In actions.
    * <p>
-   * Online transactional checkouts can be shown in the following views: {@img checkout-transactional-showin.png}
+   * Online transactional checkouts can be shown in the following views: <p align="center">{@image checkout-transactional-showin.png}
    * <p>
-   * Online historical checkouts can be shown in the following views: {@img checkout-historical-showin.png}
+   * Online historical checkouts can be shown in the following views: <p align="center">{@image checkout-historical-showin.png}
    * <p>
-   * Offline checkouts can be shown in the following views: {@img checkout-offline-showin.png}
+   * Offline checkouts can be shown in the following views: <p align="center">{@image checkout-offline-showin.png}
    */
   public class Doc_CheckoutShowIn
   {
     /**
      * Showing Checkouts in the CDO Sessions View
      * <p>
-     * Online checkouts can be shown in the {@link Doc_SessionsView CDO Sessions view}: {@img sessions-view.png}
+     * Online checkouts can be shown in the {@link Doc_SessionsView CDO Sessions view}: <p align="center">{@image sessions-view.png}
      * <p>
      * A new {@link CDOSession session} with the same target repository as the selected checkout is opened in the CDO Sessions view.
      * A new {@link CDOTransaction transaction} is opened on that session, pointing at the same branch point as the selected checkout.
@@ -396,7 +396,7 @@ public class Doc05_UsingCheckouts
     /**
      * Showing Checkouts in the CDO Time Machine View
      * <p>
-     * Online histrical checkouts can be shown in the {@link Doc_TimeMachineView CDO Time Machine view}: {@img timemachine-view.png}
+     * Online histrical checkouts can be shown in the {@link Doc_TimeMachineView CDO Time Machine view}: <p align="center">{@image timemachine-view.png}
      */
     public class Doc_CheckoutShowInTimeMachine
     {
@@ -405,7 +405,7 @@ public class Doc05_UsingCheckouts
     /**
      * Showing Checkouts in the CDO Server Browser
      * <p>
-     * Offline checkouts can be shown in the CDO Server Browser: {@img server-browser.png}
+     * Offline checkouts can be shown in the CDO Server Browser: <p align="center">{@image server-browser.png}
      * <p>
      * The CDO Server Browser allows to introspect the internal data of the locally replicated repository
      * in a web browser. It is only meant to be used for test and debug purposes.
@@ -418,7 +418,7 @@ public class Doc05_UsingCheckouts
     /**
      * Showing Checkouts in the Properties View
      * <p>
-     * All checkouts can be shown in the {@link Doc_PropertySheetIntegration Properties view}: {@img property-sheet.png}
+     * All checkouts can be shown in the {@link Doc_PropertySheetIntegration Properties view}: <p align="center">{@image property-sheet.png}
      */
     public class Doc_CheckoutShowInProperties
     {
@@ -427,7 +427,7 @@ public class Doc05_UsingCheckouts
     /**
      * Showing Checkouts in the History View
      * <p>
-     * All checkouts can be shown in the {@link Doc_HistoryIntegration History view}: {@img history.png}
+     * All checkouts can be shown in the {@link Doc_HistoryIntegration History view}: <p align="center">{@image history.png}
      * <p>
      * This is particularly useful if the "Link with Editor and Selection" button in the toolbar of the History view
      * is not enabled and the history page does not automatically adjust to the workbench selection.
@@ -439,7 +439,7 @@ public class Doc05_UsingCheckouts
     /**
      * Showing Checkouts in the System Explorer
      * <p>
-     * All checkouts can be shown in the System Explorer: {@img system-explorer-checkout.png}
+     * All checkouts can be shown in the System Explorer: <p align="center">{@image system-explorer-checkout.png}
      * <p>
      * Each checkout owns a dedicated directory under .metadata of the current workspace. This directory contains
      * the checkout.properties file that contains the configuration of the checkout. Offline checkouts also store the database
@@ -488,7 +488,7 @@ public class Doc05_UsingCheckouts
      * </ul>
      * <p>
      * If non-trivial changes are detected, i.e., changes to the same single-valued {@link EStructuralFeature feature} on both sides of the
-     * same model element, an EMF Merge editor is opened: {@img merge.png}
+     * same model element, an EMF Merge editor is opened: <p align="center">{@image merge.png}
      * <p>
      * The left side of the merge editor shows the remote repository and the right side shows the selected offline checkout.
      * Saving the merge editor applies the needed changes to the local model elements and closed the merge editor. The update/merge
@@ -514,7 +514,7 @@ public class Doc05_UsingCheckouts
      * Checking in does not strictly
      * require the local offline checkout to be up-to-date as long as the local changes and the remote changes are not conflicting
      * (i.e., neither trivial nor non-trivial conflicts exist). If conflicts are detected during the check-in process the following
-     * dialog pops up, asking to {@link Doc_OfflineUpdate update} the checkout first: {@img checkin-error.png}
+     * dialog pops up, asking to {@link Doc_OfflineUpdate update} the checkout first: <p align="center">{@image checkin-error.png}
      * <p>
      * Checking in an offline checkout is a <b>remote operation</b>.
      */
@@ -529,7 +529,7 @@ public class Doc05_UsingCheckouts
      * effectively reverting the checkout to the most recently {@link Doc_OfflineUpdate updated} state.
      * <p>
      * To revert an offline checkout the checkout is selected and the Revert action chosen from its context menu.
-     * The following confirmation dialog will pop up: {@img revert.png}
+     * The following confirmation dialog will pop up: <p align="center">{@image revert.png}
      * <p>
      * Reverting an offline checkout is a <b>local operation</b>.
      */

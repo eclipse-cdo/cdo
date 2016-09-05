@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getSource <em>Source</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getDetails <em>Details</em>}</li>
@@ -33,7 +34,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getContents <em>Contents</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.etypes.impl.AnnotationImpl#getReferences <em>References</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

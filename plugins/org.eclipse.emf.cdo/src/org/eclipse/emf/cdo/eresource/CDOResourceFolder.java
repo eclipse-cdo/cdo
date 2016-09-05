@@ -22,10 +22,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceFolder#getNodes <em>Nodes</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceFolder()
  * @model

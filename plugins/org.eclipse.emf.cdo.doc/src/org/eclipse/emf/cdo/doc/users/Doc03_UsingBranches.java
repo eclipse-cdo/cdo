@@ -57,7 +57,7 @@ public class Doc03_UsingBranches
    * There exist several ways to create new branches. The most explicit way is to use {@link Doc_RepositoriesView},
    * select a repository (with versioning mode set to branching) or an existing branch under that repository,
    * open the context menu on that repository or branch and select the New Branch action. The following dialog will pop up:
-   * {@img branch-create.png}
+   * <p align="center">{@image branch-create.png}
    * <p>
    * The upper part of the dialog shows the current branch tree of the targeted repository.
    * The <b>base branch</b> of the new branch can be changed if needed.
@@ -88,7 +88,7 @@ public class Doc03_UsingBranches
    * Existing branches can be renamed at any point in time. The main branch of a repository can not be renamed.
    * <p>
    * To rename a branch select it in the {@link Doc_RepositoriesView}, press the F2 key or open the context menu on
-   * that branch and select the Rename action. The following dialog will pop up: {@img branch-rename.png}
+   * that branch and select the Rename action. The following dialog will pop up: <p align="center">{@image branch-rename.png}
    * <p>
    * The entered new name for the selected branch is validated to be unique among the other child branches of the
    * selected branch's base branch.
@@ -109,7 +109,7 @@ public class Doc03_UsingBranches
   /**
    * Showing Branches in the History View
    * <p>
-   * All branches can be shown in the {@link Doc_HistoryIntegration History view}: {@img history.png}
+   * All branches can be shown in the {@link Doc_HistoryIntegration History view}: <p align="center">{@image history.png}
    * <p>
    * This is particularly useful if the "Link with Editor and Selection" button in the toolbar of the History view
    * is not enabled and the history page does not automatically adjust to the workbench selection.

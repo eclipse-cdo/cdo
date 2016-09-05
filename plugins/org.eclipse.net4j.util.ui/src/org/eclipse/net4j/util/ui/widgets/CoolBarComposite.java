@@ -99,7 +99,6 @@ public abstract class CoolBarComposite extends Composite
 
   /**
    * @author Eike Stepper
-   * @see org.eclipse.jface.window.ApplicationWindow.ApplicationWindowLayout
    */
   public class CoolBarLayout extends Layout
   {

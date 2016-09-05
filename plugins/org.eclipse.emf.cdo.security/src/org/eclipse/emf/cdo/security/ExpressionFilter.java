@@ -20,10 +20,10 @@ import org.eclipse.emf.cdo.expressions.Expression;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.ExpressionFilter#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getExpressionFilter()
  * @model

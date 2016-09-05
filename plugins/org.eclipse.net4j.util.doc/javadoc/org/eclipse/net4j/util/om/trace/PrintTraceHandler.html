@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>PrintTraceHandler (Net4j Utilities Documentation)</title>
@@ -117,6 +117,10 @@ extends <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Obje
 implements <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace">OMTraceHandler</a></pre>
 <div class="block">A <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace"><code>trace handler</code></a> that appends <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandlerEvent.html" title="interface in org.eclipse.net4j.util.om.trace"><code>trace events</code></a>
  to a <a href="../../../../../../org/eclipse/net4j/util/om/trace/PrintTraceHandler.html#getStream--"><code>print stream</code></a>.</div>
+<dl>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
+</dl>
 </li>
 </ul>
 </div>
@@ -186,20 +190,7 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHan
 <td class="colFirst"><code>static <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/trace/PrintTraceHandler.html#format-java.lang.String-org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent-">format</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pattern,
       <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHandlerEvent.html" title="interface in org.eclipse.net4j.util.om.trace">OMTraceHandlerEvent</a>&nbsp;event)</code>
-<div class="block">Pattern arguments:
- 
- 
- {0} --> String <b>tracerName</b>
- {1} --> String <b>tracerShort</b>
- {2} --> String <b>contextName</b>
- {3} --> String <b>contextShort</b>
- {4} --> long <b>timeStamp</b>
- {5} --> String <b>message</b>
- {6} --> String <b>threadName</b>
- {7} --> long <b>threadID</b>
- {8} --> int <b>threadPriority</b>
- {9} --> Thread.State <b>threadState</b>
- </div>
+<div class="block">Pattern arguments:</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -217,20 +208,7 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHan
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/eclipse/net4j/util/om/trace/PrintTraceHandler.html#setPattern-java.lang.String-">setPattern</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;pattern)</code>
-<div class="block">Pattern arguments:
- 
- 
- {0} --> String <b>tracerName</b>
- {1} --> String <b>tracerShort</b>
- {2} --> String <b>contextName</b>
- {3} --> String <b>contextShort</b>
- {4} --> long <b>timeStamp</b>
- {5} --> String <b>message</b>
- {6} --> String <b>threadName</b>
- {7} --> long <b>threadID</b>
- {8} --> int <b>threadPriority</b>
- {9} --> Thread.State <b>threadState</b>
- </div>
+<div class="block">Pattern arguments:</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
@@ -338,16 +316,16 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHan
 <div class="block">Pattern arguments:
  <p>
  <ul>
- <li>{0} --> String <b>tracerName</b>
- <li>{1} --> String <b>tracerShort</b>
- <li>{2} --> String <b>contextName</b>
- <li>{3} --> String <b>contextShort</b>
- <li>{4} --> long <b>timeStamp</b>
- <li>{5} --> String <b>message</b>
- <li>{6} --> String <b>threadName</b>
- <li>{7} --> long <b>threadID</b>
- <li>{8} --> int <b>threadPriority</b>
- <li>{9} --> Thread.State <b>threadState</b>
+ <li>{0} &rarr; String <b>tracerName</b>
+ <li>{1} &rarr; String <b>tracerShort</b>
+ <li>{2} &rarr; String <b>contextName</b>
+ <li>{3} &rarr; String <b>contextShort</b>
+ <li>{4} &rarr; long <b>timeStamp</b>
+ <li>{5} &rarr; String <b>message</b>
+ <li>{6} &rarr; String <b>threadName</b>
+ <li>{7} &rarr; long <b>threadID</b>
+ <li>{8} &rarr; int <b>threadPriority</b>
+ <li>{9} &rarr; Thread.State <b>threadState</b>
  </ul></div>
 </li>
 </ul>
@@ -403,16 +381,16 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHan
 <div class="block">Pattern arguments:
  <p>
  <ul>
- <li>{0} --> String <b>tracerName</b>
- <li>{1} --> String <b>tracerShort</b>
- <li>{2} --> String <b>contextName</b>
- <li>{3} --> String <b>contextShort</b>
- <li>{4} --> long <b>timeStamp</b>
- <li>{5} --> String <b>message</b>
- <li>{6} --> String <b>threadName</b>
- <li>{7} --> long <b>threadID</b>
- <li>{8} --> int <b>threadPriority</b>
- <li>{9} --> Thread.State <b>threadState</b>
+ <li>{0} &rarr; String <b>tracerName</b>
+ <li>{1} &rarr; String <b>tracerShort</b>
+ <li>{2} &rarr; String <b>contextName</b>
+ <li>{3} &rarr; String <b>contextShort</b>
+ <li>{4} &rarr; long <b>timeStamp</b>
+ <li>{5} &rarr; String <b>message</b>
+ <li>{6} &rarr; String <b>threadName</b>
+ <li>{7} &rarr; long <b>threadID</b>
+ <li>{8} &rarr; int <b>threadPriority</b>
+ <li>{9} &rarr; Thread.State <b>threadState</b>
  </ul></div>
 </li>
 </ul>
@@ -484,6 +462,6 @@ implements <a href="../../../../../../org/eclipse/net4j/util/om/trace/OMTraceHan
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

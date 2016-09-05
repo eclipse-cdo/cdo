@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.doc.reference;
 
 /**
  * DBStore Mapping Strategies
- * <p>
- * {@excel ../../../../../../../Tables.xlsx#MappingStrategies}
  *
  * @number 201
  */

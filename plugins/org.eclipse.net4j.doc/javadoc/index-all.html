@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>Index (Net4j Signalling Platform Documentation)</title>
@@ -296,15 +296,13 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/RequestWithConfirmation.html#confirming-org.eclipse.net4j.util.io.ExtendedDataInputStream-">confirming(ExtendedDataInputStream)</a></span> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithConfirmation.html" title="class in org.eclipse.net4j.signal">RequestWithConfirmation</a></dt>
 <dd>
-<div class="block"><b>Important Note:</b> The confirmation must not be empty, i.e. the stream must be used at least to read a
- <code>boolean</code>.</div>
+<div class="block"><b>Important Note:</b> The confirmation must not be empty, i.e.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/RequestWithMonitoring.html#confirming-org.eclipse.net4j.util.io.ExtendedDataInputStream-">confirming(ExtendedDataInputStream)</a></span> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal">RequestWithMonitoring</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/RequestWithMonitoring.html#confirming-org.eclipse.net4j.util.io.ExtendedDataInputStream-org.eclipse.net4j.util.om.monitor.OMMonitor-">confirming(ExtendedDataInputStream, OMMonitor)</a></span> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal">RequestWithMonitoring</a></dt>
 <dd>
-<div class="block"><b>Important Note:</b> The confirmation must not be empty, i.e. the stream must be used at least to read a
- <code>boolean</code>.</div>
+<div class="block"><b>Important Note:</b> The confirmation must not be empty, i.e.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/security/AuthenticationRequest.html#confirming-org.eclipse.net4j.util.io.ExtendedDataInputStream-org.eclipse.net4j.util.om.monitor.OMMonitor-">confirming(ExtendedDataInputStream, OMMonitor)</a></span> - Method in class org.eclipse.net4j.signal.security.<a href="org/eclipse/net4j/signal/security/AuthenticationRequest.html" title="class in org.eclipse.net4j.signal.security">AuthenticationRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -482,6 +480,8 @@
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/ui/AcceptorContentProvider.html#disconnectInput-org.eclipse.net4j.util.container.IManagedContainer-">disconnectInput(IManagedContainer)</a></span> - Method in class org.eclipse.net4j.ui.<a href="org/eclipse/net4j/ui/AcceptorContentProvider.html" title="class in org.eclipse.net4j.ui">AcceptorContentProvider</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/ui/ConnectorContentProvider.html#disconnectInput-org.eclipse.net4j.util.container.IManagedContainer-">disconnectInput(IManagedContainer)</a></span> - Method in class org.eclipse.net4j.ui.<a href="org/eclipse/net4j/ui/ConnectorContentProvider.html" title="class in org.eclipse.net4j.ui">ConnectorContentProvider</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/SignalCounter.html#dispose--">dispose()</a></span> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalCounter.html" title="class in org.eclipse.net4j.signal">SignalCounter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/spi/net4j/InternalBuffer.html#dispose--">dispose()</a></span> - Method in interface org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</a></dt>
 <dd>&nbsp;</dd>
@@ -1798,6 +1798,8 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/spi/net4j/Acceptor.html#removeConnector-org.eclipse.net4j.connector.IConnector-">removeConnector(IConnector)</a></span> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Acceptor.html" title="class in org.eclipse.spi.net4j">Acceptor</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/SignalCounter.html#removeCountFor-java.lang.Class-">removeCountFor(Class&lt;? extends Signal&gt;)</a></span> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalCounter.html" title="class in org.eclipse.net4j.signal">SignalCounter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/Request.html" title="class in org.eclipse.net4j.signal"><span class="typeNameLink">Request</span></a> - Class in <a href="org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></dt>
 <dd>
 <div class="block">Represents the sender side of a one-way <a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal"><code>signal</code></a>, i.e., one with no response.</div>
@@ -1856,8 +1858,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/IndicationWithResponse.html#responding-org.eclipse.net4j.util.io.ExtendedDataOutputStream-">responding(ExtendedDataOutputStream)</a></span> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/IndicationWithResponse.html" title="class in org.eclipse.net4j.signal">IndicationWithResponse</a></dt>
 <dd>
-<div class="block"><b>Important Note:</b> The response must not be empty, i.e. the stream must be used at least to write a
- <code>boolean</code>.</div>
+<div class="block"><b>Important Note:</b> The response must not be empty, i.e.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/eclipse/net4j/signal/security/AuthenticationIndication.html#responding-org.eclipse.net4j.util.io.ExtendedDataOutputStream-org.eclipse.net4j.util.om.monitor.OMMonitor-">responding(ExtendedDataOutputStream, OMMonitor)</a></span> - Method in class org.eclipse.net4j.signal.security.<a href="org/eclipse/net4j/signal/security/AuthenticationIndication.html" title="class in org.eclipse.net4j.signal.security">AuthenticationIndication</a></dt>
 <dd>&nbsp;</dd>
@@ -2335,6 +2336,6 @@ the order they are declared.</div>
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

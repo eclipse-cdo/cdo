@@ -20,10 +20,10 @@ import org.eclipse.emf.ecore.EPackage;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.PackagePermission#getApplicablePackage <em>Applicable Package</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getPackagePermission()
  * @model

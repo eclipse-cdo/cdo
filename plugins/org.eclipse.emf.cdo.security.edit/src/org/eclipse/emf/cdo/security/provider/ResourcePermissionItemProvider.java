@@ -17,17 +17,7 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemColorProvider;
-import org.eclipse.emf.edit.provider.IItemFontProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITableItemColorProvider;
-import org.eclipse.emf.edit.provider.ITableItemFontProvider;
-import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -41,9 +31,7 @@ import java.util.List;
  * @generated
  */
 @Deprecated
-public class ResourcePermissionItemProvider extends PermissionItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+public class ResourcePermissionItemProvider extends PermissionItemProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -83,9 +71,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addPatternPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourcePermission_pattern_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourcePermission_pattern_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourcePermission_pattern_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourcePermission_pattern_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourcePermission_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));

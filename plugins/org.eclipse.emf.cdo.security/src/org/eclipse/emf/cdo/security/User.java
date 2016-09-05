@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getLabel <em>Label</em>}</li>
@@ -36,7 +37,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.emf.cdo.security.User#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.User#getUnassignedRoles <em>Unassigned Roles</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getUser()
  * @model

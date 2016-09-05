@@ -27,10 +27,10 @@ import java.util.Iterator;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.CombinedFilterImpl#getOperands <em>Operands</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

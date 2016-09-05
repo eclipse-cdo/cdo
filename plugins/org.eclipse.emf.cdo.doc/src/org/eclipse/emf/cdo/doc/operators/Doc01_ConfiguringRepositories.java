@@ -77,9 +77,7 @@ public class Doc01_ConfiguringRepositories
      * Property supportingAudits
      * <p>
      * Specifies whether the repository will support audit views or not. Please note that a repository can only support audit views
-     * if its {@link Element_store store} supports audit views, as well:
-     * <p>
-     * {@excel ../../../../../../../Tables.xlsx#AuditingSupport}
+     * if its {@link Element_store store} supports audit views, as well.
      * <p>
      * The shipped DBStore does support audit views.
      * Note also that it will not delete or update rows for modified objects if audits are supported.
@@ -93,9 +91,7 @@ public class Doc01_ConfiguringRepositories
      * Property supportingBranches
      * <p>
      * Specifies whether the repository will support the creation and usage of branches below the always existing main branch or not.
-     * Please note that a repository can only support branches if its {@link Element_store store} supports branches, as well:
-     * <p>
-     * {@excel ../../../../../../../Tables.xlsx#BranchingSupport}
+     * Please note that a repository can only support branches if its {@link Element_store store} supports branches, as well.
      * <p>
      * Also note that branching support always <b>requires</b> {@link Property_supportingAudits auditing support}, too.
      */

@@ -24,10 +24,10 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.ClassPermissionImpl#getApplicableClass <em>Applicable Class</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

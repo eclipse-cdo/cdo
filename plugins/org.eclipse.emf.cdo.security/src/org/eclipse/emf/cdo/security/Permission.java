@@ -22,11 +22,11 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Permission#getRole <em>Role</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Permission#getAccess <em>Access</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getPermission()
  * @model abstract="true"

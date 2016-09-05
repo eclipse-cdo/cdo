@@ -53,7 +53,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  * <p>
  * This article explains the relationship between the main concepts that are exposed in the
  * {@link Doc01_UserInterface CDO User Interface} and their underlying technical core concepts.
- * {@img tech-overview.png}
+ * <p align="center">{@image tech-overview.png}
  * <p>
  * <b>Table of Contents</b> {@toc}
  *
@@ -187,7 +187,7 @@ public class Doc09_TechnicalBackground
    * <p>
    * A {@link CDOSession} is the technical representation of a {@link CDOProtocol} connection to an {@link IRepository}.
    * On the transport level this connection is provided by an {@link IConnector} / {@link IAcceptor} pair.
-   * {@img tech-sessions.png}
+   * <p align="center">{@image tech-sessions.png}
    *
    * @see Doc_SessionsView
    * @see Doc_BackgroundViews
@@ -203,7 +203,7 @@ public class Doc09_TechnicalBackground
    * A {@link CDOView} is a technical facility that provides a client application with all the models and model elements in a repository
    * for a specific {@link CDOBranchPoint#getTimeStamp() point in time} and in a specific {@link CDOBranchPoint#getBranch() branch}.
    * The model elements provided by a CDOView are {@link ReadOnlyException read-only}.
-   * {@img tech-views.png}
+   * <p align="center">{@image tech-views.png}
    *
    * @see Doc_BackgroundSessions
    * @see Doc_BackgroundCheckouts
@@ -220,7 +220,7 @@ public class Doc09_TechnicalBackground
    * The model elements provided by a CDOTransaction are writable.
    * Changes to these model elements must be {@link CDOTransaction#commit(org.eclipse.core.runtime.IProgressMonitor) committed} to make them
    * persistent in the repository and to distribute them to the views and transactions of other users.
-   * {@img tech-transactions.png}
+   * <p align="center">{@image tech-transactions.png}
    *
    * @see Doc_BackgroundSessions
    * @see Doc_BackgroundCheckouts

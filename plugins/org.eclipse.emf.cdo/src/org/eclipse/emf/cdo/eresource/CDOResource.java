@@ -35,6 +35,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getResourceSet <em>Resource Set</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getURI <em>URI</em>}</li>
@@ -46,7 +47,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getWarnings <em>Warnings</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResource#getTimeStamp <em>Time Stamp</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResource()
  * @model

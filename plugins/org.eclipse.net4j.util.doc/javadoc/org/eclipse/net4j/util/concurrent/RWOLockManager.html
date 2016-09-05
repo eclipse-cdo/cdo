@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>RWOLockManager (Net4j Utilities Documentation)</title>
@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":9,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -131,6 +131,8 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockMan
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.2</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Caspar De Groot</dd>
 </dl>
 </li>
 </ul>
@@ -219,7 +221,7 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockMan
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -302,12 +304,16 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockMan
             <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&nbsp;lockState)</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#setUnlockAll-boolean-">setUnlockAll</a></span>(boolean&nbsp;on)</code>&nbsp;</td>
+</tr>
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock-CONTEXT-">unlock</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context)</code>
 <div class="block">Attempts to release all locks(read and write) for a given context.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-CONTEXT-java.util.Collection-">unlock</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
       <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
@@ -315,20 +321,20 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockMan
 <div class="block">Attempts to release for a given locktype, context and objects.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock2-CONTEXT-">unlock2</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context)</code>
 <div class="block">Removes all locks owned by the given context on any objects.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock2-CONTEXT-java.util.Collection-">unlock2</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
        <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;? extends <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code>
 <div class="block">Removes all locks owned by the given context.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html#unlock2-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-CONTEXT-java.util.Collection-">unlock2</a></span>(<a href="../../../../../org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" title="enum in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
        <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
@@ -673,11 +679,24 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockMan
 </a><a name="setLockState-OBJECT-org.eclipse.net4j.util.concurrent.RWOLockManager.LockState-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>setLockState</h4>
 <pre>public&nbsp;void&nbsp;setLockState(<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;key,
                          <a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<a href="../../../../../org/eclipse/net4j/util/concurrent/RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&nbsp;lockState)</pre>
+</li>
+</ul>
+<a name="setUnlockAll-boolean-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>setUnlockAll</h4>
+<pre>public static&nbsp;void&nbsp;setUnlockAll(boolean&nbsp;on)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>3.7</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -748,6 +767,6 @@ implements <a href="../../../../../org/eclipse/net4j/util/concurrent/IRWOLockMan
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

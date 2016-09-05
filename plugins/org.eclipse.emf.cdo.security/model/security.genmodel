@@ -12,6 +12,12 @@
   <genPackages prefix="Security" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
       multipleEditorPages="false" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="security.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="security.ecore#//PatternStyle">
+      <genEnumLiterals ecoreEnumLiteral="security.ecore#//PatternStyle/EXACT"/>
+      <genEnumLiterals ecoreEnumLiteral="security.ecore#//PatternStyle/TREE"/>
+      <genEnumLiterals ecoreEnumLiteral="security.ecore#//PatternStyle/ANT"/>
+      <genEnumLiterals ecoreEnumLiteral="security.ecore#//PatternStyle/REGEX"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="security.ecore#//Access">
       <genEnumLiterals ecoreEnumLiteral="security.ecore#//Access/READ"/>
       <genEnumLiterals ecoreEnumLiteral="security.ecore#//Access/WRITE"/>
@@ -87,21 +93,29 @@
     </genClasses>
     <genClasses image="false" ecoreClass="security.ecore#//ObjectPermission"/>
     <genClasses ecoreClass="security.ecore#//FilterPermission">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//FilterPermission/filter"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference security.ecore#//FilterPermission/filters"/>
     </genClasses>
     <genClasses image="false" ecoreClass="security.ecore#//PermissionFilter"/>
-    <genClasses ecoreClass="security.ecore#//ReferenceFilter">
-      <genFeatures children="true" createChild="false" propertySortChoices="true"
-          ecoreFeature="ecore:EReference security.ecore#//ReferenceFilter/reference"/>
+    <genClasses ecoreClass="security.ecore#//LinkedFilter">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//LinkedFilter/filter"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//PackageFilter">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//PackageFilter/applicablePackage"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//ClassFilter">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference security.ecore#//ClassFilter/applicableClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ClassFilter/subTypes"/>
     </genClasses>
     <genClasses ecoreClass="security.ecore#//ResourceFilter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/pattern"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/patternStyle"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/folders"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/textResources"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/binaryResources"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/modelResources"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/modelObjects"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/includeParents"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute security.ecore#//ResourceFilter/includeRoot"/>
     </genClasses>
     <genClasses image="false" ecoreClass="security.ecore#//ObjectFilter"/>
     <genClasses ecoreClass="security.ecore#//ExpressionFilter">

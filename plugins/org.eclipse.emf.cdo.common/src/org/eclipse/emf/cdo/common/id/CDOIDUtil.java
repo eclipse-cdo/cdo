@@ -334,9 +334,9 @@ public final class CDOIDUtil
   /**
    * Format of the uri fragment.
    * <p>
-   * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * Non-legacy: <code>&lt;ID TYPE&gt;/&lt;CUSTOM STRING FROM OBJECT FACTORY&gt;</code>
    * <p>
-   * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * Legacy: <code>&lt;ID TYPE&gt;/&lt;PACKAGE URI&gt;/&lt;CLASSIFIER ID&gt;/&lt;CUSTOM STRING FROM OBJECT FACTORY&gt;</code>
    *
    * @since 2.0
    */
@@ -364,9 +364,9 @@ public final class CDOIDUtil
   /**
    * Format of the URI fragment.
    * <p>
-   * Non-legacy: <code>&lt;ID TYPE>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * Non-legacy: <code>&lt;ID TYPE&gt;/&lt;CUSTOM STRING FROM OBJECT FACTORY&gt;</code>
    * <p>
-   * Legacy: <code>&lt;ID TYPE>/&lt;PACKAGE URI>/&lt;CLASSIFIER ID>/&lt;CUSTOM STRING FROM OBJECT FACTORY></code>
+   * Legacy: <code>&lt;ID TYPE&gt;/&lt;PACKAGE URI&gt;/&lt;CLASSIFIER ID&gt;/&lt;CUSTOM STRING FROM OBJECT FACTORY&gt;</code>
    *
    * @since 3.0
    */

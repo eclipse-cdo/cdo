@@ -69,7 +69,7 @@ import org.eclipse.emf.ecore.EPackage;
  * CDO repository accesses models reflectively and the model objects are not implemented as {@link EObject EObjects} on
  * the server.
  * <p>
- * The following diagram illustrates the major building blocks of a CDO repository: {@img repository-architecture.png}
+ * The following diagram illustrates the major building blocks of a CDO repository: <p align="center">{@image repository-architecture.png}
  *
  * @author Eike Stepper
  */

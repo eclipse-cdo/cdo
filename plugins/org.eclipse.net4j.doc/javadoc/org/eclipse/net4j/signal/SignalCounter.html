@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>SignalCounter (Net4j Signalling Platform Documentation)</title>
@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -120,6 +120,8 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
 </dl>
 </li>
 </ul>
@@ -164,18 +166,26 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#clearCounts--">clearCounts</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#dispose--">dispose</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#getCountFor-java.lang.Class-">getCountFor</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a>&gt;&nbsp;signal)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#getCountForSignalTypes--">getCountForSignalTypes</a></span>()</code>
 <div class="block">Get the number of different signal counted.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#notifyEvent-org.eclipse.net4j.util.event.IEvent-">notifyEvent</a></span>(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/eclipse/net4j/signal/SignalCounter.html#removeCountFor-java.lang.Class-">removeCountFor</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a>&gt;&nbsp;signal)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -229,15 +239,6 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getCountFor-java.lang.Class-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCountFor</h4>
-<pre>public&nbsp;int&nbsp;getCountFor(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a>&gt;&nbsp;signal)</pre>
-</li>
-</ul>
 <a name="getCountForSignalTypes--">
 <!--   -->
 </a>
@@ -249,6 +250,28 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.4</dd>
+</dl>
+</li>
+</ul>
+<a name="getCountFor-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCountFor</h4>
+<pre>public&nbsp;int&nbsp;getCountFor(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a>&gt;&nbsp;signal)</pre>
+</li>
+</ul>
+<a name="removeCountFor-java.lang.Class-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeCountFor</h4>
+<pre>public&nbsp;int&nbsp;removeCountFor(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;? extends <a href="../../../../org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a>&gt;&nbsp;signal)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>
@@ -264,13 +287,26 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <a name="notifyEvent-org.eclipse.net4j.util.event.IEvent-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>notifyEvent</h4>
 <pre>public&nbsp;void&nbsp;notifyEvent(<a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true#notifyEvent-org.eclipse.net4j.util.event.IEvent-" title="class or interface in org.eclipse.net4j.util.event">notifyEvent</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/IListener.html?is-external=true" title="class or interface in org.eclipse.net4j.util.event">IListener</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="dispose--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>dispose</h4>
+<pre>public&nbsp;void&nbsp;dispose()</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>
@@ -342,6 +378,6 @@ implements <a href="../../../../../../org.eclipse.net4j.util.doc/javadoc/org/ecl
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

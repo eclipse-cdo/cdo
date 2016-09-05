@@ -30,10 +30,10 @@ import java.lang.reflect.InvocationTargetException;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.impl.ContainedObjectImpl#getObject <em>Object</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -94,10 +94,10 @@ public class ContainedObjectImpl extends CDOObjectImpl implements ContainedObjec
   }
 
   /**
-   * <!-- begin-user-doc -->
+  	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+  	 * @generated
+  	 */
   public void setObject(EObject newObject)
   {
     eDynamicSet(ExpressionsPackage.CONTAINED_OBJECT__OBJECT, ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT,

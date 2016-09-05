@@ -1,24 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 
-<HEAD>
-<TITLE>Working with Branches (CDO Model Repository Documentation)</TITLE>
+<head>
+<title>Working with Branches (CDO Model Repository Documentation)</title>
 
-<LINK REL="STYLESHEET" HREF="../book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
 
-<SCRIPT type="text/javascript">
+<noscript></noscript>
+<script type="text/javascript">
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="Working with Branches (CDO Model Repository Documentation)";
     }
 }
-</SCRIPT>
-<NOSCRIPT></NOSCRIPT>
-</HEAD>
+</script>
+</head>
 
-<BODY BGCOLOR="white" onload="windowTitle();">
-<!-- <div class="help_breadcrumbs"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
 
 <table border="0">
 	<tr>
@@ -30,11 +30,11 @@ function windowTitle()
 <p>
  <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>Branches</code></a> are a very powerful concept in CDO. They allow to isolate a sequence of commits from other
  sequences of commits, as well as all the locks on the objects that are involved. A branch is represented by a
- <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>base point</code></a> and a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>name</code></a>. The base point of a branch X is the
- <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>timestamp</code></a> in the <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>parent branch</code></a> where the
+ <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html#getBase()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranch"><code>base point</code></a> and a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html#getName()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranch"><code>name</code></a>. The base point of a branch X is the
+ <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>timestamp</code></a> in the <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>parent branch</code></a> where the
  branch X forks off. As such all branches of a repository form a tree that is rooted at the
- <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>main branch</code></a>, which itself has no proper base point (the base branch is
- <code>null</code> and the base time is identical to the <a href="../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>creation time</code></a> of the repository).
+ <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html#getMainBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchManager"><code>main branch</code></a>, which itself has no proper base point (the base branch is
+ <code>null</code> and the base time is identical to the <a href="../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>creation time</code></a> of the repository).
  <p>
  The branch tree of a repository is displayed under that repository in the <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>. The main branch
  is always represented by the repository node itself. The displayed branch tree is updated in real-time even when other users
@@ -52,10 +52,10 @@ function windowTitle()
  <p>
  <b>Table of Contents</b> <p>
 <table border="0">
-<tr><td>1&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_CreatingBranches" title="Chapter in CDO Model Repository Documentation">Creating Branches</a></td></tr>
-<tr><td>2&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_RenamingBranches" title="Chapter in CDO Model Repository Documentation">Renaming Branches</a></td></tr>
-<tr><td>3&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_DeletingBranches" title="Chapter in CDO Model Repository Documentation">Deleting Branches</a></td></tr>
-<tr><td>4&nbsp;</td><td colspan="3"><a href="Doc03_UsingBranches.html#Doc_BranchShowInHistory" title="Chapter in CDO Model Repository Documentation">Showing Branches in the History View</a></td></tr>
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc03_UsingBranches.html#Doc_CreatingBranches" title="Chapter in CDO Model Repository Documentation">Creating Branches</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc03_UsingBranches.html#Doc_RenamingBranches" title="Chapter in CDO Model Repository Documentation">Renaming Branches</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_UsingBranches.html#Doc_DeletingBranches" title="Chapter in CDO Model Repository Documentation">Deleting Branches</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc03_UsingBranches.html#Doc_BranchShowInHistory" title="Chapter in CDO Model Repository Documentation">Showing Branches in the History View</a></td></tr>
 </table>
 </p>
 
@@ -65,7 +65,7 @@ function windowTitle()
  There exist several ways to create new branches. The most explicit way is to use <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>,
  select a repository (with versioning mode set to branching) or an existing branch under that repository,
  open the context menu on that repository or branch and select the New Branch action. The following dialog will pop up:
- <p align="center"><img src="branch-create.png"></p>
+ <p align="center"><img src="branch-create.png">
 
  <p>
  The upper part of the dialog shows the current branch tree of the targeted repository.
@@ -78,7 +78,7 @@ function windowTitle()
       of its own base branch.
  <li> <b>Time</b> allows to enter any valid time stamp. Invalid time stamps are those that are before the creation of the base branch
       or after the current time.
- <li> <b>Head</b> refers to the current time. Note that the <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>head</code></a> of a branch is a floating branch point,
+ <li> <b>Head</b> refers to the current time. Note that the <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html#getHead()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranch"><code>head</code></a> of a branch is a floating branch point,
       i.e., it always point to the current time in a branch. Nevertheless selecting this option will set the base time stamp of the
       new branch to the fixed point in time on the server when the branch is actually created.
  </ul>
@@ -92,7 +92,7 @@ function windowTitle()
  Existing branches can be renamed at any point in time. The main branch of a repository can not be renamed.
  <p>
  To rename a branch select it in the <a href="Doc01_UserInterface.html#Doc_RepositoriesView" title="Chapter in CDO Model Repository Documentation">CDO Repositories View</a>, press the F2 key or open the context menu on
- that branch and select the Rename action. The following dialog will pop up: <p align="center"><img src="branch-rename.png"></p>
+ that branch and select the Rename action. The following dialog will pop up: <p align="center"><img src="branch-rename.png">
 
  <p>
  The entered new name for the selected branch is validated to be unique among the other child branches of the
@@ -104,7 +104,7 @@ function windowTitle()
 
 <h2><a name="Doc_BranchShowInHistory"></a>4&nbsp;&nbsp;Showing Branches in the History View</h2>
 <p>
- All branches can be shown in the <a href="Doc01_UserInterface.html#Doc_HistoryIntegration" title="Chapter in CDO Model Repository Documentation">History view</a>: <p align="center"><img src="history.png"></p>
+ All branches can be shown in the <a href="Doc01_UserInterface.html#Doc_HistoryIntegration" title="Chapter in CDO Model Repository Documentation">History view</a>: <p align="center"><img src="history.png">
 
  <p>
  This is particularly useful if the "Link with Editor and Selection" button in the toolbar of the History view
@@ -112,7 +112,8 @@ function windowTitle()
 
 <p align="right">
 <a href="Doc02_ManagingRepositories.html" title="Backward to Managing Repositories"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_CheckingOut.html" title="Forward to Checking Out from Repositories"><img src="../../images/forward.png" border="0"></a></p>
-<HR>
-<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">User's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

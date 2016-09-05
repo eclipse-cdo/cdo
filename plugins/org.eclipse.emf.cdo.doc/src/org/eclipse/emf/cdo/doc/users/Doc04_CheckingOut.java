@@ -61,7 +61,7 @@ public class Doc04_CheckingOut
    * <p>
    * The first page of the checkout wizard shows the list of the repositories that are configured in the current workspace.
    * The New Repository button opens the repository wizard that is explained in {@link Doc_CreatingRepositories}.
-   * {@img checkout-wizard-repository.png}
+   * <p align="center">{@image checkout-wizard-repository.png}
    * <p>
    * Note that this first wizard page is automatically skipped if the workbench selection implied a specific repository
    * at the time the wizard was opened, such as a repository or branch being selected in the {@link Doc_RepositoriesView}.
@@ -77,7 +77,7 @@ public class Doc04_CheckingOut
   /**
    * Selecting the Checkout Type
    * <p>
-   * The second page of the checkout wizard allows to select the type of the checkout to create: {@img checkout-wizard-type.png}
+   * The second page of the checkout wizard allows to select the type of the checkout to create: <p align="center">{@image checkout-wizard-type.png}
    * <p>
    * After selecting the desired checkout type pressing the Next button or double-clicking
    * the selected checkout type advances to {@link Doc_CheckoutBranchPoint}.
@@ -157,10 +157,10 @@ public class Doc04_CheckingOut
    * Selecting the Branch Point
    * <p>
    * A repository may contain the states of models and model elements from many different branches and time stamps. The third page of the
-   * checkout wizard allows to select the branch point of the checkout to create: {@img checkout-wizard-branchpoint.png}
+   * checkout wizard allows to select the branch point of the checkout to create: <p align="center">{@image checkout-wizard-branchpoint.png}
    * <p>
    * For {@link Doc_TransactionalCheckouts transactional checkouts} the time stamp is implied to be the {@link CDOBranch#getHead() head}
-   * of the selected branch, so the wizard page is reduced to: {@img checkout-wizard-branch.png}
+   * of the selected branch, so the wizard page is reduced to: <p align="center">{@image checkout-wizard-branch.png}
    * <p>
    * After selecting the desired branch and optionally the desired time stamp pressing the Next button or double-clicking
    * the selected branch advances to {@link Doc_CheckoutRootObject}.
@@ -180,7 +180,7 @@ public class Doc04_CheckingOut
    * repository. But by selecting a root object different from the {@link CDOView#getRootResource() root resource} of the repository
    * the folders, resources, and model elements displayed under the checkout in the {@link Doc_ProjectExplorerIntegration Project Explorer}
    * can be limited to the children of this root object. Visually the checkout node is equivalent to the selected root object:
-   * {@img checkout-wizard-rootobject.png}
+   * <p align="center">{@image checkout-wizard-rootobject.png}
    * <p>
    * After selecting the desired root object pressing the Next button or double-clicking
    * the selected root object advances to {@link Doc_CheckoutName}.
@@ -193,7 +193,7 @@ public class Doc04_CheckingOut
    * Naming the Checkout
    * <p>
    * The fifth and last page of the checkout allows to review the choices of the previous pages and to change the proposed name/label
-   * of the checkout to create: {@img checkout-wizard-name.png}
+   * of the checkout to create: <p align="center">{@image checkout-wizard-name.png}
    * <p>
    * Pressing the Finish button will close the wizard and create the new checkout as specified.
    *

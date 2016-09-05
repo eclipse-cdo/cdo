@@ -26,10 +26,10 @@ import org.eclipse.emf.ecore.EClass;
  * @since 4.0 <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.etypes.impl.ModelElementImpl#getAnnotations <em>Annotations</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

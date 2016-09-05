@@ -27,10 +27,10 @@ import org.eclipse.emf.ecore.EPackage;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.PackageFilterImpl#getApplicablePackage <em>Applicable Package</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

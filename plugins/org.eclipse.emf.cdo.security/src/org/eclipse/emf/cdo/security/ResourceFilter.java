@@ -18,6 +18,7 @@ package org.eclipse.emf.cdo.security;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.ResourceFilter#getPath <em>Path</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.ResourceFilter#getPatternStyle <em>Pattern Style</em>}</li>
@@ -29,7 +30,6 @@ package org.eclipse.emf.cdo.security;
  *   <li>{@link org.eclipse.emf.cdo.security.ResourceFilter#isIncludeParents <em>Include Parents</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.ResourceFilter#isIncludeRoot <em>Include Root</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getResourceFilter()
  * @model

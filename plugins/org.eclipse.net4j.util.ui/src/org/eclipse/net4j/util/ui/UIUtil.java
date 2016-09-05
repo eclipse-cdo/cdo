@@ -534,7 +534,7 @@ public final class UIUtil
   }
 
   /**
-   * Adds indentation to the control. if indent value is < 0, the control indentation is left unchanged.
+   * Adds indentation to the control. if indent value is &lt; 0, the control indentation is left unchanged.
    *
    * @since 2.0
    */

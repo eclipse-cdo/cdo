@@ -7,7 +7,5 @@
 
 /**
  * A framework for request/response based communication on top of the Net4j transport layer.
- * <p>
- * <img src="doc-files/signals.png" title="Diagram Signals" border="0"/>
  */
 package org.eclipse.net4j.signal;

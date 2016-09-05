@@ -47,9 +47,6 @@
     <genClasses ecoreClass="expressions.ecore#//StringValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//StringValue/literal"/>
     </genClasses>
-    <genClasses ecoreClass="expressions.ecore#//ListValue">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ListValue/elements"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="expressions.ecore#//Invocation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//Invocation/arguments"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//Invocation/name"/>
@@ -58,14 +55,14 @@
     <genClasses ecoreClass="expressions.ecore#//MemberInvocation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//MemberInvocation/object"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="expressions.ecore#//Access">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//Access/name"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//StaticAccess"/>
     <genClasses ecoreClass="expressions.ecore#//MemberAccess">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//MemberAccess/object"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//MemberAccess/name"/>
     </genClasses>
-    <genClasses ecoreClass="expressions.ecore#//ContextAccess">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute expressions.ecore#//ContextAccess/name"/>
-    </genClasses>
-    <genClasses ecoreClass="expressions.ecore#//This"/>
+    <genClasses ecoreClass="expressions.ecore#//ContextAccess"/>
     <genClasses ecoreClass="expressions.ecore#//ContainedObject">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ContainedObject/object"/>
     </genClasses>
@@ -74,6 +71,9 @@
     </genClasses>
     <genClasses ecoreClass="expressions.ecore#//LinkedExpression">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference expressions.ecore#//LinkedExpression/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="expressions.ecore#//ListConstruction">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference expressions.ecore#//ListConstruction/elements"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -70,7 +70,7 @@ public interface IListMapping
    *          the revision into which the list values should be read.
    * @param listChunk
    *          indicating the lazy loading behavior: {@link CDORevision#UNCHUNKED} means that the whole list should be
-   *          read. Else, if <code>listChunk >= 0</code>, the list is filled with {@link InternalCDOList#UNINITIALIZED}
+   *          read. Else, if <code>listChunk &gt;= 0</code>, the list is filled with {@link InternalCDOList#UNINITIALIZED}
    *          and only the first <code>listChunk</code> values are read.
    */
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk);

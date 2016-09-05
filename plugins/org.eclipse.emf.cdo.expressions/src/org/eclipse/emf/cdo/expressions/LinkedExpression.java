@@ -17,10 +17,10 @@ package org.eclipse.emf.cdo.expressions;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.LinkedExpression#getExpression <em>Expression</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getLinkedExpression()
  * @model

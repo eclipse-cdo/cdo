@@ -98,6 +98,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getResourceSet <em>Resource Set</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getURI <em>URI</em>}</li>
@@ -109,7 +110,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getWarnings <em>Warnings</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl#getTimeStamp <em>Time Stamp</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

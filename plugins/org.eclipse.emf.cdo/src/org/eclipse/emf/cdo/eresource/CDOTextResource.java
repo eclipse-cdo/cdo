@@ -24,14 +24,14 @@ import java.io.Reader;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOTextResource#getContents <em>Contents</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOTextResource#getEncoding <em>Encoding</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOTextResource()
- * @model superTypes="org.eclipse.emf.cdo.eresource.CDOFileResource<org.eclipse.emf.cdo.etypes.Reader>"
+ * @model superTypes="org.eclipse.emf.cdo.eresource.CDOFileResource&lt;org.eclipse.emf.cdo.etypes.Reader&gt;"
  * @generated
  */
 public interface CDOTextResource extends CDOFileResource<Reader>

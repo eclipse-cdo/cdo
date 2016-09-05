@@ -19,11 +19,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.Invocation#getArguments <em>Arguments</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.expressions.Invocation#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getInvocation()
  * @model abstract="true"

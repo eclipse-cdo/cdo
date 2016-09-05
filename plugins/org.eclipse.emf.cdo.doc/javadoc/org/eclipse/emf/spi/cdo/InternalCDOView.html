@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>InternalCDOView (CDO Model Repository Documentation)</title>
@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":38,"i25":6,"i26":6,"i27":6,"i28":6,"i29":6,"i30":6,"i31":38,"i32":6,"i33":6,"i34":38,"i35":6,"i36":6,"i37":6,"i38":6,"i39":6,"i40":6,"i41":6,"i42":6,"i43":6,"i44":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":38,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":38,"i25":38,"i26":6,"i27":6,"i28":6,"i29":6,"i30":6,"i31":6,"i32":38,"i33":6,"i34":6,"i35":38,"i36":6,"i37":6,"i38":6,"i39":6,"i40":6,"i41":6,"i42":6,"i43":6,"i44":6,"i45":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -114,6 +114,8 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>2.0</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
 <dt><span class="simpleTagLabel">No Implement</span></dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
 <dt><span class="simpleTagLabel">No Extend</span></dt>
@@ -141,6 +143,12 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</a></span></code>
 <div class="block">Optimizes the storage of <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoView--"><code>CDOObject.cdoView()</code></a> and <a href="../../../../../org/eclipse/emf/cdo/CDOObject.html#cdoState--"><code>CDOObject.cdoState()</code></a>.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewInvalidationData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewInvalidationData</a></span></code>
+<div class="block">A data structure that holds all input values of <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData-"><code>InternalCDOView#invalidate()</code></a>.</div>
 </td>
 </tr>
 </table>
@@ -306,7 +314,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleAddAdapter-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.common.notify.Adapter-">handleAddAdapter</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+                <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -322,7 +330,7 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#handleRemoveAdapter-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.common.notify.Adapter-">handleRemoveAdapter</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+                   <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
@@ -349,32 +357,40 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
           <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
           boolean&nbsp;async,
-          boolean&nbsp;clearResourcePathCache)</code>&nbsp;</td>
+          boolean&nbsp;clearResourcePathCache)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">As of 4.6. use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData-"><code>invalidate(ViewInvalidationData)</code></a></span></div>
+</div>
+</td>
 </tr>
 <tr id="i26" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData-">invalidate</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewInvalidationData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewInvalidationData</a>&nbsp;invalidationData)</code>&nbsp;</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectLocked-org.eclipse.emf.cdo.CDOObject-org.eclipse.net4j.util.concurrent.IRWLockManager.LockType-boolean-">isObjectLocked</a></span>(<a href="../../../../../org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
               <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html?is-external=true" title="class or interface in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
               boolean&nbsp;byOthers)</code>&nbsp;</td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#isObjectNew-org.eclipse.emf.cdo.common.id.CDOID-">isObjectNew</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code>&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#lockView--">lockView</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#prefetchRevisions-org.eclipse.emf.cdo.common.id.CDOID-int-">prefetchRevisions</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
                  int&nbsp;depth)</code>&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerObject-org.eclipse.emf.spi.cdo.InternalCDOObject-">registerObject</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code>&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#registerProxyResource-org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl-">registerProxyResource</a></span>(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
@@ -382,62 +398,62 @@ extends <a href="../../../../../org/eclipse/emf/cdo/view/CDOView.html" title="in
 </div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#remapObject-org.eclipse.emf.cdo.common.id.CDOID-">remapObject</a></span>(<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;oldID)</code>&nbsp;</td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#resourceLoaded-org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl-boolean-">resourceLoaded</a></span>(<a href="../../../../../org/eclipse/emf/cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource,
               boolean&nbsp;loaded)</code>&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer-org.eclipse.emf.cdo.view.CDOFeatureAnalyzer-">setFeatureAnalyzer</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a>&nbsp;featureAnalyzer)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setLastUpdateTime-long-">setLastUpdateTime</a></span>(long&nbsp;lastUpdateTime)</code>&nbsp;</td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setProvider-org.eclipse.emf.cdo.view.CDOViewProvider-">setProvider</a></span>(<a href="../../../../../org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view">CDOViewProvider</a>&nbsp;provider)</code>&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setRepositoryName-java.lang.String-">setRepositoryName</a></span>(<a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;repositoryName)</code>&nbsp;</td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setSession-org.eclipse.emf.spi.cdo.InternalCDOSession-">setSession</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a>&nbsp;session)</code>&nbsp;</td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewID-int-">setViewID</a></span>(int&nbsp;viewId)</code>&nbsp;</td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#setViewSet-org.eclipse.emf.spi.cdo.InternalCDOViewSet-">setViewSet</a></span>(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a>&nbsp;viewSet)</code>&nbsp;</td>
 </tr>
-<tr id="i41" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#subscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">subscribe</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
-</tr>
 <tr id="i42" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#subscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">subscribe</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+</tr>
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#toTransaction--">toTransaction</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#unlockView--">unlockView</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#unsubscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">unsubscribe</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#unsubscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">unsubscribe</a></span>(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+           <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -792,16 +808,31 @@ void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/C
 <ul class="blockList">
 <li class="blockList">
 <h4>invalidate</h4>
-<pre>void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                long&nbsp;lastUpdateTime,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
-                <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
-                boolean&nbsp;async,
-                boolean&nbsp;clearResourcePathCache)</pre>
+<pre><a href="http://download.oracle.com/javase/1.5.0/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+                             long&nbsp;lastUpdateTime,
+                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
+                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
+                             <a href="http://download.oracle.com/javase/1.5.0/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<a href="../../../../../org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;oldRevisions,
+                             boolean&nbsp;async,
+                             boolean&nbsp;clearResourcePathCache)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">As of 4.6. use <a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate-org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData-"><code>invalidate(ViewInvalidationData)</code></a></span></div>
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>4.2</dd>
+</dl>
+</li>
+</ul>
+<a name="invalidate-org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>invalidate</h4>
+<pre>void&nbsp;invalidate(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOView.ViewInvalidationData.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewInvalidationData</a>&nbsp;invalidationData)</pre>
+<dl>
+<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd>4.6</dd>
 </dl>
 </li>
 </ul>
@@ -978,7 +1009,7 @@ void&nbsp;registerProxyResource(<a href="../../../../../org/eclipse/emf/cdo/eres
 <li class="blockList">
 <h4>handleAddAdapter</h4>
 <pre>void&nbsp;handleAddAdapter(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+                      <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
 <a name="handleRemoveAdapter-org.eclipse.emf.spi.cdo.InternalCDOObject-org.eclipse.emf.common.notify.Adapter-">
@@ -988,7 +1019,7 @@ void&nbsp;registerProxyResource(<a href="../../../../../org/eclipse/emf/cdo/eres
 <li class="blockList">
 <h4>handleRemoveAdapter</h4>
 <pre>void&nbsp;handleRemoveAdapter(<a href="../../../../../org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
-                         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+                         <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
 <a name="subscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">
@@ -997,8 +1028,8 @@ void&nbsp;registerProxyResource(<a href="../../../../../org/eclipse/emf/cdo/eres
 <ul class="blockList">
 <li class="blockList">
 <h4>subscribe</h4>
-<pre>void&nbsp;subscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+<pre>void&nbsp;subscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+               <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
 <a name="unsubscribe-org.eclipse.emf.ecore.EObject-org.eclipse.emf.common.notify.Adapter-">
@@ -1007,8 +1038,8 @@ void&nbsp;registerProxyResource(<a href="../../../../../org/eclipse/emf/cdo/eres
 <ul class="blockList">
 <li class="blockList">
 <h4>unsubscribe</h4>
-<pre>void&nbsp;unsubscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
-                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
+<pre>void&nbsp;unsubscribe(<a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore">EObject</a>&nbsp;eObject,
+                 <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/common/notify/Adapter.html?is-external=true" title="class or interface in org.eclipse.emf.common.notify">Adapter</a>&nbsp;adapter)</pre>
 </li>
 </ul>
 <a name="hasSubscription-org.eclipse.emf.cdo.common.id.CDOID-">
@@ -1170,6 +1201,6 @@ void&nbsp;registerProxyResource(<a href="../../../../../org/eclipse/emf/cdo/eres
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

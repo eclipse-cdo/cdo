@@ -7,7 +7,5 @@
 
 /**
  * The Net4j transport layer concepts for dealing with acceptors.
- * <p>
- * <img src="doc-files/acceptors.png" title="Diagram Acceptors" border="0"/>
  */
 package org.eclipse.net4j.acceptor;

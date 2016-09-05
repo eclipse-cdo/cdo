@@ -708,7 +708,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * <p>This is property makes it unnecessary to call done() on a SubMonitor instance, since child
    * monitors are automatically cleaned up the next time the parent is touched.</p>
    *
-   * <code><pre>
+   * <pre><code>
    *      ////////////////////////////////////////////////////////////////////////////
    *      // Example 1: Typical usage of newChild
    *      void myMethod(IProgressMonitor parent) {
@@ -724,7 +724,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    *      void myMethod(IProgressMonitor parent) {
    *          SubMonitor progress = SubMonitor.convert(parent, 100);
    *
-   *          for (int i = 0; i < 100; i++) {
+   *          for (int i = 0; i &lt; 100; i++) {
    *              // Creating the next child monitor will clean up the previous one,
    *              // causing progress to be reported smoothly even if we don't do anything
    *              // with the monitors we create
@@ -749,7 +749,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    *          Object someValue = computeValue(progress.newChild(50));
    *          callMethod(progress.newChild(50), someValue);
    *      }
-   * </pre></code>
+   * </code></pre>
    *
    * @param totalWork number of ticks to consume from the receiver
    * @return new sub progress monitor that may be used in place of a new SubMonitor
@@ -773,7 +773,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    * <p>This is property makes it unnecessary to call done() on a SubMonitor instance, since child
    * monitors are automatically cleaned up the next time the parent is touched.</p>
    *
-   * <code><pre>
+   * <pre><code>
    *      ////////////////////////////////////////////////////////////////////////////
    *      // Example 1: Typical usage of newChild
    *      void myMethod(IProgressMonitor parent) {
@@ -789,7 +789,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    *      void myMethod(IProgressMonitor parent) {
    *          SubMonitor progress = SubMonitor.convert(parent, 100);
    *
-   *          for (int i = 0; i < 100; i++) {
+   *          for (int i = 0; i &lt; 100; i++) {
    *              // Creating the next child monitor will clean up the previous one,
    *              // causing progress to be reported smoothly even if we don't do anything
    *              // with the monitors we create
@@ -814,7 +814,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
    *          Object someValue = computeValue(progress.newChild(50));
    *          callMethod(progress.newChild(50), someValue);
    *      }
-   * </pre></code>
+   * </code></pre>
    *
    * @param totalWork number of ticks to consume from the receiver
    * @return new sub progress monitor that may be used in place of a new SubMonitor

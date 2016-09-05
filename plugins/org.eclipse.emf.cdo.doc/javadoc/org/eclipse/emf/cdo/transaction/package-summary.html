@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>org.eclipse.emf.cdo.transaction (CDO Model Repository Documentation)</title>
@@ -142,7 +142,7 @@
 <tr class="rowColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></td>
 <td class="colLast">
-<div class="block">A read-write view to the <em>current</em> (i.e. latest) state of the object graph in the repository.</div>
+<div class="block">A read-write view to the <em>current</em> (i.e.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -155,7 +155,22 @@
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AutoReleaseLocksEvent</a></td>
 <td class="colLast">
 <div class="block">An <a href="../../../../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html?is-external=true" title="class or interface in org.eclipse.net4j.util.options"><code>options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
- <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-"><code>auto release locks</code></a> option has changed.</div>
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-"><code>auto release locks enabled</code></a> or
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>auto release locks exemptions</code></a> options have changed.</div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksEnabledEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksEnabledEvent</a></td>
+<td class="colLast">
+<div class="block">An <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><code>auto release locks options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#setAutoReleaseLocksEnabled-boolean-"><code>auto release locks enabled</code></a> option has changed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksExemptionsEvent.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksExemptionsEvent</a></td>
+<td class="colLast">
+<div class="block">An <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.AutoReleaseLocksEvent.html" title="interface in org.eclipse.emf.cdo.transaction"><code>auto release locks options event</code></a> fired from transaction <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.html#options--"><code>options</code></a> when the
+ <a href="../../../../../org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html#getAutoReleaseLocksExemptions--"><code>auto release locks exemptions</code></a> option has changed.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -257,7 +272,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUndoDetector</a></td>
 <td class="colLast">
-<div class="block">A strategy used to detect whether the feature of an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> has the original (clean) value after a number of modifications.</div>
+<div class="block">A strategy used to detect whether the feature of an <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/EObject.html?is-external=true" title="class or interface in org.eclipse.emf.ecore"><code>object</code></a> has the original (clean) value after a number of modifications.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -281,7 +296,7 @@
 <tr class="altColor">
 <td class="colFirst"><a href="../../../../../org/eclipse/emf/cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a></td>
 <td class="colLast">
-<div class="block">A distributed (XA) transaction that can atomically commit the changes to multiple <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource sets</code></a>,
+<div class="block">A distributed (XA) transaction that can atomically commit the changes to multiple <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.9.0/org/eclipse/emf/ecore/resource/ResourceSet.html?is-external=true" title="class or interface in org.eclipse.emf.ecore.resource"><code>resource sets</code></a>,
  each represented by a registered <a href="../../../../../org/eclipse/emf/cdo/view/CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a>.</div>
 </td>
 </tr>
@@ -429,6 +444,10 @@
 </a>
 <h2 title="Package org.eclipse.emf.cdo.transaction Description">Package org.eclipse.emf.cdo.transaction Description</h2>
 <div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
+<dl>
+<dt><span class="simpleTagLabel">Apiviz</span></dt>
+<dd>.*Event</dd>
+</dl>
 </div>
 <!-- ======= START OF BOTTOM NAVBAR ====== -->
 <div class="bottomNav"><a name="navbar.bottom">
@@ -476,6 +495,6 @@
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

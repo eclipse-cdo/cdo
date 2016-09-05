@@ -98,9 +98,7 @@ public class EresourceSwitch<T>
       CDOResourceNode cdoResourceNode = (CDOResourceNode)theEObject;
       T result = caseCDOResourceNode(cdoResourceNode);
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE_FOLDER:
@@ -108,13 +106,9 @@ public class EresourceSwitch<T>
       CDOResourceFolder cdoResourceFolder = (CDOResourceFolder)theEObject;
       T result = caseCDOResourceFolder(cdoResourceFolder);
       if (result == null)
-      {
         result = caseCDOResourceNode(cdoResourceFolder);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE:
@@ -122,17 +116,11 @@ public class EresourceSwitch<T>
       CDOResource cdoResource = (CDOResource)theEObject;
       T result = caseCDOResource(cdoResource);
       if (result == null)
-      {
         result = caseCDOResourceLeaf(cdoResource);
-      }
       if (result == null)
-      {
         result = caseCDOResourceNode(cdoResource);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EresourcePackage.CDO_RESOURCE_LEAF:
@@ -140,13 +128,9 @@ public class EresourceSwitch<T>
       CDOResourceLeaf cdoResourceLeaf = (CDOResourceLeaf)theEObject;
       T result = caseCDOResourceLeaf(cdoResourceLeaf);
       if (result == null)
-      {
         result = caseCDOResourceNode(cdoResourceLeaf);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EresourcePackage.CDO_FILE_RESOURCE:
@@ -154,17 +138,11 @@ public class EresourceSwitch<T>
       CDOFileResource<?> cdoFileResource = (CDOFileResource<?>)theEObject;
       T result = caseCDOFileResource(cdoFileResource);
       if (result == null)
-      {
         result = caseCDOResourceLeaf(cdoFileResource);
-      }
       if (result == null)
-      {
         result = caseCDOResourceNode(cdoFileResource);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EresourcePackage.CDO_BINARY_RESOURCE:
@@ -172,21 +150,13 @@ public class EresourceSwitch<T>
       CDOBinaryResource cdoBinaryResource = (CDOBinaryResource)theEObject;
       T result = caseCDOBinaryResource(cdoBinaryResource);
       if (result == null)
-      {
         result = caseCDOFileResource(cdoBinaryResource);
-      }
       if (result == null)
-      {
         result = caseCDOResourceLeaf(cdoBinaryResource);
-      }
       if (result == null)
-      {
         result = caseCDOResourceNode(cdoBinaryResource);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     case EresourcePackage.CDO_TEXT_RESOURCE:
@@ -194,21 +164,13 @@ public class EresourceSwitch<T>
       CDOTextResource cdoTextResource = (CDOTextResource)theEObject;
       T result = caseCDOTextResource(cdoTextResource);
       if (result == null)
-      {
         result = caseCDOFileResource(cdoTextResource);
-      }
       if (result == null)
-      {
         result = caseCDOResourceLeaf(cdoTextResource);
-      }
       if (result == null)
-      {
         result = caseCDOResourceNode(cdoTextResource);
-      }
       if (result == null)
-      {
         result = defaultCase(theEObject);
-      }
       return result;
     }
     default:

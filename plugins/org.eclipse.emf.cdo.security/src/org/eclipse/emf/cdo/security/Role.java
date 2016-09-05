@@ -21,12 +21,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getPermissions <em>Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Role#getAssignees <em>Assignees</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getRole()
  * @model

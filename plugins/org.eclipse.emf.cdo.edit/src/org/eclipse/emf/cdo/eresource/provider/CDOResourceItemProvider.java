@@ -19,17 +19,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemColorProvider;
-import org.eclipse.emf.edit.provider.IItemFontProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITableItemColorProvider;
-import org.eclipse.emf.edit.provider.ITableItemFontProvider;
-import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -45,9 +35,7 @@ import java.util.List;
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
  */
-public class CDOResourceItemProvider extends CDOResourceLeafItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+public class CDOResourceItemProvider extends CDOResourceLeafItemProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -134,9 +122,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addTrackingModificationPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_CDOResource_trackingModification_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_trackingModification_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_CDOResource_trackingModification_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_trackingModification_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_CDOResource_type"), //$NON-NLS-1$
             EresourcePackage.Literals.CDO_RESOURCE__TRACKING_MODIFICATION, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
@@ -152,7 +140,7 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(), getString("_UI_CDOResource_timeStamp_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", //$NON-NLS-1$ //$NON-NLS-2$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOResource_timeStamp_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_CDOResource_type"), //$NON-NLS-1$
             EresourcePackage.Literals.CDO_RESOURCE__TIME_STAMP, true, false, false,
             ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));

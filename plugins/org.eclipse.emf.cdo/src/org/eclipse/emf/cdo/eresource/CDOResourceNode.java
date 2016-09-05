@@ -25,12 +25,12 @@ import java.util.Map;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getFolder <em>Folder</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.eresource.CDOResourceNode#getPath <em>Path</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.eresource.EresourcePackage#getCDOResourceNode()
  * @model abstract="true"

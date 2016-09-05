@@ -17,17 +17,7 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemColorProvider;
-import org.eclipse.emf.edit.provider.IItemFontProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITableItemColorProvider;
-import org.eclipse.emf.edit.provider.ITableItemFontProvider;
-import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -41,9 +31,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ResourceFilterItemProvider extends PermissionFilterItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+public class ResourceFilterItemProvider extends PermissionFilterItemProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -93,7 +81,7 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(), getString("_UI_ResourceFilter_path_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_path_feature", //$NON-NLS-1$ //$NON-NLS-2$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_path_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__PATH, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -108,9 +96,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addPatternStylePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourceFilter_patternStyle_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_patternStyle_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourceFilter_patternStyle_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_patternStyle_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -125,9 +113,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addFoldersPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourceFilter_folders_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_folders_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourceFilter_folders_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_folders_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
@@ -142,9 +130,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addModelResourcesPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourceFilter_modelResources_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelResources_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourceFilter_modelResources_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelResources_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
@@ -159,9 +147,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addModelObjectsPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourceFilter_modelObjects_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelObjects_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourceFilter_modelObjects_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelObjects_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
@@ -176,9 +164,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addIncludeParentsPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourceFilter_includeParents_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeParents_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourceFilter_includeParents_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeParents_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
@@ -195,7 +183,7 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(), getString("_UI_ResourceFilter_includeRoot_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeRoot_feature", //$NON-NLS-1$ //$NON-NLS-2$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeRoot_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
@@ -210,9 +198,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addTextResourcesPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourceFilter_textResources_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_textResources_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourceFilter_textResources_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_textResources_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
@@ -227,9 +215,9 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   protected void addBinaryResourcesPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors
-    .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-        getResourceLocator(), getString("_UI_ResourceFilter_binaryResources_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_binaryResources_feature", //$NON-NLS-1$ //$NON-NLS-2$
+        .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+            getResourceLocator(), getString("_UI_ResourceFilter_binaryResources_feature"), //$NON-NLS-1$
+            getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_binaryResources_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_ResourceFilter_type"), //$NON-NLS-1$
             SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, true, false, false,
             ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));

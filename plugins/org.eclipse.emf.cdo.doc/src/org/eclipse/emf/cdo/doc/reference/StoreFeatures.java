@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.doc.reference;
 
 /**
  * Store Feature Matrix
- * <p>
- * {@excel ../../../../../../../Tables.xlsx}
  *
  * @number 200
  */

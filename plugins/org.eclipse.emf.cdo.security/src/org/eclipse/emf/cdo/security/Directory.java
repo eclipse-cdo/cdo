@@ -22,11 +22,11 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.Directory#getItems <em>Items</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.Directory#getName <em>Name</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getDirectory()
  * @model

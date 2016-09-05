@@ -27,8 +27,6 @@ import org.eclipse.emf.ecore.EClass;
  * An implementation of the model object '<em><b>Object Permission</b></em>'.
  * @since 4.2
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

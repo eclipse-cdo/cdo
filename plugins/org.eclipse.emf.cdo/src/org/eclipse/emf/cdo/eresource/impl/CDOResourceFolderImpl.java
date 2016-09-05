@@ -39,10 +39,10 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOResourceFolderImpl#getNodes <em>Nodes</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

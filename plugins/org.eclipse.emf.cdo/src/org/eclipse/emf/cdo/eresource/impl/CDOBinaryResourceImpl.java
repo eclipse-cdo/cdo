@@ -25,14 +25,14 @@ import java.io.InputStream;
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.eresource.impl.CDOBinaryResourceImpl#getContents <em>Contents</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream>implements CDOBinaryResource
+public class CDOBinaryResourceImpl extends CDOFileResourceImpl<InputStream> implements CDOBinaryResource
 {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

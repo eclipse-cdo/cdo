@@ -8,8 +8,6 @@
 /**
  * The Net4j transport layer.
  * <p>
- * <img src="doc-files/architecture.png" title="Diagram Architecture" border="0"/>
- * <p>
  * The five main interfaces of the transport layer are:
  * 	<ul>
  * 		<li>{@link org.eclipse.net4j.buffer.IBuffer}</li>

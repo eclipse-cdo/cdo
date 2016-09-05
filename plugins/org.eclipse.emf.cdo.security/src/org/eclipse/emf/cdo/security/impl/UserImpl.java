@@ -34,6 +34,7 @@ import java.util.Set;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getGroups <em>Groups</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getLabel <em>Label</em>}</li>
@@ -49,7 +50,6 @@ import java.util.Set;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getAllPermissions <em>All Permissions</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.UserImpl#getUnassignedRoles <em>Unassigned Roles</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

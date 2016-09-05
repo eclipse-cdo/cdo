@@ -978,9 +978,11 @@ public class SecurityEditor extends MultiPageEditorPart
    */
   public Diagnostic analyzeResourceProblems(Resource resource, Exception exception)
   {
-    if (!resource.getErrors().isEmpty() || !resource.getWarnings().isEmpty())
+    boolean hasErrors = !resource.getErrors().isEmpty();
+    if (hasErrors || !resource.getWarnings().isEmpty())
     {
-      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(Diagnostic.ERROR, "org.eclipse.emf.cdo.security.editor", //$NON-NLS-1$
+      BasicDiagnostic basicDiagnostic = new BasicDiagnostic(hasErrors ? Diagnostic.ERROR : Diagnostic.WARNING,
+          "org.eclipse.emf.cdo.security.editor", //$NON-NLS-1$
           0, getString("_UI_CreateModelError_message", resource.getURI()), //$NON-NLS-1$
           new Object[] { exception == null ? (Object)resource : exception });
       basicDiagnostic.merge(EcoreUtil.computeDiagnostic(resource, true));
@@ -1444,7 +1446,7 @@ public class SecurityEditor extends MultiPageEditorPart
    */
   protected void doSaveAs(URI uri, IEditorInput editorInput)
   {
-    editingDomain.getResourceSet().getResources().get(0).setURI(uri);
+    (editingDomain.getResourceSet().getResources().get(0)).setURI(uri);
     setInputWithNotify(editorInput);
     setPartName(editorInput.getName());
     IProgressMonitor progressMonitor = getActionBars().getStatusLineManager() != null

@@ -57,7 +57,7 @@ public final class ObjectUtil
   }
 
   /**
-   * A collision-free hash code for small sets (<=4) of small, positive integers (<=128)
+   * A collision-free hash code for small sets (&lt;=4) of small, positive integers (&lt;=128)
    *
    * @since 3.2
    */

@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.InternalEObject;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getItems <em>Items</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getAllUsers <em>All Users</em>}</li>
@@ -48,7 +49,6 @@ import org.eclipse.emf.ecore.InternalEObject;
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultGroupDirectory <em>Default Group Directory</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.impl.RealmImpl#getDefaultRoleDirectory <em>Default Role Directory</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

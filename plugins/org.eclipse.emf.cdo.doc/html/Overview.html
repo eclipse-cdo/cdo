@@ -1,24 +1,24 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<HTML>
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 
-<HEAD>
-<TITLE>Overview (CDO Model Repository Documentation)</TITLE>
+<head>
+<title>Overview (CDO Model Repository Documentation)</title>
 
-<LINK REL="STYLESHEET" HREF="book.css" CHARSET="ISO-8859-1" TYPE="text/css">
+<link rel="stylesheet" href="book.css" charset="UTF-8" type="text/css">
 
-<SCRIPT type="text/javascript">
+<noscript></noscript>
+<script type="text/javascript">
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
         parent.document.title="Overview (CDO Model Repository Documentation)";
     }
 }
-</SCRIPT>
-<NOSCRIPT></NOSCRIPT>
-</HEAD>
+</script>
+</head>
 
-<BODY BGCOLOR="white" onload="windowTitle();">
-<!-- <div class="help_breadcrumbs"><a href="" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a></div> -->
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a></div> -->
 
 <table border="0">
 	<tr>
@@ -34,7 +34,7 @@ function windowTitle()
  describe the structure of and the possible relations between these objects.
  <p>
  CDO supports plentyfold deployments such as embedded repositories, offline clones or replicated clusters. The
- following diagram illustrates the most common scenario: <p align="center"><img src="cdo-overview.png"></p>
+ following diagram illustrates the most common scenario: <p align="center"><img src="cdo-overview.png">
 
 
 <h2><a name="Functionality"></a>1&nbsp;&nbsp;Functionality</h2>
@@ -137,15 +137,7 @@ function windowTitle()
 
 <h3><a name="Client"></a>2.1&nbsp;&nbsp;Client Architecture</h3>
 <p>
- <p>
- The architecture of a CDO application is characterized by its mandatory dependency on EMF, the Eclipse Modeling
- Framework. Most of the time an application interacts with the object graph of the model through standard EMF APIs
- because CDO model graph objects are <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a>. While CDO's basic functionality integrates nicely and
- transparently with EMF's extension mechanisms some of the more advanced functions may require to add direct
- dependencies on CDO to your application code.
- <p>
- The following diagram illustrates the major building blocks of a CDO application: <p align="center"><img src="programmers/client/application-architecture.png"></p>
-<p><b>See Also:</b></p>
+ <a href="programmers/client/Doc01_Architecture.html" title="Article in CDO Model Repository Documentation">!!inline!!</a><p><b>See Also:</b></p>
 <ul>
 	<li><a href="programmers/client/Doc01_Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Client Application</a></li>
 </ul>
@@ -153,19 +145,7 @@ function windowTitle()
 
 <h3><a name="Repository"></a>2.2&nbsp;&nbsp;Repository Architecture</h3>
 <p>
- <p>
- The main building block of a CDO repository is split into two layers, the generic repository layer that client
- applications interact with and the database integration layer that providers can hook into to integrate their data
- storage solutions with CDO. A number of such integrations already ship with CDO, making it possible to connect a
- repository to all sorts of JDBC databases, Hibernate, Objectivity/DB, MongoDB or DB4O.
- <p>
- While technically a CDO repository depends on EMF this dependency is not of equal importance as it is in a CDO
- application. In particular the generated application models are not required to be deployed to the server because a
- CDO repository accesses models reflectively and the model objects are not implemented as <a href="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a> on
- the server.
- <p>
- The following diagram illustrates the major building blocks of a CDO repository: <p align="center"><img src="programmers/server/repository-architecture.png"></p>
-<p><b>See Also:</b></p>
+ <a href="programmers/server/Architecture.html" title="Article in CDO Model Repository Documentation">!!inline!!</a><p><b>See Also:</b></p>
 <ul>
 	<li><a href="programmers/server/Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Repository</a></li>
 </ul>
@@ -173,7 +153,8 @@ function windowTitle()
 
 <p align="right">
 &nbsp;<a href="users/index.html" title="Forward to User's Guide"><img src="../images/forward.png" border="0"></a></p>
-<HR>
-<i>Copyright (c) 2011, 2012, 2015 Eike Stepper (Berlin, Germany) and others.</i>
-</BODY>
-</HTML>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a></div> -->
+
+<div class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

@@ -51,15 +51,15 @@ public interface CDORevisionData
    * <p>
    * <b>Usage Example:</b>
    * <p>
-   * <code><pre>
+   * <pre><code>
    * CDORevision revision = ...;
    * CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
    *
    * int containingFeatureID = revision.data().getContainingFeatureID();
    *
-   * EStructuralFeature feature = containingFeatureID <= InternalEObject.EOPPOSITE_FEATURE_BASE ?
+   * EStructuralFeature feature = containingFeatureID &lt;= InternalEObject.EOPPOSITE_FEATURE_BASE ?
    *     container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID) :
-   *     ((EReference)revision.getEClass().getEStructuralFeature(containingFeatureID)).getEOpposite();</pre></code>
+   *     ((EReference)revision.getEClass().getEStructuralFeature(containingFeatureID)).getEOpposite();</code></pre>
    *
    * @see BasicEObjectImpl#eContainingFeature()
    * @see #getContainerID()

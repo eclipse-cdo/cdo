@@ -20,11 +20,11 @@ import org.eclipse.emf.ecore.EClass;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.security.ClassFilter#getApplicableClass <em>Applicable Class</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.security.ClassFilter#isSubTypes <em>Sub Types</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.security.SecurityPackage#getClassFilter()
  * @model

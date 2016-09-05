@@ -25,8 +25,6 @@ import java.lang.reflect.Modifier;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Static Access</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

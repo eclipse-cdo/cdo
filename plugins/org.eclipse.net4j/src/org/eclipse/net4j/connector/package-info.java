@@ -7,7 +7,5 @@
 
 /**
  * The Net4j transport layer concepts for dealing with connectors.
- * <p>
- * <img src="doc-files/connectors.png" title="Diagram Connectors" border="0"/>
  */
 package org.eclipse.net4j.connector;

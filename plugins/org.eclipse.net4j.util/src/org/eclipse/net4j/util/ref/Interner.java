@@ -20,7 +20,7 @@ import java.lang.ref.WeakReference;
 public class Interner<E>
 {
   private static final int[] PRIME_CAPACITIES = new int[] { 17, 37, 67, 131, 257, 521, 1031, 2053, 4099, 8209, 16411,
-    32771, 65537, 131101, 262147, 524309, 1048583, 2097169, 4194319, 8388617, 16777259, 33554467, 67108879, 134217757,
+      32771, 65537, 131101, 262147, 524309, 1048583, 2097169, 4194319, 8388617, 16777259, 33554467, 67108879, 134217757,
       268435459, 536870923, 1073741827, 2147483629 };
 
   private int size;
@@ -119,8 +119,7 @@ public class Interner<E>
 
   /**
    * Returns true if the two objects are to be considered equal.
-   * The first object will always be the one passed in as an argument to {@link #add(Object) add},
-   * {@link #contains(Object) contains}, {@link #get(Object) get}, {@link #intern(Object)}, {@link #remove(Object)}.
+   * The first object will always be the one passed in as an argument to {@link #intern(Object)}.
    */
   protected boolean equals(E object, E otherObject)
   {

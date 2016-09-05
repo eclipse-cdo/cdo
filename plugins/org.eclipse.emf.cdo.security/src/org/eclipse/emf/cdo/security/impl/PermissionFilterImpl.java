@@ -30,8 +30,6 @@ import org.eclipse.emf.ecore.EClass;
  * An implementation of the model object '<em><b>Permission Filter</b></em>'.
  * @since 4.3
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

@@ -156,9 +156,11 @@ public interface CDOObject extends EObject, CDOWithID
    * Returns the write option associated with this object.
    * <p>
    * A write option is a lock that
+   * <ul>
    * <li>is exclusive; i.e. can only be held by one view</li>
    * <li>prevents other views from obtaining a write lock on the same object</li>
    * <li>does not prevent other views from obtaining a read lock on the same object</li>
+   * </ul>
    * <p>
    * It thus allows a view to ensure that it is the only that who will be able to obtain a write lock in the future,
    * without preventing read locks to be obtained by others at this moment.

@@ -16,17 +16,7 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
-import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
-import org.eclipse.emf.edit.provider.IItemColorProvider;
-import org.eclipse.emf.edit.provider.IItemFontProvider;
-import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-import org.eclipse.emf.edit.provider.IItemPropertySource;
-import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
-import org.eclipse.emf.edit.provider.ITableItemColorProvider;
-import org.eclipse.emf.edit.provider.ITableItemFontProvider;
-import org.eclipse.emf.edit.provider.ITableItemLabelProvider;
-import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
@@ -41,9 +31,7 @@ import java.util.List;
  * @noextend This class is not intended to be subclassed by clients. <!-- end-user-doc -->
  * @generated
  */
-public class CDOTextResourceItemProvider extends CDOFileResourceItemProvider implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+public class CDOTextResourceItemProvider extends CDOFileResourceItemProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -83,7 +71,7 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(), getString("_UI_CDOTextResource_contents_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_contents_feature", //$NON-NLS-1$ //$NON-NLS-2$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_contents_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_CDOTextResource_type"), //$NON-NLS-1$
             EresourcePackage.Literals.CDO_TEXT_RESOURCE__CONTENTS, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -101,7 +89,7 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
     itemPropertyDescriptors
         .add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
             getResourceLocator(), getString("_UI_CDOTextResource_encoding_feature"), //$NON-NLS-1$
-            getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_encoding_feature", //$NON-NLS-1$ //$NON-NLS-2$
+            getString("_UI_PropertyDescriptor_description", "_UI_CDOTextResource_encoding_feature", //$NON-NLS-1$//$NON-NLS-2$
                 "_UI_CDOTextResource_type"), //$NON-NLS-1$
             EresourcePackage.Literals.CDO_TEXT_RESOURCE__ENCODING, true, false, false,
             ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
@@ -139,8 +127,7 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   {
     String label = ((CDOTextResource)object).getName();
     return label == null || label.length() == 0 ? getString("_UI_CDOTextResource_type") //$NON-NLS-1$
-        :
-        label;
+        : label;
   }
 
   /**

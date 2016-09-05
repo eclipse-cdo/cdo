@@ -24,14 +24,6 @@ import org.eclipse.net4j.util.security.IUserAware;
  * socket connection. The underlying physical connection is represented by a {@link IChannelMultiplexer channel
  * multiplexer}.
  * <p>
- * <dt><b>Class Diagram:</b></dt>
- * <dd><img src="doc-files/IChannel-1.gif" title="Diagram Buffers" border="0" usemap="#IChannel-1.gif"/></dd>
- * <p>
- * <MAP NAME="IChannel-1.gif"> <AREA SHAPE="RECT" COORDS="301,8,451,68" HREF="IChannelID.html"> <AREA SHAPE="RECT"
- * COORDS="301,141,451,211" HREF="IChannel.html"> <AREA SHAPE="RECT" COORDS="599,151,696,201"
- * HREF="../buffer/IBufferHandler.html"> <AREA SHAPE="RECT" COORDS="7,151,96,201" HREF="../connector/IConnector.html">
- * </MAP>
- * <p>
  * An example for opening a channel on an {@link IConnector} and sending an {@link IBuffer}:
  * <p>
  *

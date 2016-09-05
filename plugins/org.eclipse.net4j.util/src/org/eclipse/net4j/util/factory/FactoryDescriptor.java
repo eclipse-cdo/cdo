@@ -21,12 +21,12 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  *
  * <pre>
  *    &lt;extension
- *          point="org.eclipse.net4j.util.factories">
+ *          point="org.eclipse.net4j.util.factories"&gt;
  *       &lt;factory
  *             class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"
  *             productGroup="org.eclipse.net4j.util.timers"
- *             type="daemon"/>
- *    &lt;/extension>
+ *             type="daemon"/&gt;
+ *    &lt;/extension&gt;
  * </pre>
  *
  * @author Eike Stepper

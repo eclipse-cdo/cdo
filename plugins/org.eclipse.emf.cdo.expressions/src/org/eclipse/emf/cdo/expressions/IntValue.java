@@ -17,10 +17,10 @@ package org.eclipse.emf.cdo.expressions;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.IntValue#getLiteral <em>Literal</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.eclipse.emf.cdo.expressions.ExpressionsPackage#getIntValue()
  * @model

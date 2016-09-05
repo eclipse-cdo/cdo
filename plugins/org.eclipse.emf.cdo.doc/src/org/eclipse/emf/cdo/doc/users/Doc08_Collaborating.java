@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  * CDO supports real-time collaboration on models by transferring the changes that one user
  * {@link CDOTransaction#commit(org.eclipse.core.runtime.IProgressMonitor) commits} to the repository to all
  * other users connected to the same repository and transparently weaving those changes into their model copies.
- * {@img collaborating.png}
+ * <p align="center">{@image collaborating.png}
  * <p>
  * With CDO the local model copies (in particular with {@link Doc_TransactionalCheckouts online transactional checkouts}) do not need to be
  * <i>updated</i> manually; they are automatically updated (almost) at the time they are changed by other users.
@@ -68,7 +68,7 @@ public class Doc08_Collaborating
      * CDO can anticipate the conflict potential of the local changes early, in particular before an attempt to commit these changes is even made.
      * The {@link Doc_EditingModelElementsEditor CDO Model Editor} decorates such conflicting model elements with a red-colored font,
      * indicating that the underlying {@link CDOTransaction transaction} can not be successfully committed anymore.
-     * {@img early-conflict.png}
+     * <p align="center">{@image early-conflict.png}
      * <p>
      * {@link Doc_AutomaticConflictResolution} and {@link Doc_InteractiveConflictResolution}, if enabled, may have an impact on what exact types
      * of changes are considered a conflict.
@@ -103,14 +103,14 @@ public class Doc08_Collaborating
      * <p>
      * If {@link Doc_AutomaticConflictResolution} has detected non-trivial conflicts in a local {@link CDOTransaction transaction} and
      * an attempt is made to commit this transaction the following dialog pops up:
-     * {@img late-conflict.png}
+     * <p align="center">{@image late-conflict.png}
      * <p>
      * The dialog shows an overview of how many local model elements are added, changed, and removed. One of several conflict resolution
      * actions has to be selected by the user:
      * <ul>
      * <li> If the Merge action is selected an EMF Merge editor is opened with the left side showing the remote changes and
      *      the right side showing the local changes:
-     *      {@img merge.png}
+     *      <p align="center">{@image merge.png}
      *      <p>
      *      Saving this merge editor commits the merged local transaction. Note that new non-trivial conflicts may have been detected
      *      in the meantime, in which case interactive conflict resolution is triggered again.
@@ -142,7 +142,7 @@ public class Doc08_Collaborating
    * {@link Doc_ProjectExplorerIntegration} support lock state visualization by decorating model elements that are locked by the current user
    * with a green lock icon (indicating that they can be modified) and model elements that are locked by other users with a red lock icon
    * (indicating that they can not be modified):
-   * {@img pessimistic-locking.png}
+   * <p align="center">{@image pessimistic-locking.png}
    * <p>
    * Note that a CDO editor generally operates in the context of a separate transaction, in particular not in the context of the
    * {@link CDOView read-only view} of the associated checkout, which explains why, in the screen shot above, both checkouts show the

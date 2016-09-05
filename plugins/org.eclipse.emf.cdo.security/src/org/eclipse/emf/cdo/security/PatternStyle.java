@@ -36,26 +36,29 @@ public enum PatternStyle implements Enumerator
    * @generated
    * @ordered
    */
-  EXACT(0, "EXACT", "EXACT"), /**
+  EXACT(0, "EXACT", "EXACT"),
+  /**
    * The '<em><b>TREE</b></em>' literal object.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  * <!-- end-user-doc -->
    * @see #TREE_VALUE
    * @generated
    * @ordered
    */
-  TREE(1, "TREE", "TREE"), /**
+  TREE(1, "TREE", "TREE"),
+  /**
    * The '<em><b>ANT</b></em>' literal object.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  * <!-- end-user-doc -->
    * @see #ANT_VALUE
    * @generated
    * @ordered
    */
-  ANT(2, "ANT", "ANT"), /**
+  ANT(2, "ANT", "ANT"),
+  /**
    * The '<em><b>REGEX</b></em>' literal object.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  * <!-- end-user-doc -->
    * @see #REGEX_VALUE
    * @generated
    * @ordered
@@ -142,6 +145,8 @@ public enum PatternStyle implements Enumerator
    * Returns the '<em><b>Pattern Style</b></em>' literal with the specified literal value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @param literal the literal.
+   * @return the matching enumerator or <code>null</code>.
    * @generated
    */
   public static PatternStyle get(String literal)
@@ -161,6 +166,8 @@ public enum PatternStyle implements Enumerator
    * Returns the '<em><b>Pattern Style</b></em>' literal with the specified name.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @param name the name.
+   * @return the matching enumerator or <code>null</code>.
    * @generated
    */
   public static PatternStyle getByName(String name)
@@ -180,6 +187,8 @@ public enum PatternStyle implements Enumerator
    * Returns the '<em><b>Pattern Style</b></em>' literal with the specified integer value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @param value the integer value.
+   * @return the matching enumerator or <code>null</code>.
    * @generated
    */
   public static PatternStyle get(int value)

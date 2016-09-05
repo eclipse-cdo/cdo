@@ -296,7 +296,7 @@ public class ComposeBranchPointComposite extends Composite
   }
 
   /**
-   * @deprecated as of 4.4 use {@link #createSelectBranchComposite(Composite)}.
+   * @deprecated as of 4.4 use {@link #createBranchViewer()}.
    */
   @Deprecated
   protected SelectBranchComposite createSelectBranchComposite(CDOSession session, CDOBranch branch)

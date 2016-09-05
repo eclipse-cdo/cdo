@@ -22,7 +22,7 @@ import java.util.List;
  * Detection of referential integrity violations must be explicitly enabled on the server side because it can be expensive:
  *
  * <pre>
-    &lt;property name="ensureReferentialIntegrity" value="true"/>
+    &lt;property name="ensureReferentialIntegrity" value="true"/&gt;
  * </pre>
  * The risk of referential integrity violations can be <b>reduced</b> (but not eliminated) by using local cross reference queries
  * before committing:

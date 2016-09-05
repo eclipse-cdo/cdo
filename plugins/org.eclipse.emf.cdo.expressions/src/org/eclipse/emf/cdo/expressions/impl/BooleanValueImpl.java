@@ -21,10 +21,10 @@ import org.eclipse.emf.ecore.EClass;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.expressions.impl.BooleanValueImpl#isLiteral <em>Literal</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

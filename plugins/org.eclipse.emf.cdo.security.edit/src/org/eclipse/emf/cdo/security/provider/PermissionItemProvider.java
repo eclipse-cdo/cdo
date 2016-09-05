@@ -44,8 +44,8 @@ import java.util.List;
  * @generated
  */
 public class PermissionItemProvider extends ItemProviderAdapter implements IEditingDomainItemProvider,
-IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
-ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
+    IStructuredItemContentProvider, ITreeItemContentProvider, IItemLabelProvider, IItemPropertySource,
+    ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemColorProvider, IItemFontProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -125,8 +125,7 @@ ITableItemLabelProvider, ITableItemColorProvider, ITableItemFontProvider, IItemC
   {
     Access labelValue = ((Permission)object).getAccess();
     String label = labelValue == null ? null : labelValue.toString();
-    return label == null || label.length() == 0 ? getString("_UI_Permission_type") //$NON-NLS-1$
-        :
+    return label == null || label.length() == 0 ? getString("_UI_Permission_type") : //$NON-NLS-1$
         getString("_UI_Permission_type") + " " + label; //$NON-NLS-1$ //$NON-NLS-2$
   }
 

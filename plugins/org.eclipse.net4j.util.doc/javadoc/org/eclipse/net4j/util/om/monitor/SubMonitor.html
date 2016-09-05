@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- NewPage -->
-<html lang="de">
+<html lang="en">
 <head>
 
 <title>SubMonitor (Net4j Utilities Documentation)</title>
@@ -186,6 +186,8 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
 <dl>
 <dt><span class="simpleTagLabel">Since:</span></dt>
 <dd>3.4</dd>
+<dt><span class="simpleTagLabel">Author:</span></dt>
+<dd>Eike Stepper</dd>
 </dl>
 </li>
 </ul>
@@ -933,7 +935,7 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
  <p>This is property makes it unnecessary to call done() on a SubMonitor instance, since child
  monitors are automatically cleaned up the next time the parent is touched.</p>
 
- <code><pre>
+ <pre><code>
       ////////////////////////////////////////////////////////////////////////////
       // Example 1: Typical usage of newChild
       void myMethod(IProgressMonitor parent) {
@@ -949,7 +951,7 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
       void myMethod(IProgressMonitor parent) {
           SubMonitor progress = SubMonitor.convert(parent, 100);
 
-          for (int i = 0; i < 100; i++) {
+          for (int i = 0; i &lt; 100; i++) {
               // Creating the next child monitor will clean up the previous one,
               // causing progress to be reported smoothly even if we don't do anything
               // with the monitors we create
@@ -974,7 +976,7 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
           Object someValue = computeValue(progress.newChild(50));
           callMethod(progress.newChild(50), someValue);
       }
- </pre></code></div>
+ </code></pre></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>totalWork</code> - number of ticks to consume from the receiver</dd>
@@ -1004,7 +1006,7 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
  <p>This is property makes it unnecessary to call done() on a SubMonitor instance, since child
  monitors are automatically cleaned up the next time the parent is touched.</p>
 
- <code><pre>
+ <pre><code>
       ////////////////////////////////////////////////////////////////////////////
       // Example 1: Typical usage of newChild
       void myMethod(IProgressMonitor parent) {
@@ -1020,7 +1022,7 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
       void myMethod(IProgressMonitor parent) {
           SubMonitor progress = SubMonitor.convert(parent, 100);
 
-          for (int i = 0; i < 100; i++) {
+          for (int i = 0; i &lt; 100; i++) {
               // Creating the next child monitor will clean up the previous one,
               // causing progress to be reported smoothly even if we don't do anything
               // with the monitors we create
@@ -1045,7 +1047,7 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
           Object someValue = computeValue(progress.newChild(50));
           callMethod(progress.newChild(50), someValue);
       }
- </pre></code></div>
+ </code></pre></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>totalWork</code> - number of ticks to consume from the receiver</dd>
@@ -1167,6 +1169,6 @@ public void recurse(IContainer container, IProgressMonitor monitor) throws Excep
 <!--   -->
 </a></div>
 <!-- ======== END OF BOTTOM NAVBAR ======= -->
-<p class="legalCopy"><small><i>Copyright (c) 2011-2015 Eike Stepper (Berlin, Germany) and others.</i></small></p>
+<p class="legalCopy"><small><i class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </body>
 </html>

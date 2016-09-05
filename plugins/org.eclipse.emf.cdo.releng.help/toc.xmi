@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
+  <article:Plugin name="org.eclipse.emf.cdo.releng.apireports" label="API Report Generator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.buildstamp" label="Build Time Stamp Generator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.doc" label="Documentation Generator"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.tasks" label="Mylyn Task Overview"/>
+  <article:Plugin name="org.eclipse.emf.cdo.releng.relativepaths" label="Relative Path Creator"/>
+</xmi:XMI>

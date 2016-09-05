@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.emf.cdo.releng.help; singleton:=true
+Bundle-Version: 4.1.400.qualifier
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: .
+Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=optional,
+ org.eclipse.net4j.jvm;bundle-version="[4.1.0,5.0.0)",
+ org.eclipse.net4j.tcp;bundle-version="[4.1.0,5.0.0)",
+ org.eclipse.net4j.http.server;bundle-version="[4.0.0,5.0.0)"
+Export-Package: org.eclipse.emf.cdo.releng.help;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.contributor;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.online;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.reference;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.reference.api;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.releng;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.releng.building;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.releng.promoting;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.releng.provisioning;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.writer;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.writer.authoring;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.writer.building;version="4.1.400",
+ org.eclipse.emf.cdo.releng.help.writer.examples;version="4.1.400"

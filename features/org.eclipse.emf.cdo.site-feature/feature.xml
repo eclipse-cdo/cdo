@@ -127,6 +127,10 @@
          version="0.0.0"/>
 
    <includes
+         id="org.eclipse.emf.cdo.releng.help"
+         version="0.0.0"/>
+
+   <includes
          id="org.eclipse.emf.cdo.explorer"
          version="0.0.0"/>
 

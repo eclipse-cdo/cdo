@@ -207,6 +207,9 @@
         <fileset dir="${releng.help}/html">
           <include name="**" />
         </fileset>
+        <fileset dir="${releng.help}">
+          <include name="docs.txt" />
+        </fileset>
       </copy>
     </sequential>
   </macrodef>

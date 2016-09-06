@@ -202,10 +202,10 @@
     <sequential>
       <echo message="" />
       <echo message="Generating help center" />
-      <cleandir dir="${build.root}/help" mkdir="false" />
-      <copy todir="${build.root}">
-        <fileset dir="${releng}">
-          <include name="help/**" />
+      <cleandir dir="${build.root}/help" mkdir="true" />
+      <copy todir="${build.root}/help">
+        <fileset dir="${releng.help}/html">
+          <include name="**" />
         </fileset>
       </copy>
     </sequential>
@@ -472,6 +472,7 @@
     <property name="features" location="${git.clone}/features" />
     <property name="plugins" location="${git.clone}/plugins" />
     <property name="releng" location="${plugins}/org.eclipse.emf.cdo.releng" />
+    <property name="releng.help" location="${plugins}/org.eclipse.emf.cdo.releng.help" />
     <property name="test.report" location="${build.root}/test-report.xml" />
     <property name="tools" location="${build.root}/tools" />
     <property name="zips" location="${build.root}/zips" />

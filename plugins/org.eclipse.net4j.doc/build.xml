@@ -285,6 +285,7 @@
         <param name="-basefolder" value="${plugins.dir}/.." />
         <param name="-project" value="org.eclipse.net4j.doc" />
         <param name="-externals" value="${jdk.link};${platform.link};${emf.link}" />
+        <!--param name="-modelfolder" value="/develop/MODELS" /-->
 
       </doclet>
 

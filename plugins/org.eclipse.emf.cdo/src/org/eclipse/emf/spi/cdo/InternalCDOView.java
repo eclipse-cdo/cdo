@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -32,7 +31,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -195,15 +193,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle
    * @since 4.1
    */
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo);
-
-  /**
-   * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOID ids}.
-   *
-   * If the collection of {@link CDOID ids} is empty, {@link CDOLockState lock states} of all locked objects are returned.
-   *
-   * @since 4.1
-   */
-  public CDOLockState[] getLockStates(Collection<CDOID> ids);
 
   /**
    * @since 4.2

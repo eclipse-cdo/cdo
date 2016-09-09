@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -721,6 +722,22 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   public boolean isObjectRegistered(CDOID id)
   {
     return delegate.isObjectRegistered(id);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public CDOLockState[] getLockStates(Collection<CDOID> ids)
+  {
+    return delegate.getLockStates(ids);
+  }
+
+  /**
+   * @since 4.6
+   */
+  public CDOLockState[] getLockStatesOfObjects(Collection<? extends CDOObject> objects)
+  {
+    return delegate.getLockStatesOfObjects(objects);
   }
 
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout)

@@ -1391,15 +1391,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
    */
   public static CDOLockState getLockState(InternalCDOObject object)
   {
-    if (!FSMUtil.isTransient(object))
+    if (FSMUtil.isTransient(object))
     {
-      InternalCDOView view = object.cdoView();
-      CDOID id = object.cdoID();
-
-      return view.getLockStates(Collections.singletonList(id))[0];
+      return null;
     }
 
-    return null;
+    InternalCDOView view = object.cdoView();
+    CDOID id = object.cdoID();
+
+    return view.getLockStates(Collections.singletonList(id))[0];
   }
 
   /**

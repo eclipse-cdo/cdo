@@ -15,11 +15,22 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageTypeRegistry;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.session.CDORepositoryInfo;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalTransaction;
+import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUpdatable;
@@ -30,6 +41,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -76,6 +88,52 @@ public abstract class AbstractCDOTest extends ConfigTest
     // This override adds no functionality.
     // It just ensures that the IDE shows doSetUp() and doTearDown() in the same class.
     super.doTearDown();
+  }
+
+  public InternalSession serverSession(CDOSession session)
+  {
+    String repositoryName = session.getRepositoryInfo().getName();
+    InternalRepository repository = getRepository(repositoryName);
+    return repository.getSessionManager().getSession(session.getSessionID());
+  }
+
+  public InternalView serverView(CDOView view)
+  {
+    InternalSession serverSession = serverSession(view.getSession());
+    return serverSession.getView(view.getViewID());
+  }
+
+  public InternalTransaction serverTransaction(CDOTransaction transaction)
+  {
+    return (InternalTransaction)serverView(transaction);
+  }
+
+  public CDOBranch serverBranch(CDOBranch branch)
+  {
+    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)branch.getBranchManager().getRepository();
+    InternalRepository repository = getRepository(repositoryInfo.getName());
+    return repository.getBranchManager().getBranch(branch.getID());
+  }
+
+  public LockState<Object, IView> serverLockState(CDOSession session, CDOLockState lockState)
+  {
+    Object serverLockTarget = serverLockTarget(lockState.getLockedObject());
+
+    InternalSession serverSession = serverSession(session);
+    InternalLockManager lockingManager = serverSession.getManager().getRepository().getLockingManager();
+    return lockingManager.getLockState(serverLockTarget);
+  }
+
+  public Object serverLockTarget(Object lockTarget)
+  {
+    if (lockTarget instanceof CDOIDAndBranch)
+    {
+      CDOIDAndBranch idAndBranch = (CDOIDAndBranch)lockTarget;
+      CDOBranch serverBranch = serverBranch(idAndBranch.getBranch());
+      return CDOIDUtil.createIDAndBranch(idAndBranch.getID(), serverBranch);
+    }
+
+    return lockTarget;
   }
 
   public static void assertEquals(Object expected, Object actual)
@@ -368,7 +426,8 @@ public abstract class AbstractCDOTest extends ConfigTest
           {
             if (exception[0] == null)
             {
-              exception[0] = new TimeoutRuntimeException(updatable.toString() + " did not receive an update of " + info);
+              exception[0] = new TimeoutRuntimeException(
+                  updatable.toString() + " did not receive an update of " + info);
             }
 
             break;

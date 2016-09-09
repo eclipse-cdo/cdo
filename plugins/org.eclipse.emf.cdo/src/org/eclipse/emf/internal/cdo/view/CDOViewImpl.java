@@ -14,7 +14,6 @@ package org.eclipse.emf.internal.cdo.view;
 
 import org.eclipse.emf.cdo.CDONotification;
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -611,22 +610,6 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
     {
       fireEvent(new ViewLocksChangedEvent(sender, lockChangeInfo), listeners);
     }
-  }
-
-  protected InternalCDORevision getRevision(CDOObject object)
-  {
-    if (object.cdoState() == CDOState.NEW)
-    {
-      return null;
-    }
-
-    InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
-    if (revision == null)
-    {
-      revision = CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
-    }
-
-    return revision;
   }
 
   /**

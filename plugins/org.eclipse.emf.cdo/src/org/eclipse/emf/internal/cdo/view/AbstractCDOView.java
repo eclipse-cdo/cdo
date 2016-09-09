@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
@@ -1247,6 +1248,37 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
 
     return revision;
+  }
+
+  protected InternalCDORevision getRevision(CDOObject object)
+  {
+    if (object.cdoState() == CDOState.NEW)
+    {
+      return null;
+    }
+
+    InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+    if (revision == null)
+    {
+      revision = CDOStateMachine.INSTANCE.read((InternalCDOObject)object);
+    }
+
+    return revision;
+  }
+
+  public CDOLockState[] getLockStatesOfObjects(Collection<? extends CDOObject> objects)
+  {
+    List<CDOID> ids = new ArrayList<CDOID>();
+    for (CDOObject object : objects)
+    {
+      InternalCDORevision revision = getRevision(object);
+      if (revision != null)
+      {
+        ids.add(revision.getID());
+      }
+    }
+
+    return getLockStates(ids);
   }
 
   public List<InternalCDOObject> getObjectsList()

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitHistory;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
@@ -470,6 +471,24 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    */
   @Deprecated
   public int reload(CDOObject... objects);
+
+  /**
+   * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOID ids}.
+   *
+   * If the collection of {@link CDOID ids} is empty, {@link CDOLockState lock states} of all locked objects are returned.
+   *
+   * @since 4.6
+   */
+  public CDOLockState[] getLockStates(Collection<CDOID> ids);
+
+  /**
+   * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOObject objects}.
+   *
+   * If the collection of {@link CDOObject objects} is empty, {@link CDOLockState lock states} of all locked objects are returned.
+   *
+   * @since 4.6
+   */
+  public CDOLockState[] getLockStatesOfObjects(Collection<? extends CDOObject> objects);
 
   /**
    * Locks the given objects. Once the objects are locked, they will not be changed remotely or go in conflict state.

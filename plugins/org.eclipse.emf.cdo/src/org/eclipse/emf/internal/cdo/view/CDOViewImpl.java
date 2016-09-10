@@ -657,6 +657,14 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
                 }
               }
             }
+            else if (FSMUtil.isTransient(object))
+            {
+              CDOID id = getID((InternalCDOObject)object, true);
+              if (id != null)
+              {
+                objectIDs.add(id);
+              }
+            }
             else
             {
               objectIDs.add(object.cdoID());

@@ -1271,10 +1271,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     List<CDOID> ids = new ArrayList<CDOID>();
     for (CDOObject object : objects)
     {
-      InternalCDORevision revision = getRevision(object);
-      if (revision != null)
+      CDOID id = getID((InternalCDOObject)object, true);
+      if (id != null)
       {
-        ids.add(revision.getID());
+        ids.add(id);
       }
     }
 

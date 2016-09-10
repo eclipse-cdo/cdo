@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.event.IListener;
 
 import org.junit.Assert;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -166,10 +167,18 @@ public class TestListener2 implements IListener
     waitFor(i, timeout);
   }
 
+  public void clearEvents()
+  {
+    synchronized (this)
+    {
+      events.clear();
+    }
+  }
+
   public String formatEvents(String prefix, String suffix)
   {
     StringBuilder builder = new StringBuilder();
-
+  
     synchronized (this)
     {
       for (Entry<IEvent, Long> entry : events.entrySet())
@@ -177,8 +186,14 @@ public class TestListener2 implements IListener
         builder.append(prefix + entry.getValue() + ": " + entry.getKey() + suffix);
       }
     }
-
+  
     return builder.toString();
+  }
+
+  public void dump(PrintStream out)
+  {
+    out.println(this);
+    out.print(formatEvents("  ", "\n"));
   }
 
   @Override

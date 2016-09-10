@@ -11,17 +11,26 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.util.TestListener2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
+
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.List;
 
@@ -42,10 +51,14 @@ public class Bugzilla_469301_Test extends AbstractCDOTest
     resource.getContents().add(company1);
     transaction.commit();
 
-    resource.getContents().remove(company0);
-    resource.getContents().remove(company1);
+    TestListener2 controlListener1 = openControlView(transaction, session, "LOCAL");
+    TestListener2 controlListener2 = openControlView(transaction, openSession(), "REMOTE");
 
+    // Detach
     List<? extends CDOObject> companies = CDOUtil.getCDOObjects(company0, company1);
+    resource.getContents().removeAll(companies);
+
+    // Lock
     transaction.lockObjects(companies, LockType.WRITE, DEFAULT_TIMEOUT);
 
     CDOLockState[] lockStates = transaction.getLockStatesOfObjects(companies);
@@ -58,5 +71,59 @@ public class Bugzilla_469301_Test extends AbstractCDOTest
       LockState<Object, IView> serverLockState = serverLockState(session, lockState);
       assertEquals(serverTransaction(transaction), serverLockState.getWriteLockOwner());
     }
+
+    assertEvent(controlListener1, transaction, CDOLockChangeInfo.Operation.LOCK);
+    assertEvent(controlListener2, transaction, CDOLockChangeInfo.Operation.LOCK);
+
+    // Unlock
+    transaction.unlockObjects(companies, LockType.WRITE);
+
+    lockStates = transaction.getLockStatesOfObjects(companies);
+    assertEquals(2, lockStates.length);
+
+    for (CDOLockState lockState : lockStates)
+    {
+      assertNull(lockState.getWriteLockOwner());
+      assertNull(serverLockState(session, lockState));
+    }
+
+    assertEvent(controlListener1, transaction, CDOLockChangeInfo.Operation.UNLOCK);
+    assertEvent(controlListener2, transaction, CDOLockChangeInfo.Operation.UNLOCK);
+  }
+
+  private TestListener2 openControlView(CDOTransaction transaction, CDOSession session, String name)
+  {
+    CDOView controlView = session.openView();
+    controlView.options().setLockNotificationEnabled(true);
+
+    int counter = 1;
+    for (InternalCDOObject object : ((InternalCDOTransaction)transaction).getObjectsList())
+    {
+      // Load control object and make sure that it is not garbage collected.
+      InternalCDOObject controlObject = controlView.getObject(object);
+      controlView.properties().put(name + counter++, controlObject);
+    }
+
+    TestListener2 controlListener = new TestListener2(CDOViewLocksChangedEvent.class, name);
+    controlView.addListener(controlListener);
+    return controlListener;
+  }
+
+  private void assertEvent(TestListener2 controlListener, CDOLockOwner lockOwner, CDOLockChangeInfo.Operation operation)
+  {
+    controlListener.waitFor(1, DEFAULT_TIMEOUT);
+
+    CDOViewLocksChangedEvent event = (CDOViewLocksChangedEvent)controlListener.getEvents().get(0);
+    assertEquals(operation, event.getOperation());
+    assertEquals(LockType.WRITE, event.getLockType());
+    assertEquals(lockOwner, event.getLockOwner());
+    assertEquals(2, event.getLockStates().length);
+
+    for (CDOLockState lockState : event.getLockStates())
+    {
+      assertEquals(event.getOperation() == Operation.LOCK ? lockOwner : null, lockState.getWriteLockOwner());
+    }
+
+    controlListener.clearEvents();
   }
 }

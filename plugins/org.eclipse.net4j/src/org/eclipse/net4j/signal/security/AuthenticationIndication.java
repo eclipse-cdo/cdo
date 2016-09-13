@@ -61,6 +61,12 @@ public class AuthenticationIndication extends IndicationWithMonitoring
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 1;
+  }
+
+  @Override
   protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     challenge = new Challenge(in);

@@ -45,6 +45,12 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 1;
+  }
+
+  @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     viewID = in.readInt();

@@ -40,6 +40,12 @@ public class SwitchTargetIndication extends CDOServerReadIndicationWithMonitorin
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 90;
+  }
+
+  @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws IOException
   {
     try

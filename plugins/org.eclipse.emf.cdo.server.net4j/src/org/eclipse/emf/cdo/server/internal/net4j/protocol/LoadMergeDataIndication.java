@@ -50,6 +50,12 @@ public class LoadMergeDataIndication extends CDOServerReadIndicationWithMonitori
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 10;
+  }
+
+  @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     infos = in.readInt();

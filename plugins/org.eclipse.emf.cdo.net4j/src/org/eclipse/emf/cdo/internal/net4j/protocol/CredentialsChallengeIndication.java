@@ -63,6 +63,12 @@ public class CredentialsChallengeIndication extends IndicationWithMonitoring
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 1;
+  }
+
+  @Override
   protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     operation = in.readEnum(CredentialsUpdateOperation.class);

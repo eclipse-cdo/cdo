@@ -47,6 +47,12 @@ public class ConfirmationIndication<PROTOCOL extends SignalProtocol<?> & IConfir
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 1;
+  }
+
+  @Override
   protected void indicating(ExtendedDataInputStream in, OMMonitor monitor) throws Exception
   {
     prompt = ConfirmationPrompt.read(in);

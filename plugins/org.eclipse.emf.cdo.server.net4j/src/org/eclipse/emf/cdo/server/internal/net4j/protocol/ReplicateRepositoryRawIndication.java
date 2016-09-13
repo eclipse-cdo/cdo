@@ -35,6 +35,12 @@ public class ReplicateRepositoryRawIndication extends CDOServerReadIndicationWit
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 1;
+  }
+
+  @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws IOException
   {
     try

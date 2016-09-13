@@ -78,6 +78,12 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 10;
+  }
+
+  @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     repositoryName = in.readString();

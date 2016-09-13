@@ -41,6 +41,12 @@ public class ChangeCredentialsIndication extends CDOServerIndicationWithMonitori
   }
 
   @Override
+  protected int getIndicatingWorkPercent()
+  {
+    return 20;
+  }
+
+  @Override
   protected void indicating(CDODataInput in, OMMonitor monitor) throws Exception
   {
     operation = in.readEnum(CredentialsUpdateOperation.class);

@@ -569,7 +569,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
       try
       {
-        if (getPreviousSavepoint() == null && reattachedObjects.isEmpty())
+        if (getPreviousSavepoint() == null && getReattachedObjects().isEmpty())
         {
           return Collections.unmodifiableMap(getDetachedObjects());
         }
@@ -588,7 +588,8 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
             }
           }
 
-          for (CDOID reattachedID : savepoint.getReattachedObjects().keySet())
+          Map<CDOID, CDOObject> reattachedObjects = savepoint.getReattachedObjects();
+          for (CDOID reattachedID : reattachedObjects.keySet())
           {
             detachedObjects.remove(reattachedID);
           }
@@ -667,6 +668,76 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   //
   // return isNew;
   // }
+
+  public CDOObject getDetachedObject(CDOID id)
+  {
+    synchronized (transaction.getViewMonitor())
+    {
+      transaction.lockView();
+
+      try
+      {
+        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+        {
+          Map<CDOID, CDOObject> reattachedObjects = savepoint.getReattachedObjects();
+          if (!reattachedObjects.isEmpty())
+          {
+            CDOObject object = reattachedObjects.get(id);
+            if (object != null)
+            {
+              return null;
+            }
+          }
+
+          Map<CDOID, CDOObject> detachedObjects = savepoint.getDetachedObjects();
+          if (!detachedObjects.isEmpty())
+          {
+            CDOObject object = detachedObjects.get(id);
+            if (object != null)
+            {
+              return object;
+            }
+          }
+        }
+      }
+      finally
+      {
+        transaction.unlockView();
+      }
+    }
+
+    return null;
+  }
+
+  public CDOObject getDirtyObject(CDOID id)
+  {
+    synchronized (transaction.getViewMonitor())
+    {
+      transaction.lockView();
+
+      try
+      {
+        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+        {
+          Map<CDOID, CDOObject> dirtyObjects = savepoint.getDirtyObjects();
+          if (!dirtyObjects.isEmpty())
+          {
+            CDOObject object = dirtyObjects.get(id);
+            if (object != null)
+            {
+              return object;
+            }
+          }
+        }
+      }
+      finally
+      {
+        transaction.unlockView();
+      }
+    }
+
+    return null;
+  }
 
   public void rollback()
   {

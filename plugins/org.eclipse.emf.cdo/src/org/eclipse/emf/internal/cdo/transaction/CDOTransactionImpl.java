@@ -1444,7 +1444,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         CDOID id = super.getRootOrTopLevelResourceNodeID(name);
-        if (getLastSavepoint().getAllDetachedObjects().containsKey(id) || getDirtyObjects().containsKey(id))
+
+        InternalCDOSavepoint lastSavepoint = getLastSavepoint();
+        if (lastSavepoint.getDetachedObject(id) != null || lastSavepoint.getDirtyObject(id) != null)
         {
           throw new CDOException(MessageFormat.format(Messages.getString("CDOTransactionImpl.1"), name)); //$NON-NLS-1$
         }
@@ -2495,7 +2497,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static List<EPackage> analyzeNewPackages(Collection<EPackage> usedTopLevelPackages,
       CDOPackageRegistry packageRegistry)
   {
-    // Determine which of the corresdonding EPackages are new
+    // Determine which of the corresponding EPackages are new
     List<EPackage> newPackages = new ArrayList<EPackage>();
 
     IPackageClosure closure = new CompletePackageClosure();
@@ -2984,8 +2986,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       try
       {
         CDOID id = super.getID(object, onlyPersistedID);
-
-        // If super returned a good result, return immediately
         if (id != null)
         {
           return id;
@@ -2995,21 +2995,25 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         // indirectly through provideCDOID. This occurs when deltas or revisions are
         // being written out to a stream; in which case null must be returned (for transients) so that
         // the caller will detect a dangling reference
-        if (providingCDOID.get())
+        if (providingCDOID.get() == Boolean.TRUE)
         {
           return null;
         }
 
-        // The super implementation will return null for a transient (unattached) object;
-        // but in a tx, an transient object may previously have been attached. So we consult
-        // the cleanRevisions if that's the case.
-        CDORevisionKey revKey = cleanRevisions.get(object);
-        if (revKey != null && getDetachedObjects().containsValue(object))
+        // The super implementation returns null for a transient (unattached) object;
+        // but in a transaction, a transient object may have been attached previously.
+        // So we consult the cleanRevisions if that's the case.
+        CDORevisionKey revisionKey = cleanRevisions.get(object);
+        if (revisionKey != null)
         {
-          id = revKey.getID();
+          CDOID revisionID = revisionKey.getID();
+          if (lastSavepoint.getDetachedObject(revisionID) != null)
+          {
+            return revisionID;
+          }
         }
 
-        return id;
+        return null;
       }
       finally
       {
@@ -3029,12 +3033,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       {
         try
         {
-          providingCDOID.set(true);
+          providingCDOID.set(Boolean.TRUE);
           return super.provideCDOID(idOrObject);
         }
         finally
         {
-          providingCDOID.set(false);
+          providingCDOID.remove();
         }
       }
       finally

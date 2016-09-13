@@ -14,36 +14,26 @@ package org.eclipse.emf.internal.cdo.query;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
-import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Simon McDuff
  */
 public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
 {
-  private Map<CDOID, CDOObject> detachedObjects;
-
   public CDOQueryResultIteratorImpl(CDOView view, CDOQueryInfo queryInfo)
   {
     super(view, queryInfo);
-  }
-
-  @Override
-  public void close()
-  {
-    detachedObjects = null;
-    super.close();
   }
 
   @Override
@@ -72,15 +62,10 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
       }
       catch (ObjectNotFoundException ex)
       {
-        if (view instanceof CDOTransaction)
+        if (view instanceof InternalCDOTransaction)
         {
-          if (detachedObjects == null)
-          {
-            CDOTransaction transaction = (CDOTransaction)view;
-            detachedObjects = transaction.getDetachedObjects();
-          }
-
-          CDOObject cdoObject = detachedObjects.get(id);
+          InternalCDOTransaction transaction = (InternalCDOTransaction)view;
+          CDOObject cdoObject = transaction.getLastSavepoint().getDetachedObject(id);
           return (T)CDOUtil.getEObject(cdoObject);
         }
 
@@ -137,7 +122,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
   /**
    * @author Simon McDuff
    */
-  private class QueryResultList extends AbstractList<T>implements EList<T>
+  private class QueryResultList extends AbstractList<T> implements EList<T>
   {
     private List<Object> objects;
 

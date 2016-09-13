@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 
@@ -45,4 +46,14 @@ public interface InternalCDOSavepoint extends CDOSavepoint, InternalCDOUserSavep
    * @since 4.1
    */
   public boolean isNewObject(CDOID id);
+
+  /**
+   * @since 4.6
+   */
+  public CDOObject getDirtyObject(CDOID id);
+
+  /**
+   * @since 4.6
+   */
+  public CDOObject getDetachedObject(CDOID id);
 }

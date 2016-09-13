@@ -101,6 +101,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -454,16 +455,14 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         Set<CDOID> changedIDs = new HashSet<CDOID>();
 
         InternalCDOTransaction tx = (InternalCDOTransaction)transaction;
-        Set<CDOID> dirtyObjects = tx.getDirtyObjects().keySet();
-        Set<CDOID> detachedObjects = tx.getDetachedObjects().keySet();
+        InternalCDOSavepoint lastSavepoint = tx.getLastSavepoint();
 
         for (InternalCDORevision revision : tx.getCleanRevisions().values())
         {
           CDOID id = revision.getID();
           changedIDs.add(id);
 
-          boolean isDetached = detachedObjects.contains(id);
-          if (isDetached)
+          if (lastSavepoint.getDetachedObject(id) != null)
           {
             if (base.isAddedObject(id))
             {
@@ -474,7 +473,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
               base.registerChangedOrDetachedObject(revision);
             }
           }
-          else if (dirtyObjects.contains(id))
+          else if (lastSavepoint.getDirtyObject(id) != null)
           {
             base.registerChangedOrDetachedObject(revision);
           }

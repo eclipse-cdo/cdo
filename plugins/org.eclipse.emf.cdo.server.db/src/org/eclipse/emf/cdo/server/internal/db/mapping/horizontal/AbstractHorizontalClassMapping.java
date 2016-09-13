@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -685,6 +686,15 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id,
               branchManager.getMainBranch().getVersion(version), CDORevision.UNCHUNKED, true);
 
+          if (!handler.handleRevision(revision))
+          {
+            break;
+          }
+        }
+        else
+        {
+          // Tell handler about detached IDs
+          InternalCDORevision revision = new DetachedCDORevision(null, id, null, version, 0);
           if (!handler.handleRevision(revision))
           {
             break;

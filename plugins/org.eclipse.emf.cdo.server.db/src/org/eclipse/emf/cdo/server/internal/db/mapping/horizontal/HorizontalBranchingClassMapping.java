@@ -886,7 +886,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         {
           // Tell handler about detached IDs
           InternalCDORevision revision = new DetachedCDORevision(null, id, null, version, 0);
-          handler.handleRevision(revision);
+          if (!handler.handleRevision(revision))
+          {
+            break;
+          }
+
         }
       }
     }

@@ -10,6 +10,7 @@
  *    Christian W. Damus (CEA LIST) - bug 399306
  *    Christian W. Damus (CEA LIST) - bug 418454
  *    Christian W. Damus (CEA LIST) - bug 399487
+ *    Laurent Redor (Obeo) - bug 501607
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
@@ -1211,7 +1212,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         if (object.eClass().getEPackage() == SecurityPackage.eINSTANCE)
         {
           validate(object, diagnostic, context);
-          realmChecked = object instanceof Realm;
+          realmChecked |= object instanceof Realm;
         }
       }
 

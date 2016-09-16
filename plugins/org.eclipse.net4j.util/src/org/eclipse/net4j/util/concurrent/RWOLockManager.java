@@ -30,7 +30,7 @@ import java.util.Set;
 
 /**
  * Keeps track of locks on objects. Locks are owned by contexts. A particular combination of locks and their owners, for
- * a given object, is represented by instances of the {@link LockState} class. This class is also repsonsible for
+ * a given object, is represented by instances of the {@link LockState} class. This class is also responsible for
  * deciding whether or not a new lock can be granted, based on the locks already present.
  *
  * @author Caspar De Groot
@@ -71,7 +71,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Lock: {0} --> {1}", objectsToLock, context); //$NON-NLS-1$
+      TRACER.format("Lock: {0} --> {1}", context, objectsToLock); //$NON-NLS-1$
     }
 
     // Must come before the synchronized block!
@@ -194,7 +194,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     if (TRACER.isEnabled())
     {
-      TRACER.format("Unlock", lockStates, context); //$NON-NLS-1$
+      TRACER.format("Unlock: {0} --> {1}", context, lockStates); //$NON-NLS-1$
     }
 
     List<OBJECT> objectsWithoutLocks = new LinkedList<OBJECT>();

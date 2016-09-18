@@ -1477,36 +1477,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return null;
   }
 
-  /**
-   * @since 2.0
-   */
   @Override
-  public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
+  protected InternalCDOObject getObjectUnsynced(CDOID id, boolean loadOnDemand)
   {
-    checkActive();
-    synchronized (getViewMonitor())
+    if (isObjectNew(id) && isObjectDetached(id))
     {
-      lockView();
-
-      try
-      {
-        if (CDOIDUtil.isNull(id))
-        {
-          return null;
-        }
-
-        if (isObjectNew(id) && isObjectDetached(id))
-        {
-          throw new ObjectNotFoundException(id, this);
-        }
-
-        return super.getObject(id, loadOnDemand);
-      }
-      finally
-      {
-        unlockView();
-      }
+      throw new ObjectNotFoundException(id, this);
     }
+
+    return super.getObjectUnsynced(id, loadOnDemand);
   }
 
   @Override
@@ -1517,7 +1496,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private boolean isObjectDetached(CDOID id)
   {
-    return lastSavepoint.getAllDetachedObjects().containsKey(id);
+    return lastSavepoint.getDetachedObject(id) != null;
   }
 
   /**
@@ -2955,25 +2934,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected CDOID getXRefTargetID(CDOObject target)
   {
-    synchronized (getViewMonitor())
+    CDORevisionKey key = cleanRevisions.get(target);
+    if (key != null)
     {
-      lockView();
-
-      try
-      {
-        CDORevisionKey key = cleanRevisions.get(target);
-        if (key != null)
-        {
-          return key.getID();
-        }
-
-        return super.getXRefTargetID(target);
-      }
-      finally
-      {
-        unlockView();
-      }
+      return key.getID();
     }
+
+    return super.getXRefTargetID(target);
   }
 
   @Override

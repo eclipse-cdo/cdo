@@ -1576,24 +1576,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected CDOID getXRefTargetID(CDOObject target)
   {
-    synchronized (getViewMonitor())
+    if (FSMUtil.isTransient(target))
     {
-      lockView();
-
-      try
-      {
-        if (FSMUtil.isTransient(target))
-        {
-          throw new IllegalArgumentException("Cross referencing for transient objects not supported " + target);
-        }
-
-        return target.cdoID();
-      }
-      finally
-      {
-        unlockView();
-      }
+      throw new IllegalArgumentException("Cross referencing for transient objects not supported " + target);
     }
+
+    return target.cdoID();
   }
 
   public CDOResourceImpl getResource(CDOID resourceID)
@@ -1636,7 +1624,6 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
   {
-    checkActive();
     if (CDOIDUtil.isNull(id))
     {
       return null;
@@ -1648,60 +1635,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        if (rootResource != null && rootResource.cdoID() == id)
-        {
-          return rootResource;
-        }
-
-        if (id == lastLookupID)
-        {
-          return lastLookupObject;
-        }
-
-        lastLookupID = null;
-        lastLookupObject = null;
-        InternalCDOObject localLookupObject = null;
-
-        if (id.isExternal())
-        {
-          URI uri = URI.createURI(((CDOIDExternal)id).getURI());
-          ResourceSet resourceSet = getResourceSet();
-
-          localLookupObject = (InternalCDOObject)CDOUtil.getCDOObject(resourceSet.getEObject(uri, loadOnDemand));
-          if (localLookupObject == null)
-          {
-            if (!loadOnDemand)
-            {
-              return null;
-            }
-
-            throw new ObjectNotFoundException(id, this);
-          }
-        }
-        else
-        {
-          // Needed for recursive call to getObject. (from createObject/cleanObject/getResource/getObject)
-          localLookupObject = objects.get(id);
-          if (localLookupObject == null)
-          {
-            if (!loadOnDemand)
-            {
-              return null;
-            }
-
-            excludeNewObject(id);
-            localLookupObject = createObject(id);
-
-            if (id == rootResourceID)
-            {
-              setRootResource((CDOResourceImpl)localLookupObject);
-            }
-          }
-        }
-
-        lastLookupID = id;
-        lastLookupObject = localLookupObject;
-        return lastLookupObject;
+        return getObjectUnsynced(id, loadOnDemand);
       }
       finally
       {
@@ -1710,24 +1644,66 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  protected void excludeNewObject(CDOID id)
+  protected InternalCDOObject getObjectUnsynced(CDOID id, boolean loadOnDemand)
   {
-    synchronized (getViewMonitor())
+    if (rootResource != null && rootResource.cdoID() == id)
     {
-      lockView();
+      return rootResource;
+    }
 
-      try
+    if (id == lastLookupID)
+    {
+      return lastLookupObject;
+    }
+
+    lastLookupID = null;
+    lastLookupObject = null;
+    InternalCDOObject localLookupObject = null;
+
+    if (id.isExternal())
+    {
+      URI uri = URI.createURI(((CDOIDExternal)id).getURI());
+      ResourceSet resourceSet = getResourceSet();
+
+      localLookupObject = (InternalCDOObject)CDOUtil.getCDOObject(resourceSet.getEObject(uri, loadOnDemand));
+      if (localLookupObject == null)
       {
-        if (isObjectNew(id))
+        if (!loadOnDemand)
         {
-          throw new ObjectNotFoundException(id, this);
+          return null;
         }
-      }
-      finally
-      {
-        unlockView();
+
+        throw new ObjectNotFoundException(id, this);
       }
     }
+    else
+    {
+      // Needed for recursive call to getObject. (from createObject/cleanObject/getResource/getObject)
+      localLookupObject = objects.get(id);
+      if (localLookupObject == null)
+      {
+        if (!loadOnDemand)
+        {
+          return null;
+        }
+
+        excludeNewObject(id);
+        localLookupObject = createObject(id);
+
+        if (id == rootResourceID)
+        {
+          setRootResource((CDOResourceImpl)localLookupObject);
+        }
+      }
+    }
+
+    lastLookupID = id;
+    lastLookupObject = localLookupObject;
+    return lastLookupObject;
+  }
+
+  protected void excludeNewObject(CDOID id)
+  {
   }
 
   public boolean isObjectNew(CDOID id)

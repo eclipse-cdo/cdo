@@ -1704,6 +1704,22 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected void excludeNewObject(CDOID id)
   {
+    synchronized (getViewMonitor())
+    {
+      lockView();
+
+      try
+      {
+        if (isObjectNew(id))
+        {
+          throw new ObjectNotFoundException(id, this);
+        }
+      }
+      finally
+      {
+        unlockView();
+      }
+    }
   }
 
   public boolean isObjectNew(CDOID id)

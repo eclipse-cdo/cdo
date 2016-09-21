@@ -2228,8 +2228,8 @@ public class Repository extends Container<Object> implements InternalRepository,
       }
       else
       {
-        initSystemPackages(false);
         readPackageUnits();
+        initSystemPackages(false);
         readRootResource();
       }
     }

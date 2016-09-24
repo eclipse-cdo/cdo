@@ -43,6 +43,11 @@ public class DelegatingCloseableIterator<E> implements CloseableIterator<E>
     return delegate.next();
   }
 
+  public void remove()
+  {
+    throw new UnsupportedOperationException();
+  }
+
   public void close()
   {
     closed = true;

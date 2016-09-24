@@ -108,7 +108,17 @@ public interface CDOQuery extends CDOQueryInfo
   public CDOQuery setParameter(String name, Object value);
 
   /**
-   * Binds an object as teh context for this query.
+   * Removes the value of a named parameter.
+   *
+   * @param name
+   *          the parameter name
+   * @return the same query instance
+   * @since 4.6
+   */
+  public CDOQuery unsetParameter(String name);
+
+  /**
+   * Binds an object as the context for this query.
    *
    * @since 4.0
    */

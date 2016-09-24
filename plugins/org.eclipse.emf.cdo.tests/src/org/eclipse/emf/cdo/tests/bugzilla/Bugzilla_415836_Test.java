@@ -227,10 +227,12 @@ public class Bugzilla_415836_Test extends AbstractCDOTest
   public void testCDOTransaction_GetOrCreateBinaryResourceWithExistingResourceAndTimeoutException() throws Exception
   {
     String resourcePath = getResourcePath("test1");
+
     transaction.getOrCreateBinaryResource(resourcePath);
     transaction.commit();
     transaction.close();
     session.close();
+
     session = openSession();
     transaction = session.openTransaction();
 

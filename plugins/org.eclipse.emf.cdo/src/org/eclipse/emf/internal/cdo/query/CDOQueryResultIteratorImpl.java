@@ -42,60 +42,6 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
     return adapt(super.next());
   }
 
-  @SuppressWarnings("unchecked")
-  protected T adapt(Object object)
-  {
-    if (object instanceof CDOID)
-    {
-      CDOID id = (CDOID)object;
-      if (id.isNull())
-      {
-        return null;
-      }
-
-      CDOView view = getView();
-
-      try
-      {
-        CDOObject cdoObject = view.getObject(id, true);
-        return (T)CDOUtil.getEObject(cdoObject);
-      }
-      catch (ObjectNotFoundException ex)
-      {
-        if (view instanceof InternalCDOTransaction)
-        {
-          InternalCDOTransaction transaction = (InternalCDOTransaction)view;
-          CDOObject cdoObject = transaction.getLastSavepoint().getDetachedObject(id);
-          return (T)CDOUtil.getEObject(cdoObject);
-        }
-
-        return null;
-      }
-    }
-
-    // Support a query return value of Object[]
-    if (object instanceof Object[])
-    {
-      Object[] objects = (Object[])object;
-      Object[] resolvedObjects = new Object[objects.length];
-      for (int i = 0; i < objects.length; i++)
-      {
-        if (objects[i] instanceof CDOID)
-        {
-          resolvedObjects[i] = adapt(objects[i]);
-        }
-        else
-        {
-          resolvedObjects[i] = objects[i];
-        }
-      }
-
-      return (T)resolvedObjects;
-    }
-
-    return (T)object;
-  }
-
   @Override
   public List<T> asList()
   {
@@ -117,6 +63,60 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
     }
 
     return null;
+  }
+
+  @SuppressWarnings("unchecked")
+  protected T adapt(Object object)
+  {
+    if (object instanceof CDOID)
+    {
+      CDOID id = (CDOID)object;
+      if (id.isNull())
+      {
+        return null;
+      }
+  
+      CDOView view = getView();
+  
+      try
+      {
+        CDOObject cdoObject = view.getObject(id, true);
+        return (T)CDOUtil.getEObject(cdoObject);
+      }
+      catch (ObjectNotFoundException ex)
+      {
+        if (view instanceof InternalCDOTransaction)
+        {
+          InternalCDOTransaction transaction = (InternalCDOTransaction)view;
+          CDOObject cdoObject = transaction.getLastSavepoint().getDetachedObject(id);
+          return (T)CDOUtil.getEObject(cdoObject);
+        }
+  
+        return null;
+      }
+    }
+  
+    // Support a query return value of Object[]
+    if (object instanceof Object[])
+    {
+      Object[] objects = (Object[])object;
+      Object[] resolvedObjects = new Object[objects.length];
+      for (int i = 0; i < objects.length; i++)
+      {
+        if (objects[i] instanceof CDOID)
+        {
+          resolvedObjects[i] = adapt(objects[i]);
+        }
+        else
+        {
+          resolvedObjects[i] = objects[i];
+        }
+      }
+  
+      return (T)resolvedObjects;
+    }
+  
+    return (T)object;
   }
 
   /**

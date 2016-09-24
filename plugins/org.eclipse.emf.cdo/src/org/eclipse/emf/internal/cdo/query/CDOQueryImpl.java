@@ -19,8 +19,10 @@ import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -58,6 +60,12 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
   public CDOQueryImpl setParameter(String name, Object value)
   {
     parameters.put(name, value);
+    return this;
+  }
+
+  public CDOQueryImpl unsetParameter(String name)
+  {
+    parameters.remove(name);
     return this;
   }
 
@@ -137,7 +145,8 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       {
         try
         {
-          view.getSession().getSessionProtocol().query(view, queryResult);
+          CDOSessionProtocol sessionProtocol = view.getSession().getSessionProtocol();
+          sessionProtocol.query(view, queryResult);
         }
         catch (Exception ex)
         {
@@ -147,8 +156,7 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
       }
     };
 
-    // TODO Simon: Can we leverage a thread pool?
-    new Thread(runnable).start();
+    ConcurrencyUtil.execute(view, runnable);
 
     try
     {

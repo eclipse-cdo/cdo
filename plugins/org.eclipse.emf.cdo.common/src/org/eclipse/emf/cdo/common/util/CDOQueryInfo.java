@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import java.util.Map;
 
 /**
- * Encapsulates all the transferrable information that fully specifies a query from a {@link CDOCommonView view} to a
+ * Encapsulates all the transferable information that fully specifies a query from a {@link CDOCommonView view} to a
  * {@link CDOCommonRepository repository}.
  *
  * @author Simon McDuff
@@ -51,6 +51,13 @@ public interface CDOQueryInfo
    * Returns the parameters of this query as a map.
    */
   public Map<String, Object> getParameters();
+
+  /**
+   * Returns the value of the named parameter.
+   *
+   * @since 4.6
+   */
+  public <T> T getParameter(String name);
 
   /**
    * Returns the context object, or <code>null</code> if no context is bound.

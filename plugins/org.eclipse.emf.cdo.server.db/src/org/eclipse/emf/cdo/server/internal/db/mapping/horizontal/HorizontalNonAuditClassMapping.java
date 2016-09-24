@@ -341,7 +341,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
       return stmt;
     }
-    catch (SQLException ex)
+    catch (Throwable ex)
     {
       DBUtil.close(stmt); // only release on error
       throw new DBException(ex);

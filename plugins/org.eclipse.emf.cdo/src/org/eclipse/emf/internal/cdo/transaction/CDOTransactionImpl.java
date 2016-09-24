@@ -16,6 +16,7 @@
 package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -30,6 +31,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOIdentifiable;
@@ -58,6 +60,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -65,6 +68,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.eresource.EresourceFactory;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
@@ -114,12 +118,14 @@ import org.eclipse.emf.cdo.util.DanglingIntegrityException;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.util.LocalCommitConflictException;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
+import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
+import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
@@ -131,8 +137,12 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.AbstractCloseableIterator;
 import org.eclipse.net4j.util.collection.ByteArrayWrapper;
+import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.collection.ComposedIterator;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.collection.DelegatingCloseableIterator;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -149,6 +159,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -1032,15 +1043,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             return (CDOResource)getObject(id);
           }
         }
-        catch (TransactionException e)
+        catch (CDOResourceNodeNotFoundException ignore)
         {
-          // A TimeoutException or another exception due to client/server communication issue does not allow to know if
-          // resource exists
-          throw e;
-        }
-        catch (CDOException ignore)
-        {
-          // Just create the missing resource
+          // Just create the missing resource.
         }
 
         return createResource(path);
@@ -1087,15 +1092,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             return (CDOTextResource)getObject(id);
           }
         }
-        catch (TransactionException e)
+        catch (CDOResourceNodeNotFoundException ignore)
         {
-          // A TimeoutException or another exception due to client/server communication issue does not allow to know if
-          // resource exists
-          throw e;
-        }
-        catch (CDOException ignore)
-        {
-          // Just create the missing resource
+          // Just create the missing resource.
         }
 
         return createTextResource(path);
@@ -1142,13 +1141,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             return (CDOBinaryResource)getObject(id);
           }
         }
-        catch (TransactionException e)
-        {
-          // A TimeoutException or another exception due to client/server communication issue does not allow to know if
-          // resource exists
-          throw e;
-        }
-        catch (CDOException ignore)
+        catch (CDOResourceNodeNotFoundException ignore)
         {
           // Just create the missing resource
         }
@@ -1235,15 +1228,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             return (CDOResourceFolder)getObject(id);
           }
         }
-        catch (TransactionException e)
+        catch (CDOResourceNodeNotFoundException ignore)
         {
-          // A TimeoutException or another exception due to client/server communication issue does not allow to know if
-          // resource exists
-          throw e;
-        }
-        catch (CDOException ignore)
-        {
-          // Just create the missing resource
+          // Just create the missing resource.
         }
 
         return createResourceFolder(path);
@@ -1277,7 +1264,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             CDOID folderID = folder == null ? null : folder.cdoID();
             node = getResourceNode(folderID, name);
           }
-          catch (CDOException ex)
+          catch (CDOResourceNodeNotFoundException ex)
           {
             node = EresourceFactory.eINSTANCE.createCDOResourceFolder();
             attachNewResourceNode(folder, name, node);
@@ -1444,9 +1431,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
 
         CDOID id = super.getRootOrTopLevelResourceNodeID(name);
-
-        InternalCDOSavepoint lastSavepoint = getLastSavepoint();
-        if (lastSavepoint.getDetachedObject(id) != null || lastSavepoint.getDirtyObject(id) != null)
+        if (isObjectDetached(id) || isObjectDirty(id))
         {
           throw new CDOException(MessageFormat.format(Messages.getString("CDOTransactionImpl.1"), name)); //$NON-NLS-1$
         }
@@ -1492,6 +1477,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public boolean isObjectNew(CDOID id)
   {
     return lastSavepoint.isNewObject(id);
+  }
+
+  private boolean isObjectDirty(CDOID id)
+  {
+    return lastSavepoint.getDirtyObject(id) != null;
   }
 
   private boolean isObjectDetached(CDOID id)
@@ -2932,6 +2922,453 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
+  protected CloseableIterator<CDOResourceNode> queryResourcesUnsynced(CDOResourceFolder folder, final String name,
+      final boolean exactMatch)
+  {
+    if (!isDirty())
+    {
+      return super.queryResourcesUnsynced(folder, name, exactMatch);
+    }
+
+    CDOState state;
+    CDOList list = null;
+
+    if (folder == null)
+    {
+      CDOResource rootResource = getRootResource();
+      state = rootResource.cdoState();
+      if (state.isLocal())
+      {
+        InternalCDORevision revision = (InternalCDORevision)rootResource.cdoRevision();
+        if (revision != null)
+        {
+          list = revision.getList(EresourcePackage.Literals.CDO_RESOURCE__CONTENTS);
+        }
+      }
+    }
+    else
+    {
+      state = folder.cdoState();
+      if (state == CDOState.TRANSIENT)
+      {
+        throw new CDOException("Folder " + folder + " is transient");
+      }
+
+      if (state.isLocal())
+      {
+        InternalCDORevision revision = (InternalCDORevision)folder.cdoRevision();
+        if (revision != null)
+        {
+          list = revision.getList(EresourcePackage.Literals.CDO_RESOURCE_FOLDER__NODES);
+        }
+      }
+    }
+
+    if (state.isRemote())
+    {
+      Set<CDOID> validIDs = null;
+      List<CDOResourceNode> addedNodes = null;
+
+      if (list != null)
+      {
+        for (Object element : list)
+        {
+          if (element instanceof CDOResourceNode)
+          {
+            CDOResourceNode node = (CDOResourceNode)element;
+
+            if (addedNodes == null)
+            {
+              addedNodes = new ArrayList<CDOResourceNode>();
+            }
+
+            addedNodes.add(node);
+          }
+          else
+          {
+            CDOID id = (CDOID)element;
+            if (isObjectNew(id))
+            {
+              CDOResourceNode node = (CDOResourceNode)getObject(id);
+              addedNodes.add(node);
+            }
+            else
+            {
+              if (validIDs == null)
+              {
+                validIDs = new HashSet<CDOID>();
+              }
+
+              validIDs.add(id);
+            }
+          }
+        }
+      }
+
+      final Set<CDOID> finalValidIDs = validIDs;
+      final List<CDOResourceNode> finalAddedNodes = addedNodes;
+      final CloseableIterator<CDOResourceNode> delegate = super.queryResourcesUnsynced(folder, name, exactMatch);
+
+      return new AbstractCloseableIterator<CDOResourceNode>()
+      {
+        private Iterator<CDOResourceNode> addedNodesIterator = finalAddedNodes == null ? null
+            : finalAddedNodes.iterator();
+
+        @Override
+        protected Object computeNextElement()
+        {
+          if (addedNodesIterator != null)
+          {
+            if (isClosed())
+            {
+              return END_OF_DATA;
+            }
+
+            while (addedNodesIterator.hasNext())
+            {
+              CDOResourceNode node = addedNodesIterator.next();
+
+              // Locally added node is not matched by the server; match it now.
+              if (isResourceMatch(node.getName(), name, exactMatch))
+              {
+                return node;
+              }
+            }
+
+            addedNodesIterator = null;
+          }
+
+          if (finalValidIDs != null)
+          {
+            while (delegate.hasNext())
+            {
+              CDOResourceNode node = delegate.next();
+              if (finalValidIDs.contains(node.cdoID()))
+              {
+                if (node.cdoState().isLocal())
+                {
+                  // Locally changed node is not matched by the server; match it now.
+                  if (isResourceMatch(node.getName(), name, exactMatch))
+                  {
+                    return node;
+                  }
+                }
+                else
+                {
+                  // Locally unchanged node is matched by the server already; just return it.
+                  return node;
+                }
+              }
+            }
+          }
+
+          return END_OF_DATA;
+        }
+
+        @Override
+        public void close()
+        {
+          delegate.close();
+        }
+
+        @Override
+        public boolean isClosed()
+        {
+          return delegate.isClosed();
+        }
+      };
+    }
+
+    final CDOList finalList = list;
+
+    return new AbstractCloseableIterator<CDOResourceNode>()
+    {
+      private Iterator<Object> listIterator = finalList == null ? null : finalList.iterator();
+
+      @Override
+      protected Object computeNextElement()
+      {
+        if (listIterator != null)
+        {
+          while (listIterator.hasNext())
+          {
+            Object element = listIterator.next();
+            CDOResourceNode node = getResourceNode(element);
+
+            // Locally added node is not matched by the server; match it now.
+            if (isResourceMatch(node.getName(), name, exactMatch))
+            {
+              return node;
+            }
+          }
+
+          listIterator = null;
+        }
+
+        return END_OF_DATA;
+      }
+
+      private CDOResourceNode getResourceNode(Object element)
+      {
+        if (element instanceof CDOResourceNode)
+        {
+          return (CDOResourceNode)element;
+        }
+
+        return (CDOResourceNode)getObject((CDOID)element);
+      }
+
+      @Override
+      public void close()
+      {
+        listIterator = null;
+      }
+
+      @Override
+      public boolean isClosed()
+      {
+        return listIterator == null;
+      }
+
+    };
+  }
+
+  @Override
+  protected <T extends EObject> CloseableIterator<T> queryInstancesUnsynced(final EClass type, final boolean exact)
+  {
+    if (!isDirty())
+    {
+      return super.queryInstancesUnsynced(type, exact);
+    }
+
+    final Map<CDOID, CDOObject> newObjects = lastSavepoint.getAllNewObjects();
+    final CloseableIterator<T> delegate = super.queryInstancesUnsynced(type, exact);
+
+    return new AbstractCloseableIterator<T>()
+    {
+      private Iterator<CDOObject> newObjectsIterator = newObjects.isEmpty() ? null : newObjects.values().iterator();
+
+      @Override
+      protected Object computeNextElement()
+      {
+        if (newObjectsIterator != null)
+        {
+          if (isClosed())
+          {
+            return END_OF_DATA;
+          }
+
+          while (newObjectsIterator.hasNext())
+          {
+            EObject newObject = CDOUtil.getEObject(newObjectsIterator.next());
+
+            // Locally added node is not matched by the server; match it now.
+            if (exact ? type == newObject.eClass() : type.isInstance(newObject))
+            {
+              return newObject;
+            }
+          }
+
+          newObjectsIterator = null;
+        }
+
+        while (delegate.hasNext())
+        {
+          T object = delegate.next();
+          CDOObject cdoObject = CDOUtil.getCDOObject(object);
+          System.out.println(cdoObject);
+
+          if (!FSMUtil.isTransient(cdoObject))
+          {
+            return object;
+          }
+        }
+
+        return END_OF_DATA;
+      }
+
+      @Override
+      public void close()
+      {
+        delegate.close();
+      }
+
+      @Override
+      public boolean isClosed()
+      {
+        return delegate.isClosed();
+      }
+    };
+  }
+
+  @Override
+  protected CloseableIterator<CDOObjectReference> queryXRefsUnsynced(Set<CDOObject> targetObjects,
+      EReference... sourceReferences)
+  {
+    if (!isDirty())
+    {
+      return super.queryXRefsUnsynced(targetObjects, sourceReferences);
+    }
+
+    final Set<CDOID> targetIDs = new HashSet<CDOID>();
+    final Set<EReference> relevantReferences = toSet(sourceReferences);
+    final CDOQuery query = createXRefsQuery(false, targetIDs, targetObjects, sourceReferences);
+
+    if (query.getQueryString() != null)
+    {
+      final Set<CDOID> localIDs = new HashSet<CDOID>();
+      final List<CDOObjectReference> localXRefs = queryXRefsLocal(localIDs, targetIDs, relevantReferences);
+      final CloseableIterator<CDOObjectReference> delegate = query.getResultAsync(CDOObjectReference.class);
+
+      return new AbstractCloseableIterator<CDOObjectReference>()
+      {
+        private Iterator<CDOObjectReference> localXRefsIterator = localXRefs == null ? null : localXRefs.iterator();
+
+        @Override
+        protected Object computeNextElement()
+        {
+          if (localXRefsIterator != null)
+          {
+            if (isClosed())
+            {
+              return END_OF_DATA;
+            }
+
+            if (localXRefsIterator.hasNext())
+            {
+              return localXRefsIterator.next();
+            }
+
+            localXRefsIterator = null;
+          }
+
+          while (delegate.hasNext())
+          {
+            CDOObjectReference ref = delegate.next();
+            if (!localIDs.contains(ref.getSourceID()))
+            {
+              return ref;
+            }
+          }
+
+          return END_OF_DATA;
+        }
+
+        @Override
+        public void close()
+        {
+          delegate.close();
+        }
+
+        @Override
+        public boolean isClosed()
+        {
+          return delegate.isClosed();
+        }
+      };
+    }
+
+    List<CDOObjectReference> localXRefs = queryXRefsLocal(null, targetIDs, relevantReferences);
+    if (localXRefs != null)
+    {
+      return new DelegatingCloseableIterator<CDOObjectReference>(localXRefs.iterator());
+    }
+
+    return AbstractCloseableIterator.emptyCloseable();
+  }
+
+  private List<CDOObjectReference> queryXRefsLocal(Set<CDOID> localIDs, Set<CDOID> targetIDs,
+      Set<EReference> relevantReferences)
+  {
+    List<CDOObjectReference> refs = null;
+
+    Map<CDOID, CDOObject> newObjects = lastSavepoint.getAllNewObjects();
+    Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getAllDirtyObjects();
+
+    if (localIDs != null)
+    {
+      localIDs.addAll(newObjects.keySet());
+      localIDs.addAll(dirtyObjects.keySet());
+      localIDs.addAll(lastSavepoint.getAllDetachedObjects().keySet());
+    }
+
+    @SuppressWarnings("unchecked")
+    Iterator<CDOObject> it = new ComposedIterator<CDOObject>( //
+        newObjects.values().iterator(), //
+        dirtyObjects.values().iterator());
+
+    while (it.hasNext())
+    {
+      CDOObject object = it.next();
+      InternalCDORevision revision = (InternalCDORevision)object.cdoRevision();
+
+      for (EReference reference : revision.getClassInfo().getAllPersistentReferences())
+      {
+        if (!reference.isContainer() && !reference.isContainment()
+            && (relevantReferences == null || relevantReferences.contains(reference)))
+        {
+          if (reference.isMany())
+          {
+            CDOList list = revision.getList(reference);
+            int index = 0;
+
+            for (Object value : list)
+            {
+              refs = addXRefLocal(refs, targetIDs, object, reference, index, value);
+              ++index;
+            }
+          }
+          else
+          {
+            Object value = revision.getValue(reference);
+            refs = addXRefLocal(refs, targetIDs, object, reference, 0, value);
+          }
+        }
+      }
+    }
+
+    return refs;
+  }
+
+  private List<CDOObjectReference> addXRefLocal(List<CDOObjectReference> refs, Set<CDOID> targetIDs, CDOObject object,
+      EReference reference, int index, Object value)
+  {
+    if (value != null)
+    {
+      CDOID targetID = value instanceof CDOID ? (CDOID)value : getXRefID(CDOUtil.getCDOObject((EObject)value));
+      if (!CDOIDUtil.isNull(targetID) && targetIDs.contains(targetID))
+      {
+        CDOIDReference delegateRef = new CDOIDReference(targetID, object.cdoID(), reference, index);
+        CDOObjectReference ref = new CDOObjectReferenceImpl(this, delegateRef);
+
+        if (refs == null)
+        {
+          refs = new ArrayList<CDOObjectReference>();
+        }
+
+        refs.add(ref);
+      }
+    }
+
+    return refs;
+  }
+
+  private CDOID getXRefID(CDOObject object)
+  {
+    CDOID id = object.cdoID();
+    if (id == null)
+    {
+      CDORevisionKey key = cleanRevisions.get(object);
+      if (key != null)
+      {
+        id = key.getID();
+      }
+    }
+
+    return id;
+  }
+
+  @Override
   protected CDOID getXRefTargetID(CDOObject target)
   {
     CDORevisionKey key = cleanRevisions.get(target);
@@ -2974,7 +3411,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (revisionKey != null)
         {
           CDOID revisionID = revisionKey.getID();
-          if (lastSavepoint.getDetachedObject(revisionID) != null)
+          if (isObjectDetached(revisionID))
           {
             return revisionID;
           }
@@ -3490,6 +3927,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return locksOnNewObjects;
   }
 
+  public static boolean isResourceMatch(String nodeName, String name, boolean exactMatch)
+  {
+    boolean useEquals = exactMatch || nodeName == null || name == null;
+    return useEquals ? ObjectUtil.equals(nodeName, name) : nodeName.startsWith(name);
+  }
+
   public static void resurrectObject(CDOObject object, CDOID id)
   {
     if (object.cdoState() != CDOState.NEW)
@@ -3534,6 +3977,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     return synthetics[0];
+  }
+
+  private static <T> Set<T> toSet(T... objects)
+  {
+    Set<T> result = null;
+    if (objects.length != 0)
+    {
+      result = new HashSet<T>();
+      for (T object : objects)
+      {
+        result.add(object);
+      }
+    }
+
+    return result;
   }
 
   /**

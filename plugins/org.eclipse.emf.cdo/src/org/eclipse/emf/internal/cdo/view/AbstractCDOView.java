@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -83,6 +84,7 @@ import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.AbstractCloseableIterator;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
@@ -895,7 +897,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         getResourceNodeID(path);
         return true;
       }
-      catch (Exception ex)
+      catch (CDOResourceNodeNotFoundException ex)
       {
         return false;
       }
@@ -943,7 +945,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           }
         }
 
-        throw new CDOException("Resource node not found: " + path);
+        throw new CDOResourceNodeNotFoundException("Resource node not found: " + path);
       }
       finally
       {
@@ -1183,7 +1185,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           }
         }
 
-        throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.5"), name)); //$NON-NLS-1$
+        throw new CDOResourceNodeNotFoundException(MessageFormat.format(Messages.getString("CDOViewImpl.5"), name)); //$NON-NLS-1$
       }
       finally
       {
@@ -1194,29 +1196,24 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected CDOID getRootOrTopLevelResourceNodeID(String name)
   {
+    if (name == null)
+    {
+      return rootResourceID;
+    }
+
     synchronized (getViewMonitor())
     {
       lockView();
 
       try
       {
-        if (name == null)
-        {
-          return rootResourceID;
-        }
-
         CDOQuery resourceQuery = createResourcesQuery(null, name, true);
         resourceQuery.setMaxResults(1);
+
         List<CDOID> ids = resourceQuery.getResult(CDOID.class);
         if (ids.isEmpty())
         {
-          throw new CDOException(MessageFormat.format(Messages.getString("CDOViewImpl.7"), name)); //$NON-NLS-1$
-        }
-
-        if (ids.size() > 1)
-        {
-          // TODO is this still needed since the is resourceQuery.setMaxResults(1) ??
-          throw new ImplementationError(Messages.getString("CDOViewImpl.8")); //$NON-NLS-1$
+          throw new CDOResourceNodeNotFoundException(MessageFormat.format(Messages.getString("CDOViewImpl.7"), name)); //$NON-NLS-1$
         }
 
         return ids.get(0);
@@ -1402,7 +1399,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     } while (resources.size() > size);
   }
 
-  public List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch)
+  public final List<CDOResourceNode> queryResources(CDOResourceFolder folder, String name, boolean exactMatch)
   {
     synchronized (getViewMonitor())
     {
@@ -1410,8 +1407,23 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
-        return resourceQuery.getResult(CDOResourceNode.class);
+        CloseableIterator<CDOResourceNode> it = queryResourcesUnsynced(folder, name, exactMatch);
+
+        try
+        {
+          List<CDOResourceNode> result = new ArrayList<CDOResourceNode>();
+
+          while (it.hasNext())
+          {
+            CDOResourceNode node = it.next();
+            result.add(node);
+          }
+          return result;
+        }
+        finally
+        {
+          it.close();
+        }
       }
       finally
       {
@@ -1420,7 +1432,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  public CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
+  public final CloseableIterator<CDOResourceNode> queryResourcesAsync(CDOResourceFolder folder, String name,
       boolean exactMatch)
   {
     synchronized (getViewMonitor())
@@ -1429,14 +1441,20 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
-        return resourceQuery.getResultAsync(CDOResourceNode.class);
+        return queryResourcesUnsynced(folder, name, exactMatch);
       }
       finally
       {
         unlockView();
       }
     }
+  }
+
+  protected CloseableIterator<CDOResourceNode> queryResourcesUnsynced(CDOResourceFolder folder, String name,
+      boolean exactMatch)
+  {
+    CDOQuery resourceQuery = createResourcesQuery(folder, name, exactMatch);
+    return resourceQuery.getResultAsync(CDOResourceNode.class);
   }
 
   private CDOQuery createResourcesQuery(CDOResourceFolder folder, String name, boolean exactMatch)
@@ -1448,31 +1466,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return query;
   }
 
-  public <T extends EObject> List<T> queryInstances(EClass type)
-  {
-    CDOQuery query = createInstancesQuery(type);
-    return query.getResult();
-  }
-
-  public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type)
-  {
-    CDOQuery query = createInstancesQuery(type);
-    return query.getResultAsync();
-  }
-
-  private CDOQuery createInstancesQuery(EClass type)
-  {
-    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES, null);
-    query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_TYPE, type);
-    return query;
-  }
-
-  public List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences)
-  {
-    return queryXRefs(Collections.singleton(targetObject), sourceReferences);
-  }
-
-  public List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  public final <T extends EObject> List<T> queryInstances(EClass type)
   {
     synchronized (getViewMonitor())
     {
@@ -1480,8 +1474,24 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        CDOQuery xrefsQuery = createXRefsQuery(targetObjects, sourceReferences);
-        return xrefsQuery.getResult(CDOObjectReference.class);
+        CloseableIterator<T> it = queryInstancesUnsynced(type, false);
+
+        try
+        {
+          List<T> result = new ArrayList<T>();
+
+          while (it.hasNext())
+          {
+            T object = it.next();
+            result.add(object);
+          }
+
+          return result;
+        }
+        finally
+        {
+          it.close();
+        }
       }
       finally
       {
@@ -1490,7 +1500,92 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  public CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
+  public final <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type)
+  {
+    return queryInstancesAsync(type, false);
+  }
+
+  public final <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type, boolean exact)
+  {
+    if (exact && (type.isInterface() || type.isAbstract()))
+    {
+      return AbstractCloseableIterator.emptyCloseable();
+    }
+
+    synchronized (getViewMonitor())
+    {
+      lockView();
+
+      try
+      {
+        return queryInstancesUnsynced(type, exact);
+      }
+      finally
+      {
+        unlockView();
+      }
+    }
+  }
+
+  protected <T extends EObject> CloseableIterator<T> queryInstancesUnsynced(EClass type, boolean exact)
+  {
+    CDOQuery query = createInstancesQuery(type, exact);
+    return query.getResultAsync();
+  }
+
+  private CDOQuery createInstancesQuery(EClass type, boolean exact)
+  {
+    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES, null);
+    query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_TYPE, type);
+
+    if (exact)
+    {
+      query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_EXACT, Boolean.TRUE);
+    }
+
+    return query;
+  }
+
+  public final List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences)
+  {
+    return queryXRefs(Collections.singleton(targetObject), sourceReferences);
+  }
+
+  public final List<CDOObjectReference> queryXRefs(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  {
+    synchronized (getViewMonitor())
+    {
+      lockView();
+
+      try
+      {
+        CloseableIterator<CDOObjectReference> it = queryXRefsUnsynced(targetObjects, sourceReferences);
+
+        try
+        {
+          List<CDOObjectReference> result = new ArrayList<CDOObjectReference>();
+
+          while (it.hasNext())
+          {
+            CDOObjectReference object = it.next();
+            result.add(object);
+          }
+
+          return result;
+        }
+        finally
+        {
+          it.close();
+        }
+      }
+      finally
+      {
+        unlockView();
+      }
+    }
+  }
+
+  public final CloseableIterator<CDOObjectReference> queryXRefsAsync(Set<CDOObject> targetObjects,
       EReference... sourceReferences)
   {
     synchronized (getViewMonitor())
@@ -1499,8 +1594,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try
       {
-        CDOQuery xrefsQuery = createXRefsQuery(targetObjects, sourceReferences);
-        return xrefsQuery.getResultAsync(CDOObjectReference.class);
+        return queryXRefsUnsynced(targetObjects, sourceReferences);
       }
       finally
       {
@@ -1509,53 +1603,76 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   }
 
-  private CDOQuery createXRefsQuery(Set<CDOObject> targetObjects, EReference... sourceReferences)
+  protected CloseableIterator<CDOObjectReference> queryXRefsUnsynced(Set<CDOObject> targetObjects,
+      EReference... sourceReferences)
   {
-    checkActive();
+    CDOQuery query = createXRefsQuery(true, null, targetObjects, sourceReferences);
+    if (query.getQueryString() != null)
+    {
+      return query.getResultAsync(CDOObjectReference.class);
+    }
 
-    String string = createXRefsQueryString(targetObjects);
-    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_XREFS, string);
+    return AbstractCloseableIterator.emptyCloseable();
+  }
+
+  protected final CDOQuery createXRefsQuery(boolean excludeNewObjects, Set<CDOID> targetIDs,
+      Set<CDOObject> targetObjects, EReference... sourceReferences)
+  {
+    StringBuilder builder = null;
+
+    for (CDOObject target : targetObjects)
+    {
+      CDOID id = getXRefTargetID(target);
+
+      if (targetIDs != null)
+      {
+        targetIDs.add(id);
+      }
+
+      if (isObjectNew(id))
+      {
+        if (excludeNewObjects)
+        {
+          throw new IllegalArgumentException(
+              "Cross referencing for uncommitted new objects is not supported: " + target);
+        }
+      }
+      else
+      {
+        if (builder == null)
+        {
+          builder = new StringBuilder();
+        }
+        else
+        {
+          builder.append("|");
+        }
+
+        builder.append(id.isExternal() ? "e" : "i");
+        builder.append(id.toURIFragment());
+
+        if (!(id instanceof CDOClassifierRef.Provider))
+        {
+          builder.append("|");
+          CDOClassifierRef classifierRef = new CDOClassifierRef(target.eClass());
+          builder.append(classifierRef.getURI());
+        }
+      }
+    }
+
+    String queryString = builder == null ? null : builder.toString();
+    CDOQuery query = createQuery(CDOProtocolConstants.QUERY_LANGUAGE_XREFS, queryString);
 
     if (sourceReferences.length != 0)
     {
-      string = createXRefsQueryParameter(sourceReferences);
-      query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES, string);
+      String sourceReferencesParam = createXRefsQuerySourceReferences(sourceReferences);
+      query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES, sourceReferencesParam);
     }
 
     return query;
   }
 
-  private String createXRefsQueryString(Set<CDOObject> targetObjects)
-  {
-    StringBuilder builder = new StringBuilder();
-    for (CDOObject target : targetObjects)
-    {
-      CDOID id = getXRefTargetID(target);
-      if (isObjectNew(id))
-      {
-        throw new IllegalArgumentException("Cross referencing for uncommitted new objects not supported " + target);
-      }
-
-      if (builder.length() != 0)
-      {
-        builder.append("|");
-      }
-
-      builder.append(id.isExternal() ? "e" : "i");
-      builder.append(id.toURIFragment());
-
-      if (!(id instanceof CDOClassifierRef.Provider))
-      {
-        builder.append("|");
-        CDOClassifierRef classifierRef = new CDOClassifierRef(target.eClass());
-        builder.append(classifierRef.getURI());
-      }
-    }
-
-    return builder.toString();
-  }
-
-  private String createXRefsQueryParameter(EReference[] sourceReferences)
+  private String createXRefsQuerySourceReferences(EReference[] sourceReferences)
   {
     StringBuilder builder = new StringBuilder();
     for (EReference sourceReference : sourceReferences)

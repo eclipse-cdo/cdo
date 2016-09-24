@@ -53,8 +53,9 @@ import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.LongIDStore;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
+
 import org.eclipse.net4j.util.HexUtil;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.Predicate;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.AbstractFilteredIterator;
@@ -672,7 +673,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
     CDOID folderID = context.getFolderID();
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
-    for (Entry<Object, List<InternalCDORevision>> entry : revisions.entrySet())
+    for (Map.Entry<Object, List<InternalCDORevision>> entry : revisions.entrySet())
     {
       CDOBranch branch = getBranch(entry.getKey());
       if (branch != context.getBranch())
@@ -710,10 +711,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader3, D
       }
 
       String revisionName = (String)revision.data().get(resourceNameFeature, 0);
-      boolean useEquals = exactMatch || revisionName == null || name == null;
-      boolean match = useEquals ? ObjectUtil.equals(revisionName, name) : revisionName.startsWith(name);
-
-      if (match)
+      if (CDOTransactionImpl.isResourceMatch(revisionName, name, exactMatch))
       {
         if (!context.addResource(revision.getID()))
         {

@@ -635,6 +635,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/transaction/CDOTransactionImpl.java" type="org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl">
+        <filter id="572522506">
+            <message_arguments>
+                <message_argument value="CDOIDReference"/>
+                <message_argument value="CDOTransactionImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/util/DefaultLocksChangedEvent.java" type="org.eclipse.emf.internal.cdo.util.DefaultLocksChangedEvent">
         <filter id="574619656">
             <message_arguments>
@@ -644,13 +652,6 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/view/AbstractCDOView.java" type="org.eclipse.emf.internal.cdo.view.AbstractCDOView">
-        <filter id="574660632">
-            <message_arguments>
-                <message_argument value="InternalCDOView"/>
-                <message_argument value="CDOCommonView"/>
-                <message_argument value="AbstractCDOView"/>
-            </message_arguments>
-        </filter>
         <filter id="574668824">
             <message_arguments>
                 <message_argument value="InternalCDOView"/>

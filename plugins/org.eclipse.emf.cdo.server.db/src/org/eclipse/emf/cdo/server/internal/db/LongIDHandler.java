@@ -178,7 +178,7 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
   public void setCDOID(PreparedStatement stmt, int column, CDOID id, long commitTime) throws SQLException
   {
     long value;
-    if (id.getType() == CDOID.Type.EXTERNAL_OBJECT)
+    if (id != null && id.getType() == CDOID.Type.EXTERNAL_OBJECT)
     {
       if (commitTime == CDOBranchPoint.INVALID_DATE)
       {
@@ -236,7 +236,7 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
 
   public String unmapURI(IDBStoreAccessor accessor, CDOID id)
   {
-    if (id.getType() == CDOID.Type.EXTERNAL_OBJECT)
+    if (id != null && id.getType() == CDOID.Type.EXTERNAL_OBJECT)
     {
       return ((CDOIDExternal)id).getURI();
     }

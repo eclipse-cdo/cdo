@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Bug 416555: Provide CDOView.queryInstances(EClass).
- * 
+ *
  * @author Eike Stepper
  */
 public class Bugzilla_416555_Test extends AbstractCDOTest
@@ -38,10 +38,6 @@ public class Bugzilla_416555_Test extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
-
-    // TODO Remove this work-around for a bug with unmapped packages
-    resource.getContents().add(getModel1Factory().createCompany());
-    transaction.commit();
 
     int orders = transaction.queryInstances(getModel1Package().getOrder()).size();
     int purchaseOrders = transaction.queryInstances(getModel1Package().getPurchaseOrder()).size();
@@ -56,7 +52,16 @@ public class Bugzilla_416555_Test extends AbstractCDOTest
     resource.getContents().add(getModel1Factory().createSalesOrder());
     resource.getContents().add(getModel1Factory().createSalesOrder());
     resource.getContents().add(getModel1Factory().createSalesOrder());
+    assertResult(transaction, orders + 9, purchaseOrders + 4, salesOrders + 5);
 
+    resource.getContents().remove(0);
+    resource.getContents().remove(0);
+    assertResult(transaction, orders + 7, purchaseOrders + 2, salesOrders + 5);
+    transaction.commit();
+
+    resource.getContents().remove(0);
+    resource.getContents().remove(0);
+    assertResult(transaction, orders + 5, purchaseOrders, salesOrders + 5);
     transaction.commit();
     session1.close();
 
@@ -64,12 +69,14 @@ public class Bugzilla_416555_Test extends AbstractCDOTest
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
+    assertResult(view, orders + 5, purchaseOrders, salesOrders + 5);
+  }
 
-    assertResult(orders + 9, view.queryInstances(getModel1Package().getOrder()), Order.class);
-
-    assertResult(purchaseOrders + 4, view.queryInstances(getModel1Package().getPurchaseOrder()), PurchaseOrder.class);
-
-    assertResult(salesOrders + 5, view.queryInstances(getModel1Package().getSalesOrder()), SalesOrder.class);
+  private void assertResult(CDOView view, int orders, int purchaseOrders, int salesOrders)
+  {
+    assertResult(orders, view.queryInstances(getModel1Package().getOrder()), Order.class);
+    assertResult(purchaseOrders, view.queryInstances(getModel1Package().getPurchaseOrder()), PurchaseOrder.class);
+    assertResult(salesOrders, view.queryInstances(getModel1Package().getSalesOrder()), SalesOrder.class);
   }
 
   private void assertResult(int expected, List<EObject> results, Class<?> c)
@@ -87,10 +94,6 @@ public class Bugzilla_416555_Test extends AbstractCDOTest
     CDOTransaction transaction = session1.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
-    // TODO Remove this work-around for a bug with unmapped packages
-    resource.getContents().add(getModel1Factory().createCompany());
-    transaction.commit();
-
     int orders = transaction.queryInstances(getModel1Package().getOrder()).size();
     int purchaseOrders = transaction.queryInstances(getModel1Package().getPurchaseOrder()).size();
     int salesOrders = transaction.queryInstances(getModel1Package().getSalesOrder()).size();
@@ -104,7 +107,16 @@ public class Bugzilla_416555_Test extends AbstractCDOTest
     resource.getContents().add(getModel1Factory().createSalesOrder());
     resource.getContents().add(getModel1Factory().createSalesOrder());
     resource.getContents().add(getModel1Factory().createSalesOrder());
+    assertResultAsync(transaction, orders + 9, purchaseOrders + 4, salesOrders + 5);
 
+    resource.getContents().remove(0);
+    resource.getContents().remove(0);
+    assertResult(transaction, orders + 7, purchaseOrders + 2, salesOrders + 5);
+    transaction.commit();
+
+    resource.getContents().remove(0);
+    resource.getContents().remove(0);
+    assertResult(transaction, orders + 5, purchaseOrders, salesOrders + 5);
     transaction.commit();
     session1.close();
 
@@ -112,16 +124,18 @@ public class Bugzilla_416555_Test extends AbstractCDOTest
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
-
-    assertResult(orders + 9, view.queryInstancesAsync(getModel1Package().getOrder()), Order.class);
-
-    assertResult(purchaseOrders + 4, view.queryInstancesAsync(getModel1Package().getPurchaseOrder()),
-        PurchaseOrder.class);
-
-    assertResult(salesOrders + 5, view.queryInstancesAsync(getModel1Package().getSalesOrder()), SalesOrder.class);
+    assertResultAsync(view, orders + 5, purchaseOrders, salesOrders + 5);
   }
 
-  private void assertResult(int expected, CloseableIterator<EObject> it, Class<?> c)
+  private void assertResultAsync(CDOView view, int orders, int purchaseOrders, int salesOrders)
+  {
+    assertResultAsync(orders, view.queryInstancesAsync(getModel1Package().getOrder()), Order.class);
+    assertResultAsync(purchaseOrders, view.queryInstancesAsync(getModel1Package().getPurchaseOrder()),
+        PurchaseOrder.class);
+    assertResultAsync(salesOrders, view.queryInstancesAsync(getModel1Package().getSalesOrder()), SalesOrder.class);
+  }
+
+  private void assertResultAsync(int expected, CloseableIterator<EObject> it, Class<?> c)
   {
     int count = 0;
     while (it.hasNext())

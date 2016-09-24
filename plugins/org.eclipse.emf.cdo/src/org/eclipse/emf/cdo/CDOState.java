@@ -18,20 +18,74 @@ package org.eclipse.emf.cdo;
  */
 public enum CDOState
 {
-  TRANSIENT, NEW, CLEAN, DIRTY, PROXY, CONFLICT,
+  /**
+   * @since 1.0
+   */
+  TRANSIENT(true, false),
+
+  /**
+   * @since 1.0
+   */
+  NEW(true, false),
+
+  /**
+   * @since 1.0
+   */
+  CLEAN(false, true),
+
+  /**
+   * @since 1.0
+   */
+  DIRTY(true, true),
+
+  /**
+   * @since 1.0
+   */
+  PROXY(false, true),
+
+  /**
+   * @since 1.0
+   */
+  CONFLICT(true, true),
 
   /**
    * @since 2.0
    */
-  INVALID,
+  INVALID(false, false),
 
   /**
    * @since 2.0
    */
-  INVALID_CONFLICT,
+  INVALID_CONFLICT(false, false),
 
   /**
    * An intermediary state for internal use only. This state marks the first of two phases during an attach operation.
    */
-  PREPARED
+  PREPARED(true, false);
+
+  private final boolean local;
+
+  private final boolean remote;
+
+  private CDOState(boolean local, boolean remote)
+  {
+    this.local = local;
+    this.remote = remote;
+  }
+
+  /**
+   * @since 4.6
+   */
+  public final boolean isLocal()
+  {
+    return local;
+  }
+
+  /**
+   * @since 4.6
+   */
+  public final boolean isRemote()
+  {
+    return remote;
+  }
 }

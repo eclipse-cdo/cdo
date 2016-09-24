@@ -12,6 +12,7 @@ package org.eclipse.emf.internal.cdo.object;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -35,12 +36,22 @@ public class CDOObjectReferenceImpl implements CDOObjectReference
 
   public CDOObject getTargetObject()
   {
-    return view.getObject(delegate.getTargetObject());
+    return view.getObject(getTargetID());
+  }
+
+  public CDOID getTargetID()
+  {
+    return delegate.getTargetObject();
   }
 
   public CDOObject getSourceObject()
   {
-    return view.getObject(delegate.getSourceObject());
+    return view.getObject(getSourceID());
+  }
+
+  public CDOID getSourceID()
+  {
+    return delegate.getSourceObject();
   }
 
   public EStructuralFeature getSourceFeature()
@@ -72,5 +83,4 @@ public class CDOObjectReferenceImpl implements CDOObjectReference
     builder.append(getTargetObject());
     return builder.toString();
   }
-
 }

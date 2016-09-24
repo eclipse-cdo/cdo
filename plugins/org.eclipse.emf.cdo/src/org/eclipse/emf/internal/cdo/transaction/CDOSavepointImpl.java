@@ -454,6 +454,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
             .getNextSavepoint())
         {
           newObjects.putAll(savepoint.getNewObjects());
+
           for (CDOID removedID : savepoint.getDetachedObjects().keySet())
           {
             newObjects.remove(removedID);

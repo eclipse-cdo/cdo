@@ -38,9 +38,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * 300149: Support remote cross referencing with a convenient API on the client and SPI on the server for the stores to
- * implement https://bugs.eclipse.org/bugs/show_bug.cgi?id=300149
- * 
+ * Bug 300149: Support remote cross referencing with a convenient API on the client and SPI on the server.
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -55,36 +54,47 @@ public class XRefTest extends AbstractCDOTest
 
   public void testCrossReferenceMultivalueEReferenceQuery() throws Exception
   {
-    PurchaseOrder purchaseOrder1 = getModel1Factory().createPurchaseOrder();
-    PurchaseOrder purchaseOrder2 = getModel1Factory().createPurchaseOrder();
-    PurchaseOrder purchaseOrder3 = getModel1Factory().createPurchaseOrder();
-    PurchaseOrder purchaseOrder4 = getModel1Factory().createPurchaseOrder();
-
-    Supplier supplier = getModel1Factory().createSupplier();
-    supplier.getPurchaseOrders().add(purchaseOrder1);
-    supplier.getPurchaseOrders().add(purchaseOrder2);
-    supplier.getPurchaseOrders().add(purchaseOrder3);
-    supplier.getPurchaseOrders().add(purchaseOrder4);
-
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
-
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
-    resource.getContents().add(supplier);
-    resource.getContents().add(purchaseOrder1);
-    resource.getContents().add(purchaseOrder2);
-    resource.getContents().add(purchaseOrder3);
-    resource.getContents().add(purchaseOrder4);
 
+    Supplier supplier = getModel1Factory().createSupplier();
+    resource.getContents().add(supplier);
+    PurchaseOrder purchaseOrder1 = addPurchaseOrder(supplier);
+    addPurchaseOrder(supplier);
+    addPurchaseOrder(supplier);
+    addPurchaseOrder(supplier);
+    assertResult(transaction, supplier, 4);
+
+    PurchaseOrder purchaseOrder5 = addPurchaseOrder(supplier);
+    PurchaseOrder purchaseOrder6 = addPurchaseOrder(supplier);
+    assertResult(transaction, supplier, 6);
+
+    EcoreUtil.delete(purchaseOrder5);
+    EcoreUtil.delete(purchaseOrder6);
+    assertResult(transaction, supplier, 4);
+
+    transaction.commit();
+
+    supplier.getPurchaseOrders().remove(purchaseOrder1);
+    assertResult(transaction, supplier, 3);
+    transaction.commit();
+
+    supplier.getPurchaseOrders().add(purchaseOrder1);
+    assertResult(transaction, supplier, 4);
     transaction.commit();
 
     /******************/
 
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
+    assertResult(view, supplier, 4);
+  }
 
-    List<CDOObjectReference> results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(supplier)));
-    assertEquals(4, results.size());
+  private void assertResult(CDOView view, EObject targetObject, int expectedXRefs)
+  {
+    List<CDOObjectReference> results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(targetObject)));
+    assertEquals(expectedXRefs, results.size());
 
     for (CDOObjectReference result : results)
     {
@@ -93,30 +103,19 @@ public class XRefTest extends AbstractCDOTest
     }
   }
 
-  public void testLocallyDetachedObject() throws Exception
+  public void testLocallyDetachedTarget() throws Exception
   {
-    PurchaseOrder purchaseOrder1 = getModel1Factory().createPurchaseOrder();
-    PurchaseOrder purchaseOrder2 = getModel1Factory().createPurchaseOrder();
-    PurchaseOrder purchaseOrder3 = getModel1Factory().createPurchaseOrder();
-    PurchaseOrder purchaseOrder4 = getModel1Factory().createPurchaseOrder();
+    CDOSession session1 = openSession();
+    CDOTransaction transaction = session1.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
 
     Supplier supplier = getModel1Factory().createSupplier();
-    supplier.getPurchaseOrders().add(purchaseOrder1);
-    supplier.getPurchaseOrders().add(purchaseOrder2);
-    supplier.getPurchaseOrders().add(purchaseOrder3);
-    supplier.getPurchaseOrders().add(purchaseOrder4);
-
-    CDOSession session1 = openSession();
-    CDOTransaction transaction1 = session1.openTransaction();
-
-    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
     resource.getContents().add(supplier);
-    resource.getContents().add(purchaseOrder1);
-    resource.getContents().add(purchaseOrder2);
-    resource.getContents().add(purchaseOrder3);
-    resource.getContents().add(purchaseOrder4);
-
-    transaction1.commit();
+    addPurchaseOrder(supplier);
+    addPurchaseOrder(supplier);
+    addPurchaseOrder(supplier);
+    addPurchaseOrder(supplier);
+    transaction.commit();
 
     /******************/
 
@@ -186,22 +185,24 @@ public class XRefTest extends AbstractCDOTest
     CDOTransaction transaction = session1.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().addAll(Arrays.asList(obj1_1, obj1_2, obj1_3, obj1_4, obj2_1, obj2_2, obj2_3, obj2_4));
+    assertXRefsToMany(transaction, ref, obj2_1, obj2_2, obj2_3);
     transaction.commit();
-    transaction.close();
-    session1.close();
 
     // check XRefs
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
+    assertXRefsToMany(view, ref, obj2_1, obj2_2, obj2_3);
+  }
 
+  private void assertXRefsToMany(CDOView view, EReference ref, EObject obj2_1, EObject obj2_2, EObject obj2_3)
+  {
     List<CDOObjectReference> results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(obj2_1)));
     assertEquals(1, results.size());
 
     {
       CDOObjectReference result = results.get(0);
       assertEquals(0, result.getSourceIndex());
-      // XXX fails!
-      // assertEquals(ref, result.getSourceReference());
+      assertEquals(ref.getName(), result.getSourceFeature().getName());
       CDOObject sourceObject = results.get(0).getSourceObject();
       assertEquals(3, sourceObject.eGet(sourceObject.eClass().getEStructuralFeature("id")));
     }
@@ -250,9 +251,6 @@ public class XRefTest extends AbstractCDOTest
     }
 
     assertEquals(true, found1 && found2 && found3);
-
-    view.close();
-    session2.close();
   }
 
   public void testXRefsToOne() throws Exception
@@ -302,14 +300,17 @@ public class XRefTest extends AbstractCDOTest
     CDOTransaction transaction = session1.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("/test1"));
     resource.getContents().addAll(Arrays.asList(obj1_1, obj1_2, obj1_3, obj1_4, obj2_1, obj2_2, obj2_3, obj2_4));
+    assertXRefsToOne(transaction, ref, obj2_1, obj2_2, obj2_3);
     transaction.commit();
-    transaction.close();
-    session1.close();
 
     // check XRefs
     CDOSession session2 = openSession();
     CDOView view = session2.openView();
+    assertXRefsToOne(view, ref, obj2_1, obj2_2, obj2_3);
+  }
 
+  private void assertXRefsToOne(CDOView view, EReference ref, EObject obj2_1, EObject obj2_2, EObject obj2_3)
+  {
     List<CDOObjectReference> results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(obj2_1)));
     assertEquals(true, results.isEmpty());
 
@@ -351,9 +352,6 @@ public class XRefTest extends AbstractCDOTest
     }
 
     assertEquals(true, found1 && found2);
-
-    view.close();
-    session2.close();
   }
 
   @SuppressWarnings({ "unchecked", "unused" })
@@ -413,22 +411,23 @@ public class XRefTest extends AbstractCDOTest
     ((EList<EObject>)a1.eGet(ab6)).add(b3);
     ((EList<EObject>)a1.eGet(ab6)).add(b4);
 
-    transaction.commit();
+    for (int i = 0; i < 2; i++)
+    {
+      List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1));
+      assertEquals(2, results.size());
 
-    /******************/
+      assertEquals(0, results.get(0).getSourceIndex());
+      assertEquals(ab5, results.get(0).getSourceFeature());
+      assertEquals(a1, results.get(0).getSourceObject());
+      assertEquals(b1, results.get(0).getTargetObject());
 
-    List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1));
-    assertEquals(2, results.size());
+      assertEquals(0, results.get(1).getSourceIndex());
+      assertEquals(ab6, results.get(1).getSourceFeature());
+      assertEquals(a1, results.get(1).getSourceObject());
+      assertEquals(b1, results.get(1).getTargetObject());
 
-    assertEquals(0, results.get(0).getSourceIndex());
-    assertEquals(ab5, results.get(0).getSourceFeature());
-    assertEquals(a1, results.get(0).getSourceObject());
-    assertEquals(b1, results.get(0).getTargetObject());
-
-    assertEquals(0, results.get(1).getSourceIndex());
-    assertEquals(ab6, results.get(1).getSourceFeature());
-    assertEquals(a1, results.get(1).getSourceObject());
-    assertEquals(b1, results.get(1).getTargetObject());
+      transaction.commit();
+    }
   }
 
   @SuppressWarnings({ "unchecked", "unused" })
@@ -488,17 +487,18 @@ public class XRefTest extends AbstractCDOTest
     ((EList<EObject>)a1.eGet(ab6)).add(b3);
     ((EList<EObject>)a1.eGet(ab6)).add(b4);
 
-    transaction.commit();
+    for (int i = 0; i < 2; i++)
+    {
+      List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1), ab5);
+      assertEquals(1, results.size());
 
-    /******************/
+      assertEquals(0, results.get(0).getSourceIndex());
+      assertEquals(ab5, results.get(0).getSourceFeature());
+      assertEquals(a1, results.get(0).getSourceObject());
+      assertEquals(b1, results.get(0).getTargetObject());
 
-    List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1), ab5);
-    assertEquals(1, results.size());
-
-    assertEquals(0, results.get(0).getSourceIndex());
-    assertEquals(ab5, results.get(0).getSourceFeature());
-    assertEquals(a1, results.get(0).getSourceObject());
-    assertEquals(b1, results.get(0).getTargetObject());
+      transaction.commit();
+    }
   }
 
   @SuppressWarnings({ "unchecked", "unused" })
@@ -558,27 +558,36 @@ public class XRefTest extends AbstractCDOTest
     ((EList<EObject>)a1.eGet(ab6)).add(b3);
     ((EList<EObject>)a1.eGet(ab6)).add(b4);
 
-    transaction.commit();
+    for (int i = 0; i < 2; i++)
+    {
+      List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1), ab6);
+      assertEquals(1, results.size());
 
-    /******************/
+      assertEquals(0, results.get(0).getSourceIndex());
+      assertEquals(ab6, results.get(0).getSourceFeature());
+      assertEquals(a1, results.get(0).getSourceObject());
+      assertEquals(b1, results.get(0).getTargetObject());
 
-    List<CDOObjectReference> results = transaction.queryXRefs(CDOUtil.getCDOObject(b1), ab6);
-    assertEquals(1, results.size());
-
-    assertEquals(0, results.get(0).getSourceIndex());
-    assertEquals(ab6, results.get(0).getSourceFeature());
-    assertEquals(a1, results.get(0).getSourceObject());
-    assertEquals(b1, results.get(0).getTargetObject());
+      transaction.commit();
+    }
   }
 
-  private EObject addObject(CDOResource resource, EClass eClass)
+  private PurchaseOrder addPurchaseOrder(Supplier supplier)
   {
-    EObject b8 = EcoreUtil.create(eClass);
-    resource.getContents().add(b8);
-    return b8;
+    PurchaseOrder purchaseOrder = getModel1Factory().createPurchaseOrder();
+    supplier.getPurchaseOrders().add(purchaseOrder);
+    supplier.eResource().getContents().add(purchaseOrder);
+    return purchaseOrder;
   }
 
-  private EReference addReference(EClass source, EClass target, boolean many)
+  private static EObject addObject(CDOResource resource, EClass eClass)
+  {
+    EObject object = EcoreUtil.create(eClass);
+    resource.getContents().add(object);
+    return object;
+  }
+
+  private static EReference addReference(EClass source, EClass target, boolean many)
   {
     EReference reference = EcoreFactory.eINSTANCE.createEReference();
     EList<EStructuralFeature> features = source.getEStructuralFeatures();

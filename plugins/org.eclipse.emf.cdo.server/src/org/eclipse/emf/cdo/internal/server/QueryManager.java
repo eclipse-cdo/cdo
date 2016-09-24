@@ -314,9 +314,6 @@ public class QueryManager extends Lifecycle implements InternalQueryManager
         }
         catch (Throwable executionException)
         {
-          // int xxx;
-          // ConcurrencyUtil.sleep(2000);
-
           addResult(executionException);
           return;
         }

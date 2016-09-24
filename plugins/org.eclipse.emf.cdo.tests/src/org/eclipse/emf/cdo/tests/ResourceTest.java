@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -881,7 +882,7 @@ public class ResourceTest extends AbstractCDOTest
   /**
    * bug 208689
    */
-  public void testQueryModifiedResources() throws Exception
+  public void testQueryResourcesAsync() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -909,39 +910,145 @@ public class ResourceTest extends AbstractCDOTest
       createResource(transaction, "/cdresource");
       createResource(transaction, "/ceresource");
       transaction.commit();
-      modifyResource(transaction, "/aresource");
-      modifyResource(transaction, "/aaresource");
-      modifyResource(transaction, "/abresource");
-      modifyResource(transaction, "/acresource");
-      modifyResource(transaction, "/adresource");
-      modifyResource(transaction, "/aeresource");
-      modifyResource(transaction, "/bresource");
-      modifyResource(transaction, "/baresource");
-      modifyResource(transaction, "/bbresource");
-      modifyResource(transaction, "/bcresource");
-      modifyResource(transaction, "/bdresource");
-      modifyResource(transaction, "/beresource");
-      modifyResource(transaction, "/bearesource");
-      modifyResource(transaction, "/bebresource");
-      modifyResource(transaction, "/cresource");
-      modifyResource(transaction, "/caresource");
-      modifyResource(transaction, "/caresource2");
-      modifyResource(transaction, "/caresource3");
-      modifyResource(transaction, "/cbresource");
-      modifyResource(transaction, "/ccresource");
-      modifyResource(transaction, "/cdresource");
-      modifyResource(transaction, "/ceresource");
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+    queryResourcesAsync(view, "a", 6);
+    queryResourcesAsync(view, "b", 8);
+    queryResourcesAsync(view, "c", 8);
+    queryResourcesAsync(view, "be", 3);
+    queryResourcesAsync(view, "ca", 3);
+    session.close();
+  }
+
+  /**
+   * bug 208689
+   */
+  public void testQueryModifiedResources() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      createResource(transaction, "aresource");
+      createResource(transaction, "aaresource");
+      createResource(transaction, "abresource");
+      createResource(transaction, "acresource");
+      createResource(transaction, "adresource");
+      createResource(transaction, "aeresource");
+
+      createResource(transaction, "bresource");
+      createResource(transaction, "baresource");
+      createResource(transaction, "bbresource");
+      createResource(transaction, "bcresource");
+      createResource(transaction, "bdresource");
+      createResource(transaction, "beresource");
+      createResource(transaction, "bearesource");
+      createResource(transaction, "bebresource");
+
+      createResource(transaction, "cresource");
+      createResource(transaction, "caresource");
+      createResource(transaction, "caresource2");
+      createResource(transaction, "caresource3");
+      createResource(transaction, "cbresource");
+      createResource(transaction, "ccresource");
+      createResource(transaction, "cdresource");
+      createResource(transaction, "ceresource");
+      transaction.commit();
+
+      renameResource(transaction, "aresource", "aresource2"); // Must still match.
+      renameResource(transaction, "aaresource", "Zaresource"); // Must no longer match.
+
+      deleteResource(transaction, "caresource2");
+      deleteResource(transaction, "caresource3");
+
+      createResource(transaction, "xxresource");
+      createResource(transaction, "xyresource");
+      createResource(transaction, "xzresource");
+
+      queryResources(transaction, "a", 5); // 1 match less than 6.
+      queryResources(transaction, "b", 8);
+      queryResources(transaction, "be", 3);
+      queryResources(transaction, "c", 6); // 2 matches less than 8.
+      queryResources(transaction, "ca", 1); // 2 matches less than 3.
+      queryResources(transaction, "x", 3);
+
       transaction.commit();
       session.close();
     }
 
     CDOSession session = openSession();
     CDOView view = session.openView();
-    queryResources(view, "a", 6);
+    queryResources(view, "a", 5); // 1 match less than 6.
     queryResources(view, "b", 8);
-    queryResources(view, "c", 8);
     queryResources(view, "be", 3);
-    queryResources(view, "ca", 3);
+    queryResources(view, "c", 6); // 2 matches less than 8.
+    queryResources(view, "ca", 1); // 2 matches less than 3.
+    queryResources(view, "x", 3);
+    session.close();
+  }
+
+  public void testQueryModifiedResourcesAsync() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      createResource(transaction, "aresource");
+      createResource(transaction, "aaresource");
+      createResource(transaction, "abresource");
+      createResource(transaction, "acresource");
+      createResource(transaction, "adresource");
+      createResource(transaction, "aeresource");
+
+      createResource(transaction, "bresource");
+      createResource(transaction, "baresource");
+      createResource(transaction, "bbresource");
+      createResource(transaction, "bcresource");
+      createResource(transaction, "bdresource");
+      createResource(transaction, "beresource");
+      createResource(transaction, "bearesource");
+      createResource(transaction, "bebresource");
+
+      createResource(transaction, "cresource");
+      createResource(transaction, "caresource");
+      createResource(transaction, "caresource2");
+      createResource(transaction, "caresource3");
+      createResource(transaction, "cbresource");
+      createResource(transaction, "ccresource");
+      createResource(transaction, "cdresource");
+      createResource(transaction, "ceresource");
+      transaction.commit();
+
+      renameResource(transaction, "aresource", "aresource2"); // Must still match.
+      renameResource(transaction, "aaresource", "Zaresource"); // Must no longer match.
+
+      deleteResource(transaction, "caresource2"); // Must no longer match.
+      deleteResource(transaction, "caresource3"); // Must no longer match.
+
+      createResource(transaction, "xxresource"); // Must match now.
+      createResource(transaction, "xyresource"); // Must match now.
+      createResource(transaction, "xzresource"); // Must match now.
+
+      queryResourcesAsync(transaction, "a", 5); // 1 match less than 6.
+      queryResourcesAsync(transaction, "b", 8);
+      queryResourcesAsync(transaction, "be", 3);
+      queryResourcesAsync(transaction, "c", 6); // 2 matches less than 8.
+      queryResourcesAsync(transaction, "ca", 1); // 2 matches less than 3.
+      queryResourcesAsync(transaction, "x", 3);
+
+      transaction.commit();
+      session.close();
+    }
+
+    CDOSession session = openSession();
+    CDOView view = session.openView();
+    queryResourcesAsync(view, "a", 5); // 1 match less than 6.
+    queryResourcesAsync(view, "b", 8);
+    queryResourcesAsync(view, "be", 3);
+    queryResourcesAsync(view, "c", 6); // 2 matches less than 8.
+    queryResourcesAsync(view, "ca", 1); // 2 matches less than 3.
+    queryResourcesAsync(view, "x", 3);
     session.close();
   }
 
@@ -1813,15 +1920,16 @@ public class ResourceTest extends AbstractCDOTest
     return resource;
   }
 
-  private CDOResource modifyResource(CDOTransaction transaction, String path)
+  private void renameResource(CDOTransaction transaction, String path, String newName)
   {
-    Product1 p = getModel1Factory().createProduct1();
-    p.setName("test-" + path + "-modified");
-    p.setVat(VAT.VAT0);
-
     CDOResource resource = transaction.getResource(getResourcePath(path));
-    resource.getContents().add(p);
-    return resource;
+    resource.setName(newName);
+  }
+
+  private void deleteResource(CDOTransaction transaction, String path)
+  {
+    CDOResource resource = transaction.getResource(getResourcePath(path));
+    EcoreUtil.remove(resource);
   }
 
   private void queryResources(CDOView view, String namePrefix, int expected)
@@ -1835,6 +1943,24 @@ public class ResourceTest extends AbstractCDOTest
     }
 
     assertEquals(expected, nodes.size());
+  }
+
+  private void queryResourcesAsync(CDOView view, String namePrefix, int expected)
+  {
+    msg("Name prefix: " + namePrefix);
+    CDOResourceFolder folder = (CDOResourceFolder)view.getResourceNode(getResourcePath(null));
+    CloseableIterator<CDOResourceNode> nodes = view.queryResourcesAsync(folder, namePrefix, false);
+
+    int count = 0;
+    for (CloseableIterator<CDOResourceNode> it = nodes; it.hasNext();)
+    {
+      CDOResourceNode node = it.next();
+      msg("Result: " + node.getPath());
+      ++count;
+    }
+
+    assertEquals(expected, count);
+    nodes.close();
   }
 
   /**

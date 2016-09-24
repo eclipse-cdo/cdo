@@ -89,9 +89,9 @@ public abstract class AbstractIterator<T> implements Iterator<T>
   /**
    * @author Eike Stepper
    */
-  private static final class EmptyIterator implements ListIterator<Object>
+  static final class EmptyIterator implements ListIterator<Object>, CloseableIterator<Object>
   {
-    private static final ListIterator<Object> INSTANCE = new EmptyIterator();
+    static final ListIterator<Object> INSTANCE = new EmptyIterator();
 
     public boolean hasNext()
     {
@@ -136,6 +136,16 @@ public abstract class AbstractIterator<T> implements Iterator<T>
     public void add(Object e)
     {
       throw new UnsupportedOperationException();
+    }
+
+    public void close()
+    {
+      // Do nothing.
+    }
+
+    public boolean isClosed()
+    {
+      return true;
     }
   }
 }

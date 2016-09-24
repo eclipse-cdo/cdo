@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOReference;
 
 /**
@@ -24,4 +25,13 @@ import org.eclipse.emf.cdo.common.id.CDOReference;
  */
 public interface CDOObjectReference extends CDOReference<CDOObject>
 {
+  /**
+   * @since 4.6
+   */
+  public CDOID getTargetID();
+
+  /**
+   * @since 4.6
+   */
+  public CDOID getSourceID();
 }

@@ -719,7 +719,7 @@ public abstract class AbstractOMTest extends TestCase
     {
       if (consoleEnabled && TRACER.isEnabled())
       {
-        TRACER.trace("--> " + m); //$NON-NLS-1$
+        TRACER.trace(String.valueOf(m));
       }
     }
   }

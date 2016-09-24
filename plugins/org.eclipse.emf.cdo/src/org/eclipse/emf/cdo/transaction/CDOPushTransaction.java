@@ -785,6 +785,14 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   /**
+   * @since 4.6
+   */
+  public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type, boolean exact)
+  {
+    return delegate.queryInstancesAsync(type, exact);
+  }
+
+  /**
    * @since 4.0
    */
   public List<CDOObjectReference> queryXRefs(CDOObject targetObject, EReference... sourceReferences)

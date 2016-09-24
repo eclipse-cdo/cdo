@@ -375,6 +375,13 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type);
 
   /**
+   * Returns an iterator over the instances of the given type. The underlying query will be executed asynchronously.
+   *
+   * @since 4.6
+   */
+  public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type, boolean exact);
+
+  /**
    * Returns a list of {@link CDOObjectReference object references} that represent the cross references to the specified
    * target object.
    *

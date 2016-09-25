@@ -1192,38 +1192,62 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl
   public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase,
       boolean computeChangeSets)
   {
-    CDOBranchPoint ancestor = CDOBranchUtil.getAncestor(target, source);
+    return getMergeData(target, source, null, sourceBase, computeChangeSets);
+  }
 
-    CDORevisionAvailabilityInfo ancestorInfo = createRevisionAvailabilityInfo2(ancestor);
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase,
+      CDOBranchPoint sourceBase, boolean computeChangeSets)
+  {
+    CDOBranchPoint ancestor = null;
+
+    if (sourceBase == null)
+    {
+      ancestor = CDOBranchUtil.getAncestor(target, source);
+      sourceBase = ancestor;
+    }
+
+    if (targetBase == null)
+    {
+      if (ancestor == null)
+      {
+        ancestor = CDOBranchUtil.getAncestor(target, source);
+      }
+
+      targetBase = ancestor;
+    }
+
+    boolean sameBase = sourceBase.equals(targetBase);
+
     CDORevisionAvailabilityInfo targetInfo = createRevisionAvailabilityInfo2(target);
     CDORevisionAvailabilityInfo sourceInfo = createRevisionAvailabilityInfo2(source);
-    CDORevisionAvailabilityInfo baseInfo = sourceBase != null ? createRevisionAvailabilityInfo2(sourceBase) : null;
+    CDORevisionAvailabilityInfo targetBaseInfo = createRevisionAvailabilityInfo2(targetBase);
+    CDORevisionAvailabilityInfo sourceBaseInfo = sameBase ? null : createRevisionAvailabilityInfo2(sourceBase);
 
-    Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, ancestorInfo, baseInfo);
+    Set<CDOID> ids = sessionProtocol.loadMergeData(targetInfo, sourceInfo, targetBaseInfo, sourceBaseInfo);
 
     cacheRevisions2(targetInfo);
     cacheRevisions2(sourceInfo);
-    cacheRevisions2(ancestorInfo);
+    cacheRevisions2(targetBaseInfo);
 
-    if (baseInfo != null)
+    if (sameBase)
     {
-      cacheRevisions2(baseInfo);
+      sourceBaseInfo = targetBaseInfo;
     }
     else
     {
-      baseInfo = ancestorInfo;
+      cacheRevisions2(sourceBaseInfo);
     }
 
     CDOChangeSet targetChanges = null;
     CDOChangeSet sourceChanges = null;
     if (computeChangeSets)
     {
-      targetChanges = createChangeSet(ids, ancestorInfo, targetInfo);
-      sourceChanges = createChangeSet(ids, baseInfo, sourceInfo);
+      targetChanges = createChangeSet(ids, targetBaseInfo, targetInfo);
+      sourceChanges = createChangeSet(ids, sourceBaseInfo, sourceInfo);
     }
 
-    return new MergeData(target, source, sourceBase, ancestor, targetInfo, sourceInfo, baseInfo, ancestorInfo, ids,
-        targetChanges, sourceChanges);
+    return new MergeData(target, source, sourceBase, targetBase, targetInfo, sourceInfo, sourceBaseInfo, targetBaseInfo,
+        ids, targetChanges, sourceChanges);
   }
 
   @Deprecated

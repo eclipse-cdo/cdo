@@ -135,7 +135,6 @@ public class Scenario implements IScenario
   {
     Set<String> capabilities = new CaseInsensitiveStringSet();
     capabilities.add(IConfig.CAPABILITY_ALL);
-    capabilities.add(IConfig.EFFORT_MERGING); // TODO Remove when effort merging done!
 
     repositoryConfig.initCapabilities(capabilities);
     sessionConfig.initCapabilities(capabilities);

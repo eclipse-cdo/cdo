@@ -150,7 +150,7 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    */
   @Deprecated
   public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData,
-      CDORevisionProvider ancestorProvider, CDORevisionProvider targetProvider, CDOBranchPoint source);
+      CDORevisionProvider targetBaseProvider, CDORevisionProvider targetProvider, CDOBranchPoint source);
 
   /**
    * @param source
@@ -159,9 +159,9 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *          a {@link CDOBranch#isLocal() local} branch.
    * @since 4.1
    */
-  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider ancestorProvider,
+  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider,
       CDORevisionProvider targetProvider, CDOBranchPoint source, boolean keepVersions)
-          throws ChangeSetOutdatedException;
+      throws ChangeSetOutdatedException;
 
   /**
    * @since 4.0

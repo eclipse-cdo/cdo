@@ -319,6 +319,12 @@ public interface InternalCDOSession
       boolean computeChangeSets);
 
   /**
+   * @since 4.6
+   */
+  public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase,
+      CDOBranchPoint sourceBase, boolean computeChangeSets);
+
+  /**
    * @author Eike Stepper
    * @since 4.5
    */
@@ -477,15 +483,15 @@ public interface InternalCDOSession
 
     private final CDOBranchPoint sourceBase;
 
-    private final CDOBranchPoint ancestor;
+    private final CDOBranchPoint targetBase;
 
     private final CDORevisionAvailabilityInfo targetInfo;
 
     private final CDORevisionAvailabilityInfo sourceInfo;
 
-    private final CDORevisionAvailabilityInfo baseInfo;
+    private final CDORevisionAvailabilityInfo sourceBaseInfo;
 
-    private final CDORevisionAvailabilityInfo ancestorInfo;
+    private final CDORevisionAvailabilityInfo targetBaseInfo;
 
     private final Set<CDOID> ids;
 
@@ -493,19 +499,19 @@ public interface InternalCDOSession
 
     private final CDOChangeSet sourceChanges;
 
-    public MergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint ancestor,
+    public MergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint sourceBase, CDOBranchPoint targetBase,
         CDORevisionAvailabilityInfo targetInfo, CDORevisionAvailabilityInfo sourceInfo,
-        CDORevisionAvailabilityInfo baseInfo, CDORevisionAvailabilityInfo ancestorInfo, Set<CDOID> ids,
+        CDORevisionAvailabilityInfo sourceBaseInfo, CDORevisionAvailabilityInfo targetBaseInfo, Set<CDOID> ids,
         CDOChangeSet targetChanges, CDOChangeSet sourceChanges)
     {
       this.target = target;
       this.source = source;
       this.sourceBase = sourceBase;
-      this.ancestor = ancestor;
+      this.targetBase = targetBase;
       this.targetInfo = targetInfo;
       this.sourceInfo = sourceInfo;
-      this.baseInfo = baseInfo;
-      this.ancestorInfo = ancestorInfo;
+      this.sourceBaseInfo = sourceBaseInfo;
+      this.targetBaseInfo = targetBaseInfo;
       this.ids = ids;
       this.targetChanges = targetChanges;
       this.sourceChanges = sourceChanges;
@@ -526,9 +532,12 @@ public interface InternalCDOSession
       return sourceBase;
     }
 
-    public CDOBranchPoint getAncestor()
+    /**
+     * @since 4.6
+     */
+    public CDOBranchPoint getTargetBase()
     {
-      return ancestor;
+      return targetBase;
     }
 
     public CDORevisionAvailabilityInfo getTargetInfo()
@@ -541,14 +550,20 @@ public interface InternalCDOSession
       return sourceInfo;
     }
 
-    public CDORevisionAvailabilityInfo getBaseInfo()
+    /**
+     * @since 4.6
+     */
+    public CDORevisionAvailabilityInfo getSourceBaseInfo()
     {
-      return baseInfo;
+      return sourceBaseInfo;
     }
 
-    public CDORevisionAvailabilityInfo getAncestorInfo()
+    /**
+     * @since 4.6
+     */
+    public CDORevisionAvailabilityInfo getTargetBaseInfo()
     {
-      return ancestorInfo;
+      return targetBaseInfo;
     }
 
     public Set<CDOID> getIDs()
@@ -564,6 +579,33 @@ public interface InternalCDOSession
     public CDOChangeSet getSourceChanges()
     {
       return sourceChanges;
+    }
+
+    /**
+     * @deprecated As of 4.6 use {@link #getTargetBase()}.
+     */
+    @Deprecated
+    public CDOBranchPoint getAncestor()
+    {
+      return getTargetBase();
+    }
+
+    /**
+     * @deprecated As of 4.6 use {@link #getSourceBaseInfo()}.
+     */
+    @Deprecated
+    public CDORevisionAvailabilityInfo getBaseInfo()
+    {
+      return getSourceBaseInfo();
+    }
+
+    /**
+     * @deprecated As of 4.6 use {@link #getTargetBaseInfo()}.
+     */
+    @Deprecated
+    public CDORevisionAvailabilityInfo getAncestorInfo()
+    {
+      return getTargetBaseInfo();
     }
   }
 }

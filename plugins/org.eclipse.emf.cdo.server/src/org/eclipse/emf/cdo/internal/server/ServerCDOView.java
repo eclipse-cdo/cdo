@@ -1180,6 +1180,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase,
+        CDOBranchPoint sourceBase, boolean computeChangeSets)
+    {
+      throw new UnsupportedOperationException();
+    }
+
     public boolean isPassiveUpdateEnabled()
     {
       throw new UnsupportedOperationException();

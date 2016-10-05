@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA LIST) - bug 416298: CDOResourceNodes do not support reflective access to derived path attribute
+ *    Thorsten Schlathoelter - bug 494954: Name change does not trigger recache of URI
  */
 package org.eclipse.emf.cdo.eresource.impl;
 
@@ -332,6 +333,12 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
     default:
       super.eSet(featureID, newValue);
+    }
+
+    // Bug 494954: Update the URI if name the changes
+    if (featureID == EresourcePackage.CDO_RESOURCE_NODE__NAME)
+    {
+      recacheURIs();
     }
   }
 

@@ -24,9 +24,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 public interface CDOSetFeatureDelta extends CDOFeatureDelta
 {
   /**
+   * @deprecated As of 4.6 use {@link CDOFeatureDelta#UNKNOWN_VALUE}.
    * @since 4.0
    */
-  public static final Object UNSPECIFIED = new Object();
+  @Deprecated
+  public static final Object UNSPECIFIED = UNKNOWN_VALUE;
 
   public int getIndex();
 

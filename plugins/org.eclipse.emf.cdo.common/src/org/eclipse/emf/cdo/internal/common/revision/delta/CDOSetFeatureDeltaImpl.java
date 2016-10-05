@@ -31,7 +31,7 @@ import java.text.MessageFormat;
 public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl
     implements CDOSetFeatureDelta, ListTargetAdding
 {
-  private Object oldValue = CDOSetFeatureDelta.UNSPECIFIED;
+  private Object oldValue = UNKNOWN_VALUE;
 
   public CDOSetFeatureDeltaImpl(EStructuralFeature feature, int index, Object value)
   {
@@ -87,16 +87,6 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl
   @Override
   protected String toStringAdditional()
   {
-    String oldValueForMessage;
-    if (oldValue != CDOSetFeatureDelta.UNSPECIFIED)
-    {
-      oldValueForMessage = oldValue == null ? "null" : oldValue.toString();
-    }
-    else
-    {
-      oldValueForMessage = "UNSPECIFIED"; //$NON-NLS-1$
-    }
-
-    return super.toStringAdditional() + MessageFormat.format(", oldValue={0}", oldValueForMessage); //$NON-NLS-1$
+    return super.toStringAdditional() + MessageFormat.format(", oldValue={0}", oldValue); //$NON-NLS-1$
   }
 }

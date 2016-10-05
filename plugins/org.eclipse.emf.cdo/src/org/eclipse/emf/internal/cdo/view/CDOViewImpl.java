@@ -1218,10 +1218,20 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         List<CDORevisionDelta> deltas = new ArrayList<CDORevisionDelta>();
         Map<CDOObject, CDORevisionDelta> revisionDeltas = new HashMap<CDOObject, CDORevisionDelta>();
         Set<CDOObject> detachedObjects = new HashSet<CDOObject>();
+        Map<CDOID, InternalCDORevision> oldRevisions = invalidationData.getOldRevisions();
+        if (oldRevisions == null)
+        {
+          oldRevisions = CDOIDUtil.createMap();
+        }
 
-        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = invalidate(
-            invalidationData.getAllChangedObjects(), invalidationData.getAllDetachedObjects(), deltas, revisionDeltas,
-            detachedObjects);
+        Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = invalidate( //
+            invalidationData.getAllChangedObjects(), //
+            invalidationData.getAllDetachedObjects(), //
+            deltas, //
+            revisionDeltas, //
+            detachedObjects, //
+            oldRevisions);
+
         handleConflicts(lastUpdateTime, conflicts, deltas);
 
         sendInvalidationNotifications(revisionDeltas.keySet(), detachedObjects);
@@ -1231,7 +1241,7 @@ public class CDOViewImpl extends AbstractCDOView implements IExecutorServiceProv
         // Then send the notifications. The deltas could have been modified by the conflict resolvers.
         if (!deltas.isEmpty() || !detachedObjects.isEmpty())
         {
-          sendDeltaNotifications(deltas, detachedObjects, invalidationData.getOldRevisions());
+          sendDeltaNotifications(deltas, detachedObjects, oldRevisions);
         }
 
         fireAdaptersNotifiedEvent(lastUpdateTime);

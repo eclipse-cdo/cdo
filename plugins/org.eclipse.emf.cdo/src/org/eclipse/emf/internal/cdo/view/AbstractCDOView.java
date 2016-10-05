@@ -2541,9 +2541,13 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   /*
    * Synchronized through InvalidationRunner.run()
    */
-  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
-      Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
+  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate( //
+      List<CDORevisionKey> allChangedObjects, //
+      List<CDOIDAndVersion> allDetachedObjects, //
+      List<CDORevisionDelta> deltas, //
+      Map<CDOObject, CDORevisionDelta> revisionDeltas, //
+      Set<CDOObject> detachedObjects, //
+      Map<CDOID, InternalCDORevision> oldRevisions)
   {
     boolean hasConflictResolvers = this instanceof CDOTransaction
         && ((CDOTransaction)this).options().getConflictResolvers().length != 0;
@@ -2552,15 +2556,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     // Bug 363355: manage detached objects before changed objects to avoid issue on eContainer
     for (CDOIDAndVersion key : allDetachedObjects)
     {
-      InternalCDOObject detachedObject = removeObject(key.getID());
+      CDOID id = key.getID();
+
+      InternalCDOObject detachedObject = removeObject(id);
       if (detachedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create((CDORevision)detachedObject.cdoRevision(),
-            CDORevisionDelta.DETACHED);
-        // if (!isLocked(detachedObject))
-        {
-          CDOStateMachine.INSTANCE.detachRemote(detachedObject);
-        }
+        CDORevision oldRevision = detachedObject.cdoRevision();
+        oldRevisions.put(id, (InternalCDORevision)oldRevision);
+
+        CDOStateMachine.INSTANCE.detachRemote(detachedObject);
 
         detachedObjects.add(detachedObject);
         if (detachedObject.cdoConflict())
@@ -2570,7 +2574,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
             conflicts = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>();
           }
 
-          conflicts.put(detachedObject, oldInfo);
+          conflicts.put(detachedObject, Pair.create(oldRevision, CDORevisionDelta.DETACHED));
         }
       }
     }
@@ -2581,6 +2585,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       if (key instanceof CDORevisionDelta)
       {
         delta = (CDORevisionDelta)key;
+        
         // Copy the revision delta so that conflict resolvers can modify it.
         if (hasConflictResolvers)
         {
@@ -2590,14 +2595,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         deltas.add(delta);
       }
 
-      CDOObject changedObject = objects.get(key.getID());
+      CDOID id = key.getID();
+
+      CDOObject changedObject = objects.get(id);
       if (changedObject != null)
       {
-        Pair<CDORevision, CDORevisionDelta> oldInfo = Pair.create(changedObject.cdoRevision(), delta);
-        // if (!isLocked(changedObject))
-        {
-          CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key);
-        }
+        CDORevision oldRevision = changedObject.cdoRevision();
+        oldRevisions.put(id, (InternalCDORevision)oldRevision);
+
+        CDOStateMachine.INSTANCE.invalidate((InternalCDOObject)changedObject, key);
 
         if (changedObject instanceof CDOResourceNodeImpl)
         {
@@ -2615,7 +2621,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
             conflicts = new HashMap<CDOObject, Pair<CDORevision, CDORevisionDelta>>();
           }
 
-          conflicts.put(changedObject, oldInfo);
+          conflicts.put(changedObject, Pair.create(oldRevision, delta));
         }
       }
     }

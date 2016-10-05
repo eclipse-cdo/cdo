@@ -3543,13 +3543,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    *
    * @since 3.0
    */
-  /*
-   * Synchronized through InvlidationRunner.run()
-   */
   @Override
-  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate(List<CDORevisionKey> allChangedObjects,
-      List<CDOIDAndVersion> allDetachedObjects, List<CDORevisionDelta> deltas,
-      Map<CDOObject, CDORevisionDelta> revisionDeltas, Set<CDOObject> detachedObjects)
+  protected Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> invalidate( //
+      List<CDORevisionKey> allChangedObjects, //
+      List<CDOIDAndVersion> allDetachedObjects, //
+      List<CDORevisionDelta> deltas, //
+      Map<CDOObject, CDORevisionDelta> revisionDeltas, //
+      Set<CDOObject> detachedObjects, //
+      Map<CDOID, InternalCDORevision> oldRevisions)
   {
     if (!allDetachedObjects.isEmpty())
     {
@@ -3567,8 +3568,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       session.clearCommittedSinceLastRefresh();
     }
 
-    Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = //
-        super.invalidate(allChangedObjects, allDetachedObjects, deltas, revisionDeltas, detachedObjects);
+    Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts = super.invalidate( //
+        allChangedObjects, //
+        allDetachedObjects, //
+        deltas, //
+        revisionDeltas, //
+        detachedObjects, //
+        oldRevisions);
 
     if (!allChangedObjects.isEmpty())
     {

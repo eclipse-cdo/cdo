@@ -184,18 +184,12 @@ public class CDODeltaNotificationImpl extends ENotificationImpl implements CDODe
         EDataType eAttributeType = ((EAttribute)feature).getEAttributeType();
         if (eAttributeType != null)
         {
-          String stringValue;
           if (eAttributeType instanceof EEnum && object instanceof Integer)
           {
             EEnumLiteral literal = ((EEnum)eAttributeType).getEEnumLiteral((Integer)object);
-            stringValue = literal.getLiteral();
+            String stringValue = literal.getLiteral();
+            object = eAttributeType.getEPackage().getEFactoryInstance().createFromString(eAttributeType, stringValue);
           }
-          else
-          {
-            stringValue = String.valueOf(object);
-          }
-
-          object = eAttributeType.getEPackage().getEFactoryInstance().createFromString(eAttributeType, stringValue);
         }
       }
     }

@@ -155,7 +155,13 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
   public void visit(CDOSetFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
-    Object oldValue = getOldValue(feature);
+
+    Object oldValue = delta.getOldValue();
+    if (oldValue == null)
+    {
+      oldValue = getOldValue(feature);
+    }
+
     if (oldValue instanceof CDOID)
     {
       CDOID oldID = (CDOID)oldValue;

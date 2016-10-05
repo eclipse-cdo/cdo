@@ -247,6 +247,7 @@ public final class CDOStoreImpl implements CDOStore
 
         value = convertToEMF(eObject, revision, feature, NO_INDEX, value);
         Object defaultValue = feature.getDefaultValue();
+
         return !ObjectUtil.equals(value, defaultValue);
       }
       finally
@@ -564,12 +565,12 @@ public final class CDOStoreImpl implements CDOStore
         // TODO: Use writeRevision() result!!
         InternalCDORevision oldRevision = readRevision(cdoObject);
         Object oldValue = oldRevision.get(feature, index);
-        oldValue = convertToEMF(eObject, oldRevision, feature, index, oldValue);
+        Object resultValue = convertToEMF(eObject, oldRevision, feature, index, oldValue);
 
         CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value, oldValue);
         writeRevision(cdoObject, delta);
 
-        return oldValue;
+        return resultValue;
       }
       finally
       {
@@ -950,8 +951,7 @@ public final class CDOStoreImpl implements CDOStore
     }
 
     Object oldValue = revision.get(feature, index);
-    oldValue = convertToEMF(eObject, revision, feature, index, oldValue);
-    return oldValue;
+    return convertToEMF(eObject, revision, feature, index, oldValue);
   }
 
   private static InternalCDORevision readRevision(InternalCDOObject cdoObject)

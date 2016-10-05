@@ -901,6 +901,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       {
         return false;
       }
+      finally
+      {
+        unlockView();
+      }
     }
   }
 

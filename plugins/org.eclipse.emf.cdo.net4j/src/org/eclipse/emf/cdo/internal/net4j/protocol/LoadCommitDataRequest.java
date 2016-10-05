@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 
 import java.io.IOException;
 
@@ -39,6 +40,14 @@ public class LoadCommitDataRequest extends CDOClientRequest<CDOCommitData>
   @Override
   protected CDOCommitData confirming(CDODataInput in) throws IOException
   {
-    return in.readCDOCommitData();
+    try
+    {
+      CDOSetFeatureDeltaImpl.transferOldValue(true);
+      return in.readCDOCommitData();
+    }
+    finally
+    {
+      CDOSetFeatureDeltaImpl.transferOldValue(false);
+    }
   }
 }

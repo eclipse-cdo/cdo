@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchPointImpl;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
+import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.CheckUtil;
@@ -283,7 +284,10 @@ public class CDOCommitInfoImpl extends CDOBranchPointImpl implements CDOCommitIn
   {
     if (commitData == null)
     {
-      commitData = commitInfoManager.getCommitInfoLoader().loadCommitData(getTimeStamp());
+      long timeStamp = getTimeStamp();
+
+      CommitInfoLoader commitInfoLoader = commitInfoManager.getCommitInfoLoader();
+      commitData = commitInfoLoader.loadCommitData(timeStamp);
     }
   }
 }

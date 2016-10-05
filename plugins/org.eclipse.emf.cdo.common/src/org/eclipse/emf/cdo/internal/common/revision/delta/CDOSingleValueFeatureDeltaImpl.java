@@ -63,6 +63,11 @@ public abstract class CDOSingleValueFeatureDeltaImpl extends CDOFeatureDeltaImpl
 
   protected void writeValue(CDODataOutput out, EClass eClass) throws IOException
   {
+    writeValue(out, eClass, value);
+  }
+
+  protected void writeValue(CDODataOutput out, EClass eClass, Object value) throws IOException
+  {
     Object valueToWrite = value;
     if (valueToWrite == UNKNOWN_VALUE)
     {

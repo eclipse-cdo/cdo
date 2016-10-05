@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.common.revision.delta;
 
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
@@ -31,6 +32,8 @@ import java.text.MessageFormat;
 public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl
     implements CDOSetFeatureDelta, ListTargetAdding
 {
+  private static final ThreadLocal<Boolean> TRANSFER_OLD_VALUE = new ThreadLocal<Boolean>();
+
   private Object oldValue = UNKNOWN_VALUE;
 
   public CDOSetFeatureDeltaImpl(EStructuralFeature feature, int index, Object value)
@@ -47,6 +50,22 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl
   public CDOSetFeatureDeltaImpl(CDODataInput in, EClass eClass) throws IOException
   {
     super(in, eClass);
+
+    if (TRANSFER_OLD_VALUE.get() == Boolean.TRUE)
+    {
+      oldValue = readValue(in, eClass);
+    }
+  }
+
+  @Override
+  public void write(CDODataOutput out, EClass eClass) throws IOException
+  {
+    super.write(out, eClass);
+
+    if (TRANSFER_OLD_VALUE.get() == Boolean.TRUE)
+    {
+      writeValue(out, eClass, oldValue);
+    }
   }
 
   public Type getType()
@@ -88,5 +107,17 @@ public class CDOSetFeatureDeltaImpl extends CDOSingleValueFeatureDeltaImpl
   protected String toStringAdditional()
   {
     return super.toStringAdditional() + MessageFormat.format(", oldValue={0}", oldValue); //$NON-NLS-1$
+  }
+
+  public static void transferOldValue(boolean on)
+  {
+    if (on)
+    {
+      TRANSFER_OLD_VALUE.set(Boolean.TRUE);
+    }
+    else
+    {
+      TRANSFER_OLD_VALUE.remove();
+    }
   }
 }

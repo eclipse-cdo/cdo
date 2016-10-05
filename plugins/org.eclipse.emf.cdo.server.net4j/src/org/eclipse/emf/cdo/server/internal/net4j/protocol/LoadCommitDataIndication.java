@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitData;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 
 import java.io.IOException;
 
@@ -39,6 +40,15 @@ public class LoadCommitDataIndication extends CDOServerReadIndication
   protected void responding(final CDODataOutput out) throws IOException
   {
     CDOCommitData commitData = getRepository().loadCommitData(timeStamp);
-    out.writeCDOCommitData(commitData); // Exposes revision to client side
+
+    try
+    {
+      CDOSetFeatureDeltaImpl.transferOldValue(true);
+      out.writeCDOCommitData(commitData); // Exposes revision to client side
+    }
+    finally
+    {
+      CDOSetFeatureDeltaImpl.transferOldValue(false);
+    }
   }
 }

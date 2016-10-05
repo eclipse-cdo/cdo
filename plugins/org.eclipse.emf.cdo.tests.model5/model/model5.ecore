@@ -83,4 +83,8 @@
         eOpposite="#//Parent/favourite"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="WithCustomType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="#//CustomType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="CustomType" instanceClassName="org.eclipse.emf.cdo.tests.model5.CustomType"/>
 </ecore:EPackage>

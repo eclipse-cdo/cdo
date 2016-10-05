@@ -13,6 +13,7 @@
       literalsInterface="false" extensibleProviderFactory="true" childCreationExtenders="true"
       ecorePackage="model5.ecore#/">
     <genDataTypes ecoreDataType="model5.ecore#//IntArray"/>
+    <genDataTypes ecoreDataType="model5.ecore#//CustomType"/>
     <genClasses ecoreClass="model5.ecore#//TestFeatureMap">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model5.ecore#//TestFeatureMap/managers"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference model5.ecore#//TestFeatureMap/doctors"/>
@@ -62,6 +63,9 @@
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference model5.ecore#//Child/parent"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model5.ecore#//Child/preferredBy"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model5.ecore#//Child/name"/>
+    </genClasses>
+    <genClasses ecoreClass="model5.ecore#//WithCustomType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model5.ecore#//WithCustomType/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

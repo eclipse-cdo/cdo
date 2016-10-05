@@ -150,11 +150,20 @@ public interface Model5Factory extends EFactory
   Child createChild();
 
   /**
-   * Returns a new object of class '<em>Gen List Of String</em>'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return a new object of class '<em>Gen List Of String</em>'.
+   * Returns a new object of class '<em>With Custom Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>With Custom Type</em>'.
    * @generated
    */
+  WithCustomType createWithCustomType();
+
+  /**
+  	 * Returns a new object of class '<em>Gen List Of String</em>'.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return a new object of class '<em>Gen List Of String</em>'.
+  	 * @generated
+  	 */
   GenListOfString createGenListOfString();
 
   /**

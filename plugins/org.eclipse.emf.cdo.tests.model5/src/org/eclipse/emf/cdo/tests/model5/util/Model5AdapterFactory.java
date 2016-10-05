@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -185,6 +186,12 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
     public Adapter caseChild(Child object)
     {
       return createChildAdapter();
+    }
+
+    @Override
+    public Adapter caseWithCustomType(WithCustomType object)
+    {
+      return createWithCustomTypeAdapter();
     }
 
     @Override
@@ -413,14 +420,29 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString <em>Gen List Of String</em>}'.
-   * <!-- begin-user-doc --> This default implementation returns null so that we can
-   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
-   * end-user-doc -->
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.WithCustomType <em>With Custom Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.tests.model5.GenListOfString
+   * @see org.eclipse.emf.cdo.tests.model5.WithCustomType
    * @generated
    */
+  public Adapter createWithCustomTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.GenListOfString <em>Gen List Of String</em>}'.
+  	 * <!-- begin-user-doc --> This default implementation returns null so that we can
+   * easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!--
+   * end-user-doc -->
+  	 * @return the new adapter.
+  	 * @see org.eclipse.emf.cdo.tests.model5.GenListOfString
+  	 * @generated
+  	 */
   public Adapter createGenListOfStringAdapter()
   {
     return null;

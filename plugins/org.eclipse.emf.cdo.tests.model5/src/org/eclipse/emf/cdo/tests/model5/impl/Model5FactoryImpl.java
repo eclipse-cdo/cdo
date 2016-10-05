@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.tests.model5.impl;
 
 //import org.eclipse.emf.cdo.tests.model5.*;
 import org.eclipse.emf.cdo.tests.model5.Child;
+import org.eclipse.emf.cdo.tests.model5.CustomType;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
 import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
@@ -29,6 +30,7 @@ import org.eclipse.emf.cdo.tests.model5.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -116,6 +118,8 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
       return createParent();
     case Model5Package.CHILD:
       return createChild();
+    case Model5Package.WITH_CUSTOM_TYPE:
+      return createWithCustomType();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -132,6 +136,8 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
     {
     case Model5Package.INT_ARRAY:
       return createIntArrayFromString(eDataType, initialValue);
+    case Model5Package.CUSTOM_TYPE:
+      return createCustomTypeFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -148,6 +154,8 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
     {
     case Model5Package.INT_ARRAY:
       return convertIntArrayToString(eDataType, instanceValue);
+    case Model5Package.CUSTOM_TYPE:
+      return convertCustomTypeToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -306,9 +314,20 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public WithCustomType createWithCustomType()
+  {
+    WithCustomTypeImpl withCustomType = new WithCustomTypeImpl();
+    return withCustomType;
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public int[] createIntArrayFromString(EDataType eDataType, String initialValue)
   {
     return (int[])super.createFromString(initialValue);
@@ -321,6 +340,26 @@ public class Model5FactoryImpl extends EFactoryImpl implements Model5Factory
   public String convertIntArrayToString(EDataType eDataType, Object instanceValue)
   {
     return super.convertToString(instanceValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public CustomType createCustomTypeFromString(EDataType eDataType, String initialValue)
+  {
+    return CustomType.createFromString(initialValue);
+  }
+
+  /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated NOT
+     */
+  public String convertCustomTypeToString(EDataType eDataType, Object instanceValue)
+  {
+    return CustomType.convertToString(instanceValue);
   }
 
   /**

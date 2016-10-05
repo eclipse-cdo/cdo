@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -177,11 +178,20 @@ public interface Model5Factory extends EFactory, org.eclipse.emf.cdo.tests.model
   Child createChild();
 
   /**
-   * Returns the package supported by this factory.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @return the package supported by this factory.
+   * Returns a new object of class '<em>With Custom Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>With Custom Type</em>'.
    * @generated
    */
+  WithCustomType createWithCustomType();
+
+  /**
+  	 * Returns the package supported by this factory.
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @return the package supported by this factory.
+  	 * @generated
+  	 */
   Model5Package getModel5Package();
 
 } // Model5Factory

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -190,6 +191,12 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
     public Adapter caseChild(Child object)
     {
       return createChildAdapter();
+    }
+
+    @Override
+    public Adapter caseWithCustomType(WithCustomType object)
+    {
+      return createWithCustomTypeAdapter();
     }
 
     @Override
@@ -454,13 +461,28 @@ public class Model5AdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for the default case.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model5.WithCustomType <em>With Custom Type</em>}'.
    * <!-- begin-user-doc -->
-   * This default implementation returns null.
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model5.WithCustomType
    * @generated
    */
+  public Adapter createWithCustomTypeAdapter()
+  {
+    return null;
+  }
+
+  /**
+  	 * Creates a new adapter for the default case.
+  	 * <!-- begin-user-doc -->
+   * This default implementation returns null.
+   * <!-- end-user-doc -->
+  	 * @return the new adapter.
+  	 * @generated
+  	 */
   public Adapter createEObjectAdapter()
   {
     return null;

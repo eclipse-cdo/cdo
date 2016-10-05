@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.tests.model5.legacy.impl;
 
 import org.eclipse.emf.cdo.tests.model5.Child;
+import org.eclipse.emf.cdo.tests.model5.CustomType;
 import org.eclipse.emf.cdo.tests.model5.Doctor;
 import org.eclipse.emf.cdo.tests.model5.GenListOfBoolean;
 import org.eclipse.emf.cdo.tests.model5.GenListOfChar;
@@ -26,6 +27,7 @@ import org.eclipse.emf.cdo.tests.model5.GenListOfString;
 import org.eclipse.emf.cdo.tests.model5.Manager;
 import org.eclipse.emf.cdo.tests.model5.Parent;
 import org.eclipse.emf.cdo.tests.model5.TestFeatureMap;
+import org.eclipse.emf.cdo.tests.model5.WithCustomType;
 import org.eclipse.emf.cdo.tests.model5.legacy.Model5Factory;
 import org.eclipse.emf.cdo.tests.model5.legacy.Model5Package;
 
@@ -141,10 +143,24 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   private EClass childEClass = null;
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  private EClass withCustomTypeEClass = null;
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   private EDataType intArrayEDataType = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType customTypeEDataType = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry
@@ -542,12 +558,42 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getWithCustomType()
+  {
+    return withCustomTypeEClass;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public EAttribute getWithCustomType_Value()
+  {
+    return (EAttribute)withCustomTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   public EDataType getIntArray()
   {
     return intArrayEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EDataType getCustomType()
+  {
+    return customTypeEDataType;
   }
 
   /**
@@ -632,8 +678,12 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     createEReference(childEClass, CHILD__PREFERRED_BY);
     createEAttribute(childEClass, CHILD__NAME);
 
+    withCustomTypeEClass = createEClass(WITH_CUSTOM_TYPE);
+    createEAttribute(withCustomTypeEClass, WITH_CUSTOM_TYPE__VALUE);
+
     // Create data types
     intArrayEDataType = createEDataType(INT_ARRAY);
+    customTypeEDataType = createEDataType(CUSTOM_TYPE);
   }
 
   /**
@@ -765,8 +815,14 @@ public class Model5PackageImpl extends EPackageImpl implements Model5Package
     initEAttribute(getChild_Name(), ecorePackage.getEString(), "name", null, 0, 1, Child.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(withCustomTypeEClass, WithCustomType.class, "WithCustomType", !IS_ABSTRACT, !IS_INTERFACE,
+        IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getWithCustomType_Value(), getCustomType(), "value", null, 0, 1, WithCustomType.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     // Initialize data types
     initEDataType(intArrayEDataType, int[].class, "IntArray", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(customTypeEDataType, CustomType.class, "CustomType", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

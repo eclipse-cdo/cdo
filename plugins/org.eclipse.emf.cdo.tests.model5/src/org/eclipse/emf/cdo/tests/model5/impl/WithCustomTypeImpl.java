@@ -1,0 +1,80 @@
+/**
+ */
+package org.eclipse.emf.cdo.tests.model5.impl;
+
+import org.eclipse.emf.cdo.tests.model5.CustomType;
+import org.eclipse.emf.cdo.tests.model5.Model5Package;
+import org.eclipse.emf.cdo.tests.model5.WithCustomType;
+
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+
+import org.eclipse.emf.ecore.EClass;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>With Custom Type</b></em>'.
+ * <!-- end-user-doc -->
+ * <p>
+ * The following features are implemented:
+ * </p>
+ * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model5.impl.WithCustomTypeImpl#getValue <em>Value</em>}</li>
+ * </ul>
+ *
+ * @generated
+ */
+public class WithCustomTypeImpl extends CDOObjectImpl implements WithCustomType
+{
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected WithCustomTypeImpl()
+  {
+    super();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected EClass eStaticClass()
+  {
+    return Model5Package.eINSTANCE.getWithCustomType();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  protected int eStaticFeatureCount()
+  {
+    return 0;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CustomType getValue()
+  {
+    return (CustomType)eGet(Model5Package.eINSTANCE.getWithCustomType_Value(), true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setValue(CustomType newValue)
+  {
+    eSet(Model5Package.eINSTANCE.getWithCustomType_Value(), newValue);
+  }
+
+} // WithCustomTypeImpl

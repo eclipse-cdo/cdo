@@ -354,6 +354,8 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     public static final String ID_GENERATION_LOCATION = "idGenerationLocation"; //$NON-NLS-1$
 
     /**
+     * Possible values: NO | YES | WITH_MERGE_SOURCE.
+     *
      * @since 4.6
      */
     public static final String COMMIT_INFO_STORAGE = "commitInfoStorage"; //$NON-NLS-1$

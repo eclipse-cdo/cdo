@@ -1110,13 +1110,13 @@ public class model4PackageImpl extends EPackageImpl implements model4Package
     // Add supertypes to classes
     implSingleRefContainerEClass.getESuperTypes().add(themodel4interfacesPackage.getISingleRefContainer());
     implSingleRefContainedElementEClass.getESuperTypes()
-    .add(themodel4interfacesPackage.getISingleRefContainedElement());
+        .add(themodel4interfacesPackage.getISingleRefContainedElement());
     implSingleRefNonContainerEClass.getESuperTypes().add(themodel4interfacesPackage.getISingleRefNonContainer());
     implSingleRefNonContainedElementEClass.getESuperTypes()
-    .add(themodel4interfacesPackage.getISingleRefNonContainedElement());
+        .add(themodel4interfacesPackage.getISingleRefNonContainedElement());
     implMultiRefNonContainerEClass.getESuperTypes().add(themodel4interfacesPackage.getIMultiRefNonContainer());
     implMultiRefNonContainedElementEClass.getESuperTypes()
-    .add(themodel4interfacesPackage.getIMultiRefNonContainedElement());
+        .add(themodel4interfacesPackage.getIMultiRefNonContainedElement());
     implMultiRefContainerEClass.getESuperTypes().add(themodel4interfacesPackage.getIMultiRefContainer());
     implMultiRefContainedElementEClass.getESuperTypes().add(themodel4interfacesPackage.getIMultiRefContainedElement());
     implSingleRefContainerNPLEClass.getESuperTypes().add(themodel4interfacesPackage.getISingleRefContainerNPL());

@@ -42,7 +42,7 @@ public interface GenRefMapNonContained extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Elements</em>' map.
    * @see org.eclipse.emf.cdo.tests.model4.model4Package#getGenRefMapNonContained_Elements()
-   * @model mapType="org.eclipse.emf.cdo.tests.model4.StringToEObject<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EObject>"
+   * @model mapType="org.eclipse.emf.cdo.tests.model4.StringToEObject&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EObject&gt;"
    * @generated
    */
   EMap<String, EObject> getElements();

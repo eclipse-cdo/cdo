@@ -700,7 +700,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
       return notUnsettableChar != NOT_UNSETTABLE_CHAR_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DATE:
       return NOT_UNSETTABLE_DATE_EDEFAULT == null ? notUnsettableDate != null
-      : !NOT_UNSETTABLE_DATE_EDEFAULT.equals(notUnsettableDate);
+          : !NOT_UNSETTABLE_DATE_EDEFAULT.equals(notUnsettableDate);
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_DOUBLE:
       return notUnsettableDouble != NOT_UNSETTABLE_DOUBLE_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_FLOAT:
@@ -713,7 +713,7 @@ public class NotUnsettableWithDefaultImpl extends EObjectImpl implements NotUnse
       return notUnsettableShort != NOT_UNSETTABLE_SHORT_EDEFAULT;
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_STRING:
       return NOT_UNSETTABLE_STRING_EDEFAULT == null ? notUnsettableString != null
-      : !NOT_UNSETTABLE_STRING_EDEFAULT.equals(notUnsettableString);
+          : !NOT_UNSETTABLE_STRING_EDEFAULT.equals(notUnsettableString);
     case Model2Package.NOT_UNSETTABLE_WITH_DEFAULT__NOT_UNSETTABLE_VAT:
       return notUnsettableVAT != NOT_UNSETTABLE_VAT_EDEFAULT;
     }

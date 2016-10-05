@@ -60,7 +60,7 @@ public interface Customer extends Address
    * <!-- end-user-doc -->
    * @return the value of the '<em>Order By Product</em>' map.
    * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCustomer_OrderByProduct()
-   * @model mapType="org.eclipse.emf.cdo.tests.model1.ProductToOrder<org.eclipse.emf.cdo.tests.model1.Product1, org.eclipse.emf.cdo.tests.model1.SalesOrder>"
+   * @model mapType="org.eclipse.emf.cdo.tests.model1.ProductToOrder&lt;org.eclipse.emf.cdo.tests.model1.Product1, org.eclipse.emf.cdo.tests.model1.SalesOrder&gt;"
    * @generated
    */
   EMap<Product1, SalesOrder> getOrderByProduct();

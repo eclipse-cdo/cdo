@@ -243,10 +243,10 @@ public class BaseObjectImpl extends EObjectImpl implements BaseObject
     {
     case Model6Package.BASE_OBJECT__ATTRIBUTE_OPTIONAL:
       return ATTRIBUTE_OPTIONAL_EDEFAULT == null ? attributeOptional != null
-      : !ATTRIBUTE_OPTIONAL_EDEFAULT.equals(attributeOptional);
+          : !ATTRIBUTE_OPTIONAL_EDEFAULT.equals(attributeOptional);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_REQUIRED:
       return ATTRIBUTE_REQUIRED_EDEFAULT == null ? attributeRequired != null
-      : !ATTRIBUTE_REQUIRED_EDEFAULT.equals(attributeRequired);
+          : !ATTRIBUTE_REQUIRED_EDEFAULT.equals(attributeRequired);
     case Model6Package.BASE_OBJECT__ATTRIBUTE_LIST:
       return attributeList != null && !attributeList.isEmpty();
     }

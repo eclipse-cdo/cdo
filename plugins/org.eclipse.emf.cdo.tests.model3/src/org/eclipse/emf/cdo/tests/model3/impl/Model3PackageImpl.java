@@ -227,7 +227,7 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     // Obtain or create and register interdependencies
     SubpackagePackageImpl theSubpackagePackage = (SubpackagePackageImpl)(EPackage.Registry.INSTANCE
         .getEPackage(SubpackagePackage.eNS_URI) instanceof SubpackagePackageImpl
-        ? EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI) : SubpackagePackage.eINSTANCE);
+            ? EPackage.Registry.INSTANCE.getEPackage(SubpackagePackage.eNS_URI) : SubpackagePackage.eINSTANCE);
 
     // Create package meta-data objects
     theModel3Package.createPackageContents();

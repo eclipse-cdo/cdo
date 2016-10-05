@@ -20,4 +20,11 @@
        genModel = "model/model5.genmodel"/> 
   </extension>
   
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated model5.legacy -->
+      <package
+            uri="http://www.eclipse.org/emf/CDO/tests/model5/1.0.0"
+            class="org.eclipse.emf.cdo.tests.model5.legacy.Model5Package"/>
+   </extension>
+
 </plugin>

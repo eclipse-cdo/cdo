@@ -54,7 +54,7 @@ public interface MapHolder extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>Integer To String Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_IntegerToStringMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.IntegerToStringMap<org.eclipse.emf.ecore.EIntegerObject, org.eclipse.emf.ecore.EString>"
+   * @model mapType="org.eclipse.emf.cdo.tests.model2.IntegerToStringMap&lt;org.eclipse.emf.ecore.EIntegerObject, org.eclipse.emf.ecore.EString&gt;"
    * @generated
    */
   EMap<Integer, String> getIntegerToStringMap();
@@ -71,7 +71,7 @@ public interface MapHolder extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>String To String Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToStringMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToStringMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
+   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToStringMap&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString&gt;"
    * @generated
    */
   EMap<String, String> getStringToStringMap();
@@ -88,7 +88,7 @@ public interface MapHolder extends EObject
    * <!-- end-user-doc -->
    * @return the value of the '<em>String To VAT Map</em>' map.
    * @see org.eclipse.emf.cdo.tests.model2.Model2Package#getMapHolder_StringToVATMap()
-   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToVATMap<org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.VAT>"
+   * @model mapType="org.eclipse.emf.cdo.tests.model2.StringToVATMap&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.cdo.tests.model1.VAT&gt;"
    * @generated
    */
   EMap<String, VAT> getStringToVATMap();

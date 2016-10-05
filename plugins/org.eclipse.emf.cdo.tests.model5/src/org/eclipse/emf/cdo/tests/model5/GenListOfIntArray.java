@@ -32,7 +32,7 @@ public interface GenListOfIntArray extends EObject
 {
   /**
    * Returns the value of the '<em><b>Elements</b></em>' attribute list.
-   * The list contents are of type {@link int}[].
+   * The list contents are of type {@link int}<code>[]</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Elements</em>' attribute list isn't clear, there really should be more of a description
